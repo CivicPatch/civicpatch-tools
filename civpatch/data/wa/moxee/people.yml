@@ -2,7 +2,7 @@
 - name: LeRoy Lenseigne
   roles:
   - Mayor
-  divisions: []
+  divisions:
   image: https://cityofmoxee.us/wp-content/uploads/2019/10/City-Council-Leroy-Lenseigne.jpg
   cdn_image: https://cdn.civicpatch.org/open-data/wa/moxee/images/e8381a5c74934221b0c997e51de892a3a24ace973737020104af3e20065f5c3d.jpg
   email:
@@ -12,7 +12,7 @@
   end_date: '2027'
   sources:
   - https://cityofmoxee.us/city-government
-  updated_at: '2025-06-25T04:43:23Z'
+  updated_at: '2025-06-25T04:50:53Z'
 - name: Rob Layman
   roles:
   - Council Member
@@ -27,7 +27,7 @@
   end_date: '2025'
   sources:
   - https://cityofmoxee.us/city-government
-  updated_at: '2025-06-25T04:43:23Z'
+  updated_at: '2025-06-25T04:50:53Z'
 - name: Greg Spurgin
   roles:
   - Council Member
@@ -42,7 +42,7 @@
   end_date: '2025'
   sources:
   - https://cityofmoxee.us/city-government
-  updated_at: '2025-06-25T04:43:23Z'
+  updated_at: '2025-06-25T04:50:53Z'
 - name: Jan Hutchinson
   roles:
   - Council Member
@@ -57,7 +57,7 @@
   end_date: '2027'
   sources:
   - https://cityofmoxee.us/city-government
-  updated_at: '2025-06-25T04:43:23Z'
+  updated_at: '2025-06-25T04:50:53Z'
 - name: David Roy
   roles:
   - Council Member
@@ -72,7 +72,7 @@
   end_date: '2027'
   sources:
   - https://cityofmoxee.us/city-government
-  updated_at: '2025-06-25T04:43:23Z'
+  updated_at: '2025-06-25T04:50:53Z'
 - name: Larry Frank
   roles:
   - Council Member
@@ -87,4 +87,4 @@
   end_date: '2027'
   sources:
   - https://cityofmoxee.us/city-government
-  updated_at: '2025-06-25T04:43:23Z'
+  updated_at: '2025-06-25T04:50:53Z'

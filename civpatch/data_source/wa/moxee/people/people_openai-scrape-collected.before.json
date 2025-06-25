@@ -24,7 +24,7 @@
       {
         "data": "(509) 575-8851",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General city phone number listed on the page; no direct personal phone found.",
+        "llm_confidence_reason": "General City Hall phone number listed near City Council info; no personal phone found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -32,8 +32,8 @@
     "websites": [
       {
         "data": "https://cityofmoxee.us/city-government",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "General city government page URL; no personal profile URL found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city government page URL; no personal website found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -46,7 +46,7 @@
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:39:45Z"
+    "updated_at": "2025-06-25T04:48:27Z"
   },
   {
     "name": "Greg Spurgin",
@@ -57,7 +57,7 @@
       {
         "data": "https://cityofmoxee.us/wp-content/uploads/2021/06/City-Council-Greg-Spurgin-e1623435553920.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Greg Spurgin's name and position.",
+        "llm_confidence_reason": "Image directly associated with Greg Spurgin.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -65,7 +65,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed under City Council with Position #2, indicating council member role."
+        "llm_confidence_reason": "Listed as Position #2 on City Council, which implies Council Member role."
       }
     ],
     "divisions": [
@@ -79,7 +79,7 @@
       {
         "data": "(509) 575-8851",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General city phone number listed; no personal phone found.",
+        "llm_confidence_reason": "General City Hall phone number used as no personal phone found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -87,8 +87,8 @@
     "websites": [
       {
         "data": "https://cityofmoxee.us/city-government",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "General city government page URL; no personal profile URL found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city government page URL; no personal website found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -101,7 +101,7 @@
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:39:45Z"
+    "updated_at": "2025-06-25T04:48:27Z"
   },
   {
     "name": "Rob Layman",
@@ -112,7 +112,7 @@
       {
         "data": "https://cityofmoxee.us/wp-content/uploads/2019/10/City-Council-Rob-Layman.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Rob Layman's name and position.",
+        "llm_confidence_reason": "Image directly associated with Rob Layman.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -120,7 +120,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed under City Council with Position #1, indicating council member role."
+        "llm_confidence_reason": "Listed as Position #1 on City Council, indicating Council Member."
       }
     ],
     "divisions": [
@@ -134,7 +134,7 @@
       {
         "data": "(509) 575-8851",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General city phone number listed; no personal phone found.",
+        "llm_confidence_reason": "General City Hall phone number used as no personal phone found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -142,8 +142,8 @@
     "websites": [
       {
         "data": "https://cityofmoxee.us/city-government",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "General city government page URL; no personal profile URL found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city government page URL; no personal website found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -156,7 +156,7 @@
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:39:45Z"
+    "updated_at": "2025-06-25T04:48:27Z"
   },
   {
     "name": "Jan Hutchinson",
@@ -167,7 +167,7 @@
       {
         "data": "https://cityofmoxee.us/wp-content/uploads/2021/01/Moxee-City-Council-Jan-Hutchinson.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Jan Hutchinson's name and position.",
+        "llm_confidence_reason": "Image directly associated with Jan Hutchinson.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -175,7 +175,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed under City Council with Position #3, indicating council member role."
+        "llm_confidence_reason": "Listed as Position #3 on City Council, indicating Council Member."
       }
     ],
     "divisions": [
@@ -189,7 +189,7 @@
       {
         "data": "(509) 575-8851",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General city phone number listed; no personal phone found.",
+        "llm_confidence_reason": "General City Hall phone number used as no personal phone found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -197,8 +197,8 @@
     "websites": [
       {
         "data": "https://cityofmoxee.us/city-government",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "General city government page URL; no personal profile URL found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city government page URL; no personal website found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -211,7 +211,7 @@
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:39:45Z"
+    "updated_at": "2025-06-25T04:48:27Z"
   },
   {
     "name": "David Roy",
@@ -222,7 +222,7 @@
       {
         "data": "https://cityofmoxee.us/wp-content/uploads/2020/01/CityCouncil-DavidRoy.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with David Roy's name and position.",
+        "llm_confidence_reason": "Image directly associated with David Roy.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -230,7 +230,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed under City Council with Position #4, indicating council member role."
+        "llm_confidence_reason": "Listed as Position #4 on City Council, indicating Council Member."
       }
     ],
     "divisions": [
@@ -244,7 +244,7 @@
       {
         "data": "(509) 575-8851",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General city phone number listed; no personal phone found.",
+        "llm_confidence_reason": "General City Hall phone number used as no personal phone found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -252,8 +252,8 @@
     "websites": [
       {
         "data": "https://cityofmoxee.us/city-government",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "General city government page URL; no personal profile URL found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city government page URL; no personal website found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -266,7 +266,7 @@
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:39:45Z"
+    "updated_at": "2025-06-25T04:48:27Z"
   },
   {
     "name": "Larry Frank",
@@ -277,7 +277,7 @@
       {
         "data": "https://cityofmoxee.us/wp-content/uploads/2019/10/City-Council-Larry-Frank.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Larry Frank's name and position.",
+        "llm_confidence_reason": "Image directly associated with Larry Frank.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -285,7 +285,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed under City Council with Position #5, indicating council member role."
+        "llm_confidence_reason": "Listed as Position #5 on City Council, indicating Council Member."
       }
     ],
     "divisions": [
@@ -299,7 +299,7 @@
       {
         "data": "(509) 575-8851",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General city phone number listed; no personal phone found.",
+        "llm_confidence_reason": "General City Hall phone number used as no personal phone found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -307,8 +307,8 @@
     "websites": [
       {
         "data": "https://cityofmoxee.us/city-government",
-        "llm_confidence": 0.6,
-        "llm_confidence_reason": "General city government page URL; no personal profile URL found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city government page URL; no personal website found.",
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
@@ -321,6 +321,6 @@
         "source": "https://cityofmoxee.us/city-government"
       }
     ],
-    "updated_at": "2025-06-25T04:39:45Z"
+    "updated_at": "2025-06-25T04:48:27Z"
   }
 ]
