@@ -9,14 +9,14 @@
     "images": [
       {
         "data": "https://cmsv2-assets.apptegy.net/uploads/23464/file/4240923/3247dda9-412d-4728-a246-3d10e269a15f.jpeg",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is directly next to the name and title 'Mayor Mike Reuter'.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name 'Mayor Mike Reuter'.",
         "source": "https://www.cityofkalama.com/o/city-of-kalama/page/city-council"
       },
       {
         "data": "https://core-docs.s3.amazonaws.com/city_of_kalama_ar/profile/avatar/295742/circled_3ae949b4-d640-40fb-9482-82a9a728e9c5.png",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "Image appears near mentions of Mayor Reuter and City Council meetings; likely a council or mayoral portrait.",
+        "llm_confidence_reason": "Single prominent image near mentions of Mayor Reuter likely represents him.",
         "source": "https://www.cityofkalama.com/live-feed?page_no=2"
       },
       {
@@ -29,18 +29,18 @@
     "roles": [
       {
         "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly labeled as Mayor in the content."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly labeled as Mayor Mike Reuter in the content."
       },
       {
         "data": "Mayor",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Multiple references to 'Mayor Reuter' facilitating council meetings and public hearings indicate he is the Mayor."
+        "llm_confidence_reason": "Text explicitly refers to 'Mayor Reuter' facilitating council meetings and public hearings, indicating he is the Mayor."
       },
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as Mayor under Elected Officials."
+        "llm_confidence_reason": "Listed explicitly as 'Mayor' under Elected Officials."
       }
     ],
     "divisions": [],
@@ -56,7 +56,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T21:23:51Z"
+    "updated_at": "2025-06-25T21:45:14Z"
   },
   {
     "name": "Jon Stanfill",
@@ -67,8 +67,8 @@
     "images": [
       {
         "data": "https://cmsv2-assets.apptegy.net/uploads/23464/file/4493499/0d821f31-76eb-4347-bb4e-cddbba119876.png",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is directly next to the name and position.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name 'Council Position #1, Jon Stanfill'.",
         "source": "https://www.cityofkalama.com/o/city-of-kalama/page/city-council"
       },
       {
@@ -82,7 +82,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as 'Council Position #1' indicating a City Council member role."
+        "llm_confidence_reason": "Listed as Council Position #1, indicating a city council member role."
       },
       {
         "data": "Council Member",
@@ -93,8 +93,8 @@
     "divisions": [
       {
         "data": "Position 1",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Position #1'."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Position number is explicitly given as #1."
       },
       {
         "data": "Position 1",
@@ -114,7 +114,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T21:23:51Z"
+    "updated_at": "2025-06-25T21:45:14Z"
   },
   {
     "name": "Scott Moon",
@@ -125,8 +125,8 @@
     "images": [
       {
         "data": "https://cmsv2-assets.apptegy.net/uploads/23464/file/4240950/5d8ea85f-6f5c-4191-a958-a8c2a628a430.jpeg",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is directly next to the name and position.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name 'Council Position #2, Scott Moon'.",
         "source": "https://www.cityofkalama.com/o/city-of-kalama/page/city-council"
       },
       {
@@ -140,7 +140,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as 'Council Position #2' indicating a City Council member role."
+        "llm_confidence_reason": "Listed as Council Position #2, indicating a city council member role."
       },
       {
         "data": "Council Member",
@@ -151,8 +151,8 @@
     "divisions": [
       {
         "data": "Position 2",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Position #2'."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Position number is explicitly given as #2."
       },
       {
         "data": "Position 2",
@@ -172,18 +172,18 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T21:23:51Z"
+    "updated_at": "2025-06-25T21:45:14Z"
   },
   {
-    "name": "Wendy Christianson",
+    "name": "Wendy Conradi Christianson",
     "sources": [
       "https://www.cityofkalama.com/o/city-of-kalama/page/city-council"
     ],
     "images": [
       {
         "data": "https://cmsv2-assets.apptegy.net/uploads/23464/file/4240918/ef2a8a84-2a6d-42be-8c64-5f7eae13a7f2.jpeg",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is directly next to the name and position.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name 'Council Position #3, Wendy (Conradi) Christianson'.",
         "source": "https://www.cityofkalama.com/o/city-of-kalama/page/city-council"
       }
     ],
@@ -191,14 +191,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as 'Council Position #3' indicating a City Council member role."
+        "llm_confidence_reason": "Listed as Council Position #3, indicating a city council member role."
       }
     ],
     "divisions": [
       {
         "data": "Position 3",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Position #3'."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Position number is explicitly given as #3."
       }
     ],
     "phone_numbers": [],
@@ -206,7 +206,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T21:23:51Z"
+    "updated_at": "2025-06-25T21:45:14Z"
   },
   {
     "name": "Steve Kallio",
@@ -217,8 +217,8 @@
     "images": [
       {
         "data": "https://cmsv2-assets.apptegy.net/uploads/23464/file/4493498/3d68455f-b82b-463b-a919-eea64cf0dc05.png",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is directly next to the name and position.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name 'Council Position #4, Steve Kallio'.",
         "source": "https://www.cityofkalama.com/o/city-of-kalama/page/city-council"
       },
       {
@@ -232,7 +232,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as 'Council Position #4' indicating a City Council member role."
+        "llm_confidence_reason": "Listed as Council Position #4, indicating a city council member role."
       },
       {
         "data": "Council Member",
@@ -243,8 +243,8 @@
     "divisions": [
       {
         "data": "Position 4",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Position #4'."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Position number is explicitly given as #4."
       },
       {
         "data": "Position 4",
@@ -264,7 +264,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T21:23:51Z"
+    "updated_at": "2025-06-25T21:45:14Z"
   },
   {
     "name": "Deb Geiger",
@@ -275,8 +275,8 @@
     "images": [
       {
         "data": "https://cmsv2-assets.apptegy.net/uploads/23464/file/4240921/5d8c1263-7205-47f7-8fb5-ec67a0dcc68f.jpeg",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is directly next to the name and position.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name 'Council Position #5, Deb Geiger'.",
         "source": "https://www.cityofkalama.com/o/city-of-kalama/page/city-council"
       },
       {
@@ -290,7 +290,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as 'Council Position #5' indicating a City Council member role."
+        "llm_confidence_reason": "Listed as Council Position #5, indicating a city council member role."
       },
       {
         "data": "Council Member",
@@ -301,8 +301,8 @@
     "divisions": [
       {
         "data": "Position 5",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Position #5'."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Position number is explicitly given as #5."
       },
       {
         "data": "Position 5",
@@ -322,7 +322,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T21:23:51Z"
+    "updated_at": "2025-06-25T21:45:14Z"
   },
   {
     "name": "Wendy Christianson (Conradi)",
@@ -363,6 +363,6 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-25T21:23:51Z"
+    "updated_at": "2025-06-25T21:45:14Z"
   }
 ]

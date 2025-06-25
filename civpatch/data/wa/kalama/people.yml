@@ -14,22 +14,7 @@
   - https://www.cityofkalama.com/o/city-of-kalama/page/city-council
   - https://www.cityofkalama.com/live-feed?page_no=2
   - https://www.cityofkalama.com/staff
-  updated_at: '2025-06-25T21:24:17Z'
-- name: Wendy Conradi
-  roles:
-  - Council Member
-  divisions: []
-  image:
-  cdn_image:
-  email: wconradi03@kalama.com
-  phone_number:
-  website:
-  start_date:
-  end_date:
-  sources:
-  - https://www.cityofkalama.com/o/city-of-kalama/page/city-council
-  - https://www.cityofkalama.com/staff
-  updated_at: '2025-06-25T21:24:17Z'
+  updated_at: '2025-06-25T21:45:44Z'
 - name: Jon Stanfill
   roles:
   - Council Member
@@ -45,7 +30,7 @@
   sources:
   - https://www.cityofkalama.com/o/city-of-kalama/page/city-council
   - https://www.cityofkalama.com/staff
-  updated_at: '2025-06-25T21:24:17Z'
+  updated_at: '2025-06-25T21:45:44Z'
 - name: Scott Moon
   roles:
   - Council Member
@@ -61,7 +46,23 @@
   sources:
   - https://www.cityofkalama.com/o/city-of-kalama/page/city-council
   - https://www.cityofkalama.com/staff
-  updated_at: '2025-06-25T21:24:17Z'
+  updated_at: '2025-06-25T21:45:44Z'
+- name: Wendy Christianson
+  roles:
+  - Council Member
+  divisions:
+  - Position 3
+  image: https://cmsv2-assets.apptegy.net/uploads/23464/file/4240918/ef2a8a84-2a6d-42be-8c64-5f7eae13a7f2.jpeg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/kalama/images/cc13f476ce8e4a0a317ff873e2f2544b98aa2bc603646f66a7d61319c850c276.jpg
+  email: wconradi03@kalama.com
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.cityofkalama.com/o/city-of-kalama/page/city-council
+  - https://www.cityofkalama.com/staff
+  updated_at: '2025-06-25T21:45:44Z'
 - name: Steve Kallio
   roles:
   - Council Member
@@ -77,7 +78,7 @@
   sources:
   - https://www.cityofkalama.com/o/city-of-kalama/page/city-council
   - https://www.cityofkalama.com/staff
-  updated_at: '2025-06-25T21:24:17Z'
+  updated_at: '2025-06-25T21:45:44Z'
 - name: Deb Geiger
   roles:
   - Council Member
@@ -93,4 +94,4 @@
   sources:
   - https://www.cityofkalama.com/o/city-of-kalama/page/city-council
   - https://www.cityofkalama.com/staff
-  updated_at: '2025-06-25T21:24:17Z'
+  updated_at: '2025-06-25T21:45:44Z'
