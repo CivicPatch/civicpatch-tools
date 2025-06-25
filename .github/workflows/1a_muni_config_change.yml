@@ -124,7 +124,7 @@ jobs:
           CLOUDFLARE_R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
           CLOUDFLARE_R2_SECRET_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_KEY }}
         run: |
-          ./civpatch_cli/bin/cli scrape -run 
+          ./civpatch_cli/bin/cli scrape -run \
             -state ${{ env.STATE }} \
             -geoid ${{ env.GEOID }} \
             -github-env env-${{ github.actor }} \
