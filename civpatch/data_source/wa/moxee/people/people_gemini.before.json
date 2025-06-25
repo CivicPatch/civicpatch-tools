@@ -1,0 +1,121 @@
+[
+  {
+    "name": "LeRoy Lenseigne",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      "at-large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2027",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  },
+  {
+    "name": "Greg Spurgin",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Position #2",
+      "at-large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2025",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  },
+  {
+    "name": "Rob Layman",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Position #1",
+      "at-large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2025",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  },
+  {
+    "name": "Jan Hutchinson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Position #3",
+      "at-large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2027",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  },
+  {
+    "name": "David Roy",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Position #4",
+      "at-large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2027",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  },
+  {
+    "name": "Larry Frank",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Position #5",
+      "at-large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2027",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  }
+]

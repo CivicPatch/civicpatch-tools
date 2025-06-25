@@ -1,0 +1,231 @@
+[
+  {
+    "name": "LeRoy Lenseigne",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states '5 elected at large City Council Members' and LeRoy Lenseigne is the Mayor of this council, implying an at-large position."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term ends 2027'.",
+        "source": "https://cityofmoxee.us/city-government"
+      }
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  },
+  {
+    "name": "Greg Spurgin",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council' with a 'Position #'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #2'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states '5 elected at large City Council Members', and Greg Spurgin is one of them."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term ends 2025'.",
+        "source": "https://cityofmoxee.us/city-government"
+      }
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  },
+  {
+    "name": "Rob Layman",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council' with a 'Position #'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #1'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states '5 elected at large City Council Members', and Rob Layman is one of them."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term ends 2025'.",
+        "source": "https://cityofmoxee.us/city-government"
+      }
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  },
+  {
+    "name": "Jan Hutchinson",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council' with a 'Position #'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #3'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states '5 elected at large City Council Members', and Jan Hutchinson is one of them."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term ends 2027'.",
+        "source": "https://cityofmoxee.us/city-government"
+      }
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  },
+  {
+    "name": "David Roy",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council' with a 'Position #'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #4'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states '5 elected at large City Council Members', and David Roy is one of them."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term ends 2027'.",
+        "source": "https://cityofmoxee.us/city-government"
+      }
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  },
+  {
+    "name": "Larry Frank",
+    "sources": [
+      "https://cityofmoxee.us/city-government"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council' with a 'Position #'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position #5'."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states '5 elected at large City Council Members', and Larry Frank is one of them."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term ends 2027'.",
+        "source": "https://cityofmoxee.us/city-government"
+      }
+    ],
+    "updated_at": "2025-06-25T04:43:19Z"
+  }
+]
