@@ -2,7 +2,7 @@ top of page
 
 Skip to Main Content
 
-![](https://static.wixstatic.com/media/ef3eacff722648c79da25c362882a4bb.jpg/v1/fill/w_1265,h_2372,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ef3eacff722648c79da25c362882a4bb.jpg)
+![](https://static.wixstatic.com/media/ef3eacff722648c79da25c362882a4bb.jpg/v1/fill/w_1280,h_2372,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/ef3eacff722648c79da25c362882a4bb.jpg)
 
 ![Background 3-Brown.png](https://static.wixstatic.com/media/38ff98_16959b36987345bdaf76e7d41b73061a~mv2.png/v1/fill/w_155,h_193,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Background%203-Brown.png)
 
