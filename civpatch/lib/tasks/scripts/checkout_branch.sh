@@ -7,24 +7,22 @@ fi
 
 REPO_URL="https://github.com/CivicPatch/civicpatch-tools.git"
 
+echo "Before cloning:"
+rm -rf /app/*
+
 cd /app
-mkdir -p ./tmp/civicpatch-tools
-# Clone main branch first
-git clone -b main $REPO_URL ./tmp/civicpatch-tools
-# Try to fetch the target branch
-git -C ./tmp/civicpatch-tools fetch origin $BRANCH_NAME || true
-# Create and checkout the branch (will create if doesn't exist)
-git -C ./tmp/civicpatch-tools checkout -B $BRANCH_NAME
-# Pull latest changes from the branch if it exists
-git -C ./tmp/civicpatch-tools pull origin $BRANCH_NAME || true
 
-# Copy everything except the lock files
-cp -r ./tmp/civicpatch-tools/. /app
+# Clone the repository into the current directory
+git clone -b $BRANCH_NAME $REPO_URL . || {
+  echo "Failed to clone branch $BRANCH_NAME. Falling back to main branch."
+  git clone -b main $REPO_URL .
+}
 
-rm -rf ./tmp
-cd /app/civpatch
+# Checkout the target branch (create it if it doesn't exist locally)
+git checkout -B $BRANCH_NAME origin/$BRANCH_NAME || git checkout -B $BRANCH_NAME
 
-# Create and checkout the branch in the main repo
-git checkout -B $BRANCH_NAME
-# Pull latest changes in the main repo
-git pull origin $BRANCH_NAME || true
+# Restore node_modules from /tmp/node_modules
+mv /tmp/node_modules /app/civpatch/node_modules || {
+  echo "Failed to restore node_modules from /tmp/node_modules"
+  exit 1
+}

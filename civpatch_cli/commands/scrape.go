@@ -102,7 +102,7 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 	}
 
 	cmd := []string{
-		"./lib/tasks/scripts/checkout_branch.sh",
+		"/scripts/checkout_branch.sh",
 		"&&",
 		fmt.Sprintf("xvfb-run rake 'pipeline:scrape[%s,%s,%t]'", state, geoid, createPr),
 	}
@@ -113,8 +113,9 @@ func ScrapeRun(ctx context.Context, state string, geoid string, createPr bool, d
 
 	fmt.Printf("Starting scrape job. This might take a while...")
 	if createPr {
-		cmd = append(cmd, "&&", fmt.Sprintf("./lib/tasks/scripts/create_pull_request.sh %s %s", state, geoid))
+		cmd = append(cmd, "&&", fmt.Sprintf("/scripts/create_pull_request.sh %s %s", state, geoid))
 	} else {
+		cmd = append(cmd, "&&", fmt.Sprintf("/scripts/update_branch.sh %s %s", state, geoid))
 		fmt.Printf("Check out the logs for the container in Docker Desktop (if available).\n")
 		output = docker.TaskOptionsOutput{
 			StreamOutput:    false,

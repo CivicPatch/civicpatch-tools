@@ -38,6 +38,12 @@ COMMIT_MESSAGE="Municipality officials scrape for state: $STATE geoid: $GEOID"
 
 echo "Committing changes (if any) to branch ($CURRENT_BRANCH): ${FOLDERS_TO_COPY[@]}"
 
+echo "in remote, not local:"
+git log --oneline $CURRENT_BRANCH..origin/$CURRENT_BRANCH
+
+echo "in local, not remote:"
+git log --oneline origin/$CURRENT_BRANCH..$CURRENT_BRANCH
+
 REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/CivicPatch/civicpatch-tools.git"
 git remote set-url origin $REPO_URL
 

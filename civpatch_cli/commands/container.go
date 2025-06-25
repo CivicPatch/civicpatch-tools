@@ -76,7 +76,7 @@ func RunTask(ctx context.Context,
 	}
 
 	commands := []string{
-		"./lib/tasks/scripts/checkout_branch.sh",
+		"/scripts/checkout_branch.sh",
 		"&&",
 		command,
 	}
