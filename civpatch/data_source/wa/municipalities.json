@@ -4425,10 +4425,12 @@
       "type": "Town",
       "population": 895,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "b6e65efc7fceace1711c416863a4140c",
+      "meta_updated_at": "2025-06-26T23:54:48Z",
+      "meta_hash": "0d587bccc5de6d4256df31c536558a32",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ]
     },
     {
