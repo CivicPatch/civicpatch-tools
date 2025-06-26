@@ -3742,14 +3742,14 @@
       "counties": [
         "Skamania"
       ],
-      "website": "http://www.cityofstevenson.com",
+      "website": "https://www.ci.stevenson.wa.us/",
       "fips": "53-67875",
       "gnis": "2411980",
       "type": "city",
       "population": 1491,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-25T23:11:07Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-06-26T17:31:40Z",
+      "meta_hash": "b0fe0f7aaa3be2aba844c9f72740aadc",
       "meta_sources": [
         "state_source",
         "gemini",
