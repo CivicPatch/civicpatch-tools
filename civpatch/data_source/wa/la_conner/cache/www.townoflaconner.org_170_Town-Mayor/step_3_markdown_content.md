@@ -1,3 +1,5 @@
+This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
+
 [Skip To Main Content](https://www.townoflaconner.org/170/Town-Mayor/)
 
 Loading
@@ -15,7 +17,7 @@ Search
 
 ![Home Page](https://www.townoflaconner.org/ImageRepository/Document?documentID=1146)
 
-![](https://www.townoflaconner.org/ImageRepository/Document?documentID=1143)
+![](https://www.townoflaconner.org/ImageRepository/Document?documentID=1144)
 
 1. [Home](https://www.townoflaconner.org)
 2. [Town Government](https://www.townoflaconner.org/27/Town-Government)
@@ -140,3 +142,5 @@ Excel Download
 PowerPoint Download
 
 Document Download
+
+Explore your accessibility options

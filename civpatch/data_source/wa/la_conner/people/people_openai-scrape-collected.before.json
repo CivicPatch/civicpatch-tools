@@ -1,54 +1,5 @@
 [
   {
-    "name": "Marna Hanneman",
-    "sources": [
-      "https://www.townoflaconner.org/170/Town-Mayor"
-    ],
-    "images": [
-      {
-        "data": "https://www.townoflaconner.org/ImageRepository/Document?documentID=1743",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Image near the name Marna Hanneman with alt text 'Mayor Marna Hanneman'.",
-        "source": "https://www.townoflaconner.org/170/Town-Mayor"
-      }
-    ],
-    "roles": [
-      {
-        "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Town Mayor' and described as Mayor in the text."
-      }
-    ],
-    "divisions": [],
-    "phone_numbers": [
-      {
-        "data": "360-466-3125",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number listed directly under Marna Hanneman's contact info.",
-        "source": "https://www.townoflaconner.org/170/Town-Mayor"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mayor@townoflaconner.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email link labeled 'Email Marna Hanneman' with mailto: mayor@townoflaconner.org.",
-        "source": "https://www.townoflaconner.org/170/Town-Mayor"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.townoflaconner.org/170/Town-Mayor",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the official Town Mayor page for La Conner.",
-        "source": "https://www.townoflaconner.org/170/Town-Mayor"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-06-26T23:28:02Z"
-  },
-  {
     "name": "Annie Taylor",
     "sources": [
       "https://www.townoflaconner.org/Directory.aspx?did=5",
@@ -71,7 +22,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title given as 'Town Council, Position 1' which corresponds to a council member role."
+        "llm_confidence_reason": "Listed as 'Town Council, Position 1' which corresponds to a council member role."
       }
     ],
     "divisions": [
@@ -89,14 +40,14 @@
     "phone_numbers": [
       {
         "data": "360-466-3125",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed near the council member's name and role.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed near the name and role.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       },
       {
         "data": "360-466-3125",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number listed directly under Annie Taylor's contact info.",
+        "llm_confidence_reason": "Phone number is listed directly under the name and role.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=7"
       }
     ],
@@ -110,7 +61,7 @@
       {
         "data": "council_1@townoflaconner.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email link labeled 'Email Annie Taylor' with this address.",
+        "llm_confidence_reason": "Email is linked as 'Email Annie Taylor' and matches the council position.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=7"
       }
     ],
@@ -118,7 +69,7 @@
       {
         "data": "https://www.townoflaconner.org/directory.aspx?EID=7",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page URL linked to Annie Taylor's name.",
+        "llm_confidence_reason": "Profile page URL linked to the name.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       }
     ],
@@ -133,11 +84,11 @@
       {
         "data": "2023-12",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration explicitly stated as 'expires December 2023'.",
+        "llm_confidence_reason": "Term expiration date explicitly stated as December 2023.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=7"
       }
     ],
-    "updated_at": "2025-06-26T23:28:02Z"
+    "updated_at": "2025-06-26T23:51:35Z"
   },
   {
     "name": "MaryLee Chamberlain",
@@ -149,7 +100,7 @@
       {
         "data": "https://www.townoflaconner.org/ImageRepository/Document?documentID=1554",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Image is a portrait near the name MaryLee Chamberlain.",
+        "llm_confidence_reason": "Image URL is a portrait near the name MaryLee Chamberlain.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=8"
       }
     ],
@@ -162,7 +113,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title given as 'Town Council, Position 4' which matches a council member role."
+        "llm_confidence_reason": "Title given as 'Town Council, Position 4' which matches 'Council Member' role in target roles."
       }
     ],
     "divisions": [
@@ -174,14 +125,14 @@
       {
         "data": "Position 4",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Position 4 explicitly stated in the title."
+        "llm_confidence_reason": "Position 4 explicitly stated in title."
       }
     ],
     "phone_numbers": [
       {
         "data": "360-466-3125",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed near the council member's name and role.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed near the name and role.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       },
       {
@@ -201,7 +152,7 @@
       {
         "data": "council_4@townoflaconner.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email link text is 'Email MaryLee Chamberlain' with this address.",
+        "llm_confidence_reason": "Email link text explicitly shows this email for MaryLee Chamberlain.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=8"
       }
     ],
@@ -209,7 +160,7 @@
       {
         "data": "https://www.townoflaconner.org/directory.aspx?EID=8",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page URL linked to MaryLee Chamberlain's name.",
+        "llm_confidence_reason": "Profile page URL linked to the name.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       }
     ],
@@ -228,7 +179,7 @@
         "source": "https://www.townoflaconner.org/directory.aspx?EID=8"
       }
     ],
-    "updated_at": "2025-06-26T23:28:02Z"
+    "updated_at": "2025-06-26T23:51:35Z"
   },
   {
     "name": "Ivan Carlson",
@@ -240,7 +191,7 @@
       {
         "data": "https://www.townoflaconner.org/ImageRepository/Document?documentID=582",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Image is directly next to the name Ivan Carlson and appears to be a portrait.",
+        "llm_confidence_reason": "Image near the name Ivan Carlson identified as headshot.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=9"
       }
     ],
@@ -253,7 +204,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text states 'Town Council, Position 2' which corresponds to a council member role."
+        "llm_confidence_reason": "Title given as 'Town Council, Position 2' matches the target role 'council member' with position specified."
       }
     ],
     "divisions": [
@@ -265,20 +216,20 @@
       {
         "data": "Position 2",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Position 2 is explicitly mentioned as the division."
+        "llm_confidence_reason": "Position 2 explicitly mentioned as division."
       }
     ],
     "phone_numbers": [
       {
         "data": "360-466-3125",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed near the council member's name and role.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed near the name and role.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       },
       {
         "data": "360-466-3125",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is listed directly under Ivan Carlson's contact info.",
+        "llm_confidence_reason": "Phone number listed directly under Ivan Carlson's contact info.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=9"
       }
     ],
@@ -292,7 +243,7 @@
       {
         "data": "council_2@townoflaconner.org",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email is linked with the text 'Email Ivan Carlson' and matches the council position.",
+        "llm_confidence_reason": "Email link text explicitly shows this email for Ivan Carlson.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=9"
       }
     ],
@@ -300,7 +251,7 @@
       {
         "data": "https://www.townoflaconner.org/directory.aspx?EID=9",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page URL linked to Ivan Carlson's name.",
+        "llm_confidence_reason": "Profile page URL linked to the name.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       }
     ],
@@ -315,11 +266,11 @@
       {
         "data": "2025-12",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term expiration is explicitly stated as December 2025.",
+        "llm_confidence_reason": "Term expiration date given as December 2025.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=9"
       }
     ],
-    "updated_at": "2025-06-26T23:28:02Z"
+    "updated_at": "2025-06-26T23:51:35Z"
   },
   {
     "name": "Rick Dole",
@@ -330,8 +281,8 @@
     "images": [
       {
         "data": "https://www.townoflaconner.org/ImageRepository/Document?documentID=78",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Image is directly above the name Rick Dole and labeled as such.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is directly next to the name Rick Dole and labeled as such.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=10"
       }
     ],
@@ -344,7 +295,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text states 'Town Council, Position 3' which corresponds to a council member role."
+        "llm_confidence_reason": "Title given as 'Town Council, Position 3' which corresponds to a council member role."
       }
     ],
     "divisions": [
@@ -355,21 +306,21 @@
       },
       {
         "data": "Position 3",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Position 3 is explicitly mentioned as the division."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position 3' in the council title."
       }
     ],
     "phone_numbers": [
       {
         "data": "360-466-3125",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed near the council member's name and role.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed near the name and role.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       },
       {
         "data": "360-466-3125",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is listed directly under the role information.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under Rick Dole's contact info.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=10"
       }
     ],
@@ -382,8 +333,8 @@
       },
       {
         "data": "council_3@townoflaconner.org",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email is linked with the text 'Email Rick Dole' and matches the council position.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email link text explicitly shows this email for Rick Dole.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=10"
       }
     ],
@@ -391,7 +342,7 @@
       {
         "data": "https://www.townoflaconner.org/directory.aspx?EID=10",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page URL linked to Rick Dole's name.",
+        "llm_confidence_reason": "Profile page URL linked to the name.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       }
     ],
@@ -405,12 +356,12 @@
       },
       {
         "data": "2025-12",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expiration is given as December 2025.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated as December 2025.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=10"
       }
     ],
-    "updated_at": "2025-06-26T23:28:02Z"
+    "updated_at": "2025-06-26T23:51:35Z"
   },
   {
     "name": "Mary Wohleb",
@@ -422,7 +373,7 @@
       {
         "data": "https://www.townoflaconner.org/ImageRepository/Document?documentID=79",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image directly associated with Mary Wohleb's name and title.",
+        "llm_confidence_reason": "Image is directly next to the name Mary Wohleb and labeled accordingly.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=6"
       }
     ],
@@ -435,7 +386,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title given as 'Town Council, Position 5' indicates a council member role."
+        "llm_confidence_reason": "Title states 'Town Council, Position 5' which corresponds to a council member role."
       }
     ],
     "divisions": [
@@ -453,8 +404,8 @@
     "phone_numbers": [
       {
         "data": "360-466-3125",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed near the council member's name and role.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed near the name and role.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       },
       {
@@ -482,7 +433,7 @@
       {
         "data": "https://www.townoflaconner.org/directory.aspx?EID=6",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page URL linked to Mary Wohleb's name.",
+        "llm_confidence_reason": "Profile page URL linked to the name.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       }
     ],
@@ -501,6 +452,6 @@
         "source": "https://www.townoflaconner.org/directory.aspx?EID=6"
       }
     ],
-    "updated_at": "2025-06-26T23:28:02Z"
+    "updated_at": "2025-06-26T23:51:35Z"
   }
 ]

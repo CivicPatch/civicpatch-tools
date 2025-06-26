@@ -3,16 +3,16 @@
   roles:
   - Mayor
   divisions:
-  image: https://www.townoflaconner.org/ImageRepository/Document?documentID=1743
-  cdn_image: https://cdn.civicpatch.org/open-data/wa/la_conner/images/94e0435b0b827f443e6ce58f46a13e24723cbffe12fa2704c25df5a1d707ed73.jpg
+  image:
+  cdn_image:
   email: mayor@townoflaconner.org
   phone_number: "(360) 466-3125"
-  website: https://www.townoflaconner.org/170/Town-Mayor
+  website:
   start_date:
   end_date:
   sources:
   - https://www.townoflaconner.org/170/Town-Mayor
-  updated_at: '2025-06-26T23:31:31Z'
+  updated_at: '2025-06-26T23:52:10Z'
 - name: Annie Taylor
   roles:
   - Council Member
@@ -27,7 +27,7 @@
   sources:
   - https://www.townoflaconner.org/Directory.aspx?did=5
   - https://www.townoflaconner.org/directory.aspx?EID=7
-  updated_at: '2025-06-26T23:31:31Z'
+  updated_at: '2025-06-26T23:52:10Z'
 - name: Mary Wohleb
   roles:
   - Council Member
@@ -42,7 +42,7 @@
   sources:
   - https://www.townoflaconner.org/Directory.aspx?did=5
   - https://www.townoflaconner.org/directory.aspx?EID=6
-  updated_at: '2025-06-26T23:31:31Z'
+  updated_at: '2025-06-26T23:52:10Z'
 - name: Ivan Carlson
   roles:
   - Council Member
@@ -58,7 +58,7 @@
   sources:
   - https://www.townoflaconner.org/Directory.aspx?did=5
   - https://www.townoflaconner.org/directory.aspx?EID=9
-  updated_at: '2025-06-26T23:31:31Z'
+  updated_at: '2025-06-26T23:52:10Z'
 - name: Rick Dole
   roles:
   - Council Member
@@ -69,12 +69,12 @@
   email: council_3@townoflaconner.org
   phone_number: "(360) 466-3125"
   website: https://www.townoflaconner.org/directory.aspx?EID=10
-  start_date: 2025-12
+  start_date:
   end_date: 2025-12
   sources:
   - https://www.townoflaconner.org/Directory.aspx?did=5
   - https://www.townoflaconner.org/directory.aspx?EID=10
-  updated_at: '2025-06-26T23:31:31Z'
+  updated_at: '2025-06-26T23:52:10Z'
 - name: MaryLee Chamberlain
   roles:
   - Council Member
@@ -90,4 +90,4 @@
   sources:
   - https://www.townoflaconner.org/Directory.aspx?did=5
   - https://www.townoflaconner.org/directory.aspx?EID=8
-  updated_at: '2025-06-26T23:31:31Z'
+  updated_at: '2025-06-26T23:52:10Z'

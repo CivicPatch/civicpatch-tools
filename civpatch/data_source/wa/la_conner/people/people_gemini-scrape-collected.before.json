@@ -1,40 +1,5 @@
 [
   {
-    "name": "Marna Hanneman",
-    "sources": [
-      "https://www.townoflaconner.org/170/Town-Mayor"
-    ],
-    "images": [],
-    "roles": [
-      {
-        "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Town Mayor' is explicitly stated next to the person's name and is a target role."
-      }
-    ],
-    "divisions": [],
-    "phone_numbers": [
-      {
-        "data": "360-466-3125",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person's contact information section.",
-        "source": "https://www.townoflaconner.org/170/Town-Mayor"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mayor@townoflaconner.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person's contact information section.",
-        "source": "https://www.townoflaconner.org/170/Town-Mayor"
-      }
-    ],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-06-26T23:31:28Z"
-  },
-  {
     "name": "MaryLee Chamberlain",
     "sources": [
       "https://www.townoflaconner.org/Directory.aspx?did=5",
@@ -43,14 +8,14 @@
     "images": [],
     "roles": [
       {
-        "data": "Town Council",
+        "data": "council member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated in the text."
+        "llm_confidence_reason": "Role 'Town Council' is explicitly stated and is a target role."
       },
       {
-        "data": "council member",
+        "data": "Town Council",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text as 'Town Council'."
+        "llm_confidence_reason": "Explicitly stated as 'Town Council'."
       }
     ],
     "divisions": [
@@ -62,20 +27,20 @@
       {
         "data": "Position 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text as 'Position 4'."
+        "llm_confidence_reason": "Explicitly stated as 'Position 4' for Town Council."
       }
     ],
     "phone_numbers": [
       {
         "data": "360-466-3125",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the person's entry.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed next to the person, but it is a general Town Hall number, not a direct personal line.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       },
       {
         "data": "360-466-3125",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text as 'Phone: 360-466-3125'.",
+        "llm_confidence_reason": "Phone number is explicitly provided next to the person's name.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=8"
       }
     ],
@@ -89,7 +54,7 @@
       {
         "data": "council_4@townoflaconner.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text as 'Email MaryLee Chamberlain' with the email address provided as a mailto link and text.",
+        "llm_confidence_reason": "Email address is explicitly provided and linked to the person.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=8"
       }
     ],
@@ -99,17 +64,17 @@
       {
         "data": "2025-12",
         "llm_confidence": 1,
-        "llm_confidence_reason": "End date is explicitly stated as 'expires December 2025'.",
+        "llm_confidence_reason": "End date is explicitly stated in the text.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       },
       {
         "data": "2025-12",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text as 'expires December 2025'.",
+        "llm_confidence_reason": "Explicitly stated 'expires December 2025'.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=8"
       }
     ],
-    "updated_at": "2025-06-26T23:31:28Z"
+    "updated_at": "2025-06-26T23:52:08Z"
   },
   {
     "name": "Ivan Carlson",
@@ -120,9 +85,9 @@
     "images": [],
     "roles": [
       {
-        "data": "Town Council",
+        "data": "council member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated in the text."
+        "llm_confidence_reason": "Role 'Town Council' is explicitly stated and is a target role."
       },
       {
         "data": "Town Council",
@@ -145,8 +110,8 @@
     "phone_numbers": [
       {
         "data": "360-466-3125",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the person's entry.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed next to the person, but it is a general Town Hall number, not a direct personal line.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       },
       {
@@ -176,7 +141,7 @@
       {
         "data": "2025-12",
         "llm_confidence": 1,
-        "llm_confidence_reason": "End date is explicitly stated as 'expires December 2025'.",
+        "llm_confidence_reason": "End date is explicitly stated in the text.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       },
       {
@@ -186,7 +151,7 @@
         "source": "https://www.townoflaconner.org/directory.aspx?EID=9"
       }
     ],
-    "updated_at": "2025-06-26T23:31:28Z"
+    "updated_at": "2025-06-26T23:52:08Z"
   },
   {
     "name": "Rick Dole",
@@ -197,14 +162,14 @@
     "images": [],
     "roles": [
       {
-        "data": "Town Council",
+        "data": "council member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated in the text."
+        "llm_confidence_reason": "Role 'Town Council' is explicitly stated and is a target role."
       },
       {
-        "data": "Town Council",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated as 'Town Council' and associated with a position number."
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Town Council'."
       }
     ],
     "divisions": [
@@ -212,19 +177,24 @@
         "data": "Position 3",
         "llm_confidence": 1,
         "llm_confidence_reason": "Division is explicitly stated in the text."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position 3' for Town Council."
       }
     ],
     "phone_numbers": [
       {
         "data": "360-466-3125",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the person's entry.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed next to the person, but it is a general Town Hall number, not a direct personal line.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
       },
       {
         "data": "360-466-3125",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is clearly associated with Rick Dole and the Town of La Conner.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and linked to Rick Dole's profile section.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=10"
       }
     ],
@@ -234,25 +204,65 @@
         "llm_confidence": 1,
         "llm_confidence_reason": "Email address is explicitly provided in the text.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
-      }
-    ],
-    "websites": [],
-    "start_dates": [
+      },
       {
-        "data": "2025-12",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "The text states 'expires December 2025', implying the term started before or in 2025, but an explicit start date is not provided.",
+        "data": "council_3@townoflaconner.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked to Rick Dole's profile section.",
         "source": "https://www.townoflaconner.org/directory.aspx?EID=10"
       }
     ],
+    "websites": [],
+    "start_dates": [],
     "end_dates": [
       {
         "data": "2025-12",
         "llm_confidence": 1,
-        "llm_confidence_reason": "End date is explicitly stated as 'expires December 2025'.",
+        "llm_confidence_reason": "End date is explicitly stated in the text.",
         "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
+      },
+      {
+        "data": "2025-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'expires December 2025'.",
+        "source": "https://www.townoflaconner.org/directory.aspx?EID=10"
       }
     ],
-    "updated_at": "2025-06-26T23:31:28Z"
+    "updated_at": "2025-06-26T23:52:08Z"
+  },
+  {
+    "name": "Marna Hanneman",
+    "sources": [
+      "https://www.townoflaconner.org/170/Town-Mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Town Mayor' directly under her name and in the text 'Marna Hanneman, Mayor'"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "360-466-3125",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed next to Marna Hanneman's name",
+        "source": "https://www.townoflaconner.org/170/Town-Mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayor@townoflaconner.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Marna Hanneman",
+        "source": "https://www.townoflaconner.org/170/Town-Mayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-26T23:52:08Z"
   }
 ]
