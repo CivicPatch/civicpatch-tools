@@ -4308,10 +4308,12 @@
       "type": "town",
       "population": 992,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "7d55c60724f8c438aa50010c8fa49150",
+      "meta_updated_at": "2025-06-26T23:24:11Z",
+      "meta_hash": "22d2c16830bf58243b6b6293b1c42743",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "5373080"
     },
