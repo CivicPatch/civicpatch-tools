@@ -4258,14 +4258,14 @@
       "counties": [
         "Whitman"
       ],
-      "website": "http://www.visitpalouse.com",
+      "website": "https://www.palousewa.gov",
       "fips": "53-52950",
       "gnis": "2411364",
       "type": "city",
       "population": 1015,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-26T23:21:23Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-06-26T23:28:12Z",
+      "meta_hash": "71dc6e02b0ad5f3800dd55c3d3c7c137",
       "meta_sources": [
         "state_source",
         "gemini",
