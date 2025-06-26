@@ -3812,10 +3812,12 @@
       "type": "city",
       "population": 1471,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-04-19",
-      "meta_hash": "f12bff7c48c611962dd181339e288746",
+      "meta_updated_at": "2025-06-26T22:09:25Z",
+      "meta_hash": "476dd28fba83e59945c9f84306f6a844",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "5349275"
     },
