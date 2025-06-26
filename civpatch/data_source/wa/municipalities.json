@@ -4112,14 +4112,14 @@
       "counties": [
         "King"
       ],
-      "website": "http://ci.yarrow-point.wa.us",
+      "website": "https://yarrowpointwa.gov",
       "fips": "53-80150",
       "gnis": "2413520",
       "type": "town",
       "population": 1134,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-26T22:59:14Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-06-26T23:14:51Z",
+      "meta_hash": "32d4adeb5cb93e516257cb2392e4814f",
       "meta_sources": [
         "state_source",
         "gemini",
