@@ -3922,14 +3922,14 @@
       "counties": [
         "Yakima"
       ],
-      "website": "http://cityoftieton.com",
+      "website": "https://www.cityoftieton.gov",
       "fips": "53-71400",
       "gnis": "2413390",
       "type": "city",
       "population": 1389,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-26T22:16:44Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-06-26T22:42:11Z",
+      "meta_hash": "d4be43633790221f7da02ad7a473a30b",
       "meta_sources": [
         "state_source",
         "gemini",
