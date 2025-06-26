@@ -1,25 +1,93 @@
 ---
 - name: Marna Hanneman
-  positions:
+  roles:
   - Mayor
+  divisions:
+  image: https://www.townoflaconner.org/ImageRepository/Document?documentID=1743
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/la_conner/images/94e0435b0b827f443e6ce58f46a13e24723cbffe12fa2704c25df5a1d707ed73.jpg
   email: mayor@townoflaconner.org
+  phone_number: "(360) 466-3125"
+  website: https://www.townoflaconner.org/170/Town-Mayor
+  start_date:
+  end_date:
+  sources:
+  - https://www.townoflaconner.org/170/Town-Mayor
+  updated_at: '2025-06-26T23:31:31Z'
 - name: Annie Taylor
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image: https://www.townoflaconner.org/ImageRepository/Document?documentID=897
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/la_conner/images/1aebc26290a70836b6646149145c18deaadabbba8bc18855e44f084dfc9478e7.jpg
   email: council_1@townoflaconner.org
-- name: Ivan Carlson
-  positions:
-  - Council Member
-  email: council_2@townoflaconner.org
+  phone_number: "(360) 466-3125"
+  website: https://www.townoflaconner.org/directory.aspx?EID=7
+  start_date:
+  end_date: 2023-12
+  sources:
+  - https://www.townoflaconner.org/Directory.aspx?did=5
+  - https://www.townoflaconner.org/directory.aspx?EID=7
+  updated_at: '2025-06-26T23:31:31Z'
 - name: Mary Wohleb
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image: https://www.townoflaconner.org/ImageRepository/Document?documentID=79
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/la_conner/images/853b2b6445ce4cae020113aa5266253f3eee4e5a1ecf839e0b0dc659ce2eeefe.jpg
   email: councilmember5@townoflaconner.org
-- name: MaryLee Chamberlain
-  positions:
+  phone_number: "(360) 466-3125"
+  website: https://www.townoflaconner.org/directory.aspx?EID=6
+  start_date:
+  end_date: 2023-12
+  sources:
+  - https://www.townoflaconner.org/Directory.aspx?did=5
+  - https://www.townoflaconner.org/directory.aspx?EID=6
+  updated_at: '2025-06-26T23:31:31Z'
+- name: Ivan Carlson
+  roles:
   - Council Member
-  email: council_4@townoflaconner.org
+  divisions:
+  - Position 2
+  image: https://www.townoflaconner.org/ImageRepository/Document?documentID=582
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/la_conner/images/b01f441e328a2be3e8b7bb7cc4386399685d763077e5acc019df33294787e6a8.jpg
+  email: council_2@townoflaconner.org
+  phone_number: "(360) 466-3125"
+  website: https://www.townoflaconner.org/directory.aspx?EID=9
+  start_date:
+  end_date: 2025-12
+  sources:
+  - https://www.townoflaconner.org/Directory.aspx?did=5
+  - https://www.townoflaconner.org/directory.aspx?EID=9
+  updated_at: '2025-06-26T23:31:31Z'
 - name: Rick Dole
-  positions:
+  roles:
   - Council Member
+  divisions:
+  - Position 3
+  image: https://www.townoflaconner.org/ImageRepository/Document?documentID=78
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/la_conner/images/8c395c6035b3b25d942f690dfe79233d8836ae315307ab71ba96281e2437f4f5.jpg
   email: council_3@townoflaconner.org
+  phone_number: "(360) 466-3125"
+  website: https://www.townoflaconner.org/directory.aspx?EID=10
+  start_date: 2025-12
+  end_date: 2025-12
+  sources:
+  - https://www.townoflaconner.org/Directory.aspx?did=5
+  - https://www.townoflaconner.org/directory.aspx?EID=10
+  updated_at: '2025-06-26T23:31:31Z'
+- name: MaryLee Chamberlain
+  roles:
+  - Council Member
+  divisions:
+  - Position 4
+  image: https://www.townoflaconner.org/ImageRepository/Document?documentID=1554
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/la_conner/images/65038d8e09cbba8bf016dfe91f7c1497eb23ca3353f25ffe3d65e098986ef1cc.jpg
+  email: council_4@townoflaconner.org
+  phone_number: "(360) 466-3125"
+  website: https://www.townoflaconner.org/directory.aspx?EID=8
+  start_date:
+  end_date: 2025-12
+  sources:
+  - https://www.townoflaconner.org/Directory.aspx?did=5
+  - https://www.townoflaconner.org/directory.aspx?EID=8
+  updated_at: '2025-06-26T23:31:31Z'

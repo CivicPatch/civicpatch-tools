@@ -1,0 +1,258 @@
+[
+  {
+    "name": "Marna Hanneman",
+    "sources": [
+      "https://www.townoflaconner.org/170/Town-Mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Town Mayor' is explicitly stated next to the person's name and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "360-466-3125",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person's contact information section.",
+        "source": "https://www.townoflaconner.org/170/Town-Mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayor@townoflaconner.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person's contact information section.",
+        "source": "https://www.townoflaconner.org/170/Town-Mayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-26T23:31:28Z"
+  },
+  {
+    "name": "MaryLee Chamberlain",
+    "sources": [
+      "https://www.townoflaconner.org/Directory.aspx?did=5",
+      "https://www.townoflaconner.org/directory.aspx?EID=8"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Town Council",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated in the text."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text as 'Town Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated in the text."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text as 'Position 4'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-466-3125",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the person's entry.",
+        "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
+      },
+      {
+        "data": "360-466-3125",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text as 'Phone: 360-466-3125'.",
+        "source": "https://www.townoflaconner.org/directory.aspx?EID=8"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council_4@townoflaconner.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided in the text.",
+        "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
+      },
+      {
+        "data": "council_4@townoflaconner.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text as 'Email MaryLee Chamberlain' with the email address provided as a mailto link and text.",
+        "source": "https://www.townoflaconner.org/directory.aspx?EID=8"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "End date is explicitly stated as 'expires December 2025'.",
+        "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
+      },
+      {
+        "data": "2025-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text as 'expires December 2025'.",
+        "source": "https://www.townoflaconner.org/directory.aspx?EID=8"
+      }
+    ],
+    "updated_at": "2025-06-26T23:31:28Z"
+  },
+  {
+    "name": "Ivan Carlson",
+    "sources": [
+      "https://www.townoflaconner.org/Directory.aspx?did=5",
+      "https://www.townoflaconner.org/directory.aspx?EID=9"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Town Council",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated in the text."
+      },
+      {
+        "data": "Town Council",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Town Council' is explicitly stated as his title and is a target municipal role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated in the text."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position 2' is explicitly stated as part of his title."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-466-3125",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the person's entry.",
+        "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
+      },
+      {
+        "data": "360-466-3125",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided and associated with Ivan Carlson's contact information.",
+        "source": "https://www.townoflaconner.org/directory.aspx?EID=9"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council_2@townoflaconner.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided in the text.",
+        "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
+      },
+      {
+        "data": "council_2@townoflaconner.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided and linked to Ivan Carlson's contact information, including a mailto link for direct email.",
+        "source": "https://www.townoflaconner.org/directory.aspx?EID=9"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "End date is explicitly stated as 'expires December 2025'.",
+        "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
+      },
+      {
+        "data": "2025-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 2025' is explicitly stated for his term, which converts to YYYY-MM format correctly.",
+        "source": "https://www.townoflaconner.org/directory.aspx?EID=9"
+      }
+    ],
+    "updated_at": "2025-06-26T23:31:28Z"
+  },
+  {
+    "name": "Rick Dole",
+    "sources": [
+      "https://www.townoflaconner.org/Directory.aspx?did=5",
+      "https://www.townoflaconner.org/directory.aspx?EID=10"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Town Council",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated in the text."
+      },
+      {
+        "data": "Town Council",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Town Council' and associated with a position number."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Division is explicitly stated in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "360-466-3125",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the person's entry.",
+        "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
+      },
+      {
+        "data": "360-466-3125",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is clearly associated with Rick Dole and the Town of La Conner.",
+        "source": "https://www.townoflaconner.org/directory.aspx?EID=10"
+      }
+    ],
+    "emails": [
+      {
+        "data": "council_3@townoflaconner.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided in the text.",
+        "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "The text states 'expires December 2025', implying the term started before or in 2025, but an explicit start date is not provided.",
+        "source": "https://www.townoflaconner.org/directory.aspx?EID=10"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "End date is explicitly stated as 'expires December 2025'.",
+        "source": "https://www.townoflaconner.org/Directory.aspx?did=5"
+      }
+    ],
+    "updated_at": "2025-06-26T23:31:28Z"
+  }
+]

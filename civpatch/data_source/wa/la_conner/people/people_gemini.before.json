@@ -1,0 +1,80 @@
+[
+  {
+    "name": "Marna Hanneman",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "360-466-3125",
+    "email": "mayor@townoflaconner.org",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.townoflaconner.org/170/Town-Mayor"
+    ],
+    "updated_at": "2025-06-26T23:31:28Z"
+  },
+  {
+    "name": "MaryLee Chamberlain",
+    "roles": [
+      "Town Council",
+      "council member"
+    ],
+    "divisions": [
+      "Position 4"
+    ],
+    "image": null,
+    "phone_number": "360-466-3125",
+    "email": "council_4@townoflaconner.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-12",
+    "sources": [
+      "https://www.townoflaconner.org/Directory.aspx?did=5",
+      "https://www.townoflaconner.org/directory.aspx?EID=8"
+    ],
+    "updated_at": "2025-06-26T23:31:28Z"
+  },
+  {
+    "name": "Ivan Carlson",
+    "roles": [
+      "Town Council"
+    ],
+    "divisions": [
+      "Position 2"
+    ],
+    "image": null,
+    "phone_number": "360-466-3125",
+    "email": "council_2@townoflaconner.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2025-12",
+    "sources": [
+      "https://www.townoflaconner.org/Directory.aspx?did=5",
+      "https://www.townoflaconner.org/directory.aspx?EID=9"
+    ],
+    "updated_at": "2025-06-26T23:31:28Z"
+  },
+  {
+    "name": "Rick Dole",
+    "roles": [
+      "Town Council"
+    ],
+    "divisions": [
+      "Position 3"
+    ],
+    "image": null,
+    "phone_number": "360-466-3125",
+    "email": "council_3@townoflaconner.org",
+    "website": null,
+    "start_date": "2025-12",
+    "end_date": "2025-12",
+    "sources": [
+      "https://www.townoflaconner.org/Directory.aspx?did=5",
+      "https://www.townoflaconner.org/directory.aspx?EID=10"
+    ],
+    "updated_at": "2025-06-26T23:31:28Z"
+  }
+]
