@@ -3960,14 +3960,14 @@
       "counties": [
         "Douglas"
       ],
-      "website": "http://rockislandwa.org",
+      "website": "https://www.rockislandwa.gov",
       "fips": "53-59180",
       "gnis": "2410975",
       "type": "city",
       "population": 1279,
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-26T22:09:38Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-06-26T22:34:28Z",
+      "meta_hash": "52a1c1f6d8ab9cc6a52f3e08d4d1e0a8",
       "meta_sources": [
         "state_source",
         "gemini",
