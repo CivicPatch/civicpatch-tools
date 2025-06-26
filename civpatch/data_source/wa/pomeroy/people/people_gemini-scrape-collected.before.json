@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Jack Peasley",
+    "sources": [
+      "https://www.cityofpomeroy1.com/about1-c1s85",
+      "https://www.cityofpomeroy1.com/cemetery-opening-and-closing",
+      "https://www.cityofpomeroy1.com/anamil-license"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Jack Peasley, Mayor' and the document was approved in November 2024, indicating a current role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Jack Peasley, Mayor' signing official resolutions."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Jack Peasley, Mayor' and signed a resolution on November 5, 2024, indicating current active role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-26T22:05:57Z"
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Jack Peasley",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://static.wixstatic.com/media/b4aada852d3247f6a733b08786e4db14.jpg/v1/fill/w_1265,h_720,al_c,q_85,usm_2.00_1.00_0.00,enc_avif,quality_auto/b4aada852d3247f6a733b08786e4db14.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2024-11-05",
+    "end_date": null,
+    "sources": [
+      "https://www.cityofpomeroy1.com/about1-c1s85",
+      "https://www.cityofpomeroy1.com/cemetery-opening-and-closing",
+      "https://www.cityofpomeroy1.com/anamil-license"
+    ],
+    "updated_at": "2025-06-26T22:05:23Z"
+  },
+  {
+    "name": "Alan Gould",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2008-08-06",
+    "end_date": null,
+    "sources": [
+      "https://www.cityofpomeroy1.com/cemetery-regulations",
+      "https://www.cityofpomeroy1.com/solid-waste-collection"
+    ],
+    "updated_at": "2025-06-26T22:05:23Z"
+  },
+  {
+    "name": "G. Paul Miller",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2015-10-19",
+    "end_date": null,
+    "sources": [
+      "https://www.cityofpomeroy1.com/business-license-ordinance"
+    ],
+    "updated_at": "2025-06-26T22:05:23Z"
+  }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Jack Peasley",
+    "roles": [
+      "Mayor"
+    ],
+    "email": null,
+    "updated_at": "2025-06-26T22:03:53Z",
+    "divisions": []
+  },
+  {
+    "name": "Veronica Field",
+    "roles": [
+      "Council Member"
+    ],
+    "email": null,
+    "updated_at": "2025-06-26T22:03:53Z",
+    "divisions": []
+  },
+  {
+    "name": "James Fuchs",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "pomcouncil2@gmail.com",
+    "updated_at": "2025-06-26T22:03:53Z",
+    "divisions": []
+  },
+  {
+    "name": "Rachel Herres",
+    "roles": [
+      "Council Member"
+    ],
+    "email": null,
+    "updated_at": "2025-06-26T22:03:53Z",
+    "divisions": []
+  },
+  {
+    "name": "John Hirsch",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "jfhirschs@msn.com",
+    "updated_at": "2025-06-26T22:03:53Z",
+    "divisions": []
+  },
+  {
+    "name": "Kurt Tetrick",
+    "roles": [
+      "Council Member"
+    ],
+    "email": null,
+    "updated_at": "2025-06-26T22:03:53Z",
+    "divisions": []
+  }
+]

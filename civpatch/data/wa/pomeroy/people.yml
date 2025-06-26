@@ -1,25 +1,17 @@
 ---
 - name: Jack Peasley
-  positions:
+  roles:
   - Mayor
+  divisions:
+  image: https://static.wixstatic.com/media/b4aada852d3247f6a733b08786e4db14.jpg/v1/fill/w_1265,h_720,al_c,q_85,usm_2.00_1.00_0.00,enc_avif,quality_auto/b4aada852d3247f6a733b08786e4db14.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/pomeroy/images/0ee6f7650a42e5d0b0c4b49ef9d68cc9f9ea2a23ac0b7c5c13e7573008e56bbd.jpg
   email:
-- name: James Fuchs
-  positions:
-  - Council Member
-  email: pomcouncil2@gmail.com
-- name: John Hirsch
-  positions:
-  - Council Member
-  email: jfhirschs@msn.com
-- name: Kurt Tetrick
-  positions:
-  - Council Member
-  email:
-- name: Rachel Herres
-  positions:
-  - Council Member
-  email:
-- name: Veronica Field
-  positions:
-  - Council Member
-  email:
+  phone_number:
+  website:
+  start_date: '2024-11-05'
+  end_date:
+  sources:
+  - https://www.cityofpomeroy1.com/about1-c1s85
+  - https://www.cityofpomeroy1.com/cemetery-opening-and-closing
+  - https://www.cityofpomeroy1.com/anamil-license
+  updated_at: '2025-06-26T22:05:57Z'
