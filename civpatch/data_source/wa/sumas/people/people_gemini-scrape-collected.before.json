@@ -2,7 +2,6 @@
   {
     "name": "Bruce Bosch",
     "sources": [
-      "https://www.cityofsumas.com",
       "https://www.cityofsumas.com/contact-us"
     ],
     "images": [],
@@ -10,12 +9,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor' in a note from him."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Mayor' directly above the person's name, clearly associating the role with the individual. The role is active as of today's date (2025-06-25)."
+        "llm_confidence_reason": "Role is explicitly stated as 'Mayor'."
       }
     ],
     "divisions": [],
@@ -24,7 +18,7 @@
       {
         "data": "bbosch@cityofsumas.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
@@ -34,11 +28,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends \n12/31/2025' directly under the person's name and role, clearly associated with the individual's term of office. The date format is valid and directly extractable from the text. The role is active as of today's date (2025-06-25).",
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends – 12/31/2025'.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   },
   {
     "name": "Todd Daniels",
@@ -50,14 +44,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Council Members' for the section this person is listed under, clearly associating the role with the individual. The role is active as of today's date (2025-06-25)."
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member'."
       }
     ],
     "divisions": [
       {
         "data": "Position 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Division is explicitly stated as 'Position 1' directly next to the person's name, clearly associating the division with the individual."
+        "llm_confidence_reason": "Division is explicitly stated as 'Position 1'."
       }
     ],
     "phone_numbers": [],
@@ -65,7 +59,7 @@
       {
         "data": "tdaniels@cityofsumas.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
@@ -75,11 +69,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends \n12/31/2025' directly under the person's name and role, clearly associated with the individual's term of office. The date format is valid and directly extractable from the text. The role is active as of today's date (2025-06-25).",
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends – 12/31/2025'.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   },
   {
     "name": "Rich Postma",
@@ -91,14 +85,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Council Members' for the section this person is listed under, clearly associating the role with the individual. The role is active as of today's date (2025-06-25)."
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member'."
       }
     ],
     "divisions": [
       {
         "data": "Position 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Division is explicitly stated as 'Position 2' directly next to the person's name, clearly associating the division with the individual."
+        "llm_confidence_reason": "Division is explicitly stated as 'Position 2'."
       }
     ],
     "phone_numbers": [],
@@ -106,7 +100,7 @@
       {
         "data": "rpostma@cityofsumas.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
@@ -116,11 +110,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends: \n12/31/2025' directly under the person's name and role, clearly associated with the individual's term of office. The date format is valid and directly extractable from the text. The role is active as of today's date (2025-06-25).",
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends: 12/31/2025'.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   },
   {
     "name": "Jessica Koehler",
@@ -132,14 +126,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Council Members' for the section this person is listed under, clearly associating the role with the individual. The role is active as of today's date (2025-06-25)."
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member'."
       }
     ],
     "divisions": [
       {
         "data": "Position 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Division is explicitly stated as 'Position 3' directly next to the person's name, clearly associating the division with the individual."
+        "llm_confidence_reason": "Division is explicitly stated as 'Position 3'."
       }
     ],
     "phone_numbers": [],
@@ -147,7 +141,7 @@
       {
         "data": "jkoehler@cityofsumas.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
@@ -157,11 +151,11 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends \n12/31/2027' directly under the person's name and role, clearly associated with the individual's term of office. The date format is valid and directly extractable from the text. The role is active as of today's date (2025-06-25).",
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends – 12/31/2027'.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   },
   {
     "name": "Josh Clawson",
@@ -173,14 +167,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Council Members' for the section this person is listed under, clearly associating the role with the individual. The role is active as of today's date (2025-06-25)."
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member'."
       }
     ],
     "divisions": [
       {
         "data": "Position 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Division is explicitly stated as 'Position 4' directly next to the person's name, clearly associating the division with the individual."
+        "llm_confidence_reason": "Division is explicitly stated as 'Position 4'."
       }
     ],
     "phone_numbers": [],
@@ -188,7 +182,7 @@
       {
         "data": "jclawson@cityofsumas.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
@@ -198,11 +192,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends \n12/31/2025' directly under the person's name and role, clearly associated with the individual's term of office. The date format is valid and directly extractable from the text. The role is active as of today's date (2025-06-25).",
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends – 12/31/2025'.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   },
   {
     "name": "Jesse Clawson",
@@ -214,14 +208,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Council Members' for the section this person is listed under, clearly associating the role with the individual. The role is active as of today's date (2025-06-25)."
+        "llm_confidence_reason": "Role is explicitly stated as 'Council Member'."
       }
     ],
     "divisions": [
       {
         "data": "Position 5",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Division is explicitly stated as 'Position 5' directly next to the person's name, clearly associating the division with the individual."
+        "llm_confidence_reason": "Division is explicitly stated as 'Position 5'."
       }
     ],
     "phone_numbers": [],
@@ -229,7 +223,7 @@
       {
         "data": "JAClawson@cityofsumas.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
@@ -239,10 +233,10 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends \n12/31/2027' directly under the person's name and role, clearly associated with the individual's term of office. The date format is valid and directly extractable from the text. The role is active as of today's date (2025-06-25).",
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Ends – 12/31/2027'.",
         "source": "https://www.cityofsumas.com/contact-us"
       }
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   }
 ]
