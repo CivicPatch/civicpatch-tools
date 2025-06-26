@@ -12,10 +12,9 @@
     "start_date": null,
     "end_date": "2025-12-31",
     "sources": [
-      "https://www.cityofsumas.com",
       "https://www.cityofsumas.com/contact-us"
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   },
   {
     "name": "Todd Daniels",
@@ -34,7 +33,7 @@
     "sources": [
       "https://www.cityofsumas.com/contact-us"
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   },
   {
     "name": "Rich Postma",
@@ -53,7 +52,7 @@
     "sources": [
       "https://www.cityofsumas.com/contact-us"
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   },
   {
     "name": "Jessica Koehler",
@@ -72,7 +71,7 @@
     "sources": [
       "https://www.cityofsumas.com/contact-us"
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   },
   {
     "name": "Josh Clawson",
@@ -91,7 +90,7 @@
     "sources": [
       "https://www.cityofsumas.com/contact-us"
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   },
   {
     "name": "Jesse Clawson",
@@ -110,6 +109,6 @@
     "sources": [
       "https://www.cityofsumas.com/contact-us"
     ],
-    "updated_at": "2025-06-25T23:10:41Z"
+    "updated_at": "2025-06-26T17:38:08Z"
   }
 ]
