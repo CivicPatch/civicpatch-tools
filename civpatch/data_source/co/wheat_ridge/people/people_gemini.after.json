@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Amanda Weaver",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.ci.wheatridge.co.us/CivicAlerts.aspx?AID=3169",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.ci.wheatridge.co.us/?PID=google:Century_Link:CenturyLink_2:Century_Link&adused=8110208062&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES",
+      "https://www.ci.wheatridge.co.us/2013/Visit-Wheat-Ridge-Speaks",
+      "https://www.ci.wheatridge.co.us/CivicAlerts.aspx?AID=3169"
+    ],
+    "updated_at": "2025-06-27T21:05:19Z"
+  },
+  {
+    "name": "Rachel Hultin",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.ci.wheatridge.co.us/2013/Visit-Wheat-Ridge-Speaks"
+    ],
+    "updated_at": "2025-06-27T21:05:19Z"
+  }
+]
