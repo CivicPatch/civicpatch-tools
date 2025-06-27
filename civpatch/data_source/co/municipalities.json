@@ -293,7 +293,14 @@
       ],
       "population": 58512,
       "website": "http://www.parkeronline.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T21:03:23Z",
+      "meta_hash": "bd9bc41047dc5be38a7053eedb386d0c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Littleton",
