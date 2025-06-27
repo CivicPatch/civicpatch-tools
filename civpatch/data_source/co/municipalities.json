@@ -306,7 +306,14 @@
       ],
       "population": 45652,
       "website": "http://www.littletonco.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T20:55:05Z",
+      "meta_hash": "d8aefbecb57a1c891eee38ee5b58b7b4",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Brighton",
