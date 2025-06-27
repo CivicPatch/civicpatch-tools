@@ -1,0 +1,49 @@
+[
+  {
+    "name": "Amanda Weaver",
+    "sources": [
+      "https://www.ci.wheatridge.co.us/?PID=google:Century_Link:CenturyLink_2:Century_Link&adused=8110208062&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES",
+      "https://www.ci.wheatridge.co.us/CivicAlerts.aspx?AID=3169"
+    ],
+    "images": [
+      {
+        "data": "https://www.ci.wheatridge.co.us/ImageRepository/Document?documentID=44424",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image is directly associated with Amanda Weaver's name and council member role.",
+        "source": "https://www.ci.wheatridge.co.us/?PID=google:Century_Link:CenturyLink_2:Century_Link&adused=8110208062&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES"
+      },
+      {
+        "data": "https://www.ci.wheatridge.co.us/ImageRepository/Document?documentID=44424",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly associated with Amanda Weaver in the article.",
+        "source": "https://www.ci.wheatridge.co.us/CivicAlerts.aspx?AID=3169"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states 'Wheat Ridge City Council Member Amanda Weaver'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text explicitly states 'Wheat Ridge City Council Member Amanda Weaver'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.ci.wheatridge.co.us/CivicAlerts.aspx?AID=3169",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link is about Amanda Weaver's appointment as council member to Colorado Agriculture Commission.",
+        "source": "https://www.ci.wheatridge.co.us/?PID=google:Century_Link:CenturyLink_2:Century_Link&adused=8110208062&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-27T21:04:41Z"
+  }
+]

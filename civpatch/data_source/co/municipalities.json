@@ -434,7 +434,14 @@
       ],
       "population": 32398,
       "website": "http://www.ci.wheatridge.co.us/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T21:05:20Z",
+      "meta_hash": "c7ae20d6fa42cd247a0da14571a62dff",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Lafayette",

@@ -1,0 +1,63 @@
+[
+  {
+    "name": "Amanda Weaver",
+    "sources": [
+      "https://www.ci.wheatridge.co.us/?PID=google:Century_Link:CenturyLink_2:Century_Link&adused=8110208062&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES",
+      "https://www.ci.wheatridge.co.us/2013/Visit-Wheat-Ridge-Speaks",
+      "https://www.ci.wheatridge.co.us/CivicAlerts.aspx?AID=3169"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Wheat Ridge City Council Member Amanda Weaver'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmembers Weaver'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Wheat Ridge City Council Member Amanda Weaver'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.ci.wheatridge.co.us/CivicAlerts.aspx?AID=3169",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is a news article about her appointment, not a dedicated profile page, but it's the most specific link found for her.",
+        "source": "https://www.ci.wheatridge.co.us/?PID=google:Century_Link:CenturyLink_2:Century_Link&adused=8110208062&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES&PREVIEW=YES"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-27T21:05:19Z"
+  },
+  {
+    "name": "Rachel Hultin",
+    "sources": [
+      "https://www.ci.wheatridge.co.us/2013/Visit-Wheat-Ridge-Speaks"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmembers Hultin'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-27T21:05:19Z"
+  }
+]
