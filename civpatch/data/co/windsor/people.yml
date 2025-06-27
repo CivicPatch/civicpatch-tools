@@ -1,0 +1,16 @@
+---
+- name: Julie Cline
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email: jcline@windsorgov.com
+  phone_number: "(970) 674-2400"
+  website: https://www.windsorgov.com/directory.aspx?EID=390
+  start_date:
+  end_date:
+  sources:
+  - https://www.windsorgov.com/Directory.aspx?did=22
+  - https://www.windsorgov.com/directory.aspx?EID=390
+  updated_at: '2025-06-27T21:03:17Z'
