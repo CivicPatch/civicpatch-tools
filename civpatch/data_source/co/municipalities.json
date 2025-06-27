@@ -184,7 +184,14 @@
       ],
       "population": 76378,
       "website": "https://www.lovgov.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T20:21:29Z",
+      "meta_hash": "385d505341222a26bdd37288356bcdb9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Broomfield",
