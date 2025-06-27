@@ -237,7 +237,14 @@
       ],
       "population": 74112,
       "website": "http://www.broomfield.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T20:26:31Z",
+      "meta_hash": "f0919bb3db6eb6ca8f2f2fca7c82f7f2",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Castle Rock",
