@@ -55,7 +55,14 @@
       ],
       "population": 155984,
       "website": "https://www.lakewood.org",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T19:42:30Z",
+      "meta_hash": "d1a5dcdaa0f0e91e13f1c91607c5c7b0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Thornton",
