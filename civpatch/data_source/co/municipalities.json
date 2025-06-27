@@ -248,7 +248,14 @@
       ],
       "population": 73158,
       "website": "http://www.crgov.com",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T20:25:37Z",
+      "meta_hash": "24f248e93a6d142438487bd308be7863",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Grand Junction",
