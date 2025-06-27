@@ -12,9 +12,9 @@
     "start_date": "2023",
     "end_date": null,
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
     "name": "Tommy Butler",
@@ -29,12 +29,12 @@
     "start_date": "2023",
     "end_date": null,
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
-    "name": "Deb DeBoutez",
+    "name": "Deb Deboutez",
     "roles": [
       "Council Member"
     ],
@@ -46,9 +46,9 @@
     "start_date": "2021",
     "end_date": null,
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
     "name": "Johnny Olson",
@@ -63,15 +63,15 @@
     "start_date": "2021",
     "end_date": null,
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
     "name": "Dale Hall",
     "roles": [
-      "Mayor Pro Tem",
-      "Council Member"
+      "Council Member",
+      "Mayor Pro Tem"
     ],
     "divisions": [],
     "image": null,
@@ -81,9 +81,9 @@
     "start_date": "2023",
     "end_date": null,
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
     "name": "Brett Payton",
@@ -98,9 +98,9 @@
     "start_date": "2021",
     "end_date": null,
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
     "name": "Melissa McDonald",
@@ -115,8 +115,8 @@
     "start_date": "2023",
     "end_date": null,
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   }
 ]
