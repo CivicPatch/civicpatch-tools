@@ -1,0 +1,51 @@
+[
+  {
+    "name": "John Gates",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-06-27T20:08:50Z"
+  },
+  {
+    "name": "Tommy Butler",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-27T20:08:50Z"
+  },
+  {
+    "name": "Deb DeBoutez",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-27T20:08:50Z"
+  },
+  {
+    "name": "Johnny Olson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-27T20:08:50Z"
+  },
+  {
+    "name": "Dale Hall",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-27T20:08:50Z"
+  },
+  {
+    "name": "Melissa McDonald",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-27T20:08:50Z"
+  },
+  {
+    "name": "Brett Payton",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-27T20:08:50Z"
+  }
+]

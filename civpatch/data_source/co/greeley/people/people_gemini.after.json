@@ -1,0 +1,122 @@
+[
+  {
+    "name": "John Gates",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 350-9772",
+    "email": null,
+    "website": null,
+    "start_date": "2023",
+    "end_date": null,
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:30:18Z"
+  },
+  {
+    "name": "Tommy Butler",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 336-4291",
+    "email": null,
+    "website": null,
+    "start_date": "2023",
+    "end_date": null,
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:30:18Z"
+  },
+  {
+    "name": "Deb DeBoutez",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 336-4296",
+    "email": null,
+    "website": null,
+    "start_date": "2021",
+    "end_date": null,
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:30:18Z"
+  },
+  {
+    "name": "Johnny Olson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 336-4293",
+    "email": null,
+    "website": null,
+    "start_date": "2021",
+    "end_date": null,
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:30:18Z"
+  },
+  {
+    "name": "Dale Hall",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 657-0310",
+    "email": null,
+    "website": null,
+    "start_date": "2023",
+    "end_date": null,
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:30:18Z"
+  },
+  {
+    "name": "Brett Payton",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 336-4294",
+    "email": null,
+    "website": null,
+    "start_date": "2021",
+    "end_date": null,
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:30:18Z"
+  },
+  {
+    "name": "Melissa McDonald",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 657-7821",
+    "email": null,
+    "website": null,
+    "start_date": "2023",
+    "end_date": null,
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:30:18Z"
+  }
+]

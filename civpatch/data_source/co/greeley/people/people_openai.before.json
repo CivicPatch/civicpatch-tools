@@ -1,0 +1,134 @@
+[
+  {
+    "name": "John Gates",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.greeleygov.com/images/default-source/city-council/mayor-gates-november-2023.jpg",
+    "phone_number": "970-350-9772",
+    "email": "John.Gates@greeleygov.com",
+    "website": null,
+    "start_date": "2023",
+    "end_date": "2025",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Tommy Butler",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward I"
+    ],
+    "image": "https://www.greeleygov.com/images/default-source/city-council/tommy-butler-ward-i-2024.jpg",
+    "phone_number": "970-336-4291",
+    "email": "tommy.butler@greeleygov.com",
+    "website": null,
+    "start_date": "2023",
+    "end_date": "2027",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Deb DeBoutez",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward II"
+    ],
+    "image": "https://www.greeleygov.com/images/default-source/city-council/deb-deboutez-ward-ii-2024.jpg",
+    "phone_number": "970-336-4296",
+    "email": "deb.deboutez@greeleygov.com",
+    "website": null,
+    "start_date": "2021",
+    "end_date": "2025",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Johnny Olson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward III"
+    ],
+    "image": "https://www.greeleygov.com/images/default-source/city-council/johnny-olson-november-2023.jpg",
+    "phone_number": "970-336-4293",
+    "email": "johnny.olson@greeleygov.com",
+    "website": null,
+    "start_date": "2021",
+    "end_date": "2025",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Dale Hall",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tem"
+    ],
+    "divisions": [
+      "Ward IV"
+    ],
+    "image": "https://www.greeleygov.com/images/default-source/city-council/dale-hall-november-2023.jpg",
+    "phone_number": "970-657-0310",
+    "email": "dale.hall@greeleygov.com",
+    "website": null,
+    "start_date": "2023",
+    "end_date": "2027",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Brett Payton",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "At Large"
+    ],
+    "image": "https://www.greeleygov.com/images/default-source/city-council/brett-payton-november-2023.jpg",
+    "phone_number": "970-336-4294",
+    "email": "brett.payton@greeleygov.com",
+    "website": null,
+    "start_date": "2021",
+    "end_date": "2025",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Melissa McDonald",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "At Large"
+    ],
+    "image": "https://www.greeleygov.com/images/default-source/city-council/melissa-mcdonald-at-large-2024.jpg",
+    "phone_number": "970-657-7821",
+    "email": "melissa.mcdonald@greeleygov.com",
+    "website": null,
+    "start_date": "2023",
+    "end_date": "2027",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  }
+]
