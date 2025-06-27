@@ -107,7 +107,14 @@
       ],
       "population": 124402,
       "website": "http://www.arvada.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T20:13:15Z",
+      "meta_hash": "d4c884661b699acc552a530da99a8c40",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Westminster",
