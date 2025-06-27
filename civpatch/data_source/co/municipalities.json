@@ -9,7 +9,14 @@
       ],
       "population": 715522,
       "website": "http://www.denvergov.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T19:43:55Z",
+      "meta_hash": "48e2789d860c55429744173d6d2cfaef",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Colorado Springs",
