@@ -4,7 +4,7 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-06-27T20:08:50Z",
+    "updated_at": "2025-06-27T20:48:03Z",
     "divisions": []
   },
   {
@@ -12,7 +12,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-27T20:08:50Z",
+    "updated_at": "2025-06-27T20:48:03Z",
     "divisions": []
   },
   {
@@ -20,7 +20,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-27T20:08:50Z",
+    "updated_at": "2025-06-27T20:48:03Z",
     "divisions": []
   },
   {
@@ -28,7 +28,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-27T20:08:50Z",
+    "updated_at": "2025-06-27T20:48:03Z",
     "divisions": []
   },
   {
@@ -36,15 +36,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-27T20:08:50Z",
-    "divisions": []
-  },
-  {
-    "name": "Melissa McDonald",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-06-27T20:08:50Z",
+    "updated_at": "2025-06-27T20:48:03Z",
     "divisions": []
   },
   {
@@ -52,7 +44,15 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-27T20:08:50Z",
+    "updated_at": "2025-06-27T20:48:03Z",
+    "divisions": []
+  },
+  {
+    "name": "Melissa McDonald",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-27T20:48:03Z",
     "divisions": []
   }
 ]

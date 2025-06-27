@@ -2,14 +2,14 @@
   {
     "name": "John Gates",
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
     "images": [],
     "roles": [
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "John Gates is explicitly listed as 'Mayor'."
+        "llm_confidence_reason": "The text explicitly states 'Mayor John Gates'."
       }
     ],
     "divisions": [],
@@ -17,8 +17,8 @@
       {
         "data": "970-350-9772",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number is directly associated with John Gates's contact information.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "llm_confidence_reason": "The phone number is directly associated with John Gates in the text.",
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "emails": [],
@@ -28,23 +28,23 @@
         "data": "2023",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "The text states 'Term: 2023-2025' for John Gates.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
     "name": "Tommy Butler",
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
     "images": [],
     "roles": [
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Tommy Butler is listed under 'Ward I' which is a council position."
+        "llm_confidence_reason": "The text explicitly states 'Ward I' and lists Tommy Butler under the City Council section."
       }
     ],
     "divisions": [],
@@ -52,8 +52,8 @@
       {
         "data": "970-336-4291",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number is directly associated with Tommy Butler's contact information.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "llm_confidence_reason": "The phone number is directly associated with Tommy Butler in the text.",
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "emails": [],
@@ -63,23 +63,23 @@
         "data": "2023",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "The text states 'Term: 2023-2027' for Tommy Butler.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
-    "name": "Deb DeBoutez",
+    "name": "Deb Deboutez",
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
     "images": [],
     "roles": [
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Deb DeBoutez is listed under 'Ward II' which is a council position."
+        "llm_confidence_reason": "The text explicitly states 'Ward II' and lists Deb Deboutez under the City Council section."
       }
     ],
     "divisions": [],
@@ -87,8 +87,8 @@
       {
         "data": "970-336-4296",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number is directly associated with Deb DeBoutez's contact information.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "llm_confidence_reason": "The phone number is directly associated with Deb Deboutez in the text.",
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "emails": [],
@@ -97,24 +97,24 @@
       {
         "data": "2021",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text states 'Term: 2021- 2025' for Deb DeBoutez.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "llm_confidence_reason": "The text states 'Term: 2021- 2025' for Deb Deboutez.",
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
     "name": "Johnny Olson",
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
     "images": [],
     "roles": [
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Johnny Olson is listed under 'Ward III' which is a council position."
+        "llm_confidence_reason": "The text explicitly states 'Ward III' and lists Johnny Olson under the City Council section."
       }
     ],
     "divisions": [],
@@ -122,8 +122,8 @@
       {
         "data": "970-336-4293",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number is directly associated with Johnny Olson's contact information.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "llm_confidence_reason": "The phone number is directly associated with Johnny Olson in the text.",
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "emails": [],
@@ -133,28 +133,28 @@
         "data": "2021",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "The text states 'Term: 2021-2025' for Johnny Olson.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
     "name": "Dale Hall",
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Mayor Pro Tem",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Dale Hall is explicitly listed as 'Mayor Pro Tem'."
-      },
-      {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Dale Hall is listed under 'Ward IV' which is a council position."
+        "llm_confidence_reason": "The text explicitly states 'Ward IV' and lists Dale Hall under the City Council section."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Dale Hall | Mayor Pro Tem'."
       }
     ],
     "divisions": [],
@@ -162,8 +162,8 @@
       {
         "data": "970-657-0310",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number is directly associated with Dale Hall's contact information.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "llm_confidence_reason": "The phone number is directly associated with Dale Hall in the text.",
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "emails": [],
@@ -173,23 +173,23 @@
         "data": "2023",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "The text states 'Term: 2023-2027' for Dale Hall.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
     "name": "Brett Payton",
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
     "images": [],
     "roles": [
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Brett Payton is listed under 'At Large' which is a council position."
+        "llm_confidence_reason": "The text explicitly states 'At Large' and lists Brett Payton under the City Council section."
       }
     ],
     "divisions": [],
@@ -197,8 +197,8 @@
       {
         "data": "970-336-4294",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number is directly associated with Brett Payton's contact information.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "llm_confidence_reason": "The phone number is directly associated with Brett Payton in the text.",
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "emails": [],
@@ -208,23 +208,23 @@
         "data": "2021",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "The text states 'Term: 2021-2025' for Brett Payton.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   },
   {
     "name": "Melissa McDonald",
     "sources": [
-      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      "https://greeleygov.com/government/council"
     ],
     "images": [],
     "roles": [
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Melissa McDonald is listed under 'At Large' which is a council position."
+        "llm_confidence_reason": "The text explicitly states 'At Large' and lists Melissa McDonald under the City Council section."
       }
     ],
     "divisions": [],
@@ -232,8 +232,8 @@
       {
         "data": "970-657-7821",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number is directly associated with Melissa McDonald's contact information.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "llm_confidence_reason": "The phone number is directly associated with Melissa McDonald in the text.",
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "emails": [],
@@ -243,10 +243,10 @@
         "data": "2023",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "The text states 'Term: 2023-2027' for Melissa McDonald.",
-        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+        "source": "https://greeleygov.com/government/council"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-06-27T20:30:18Z"
+    "updated_at": "2025-06-27T20:52:18Z"
   }
 ]
