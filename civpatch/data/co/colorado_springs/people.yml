@@ -1,0 +1,107 @@
+---
+- name: Yemi Mobolade
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.coloradosprings.gov/ReportOut
+  - https://www.coloradosprings.gov/node/161071
+  updated_at: '2025-06-27T19:35:16Z'
+- name: David Leinweber
+  roles:
+  - Council Member
+  divisions:
+  - At-large
+  - District 1
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.coloradosprings.gov/ReportOut
+  updated_at: '2025-06-27T19:35:16Z'
+- name: Tom Bailey
+  roles:
+  - Council Member
+  divisions:
+  - District 2
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.coloradosprings.gov/ReportOut
+  updated_at: '2025-06-27T19:35:16Z'
+- name: Brandy Williams
+  roles:
+  - Council Member
+  divisions:
+  - District 3
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.coloradosprings.gov/ReportOut
+  updated_at: '2025-06-27T19:35:16Z'
+- name: Kimberly Gold
+  roles:
+  - Council Member
+  divisions:
+  - District 4
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.coloradosprings.gov/ReportOut
+  updated_at: '2025-06-27T19:35:16Z'
+- name: Nancy Henjum
+  roles:
+  - Council Member
+  divisions:
+  - District 5
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.coloradosprings.gov/ReportOut
+  updated_at: '2025-06-27T19:35:16Z'
+- name: Roland Rainey
+  roles:
+  - Council Member
+  divisions:
+  - District 6
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.coloradosprings.gov/ReportOut
+  updated_at: '2025-06-27T19:35:16Z'

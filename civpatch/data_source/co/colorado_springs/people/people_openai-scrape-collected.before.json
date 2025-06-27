@@ -1,0 +1,190 @@
+[
+  {
+    "name": "Yemi Mobolade",
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Mentioned as Mayor Yemi in the context of the primary governing body and community tour."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-27T19:34:59Z"
+  },
+  {
+    "name": "Nancy Henjum",
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Referred to as Councilmember Nancy Henjum representing District 5/Central in City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 5",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as District 5/Central."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-27T19:34:59Z"
+  },
+  {
+    "name": "Roland Rainey",
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Referred to as Councilmember Roland Rainey representing District 6/East in City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 6",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as District 6/East."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-27T19:34:59Z"
+  },
+  {
+    "name": "Kimberly Gold",
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Referred to as Councilmember Kimberly Gold representing District 4/Southeast in City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as District 4/Southeast."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-27T19:34:59Z"
+  },
+  {
+    "name": "Tom Bailey",
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Referred to as Councilmember Tom Bailey representing District 2/North in City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as District 2/North."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-27T19:34:59Z"
+  },
+  {
+    "name": "David Leinweber",
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Referred to as At Large Councilmember David Leinweber representing District 1/Northwest."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as At Large."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Mentioned as District 1/Northwest."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-27T19:34:59Z"
+  },
+  {
+    "name": "Brandy Williams",
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Referred to as Councilmember Brandy Williams representing District 3/Southwest in City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as District 3/Southwest."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-27T19:34:59Z"
+  }
+]
