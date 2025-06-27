@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Yemi Mobolade",
+    "roles": [
+      "Mayor",
+      "mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut",
+      "https://www.coloradosprings.gov/node/161071"
+    ],
+    "updated_at": "2025-06-27T19:35:16Z"
+  },
+  {
+    "name": "Nancy Henjum",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "District 5",
+      "Central"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "updated_at": "2025-06-27T19:35:16Z"
+  },
+  {
+    "name": "Roland Rainey",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "District 6",
+      "East"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "updated_at": "2025-06-27T19:35:16Z"
+  },
+  {
+    "name": "Kimberly Gold",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "District 4",
+      "Southeast"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "updated_at": "2025-06-27T19:35:16Z"
+  },
+  {
+    "name": "Tom Bailey",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "District 2",
+      "North"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "updated_at": "2025-06-27T19:35:16Z"
+  },
+  {
+    "name": "David Leinweber",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "District 1",
+      "Northwest",
+      "At Large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "updated_at": "2025-06-27T19:35:16Z"
+  },
+  {
+    "name": "Brandy Williams",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "District 3",
+      "Southwest"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.coloradosprings.gov/ReportOut"
+    ],
+    "updated_at": "2025-06-27T19:35:16Z"
+  }
+]

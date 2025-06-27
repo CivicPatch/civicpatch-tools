@@ -27,7 +27,14 @@
       ],
       "population": 478961,
       "website": "http://www.coloradosprings.gov",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T19:35:16Z",
+      "meta_hash": "eaf80fc4d1e305e2b19dd6a155d7274f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Aurora",
