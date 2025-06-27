@@ -369,7 +369,14 @@
       ],
       "population": 33659,
       "website": "https://www.englewoodco.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T21:01:47Z",
+      "meta_hash": "049eb455868f780565f35e9eb0fac6aa",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Windsor",
