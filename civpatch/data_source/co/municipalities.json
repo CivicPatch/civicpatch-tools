@@ -201,7 +201,14 @@
       ],
       "population": 98885,
       "website": "https://www.longmontcolorado.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T20:19:16Z",
+      "meta_hash": "567d8b81523d5a2566fa769b3e53c18a",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Loveland",
