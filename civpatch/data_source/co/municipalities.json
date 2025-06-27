@@ -289,7 +289,14 @@
       ],
       "population": 62418,
       "website": "http://www.c3gov.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T20:54:27Z",
+      "meta_hash": "ce2c6c8062b609db7a7e07a9fc2057a4",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Parker",
