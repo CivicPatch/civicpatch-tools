@@ -95,7 +95,14 @@
       ],
       "population": 141867,
       "website": "https://www.thorntonco.gov/Pages/default.aspx",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T20:16:18Z",
+      "meta_hash": "107f4aced6282590294e225ea9f48a0a",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Arvada",
