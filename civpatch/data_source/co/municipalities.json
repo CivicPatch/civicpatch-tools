@@ -365,7 +365,14 @@
       ],
       "population": 38131,
       "website": "http://www.northglenn.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T21:03:51Z",
+      "meta_hash": "7f24f65587eeb2d65ec64d3a3d63540a",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Englewood",
