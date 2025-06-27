@@ -151,7 +151,14 @@
       ],
       "population": 111876,
       "website": "http://www.pueblo.us/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T21:00:00Z",
+      "meta_hash": "8f6e111f228bc9cc9f36e30fe9090104",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Greeley",
