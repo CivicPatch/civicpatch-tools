@@ -2,7 +2,6 @@
   {
     "name": "Nancy McNally",
     "roles": [
-      "mayor",
       "Mayor"
     ],
     "divisions": [],
@@ -13,12 +12,9 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofwestminster.us/counciloutreach",
-      "https://www.cityofwestminster.us/youthadvisorypanel",
-      "https://www.cityofwestminster.us/158/Our-Councilors",
       "https://www.cityofwestminster.us/158/Our-Councillors"
     ],
-    "updated_at": "2025-06-27T20:18:50Z"
+    "updated_at": "2025-06-27T20:50:46Z"
   },
   {
     "name": "Sarah Nurmela",
@@ -33,15 +29,14 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofwestminster.us/158/Our-Councilors",
       "https://www.cityofwestminster.us/158/Our-Councillors"
     ],
-    "updated_at": "2025-06-27T20:18:50Z"
+    "updated_at": "2025-06-27T20:50:46Z"
   },
   {
     "name": "Claire Carmelia",
     "roles": [
-      "City Councillor"
+      "Council Member"
     ],
     "divisions": [],
     "image": null,
@@ -51,15 +46,14 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofwestminster.us/158/Our-Councilors",
       "https://www.cityofwestminster.us/158/Our-Councillors"
     ],
-    "updated_at": "2025-06-27T20:18:50Z"
+    "updated_at": "2025-06-27T20:50:46Z"
   },
   {
     "name": "David DeMott",
     "roles": [
-      "City Councillor"
+      "Council Member"
     ],
     "divisions": [],
     "image": null,
@@ -69,15 +63,14 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofwestminster.us/158/Our-Councilors",
       "https://www.cityofwestminster.us/158/Our-Councillors"
     ],
-    "updated_at": "2025-06-27T20:18:50Z"
+    "updated_at": "2025-06-27T20:50:46Z"
   },
   {
     "name": "Obi Ezeadi",
     "roles": [
-      "City Councillor"
+      "Council Member"
     ],
     "divisions": [],
     "image": null,
@@ -87,15 +80,14 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofwestminster.us/158/Our-Councilors",
       "https://www.cityofwestminster.us/158/Our-Councillors"
     ],
-    "updated_at": "2025-06-27T20:18:50Z"
+    "updated_at": "2025-06-27T20:50:46Z"
   },
   {
     "name": "Amber Hott",
     "roles": [
-      "City Councillor"
+      "Council Member"
     ],
     "divisions": [],
     "image": null,
@@ -105,15 +97,14 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofwestminster.us/158/Our-Councilors",
       "https://www.cityofwestminster.us/158/Our-Councillors"
     ],
-    "updated_at": "2025-06-27T20:18:50Z"
+    "updated_at": "2025-06-27T20:50:46Z"
   },
   {
     "name": "Kristine Ireland",
     "roles": [
-      "City Councillor"
+      "Council Member"
     ],
     "divisions": [],
     "image": null,
@@ -123,9 +114,8 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofwestminster.us/158/Our-Councilors",
       "https://www.cityofwestminster.us/158/Our-Councillors"
     ],
-    "updated_at": "2025-06-27T20:18:50Z"
+    "updated_at": "2025-06-27T20:50:46Z"
   }
 ]
