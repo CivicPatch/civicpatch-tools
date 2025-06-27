@@ -318,7 +318,14 @@
       ],
       "population": 40083,
       "website": "http://www.brightonco.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T20:54:43Z",
+      "meta_hash": "ed61b8feffb13c0dfa23811d4bf34b8c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Northglenn",
