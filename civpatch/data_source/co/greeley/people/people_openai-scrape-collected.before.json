@@ -1,0 +1,435 @@
+[
+  {
+    "name": "John Gates",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.greeleygov.com/images/default-source/city-council/mayor-gates-november-2023.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly associated with John Gates and labeled Mayor.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor in the content."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-350-9772",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under John Gates.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "John.Gates@greeleygov.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under John Gates.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2025, start year extracted as 2023.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2025, end year extracted as 2025.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Tommy Butler",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.greeleygov.com/images/default-source/city-council/tommy-butler-ward-i-2024.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image directly associated with Tommy Butler.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Ward I council member; role normalized to Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward I",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward I."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "970-336-4291",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Tommy Butler.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tommy.butler@greeleygov.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Tommy Butler.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2027, start year extracted as 2023.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2027, end year extracted as 2027.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Deb DeBoutez",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.greeleygov.com/images/default-source/city-council/deb-deboutez-ward-ii-2024.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image directly associated with Deb DeBoutez.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Ward II council member; role normalized to Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward II",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward II."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "970-336-4296",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Deb DeBoutez.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "deb.deboutez@greeleygov.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Deb DeBoutez.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2021-2025, start year extracted as 2021.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2021-2025, end year extracted as 2025.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Johnny Olson",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.greeleygov.com/images/default-source/city-council/johnny-olson-november-2023.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image directly associated with Johnny Olson.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Ward III council member; role normalized to Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward III",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward III."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "970-336-4293",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Johnny Olson.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "johnny.olson@greeleygov.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Johnny Olson.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2021-2025, start year extracted as 2021.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2021-2025, end year extracted as 2025.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Dale Hall",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.greeleygov.com/images/default-source/city-council/dale-hall-november-2023.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image directly associated with Dale Hall.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Ward IV council member and Mayor Pro Tem; role normalized to Council Member."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor Pro Tem."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward IV",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward IV."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "970-657-0310",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Dale Hall.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dale.hall@greeleygov.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Dale Hall.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2027, start year extracted as 2023.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2027, end year extracted as 2027.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Brett Payton",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.greeleygov.com/images/default-source/city-council/brett-payton-november-2023.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image directly associated with Brett Payton.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as At Large council member; role normalized to Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as At Large."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "970-336-4294",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Brett Payton.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "brett.payton@greeleygov.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Brett Payton.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2021-2025, start year extracted as 2021.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2021-2025, end year extracted as 2025.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  },
+  {
+    "name": "Melissa McDonald",
+    "sources": [
+      "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.greeleygov.com/images/default-source/city-council/melissa-mcdonald-at-large-2024.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image directly associated with Melissa McDonald.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as At Large council member; role normalized to Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as At Large."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "970-657-7821",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Melissa McDonald.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "melissa.mcdonald@greeleygov.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Melissa McDonald.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2027, start year extracted as 2023.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2027, end year extracted as 2027.",
+        "source": "https://www.greeleygov.com/government/ceo/media-resources/greeley-city-council"
+      }
+    ],
+    "updated_at": "2025-06-27T20:27:14Z"
+  }
+]

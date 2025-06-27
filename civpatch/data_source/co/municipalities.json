@@ -176,7 +176,14 @@
       ],
       "population": 108795,
       "website": "http://www.greeleygov.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T20:30:21Z",
+      "meta_hash": "b85096b1747c2c5f508f69fa3ccee05f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Centennial",
