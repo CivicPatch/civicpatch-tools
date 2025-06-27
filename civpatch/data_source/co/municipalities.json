@@ -161,7 +161,14 @@
       ],
       "population": 108250,
       "website": "http://www.bouldercolorado.gov",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T20:17:29Z",
+      "meta_hash": "147944b059ad7512809bd0b77399fce7",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Longmont",
