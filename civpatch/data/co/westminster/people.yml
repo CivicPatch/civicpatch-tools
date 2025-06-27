@@ -1,0 +1,33 @@
+---
+- name: Nancy McNally
+  roles:
+  - Mayor
+  divisions:
+  image: https://www.cityofwestminster.us/ImageRepository/Document?documentID=1308
+  cdn_image: https://cdn.civicpatch.org/open-data/co/westminster/images/22a334129ed24f01409cba41dd379f53a3da9200142420b3b2026f74ebd469d6.png
+  email:
+  phone_number: "(303) 469-4707"
+  website: https://www.cityofwestminster.us/directory.aspx?eid=99
+  start_date:
+  end_date:
+  sources:
+  - https://www.cityofwestminster.us/counciloutreach
+  - https://www.cityofwestminster.us/youthadvisorypanel
+  - https://www.cityofwestminster.us/158/Our-Councilors
+  - https://www.cityofwestminster.us/158/Our-Councillors
+  updated_at: '2025-06-27T20:18:51Z'
+- name: Sarah Nurmela
+  roles:
+  - Mayor Pro Tempore
+  divisions:
+  image: https://www.cityofwestminster.us/ImageRepository/Document?documentID=1311
+  cdn_image: https://cdn.civicpatch.org/open-data/co/westminster/images/bb7bd4ee4526c4738b2a4676097fee63977856d7512f631eecaaee323a67088d.png
+  email:
+  phone_number: "(720) 460-9277"
+  website: https://www.cityofwestminster.us/directory.aspx?eid=101
+  start_date:
+  end_date:
+  sources:
+  - https://www.cityofwestminster.us/158/Our-Councilors
+  - https://www.cityofwestminster.us/158/Our-Councillors
+  updated_at: '2025-06-27T20:18:51Z'
