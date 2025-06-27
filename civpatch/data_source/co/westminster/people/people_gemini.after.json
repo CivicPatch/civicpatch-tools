@@ -12,12 +12,9 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofwestminster.us/counciloutreach",
-      "https://www.cityofwestminster.us/youthadvisorypanel",
-      "https://www.cityofwestminster.us/158/Our-Councilors",
       "https://www.cityofwestminster.us/158/Our-Councillors"
     ],
-    "updated_at": "2025-06-27T20:18:50Z"
+    "updated_at": "2025-06-27T20:50:46Z"
   },
   {
     "name": "Sarah Nurmela",
@@ -32,9 +29,93 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofwestminster.us/158/Our-Councilors",
       "https://www.cityofwestminster.us/158/Our-Councillors"
     ],
-    "updated_at": "2025-06-27T20:18:50Z"
+    "updated_at": "2025-06-27T20:50:46Z"
+  },
+  {
+    "name": "Claire Carmelia",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(720) 504-6019",
+    "email": null,
+    "website": "https://www.cityofwestminster.us/directory.aspx?eid=91",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofwestminster.us/158/Our-Councillors"
+    ],
+    "updated_at": "2025-06-27T20:50:46Z"
+  },
+  {
+    "name": "David DeMott",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(303) 658-2006",
+    "email": null,
+    "website": "https://www.cityofwestminster.us/directory.aspx?eid=95",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofwestminster.us/158/Our-Councillors"
+    ],
+    "updated_at": "2025-06-27T20:50:46Z"
+  },
+  {
+    "name": "Obi Ezeadi",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(720) 447-5606",
+    "email": null,
+    "website": "https://www.cityofwestminster.us/directory.aspx?eid=92",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofwestminster.us/158/Our-Councillors"
+    ],
+    "updated_at": "2025-06-27T20:50:46Z"
+  },
+  {
+    "name": "Amber Hott",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(720) 474-3785",
+    "email": null,
+    "website": "https://www.cityofwestminster.us/directory.aspx?eid=96",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofwestminster.us/158/Our-Councillors"
+    ],
+    "updated_at": "2025-06-27T20:50:46Z"
+  },
+  {
+    "name": "Kristine Ireland",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(303) 255-1242",
+    "email": null,
+    "website": "https://www.cityofwestminster.us/directory.aspx?eid=102",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofwestminster.us/158/Our-Councillors"
+    ],
+    "updated_at": "2025-06-27T20:50:46Z"
   }
 ]
