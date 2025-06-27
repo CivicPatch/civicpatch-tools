@@ -375,7 +375,14 @@
       ],
       "population": 30411,
       "website": "https://lafayetteco.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T21:11:21Z",
+      "meta_hash": "59d3304c23097f81d761bb50f122e701",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Erie",
