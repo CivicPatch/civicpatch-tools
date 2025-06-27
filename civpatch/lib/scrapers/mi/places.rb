@@ -10,8 +10,8 @@ module Scrapers
           title = "List_of_municipalities_in_Michigan"
 
           response = Scrapers::Common.fetch_with_wikipedia(title)
-          nokogiri_doc = Nokogiri::HTML(response)
-          table = nokogiri_doc.css("table.wikitable")[0]
+          document = Nokolexbor::HTML(response)
+          table = document.css("table.wikitable")[0]
           table_rows = table.css("tr")[2..]
 
           cities = Scrapers::Common.parse_cities_from_wikipedia_table("mi", table_rows)

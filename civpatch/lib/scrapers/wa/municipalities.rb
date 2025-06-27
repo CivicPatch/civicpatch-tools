@@ -33,7 +33,7 @@ module Scrapers
 
       def self.get_places_map
         response = HTTParty.get(STATE_SOURCE_URL)
-        document = Nokogiri::HTML(response.body)
+        document = Nokolexbor::HTML(response.body)
 
         data = document.css("#tableCityProfiles").attr("data-data")
         cities = JSON.parse(data)

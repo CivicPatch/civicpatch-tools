@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "services/census"
+require_relative "co/municipalities"
 require_relative "nh/municipalities"
 require_relative "or/municipalities"
 require_relative "wa/municipalities"
@@ -35,6 +36,8 @@ module Scrapers
         Scrapers::Or::Municipalities
       when "wa"
         Scrapers::Wa::Municipalities
+      when "co"
+        Scrapers::Co::Municipalities
       else
         raise "No scraper found for #{state}"
       end
