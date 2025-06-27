@@ -44,7 +44,14 @@
       ],
       "population": 169810,
       "website": "http://www.fcgov.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-27T19:37:13Z",
+      "meta_hash": "409e8380b8a0f24eb3636d9be74a1585",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Lakewood",
