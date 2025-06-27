@@ -1,0 +1,40 @@
+[
+  {
+    "name": "Nancy McNally",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(303) 469-4707",
+    "email": null,
+    "website": "https://www.cityofwestminster.us/directory.aspx?eid=99",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofwestminster.us/counciloutreach",
+      "https://www.cityofwestminster.us/youthadvisorypanel",
+      "https://www.cityofwestminster.us/158/Our-Councilors",
+      "https://www.cityofwestminster.us/158/Our-Councillors"
+    ],
+    "updated_at": "2025-06-27T20:18:50Z"
+  },
+  {
+    "name": "Sarah Nurmela",
+    "roles": [
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(720) 460-9277",
+    "email": null,
+    "website": "https://www.cityofwestminster.us/directory.aspx?eid=101",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofwestminster.us/158/Our-Councilors",
+      "https://www.cityofwestminster.us/158/Our-Councillors"
+    ],
+    "updated_at": "2025-06-27T20:18:50Z"
+  }
+]
