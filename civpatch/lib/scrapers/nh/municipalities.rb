@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "nokogiri" # Explicitly require nokogiri
-
 module Scrapers
   module Nh
     class Municipalities
@@ -16,11 +14,11 @@ module Scrapers
           puts "Failed to fetch NH Directory page at #{DIRECTORY_URL}"
           return []
         end
-        directory_doc = Nokogiri::HTML(directory_html_string)
+        directory_doc = Nokolexbor::HTML(directory_html_string)
 
         municipality_page_infos = directory_doc.css("#CommProfiles option").map do |option|
           url_value = option["value"]
-          decoded_url = Nokogiri::HTML.fragment(url_value).text # Decode &amp;
+          decoded_url = Nokolexbor::HTML.fragment(url_value).text # Decode &amp;
           {
             name: option.text.strip,
             url: decoded_url
@@ -46,7 +44,7 @@ module Scrapers
           puts "Failed to fetch page for #{page_info[:name]} at #{page_info[:url]}"
           return { name: page_info[:name], url: page_info[:url], error: "Page fetch failed" }
         end
-        page_doc = Nokogiri::HTML(page_html_string)
+        page_doc = Nokolexbor::HTML(page_html_string)
 
         contact_details = parse_contact_details(page_info, page_doc)
         government_type = parse_government_type(page_info, page_doc)

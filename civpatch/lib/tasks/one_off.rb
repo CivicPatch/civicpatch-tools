@@ -7,6 +7,15 @@ require "scrapers/municipalities"
 require "openai"
 
 namespace :one_off do
+  task "init_state" do
+    state = "co"
+    municipalities = Scrapers::Municipalities.fetch(state)
+
+    puts "found #{municipalities.length} municipalities in #{state}"
+
+    Core::StateManager.update_municipalities(state, municipalities)
+  end
+
   task "determine_average_token_count" do
     state = "wa"
     municipalities = Core::StateManager.get_municipalities(state)["municipalities"]

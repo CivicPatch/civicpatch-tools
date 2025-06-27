@@ -50,7 +50,8 @@ module Scrapers
       response = gemini.research_municipality(municipality_context)
       {
         "type" => "state_source_fallback",
-        "people" => response["people"]
+        "people" => response["people"],
+        "government_type" => response["government_type"]
       }
     end
   end

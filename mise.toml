@@ -3,7 +3,7 @@ go = 'latest'
 air = 'latest'
 gitleaks = 'latest'
 python = 'latest' # For gitleaks
-ruby = "latest"
+ruby = 'latest'
 
 [env]
 _.file = '../.env'

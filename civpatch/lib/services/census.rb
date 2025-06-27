@@ -3,6 +3,7 @@
 module Services
   class Census
     STATE_TO_STATEFP = {
+      "co" => "08",
       "nh" => "33",
       "or" => "41",
       "wa" => "53"

@@ -28,7 +28,7 @@ module Scrapers
 
       def self.fetch_sos_municipality_data(url)
         response = Core::Browser.fetch_page_content(url)
-        html = Nokogiri::HTML(response[:page_html])
+        html = Nokolexbor::HTML(response[:page_html])
 
         # Address: Find div containing direct text node with 'Address:'
         # Use gsub to robustly remove label and potential leading junk
@@ -60,7 +60,7 @@ module Scrapers
 
       def self.fetch_sos_directory(url)
         response = Core::Browser.fetch_page_content(url)
-        html = Nokogiri::HTML(response[:page_html])
+        html = Nokolexbor::HTML(response[:page_html])
 
         municipalities = html.css(".cities ul a").map do |link|
           {

@@ -22,7 +22,7 @@ module Scrapers
           # File.write(File.join(__dir__, "cache", "#{current_date}_city_and_town_profiles.html"), response.body)
           cache_path = File.join(__dir__, "cache", "2025-05-01_city_and_town_profiles.html")
           response = File.read(cache_path)
-          html_doc = Nokogiri::HTML(response)
+          html_doc = Nokolexbor::HTML(response)
 
           target_name = municipality_entry["name"]
 

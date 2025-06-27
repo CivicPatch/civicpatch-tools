@@ -81,7 +81,7 @@ module Core
 
     def self.sanitize_html(html)
       sanitized_html = Sanitize.fragment(html, Sanitize::Config::RELAXED)
-      nokogiri_doc = Nokogiri::HTML(sanitized_html)
+      nokogiri_doc = Nokolexbor::HTML(sanitized_html)
       nokogiri_doc.css("script, style").remove
       nokogiri_doc.css("a").each do |link|
         next unless link.get_attribute("href").blank? || link.text.blank?
