@@ -26,7 +26,7 @@ module IntegrationTest
     end
 
     def test_municipality_officials
-      content_file = File.join(__dir__, "..", "..", "fixtures", "spokane_markdown.md")
+      content_file = File.join(__dir__, "..", "fixtures", "spokane_markdown.md")
       result = @gemini.extract_city_people(
         @municipality_context,
         content_file,
@@ -44,6 +44,27 @@ module IntegrationTest
                      result.map { |p| p["roles"].map{ |role_data| role_data["data"] } }.sort
       assert_equal expected.map { |p| p["divisions"].map{ |division_data| division_data["data"] } }.sort, 
                      result.map { |p| p["divisions"].map{ |division_data| division_data["data"] } }.sort
+    end
+
+    def test_divisions
+      content_file = File.join(TEST_DIR, "integration", "fixtures", "prompts", "google_gemini", "divisions_input.md")
+
+      municipality_context = {
+        state: "co",
+        municipality_entry: { "name" => "Greeley" },
+        government_type: "mayor_council"
+      }
+      
+      result = @gemini.extract_city_people(
+        municipality_context,
+        content_file,
+        @page_url,
+        @people_hint
+      )
+
+      File.write("tmp/output.json", JSON.pretty_generate(result))
+      
+      assert_equal 5, result.length, "Expected  divisions to be extracted"
     end
   end
 end

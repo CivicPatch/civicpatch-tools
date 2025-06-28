@@ -7,3 +7,5 @@ require "minitest/autorun"
 require "minitest/pride" # For colored output
 require "yaml"
 require "active_support/all"
+
+TEST_DIR = File.expand_path(__dir__) # Constant for the test directory

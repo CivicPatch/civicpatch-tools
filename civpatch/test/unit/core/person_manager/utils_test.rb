@@ -30,6 +30,8 @@ class CorePersonManagerUtilsTest < Minitest::Test
     assert_equal "At-large", Core::PersonManager::Utils.normalize_division("city wide")
     assert_equal "Zone", Core::PersonManager::Utils.normalize_division("zone")
     assert_equal "District", Core::PersonManager::Utils.normalize_division("district")
+    assert_equal "Ward North", Core::PersonManager::Utils.normalize_division("Council Ward North")
+    assert_equal "Ward North", Core::PersonManager::Utils.normalize_division("Ward Council North")
   end
 
   def test_normalize_division_with_number_word
@@ -142,10 +144,7 @@ class CorePersonManagerUtilsTest < Minitest::Test
     assert_equal "Position 6", Core::PersonManager::Utils.normalize_division("Position # 6")
     
     assert_equal "Position 6", Core::PersonManager::Utils.normalize_division("Position #6")
-  end
 
-  def test_normalize_division_alias_match
-    assert_equal "Ward North", Core::PersonManager::Utils.normalize_division("Council Ward North")
-    assert_equal "Ward North", Core::PersonManager::Utils.normalize_division("Ward Council North")
+    assert_equal "Ward 1", Core::PersonManager::Utils.normalize_division("Ward I")
   end
 end
