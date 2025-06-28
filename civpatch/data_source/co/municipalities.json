@@ -579,7 +579,14 @@
       ],
       "population": 19071,
       "website": "http://www.durangogov.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-28T18:50:36Z",
+      "meta_hash": "fc60bb4f7d699b617a76ca659781b436",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Johnstown",
