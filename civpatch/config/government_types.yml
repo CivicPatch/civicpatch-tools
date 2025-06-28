@@ -77,6 +77,9 @@ government_types:
           - council vice-president
       - role: council manager
       - role: commisioner
+      - role: board member
+        aliases:
+          - town board member
       - role: council member
         aliases:
           - city councilor
