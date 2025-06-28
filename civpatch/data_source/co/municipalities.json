@@ -504,7 +504,14 @@
       ],
       "population": 21226,
       "website": "http://www.louisvilleco.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-28T18:46:35Z",
+      "meta_hash": "cac84105668869f128d4813ebb18132c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Golden",
