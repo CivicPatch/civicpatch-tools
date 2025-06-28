@@ -526,7 +526,14 @@
       ],
       "population": 20291,
       "website": "http://www.cityofmontrose.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-28T18:48:20Z",
+      "meta_hash": "1836874c65b09a0ac4c1605c8ba1eb36",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Durango",
