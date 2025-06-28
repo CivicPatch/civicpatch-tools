@@ -569,7 +569,14 @@
       ],
       "population": 16381,
       "website": "https://www.firestoneco.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-28T18:56:24Z",
+      "meta_hash": "fcdfd99f207c03dd5d0bab416b80e2a3",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Greenwood Village",
