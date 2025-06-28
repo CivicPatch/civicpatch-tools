@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Michael Duncan",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-06-28T18:46:51Z",
+    "divisions": []
+  },
+  {
+    "name": "Chad Young",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "updated_at": "2025-06-28T18:46:51Z",
+    "divisions": []
+  },
+  {
+    "name": "Damien Berg",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:46:51Z",
+    "divisions": []
+  },
+  {
+    "name": "Jesse Molinar Jr.",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:46:51Z",
+    "divisions": []
+  },
+  {
+    "name": "Dee Anne Menzies",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:46:51Z",
+    "divisions": []
+  },
+  {
+    "name": "Dianne Morris",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:46:51Z",
+    "divisions": []
+  },
+  {
+    "name": "Andrew Paranto",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:46:51Z",
+    "divisions": []
+  }
+]
