@@ -9,13 +9,13 @@
     "roles": [
       {
         "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly provided in the 'Title' column of the table."
       },
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Title: Mayor' directly associated with Julie Cline."
+        "llm_confidence_reason": "Role is explicitly stated as 'Title: Mayor' directly under the person's name."
       }
     ],
     "divisions": [],
@@ -23,28 +23,28 @@
     "emails": [
       {
         "data": "jcline@windsorgov.com",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link in the content for this person's entry in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email directly provided in the 'Email' column of the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       },
       {
         "data": "jcline@windsorgov.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The email address is explicitly provided next to her name and title, with a 'mailto:' link confirming it is an email address for her role as Mayor. ",
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=390"
       }
     ],
     "websites": [
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=390",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly linked from the person's name in the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Ron Steinbach",
@@ -56,53 +56,53 @@
     "roles": [
       {
         "data": "Board Member",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly provided in the 'Title' column of the table."
       },
       {
         "data": "Board Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Board Member' is explicitly stated as his title."
+        "llm_confidence_reason": "Explicitly stated as 'Board Member' which is a target role."
       }
     ],
     "divisions": [
       {
         "data": "District 1",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Division is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division directly provided in the 'Title' column of the table."
       },
       {
         "data": "District 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division 'District 1' is explicitly stated as part of his title 'Board Member, District 1'."
+        "llm_confidence_reason": "Explicitly stated as 'District 1' in the text."
       }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "rsteinbach@windsorgov.com",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link in the content for this person's entry in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email directly provided in the 'Email' column of the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       },
       {
         "data": "rsteinbach@windsorgov.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The email address is directly provided as a mailto link associated with his name ('Email Me').",
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=388"
       }
     ],
     "websites": [
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=388",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly linked from the person's name in the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Brian Jones",
@@ -114,53 +114,53 @@
     "roles": [
       {
         "data": "Board Member",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly provided in the 'Title' column of the table."
       },
       {
         "data": "Board Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Title: Board Member'."
+        "llm_confidence_reason": "Explicitly stated as 'Board Member' for Brian Jones, and 'Town Board Members' indicates it's a governing body role."
       }
     ],
     "divisions": [
       {
         "data": "District 2",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Division is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division directly provided in the 'Title' column of the table."
       },
       {
         "data": "District 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly stated as 'District 2' in the text."
       }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "bjones@windsorgov.com",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link in the content for this person's entry in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email directly provided in the 'Email' column of the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       },
       {
         "data": "bjones@windsorgov.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Brian Jones.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=391"
       }
     ],
     "websites": [
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=391",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly linked from the person's name in the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Lainie Peltz",
@@ -172,66 +172,66 @@
     "roles": [
       {
         "data": "Board Member",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly provided in the 'Title' column of the table."
       },
       {
         "data": "Board Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Board Member' under 'Title:' for the person."
+        "llm_confidence_reason": "Directly stated in the text as 'Title: Board Member'."
       }
     ],
     "divisions": [
       {
         "data": "District 3",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Division is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division directly provided in the 'Title' column of the table."
       },
       {
         "data": "District 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'District 3' in the text."
+        "llm_confidence_reason": "Directly stated in the text as 'District 3'."
       }
     ],
     "phone_numbers": [
       {
         "data": "970-294-2024",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is explicitly provided in the 'Phone' column of the table for this person.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly provided in the 'Phone' column of the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       },
       {
         "data": "970-294-2024",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the person's name and title in the text ('Phone:').",
+        "llm_confidence_reason": "Directly stated in the text as 'Phone: 970-294-2024'.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=138"
       }
     ],
     "emails": [
       {
         "data": "lpeltz@windsorgov.com",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link in the content for this person's entry in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email directly provided in the 'Email' column of the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       },
       {
         "data": "lpeltz@windsorgov.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided and linked to the person's name in the text ('Email Me').",
+        "llm_confidence_reason": "Directly stated in the text as 'Email Me lpeltz@windsorgov.com'.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=138"
       }
     ],
     "websites": [
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=138",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly linked from the person's name in the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Ken Symsack",
@@ -243,20 +243,20 @@
     "roles": [
       {
         "data": "Board Member",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly provided in the 'Title' column of the table."
       },
       {
         "data": "Board Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Board Member' in the text."
+        "llm_confidence_reason": "Explicitly stated as 'Board Member' under 'Title'."
       }
     ],
     "divisions": [
       {
         "data": "District 4",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Division is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division directly provided in the 'Title' column of the table."
       },
       {
         "data": "District 4",
@@ -269,21 +269,21 @@
       {
         "data": "ksymsack@windsorgov.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Ken Symsack.",
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=392"
       }
     ],
     "websites": [
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=392",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly linked from the person's name in the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Rick Klimek",
@@ -295,62 +295,66 @@
     "roles": [
       {
         "data": "Board Member",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly provided in the 'Title' column of the table."
       },
       {
         "data": "Board Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Title: Board Member'."
+        "llm_confidence_reason": "Explicitly stated as 'Board Member' under 'Title:' for this person."
       }
     ],
     "divisions": [
       {
         "data": "District 5",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Division is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division directly provided in the 'Title' column of the table."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 5' in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "970-301-1783",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is explicitly provided in the 'Phone' column of the table for this person.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly provided in the 'Phone' column of the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       },
       {
         "data": "970-301-1783",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number is directly associated with Rick Klimek's contact information.",
+        "llm_confidence_reason": "Phone number is explicitly provided next to 'Phone:' for this person's entry.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=140"
       }
     ],
     "emails": [
       {
         "data": "rklimek@windsorgov.com",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link in the content for this person's entry in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email directly provided in the 'Email' column of the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
+      },
+      {
+        "data": "rklimek@windsorgov.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked to the person's name ('Email Me').",
+        "source": "https://www.windsorgov.com/directory.aspx?EID=140"
       }
     ],
     "websites": [
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=140",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly linked from the person's name in the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
-    "start_dates": [
-      {
-        "data": "2025-06-27",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "No explicit start date is provided, but the current date is used as a placeholder for active roles.",
-        "source": "https://www.windsorgov.com/directory.aspx?EID=140"
-      }
-    ],
+    "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Jason Hallett",
@@ -362,65 +366,65 @@
     "roles": [
       {
         "data": "Board Member",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly provided in the 'Title' column of the table."
       },
       {
         "data": "Board Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text under 'Title:'"
+        "llm_confidence_reason": "Explicitly stated in the text as 'Title: Board Member' for Jason Hallett."
       }
     ],
     "divisions": [
       {
         "data": "District 6",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Division is explicitly stated in the 'Title' column of the table for this person."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division directly provided in the 'Title' column of the table."
       },
       {
         "data": "District 6",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the text as 'District 6' associated with the role."
       }
     ],
     "phone_numbers": [
       {
         "data": "970-692-7819",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is explicitly provided in the 'Phone' column of the table for this person.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly provided in the 'Phone' column of the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       },
       {
         "data": "970-692-7819",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text under 'Phone:'",
+        "llm_confidence_reason": "Explicitly stated in the text as 'Phone: 970-692-7819' for Jason Hallett.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=141"
       }
     ],
     "emails": [
       {
         "data": "jhallett@windsorgov.com",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link in the content for this person's entry in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email directly provided in the 'Email' column of the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       },
       {
         "data": "jhallett@windsorgov.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text as an email link text, extracted as per guidelines for markdown links.",
+        "llm_confidence_reason": "Explicitly provided as a mailto link for Jason Hallett.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=141"
       }
     ],
     "websites": [
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=141",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Website URL is explicitly provided as a link associated with the person's name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly linked from the person's name in the table.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   }
 ]

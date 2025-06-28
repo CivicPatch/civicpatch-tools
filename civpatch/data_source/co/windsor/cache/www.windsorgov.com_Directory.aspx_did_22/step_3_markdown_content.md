@@ -35,7 +35,7 @@ Loading
 
 Search
 
-![](https://www.windsorgov.com/ImageRepository/Document?documentID=26749)
+![](https://www.windsorgov.com/ImageRepository/Document?documentID=26747)
 
 1. [Agendas &amp; Minutes](https://www.windsorgov.com/153/Agendas-and-Minutes)
 2. [Bids and RFP's](https://www.windsorgov.com/bids.aspx)

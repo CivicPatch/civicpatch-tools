@@ -15,7 +15,27 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=390"
     ],
-    "updated_at": "2025-06-27T20:59:33Z"
+    "updated_at": "2025-06-28T18:03:40Z"
+  },
+  {
+    "name": "Ron Steinbach",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 1"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "rsteinbach@windsorgov.com",
+    "website": "https://www.windsorgov.com/directory.aspx?EID=388",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.windsorgov.com/Directory.aspx?did=22",
+      "https://www.windsorgov.com/directory.aspx?EID=388"
+    ],
+    "updated_at": "2025-06-28T18:03:40Z"
   },
   {
     "name": "Brian Jones",
@@ -35,7 +55,7 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=391"
     ],
-    "updated_at": "2025-06-27T20:59:33Z"
+    "updated_at": "2025-06-28T18:03:40Z"
   },
   {
     "name": "Lainie Peltz",
@@ -55,7 +75,7 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=138"
     ],
-    "updated_at": "2025-06-27T20:59:33Z"
+    "updated_at": "2025-06-28T18:03:40Z"
   },
   {
     "name": "Ken Symsack",
@@ -66,7 +86,7 @@
       "District 4"
     ],
     "image": null,
-    "phone_number": null,
+    "phone_number": "(970) 674-2400",
     "email": "ksymsack@windsorgov.com",
     "website": "https://www.windsorgov.com/directory.aspx?EID=392",
     "start_date": null,
@@ -75,7 +95,7 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=392"
     ],
-    "updated_at": "2025-06-27T20:59:33Z"
+    "updated_at": "2025-06-28T18:03:40Z"
   },
   {
     "name": "Rick Klimek",
@@ -95,6 +115,6 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=140"
     ],
-    "updated_at": "2025-06-27T20:59:33Z"
+    "updated_at": "2025-06-28T18:03:40Z"
   }
 ]
