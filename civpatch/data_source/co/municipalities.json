@@ -471,7 +471,14 @@
       ],
       "population": 30038,
       "website": "http://www.erieco.gov/index.cfm",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-28T18:43:56Z",
+      "meta_hash": "c5aee4b645bac81fb8251b413a846232",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fountain",
