@@ -15,7 +15,7 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=390"
     ],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Ron Steinbach",
@@ -35,7 +35,7 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=388"
     ],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Brian Jones",
@@ -55,7 +55,7 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=391"
     ],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Lainie Peltz",
@@ -75,7 +75,7 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=138"
     ],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Ken Symsack",
@@ -95,7 +95,7 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=392"
     ],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Rick Klimek",
@@ -109,13 +109,13 @@
     "phone_number": "970-301-1783",
     "email": "rklimek@windsorgov.com",
     "website": "https://www.windsorgov.com/directory.aspx?EID=140",
-    "start_date": "2025-06-27",
+    "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=140"
     ],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   },
   {
     "name": "Jason Hallett",
@@ -135,6 +135,6 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=141"
     ],
-    "updated_at": "2025-06-27T21:03:17Z"
+    "updated_at": "2025-06-28T18:04:19Z"
   }
 ]
