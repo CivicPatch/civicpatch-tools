@@ -1,5 +1,3 @@
-This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
-
 [Skip To Main Content](https://www.pueblo.us/2563/Representative-at-Large/)
 
 Loading
@@ -119,5 +117,3 @@ Excel Download
 PowerPoint Download
 
 Document Download
-
-Explore your accessibility options

@@ -8,7 +8,7 @@
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=36131",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image URL is directly associated with Heather Graham's section and labeled with her name.",
+        "llm_confidence_reason": "Image URL is a headshot near the Mayor Heather Graham section.",
         "source": "https://www.pueblo.us/2941/Mayor-Heather-Graham"
       }
     ],
@@ -17,14 +17,30 @@
         "data": "Mayor",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "The text explicitly states Heather Graham was sworn in as Mayor of Pueblo on February 1, 2024."
+      },
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "She earned the At-Large City Council seat in fall 2021 and began her term in January 2022 before becoming Mayor."
+      },
+      {
+        "data": "City Council President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "She served two years as City Council President before becoming Mayor."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "She held an At-Large City Council seat."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "719-553-2489",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "General city hall phone number listed under contact; no direct personal phone found, so city hall number is the best available.",
+        "llm_confidence_reason": "General city hall contact number listed; no direct personal number found.",
         "source": "https://www.pueblo.us/2941/Mayor-Heather-Graham"
       }
     ],
@@ -33,7 +49,7 @@
       {
         "data": "https://www.pueblo.us/2941/Mayor-Heather-Graham",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The source page URL is the official mayor's page for Heather Graham.",
+        "llm_confidence_reason": "Page URL is the official Mayor Heather Graham profile.",
         "source": "https://www.pueblo.us/2941/Mayor-Heather-Graham"
       }
     ],
@@ -41,12 +57,19 @@
       {
         "data": "2024-02-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Text explicitly states she was sworn in on February 1, 2024.",
+        "llm_confidence_reason": "Explicitly stated sworn in on February 1, 2024 as Mayor.",
         "source": "https://www.pueblo.us/2941/Mayor-Heather-Graham"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-06-27T20:53:03Z"
+    "end_dates": [
+      {
+        "data": "2028-02-01",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Term length is four years starting February 2024, so estimated end date is February 2028.",
+        "source": "https://www.pueblo.us/2941/Mayor-Heather-Graham"
+      }
+    ],
+    "updated_at": "2025-06-28T17:57:30Z"
   },
   {
     "name": "Regina Maestri",
@@ -58,13 +81,13 @@
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=30976",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image directly associated with Regina Maestri on the page.",
+        "llm_confidence_reason": "Image directly associated with Regina Maestri's name.",
         "source": "https://www.pueblo.us/585/Council-Members"
       },
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=30976",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image URL is directly associated with Regina Maestri's section.",
+        "llm_confidence_reason": "Image URL is directly associated with Regina Maestri's name and section.",
         "source": "https://www.pueblo.us/577/District-1-Representative"
       }
     ],
@@ -72,12 +95,12 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as District 1 Representative, a typical council member role."
+        "llm_confidence_reason": "Listed as District 1 Representative, a typical council member role in the primary governing body."
       },
       {
         "data": "Council Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The page identifies Regina Maestri as 'District 1 Representative' on the City Council, which corresponds to a Council Member role."
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page title and content identify Regina Maestri as 'District 1 Representative' on the City Council, which corresponds to a Council Member role."
       }
     ],
     "divisions": [
@@ -89,14 +112,14 @@
       {
         "data": "District 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'District 1 Representative'."
+        "llm_confidence_reason": "Explicitly stated as 'District 1 Representative' in the page title and content."
       }
     ],
     "phone_numbers": [
       {
         "data": "719-504-8888",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is listed under Regina Maestri's contact information.",
+        "llm_confidence_reason": "Phone number is listed under 'Contact Information' near Regina Maestri's name.",
         "source": "https://www.pueblo.us/577/District-1-Representative"
       }
     ],
@@ -104,7 +127,7 @@
       {
         "data": "rmaestri@pueblo.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is listed under Regina Maestri's contact information.",
+        "llm_confidence_reason": "Email address is listed under 'Contact Information' near Regina Maestri's name; the other email appears unrelated.",
         "source": "https://www.pueblo.us/577/District-1-Representative"
       }
     ],
@@ -112,7 +135,7 @@
       {
         "data": "https://www.pueblo.us/577/District-1-Representative",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Official profile link for Regina Maestri as District 1 Representative.",
+        "llm_confidence_reason": "Official profile page linked for District 1 Representative.",
         "source": "https://www.pueblo.us/585/Council-Members"
       }
     ],
@@ -132,7 +155,7 @@
         "source": "https://www.pueblo.us/577/District-1-Representative"
       }
     ],
-    "updated_at": "2025-06-27T20:53:03Z"
+    "updated_at": "2025-06-28T17:57:30Z"
   },
   {
     "name": "Roger Gomez",
@@ -144,7 +167,7 @@
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=36096",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image directly associated with Roger Gomez on the page.",
+        "llm_confidence_reason": "Image directly associated with Roger Gomez's name.",
         "source": "https://www.pueblo.us/585/Council-Members"
       },
       {
@@ -158,12 +181,12 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as District 4 Representative and Work Session Chair; primary role is council member."
+        "llm_confidence_reason": "Listed as District 4 Representative and Work Session Chair, indicating council membership."
       },
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The page identifies Roger Gomez as the District 4 Representative on the City Council, which corresponds to a Council Member role."
+        "llm_confidence_reason": "The page identifies Roger Gomez as 'District 4 Representative' on the City Council, which corresponds to a Council Member role."
       }
     ],
     "divisions": [
@@ -175,14 +198,14 @@
       {
         "data": "District 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page title and content explicitly state Roger Gomez is the District 4 Representative."
+        "llm_confidence_reason": "The page title and content specify Roger Gomez as the District 4 Representative."
       }
     ],
     "phone_numbers": [
       {
         "data": "719-750-7424",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is clearly listed under contact information for Roger Gomez.",
+        "llm_confidence_reason": "Phone number is explicitly listed under Contact Information for Roger Gomez.",
         "source": "https://www.pueblo.us/576/District-4-Representative"
       }
     ],
@@ -190,7 +213,7 @@
       {
         "data": "rgomez@pueblo.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is clearly listed under contact information for Roger Gomez.",
+        "llm_confidence_reason": "Email is explicitly listed under Contact Information for Roger Gomez.",
         "source": "https://www.pueblo.us/576/District-4-Representative"
       }
     ],
@@ -198,7 +221,7 @@
       {
         "data": "https://www.pueblo.us/576/District-4-Representative",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Official profile link for Roger Gomez as District 4 Representative.",
+        "llm_confidence_reason": "Official profile page linked for District 4 Representative.",
         "source": "https://www.pueblo.us/585/Council-Members"
       }
     ],
@@ -218,7 +241,7 @@
         "source": "https://www.pueblo.us/576/District-4-Representative"
       }
     ],
-    "updated_at": "2025-06-27T20:53:03Z"
+    "updated_at": "2025-06-28T17:57:30Z"
   },
   {
     "name": "Joe Latino",
@@ -230,13 +253,13 @@
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=36186",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image directly associated with Joe Latino on the page.",
+        "llm_confidence_reason": "Image directly associated with Joe Latino's name.",
         "source": "https://www.pueblo.us/585/Council-Members"
       },
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=36095",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The image is directly associated with Joe Latino's name and role on the page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image URL is directly associated with Joe Latino's name and term information.",
         "source": "https://www.pueblo.us/578/District-2-Representative"
       }
     ],
@@ -244,12 +267,12 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as District 2 Representative, a typical council member role."
+        "llm_confidence_reason": "Listed as District 2 Representative, a primary governing body role."
       },
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The page identifies Joe Latino as the District 2 Representative on the City Council, which corresponds to a Council Member role."
+        "llm_confidence_reason": "The page title and content identify Joe Latino as the District 2 Representative on the City Council, which corresponds to a Council Member role."
       }
     ],
     "divisions": [
@@ -261,14 +284,14 @@
       {
         "data": "District 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page explicitly states Joe Latino is the District 2 Representative."
+        "llm_confidence_reason": "The page is titled 'District 2 Representative' and Joe Latino is identified as the representative for District 2."
       }
     ],
     "phone_numbers": [
       {
         "data": "719-369-0514",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is listed under Joe Latino's contact information.",
+        "llm_confidence_reason": "Phone number is explicitly listed under Joe Latino's contact information.",
         "source": "https://www.pueblo.us/578/District-2-Representative"
       }
     ],
@@ -276,7 +299,7 @@
       {
         "data": "jlatino@pueblo.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email is listed under Joe Latino's contact information.",
+        "llm_confidence_reason": "Email address is explicitly listed under Joe Latino's contact information.",
         "source": "https://www.pueblo.us/578/District-2-Representative"
       }
     ],
@@ -284,7 +307,7 @@
       {
         "data": "https://www.pueblo.us/578/District-2-Representative",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Official profile link for Joe Latino as District 2 Representative.",
+        "llm_confidence_reason": "Official profile page linked for District 2 Representative.",
         "source": "https://www.pueblo.us/585/Council-Members"
       }
     ],
@@ -292,7 +315,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term start date is explicitly given as January 1, 2024.",
+        "llm_confidence_reason": "Term start date is explicitly stated as January 1, 2024.",
         "source": "https://www.pueblo.us/578/District-2-Representative"
       }
     ],
@@ -300,11 +323,11 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term end date is explicitly given as December 31, 2027.",
+        "llm_confidence_reason": "Term end date is explicitly stated as December 31, 2027.",
         "source": "https://www.pueblo.us/578/District-2-Representative"
       }
     ],
-    "updated_at": "2025-06-27T20:53:03Z"
+    "updated_at": "2025-06-28T17:57:30Z"
   },
   {
     "name": "Sarah Martinez",
@@ -316,13 +339,13 @@
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=30977",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image directly associated with Sarah Martinez on the page.",
+        "llm_confidence_reason": "Image directly associated with Sarah Martinez's name.",
         "source": "https://www.pueblo.us/585/Council-Members"
       },
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=30977",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The image is directly associated with Sarah Martinez's name and role on the page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The image is directly next to Sarah Martinez's name and labeled with her name.",
         "source": "https://www.pueblo.us/579/District-3-Representative"
       }
     ],
@@ -330,7 +353,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as District 3 Representative, a typical council member role."
+        "llm_confidence_reason": "Listed as District 3 Representative, a primary governing body role."
       },
       {
         "data": "Council Member",
@@ -370,7 +393,7 @@
       {
         "data": "https://www.pueblo.us/579/District-3-Representative",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Official profile link for Sarah Martinez as District 3 Representative.",
+        "llm_confidence_reason": "Official profile page linked for District 3 Representative.",
         "source": "https://www.pueblo.us/585/Council-Members"
       }
     ],
@@ -378,7 +401,7 @@
       {
         "data": "2022-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term start date is explicitly stated as January 1, 2022.",
+        "llm_confidence_reason": "Term start date is explicitly given as January 1, 2022.",
         "source": "https://www.pueblo.us/579/District-3-Representative"
       }
     ],
@@ -386,11 +409,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term end date is explicitly stated as December 31, 2025.",
+        "llm_confidence_reason": "Term end date is explicitly given as December 31, 2025.",
         "source": "https://www.pueblo.us/579/District-3-Representative"
       }
     ],
-    "updated_at": "2025-06-27T20:53:03Z"
+    "updated_at": "2025-06-28T17:57:30Z"
   },
   {
     "name": "Dennis Flores",
@@ -402,13 +425,13 @@
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=10130",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image directly associated with Dennis Flores on the page.",
+        "llm_confidence_reason": "Image directly associated with Dennis Flores's name.",
         "source": "https://www.pueblo.us/585/Council-Members"
       },
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=10130",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The image is directly associated with Dennis E. Flores on the page near his name and term information.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is directly associated with Dennis E. Flores' section and labeled with his name.",
         "source": "https://www.pueblo.us/581/Representative-at-Large"
       }
     ],
@@ -416,12 +439,12 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as Representative at Large, a typical council member role."
+        "llm_confidence_reason": "Listed as Representative at Large, a common council member role."
       },
       {
         "data": "Council Member At-Large",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The page title is 'Representative at Large' and the person is listed under 'City Council Term of Office' with a term from 2018 to 2025, indicating a council member role at-large."
+        "llm_confidence_reason": "The page title and section identify Dennis E. Flores as 'Representative at Large' which corresponds to a council member at-large role in Pueblo, CO."
       }
     ],
     "divisions": [
@@ -432,23 +455,23 @@
       },
       {
         "data": "At-Large",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The page and role specify 'Representative at Large' indicating an at-large division."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly 'Representative at Large' indicating an at-large division."
       }
     ],
     "phone_numbers": [
       {
         "data": "719-406-9852",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is explicitly listed under contact information for Dennis E. Flores.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed under Dennis E. Flores' contact information.",
         "source": "https://www.pueblo.us/581/Representative-at-Large"
       }
     ],
     "emails": [
       {
         "data": "dflores@pueblo.us",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email is explicitly listed under contact information for Dennis E. Flores.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly listed under Dennis E. Flores' contact information.",
         "source": "https://www.pueblo.us/581/Representative-at-Large"
       }
     ],
@@ -456,27 +479,27 @@
       {
         "data": "https://www.pueblo.us/581/Representative-at-Large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Official profile link for Dennis Flores as Representative at Large.",
+        "llm_confidence_reason": "Official profile page linked for Representative at Large.",
         "source": "https://www.pueblo.us/585/Council-Members"
       }
     ],
     "start_dates": [
       {
         "data": "2018-01-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term start date is explicitly given as January 1, 2018.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date is explicitly stated as January 1, 2018.",
         "source": "https://www.pueblo.us/581/Representative-at-Large"
       }
     ],
     "end_dates": [
       {
         "data": "2025-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date is explicitly given as December 31, 2025.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date is explicitly stated as December 31, 2025.",
         "source": "https://www.pueblo.us/581/Representative-at-Large"
       }
     ],
-    "updated_at": "2025-06-27T20:53:03Z"
+    "updated_at": "2025-06-28T17:57:30Z"
   },
   {
     "name": "Brett Boston",
@@ -488,13 +511,13 @@
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentID=36869",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image directly associated with Brett Boston on the page.",
+        "llm_confidence_reason": "Image directly associated with Brett Boston's name.",
         "source": "https://www.pueblo.us/585/Council-Members"
       },
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentID=36869",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "The image is directly under the name Brett Boston and labeled with his name, indicating a portrait.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is directly next to the name Brett Boston and labeled with his name.",
         "source": "https://www.pueblo.us/2563/Representative-at-Large"
       }
     ],
@@ -502,12 +525,12 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as Representative at Large, a typical council member role."
+        "llm_confidence_reason": "Listed as Representative at Large, a primary governing body role."
       },
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The page title is 'Representative at Large' and the term is described as 'City Council Term of Office', indicating a council member role. 'Representative at Large' is a council member position."
+        "llm_confidence_reason": "The page title is 'Representative at Large' and the text states 'City Council Term of Office' indicating a council member role; 'Representative at Large' is a council member position."
       }
     ],
     "divisions": [
@@ -518,23 +541,23 @@
       },
       {
         "data": "At-Large",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "The page and links repeatedly refer to 'Representative at Large', indicating the division is At-Large."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page and section title explicitly state 'Representative at Large'."
       }
     ],
     "phone_numbers": [
       {
         "data": "719-750-7753",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number is listed directly under contact information for Brett Boston.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is listed under Contact Information near the name.",
         "source": "https://www.pueblo.us/2563/Representative-at-Large"
       }
     ],
     "emails": [
       {
         "data": "bboston@pueblo.us",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email is listed directly under contact information for Brett Boston.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is listed under Contact Information near the name.",
         "source": "https://www.pueblo.us/2563/Representative-at-Large"
       }
     ],
@@ -542,14 +565,14 @@
       {
         "data": "https://www.pueblo.us/2563/Representative-at-Large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Official profile link for Brett Boston as Representative at Large.",
+        "llm_confidence_reason": "Official profile page linked for Representative at Large.",
         "source": "https://www.pueblo.us/585/Council-Members"
       }
     ],
     "start_dates": [
       {
         "data": "2024-06-24",
-        "llm_confidence": 0.99,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Term start date explicitly stated as June 24, 2024.",
         "source": "https://www.pueblo.us/2563/Representative-at-Large"
       }
@@ -557,12 +580,12 @@
     "end_dates": [
       {
         "data": "2025-12-31",
-        "llm_confidence": 0.99,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Term end date explicitly stated as December 31, 2025.",
         "source": "https://www.pueblo.us/2563/Representative-at-Large"
       }
     ],
-    "updated_at": "2025-06-27T20:53:03Z"
+    "updated_at": "2025-06-28T17:57:30Z"
   },
   {
     "name": "Mark Aliff",
@@ -574,13 +597,13 @@
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=36097",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image directly associated with Mark Aliff on the page.",
+        "llm_confidence_reason": "Image directly associated with Mark Aliff's name.",
         "source": "https://www.pueblo.us/585/Council-Members"
       },
       {
         "data": "https://www.pueblo.us/ImageRepository/Document?documentId=36097",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The image near the name 'Mark Aliff' is a portrait image URL likely representing him.",
+        "llm_confidence_reason": "The image is directly next to Mark Aliff's name and role, indicating it is his portrait.",
         "source": "https://www.pueblo.us/580/Representative-at-Large---President"
       }
     ],
@@ -588,7 +611,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as Representative at Large and President, indicating council member with leadership role."
+        "llm_confidence_reason": "Listed as Representative at Large and President, indicating council membership and leadership."
       },
       {
         "data": "Council President",
@@ -610,14 +633,14 @@
       {
         "data": "At-Large",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The page is titled 'Representative at Large - President', indicating the division is 'At-Large'."
+        "llm_confidence_reason": "The role is 'Representative at Large - President', indicating an at-large division."
       }
     ],
     "phone_numbers": [
       {
         "data": "719-252-2451",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number is explicitly listed under 'Contact Information' near Mark Aliff's name.",
+        "llm_confidence_reason": "Phone number is listed under 'Contact Information' directly associated with Mark Aliff.",
         "source": "https://www.pueblo.us/580/Representative-at-Large---President"
       }
     ],
@@ -625,7 +648,7 @@
       {
         "data": "maliff@pueblo.us",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email is explicitly listed under 'Contact Information' near Mark Aliff's name.",
+        "llm_confidence_reason": "Email is listed under 'Contact Information' directly associated with Mark Aliff.",
         "source": "https://www.pueblo.us/580/Representative-at-Large---President"
       }
     ],
@@ -633,7 +656,7 @@
       {
         "data": "https://www.pueblo.us/580/Representative-at-Large---President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Official profile link for Mark Aliff as Representative at Large and President.",
+        "llm_confidence_reason": "Official profile page linked for Representative at Large - President.",
         "source": "https://www.pueblo.us/585/Council-Members"
       }
     ],
@@ -641,7 +664,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term start date is explicitly given as January 1, 2024.",
+        "llm_confidence_reason": "Term start date is explicitly stated as January 1, 2024.",
         "source": "https://www.pueblo.us/580/Representative-at-Large---President"
       }
     ],
@@ -649,10 +672,10 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date is explicitly given as December 31, 2027.",
+        "llm_confidence_reason": "Term end date is explicitly stated as December 31, 2027.",
         "source": "https://www.pueblo.us/580/Representative-at-Large---President"
       }
     ],
-    "updated_at": "2025-06-27T20:53:03Z"
+    "updated_at": "2025-06-28T17:57:30Z"
   }
 ]
