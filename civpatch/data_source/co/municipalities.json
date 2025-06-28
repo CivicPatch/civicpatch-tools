@@ -507,7 +507,14 @@
       ],
       "population": 22165,
       "website": "https://www.evanscolorado.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-28T18:45:27Z",
+      "meta_hash": "347d94f8c223dd77e0fa1870c923ba11",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Louisville",
