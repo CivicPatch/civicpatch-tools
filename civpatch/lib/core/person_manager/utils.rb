@@ -65,7 +65,7 @@ module Core
         end
 
         # Fallback: Return the original division text
-        division.capitalize
+        division.split(" ").map(&:capitalize).join(" ")
       end
 
       # NOTE: Assume no one is going to use non-numeric characters
