@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Don Conyac",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(303) 833-3291 ext. 5501",
+    "email": "dconyac@firestoneco.gov",
+    "website": "https://www.firestoneco.gov/directory.aspx?EID=89",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.firestoneco.gov/113/Board-of-Trustees",
+      "https://www.firestoneco.gov/Directory.aspx?did=51",
+      "https://www.firestoneco.gov/directory.aspx?EID=89"
+    ],
+    "updated_at": "2025-06-28T18:56:23Z"
+  },
+  {
+    "name": "Frank A. Jimenez",
+    "roles": [
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(303) 833-3291 ext. 5502",
+    "email": "fjimenez@firestoneco.gov",
+    "website": "https://www.firestoneco.gov/directory.aspx?EID=91",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.firestoneco.gov/113/Board-of-Trustees",
+      "https://www.firestoneco.gov/Directory.aspx?did=51",
+      "https://www.firestoneco.gov/directory.aspx?EID=91"
+    ],
+    "updated_at": "2025-06-28T18:56:23Z"
+  },
+  {
+    "name": "Matt Holcomb",
+    "roles": [
+      "Board Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(303) 833-3291 ext. 5500",
+    "email": "mholcomb@firestoneco.gov",
+    "website": "https://www.firestoneco.gov/directory.aspx?EID=92",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.firestoneco.gov/113/Board-of-Trustees",
+      "https://www.firestoneco.gov/Directory.aspx?did=51",
+      "https://www.firestoneco.gov/directory.aspx?EID=92"
+    ],
+    "updated_at": "2025-06-28T18:56:23Z"
+  }
+]

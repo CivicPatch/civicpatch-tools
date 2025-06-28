@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Don Conyac",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.firestoneco.gov/ImageRepository/Document?documentId=10757",
+    "phone_number": "(303) 833-3291 ext. 5501",
+    "email": "DConyac@firestoneco.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-04",
+    "sources": [
+      "https://www.firestoneco.gov/113/Board-of-Trustees"
+    ],
+    "updated_at": "2025-06-28T18:48:30Z"
+  },
+  {
+    "name": "Frank A. Jimenez",
+    "roles": [
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [],
+    "image": "https://www.firestoneco.gov/ImageRepository/Document?documentId=10763",
+    "phone_number": "(303) 833-3291 ext. 5502",
+    "email": "FJimenez@firestoneco.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-04",
+    "sources": [
+      "https://www.firestoneco.gov/113/Board-of-Trustees"
+    ],
+    "updated_at": "2025-06-28T18:48:30Z"
+  }
+]
