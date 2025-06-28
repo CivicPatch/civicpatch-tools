@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.windsorgov.com/directory.aspx?EID=390%2F)
+[Skip to Main Content](https://www.windsorgov.com/directory.aspx?EID=138%2F)
 
 ![Town of Windsor](https://www.windsorgov.com/ImageRepository/Document?documentID=26745)
 
@@ -49,15 +49,16 @@ Search
 1. [Home](https://www.windsorgov.com)
 2. Staff Directory
 
-![](https://www.windsorgov.com/ImageRepository/Document?documentID=28381)
+![](https://www.windsorgov.com/ImageRepository/Document?documentID=28384)
 
-# Julie Cline
+# Lainie Peltz
 
  
 
 [Town Board Members](https://www.windsorgov.com/Directory.aspx?DID=29)  
-Title: Mayor  
-[Email Me](mailto:jcline@windsorgov.com)
+Title: Board Member, District 3  
+Phone: 970-294-2024  
+[Email Me](mailto:lpeltz@windsorgov.com)
 
 [Return to Staff Directory](https://www.windsorgov.com/Directory.aspx)
 

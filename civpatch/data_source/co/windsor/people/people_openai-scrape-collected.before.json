@@ -23,7 +23,7 @@
       {
         "data": "970-674-2400",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "The general Town of Windsor phone number is listed near the contact section; no direct personal phone number for Julie Cline is provided.",
+        "llm_confidence_reason": "The phone number is listed under 'Contact Us' for Town of Windsor, likely the main office number associated with the Mayor.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=390"
       }
     ],
@@ -37,7 +37,7 @@
       {
         "data": "jcline@windsorgov.com",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The email 'jcline@windsorgov.com' is explicitly linked with Julie Cline.",
+        "llm_confidence_reason": "The email is explicitly provided as 'Email Me' link with mailto:jcline@windsorgov.com.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=390"
       }
     ],
@@ -45,19 +45,19 @@
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=390",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile link directly associated with the person.",
+        "llm_confidence_reason": "Profile link provided next to name.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       },
       {
         "data": "https://www.windsorgov.com/Directory.aspx?EID=390",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The URL provided is the source page for Julie Cline's directory entry.",
+        "llm_confidence_reason": "The URL provided is the profile page for Julie Cline.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=390"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   },
   {
     "name": "Ron Steinbach",
@@ -73,9 +73,9 @@
         "llm_confidence_reason": "Listed as Board Member, District 1 which is a primary governing body role."
       },
       {
-        "data": "Council Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Title given as 'Board Member, District 1' on Town Board Members page; 'Board Member' is synonymous with 'Council Member' in municipal context."
+        "data": "Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Title: Board Member, District 1' which matches the target role 'board member'."
       }
     ],
     "divisions": [
@@ -87,7 +87,7 @@
       {
         "data": "District 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'District 1' in the title."
+        "llm_confidence_reason": "The division is clearly specified as 'District 1' in the title."
       }
     ],
     "phone_numbers": [],
@@ -101,7 +101,7 @@
       {
         "data": "rsteinbach@windsorgov.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "llm_confidence_reason": "Email is explicitly provided as a mailto link labeled 'Email Me' near the name.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=388"
       }
     ],
@@ -109,13 +109,13 @@
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=388",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile link directly associated with the person.",
+        "llm_confidence_reason": "Profile link provided next to name.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   },
   {
     "name": "Brian Jones",
@@ -131,9 +131,9 @@
         "llm_confidence_reason": "Listed as Board Member, District 2 which is a primary governing body role."
       },
       {
-        "data": "Council Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Title given as 'Board Member, District 2' which aligns with a council member role for a district."
+        "data": "Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Title: Board Member, District 2' which matches a target role 'board member'."
       }
     ],
     "divisions": [
@@ -145,14 +145,14 @@
       {
         "data": "District 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'District 2' in the title."
+        "llm_confidence_reason": "The division is clearly specified as 'District 2' in the title."
       }
     ],
     "phone_numbers": [
       {
         "data": "970-674-2400",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town phone number listed near contact info; no direct personal phone found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "The phone number is listed under general Town contact info near Brian Jones's section, no direct personal phone found.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=391"
       }
     ],
@@ -166,7 +166,7 @@
       {
         "data": "bjones@windsorgov.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly linked with Brian Jones' name.",
+        "llm_confidence_reason": "Email is explicitly provided as 'Email Me' link with mailto:bjones@windsorgov.com.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=391"
       }
     ],
@@ -174,13 +174,13 @@
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=391",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile link directly associated with the person.",
+        "llm_confidence_reason": "Profile link provided next to name.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   },
   {
     "name": "Lainie Peltz",
@@ -196,9 +196,9 @@
         "llm_confidence_reason": "Listed as Board Member, District 3 which is a primary governing body role."
       },
       {
-        "data": "Council Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Title given as 'Board Member, District 3' on Windsor town site; 'Board Member' is synonymous with 'Council Member' in municipal context."
+        "data": "Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Title: Board Member, District 3' which matches the target role 'board member'."
       }
     ],
     "divisions": [
@@ -210,7 +210,7 @@
       {
         "data": "District 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'District 3' in title."
+        "llm_confidence_reason": "The division is clearly specified as 'District 3' in the title."
       }
     ],
     "phone_numbers": [
@@ -223,7 +223,7 @@
       {
         "data": "970-294-2024",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number listed directly under Lainie Peltz's contact info.",
+        "llm_confidence_reason": "Phone number is explicitly listed next to the name and title.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=138"
       }
     ],
@@ -237,7 +237,7 @@
       {
         "data": "lpeltz@windsorgov.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email link text 'Email Me' with mailto:lpeltz@windsorgov.com.",
+        "llm_confidence_reason": "Email is explicitly provided as a mailto link labeled 'Email Me' near the name.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=138"
       }
     ],
@@ -245,13 +245,13 @@
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=138",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile link directly associated with the person.",
+        "llm_confidence_reason": "Profile link provided next to name.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   },
   {
     "name": "Ken Symsack",
@@ -267,9 +267,9 @@
         "llm_confidence_reason": "Listed as Board Member, District 4 which is a primary governing body role."
       },
       {
-        "data": "Council Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text states 'Title: Board Member, District 4' which is equivalent to a council member role in the main governing body."
+        "data": "Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Title: Board Member, District 4' which matches a target role 'board member'."
       }
     ],
     "divisions": [
@@ -281,14 +281,14 @@
       {
         "data": "District 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division is explicitly stated as 'District 4' in the title."
+        "llm_confidence_reason": "The division is clearly specified as 'District 4' in the title."
       }
     ],
     "phone_numbers": [
       {
         "data": "970-674-2400",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "The general Town of Windsor phone number is provided near the contact section; no direct personal phone number found.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The phone number is listed under general Town of Windsor contact info near the person's section; no personal direct line is given.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=392"
       }
     ],
@@ -296,7 +296,7 @@
       {
         "data": "ksymsack@windsorgov.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email is explicitly provided next to the name.",
+        "llm_confidence_reason": "Email is explicitly provided as a mailto link next to the name.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=392"
       }
     ],
@@ -304,13 +304,13 @@
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=392",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile link directly associated with the person.",
+        "llm_confidence_reason": "Profile link provided next to name.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   },
   {
     "name": "Rick Klimek",
@@ -326,9 +326,9 @@
         "llm_confidence_reason": "Listed as Board Member, District 5 which is a primary governing body role."
       },
       {
-        "data": "Council Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text states 'Title: Board Member, District 5' which aligns with a council member role in the main governing body; 'Board Member' is interpreted as 'Council Member' given the target roles and municipal context."
+        "data": "Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Title: Board Member, District 5' which matches the target role 'board member'."
       }
     ],
     "divisions": [
@@ -339,8 +339,8 @@
       },
       {
         "data": "District 5",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division is explicitly stated as 'District 5' in the title."
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The division is clearly specified as 'District 5' in the title."
       }
     ],
     "phone_numbers": [
@@ -352,8 +352,8 @@
       },
       {
         "data": "970-301-1783",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is clearly listed next to the name and title.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is explicitly listed near the name and role.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=140"
       }
     ],
@@ -366,8 +366,8 @@
       },
       {
         "data": "rklimek@windsorgov.com",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email is explicitly provided as a mailto link labeled 'Email Me'.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is provided as a mailto link labeled 'Email Me' near the name and role.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=140"
       }
     ],
@@ -375,13 +375,13 @@
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=140",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile link directly associated with the person.",
+        "llm_confidence_reason": "Profile link provided next to name.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   },
   {
     "name": "Jason Hallett",
@@ -399,7 +399,7 @@
       {
         "data": "Board Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text explicitly states 'Title: Board Member, District 6' which matches a council member role."
+        "llm_confidence_reason": "The text explicitly states 'Title: Board Member, District 6' which matches the target role 'board member'."
       }
     ],
     "divisions": [
@@ -424,7 +424,7 @@
       {
         "data": "970-692-7819",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly listed next to the name and title.",
+        "llm_confidence_reason": "Phone number is explicitly listed next to the name and role.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=141"
       }
     ],
@@ -438,7 +438,7 @@
       {
         "data": "jhallett@windsorgov.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email is provided as a mailto link labeled 'Email Me' near the name and title.",
+        "llm_confidence_reason": "Email is provided as a mailto link labeled 'Email Me' near the name and role.",
         "source": "https://www.windsorgov.com/directory.aspx?EID=141"
       }
     ],
@@ -446,12 +446,12 @@
       {
         "data": "https://www.windsorgov.com/directory.aspx?EID=141",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile link directly associated with the person.",
+        "llm_confidence_reason": "Profile link provided next to name.",
         "source": "https://www.windsorgov.com/Directory.aspx?did=22"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   }
 ]

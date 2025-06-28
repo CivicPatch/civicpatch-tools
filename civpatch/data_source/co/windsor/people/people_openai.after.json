@@ -15,12 +15,12 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=390"
     ],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   },
   {
     "name": "Ron Steinbach",
     "roles": [
-      "Council Member"
+      "Board Member"
     ],
     "divisions": [
       "District 1"
@@ -35,12 +35,12 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=388"
     ],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   },
   {
     "name": "Brian Jones",
     "roles": [
-      "Council Member"
+      "Board Member"
     ],
     "divisions": [
       "District 2"
@@ -55,12 +55,12 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=391"
     ],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   },
   {
     "name": "Lainie Peltz",
     "roles": [
-      "Council Member"
+      "Board Member"
     ],
     "divisions": [
       "District 3"
@@ -75,12 +75,12 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=138"
     ],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   },
   {
     "name": "Ken Symsack",
     "roles": [
-      "Council Member"
+      "Board Member"
     ],
     "divisions": [
       "District 4"
@@ -95,12 +95,12 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=392"
     ],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
   },
   {
     "name": "Rick Klimek",
     "roles": [
-      "Council Member"
+      "Board Member"
     ],
     "divisions": [
       "District 5"
@@ -115,6 +115,26 @@
       "https://www.windsorgov.com/Directory.aspx?did=22",
       "https://www.windsorgov.com/directory.aspx?EID=140"
     ],
-    "updated_at": "2025-06-28T18:03:40Z"
+    "updated_at": "2025-06-28T18:34:05Z"
+  },
+  {
+    "name": "Jason Hallett",
+    "roles": [
+      "Board Member"
+    ],
+    "divisions": [
+      "District 6"
+    ],
+    "image": null,
+    "phone_number": "(970) 692-7819",
+    "email": "jhallett@windsorgov.com",
+    "website": "https://www.windsorgov.com/directory.aspx?EID=141",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.windsorgov.com/Directory.aspx?did=22",
+      "https://www.windsorgov.com/directory.aspx?EID=141"
+    ],
+    "updated_at": "2025-06-28T18:34:05Z"
   }
 ]
