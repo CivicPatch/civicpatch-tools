@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.windsorgov.com/directory.aspx?EID=390%2F)
+[Skip to Main Content](https://www.windsorgov.com/directory.aspx?EID=140%2F)
 
 ![Town of Windsor](https://www.windsorgov.com/ImageRepository/Document?documentID=26745)
 
@@ -35,7 +35,7 @@ Loading
 
 Search
 
-![](https://www.windsorgov.com/ImageRepository/Document?documentID=26747)
+![](https://www.windsorgov.com/ImageRepository/Document?documentID=26748)
 
 1. [Agendas &amp; Minutes](https://www.windsorgov.com/153/Agendas-and-Minutes)
 2. [Bids and RFP's](https://www.windsorgov.com/bids.aspx)
@@ -49,15 +49,16 @@ Search
 1. [Home](https://www.windsorgov.com)
 2. Staff Directory
 
-![](https://www.windsorgov.com/ImageRepository/Document?documentID=28381)
+![](https://www.windsorgov.com/ImageRepository/Document?documentID=28383)
 
-# Julie Cline
+# Rick Klimek
 
  
 
 [Town Board Members](https://www.windsorgov.com/Directory.aspx?DID=29)  
-Title: Mayor  
-[Email Me](mailto:jcline@windsorgov.com)
+Title: Board Member, District 5  
+Phone: 970-301-1783  
+[Email Me](mailto:rklimek@windsorgov.com)
 
 [Return to Staff Directory](https://www.windsorgov.com/Directory.aspx)
 

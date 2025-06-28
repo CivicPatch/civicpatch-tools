@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.windsorgov.com/directory.aspx?EID=390%2F)
+[Skip to Main Content](https://www.windsorgov.com/directory.aspx?EID=141%2F)
 
 ![Town of Windsor](https://www.windsorgov.com/ImageRepository/Document?documentID=26745)
 
@@ -49,15 +49,16 @@ Search
 1. [Home](https://www.windsorgov.com)
 2. Staff Directory
 
-![](https://www.windsorgov.com/ImageRepository/Document?documentID=28381)
+![](https://www.windsorgov.com/ImageRepository/Document?documentID=28382)
 
-# Julie Cline
+# Jason Hallett
 
  
 
 [Town Board Members](https://www.windsorgov.com/Directory.aspx?DID=29)  
-Title: Mayor  
-[Email Me](mailto:jcline@windsorgov.com)
+Title: Board Member, District 6  
+Phone: 970-692-7819  
+[Email Me](mailto:jhallett@windsorgov.com)
 
 [Return to Staff Directory](https://www.windsorgov.com/Directory.aspx)
 
