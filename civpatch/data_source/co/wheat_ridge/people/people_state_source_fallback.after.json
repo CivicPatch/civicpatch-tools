@@ -4,7 +4,7 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-06-27T21:02:12Z",
+    "updated_at": "2025-06-28T18:08:33Z",
     "divisions": []
   },
   {
@@ -12,7 +12,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-27T21:02:12Z",
+    "updated_at": "2025-06-28T18:08:33Z",
     "divisions": []
   },
   {
@@ -20,15 +20,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-27T21:02:12Z",
-    "divisions": []
-  },
-  {
-    "name": "Rachel Hultin",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-06-27T21:02:12Z",
+    "updated_at": "2025-06-28T18:08:33Z",
     "divisions": []
   },
   {
@@ -36,15 +28,15 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-27T21:02:12Z",
+    "updated_at": "2025-06-28T18:08:33Z",
     "divisions": []
   },
   {
-    "name": "Amanda Weaver",
+    "name": "Rachel Hultin",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-27T21:02:12Z",
+    "updated_at": "2025-06-28T18:08:33Z",
     "divisions": []
   },
   {
@@ -52,7 +44,23 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-27T21:02:12Z",
+    "updated_at": "2025-06-28T18:08:33Z",
+    "divisions": []
+  },
+  {
+    "name": "Amanda Weaver",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:08:33Z",
+    "divisions": []
+  },
+  {
+    "name": "Leah Dozeman",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:08:33Z",
     "divisions": []
   },
   {
@@ -60,15 +68,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-27T21:02:12Z",
-    "divisions": []
-  },
-  {
-    "name": null,
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-06-27T21:02:12Z",
+    "updated_at": "2025-06-28T18:08:33Z",
     "divisions": []
   }
 ]
