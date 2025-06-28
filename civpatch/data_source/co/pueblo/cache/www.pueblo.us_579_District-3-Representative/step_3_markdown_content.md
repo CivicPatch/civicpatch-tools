@@ -1,5 +1,3 @@
-This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
-
 [Skip To Main Content](https://www.pueblo.us/579/District-3-Representative/)
 
 Loading
@@ -22,7 +20,7 @@ Loading
 
 Search
 
-![](https://www.pueblo.us/ImageRepository/Document?documentID=34650)
+![](https://www.pueblo.us/ImageRepository/Document?documentID=34651)
 
 1. [Home](https://www.pueblo.us)
 2. [Your Government](https://www.pueblo.us/27/Your-Government)
@@ -119,5 +117,3 @@ Excel Download
 PowerPoint Download
 
 Document Download
-
-Explore your accessibility options

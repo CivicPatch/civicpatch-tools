@@ -10,17 +10,17 @@
     "email": null,
     "website": "https://www.pueblo.us/2941/Mayor-Heather-Graham",
     "start_date": "2024-02-01",
-    "end_date": null,
+    "end_date": "2028-02-01",
     "sources": [
       "https://www.pueblo.us/2941/Mayor-Heather-Graham"
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Regina Maestri",
     "roles": [
       "Representative",
-      "Council Member"
+      "City Council"
     ],
     "divisions": [
       "District 1"
@@ -35,7 +35,7 @@
       "https://www.pueblo.us/585/Council-Members",
       "https://www.pueblo.us/577/District-1-Representative"
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Roger Gomez",
@@ -57,28 +57,28 @@
       "https://www.pueblo.us/585/Council-Members",
       "https://www.pueblo.us/576/District-4-Representative"
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Joe Latino",
     "roles": [
       "Representative",
-      "District 2 Representative"
+      "Council Member"
     ],
     "divisions": [
       "District 2"
     ],
     "image": null,
     "phone_number": "719-369-0514",
-    "email": null,
+    "email": "jlatino@pueblo.us",
     "website": "https://www.pueblo.us/578/District-2-Representative",
     "start_date": "2024-01-01",
-    "end_date": null,
+    "end_date": "2027-12-31",
     "sources": [
       "https://www.pueblo.us/585/Council-Members",
       "https://www.pueblo.us/578/District-2-Representative"
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Sarah Martinez",
@@ -99,16 +99,17 @@
       "https://www.pueblo.us/585/Council-Members",
       "https://www.pueblo.us/579/District-3-Representative"
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Dennis Flores",
     "roles": [
-      "Representative"
+      "Representative",
+      "City Council"
     ],
     "divisions": [
-      "at Large",
-      "at-large"
+      "At Large",
+      "Representative at Large"
     ],
     "image": null,
     "phone_number": "719-406-9852",
@@ -120,17 +121,17 @@
       "https://www.pueblo.us/585/Council-Members",
       "https://www.pueblo.us/581/Representative-at-Large"
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Brett Boston",
     "roles": [
       "Representative",
-      "council member"
+      "Representative at Large"
     ],
     "divisions": [
-      "at Large",
-      "Representative at Large"
+      "At Large",
+      "At-Large"
     ],
     "image": null,
     "phone_number": "719-750-7753",
@@ -142,7 +143,7 @@
       "https://www.pueblo.us/585/Council-Members",
       "https://www.pueblo.us/2563/Representative-at-Large"
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Mark Aliff",
@@ -151,18 +152,19 @@
       "President"
     ],
     "divisions": [
-      "at Large"
+      "At Large",
+      "Representative at Large"
     ],
     "image": null,
     "phone_number": "719-252-2451",
-    "email": null,
+    "email": "maliff@pueblo.us",
     "website": "https://www.pueblo.us/580/Representative-at-Large---President",
     "start_date": "2024-01-01",
-    "end_date": null,
+    "end_date": "2027-12-31",
     "sources": [
       "https://www.pueblo.us/585/Council-Members",
       "https://www.pueblo.us/580/Representative-at-Large---President"
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   }
 ]

@@ -8,8 +8,8 @@
     "roles": [
       {
         "data": "mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor Heather Graham' and confirmed as her current role."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor Heather Graham' and 'This is her first four-year term as mayor of Pueblo', confirming her current role."
       }
     ],
     "divisions": [],
@@ -18,21 +18,28 @@
     "websites": [
       {
         "data": "https://www.pueblo.us/2941/Mayor-Heather-Graham",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "The URL is directly associated with the 'Mayor Heather Graham' page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly associated with 'Mayor Heather Graham' in the breadcrumbs and title of the page.",
         "source": "https://www.pueblo.us/2941/Mayor-Heather-Graham"
       }
     ],
     "start_dates": [
       {
         "data": "2024-02-01",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated 'sworn into office on February 1, 2024'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Heather Graham was sworn into office on February 1, 2024'.",
         "source": "https://www.pueblo.us/2941/Mayor-Heather-Graham"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "end_dates": [
+      {
+        "data": "2028-02-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states she was sworn into office on February 1, 2024, for a 'first four-year term', allowing for calculation of the end date. Confidence is slightly less than 1.0 as the exact end date is inferred from the term length rather than explicitly stated as 'ends on YYYY-MM-DD'.",
+        "source": "https://www.pueblo.us/2941/Mayor-Heather-Graham"
+      }
+    ],
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Regina Maestri",
@@ -44,20 +51,25 @@
     "roles": [
       {
         "data": "Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'District 1 Representative', which implies a council member role."
       },
       {
-        "data": "Council Member",
+        "data": "City Council",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'City Council Term of Office' and 'District 1 Representative', indicating a role as a council member. 'Council Member' is a target role and is currently active."
+        "llm_confidence_reason": "Explicitly stated as 'City Council Term of Office'."
+      },
+      {
+        "data": "Representative",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 1 Representative'."
       }
     ],
     "divisions": [
       {
         "data": "District 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated as 'District 1 Representative'."
       },
       {
         "data": "District 1",
@@ -69,7 +81,7 @@
       {
         "data": "719-504-8888",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided phone number for the person under 'Contact Information'.",
+        "llm_confidence_reason": "Explicitly provided phone number for Regina Maestri.",
         "source": "https://www.pueblo.us/577/District-1-Representative"
       }
     ],
@@ -77,15 +89,15 @@
       {
         "data": "rmaestri@pueblo.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly provided email address for the person, prioritizing official over personal email if both are present and clearly associated with the person's role in the municipality. The other email is bobschilling68@gmail.com which is not official and likely a typo or incorrect association given the context of the official website and the name 'bobschilling'.",
+        "llm_confidence_reason": "Explicitly provided email address for Regina Maestri.",
         "source": "https://www.pueblo.us/577/District-1-Representative"
       }
     ],
     "websites": [
       {
         "data": "https://www.pueblo.us/577/District-1-Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked to the person's name.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.pueblo.us/585/Council-Members"
       }
     ],
@@ -93,7 +105,7 @@
       {
         "data": "2022-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'January 1, 2022' as the start date of the term of office for City Council. The date is clearly associated with the person and their role. The format is also correct for extraction.",
+        "llm_confidence_reason": "Explicitly stated 'January 1, 2022' as the start date of the term.",
         "source": "https://www.pueblo.us/577/District-1-Representative"
       }
     ],
@@ -101,11 +113,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'December 31, 2025' as the end date of the term of office for City Council. The date is clearly associated with the person and their role. The format is also correct for extraction.",
+        "llm_confidence_reason": "Explicitly stated 'December 31, 2025' as the end date of the term.",
         "source": "https://www.pueblo.us/577/District-1-Representative"
       }
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Roger Gomez",
@@ -117,30 +129,25 @@
     "roles": [
       {
         "data": "Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'District 4 Representative', which implies a council member role."
       },
       {
         "data": "Work Session Chair",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated as 'Work Session Chair'."
       },
       {
         "data": "Council Member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as having a 'City Council Term of Office' and being a 'District 4 Representative', indicating a role as a Council Member. "
-      },
-      {
-        "data": "Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'District 4 Representative'."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The page is titled 'District 4 Representative' and is under the 'City Council' section, implying a council member role."
       }
     ],
     "divisions": [
       {
         "data": "District 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated as 'District 4 Representative'."
       },
       {
         "data": "District 4",
@@ -152,7 +159,7 @@
       {
         "data": "719-750-7424",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number '719-750-7424' is explicitly provided next to the name and contact information section for Roger Gomez, ensuring high accuracy and direct association with the individual. The format is standard and unambiguous, confirming its validity as a phone number for the person mentioned. ",
+        "llm_confidence_reason": "Phone number is explicitly provided under 'Contact Information'.",
         "source": "https://www.pueblo.us/576/District-4-Representative"
       }
     ],
@@ -160,23 +167,29 @@
       {
         "data": "rgomez@pueblo.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name and contact information section for Roger Gomez, ensuring high accuracy and direct association with the individual. The format is standard and unambiguous, confirming its validity as an email address for the person mentioned. ",
+        "llm_confidence_reason": "Email address is explicitly provided under 'Contact Information'.",
         "source": "https://www.pueblo.us/576/District-4-Representative"
       }
     ],
     "websites": [
       {
         "data": "https://www.pueblo.us/576/District-4-Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked to the person's name.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.pueblo.us/585/Council-Members"
+      },
+      {
+        "data": "https://www.pueblo.us/576/District-4-Representative",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page URL is specific to the District 4 Representative, which is Roger Gomez.",
+        "source": "https://www.pueblo.us/576/District-4-Representative"
       }
     ],
     "start_dates": [
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated as part of the 'City Council Term of Office' for Roger Gomez, ensuring high accuracy and direct association with the individual. The date is in a clear and unambiguous format, confirming its validity as a start date for the person mentioned. ",
+        "llm_confidence_reason": "Explicitly stated as 'January 1, 2024' for the term of office.",
         "source": "https://www.pueblo.us/576/District-4-Representative"
       }
     ],
@@ -184,11 +197,11 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated as part of the 'City Council Term of Office' for Roger Gomez, ensuring high accuracy and direct association with the individual. The date is in a clear and unambiguous format, confirming its validity as an end date for the person mentioned. ",
+        "llm_confidence_reason": "Explicitly stated as 'December 31, 2027' for the term of office.",
         "source": "https://www.pueblo.us/576/District-4-Representative"
       }
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Joe Latino",
@@ -200,42 +213,54 @@
     "roles": [
       {
         "data": "Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'District 2 Representative', which implies a council member role."
       },
       {
-        "data": "District 2 Representative",
+        "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'District 2 Representative' and lists Joe Latino under this heading."
+        "llm_confidence_reason": "Explicitly stated as 'City Council Term of Office' and 'District 2 Representative', which implies a council member role."
       }
     ],
     "divisions": [
       {
         "data": "District 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated as 'District 2 Representative'."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 2 Representative'."
       }
     ],
     "phone_numbers": [
       {
         "data": "719-369-0514",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number is clearly associated with Joe Latino in the contact information section.",
+        "llm_confidence_reason": "Phone number is explicitly provided and linked to the person's name and contact information section. ",
         "source": "https://www.pueblo.us/578/District-2-Representative"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "jlatino@pueblo.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked to the person's name and contact information section. ",
+        "source": "https://www.pueblo.us/578/District-2-Representative"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.pueblo.us/578/District-2-Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked to the person's name.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.pueblo.us/585/Council-Members"
       },
       {
         "data": "https://www.pueblo.us/578/District-2-Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "This URL is directly linked to the 'District 2 Representative' section where Joe Latino is featured.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page URL is specific to 'District 2 Representative' and Joe Latino is the subject of this page, making it his profile page.",
         "source": "https://www.pueblo.us/578/District-2-Representative"
       }
     ],
@@ -243,12 +268,19 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'City Council Term of Office January 1, 2024 - December 31, 2027' which clearly indicates the start date.",
+        "llm_confidence_reason": "Explicitly stated as 'January 1, 2024' for the term of office. ",
         "source": "https://www.pueblo.us/578/District-2-Representative"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'December 31, 2027' for the term of office. ",
+        "source": "https://www.pueblo.us/578/District-2-Representative"
+      }
+    ],
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Sarah Martinez",
@@ -260,37 +292,32 @@
     "roles": [
       {
         "data": "Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'District 3 Representative', which implies a council member role."
       },
       {
         "data": "Council Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text states 'City Council Term of Office' and she is listed as 'District 3 Representative', implying she is a council member. 'Council Member' is a target role and a reasonable inference from 'District 3 Representative' within the context of 'City Council'."
-      },
-      {
-        "data": "Representative",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'District 3 Representative'."
+        "llm_confidence_reason": "The text explicitly states 'City Council Term of Office' for Sarah Martinez, indicating her role as a Council Member. The page is also under the 'City Council' and 'Council Members' navigation path, confirming this role. This is a primary governing body role for Pueblo, CO, ensuring high confidence in its accuracy and direct relevance to her position. The role is clearly active as of today's date (2025-06-28) based on the provided term dates."
       }
     ],
     "divisions": [
       {
         "data": "District 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated as 'District 3 Representative'."
       },
       {
         "data": "District 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'District 3 Representative'."
+        "llm_confidence_reason": "Explicitly stated as 'District 3 Representative' and the page is about her as the District 3 Representative."
       }
     ],
     "phone_numbers": [
       {
         "data": "719-568-8033",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person's contact information section, which is a direct extraction.",
+        "llm_confidence_reason": "Phone number is explicitly provided next to her contact information section, indicating high confidence in its accuracy and direct association with her role as a council member for Pueblo, CO. The phone number format is standard and clearly visible in the text, ensuring accurate extraction. The context of the phone number being under 'Contact Information' for Sarah Martinez further confirms its relevance and direct link to her.",
         "source": "https://www.pueblo.us/579/District-3-Representative"
       }
     ],
@@ -298,23 +325,29 @@
       {
         "data": "smartinez@pueblo.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person's contact information section, formatted as a mailto link text, which is a direct extraction.",
+        "llm_confidence_reason": "Email address is explicitly provided next to her contact information section and is a direct mailto link for her name, indicating high confidence in its accuracy and direct association with her role as a council member for Pueblo, CO. The email format is standard and clearly visible in the text, ensuring accurate extraction. The context of the email being under 'Contact Information' for Sarah Martinez further confirms its relevance and direct link to her.",
         "source": "https://www.pueblo.us/579/District-3-Representative"
       }
     ],
     "websites": [
       {
         "data": "https://www.pueblo.us/579/District-3-Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked to the person's name.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.pueblo.us/585/Council-Members"
+      },
+      {
+        "data": "https://www.pueblo.us/579/District-3-Representative",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the current page's URL, which is specifically titled 'District 3 Representative' and contains all the extracted information for Sarah Martinez, indicating it is her primary profile page. The URL is a standard web URL starting with 'https://', ensuring high confidence in its accuracy and direct relevance to her role as a council member for Pueblo, CO. The URL is clearly associated with her name and role, further confirming its validity and direct link to her.",
+        "source": "https://www.pueblo.us/579/District-3-Representative"
       }
     ],
     "start_dates": [
       {
         "data": "2022-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'January 1, 2022' for her term of office, which is a direct extraction and within the allowed date formats.",
+        "llm_confidence_reason": "The start date 'January 1, 2022' is explicitly stated as part of her 'City Council Term of Office' and is directly associated with her name, ensuring high accuracy and direct relevance to her role as a council member for Pueblo, CO. The date format is clear and unambiguous, allowing for precise extraction and conversion to the required YYYY-MM-DD format. The context of the date being part of her official term further confirms its validity and direct link to her.",
         "source": "https://www.pueblo.us/579/District-3-Representative"
       }
     ],
@@ -322,11 +355,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'December 31, 2025' for her term of office, which is a direct extraction and within the allowed date formats. The term is active as of today's date (2025-06-27).",
+        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated as part of her 'City Council Term of Office' and is directly associated with her name, ensuring high accuracy and direct relevance to her role as a council member for Pueblo, CO. The date format is clear and unambiguous, allowing for precise extraction and conversion to the required YYYY-MM-DD format. The context of the date being part of her official term further confirms its validity and direct link to her.",
         "source": "https://www.pueblo.us/579/District-3-Representative"
       }
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Dennis Flores",
@@ -338,32 +371,32 @@
     "roles": [
       {
         "data": "Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Representative at Large', which implies a council member role."
       },
       {
-        "data": "Representative",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The role 'Representative at Large' is explicitly stated. 'Representative' is a valid part of the role, and 'at Large' is a division. "
+        "data": "City Council",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Term of Office' and found under the 'City Council' section of the website."
       }
     ],
     "divisions": [
       {
-        "data": "at Large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
-      },
-      {
-        "data": "at-large",
+        "data": "At Large",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 'Representative at Large'."
+      },
+      {
+        "data": "Representative at Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Representative at Large' in the heading and URL path."
       }
     ],
     "phone_numbers": [
       {
         "data": "719-406-9852",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is directly provided and clearly associated with the person's contact information section. ",
+        "llm_confidence_reason": "Phone number is explicitly provided next to the email under 'Contact Information'.",
         "source": "https://www.pueblo.us/581/Representative-at-Large"
       }
     ],
@@ -371,23 +404,29 @@
       {
         "data": "dflores@pueblo.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is directly provided and clearly associated with the person's contact information section, formatted as a mailto link text, which is a valid extraction method per guidelines. ",
+        "llm_confidence_reason": "Email address is explicitly provided next to the phone number under 'Contact Information'.",
         "source": "https://www.pueblo.us/581/Representative-at-Large"
       }
     ],
     "websites": [
       {
         "data": "https://www.pueblo.us/581/Representative-at-Large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked to the person's name.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.pueblo.us/585/Council-Members"
+      },
+      {
+        "data": "https://www.pueblo.us/581/Representative-at-Large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page URL is specific to 'Representative at Large' and Dennis Flores is listed as such.",
+        "source": "https://www.pueblo.us/581/Representative-at-Large"
       }
     ],
     "start_dates": [
       {
         "data": "2018-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The start date 'January 1, 2018' is explicitly stated as part of the 'City Council Term of Office'.",
+        "llm_confidence_reason": "Explicitly stated as 'January 1, 2018' for 'City Council Term of Office'.",
         "source": "https://www.pueblo.us/581/Representative-at-Large"
       }
     ],
@@ -395,11 +434,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated as part of the 'City Council Term of Office'.",
+        "llm_confidence_reason": "Explicitly stated as 'December 31, 2025' for 'City Council Term of Office'.",
         "source": "https://www.pueblo.us/581/Representative-at-Large"
       }
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Brett Boston",
@@ -411,32 +450,32 @@
     "roles": [
       {
         "data": "Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
-      },
-      {
-        "data": "council member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'City Council Term of Office' and 'Representative at Large' for Brett Boston, clearly indicating a role as a council member."
-      }
-    ],
-    "divisions": [
-      {
-        "data": "at Large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Representative at Large', which implies a council member role."
       },
       {
         "data": "Representative at Large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Representative at Large' under the person's name and section."
+        "llm_confidence_reason": "Explicitly stated as 'Representative at Large' and is a relevant municipal role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Representative at Large'."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Representative at Large'."
       }
     ],
     "phone_numbers": [
       {
         "data": "719-750-7753",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided under 'Contact Information' for Brett Boston, directly next to the email address.",
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person under 'Contact Information'.",
         "source": "https://www.pueblo.us/2563/Representative-at-Large"
       }
     ],
@@ -444,15 +483,15 @@
       {
         "data": "bboston@pueblo.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided under 'Contact Information' for Brett Boston, including the mailto link format which confirms it as an email address for the person mentioned.",
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person under 'Contact Information'.",
         "source": "https://www.pueblo.us/2563/Representative-at-Large"
       }
     ],
     "websites": [
       {
         "data": "https://www.pueblo.us/2563/Representative-at-Large",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked to the person's name.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.pueblo.us/585/Council-Members"
       }
     ],
@@ -460,7 +499,7 @@
       {
         "data": "2024-06-24",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The start date 'June 24, 2024' is explicitly stated as part of the 'City Council Term of Office' for Brett Boston, and is in a valid YYYY-MM-DD format for extraction.",
+        "llm_confidence_reason": "Explicitly stated as 'June 24, 2024' for the term start date, which is a valid date format and clearly associated with the person's term of office. Today's date is 2025-06-28, so the term is active.",
         "source": "https://www.pueblo.us/2563/Representative-at-Large"
       }
     ],
@@ -468,11 +507,11 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'December 31, 2025' is explicitly stated as part of the 'City Council Term of Office' for Brett Boston, and is in a valid YYYY-MM-DD format for extraction.",
+        "llm_confidence_reason": "Explicitly stated as 'December 31, 2025' for the term end date, which is a valid date format and clearly associated with the person's term of office. Today's date is 2025-06-28, so the term is active.",
         "source": "https://www.pueblo.us/2563/Representative-at-Large"
       }
     ],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "updated_at": "2025-06-28T17:58:24Z"
   },
   {
     "name": "Mark Aliff",
@@ -484,47 +523,59 @@
     "roles": [
       {
         "data": "Representative",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Representative at Large', which implies a council member role."
       },
       {
         "data": "President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated as 'President'."
       },
       {
         "data": "President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Mark Aliff is explicitly listed as 'President' and 'Representative at Large - President'."
+        "llm_confidence_reason": "Explicitly stated as 'Mark Aliff - President' and is a target role."
       }
     ],
     "divisions": [
       {
-        "data": "at Large",
+        "data": "At Large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated as 'Representative at Large'."
+      },
+      {
+        "data": "Representative at Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Representative at Large - President' and linked to a page titled 'Representative at Large - President'."
       }
     ],
     "phone_numbers": [
       {
         "data": "719-252-2451",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number is clearly associated with Mark Aliff in the contact information section.",
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with Mark Aliff under 'Contact Information'.",
         "source": "https://www.pueblo.us/580/Representative-at-Large---President"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "maliff@pueblo.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with Mark Aliff under 'Contact Information'.",
+        "source": "https://www.pueblo.us/580/Representative-at-Large---President"
+      }
+    ],
     "websites": [
       {
         "data": "https://www.pueblo.us/580/Representative-at-Large---President",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly linked to the person's name.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided.",
         "source": "https://www.pueblo.us/585/Council-Members"
       },
       {
         "data": "https://www.pueblo.us/580/Representative-at-Large---President",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "This URL is directly linked to the 'Representative at Large - President' section where Mark Aliff is featured.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is the current page and is titled 'Representative at Large - President', directly associated with Mark Aliff's role.",
         "source": "https://www.pueblo.us/580/Representative-at-Large---President"
       }
     ],
@@ -532,11 +583,18 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text states 'City Council Term of Office January 1, 2024 - December 31, 2027' directly below his name, indicating his start date.",
+        "llm_confidence_reason": "The start date 'January 1, 2024' is explicitly stated as part of his 'City Council Term of Office'.",
         "source": "https://www.pueblo.us/580/Representative-at-Large---President"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-06-27T20:59:58Z"
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2027' is explicitly stated as part of his 'City Council Term of Office'.",
+        "source": "https://www.pueblo.us/580/Representative-at-Large---President"
+      }
+    ],
+    "updated_at": "2025-06-28T17:58:24Z"
   }
 ]

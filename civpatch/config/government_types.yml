@@ -91,6 +91,7 @@ government_types:
           - town council representative
           - town council member
           - town council
+          - representative
     # position_examples: *position_examples
     exclude_positions:
       - youth councilor

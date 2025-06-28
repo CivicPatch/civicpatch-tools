@@ -2,17 +2,17 @@
 - name: Heather Graham
   roles:
   - Mayor
-  divisions:
+  divisions: []
   image: https://www.pueblo.us/ImageRepository/Document?documentId=36131
   cdn_image: https://cdn.civicpatch.org/open-data/co/pueblo/images/dc48e0a97b0559327cd4f4c8baaefd362071b0ff1e0960789975b355646d6fbb.jpg
   email:
   phone_number: "(719) 553-2489"
   website: https://www.pueblo.us/2941/Mayor-Heather-Graham
   start_date: '2024-02-01'
-  end_date:
+  end_date: '2028-02-01'
   sources:
   - https://www.pueblo.us/2941/Mayor-Heather-Graham
-  updated_at: '2025-06-27T21:00:00Z'
+  updated_at: '2025-06-28T17:58:27Z'
 - name: Brett Boston
   roles:
   - Council Member
@@ -28,7 +28,39 @@
   sources:
   - https://www.pueblo.us/585/Council-Members
   - https://www.pueblo.us/2563/Representative-at-Large
-  updated_at: '2025-06-27T21:00:00Z'
+  updated_at: '2025-06-28T17:58:27Z'
+- name: Dennis Flores
+  roles:
+  - Council Member
+  divisions:
+  - At-large
+  image: https://www.pueblo.us/ImageRepository/Document?documentId=10130
+  cdn_image: https://cdn.civicpatch.org/open-data/co/pueblo/images/4d85c4e2fcb776dcb01b1745d0ba1f2d10fabb4758c8ac9da80d7f65c8be3bc7.jpg
+  email: dflores@pueblo.us
+  phone_number: "(719) 406-9852"
+  website: https://www.pueblo.us/581/Representative-at-Large
+  start_date: '2018-01-01'
+  end_date: '2025-12-31'
+  sources:
+  - https://www.pueblo.us/585/Council-Members
+  - https://www.pueblo.us/581/Representative-at-Large
+  updated_at: '2025-06-28T17:58:27Z'
+- name: Mark Aliff
+  roles:
+  - Council Member
+  divisions:
+  - At-large
+  image: https://www.pueblo.us/ImageRepository/Document?documentId=36097
+  cdn_image: https://cdn.civicpatch.org/open-data/co/pueblo/images/33057633dd2549e1edb179826bfc2fb2bf9b32c06691e85e8defeb364d737cff.png
+  email: maliff@pueblo.us
+  phone_number: "(719) 252-2451"
+  website: https://www.pueblo.us/580/Representative-at-Large---President
+  start_date: '2024-01-01'
+  end_date: '2027-12-31'
+  sources:
+  - https://www.pueblo.us/585/Council-Members
+  - https://www.pueblo.us/580/Representative-at-Large---President
+  updated_at: '2025-06-28T17:58:27Z'
 - name: Regina Maestri
   roles:
   - Council Member
@@ -44,7 +76,23 @@
   sources:
   - https://www.pueblo.us/585/Council-Members
   - https://www.pueblo.us/577/District-1-Representative
-  updated_at: '2025-06-27T21:00:00Z'
+  updated_at: '2025-06-28T17:58:27Z'
+- name: Joe Latino
+  roles:
+  - Council Member
+  divisions:
+  - District 2
+  image: https://www.pueblo.us/ImageRepository/Document?documentId=36186
+  cdn_image: https://cdn.civicpatch.org/open-data/co/pueblo/images/56552b0e843bf294aade0079a221447e563901f56c5b4ee4b2023d209815a5af.png
+  email: jlatino@pueblo.us
+  phone_number: "(719) 369-0514"
+  website: https://www.pueblo.us/578/District-2-Representative
+  start_date: '2024-01-01'
+  end_date: '2027-12-31'
+  sources:
+  - https://www.pueblo.us/585/Council-Members
+  - https://www.pueblo.us/578/District-2-Representative
+  updated_at: '2025-06-28T17:58:27Z'
 - name: Sarah Martinez
   roles:
   - Council Member
@@ -60,7 +108,7 @@
   sources:
   - https://www.pueblo.us/585/Council-Members
   - https://www.pueblo.us/579/District-3-Representative
-  updated_at: '2025-06-27T21:00:00Z'
+  updated_at: '2025-06-28T17:58:27Z'
 - name: Roger Gomez
   roles:
   - Council Member
@@ -76,4 +124,4 @@
   sources:
   - https://www.pueblo.us/585/Council-Members
   - https://www.pueblo.us/576/District-4-Representative
-  updated_at: '2025-06-27T21:00:00Z'
+  updated_at: '2025-06-28T17:58:27Z'

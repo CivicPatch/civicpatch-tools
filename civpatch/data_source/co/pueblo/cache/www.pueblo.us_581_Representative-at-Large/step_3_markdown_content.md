@@ -1,8 +1,8 @@
-[Skip To Main Content](https://www.pueblo.us/585/Council-Members/)
+[Skip To Main Content](https://www.pueblo.us/581/Representative-at-Large/)
 
 Loading
 
-[Skip to Main Content](https://www.pueblo.us/585/Council-Members/)
+[Skip to Main Content](https://www.pueblo.us/581/Representative-at-Large/)
 
 ![Pueblo, CO](https://www.pueblo.us/ImageRepository/Document?documentID=34614)
 
@@ -20,71 +20,22 @@ Loading
 
 Search
 
-![](https://www.pueblo.us/ImageRepository/Document?documentID=34650)
+![](https://www.pueblo.us/ImageRepository/Document?documentID=34651)
 
 1. [Home](https://www.pueblo.us)
 2. [Your Government](https://www.pueblo.us/27/Your-Government)
 3. [Administration](https://www.pueblo.us/1608/Administration)
 4. [City Council](https://www.pueblo.us/86/City-Council)
-5. Council Members
+5. [Council Members](https://www.pueblo.us/585/Council-Members)
+6. Representative at Large
 
-# Council Members
+# Representative at Large
 
-![Regina Maestri](https://www.pueblo.us/ImageRepository/Document?documentId=30976)
+## Dennis E. Flores
 
-**Regina Maestri**
+## **City Council Term of Office ![Flores](https://www.pueblo.us/ImageRepository/Document?documentId=10130)** January 1, 2018 - December 31, 2025
 
-**District 1 Representative**
-
-![Roger Gomez](https://www.pueblo.us/ImageRepository/Document?documentId=36096)
-
-**Roger Gomez**
-
-**District 4 Representative - Work Session Chair**
-
-![Joe Latino](https://www.pueblo.us/ImageRepository/Document?documentId=36186)
-
-**Joe Latino**
-
-**District 2 Representative**
-
-![Sarah Martinez](https://www.pueblo.us/ImageRepository/Document?documentId=30977)
-
-**Sarah Martinez**
-
-**District 3 Representative**
-
-![Flores](https://www.pueblo.us/ImageRepository/Document?documentId=10130)
-
-**Dennis Flores**
-
-**Representative at Large**
-
-![Brett Boston](https://www.pueblo.us/ImageRepository/Document?documentID=36869)
-
-**Brett Boston**
-
-**Representative at Large**
-
-![Mark Aliff](https://www.pueblo.us/ImageRepository/Document?documentId=36097)
-
-**Mark Aliff**
-
-**Representative at Large - President**
-
-[**Regina Maestri**](https://www.pueblo.us/577/District-1-Representative)
-
-[**Joe Latino**](https://www.pueblo.us/578/District-2-Representative)
-
-[**Sarah Martinez**](https://www.pueblo.us/579/District-3-Representative)
-
-[**Roger Gomez**](https://www.pueblo.us/576/District-4-Representative)
-
-[**Dennis Flores**](https://www.pueblo.us/581/Representative-at-Large)
-
-[**Brett Boston**](https://www.pueblo.us/2563/Representative-at-Large)
-
-[**Mark Aliff**](https://www.pueblo.us/580/Representative-at-Large---President)
+### Contact Information  Phone: 719-406-9852 [dflores@pueblo.us](mailto:dflores@pueblo.us)
 
 1. [District 1 Representative](https://www.pueblo.us/577/District-1-Representative)
 2. [District 2 Representative](https://www.pueblo.us/578/District-2-Representative)
