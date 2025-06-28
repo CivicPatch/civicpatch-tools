@@ -1,0 +1,31 @@
+---
+- name: George E. Lantz
+  roles:
+  - Mayor
+  divisions:
+  - At-large
+  image: https://www.greenwoodvillage.com/ImageRepository/Document?documentId=17384
+  cdn_image: https://cdn.civicpatch.org/open-data/co/greenwood_village/images/9a172be1be49ef5b0d415306caee749eae7ba737a9b3d65dfd8d39d7aa75582e.jpg
+  email: glantz@greenwoodvillage.com
+  phone_number: "(303) 486-5745"
+  website: https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: 2023-11
+  end_date: 2027-11
+  sources:
+  - https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  updated_at: '2025-06-28T18:53:03Z'
+- name: Dave Kerber
+  roles:
+  - Mayor Pro Tempore
+  divisions:
+  - District 2
+  image: https://www.greenwoodvillage.com/ImageRepository/Document?documentId=17415
+  cdn_image: https://cdn.civicpatch.org/open-data/co/greenwood_village/images/fd2b113bcef22fef37023ba9a2f53b65604b52e323a32451180ad4252ae6aecc.jpg
+  email: dkerber@greenwoodvillage.com
+  phone_number: "(303) 804-4136"
+  website: https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  start_date: 2023-11
+  end_date: 2025-11
+  sources:
+  - https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials
+  updated_at: '2025-06-28T18:53:03Z'

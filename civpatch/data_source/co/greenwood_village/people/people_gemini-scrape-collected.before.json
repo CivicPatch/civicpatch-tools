@@ -1,0 +1,565 @@
+[
+  {
+    "name": "George Lantz",
+    "sources": [
+      "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Mayor George Lantz' and 'elected Mayor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'represents the City of Greenwood Village at large'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "303-486-5745",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided under the person's name and contact information.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "glantz@greenwoodvillage.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided and linked to the person's name.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the general contact page for elected officials, not a specific profile page for the mayor, but it's the most relevant URL provided.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 're-elected in November 2023'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'term that expires in November 2027'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "updated_at": "2025-06-28T18:53:02Z"
+  },
+  {
+    "name": "Ann Nelson",
+    "sources": [
+      "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'representing District 1'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "303-804-4137",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided under the person's name and contact information.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "anelson@greenwoodvillage.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided and linked to the person's name.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the general contact page for elected officials, not a specific profile page for the council member, but it's the most relevant URL provided.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to City Council representing District 1 in November 2023'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Her term expires in November 2025'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "updated_at": "2025-06-28T18:53:02Z"
+  },
+  {
+    "name": "Paul Wiesner",
+    "sources": [
+      "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 're-elected to City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'representing District 1'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "303-804-4138",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided under the person's name and contact information.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "pwiesner@greenwoodvillage.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided and linked to the person's name.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the general contact page for elected officials, not a specific profile page for the council member, but it's the most relevant URL provided.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 're-elected to City Council representing District 1 in November 2023'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'His term expires in November 2025'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "updated_at": "2025-06-28T18:53:02Z"
+  },
+  {
+    "name": "Anne Ingebretsen",
+    "sources": [
+      "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to serve again' on City Council and 'serving a second term'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'District 2'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "303-804-4135",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided under the person's name and contact information.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "aingebretsen@greenwoodvillage.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided and linked to the person's name.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the general contact page for elected officials, not a specific profile page for the council member, but it's the most relevant URL provided.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'reelected in 2023'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Her current term expires in November 2025'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "updated_at": "2025-06-28T18:53:02Z"
+  },
+  {
+    "name": "Dave Kerber",
+    "sources": [
+      "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Dave Kerber - Mayor Pro Tem'."
+      },
+      {
+        "data": "City Council",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to serve again' on City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'District 2'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "303-804-4136",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided under the person's name and contact information.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dkerber@greenwoodvillage.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided and linked to the person's name.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the general contact page for elected officials, not a specific profile page for the council member, but it's the most relevant URL provided.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'reelected in 2023'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'His current term expires in November 2025'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "updated_at": "2025-06-28T18:53:02Z"
+  },
+  {
+    "name": "Libby Hilton Barnacle",
+    "sources": [
+      "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'representing District 3'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "303-804-4129",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided under the person's name and contact information.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ebarnacle@greenwoodvillage.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided and linked to the person's name.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the general contact page for elected officials, not a specific profile page for the council member, but it's the most relevant URL provided.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'reelected in 2023'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Her current term expires in November 2025'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "updated_at": "2025-06-28T18:53:02Z"
+  },
+  {
+    "name": "Donna Johnston",
+    "sources": [
+      "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implicitly associated with District 3 section."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "303-804-4128",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided under the person's name and contact information.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "djohnston@greenwoodvillage.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided and linked to the person's name.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the general contact page for elected officials, not a specific profile page for the council member, but it's the most relevant URL provided.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'reelected in 2023'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Her upcoming term expires in November 2025'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "updated_at": "2025-06-28T18:53:02Z"
+  },
+  {
+    "name": "Tom Stahl",
+    "sources": [
+      "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implicitly associated with District 4 section."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "303-804-4132",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided under the person's name and contact information.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tstahl@greenwoodvillage.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided and linked to the person's name.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the general contact page for elected officials, not a specific profile page for the council member, but it's the most relevant URL provided.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 're-elected in 2023'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'His current term expires in November 2025'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "updated_at": "2025-06-28T18:53:02Z"
+  },
+  {
+    "name": "Dr. Judith Hilton",
+    "sources": [
+      "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Council",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implicitly associated with District 4 section."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "303-804-4131",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided under the person's name and contact information.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jhilton@greenwoodvillage.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided and linked to the person's name.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the general contact page for elected officials, not a specific profile page for the council member, but it's the most relevant URL provided.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 're-elected in 2023'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Her current term expires in November 2025'.",
+        "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
+      }
+    ],
+    "updated_at": "2025-06-28T18:53:02Z"
+  }
+]

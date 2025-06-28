@@ -636,7 +636,14 @@
       ],
       "population": 15691,
       "website": "http://www.greenwoodvillage.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-28T18:53:03Z",
+      "meta_hash": "34b3f1a4e855540344f5d6612c06fc37",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Frederick",

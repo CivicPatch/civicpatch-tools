@@ -1,0 +1,73 @@
+[
+  {
+    "name": "George E. Lantz",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-06-28T18:49:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Ann Nelson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:49:01Z",
+    "divisions": []
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:49:01Z",
+    "divisions": [],
+    "images": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "sources": []
+  },
+  {
+    "name": "Anne Ingebretsen",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:49:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Dave Kerber",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:49:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Libby Hilton Barnacle",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:49:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Tom Stahl",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:49:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Dr. Judith Hilton",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-28T18:49:01Z",
+    "divisions": []
+  }
+]
