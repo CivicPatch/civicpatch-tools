@@ -1,0 +1,17 @@
+{
+  "name": "@civicpatch/geocoding",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sync": "node src/scripts/civpatch-sync.js",
+    "crawl": "node src/scripts/crawl.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "patchright": "^1.52.5"
+  }
+}

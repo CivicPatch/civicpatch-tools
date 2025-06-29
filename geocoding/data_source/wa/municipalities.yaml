@@ -1,0 +1,1487 @@
+- name: Seattle
+  geoid: '5363000'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+    - District 6
+    - District 7
+  population: 737015
+  website: https://seattle.gov
+  map_url: >-
+    https://arc-gis-hub-home-arcgishub.hub.arcgis.com/datasets/50c79d308ed645a08f5f8bd71766ed59_0/about
+- name: Spokane
+  geoid: '5367000'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+  population: 228989
+  website: https://my.spokanecity.org
+  map_url: https://my.spokanecity.org/opendata/gis/council-districts
+- name: Tacoma
+  geoid: '5370000'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+  population: 219346
+  website: https://cityoftacoma.org
+- name: Vancouver
+  geoid: '5374060'
+  divisions: []
+  population: 190915
+  website: https://www.cityofvancouver.us
+- name: Bellevue
+  geoid: '5305210'
+  divisions: []
+  population: 151854
+  website: https://bellevuewa.gov
+- name: Kent
+  geoid: '5335415'
+  divisions: []
+  population: 136588
+  website: https://kentwa.gov
+- name: Everett
+  geoid: '5322640'
+  divisions: []
+  population: 110629
+- name: Renton
+  geoid: '5357745'
+  divisions: []
+  population: 106785
+  website: https://www.rentonwa.gov
+- name: Spokane Valley
+  geoid: '5367167'
+  divisions: []
+  population: 102976
+  website: https://www.spokanevalleywa.gov
+- name: Federal Way
+  geoid: '5323515'
+  divisions: []
+  population: 101030
+  website: https://www.federalwaywa.gov
+- name: Yakima
+  geoid: '5380010'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+    - District 7
+  population: 96968
+  website: https://www.yakimawa.gov
+- name: Kirkland
+  geoid: '5335940'
+  divisions: []
+  population: 92175
+  website: http://www.kirklandwa.gov
+- name: Bellingham
+  geoid: '5305280'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+    - Ward 5
+    - Ward 6
+  population: 91482
+  website: https://cob.org
+- name: Auburn
+  geoid: '5303180'
+  divisions: []
+  population: 87256
+  website: https://www.auburnwa.gov
+- name: Kennewick
+  geoid: '5335275'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+  population: 83921
+  website: https://www.go2kennewick.com
+- name: Pasco
+  geoid: '5353545'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+    - District 6
+  population: 77108
+  website: https://www.pasco-wa.gov
+- name: Redmond
+  geoid: '5357535'
+  divisions: []
+  population: 73256
+  website: https://redmond.gov
+- name: Marysville
+  geoid: '5343955'
+  divisions: []
+  population: 70714
+- name: Sammamish
+  geoid: '5361115'
+  divisions: []
+  population: 67455
+  website: https://www.sammamish.us
+- name: Lakewood
+  geoid: '5338038'
+  divisions: []
+  population: 63612
+  website: https://www.cityoflakewood.us
+- name: Richland
+  geoid: '5358235'
+  divisions: []
+  population: 60560
+  website: http://www.ci.richland.wa.us
+- name: Shoreline
+  geoid: '5363960'
+  divisions: []
+  population: 58608
+  website: https://www.shorelinewa.gov
+- name: Olympia
+  geoid: '5351300'
+  divisions: []
+  population: 55605
+- name: Lacey
+  geoid: '5336745'
+  divisions: []
+  population: 53526
+- name: Burien
+  geoid: '5308850'
+  divisions: []
+  population: 52066
+  website: https://www.burienwa.gov
+- name: Bothell
+  geoid: '5307380'
+  divisions: []
+  population: 48161
+  website: https://bothellwa.gov
+- name: Bremerton
+  geoid: '5307695'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+    - District 6
+    - District 7
+  population: 43505
+  website: https://bremertonwa.gov
+- name: Puyallup
+  geoid: '5356695'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+  population: 42973
+  website: https://www.cityofpuyallup.org
+- name: Edmonds
+  geoid: '5320750'
+  divisions: []
+  population: 42853
+- name: Issaquah
+  geoid: '5333805'
+  divisions: []
+  population: 40051
+  website: https://www.issaquahwa.gov
+- name: Lynnwood
+  geoid: '5340840'
+  divisions: []
+  population: 38568
+- name: Longview
+  geoid: '5340245'
+  divisions: []
+  population: 37818
+  website: http://www.mylongview.com
+- name: Lake Stevens
+  geoid: '5337900'
+  divisions: []
+  population: 35630
+- name: Wenatchee
+  geoid: '5377105'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+  population: 35508
+  website: http://www.wenatcheewa.gov
+- name: Mount Vernon
+  geoid: '5347560'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+  population: 35219
+  website: https://mountvernonwa.gov
+- name: University Place
+  geoid: '5373465'
+  divisions: []
+  population: 34866
+  website: https://www.cityofup.com
+- name: Walla Walla
+  geoid: '5375775'
+  divisions:
+    - Ward Central
+    - Ward East
+    - Ward South
+    - Ward West
+  population: 34060
+  website: https://www.wallawallawa.gov
+- name: Pullman
+  geoid: '5356625'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+  population: 32901
+  website: https://pullman-wa.gov
+- name: Des Moines
+  geoid: '5317635'
+  divisions: []
+  population: 32888
+  website: https://www.desmoineswa.gov
+- name: SeaTac
+  geoid: '5362288'
+  divisions: []
+  population: 31454
+  website: https://seatacwa.gov
+- name: Maple Valley
+  geoid: '5343150'
+  divisions: []
+  population: 28013
+  website: https://maplevalleywa.gov
+- name: Camas
+  geoid: '5309480'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+  population: 26065
+  website: https://www.cityofcamas.us
+- name: Mercer Island
+  geoid: '5345005'
+  divisions: []
+  population: 25748
+  website: https://mercerisland.gov
+- name: Tumwater
+  geoid: '5372905'
+  divisions: []
+  population: 25350
+- name: Moses Lake
+  geoid: '5347245'
+  divisions: []
+  population: 25146
+  website: http://www.cityofml.com
+- name: Bainbridge Island
+  geoid: '5303736'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+    - District 6
+    - District 7
+    - Ward Central
+    - Ward North
+    - Ward South
+  population: 24825
+  website: https://bainbridgewa.gov
+- name: Oak Harbor
+  geoid: '5350360'
+  divisions: []
+  population: 24622
+  website: https://oakharbor.gov
+- name: Kenmore
+  geoid: '5335170'
+  divisions: []
+  population: 23914
+  website: https://kenmorewa.gov
+- name: Bonney Lake
+  geoid: '5307170'
+  divisions: []
+  population: 22487
+  website: http://www.ci.bonney-lake.wa.us
+- name: Tukwila
+  geoid: '5372625'
+  divisions: []
+  population: 21798
+  website: https://www.tukwilawa.gov
+- name: Mukilteo
+  geoid: '5347735'
+  divisions: []
+  population: 21538
+- name: mountlake terrace
+  geoid: '5347490'
+  divisions: []
+  population: 21286
+  website: http://cityofmlt.com
+- name: Mill Creek
+  geoid: '5345865'
+  divisions: []
+  population: 20926
+- name: Covington
+  geoid: '5315290'
+  divisions: []
+  population: 20777
+  website: https://www.covingtonwa.gov
+- name: Battle Ground
+  geoid: '5304475'
+  divisions: []
+  population: 20743
+  website: https://www.cityofbg.org
+- name: Port Angeles
+  geoid: '5355365'
+  divisions: []
+  population: 19960
+  website: https://www.cityofpa.us
+- name: Arlington
+  geoid: '5302585'
+  divisions: []
+  population: 19868
+- name: Monroe
+  geoid: '5346685'
+  divisions: []
+  population: 19699
+  website: https://www.monroewa.gov
+- name: Ellensburg
+  geoid: '5321240'
+  divisions: []
+  population: 18666
+  website: https://ci.ellensburg.wa.us
+- name: Centralia
+  geoid: '5311160'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+  population: 18183
+  website: https://cityofcentralia.com
+- name: Anacortes
+  geoid: '5301990'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+  population: 17637
+  website: https://cityofanacortes.org
+- name: Washougal
+  geoid: '5376405'
+  divisions: []
+  population: 17039
+  website: http://www.cityofwashougal.us
+- name: Aberdeen
+  geoid: '5300100'
+  divisions: []
+  population: 17013
+- name: Sunnyside
+  geoid: '5368750'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+  population: 16375
+  website: http://sunnyside-wa.gov
+- name: West Richland
+  geoid: '5377665'
+  divisions: []
+  population: 16295
+  website: http://www.westrichland.org
+- name: Lynden
+  geoid: '5340805'
+  divisions: []
+  population: 15749
+  website: https://lyndenwa.org
+- name: Port Orchard
+  geoid: '5355785'
+  divisions: []
+  population: 15587
+  website: https://portorchardwa.gov
+- name: Ferndale
+  geoid: '5323620'
+  divisions: []
+  population: 15048
+  website: https://www.cityofferndale.org
+- name: East Wenatchee
+  geoid: '5320155'
+  divisions: []
+  population: 14158
+  website: https://www.eastwenatcheewa.gov
+- name: Snoqualmie
+  geoid: '5365205'
+  divisions: []
+  population: 14121
+  website: http://www.snoqualmiewa.gov
+- name: Lake Forest Park
+  geoid: '5337270'
+  divisions: []
+  population: 13630
+  website: https://cityoflfp.gov
+- name: Cheney
+  geoid: '5311825'
+  divisions: []
+  population: 13255
+- name: Woodinville
+  geoid: '5379590'
+  divisions: []
+  population: 13069
+  website: https://www.ci.woodinville.wa.us
+- name: Newcastle
+  geoid: '5348645'
+  divisions: []
+  population: 13017
+  website: https://www.newcastlewa.gov
+- name: Kelso
+  geoid: '5335065'
+  divisions: []
+  population: 12720
+  website: http://www.kelso.gov
+- name: Enumclaw
+  geoid: '5322045'
+  divisions: []
+  population: 12543
+  website: https://www.cityofenumclaw.net
+- name: Sedro-Woolley
+  geoid: '5363210'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+    - Ward 5
+    - Ward 6
+  population: 12421
+  website: https://www.sedro-woolley.gov
+- name: Edgewood
+  geoid: '5320645'
+  divisions: []
+  population: 12327
+  website: http://www.cityofedgewood.org
+- name: Gig Harbor
+  geoid: '5326735'
+  divisions: []
+  population: 12029
+  website: http://www.cityofgigharbor.net
+- name: Liberty Lake
+  geoid: '5339335'
+  divisions: []
+  population: 12003
+  website: https://www.libertylakewa.gov
+- name: Poulsbo
+  geoid: '5355995'
+  divisions: []
+  population: 11975
+  website: https://cityofpoulsbo.com
+- name: Fife
+  geoid: '5323795'
+  divisions: []
+  population: 10999
+  website: https://www.fifewa.gov
+- name: Grandview
+  geoid: '5327925'
+  divisions: []
+  population: 10907
+  website: https://grandview.wa.us
+- name: Airway Heights
+  geoid: '5300905'
+  divisions: []
+  population: 10757
+  website: http://cawh.org
+- name: Sumner
+  geoid: '5368435'
+  divisions: []
+  population: 10621
+  website: https://sumnerwa.gov
+- name: Yelm
+  geoid: '5380220'
+  divisions: []
+  population: 10617
+- name: Shelton
+  geoid: '5363735'
+  divisions: []
+  population: 10371
+  website: https://sheltonwa.gov
+- name: Ridgefield
+  geoid: '5358410'
+  divisions: []
+  population: 10319
+  website: https://ridgefieldwa.us
+- name: DuPont
+  geoid: '5318965'
+  divisions: []
+  population: 10151
+  website: http://dupontwa.gov
+- name: Port Townsend
+  geoid: '5355855'
+  divisions: []
+  population: 10148
+  website: http://www.cityofpt.us
+- name: Snohomish
+  geoid: '5365170'
+  divisions: []
+  population: 10126
+- name: College Place
+  geoid: '5313855'
+  divisions: []
+  population: 9902
+  website: http://www.cpwa.us
+- name: Burlington
+  geoid: '5308920'
+  divisions: []
+  population: 9152
+- name: Orting
+  geoid: '5352005'
+  divisions: []
+  population: 9041
+  website: https://cityoforting.org
+- name: Toppenish
+  geoid: '5371960'
+  divisions: []
+  population: 8854
+  website: https://www.toppenish.gov
+- name: Hoquiam
+  geoid: '5332300'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+    - Ward 5
+    - Ward 6
+  population: 8776
+  website: https://cityofhoquiam.com
+- name: Milton
+  geoid: '5346020'
+  divisions: []
+  population: 8697
+  website: https://cityofmilton.net
+- name: Othello
+  geoid: '5352215'
+  divisions: []
+  population: 8549
+  website: https://www.othellowa.gov
+- name: Ephrata
+  geoid: '5322080'
+  divisions: []
+  population: 8477
+  website: http://www.ephrata.org
+- name: Selah
+  geoid: '5363280'
+  divisions: []
+  population: 8153
+  website: https://selahwa.gov
+- name: Duvall
+  geoid: '5319035'
+  divisions: []
+  population: 8034
+  website: https://www.duvallwa.gov
+- name: Sequim
+  geoid: '5363385'
+  divisions: []
+  population: 8024
+  website: http://www.sequimwa.gov
+- name: Stanwood
+  geoid: '5367455'
+  divisions: []
+  population: 7705
+- name: Quincy
+  geoid: '5357115'
+  divisions: []
+  population: 7543
+  website: http://quincywashington.us
+- name: North Bend
+  geoid: '5349485'
+  divisions: []
+  population: 7461
+  website: https://northbendwa.gov
+- name: Chehalis
+  geoid: '5311475'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+  population: 7439
+  website: http://ci.chehalis.wa.us
+- name: Pacific
+  geoid: '5352495'
+  divisions: []
+  population: 7235
+  website: https://pacificwa.gov
+- name: Clarkston
+  geoid: '5312630'
+  divisions: []
+  population: 7161
+  website: http://www.clarkston-wa.com
+- name: Fircrest
+  geoid: '5323970'
+  divisions: []
+  population: 7156
+  website: http://www.cityoffircrest.net
+- name: Normandy Park
+  geoid: '5349415'
+  divisions: []
+  population: 6771
+  website: https://normandyparkwa.gov
+- name: Steilacoom
+  geoid: '5367770'
+  divisions: []
+  population: 6727
+  website: https://townofsteilacoom.org
+- name: Ocean Shores
+  geoid: '5350570'
+  divisions: []
+  population: 6715
+  website: https://www.osgov.com
+- name: Union Gap
+  geoid: '5373290'
+  divisions: []
+  population: 6568
+  website: https://uniongapwa.gov
+- name: Brier
+  geoid: '5307940'
+  divisions: []
+  population: 6560
+- name: Woodland
+  geoid: '5379625'
+  divisions: []
+  population: 6531
+  website: http://www.ci.woodland.wa.us
+- name: Prosser
+  geoid: '5356450'
+  divisions: []
+  population: 6062
+  website: https://cityofprosser.com
+- name: Blaine
+  geoid: '5306505'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+  population: 5884
+  website: https://www.ci.blaine.wa.us
+- name: Connell
+  geoid: '5314485'
+  divisions: []
+  population: 5441
+  website: http://www.cityofconnell.com
+- name: Sultan
+  geoid: '5368260'
+  divisions: []
+  population: 5146
+- name: Buckley
+  geoid: '5308570'
+  divisions: []
+  population: 5114
+  website: http://www.cityofbuckley.com
+- name: Colville
+  geoid: '5314170'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+  population: 4917
+  website: http://www.colville.wa.us
+- name: Medical Lake
+  geoid: '5344690'
+  divisions: []
+  population: 4874
+  website: https://medical-lake.org
+- name: Omak
+  geoid: '5351340'
+  divisions: []
+  population: 4860
+  website: http://www.omakcity.com
+- name: Black Diamond
+  geoid: '5306330'
+  divisions: []
+  population: 4697
+  website: https://www.blackdiamondwa.gov
+- name: Wapato
+  geoid: '5376125'
+  divisions: []
+  population: 4607
+  website: https://wapato-city.org
+- name: Granite Falls
+  geoid: '5327995'
+  divisions: []
+  population: 4450
+- name: Deer Park
+  geoid: '5317320'
+  divisions: []
+  population: 4383
+  website: http://www.cityofdeerparkwa.com
+- name: Moxee
+  geoid: '5347665'
+  divisions: []
+  population: 4326
+  website: https://cityofmoxee.us
+- name: Chelan
+  geoid: '5311615'
+  divisions: []
+  population: 4222
+  website: https://cityofchelan.us
+- name: Montesano
+  geoid: '5346895'
+  divisions: []
+  population: 4138
+  website: https://www.cityofmontesano.com
+- name: Granger
+  geoid: '5327960'
+  divisions: []
+  population: 3624
+  website: https://www.grangerwashington.org
+- name: Benton City
+  geoid: '5305560'
+  divisions: []
+  population: 3479
+  website: http://ci.benton-city.wa.us
+- name: Goldendale
+  geoid: '5327435'
+  divisions: []
+  population: 3453
+  website: https://www.ci.goldendale.wa.us
+- name: Elma
+  geoid: '5321450'
+  divisions: []
+  population: 3438
+  website: https://www.cityofelma.com
+- name: La Center
+  geoid: '5336710'
+  divisions: []
+  population: 3424
+  website: https://ci.lacenter.wa.us
+- name: Forks
+  geoid: '5324810'
+  divisions: []
+  population: 3335
+  website: ''
+- name: Mattawa
+  geoid: '5344165'
+  divisions: []
+  population: 3335
+  website: http://www.cityofmattawa.com
+- name: Algona
+  geoid: '5301290'
+  divisions: []
+  population: 3290
+  website: https://algonawa.gov
+- name: Cashmere
+  geoid: '5310495'
+  divisions: []
+  population: 3248
+  website: http://www.cityofcashmere.org
+- name: Zillah
+  geoid: '5380500'
+  divisions: []
+  population: 3179
+  website: https://www.cityofzillah.us
+- name: Clyde Hill
+  geoid: '5313365'
+  divisions: []
+  population: 3126
+  website: http://www.clydehill.org
+- name: Raymond
+  geoid: '5357430'
+  divisions: []
+  population: 3081
+  website: http://cityofraymond.com
+- name: Kalama
+  geoid: '5334645'
+  divisions: []
+  population: 2959
+  website: https://www.cityofkalama.com
+- name: Medina
+  geoid: '5344725'
+  divisions: []
+  population: 2915
+  website: http://www.medina-wa.gov
+- name: Everson
+  geoid: '5322745'
+  divisions: []
+  population: 2888
+  website: http://www.ci.everson.wa.us
+- name: Eatonville
+  geoid: '5320260'
+  divisions: []
+  population: 2845
+  website: https://eatonville-wa.gov
+- name: Colfax
+  geoid: '5313785'
+  divisions: []
+  population: 2782
+  website: https://colfaxwa.org
+- name: Friday Harbor
+  geoid: '5325615'
+  divisions: []
+  population: 2613
+  website: http://fridayharbor.org
+- name: White Salmon
+  geoid: '5378330'
+  divisions: []
+  population: 2485
+  website: http://white-salmon.net
+- name: Chewelah
+  geoid: '5312140'
+  divisions: []
+  population: 2470
+  website: http://www.cityofchewelah.org
+- name: Warden
+  geoid: '5376160'
+  divisions: []
+  population: 2449
+- name: Dayton
+  geoid: '5316970'
+  divisions: []
+  population: 2448
+  website: http://www.daytonwa.com
+- name: Castle Rock
+  geoid: '5310565'
+  divisions: []
+  population: 2446
+  website: http://ci.castle-rock.wa.us
+- name: Gold Bar
+  geoid: '5327365'
+  divisions: []
+  population: 2403
+- name: Okanogan
+  geoid: '5350920'
+  divisions: []
+  population: 2379
+  website: http://www.okanogancity.com
+- name: Rainier
+  geoid: '5357220'
+  divisions: []
+  population: 2369
+- name: Leavenworth
+  geoid: '5338845'
+  divisions: []
+  population: 2263
+  website: https://cityofleavenworth.com
+- name: Westport
+  geoid: '5377630'
+  divisions: []
+  population: 2213
+  website: https://www.ci.westport.wa.us
+- name: Carnation
+  geoid: '5310215'
+  divisions: []
+  population: 2158
+  website: http://www.carnationwa.gov
+- name: Cle Elum
+  geoid: '5312945'
+  divisions: []
+  population: 2157
+  website: https://cleelum.gov
+- name: Bridgeport
+  geoid: '5307870'
+  divisions: []
+  population: 2141
+  website: http://www.bridgeportwashington.net
+- name: Newport
+  geoid: '5348820'
+  divisions: []
+  population: 2114
+  website: http://www.newport-wa.org
+- name: McCleary
+  geoid: '5341225'
+  divisions: []
+  population: 1997
+  website: https://www.cityofmccleary.com
+- name: Brewster
+  geoid: '5307835'
+  divisions: []
+  population: 1983
+  website: http://www.cityofbrewsterwashington.org
+- name: Mabton
+  geoid: '5340980'
+  divisions: []
+  population: 1959
+  website: https://www.cityofmabton.com
+- name: Coupeville
+  geoid: '5315185'
+  divisions: []
+  population: 1942
+  website: https://townofcoupeville.org
+- name: Napavine
+  geoid: '5347980'
+  divisions: []
+  population: 1888
+  website: http://www.cityofnapavine.com
+- name: Millwood
+  geoid: '5345985'
+  divisions: []
+  population: 1881
+  website: http://millwoodwa.us
+- name: Tenino
+  geoid: '5370630'
+  divisions: []
+  population: 1870
+- name: Oroville
+  geoid: '5351970'
+  divisions: []
+  population: 1795
+  website: http://www.oroville-wa.com
+- name: Royal City
+  geoid: '5360230'
+  divisions: []
+  population: 1776
+  website: http://www.royalcitywa.org
+- name: Ritzville
+  geoid: '5358725'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+    - Ward 5
+  population: 1767
+  website: http://www.cityofritzville.com
+- name: South Bend
+  geoid: '5365625'
+  divisions: []
+  population: 1746
+  website: http://www.southbend-wa.gov
+- name: Davenport
+  geoid: '5316795'
+  divisions: []
+  population: 1703
+- name: Soap Lake
+  geoid: '5365345'
+  divisions: []
+  population: 1691
+  website: https://www.soaplakewa.gov
+- name: Long Beach
+  geoid: '5340070'
+  divisions: []
+  population: 1688
+  website: http://www.longbeachwa.gov
+- name: Yacolt
+  geoid: '5379975'
+  divisions: []
+  population: 1668
+  website: http://townofyacolt.com
+- name: Cosmopolis
+  geoid: '5314870'
+  divisions: []
+  population: 1638
+  website: https://cosmopoliswa.gov
+- name: Kettle Falls
+  geoid: '5335485'
+  divisions: []
+  population: 1636
+  website: http://www.kettle-falls.com
+- name: Sumas
+  geoid: '5368330'
+  divisions: []
+  population: 1583
+  website: http://cityofsumas.com
+- name: Stevenson
+  geoid: '5367875'
+  divisions: []
+  population: 1491
+  website: https://www.ci.stevenson.wa.us/
+- name: Winlock
+  geoid: '5379275'
+  divisions: []
+  population: 1472
+  website: https://cityofwinlock.com
+- name: Nooksack
+  geoid: '5349275'
+  divisions: []
+  population: 1471
+  website: http://cityofnooksack.com
+- name: Darrington
+  geoid: '5316690'
+  divisions: []
+  population: 1462
+  website: http://townofdarrington.com
+- name: Kittitas
+  geoid: '5336045'
+  divisions: []
+  population: 1438
+  website: http://www.cityofkittitas.com
+- name: North Bonneville
+  geoid: '5349555'
+  divisions: []
+  population: 1397
+  website: http://www.northbonneville.net
+- name: Pomeroy
+  geoid: '5355120'
+  divisions: []
+  population: 1389
+  website: https://www.cityofpomeroy1.com
+- name: Tieton
+  geoid: '5371400'
+  divisions: []
+  population: 1389
+  website: https://www.cityoftieton.gov
+- name: Entiat
+  geoid: '5322010'
+  divisions: []
+  population: 1326
+  website: https://www.entiatwa.us
+- name: Woodway
+  geoid: '5379835'
+  divisions: []
+  population: 1318
+- name: Rock Island
+  geoid: '5359180'
+  divisions: []
+  population: 1279
+  website: https://www.rockislandwa.gov
+- name: Coulee Dam
+  geoid: '5315115'
+  divisions: []
+  population: 1211
+  website: https://townofcouleedam.org
+- name: Asotin
+  geoid: '5303075'
+  divisions: []
+  population: 1204
+  website: http://cityofasotin.org
+- name: Waitsburg
+  geoid: '5375565'
+  divisions: []
+  population: 1166
+  website: http://www.cityofwaitsburg.com
+- name: Langley
+  geoid: '5338355'
+  divisions: []
+  population: 1147
+  website: http://www.langleywa.org
+- name: Waterville
+  geoid: '5376510'
+  divisions: []
+  population: 1134
+  website: http://www.ci.waterville.wa.us
+- name: Yarrow Point
+  geoid: '5380150'
+  divisions: []
+  population: 1134
+  website: https://yarrowpointwa.gov
+- name: Tonasket
+  geoid: '5371890'
+  divisions: []
+  population: 1103
+  website: https://www.tonasketwa.gov
+- name: Ilwaco
+  geoid: '5333000'
+  divisions: []
+  population: 1087
+  website: http://www.ilwaco-wa.gov
+- name: Naches
+  geoid: '5347805'
+  divisions: []
+  population: 1084
+  website: https://www.townofnaches.com
+- name: Ruston
+  geoid: '5360510'
+  divisions: []
+  population: 1055
+  website: http://www.rustonwa.org
+- name: Morton
+  geoid: '5347175'
+  divisions: []
+  population: 1036
+  website: http://www.visitmorton.com
+- name: Palouse
+  geoid: '5352950'
+  divisions: []
+  population: 1015
+  website: https://www.palousewa.gov
+- name: Republic
+  geoid: '5357850'
+  divisions: []
+  population: 992
+  website: http://www.republicwa.org
+- name: Twisp
+  geoid: '5373080'
+  divisions: []
+  population: 992
+  website: http://townoftwisp.com
+- name: Grand Coulee
+  geoid: '5327855'
+  divisions: []
+  population: 972
+  website: ''
+- name: La Conner
+  geoid: '5336780'
+  divisions: []
+  population: 965
+  website: https://www.townoflaconner.org
+- name: Electric City
+  geoid: '5321030'
+  divisions: []
+  population: 956
+  website: http://www.electriccity.us
+- name: Roslyn
+  geoid: '5360055'
+  divisions: []
+  population: 950
+  website: http://www.ci.roslyn.wa.us
+- name: Odessa
+  geoid: '5350745'
+  divisions: []
+  population: 896
+- name: Wilbur
+  geoid: '5378680'
+  divisions: []
+  population: 895
+  website: http://wilburwa.com
+- name: Tekoa
+  geoid: '5370560'
+  divisions: []
+  population: 817
+  website: http://www.tekoawa.com
+- name: Roy
+  geoid: '5360160'
+  divisions: []
+  population: 816
+  website: http://www.cityofroywa.us
+- name: George
+  geoid: '5326455'
+  divisions: []
+  population: 809
+  website: http://www.cityofgeorge.org
+- name: Concrete
+  geoid: '5314380'
+  divisions: []
+  population: 801
+  website: http://townofconcrete.com
+- name: Bingen
+  geoid: '5306085'
+  outrageous: true
+  divisions: []
+  population: 778
+  website: https://www.bingenwashington.org
+- name: Mossyrock
+  geoid: '5347315'
+  divisions: []
+  population: 768
+  website: http://cityofmossyrock.com
+- name: Carbonado
+  geoid: '5309970'
+  divisions: []
+  population: 734
+  website: ''
+- name: Oakville
+  geoid: '5350430'
+  divisions: []
+  population: 715
+  website: http://www.oakvillecityhall.com
+- name: Pe Ell
+  geoid: '5353930'
+  divisions: []
+  population: 642
+  website: http://www.townofpeell.com
+- name: Reardan
+  geoid: '5357465'
+  divisions: []
+  population: 637
+- name: Toledo
+  geoid: '5371785'
+  divisions: []
+  population: 631
+  website: http://www.toledowa.us
+- name: Vader
+  geoid: '5373780'
+  divisions: []
+  population: 629
+  website: http://www.vaderwa.org
+- name: Bucoda
+  geoid: '5308605'
+  divisions: []
+  population: 600
+  website: http://bucoda.us
+- name: St. John
+  geoid: '5360860'
+  divisions: []
+  population: 599
+  website: http://www.stjohnwa.com
+- name: Rosalia
+  geoid: '5359775'
+  divisions: []
+  population: 598
+  website: http://www.townofrosalia.org
+- name: Pateros
+  geoid: '5353720'
+  divisions: []
+  population: 593
+  website: http://www.pateros.com
+- name: Fairfield
+  geoid: '5322990'
+  divisions: []
+  population: 589
+  website: ''
+- name: Harrah
+  geoid: '5329710'
+  divisions: []
+  population: 585
+  website: ''
+- name: Garfield
+  geoid: '5326140'
+  divisions: []
+  population: 562
+  website: http://www.garfieldwa.com
+- name: Cathlamet
+  geoid: '5310635'
+  divisions: []
+  population: 560
+  website: https://www.townofcathlamet.com
+- name: South Cle Elum
+  geoid: '5365765'
+  divisions: []
+  population: 559
+- name: Albion
+  geoid: '5301010'
+  divisions: []
+  population: 550
+  website: http://www.palouse.org/albion
+- name: Coulee City
+  geoid: '5315080'
+  divisions: []
+  population: 549
+  website: ''
+- name: Lind
+  geoid: '5339510'
+  divisions: []
+  population: 535
+  website: https://www.lindwa.com
+- name: Rockford
+  geoid: '5359145'
+  divisions: []
+  population: 522
+  website: http://rockfordwa.com
+- name: Winthrop
+  geoid: '5379380'
+  divisions: []
+  population: 504
+  website: https://www.townofwinthrop.com
+- name: Wilkeson
+  geoid: '5378925'
+  divisions: []
+  population: 499
+  website: ''
+- name: Sprague
+  geoid: '5367175'
+  divisions: []
+  population: 495
+- name: Hunts Point
+  geoid: '5332755'
+  divisions: []
+  population: 457
+  website: https://huntspoint-wa.gov
+- name: Harrington
+  geoid: '5329745'
+  divisions: []
+  population: 429
+- name: Ione
+  geoid: '5333560'
+  divisions: []
+  population: 428
+  website: ''
+- name: Lyman
+  geoid: '5340770'
+  divisions: []
+  population: 423
+  website: http://townoflyman.com
+- name: Colton
+  geoid: '5313890'
+  divisions: []
+  population: 401
+  website: ''
+- name: Oakesdale
+  geoid: '5350325'
+  divisions: []
+  population: 395
+  website: http://oakesdale.org
+- name: Uniontown
+  geoid: '5373360'
+  divisions: []
+  population: 389
+  website: https://uniontownwa.org
+- name: Mesa
+  geoid: '5345180'
+  divisions: []
+  population: 385
+  website: ''
+- name: South Prairie
+  geoid: '5366045'
+  divisions: []
+  population: 373
+  website: http://townofsouthprairie.com
+- name: Prescott
+  geoid: '5356240'
+  divisions: []
+  population: 372
+  website: http://www.prescottwa.com
+- name: Riverside
+  geoid: '5358795'
+  divisions: []
+  population: 329
+  website: ''
+- name: Mansfield
+  geoid: '5342800'
+  divisions: []
+  population: 326
+  website: http://www.mansfieldwashington.org
+- name: Almira
+  geoid: '5301500'
+  divisions: []
+  population: 318
+- name: Beaux Arts Village
+  geoid: '5304895'
+  divisions: []
+  population: 317
+  website: https://beauxarts-wa.gov
+- name: Endicott
+  geoid: '5321730'
+  divisions: []
+  population: 312
+  website: ''
+- name: Hamilton
+  geoid: '5329255'
+  divisions: []
+  population: 299
+  website: ''
+- name: LaCrosse
+  geoid: '5336850'
+  divisions: []
+  population: 297
+  website: http://www.lacrossewa.us
+- name: Northport
+  geoid: '5350045'
+  divisions: []
+  population: 297
+  website: http://northportwa.us
+- name: Spangle
+  geoid: '5366290'
+  divisions: []
+  population: 280
+  website: ''
+- name: Metaline Falls
+  geoid: '5345320'
+  divisions: []
+  population: 272
+  website: ''
+- name: Elmer City
+  geoid: '5321485'
+  divisions: []
+  population: 239
+  website: ''
+- name: Springdale
+  geoid: '5367210'
+  divisions: []
+  population: 234
+  website: ''
+- name: Malden
+  geoid: '5342275'
+  divisions: []
+  population: 216
+  website: ''
+- name: Marcus
+  geoid: '5343395'
+  divisions: []
+  population: 216
+  website: https://web.archive.org/web/20120903133441/http://www.townofmarcus.com
+- name: Creston
+  geoid: '5315710'
+  divisions: []
+  population: 213
+- name: Washtucna
+  geoid: '5376440'
+  divisions: []
+  population: 211
+  website: http://www.washtucna.com
+- name: Wilson Creek
+  geoid: '5379135'
+  divisions: []
+  population: 204
+  website: http://www.wilsoncreekwa.com
+- name: Conconully
+  geoid: '5314310'
+  divisions: []
+  population: 193
+  website: http://townofconconully.com
+- name: Latah
+  geoid: '5338495'
+  divisions: []
+  population: 185
+  website: ''
+- name: Hartline
+  geoid: '5329920'
+  divisions: []
+  population: 180
+  website: ''
+- name: Nespelem
+  geoid: '5348540'
+  divisions: []
+  population: 180
+  website: ''
+- name: Metaline
+  geoid: '5345285'
+  divisions: []
+  population: 162
+  website: ''
+- name: Skykomish
+  geoid: '5364855'
+  divisions: []
+  population: 161
+  website: https://skykomishwa.gov
+- name: Index
+  geoid: '5333175'
+  divisions: []
+  population: 155
+- name: Cusick
+  geoid: '5316340'
+  divisions: []
+  population: 153
+  website: ''
+- name: Kahlotus
+  geoid: '5334575'
+  divisions: []
+  population: 147
+  website: ''
+- name: Farmington
+  geoid: '5323340'
+  divisions: []
+  population: 131
+  website: https://farmingtonwa.com
+- name: Waverly
+  geoid: '5376720'
+  divisions: []
+  population: 121
+  website: ''
+- name: Starbuck
+  geoid: '5367490'
+  divisions: []
+  population: 119
+  website: http://localtown.us/starbuck-wa
+- name: Hatton
+  geoid: '5330060'
+  divisions: []
+  population: 79
+  website: ''
+- name: Lamont
+  geoid: '5338215'
+  divisions: []
+  population: 79
+  website: ''
+- name: Krupp (Marlin)
+  geoid: '5336395'
+  divisions: []
+  population: 49
+  website: ''
