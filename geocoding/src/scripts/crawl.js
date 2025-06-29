@@ -121,7 +121,6 @@ async function monitorNetworkRequests(page, duration = 20000) { // duration in m
 
     const requestListener = (request) => {
         const url = request.url();
-        console.log("Listening: ", url)
         if (patterns.some(pattern => pattern.test(url)) && !excludedPatterns.some(pattern => pattern.test(url))) {
            console.log(`ArcGIS API call detected: ${url}`);
            // Transform request to get just geojson
@@ -251,6 +250,13 @@ async function crawl(state, geoid) {
 }
 
 // Example usage
-state = 'wa'; // Replace with the desired state
-const geoid = '5367000'; // Replace with the actual geoid for Seattle
+
+// Parse command-line arguments
+const args = process.argv.slice(2);
+if (!args[0] || !args[1]) {
+    console.log("No arguments found, defaulting to state: wa and geoid: 5367000 (Spokane)")
+}
+const state = args[0] || 'wa'; // Default to 'wa' if no state is provided
+const geoid = args[1] || '5367000'; // Default to '5367000' if no geoid is provided
+
 crawl(state, geoid);
