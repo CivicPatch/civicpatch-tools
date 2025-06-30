@@ -4,15 +4,16 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-06-30T22:10:54Z",
+    "updated_at": "2025-06-30T22:41:08Z",
     "divisions": []
   },
   {
     "name": "Jamie Somerville",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Mayor Pro Tempore"
     ],
-    "updated_at": "2025-06-30T22:10:54Z",
+    "updated_at": "2025-06-30T22:41:08Z",
     "divisions": []
   },
   {
@@ -20,7 +21,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T22:10:54Z",
+    "updated_at": "2025-06-30T22:41:08Z",
     "divisions": []
   },
   {
@@ -28,7 +29,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T22:10:54Z",
+    "updated_at": "2025-06-30T22:41:08Z",
     "divisions": []
   },
   {
@@ -36,7 +37,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T22:10:54Z",
+    "updated_at": "2025-06-30T22:41:08Z",
     "divisions": []
   },
   {
@@ -44,7 +45,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T22:10:54Z",
+    "updated_at": "2025-06-30T22:41:08Z",
     "divisions": []
   },
   {
@@ -52,7 +53,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T22:10:54Z",
+    "updated_at": "2025-06-30T22:41:08Z",
     "divisions": []
   }
 ]
