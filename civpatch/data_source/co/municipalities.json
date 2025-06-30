@@ -1037,7 +1037,14 @@
       ],
       "population": 7920,
       "website": "http://www.city-woodlandpark.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T17:20:30Z",
+      "meta_hash": "0d30772c861fa270f3f950b8502c3190",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Lamar",
