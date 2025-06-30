@@ -1512,7 +1512,14 @@
       ],
       "population": 3456,
       "website": "https://cityofyuma.colorado.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:43:03Z",
+      "meta_hash": "e3c4e4f250600bd386dc94f2bda4488f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Burlington",
