@@ -892,7 +892,14 @@
       ],
       "population": 9060,
       "website": "http://www.ci.craig.co.us/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T16:55:21Z",
+      "meta_hash": "c2b5abf49eb05366df0f6a8488251e90",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Delta",
