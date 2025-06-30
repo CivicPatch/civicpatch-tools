@@ -685,7 +685,14 @@
       ],
       "population": 13735,
       "website": "http://www.sterlingcolo.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T16:23:23Z",
+      "meta_hash": "377b7efbea33eec382956271deeb75ae",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fruita",
