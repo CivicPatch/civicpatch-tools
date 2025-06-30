@@ -698,7 +698,14 @@
       ],
       "population": 13094,
       "website": "http://superiorcolorado.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T16:29:12Z",
+      "meta_hash": "1620f22d5132411f067c5ca2cd3dd14e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fort Morgan",
