@@ -23,7 +23,7 @@
       {
         "data": "At-Large",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Mayor represents the City of Greenwood Village at large."
+        "llm_confidence_reason": "Mayor represents the City at large."
       }
     ],
     "phone_numbers": [
@@ -38,7 +38,7 @@
       {
         "data": "glantz@greenwoodvillage.com",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email listed as 'Email Mayor George Lantz'.",
+        "llm_confidence_reason": "Email link labeled for Mayor George Lantz.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
@@ -55,11 +55,11 @@
       {
         "data": "2027-11",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Re-elected in November 2023 to serve final term ending November 2027.",
+        "llm_confidence_reason": "Current term expires November 2027.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
-    "updated_at": "2025-06-28T18:52:46Z"
+    "updated_at": "2025-06-30T16:35:51Z"
   },
   {
     "name": "Ann Nelson",
@@ -77,7 +77,7 @@
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.9,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Elected to City Council representing District 1."
       }
     ],
@@ -85,7 +85,7 @@
       {
         "data": "District 1",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated representing District 1."
+        "llm_confidence_reason": "Explicitly stated as representing District 1."
       }
     ],
     "phone_numbers": [
@@ -100,7 +100,7 @@
       {
         "data": "anelson@greenwoodvillage.com",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email listed as 'Email Ann Nelson'.",
+        "llm_confidence_reason": "Email link labeled for Ann Nelson.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
@@ -121,7 +121,7 @@
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
-    "updated_at": "2025-06-28T18:52:46Z"
+    "updated_at": "2025-06-30T16:35:51Z"
   },
   {
     "name": "Paul Wiesner",
@@ -139,7 +139,7 @@
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.9,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Re-elected to City Council representing District 1."
       }
     ],
@@ -147,7 +147,7 @@
       {
         "data": "District 1",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated representing District 1."
+        "llm_confidence_reason": "Explicitly stated as representing District 1."
       }
     ],
     "phone_numbers": [
@@ -162,7 +162,7 @@
       {
         "data": "pwiesner@greenwoodvillage.com",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email listed as 'Email Paul Wiesner'.",
+        "llm_confidence_reason": "Email link labeled for Paul Wiesner.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
@@ -183,7 +183,7 @@
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
-    "updated_at": "2025-06-28T18:52:46Z"
+    "updated_at": "2025-06-30T16:35:51Z"
   },
   {
     "name": "Anne Ingebretsen",
@@ -209,7 +209,7 @@
       {
         "data": "District 2",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated representing District 2."
+        "llm_confidence_reason": "Explicitly stated as representing District 2."
       }
     ],
     "phone_numbers": [
@@ -224,7 +224,7 @@
       {
         "data": "aingebretsen@greenwoodvillage.com",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email listed as 'Email Anne Ingebretsen'.",
+        "llm_confidence_reason": "Email link labeled for Anne Ingebretsen.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
@@ -245,7 +245,7 @@
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
-    "updated_at": "2025-06-28T18:52:46Z"
+    "updated_at": "2025-06-30T16:35:51Z"
   },
   {
     "name": "Dave Kerber",
@@ -271,7 +271,7 @@
       {
         "data": "District 2",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated representing District 2."
+        "llm_confidence_reason": "Explicitly stated as representing District 2."
       }
     ],
     "phone_numbers": [
@@ -286,7 +286,7 @@
       {
         "data": "dkerber@greenwoodvillage.com",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email listed as 'Email Dave Kerber'.",
+        "llm_confidence_reason": "Email link labeled for Dave Kerber.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
@@ -307,7 +307,7 @@
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
-    "updated_at": "2025-06-28T18:52:46Z"
+    "updated_at": "2025-06-30T16:35:51Z"
   },
   {
     "name": "Libby Hilton Barnacle",
@@ -333,7 +333,7 @@
       {
         "data": "District 3",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated representing District 3."
+        "llm_confidence_reason": "Explicitly stated as representing District 3."
       }
     ],
     "phone_numbers": [
@@ -348,7 +348,7 @@
       {
         "data": "ebarnacle@greenwoodvillage.com",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email listed as 'Email Libby Hilton Barnacle'.",
+        "llm_confidence_reason": "Email link labeled for Libby Hilton Barnacle.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
@@ -356,7 +356,7 @@
     "start_dates": [
       {
         "data": "2019",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "First elected in 2019 with subsequent re-elections.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
@@ -364,12 +364,12 @@
     "end_dates": [
       {
         "data": "2025-11",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Current term expires November 2025.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
-    "updated_at": "2025-06-28T18:52:46Z"
+    "updated_at": "2025-06-30T16:35:51Z"
   },
   {
     "name": "Donna Johnston",
@@ -395,7 +395,7 @@
       {
         "data": "District 3",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated representing District 3."
+        "llm_confidence_reason": "Explicitly stated as representing District 3."
       }
     ],
     "phone_numbers": [
@@ -410,7 +410,7 @@
       {
         "data": "djohnston@greenwoodvillage.com",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email listed as 'Email Donna Johnston'.",
+        "llm_confidence_reason": "Email link labeled for Donna Johnston.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
@@ -418,7 +418,7 @@
     "start_dates": [
       {
         "data": "2019",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Elected in 2019 with subsequent re-elections.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
@@ -426,12 +426,12 @@
     "end_dates": [
       {
         "data": "2025-11",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Current term expires November 2025.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
-    "updated_at": "2025-06-28T18:52:46Z"
+    "updated_at": "2025-06-30T16:35:51Z"
   },
   {
     "name": "Tom Stahl",
@@ -457,7 +457,7 @@
       {
         "data": "District 4",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated representing District 4."
+        "llm_confidence_reason": "Explicitly stated as representing District 4."
       }
     ],
     "phone_numbers": [
@@ -472,7 +472,7 @@
       {
         "data": "tstahl@greenwoodvillage.com",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email listed as 'Email Tom Stahl'.",
+        "llm_confidence_reason": "Email link labeled for Tom Stahl.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
@@ -480,7 +480,7 @@
     "start_dates": [
       {
         "data": "2021",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Elected in 2021 and re-elected in 2023.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
@@ -488,12 +488,12 @@
     "end_dates": [
       {
         "data": "2025-11",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Current term expires November 2025.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
-    "updated_at": "2025-06-28T18:52:46Z"
+    "updated_at": "2025-06-30T16:35:51Z"
   },
   {
     "name": "Judith Hilton",
@@ -504,7 +504,7 @@
       {
         "data": "https://www.greenwoodvillage.com/ImageRepository/Document?documentId=17416",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Dr. Judith Hilton.",
+        "llm_confidence_reason": "Image directly associated with Judith Hilton.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
@@ -519,14 +519,14 @@
       {
         "data": "District 4",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated representing District 4."
+        "llm_confidence_reason": "Explicitly stated as representing District 4."
       }
     ],
     "phone_numbers": [
       {
         "data": "303-804-4131",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number listed directly under Dr. Judith Hilton.",
+        "llm_confidence_reason": "Phone number listed directly under Judith Hilton.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
@@ -534,7 +534,7 @@
       {
         "data": "jhilton@greenwoodvillage.com",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email listed as 'Email Dr. Judith Hilton'.",
+        "llm_confidence_reason": "Email link labeled for Judith Hilton.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
@@ -542,19 +542,19 @@
     "start_dates": [
       {
         "data": "2019",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected in 2019 and re-elected in 2021 and 2023.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in 2019 with subsequent re-elections.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
     "end_dates": [
       {
         "data": "2025-11",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Current term expires November 2025.",
         "source": "https://www.greenwoodvillage.com/2707/Contact-Your-Elected-Officials"
       }
     ],
-    "updated_at": "2025-06-28T18:52:46Z"
+    "updated_at": "2025-06-30T16:35:51Z"
   }
 ]
