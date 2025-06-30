@@ -12,21 +12,63 @@
   end_date:
   sources:
   - https://www.friscogov.com/your-government/staff-directory
-  updated_at: '2025-06-30T22:02:08Z'
-- name: Andy Held
+  updated_at: '2025-06-30T22:18:50Z'
+- name: Dan Kibbie
   roles:
-  - Mayor Pro Tempore
+  - Council Member
   divisions:
   image:
   cdn_image:
   email:
-  phone_number: "(970) 333-1972"
+  phone_number: "(970) 393-3488"
   website:
   start_date:
   end_date:
   sources:
   - https://www.friscogov.com/your-government/staff-directory
-  updated_at: '2025-06-30T22:02:08Z'
+  updated_at: '2025-06-30T22:18:50Z'
+- name: Elizabeth Skrzypczak-Adrian
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(970) 389-5304"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.friscogov.com/your-government/staff-directory
+  updated_at: '2025-06-30T22:18:50Z'
+- name: Martin Allen
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(970) 315-2502"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.friscogov.com/your-government/staff-directory
+  updated_at: '2025-06-30T22:18:50Z'
+- name: Robyn Goldstein
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(303) 562-8626"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.friscogov.com/your-government/staff-directory
+  updated_at: '2025-06-30T22:18:50Z'
 - name: Zach Ryan
   roles:
   - Council Member
@@ -40,4 +82,4 @@
   end_date:
   sources:
   - https://www.friscogov.com/your-government/staff-directory
-  updated_at: '2025-06-30T22:02:08Z'
+  updated_at: '2025-06-30T22:18:50Z'

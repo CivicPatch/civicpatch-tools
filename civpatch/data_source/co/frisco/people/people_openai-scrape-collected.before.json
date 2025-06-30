@@ -9,7 +9,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as 'Frisco Mayor' and 'Frisco Mayor' under Town Council section."
+        "llm_confidence_reason": "Explicitly listed as 'Frisco Mayor' and 'Frisco Mayor' in Town Council section."
       }
     ],
     "divisions": [],
@@ -25,7 +25,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-30T22:01:58Z"
+    "updated_at": "2025-06-30T22:18:40Z"
   },
   {
     "name": "Andy Held",
@@ -37,7 +37,7 @@
       {
         "data": "Mayor Pro Tem",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as 'Frisco Mayor Pro Tem' under Town Council section."
+        "llm_confidence_reason": "Explicitly listed as 'Frisco Mayor Pro Tem' in Town Council section."
       }
     ],
     "divisions": [],
@@ -53,7 +53,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-30T22:01:58Z"
+    "updated_at": "2025-06-30T22:18:40Z"
   },
   {
     "name": "Martin Allen",
@@ -65,7 +65,7 @@
       {
         "data": "Town Councilmember",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as 'Frisco Town Councilmember' under Town Council section."
+        "llm_confidence_reason": "Explicitly listed as 'Frisco Town Councilmember' in Town Council section."
       }
     ],
     "divisions": [],
@@ -81,7 +81,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-30T22:01:58Z"
+    "updated_at": "2025-06-30T22:18:40Z"
   },
   {
     "name": "Robyn Goldstein",
@@ -93,7 +93,7 @@
       {
         "data": "Town Councilmember",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as 'Frisco Town Councilmember' under Town Council section."
+        "llm_confidence_reason": "Explicitly listed as 'Frisco Town Councilmember' in Town Council section."
       }
     ],
     "divisions": [],
@@ -109,7 +109,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-30T22:01:58Z"
+    "updated_at": "2025-06-30T22:18:40Z"
   },
   {
     "name": "Dan Kibbie",
@@ -121,7 +121,7 @@
       {
         "data": "Town Councilmember",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as 'Frisco Town Councilmember' under Town Council section."
+        "llm_confidence_reason": "Explicitly listed as 'Frisco Town Councilmember' in Town Council section."
       }
     ],
     "divisions": [],
@@ -137,7 +137,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-30T22:01:58Z"
+    "updated_at": "2025-06-30T22:18:40Z"
   },
   {
     "name": "Zach Ryan",
@@ -149,7 +149,7 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as 'Councilmember' under Town Council section."
+        "llm_confidence_reason": "Explicitly listed as 'Councilmember' in Town Council section."
       }
     ],
     "divisions": [],
@@ -165,7 +165,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-30T22:01:58Z"
+    "updated_at": "2025-06-30T22:18:40Z"
   },
   {
     "name": "Elizabeth Skrzypczak-Adrian",
@@ -177,7 +177,7 @@
       {
         "data": "Town Councilmember",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as 'Frisco Town Councilmember' under Town Council section."
+        "llm_confidence_reason": "Explicitly listed as 'Frisco Town Councilmember' in Town Council section."
       }
     ],
     "divisions": [],
@@ -193,6 +193,6 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-06-30T22:01:58Z"
+    "updated_at": "2025-06-30T22:18:40Z"
   }
 ]

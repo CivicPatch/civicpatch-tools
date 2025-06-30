@@ -1683,7 +1683,7 @@ Send an email to staff member
   First Last
 - Your Email Address*
 - Message*
-- Name
+- Phone
   
   This field is for validation purposes and should be left unchanged.
 
@@ -1714,7 +1714,7 @@ Notifications
   - Town Council Meeting Agendas/Council Meeting Recaps
   - Planning Commission Meeting Agendas
   - Frisco Business News
-- Phone
+- Comments
   
   This field is for validation purposes and should be left unchanged.
 
