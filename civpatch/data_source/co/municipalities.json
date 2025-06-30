@@ -1152,7 +1152,14 @@
       ],
       "population": 6442,
       "website": "http://www.cherryhillsvillage.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T17:33:15Z",
+      "meta_hash": "ba9615508dfb6e40d136310889cdfbc7",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Carbondale",
