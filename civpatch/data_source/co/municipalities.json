@@ -1763,7 +1763,14 @@
       ],
       "population": 2374,
       "website": "http://www.townofmeeker.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T22:15:36Z",
+      "meta_hash": "c0834bd18f940ab999fbbba05aeec689",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "La Salle",
