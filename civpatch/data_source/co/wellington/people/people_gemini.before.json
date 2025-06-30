@@ -4,20 +4,18 @@
     "roles": [
       "Trustee"
     ],
-    "divisions": [
-      "At-Large"
-    ],
+    "divisions": [],
     "image": null,
     "phone_number": null,
     "email": "cannoned@wellingtoncolorado.gov",
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
-    "start_date": null,
+    "start_date": "2024-04",
     "end_date": "2028-04",
     "sources": [
       "https://www.townofwellington.com",
       "https://www.townofwellington.com/161/Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:28:16Z"
+    "updated_at": "2025-06-30T16:57:31Z"
   },
   {
     "name": "Rebekka Dailey",
@@ -27,14 +25,15 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "daileyrm@wellingtoncolorado.gov",
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2024-04",
+    "end_date": "2028-04",
     "sources": [
-      "https://www.townofwellington.com"
+      "https://www.townofwellington.com",
+      "https://www.townofwellington.com/161/Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:28:16Z"
+    "updated_at": "2025-06-30T16:57:31Z"
   },
   {
     "name": "Brian Mason",
@@ -44,14 +43,15 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "masonb@wellingtoncolorado.gov",
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2022-04",
+    "end_date": "2026-04",
     "sources": [
-      "https://www.townofwellington.com"
+      "https://www.townofwellington.com",
+      "https://www.townofwellington.com/161/Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:28:16Z"
+    "updated_at": "2025-06-30T16:57:31Z"
   },
   {
     "name": "Lowrey Moyer",
@@ -61,14 +61,15 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "moyerlo@wellingtoncolorado.gov",
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2024-04",
+    "end_date": "2028-04",
     "sources": [
-      "https://www.townofwellington.com"
+      "https://www.townofwellington.com",
+      "https://www.townofwellington.com/161/Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:28:16Z"
+    "updated_at": "2025-06-30T16:57:31Z"
   },
   {
     "name": "Shirrell Tietz",
@@ -78,14 +79,15 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "tietzs@wellingtoncolorado.gov",
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2022-04",
+    "end_date": "2026-04",
     "sources": [
-      "https://www.townofwellington.com"
+      "https://www.townofwellington.com",
+      "https://www.townofwellington.com/161/Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:28:16Z"
+    "updated_at": "2025-06-30T16:57:31Z"
   },
   {
     "name": "David Wiegand",
@@ -95,14 +97,15 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "wiegandd@wellingtoncolorado.gov",
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2022-04",
+    "end_date": "2026-04",
     "sources": [
-      "https://www.townofwellington.com"
+      "https://www.townofwellington.com",
+      "https://www.townofwellington.com/161/Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:28:16Z"
+    "updated_at": "2025-06-30T16:57:31Z"
   },
   {
     "name": "Calar Chaussee",
@@ -112,13 +115,14 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "chausseec@wellingtoncolorado.gov",
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2022-04",
+    "end_date": "2026-04",
     "sources": [
-      "https://www.townofwellington.com"
+      "https://www.townofwellington.com",
+      "https://www.townofwellington.com/161/Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:28:16Z"
+    "updated_at": "2025-06-30T16:57:31Z"
   }
 ]
