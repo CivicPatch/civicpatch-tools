@@ -1307,7 +1307,14 @@
       ],
       "population": 5078,
       "website": "http://www.townofbreckenridge.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:25:35Z",
+      "meta_hash": "a022d9f6c116dc4774b5c2d6a6fda776",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Edgewater",
