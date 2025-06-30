@@ -15,7 +15,7 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://frederickco.gov/Directory.aspx?EID=20"
     ],
-    "updated_at": "2025-06-30T16:24:09Z"
+    "updated_at": "2025-06-30T16:48:01Z"
   },
   {
     "name": "Kevin R. Brown",
@@ -34,7 +34,7 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://frederickco.gov/Directory.aspx?EID=19"
     ],
-    "updated_at": "2025-06-30T16:24:09Z"
+    "updated_at": "2025-06-30T16:48:01Z"
   },
   {
     "name": "Adam Mahan",
@@ -51,7 +51,7 @@
     "sources": [
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:24:09Z"
+    "updated_at": "2025-06-30T16:48:01Z"
   },
   {
     "name": "Mark Lamach",
@@ -69,7 +69,7 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://frederickco.gov/Directory.aspx?EID=117"
     ],
-    "updated_at": "2025-06-30T16:24:09Z"
+    "updated_at": "2025-06-30T16:48:01Z"
   },
   {
     "name": "Dan March",
@@ -86,13 +86,12 @@
     "sources": [
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:24:09Z"
+    "updated_at": "2025-06-30T16:48:01Z"
   },
   {
     "name": "Windi Padia",
     "roles": [
-      "Trustee",
-      "Board Member"
+      "Trustee"
     ],
     "divisions": [],
     "image": "https://www.frederickco.gov/ImageRepository/Document?documentId=19346",
@@ -105,13 +104,12 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://frederickco.gov/Directory.aspx?EID=264"
     ],
-    "updated_at": "2025-06-30T16:24:09Z"
+    "updated_at": "2025-06-30T16:48:01Z"
   },
   {
     "name": "Chad teVelde",
     "roles": [
-      "Trustee",
-      "Board Member"
+      "Trustee"
     ],
     "divisions": [],
     "image": "https://www.frederickco.gov/ImageRepository/Document?documentId=19349",
@@ -124,6 +122,6 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://www.frederickco.gov/directory.aspx?EID=94"
     ],
-    "updated_at": "2025-06-30T16:24:09Z"
+    "updated_at": "2025-06-30T16:48:01Z"
   }
 ]

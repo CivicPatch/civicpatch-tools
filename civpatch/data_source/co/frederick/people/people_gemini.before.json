@@ -15,7 +15,7 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://frederickco.gov/Directory.aspx?EID=20"
     ],
-    "updated_at": "2025-06-30T16:24:43Z"
+    "updated_at": "2025-06-30T16:51:32Z"
   },
   {
     "name": "Kevin R. Brown",
@@ -26,7 +26,7 @@
     "divisions": [],
     "image": null,
     "phone_number": "720.382.5502",
-    "email": "krbrown@frederickco.gov",
+    "email": null,
     "website": "https://frederickco.gov/Directory.aspx?EID=19",
     "start_date": null,
     "end_date": "2028-04",
@@ -34,7 +34,7 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://frederickco.gov/Directory.aspx?EID=19"
     ],
-    "updated_at": "2025-06-30T16:24:43Z"
+    "updated_at": "2025-06-30T16:51:32Z"
   },
   {
     "name": "Adam Mahan",
@@ -51,7 +51,7 @@
     "sources": [
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:24:43Z"
+    "updated_at": "2025-06-30T16:51:32Z"
   },
   {
     "name": "Mark Lamach",
@@ -69,7 +69,7 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://frederickco.gov/Directory.aspx?EID=117"
     ],
-    "updated_at": "2025-06-30T16:24:43Z"
+    "updated_at": "2025-06-30T16:51:32Z"
   },
   {
     "name": "Dan March",
@@ -86,7 +86,7 @@
     "sources": [
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:24:43Z"
+    "updated_at": "2025-06-30T16:51:32Z"
   },
   {
     "name": "Windi Padia",
@@ -104,7 +104,7 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://frederickco.gov/Directory.aspx?EID=264"
     ],
-    "updated_at": "2025-06-30T16:24:43Z"
+    "updated_at": "2025-06-30T16:51:32Z"
   },
   {
     "name": "Chad teVelde",
@@ -122,6 +122,6 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://www.frederickco.gov/directory.aspx?EID=94"
     ],
-    "updated_at": "2025-06-30T16:24:43Z"
+    "updated_at": "2025-06-30T16:51:32Z"
   }
 ]

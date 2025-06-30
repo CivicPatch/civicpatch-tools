@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://frederickco.gov/Directory.aspx?EID=20%2F)
+[Skip to Main Content](https://frederickco.gov/Directory.aspx?EID=117%2F)
 
 [Town Offices Closed](https://frederickco.gov/AlertCenter.aspx) [Town Offices closed Friday, July 4, for Independence Day. Read On...](https://frederickco.gov/AlertCenter.aspx?AID=Town-Offices-closed-Friday-July-4-for-In-38)
 
@@ -19,37 +19,23 @@ Search
 
 <!--THE END-->
 
-![](https://frederickco.gov/ImageRepository/Document?documentID=22529)
+![](https://frederickco.gov/ImageRepository/Document?documentID=22532)
 
 1. [Home](https://frederickco.gov)
 2. Staff Directory
 
-![Tracie Crites](https://frederickco.gov/ImageRepository/Document?documentID=19352 "Tracie Crites")
+![Mark Lamach](https://frederickco.gov/ImageRepository/Document?documentID=19351 "Mark Lamach")
 
-# Tracie Crites
+# Mark Lamach
 
  
 
 [Mayor and Board of Trustees](https://frederickco.gov/Directory.aspx?DID=15)  
-Title: Mayor  
-Phone: 720.382.5504  
-[Email](mailto:tcrites@frederickco.gov)
+Title: Trustee  
+Phone: 720.382.5501  
+[Email](mailto:MLamach@frederickco.gov)
 
-A Montana native, Tracie moved to Colorado after graduating from Carroll College in 2007. She and her husband Rhett and their 3 children: Emerson (8), Isla (7), and Hamilton (5) have called Frederick home for the last 6 years
-
-Accomplishments:
-
-- Mayor, April 2020 to present
-- Trustee, April 2018 to 2020
-- Frederick POST Commission Board Liaison 2018 to 2020
-- Frederick Urban Renewal Authority 2016 to present
-- Carbon Valley Parks and Recreation District Board of Director 2016 to 2018
-- Carbon Valley Parks and Recreation District Board President 2017 to 2018
-- Advisory member for Women in Technology
-- Fundraiser for the Larimer Humane Society and Project Sanctuary
-- Founder of the March of Dimes-Carroll College Collegiate Council
-
-In her free time, Tracie enjoys trips with her family to Estes Park and cheering on her beloved Colorado Rockies.
+A native of Colorado, Mark has been involved with community activities in various capacities for over 30+ years. Mark held several leadership positions throughout his career and retired after 41.5 years. He and his wife, Rhonda, have two adult sons Nick and Jordan. They enjoy spending time with their two granddaughters and supporting them in all their activities.
 
  
 

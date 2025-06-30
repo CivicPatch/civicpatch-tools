@@ -1,57 +1,56 @@
-[Skip To Main Content](https://frederickco.gov/Directory.aspx?EID=19%2F)
+[Skip To Main Content](https://www.frederickco.gov/directory.aspx?EID=94%2F)
 
 Loading
 
-[Skip to Main Content](https://frederickco.gov/Directory.aspx?EID=19%2F)
+[Skip to Main Content](https://www.frederickco.gov/directory.aspx?EID=94%2F)
 
-[Town Offices Closed](https://frederickco.gov/AlertCenter.aspx) [Town Offices closed Friday, July 4, for Independence Day. Read On...](https://frederickco.gov/AlertCenter.aspx?AID=Town-Offices-closed-Friday-July-4-for-In-38)
+[Town Offices Closed](https://www.frederickco.gov/AlertCenter.aspx) [Town Offices closed Friday, July 4, for Independence Day. Read On...](https://www.frederickco.gov/AlertCenter.aspx?AID=Town-Offices-closed-Friday-July-4-for-In-38)
 
-[Create a Website Account](https://frederickco.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
+[Create a Website Account](https://www.frederickco.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
-- [Website Sign In](https://frederickco.gov/MyAccount)
+- [Website Sign In](https://www.frederickco.gov/MyAccount)
 
 Search
 
-![Frederick CO Homepage](https://frederickco.gov/ImageRepository/Document?documentID=22534)
+![Frederick CO Homepage](https://www.frederickco.gov/ImageRepository/Document?documentID=22534)
 
-1. [Living in Frederick](https://frederickco.gov/220/Living-in-Frederick)
-2. [Doing Business](https://frederickco.gov/672/Doing-Business)
-3. [Your Government](https://frederickco.gov/280/Your-Government)
-4. [How To...](https://frederickco.gov/190/How-To)
+1. [Living in Frederick](https://www.frederickco.gov/220/Living-in-Frederick)
+2. [Doing Business](https://www.frederickco.gov/672/Doing-Business)
+3. [Your Government](https://www.frederickco.gov/280/Your-Government)
+4. [How To...](https://www.frederickco.gov/190/How-To)
 
 <!--THE END-->
 
-![](https://frederickco.gov/ImageRepository/Document?documentID=22530)
+![](https://www.frederickco.gov/ImageRepository/Document?documentID=22529)
 
-1. [Home](https://frederickco.gov)
+1. [Home](https://www.frederickco.gov)
 2. Staff Directory
 
-![Kevin Brown](https://frederickco.gov/ImageRepository/Document?documentID=19347)
+![Chad teVelde](https://www.frederickco.gov/ImageRepository/Document?documentID=19349)
 
-# Kevin R. Brown
+# Chad teVelde
 
  
 
-[Mayor and Board of Trustees](https://frederickco.gov/Directory.aspx?DID=15)  
+[Mayor and Board of Trustees](https://www.frederickco.gov/Directory.aspx?DID=15)  
 Title: Trustee  
-Phone: 720.382.5502  
-[Email](mailto:krbrown@frederickco.gov)
+[Email](mailto:CteVelde@frederickco.gov)
 
-[Return to Staff Directory](https://frederickco.gov/Directory.aspx)
+[Return to Staff Directory](https://www.frederickco.gov/Directory.aspx)
 
-1. [Board of Trustees Meeting Livestream](https://frederickco.gov/CivicMedia?CID=1)
+1. [Board of Trustees Meeting Livestream](https://www.frederickco.gov/CivicMedia?CID=1)
 
-[Events](https://frederickco.gov/316/Communications-Engagement)
+[Events](https://www.frederickco.gov/316/Communications-Engagement)
 
-[Town Jobs](https://frederickco.gov/344/Town-Job-Opportunities)
+[Town Jobs](https://www.frederickco.gov/344/Town-Job-Opportunities)
 
 [Utility Billing](https://www.municipalonlinepayments.com/frederickco/utilities)
 
-[Submit a Report](https://frederickco.gov/1004/Submit-a-Report)
+[Submit a Report](https://www.frederickco.gov/1004/Submit-a-Report)
 
-[Agendas &amp; Minutes](https://frederickco.gov/1100/Agenda-Portal)
+[Agendas &amp; Minutes](https://www.frederickco.gov/1100/Agenda-Portal)
 
-[Police](https://frederickco.gov/360/Police)
+[Police](https://www.frederickco.gov/360/Police)
 
 ### Contact Us
 
@@ -61,31 +60,31 @@ Phone: 720.382.5502
 4. Frederick, CO 80530
 5. Monday through Friday
 6. 8 am to 5 pm
-7. [Phone &amp; Email Directory](https://frederickco.gov/Directory.aspx)
+7. [Phone &amp; Email Directory](https://www.frederickco.gov/Directory.aspx)
 
-### [Quick Links](https://frederickco.gov/QuickLinks.aspx?CID=64)
+### [Quick Links](https://www.frederickco.gov/QuickLinks.aspx?CID=64)
 
-1. [Town Staff](https://frederickco.gov/Directory.aspx)
+1. [Town Staff](https://www.frederickco.gov/Directory.aspx)
 2. [Utility Online Bill Pay](https://www.municipalonlinepayments.com/frederickco/utilities)
-3. [Events](https://frederickco.gov/234/Events)
-4. [News](https://frederickco.gov/civicalerts.aspx)
-5. [Calendar](https://frederickco.gov/calendar.aspx)
-6. [Connect with Us](https://frederickco.gov/196/Connect-With)
+3. [Events](https://www.frederickco.gov/234/Events)
+4. [News](https://www.frederickco.gov/civicalerts.aspx)
+5. [Calendar](https://www.frederickco.gov/calendar.aspx)
+6. [Connect with Us](https://www.frederickco.gov/196/Connect-With)
 
 /QuickLinks.aspx
 
-### [Site Links](https://frederickco.gov/QuickLinks.aspx?CID=56)
+### [Site Links](https://www.frederickco.gov/QuickLinks.aspx?CID=56)
 
-1. [Home](https://frederickco.gov)
-2. [Site Map](https://frederickco.gov/sitemap)
-3. [Accessibility](https://frederickco.gov/1090/Policies)
-4. [Copyright Notices](https://frederickco.gov/copyright)
-5. [Privacy Policy](https://frederickco.gov/522/Privacy-Policy)
-6. [Employee Portal](https://frederickco.gov/72/Employee-Portal)
+1. [Home](https://www.frederickco.gov)
+2. [Site Map](https://www.frederickco.gov/sitemap)
+3. [Accessibility](https://www.frederickco.gov/1090/Policies)
+4. [Copyright Notices](https://www.frederickco.gov/copyright)
+5. [Privacy Policy](https://www.frederickco.gov/522/Privacy-Policy)
+6. [Employee Portal](https://www.frederickco.gov/72/Employee-Portal)
 
 /QuickLinks.aspx
 
-[WEBSITE LOGIN](https://frederickco.gov/myaccount)
+[WEBSITE LOGIN](https://www.frederickco.gov/myaccount)
 
 Government Websites by [CivicPlus®](https://connect.civicplus.com/referral)
 
