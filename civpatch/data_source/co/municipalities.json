@@ -570,8 +570,8 @@
       "population": 16381,
       "website": "https://www.firestoneco.gov/",
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-28T18:56:24Z",
-      "meta_hash": "fcdfd99f207c03dd5d0bab416b80e2a3",
+      "meta_updated_at": "2025-06-30T16:29:41Z",
+      "meta_hash": "4a50097d43e8996bdadf0495bdc4f807",
       "meta_sources": [
         "state_source",
         "gemini",
