@@ -1490,7 +1490,14 @@
       ],
       "population": 3822,
       "website": "https://www.cityofflorenceco.gov/.",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:40:17Z",
+      "meta_hash": "0a005d5c695ee281c38b136cb5f3db4c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Silt",
