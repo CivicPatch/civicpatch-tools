@@ -1654,8 +1654,8 @@
       "population": 2913,
       "website": "http://www.friscogov.com/",
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-30T22:02:08Z",
-      "meta_hash": "484ccb9191fa40d860caedf74b1966ee",
+      "meta_updated_at": "2025-06-30T22:18:50Z",
+      "meta_hash": "ba5fed0e5fee24851856fe7259b1472d",
       "meta_sources": [
         "state_source",
         "gemini",

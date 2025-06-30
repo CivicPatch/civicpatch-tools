@@ -14,7 +14,7 @@
     "sources": [
       "https://www.friscogov.com/your-government/staff-directory"
     ],
-    "updated_at": "2025-06-30T22:01:58Z"
+    "updated_at": "2025-06-30T22:18:40Z"
   },
   {
     "name": "Andy Held",
@@ -31,7 +31,58 @@
     "sources": [
       "https://www.friscogov.com/your-government/staff-directory"
     ],
-    "updated_at": "2025-06-30T22:01:58Z"
+    "updated_at": "2025-06-30T22:18:40Z"
+  },
+  {
+    "name": "Martin Allen",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 315-2502",
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.friscogov.com/your-government/staff-directory"
+    ],
+    "updated_at": "2025-06-30T22:18:40Z"
+  },
+  {
+    "name": "Robyn Goldstein",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(303) 562-8626",
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.friscogov.com/your-government/staff-directory"
+    ],
+    "updated_at": "2025-06-30T22:18:40Z"
+  },
+  {
+    "name": "Dan Kibbie",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 393-3488",
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.friscogov.com/your-government/staff-directory"
+    ],
+    "updated_at": "2025-06-30T22:18:40Z"
   },
   {
     "name": "Zach Ryan",
@@ -48,6 +99,23 @@
     "sources": [
       "https://www.friscogov.com/your-government/staff-directory"
     ],
-    "updated_at": "2025-06-30T22:01:58Z"
+    "updated_at": "2025-06-30T22:18:40Z"
+  },
+  {
+    "name": "Elizabeth Skrzypczak-Adrian",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 389-5304",
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.friscogov.com/your-government/staff-directory"
+    ],
+    "updated_at": "2025-06-30T22:18:40Z"
   }
 ]
