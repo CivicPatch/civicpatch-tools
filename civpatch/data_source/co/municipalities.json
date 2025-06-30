@@ -1048,7 +1048,14 @@
       ],
       "population": 7687,
       "website": "http://www.ci.lamar.co.us/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T17:28:34Z",
+      "meta_hash": "ea5414e5301a0f7c77fdf58c4e35e1ae",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Severance",
