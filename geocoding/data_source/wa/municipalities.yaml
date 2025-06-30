@@ -29,6 +29,7 @@
     - District 3
     - District 4
     - District 5
+  map_url: https://hub.arcgis.com/datasets/tacoma::city-council-districts-tacoma/about
   population: 219346
   website: https://cityoftacoma.org
 - name: Vancouver
@@ -73,7 +74,13 @@
     - District 3
     - District 4
     - District 5
+    - District 6
     - District 7
+    - District Dummy # Yakima map has a dupe district...
+  map_url: https://www.yakimawa.gov/council/city-council-districts
+  map_attribute: 
+    attr_name: Option2 # This is also kind of silly
+    division_type: council_district
   population: 96968
   website: https://www.yakimawa.gov
 - name: Kirkland

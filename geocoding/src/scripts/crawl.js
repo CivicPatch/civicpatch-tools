@@ -35,8 +35,6 @@ const DIVISION_ATTRIBUTES = {
     "ward": ["ward"]
 }
 
-
-
 const HEURISTICS = {
     "divisions_match": {
         name: "MATCHES # DIVISIONS",
@@ -93,7 +91,8 @@ const HEURISTICS = {
 PROJECT_ROOT = path.join(__dirname, '../../..');
 
 const patterns = [
-    /rest\/services\/\S+\/\d+\/query/
+    /rest\/services\/\S+\/\d+\/query/,
+    /rest\/services\/\S+\/FeatureServer\/\d+/
 ];
 
 const GEOJSON_QUERY = "?where=1%3D1&outFields=*&f=geojson"
@@ -121,14 +120,23 @@ async function monitorNetworkRequests(page, duration = 20000) { // duration in m
 
     const requestListener = (request) => {
         const url = request.url();
+        if (!excludedPatterns.some(pattern => pattern.test(url))) {
+            fs.writeFileSync(path.join(PROJECT_ROOT, "tmp", "output.txt"), `Request URL: ${url}\n`, { flag: 'a' });
+        }
         if (patterns.some(pattern => pattern.test(url)) && !excludedPatterns.some(pattern => pattern.test(url))) {
            console.log(`ArcGIS API call detected: ${url}`);
            // Transform request to get just geojson
            const urlObj = new URL(url);
-           urlObj.search = GEOJSON_QUERY; // Replace the existing search parameters with GEOJSON_QUERY
-           let updated_url = urlObj.toString();
-           console.log(`Transformed URL for GeoJSON: ${updated_url}`); 
-           candidate_urls.push(updated_url);
+
+           // If the end of the path is /FeatureServer/<number>, we need to append "query" to the end of the URL
+          if (/FeatureServer\/\d+$/.test(urlObj.pathname)) {
+            urlObj.pathname += "/query";
+            urlObj.search = GEOJSON_QUERY; 
+          }
+          urlObj.search = GEOJSON_QUERY; // Replace the existing search parameters with GEOJSON_QUERY
+          let updated_url = urlObj.toString();
+          console.log(`Transformed URL for GeoJSON: ${updated_url}`); 
+          candidate_urls.push(updated_url);
         }
     };
 
