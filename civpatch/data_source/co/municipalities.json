@@ -1156,7 +1156,14 @@
       ],
       "population": 6434,
       "website": "http://www.carbondalegov.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T17:27:46Z",
+      "meta_hash": "08ddb2b3f172d29255bdf65469a6a563",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Dacono",
