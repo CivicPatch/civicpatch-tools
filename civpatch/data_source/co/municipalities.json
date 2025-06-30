@@ -1318,7 +1318,14 @@
       ],
       "population": 5005,
       "website": "http://www.edgewaterco.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:22:00Z",
+      "meta_hash": "083be26c9b458ef752d5733f213cd5d3",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "New Castle",
