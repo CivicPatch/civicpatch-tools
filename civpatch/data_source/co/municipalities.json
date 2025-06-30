@@ -1608,7 +1608,14 @@
       ],
       "population": 3096,
       "website": "http://tosv.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T22:02:32Z",
+      "meta_hash": "05d737af1df11b01b753b86847ab2276",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Walsenburg",
