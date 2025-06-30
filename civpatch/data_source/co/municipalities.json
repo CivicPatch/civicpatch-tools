@@ -904,7 +904,14 @@
       ],
       "population": 8386,
       "website": "http://www.millikenco.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T16:58:29Z",
+      "meta_hash": "a8b2c7b6765e7fc0f735f9e812f8c494",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Trinidad",
