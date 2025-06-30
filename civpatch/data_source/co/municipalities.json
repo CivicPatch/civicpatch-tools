@@ -1101,7 +1101,14 @@
       ],
       "population": 6560,
       "website": "https://www.gunnisonco.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T17:23:26Z",
+      "meta_hash": "e9d5a5e1d382116b370d59c2aca3dd96",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Timnath",
