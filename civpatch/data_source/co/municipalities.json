@@ -994,7 +994,14 @@
       ],
       "population": 8040,
       "website": "http://www.townofgypsum.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T17:04:28Z",
+      "meta_hash": "12cb6f7a499f21929a7c01e04bc699dd",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fort Lupton",
