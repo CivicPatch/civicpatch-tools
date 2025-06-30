@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Brian Mason",
+    "roles": [
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.townofwellington.com/161/Board-of-Trustees",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "updated_at": "2025-06-30T16:28:16Z"
+  },
+  {
+    "name": "Calar Chaussee",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.townofwellington.com/161/Board-of-Trustees",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "updated_at": "2025-06-30T16:28:16Z"
+  }
+]

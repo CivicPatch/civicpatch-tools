@@ -1,0 +1,267 @@
+[
+  {
+    "name": "Ed Cannon",
+    "sources": [
+      "https://www.townofwellington.com",
+      "https://www.townofwellington.com/161/Board-of-Trustees"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as Trustee under Wellington Elected Officials section."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Ed Cannon, Trustee' as a member of the Board of Trustees, which is the main governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-568-3381",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number listed near officials; no direct personal number found.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cannoned@wellingtoncolorado.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is listed directly under Ed Cannon's name.",
+        "source": "https://www.townofwellington.com/161/Board-of-Trustees"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with Ed Cannon's Trustee role.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 'Term expires: April 2028'.",
+        "source": "https://www.townofwellington.com/161/Board-of-Trustees"
+      }
+    ],
+    "updated_at": "2025-06-30T16:28:01Z"
+  },
+  {
+    "name": "Rebekka Dailey",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as Trustee under Wellington Elected Officials section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-568-3381",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number listed near officials; no direct personal number found.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with Rebekka Dailey's Trustee role.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:01Z"
+  },
+  {
+    "name": "Brian Mason",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as Mayor Pro Tem under Wellington Elected Officials section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-568-3381",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number listed near officials; no direct personal number found.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with Brian Mason's Mayor Pro Tem role.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:01Z"
+  },
+  {
+    "name": "Lowrey Moyer",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as Trustee under Wellington Elected Officials section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-568-3381",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number listed near officials; no direct personal number found.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with Lowrey Moyer's Trustee role.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:01Z"
+  },
+  {
+    "name": "Shirrell Tietz",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as Trustee under Wellington Elected Officials section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-568-3381",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number listed near officials; no direct personal number found.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with Shirrell Tietz's Trustee role.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:01Z"
+  },
+  {
+    "name": "David Wiegand",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as Trustee under Wellington Elected Officials section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-568-3381",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number listed near officials; no direct personal number found.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with David Wiegand's Trustee role.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:01Z"
+  },
+  {
+    "name": "Calar Chaussee",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as Mayor under Wellington Elected Officials section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-568-3381",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number listed near officials; no direct personal number found.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link associated with Calar Chaussee's Mayor role.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:01Z"
+  }
+]

@@ -1,0 +1,29 @@
+---
+- name: Calar Chaussee
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(970) 568-3381"
+  website: https://www.townofwellington.com/161/Board-of-Trustees
+  start_date:
+  end_date:
+  sources:
+  - https://www.townofwellington.com
+  updated_at: '2025-06-30T16:28:16Z'
+- name: Brian Mason
+  roles:
+  - Mayor Pro Tempore
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(970) 568-3381"
+  website: https://www.townofwellington.com/161/Board-of-Trustees
+  start_date:
+  end_date:
+  sources:
+  - https://www.townofwellington.com
+  updated_at: '2025-06-30T16:28:16Z'

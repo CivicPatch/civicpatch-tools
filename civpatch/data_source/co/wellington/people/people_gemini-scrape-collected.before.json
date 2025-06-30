@@ -1,0 +1,224 @@
+[
+  {
+    "name": "Ed Cannon",
+    "sources": [
+      "https://www.townofwellington.com",
+      "https://www.townofwellington.com/161/Board-of-Trustees"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Trustee' next to the name Ed Cannon"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'The Mayor and Trustees are elected at large', which applies to Ed Cannon as a Trustee."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "cannoned@wellingtoncolorado.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name Ed Cannon",
+        "source": "https://www.townofwellington.com/161/Board-of-Trustees"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked next to the name.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 'April 2028'",
+        "source": "https://www.townofwellington.com/161/Board-of-Trustees"
+      }
+    ],
+    "updated_at": "2025-06-30T16:28:16Z"
+  },
+  {
+    "name": "Rebekka Dailey",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked next to the name.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:16Z"
+  },
+  {
+    "name": "Brian Mason",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked next to the name.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:16Z"
+  },
+  {
+    "name": "Lowrey Moyer",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked next to the name.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:16Z"
+  },
+  {
+    "name": "Shirrell Tietz",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked next to the name.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:16Z"
+  },
+  {
+    "name": "David Wiegand",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked next to the name.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:16Z"
+  },
+  {
+    "name": "Calar Chaussee",
+    "sources": [
+      "https://www.townofwellington.com"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofwellington.com/161/Board-of-Trustees",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked next to the name.",
+        "source": "https://www.townofwellington.com"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-06-30T16:28:16Z"
+  }
+]
