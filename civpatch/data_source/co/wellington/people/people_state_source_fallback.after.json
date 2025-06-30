@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Calar Chaussee",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-06-30T16:27:12Z",
+    "divisions": []
+  },
+  {
+    "name": "Brian Mason",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "updated_at": "2025-06-30T16:27:12Z",
+    "divisions": []
+  },
+  {
+    "name": "Rebekka Dailey",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-30T16:27:12Z",
+    "divisions": []
+  },
+  {
+    "name": "Shirrell Tietz",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-30T16:27:12Z",
+    "divisions": []
+  },
+  {
+    "name": "David Wiegand",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-30T16:27:12Z",
+    "divisions": []
+  },
+  {
+    "name": "Ed Cannon",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-30T16:27:12Z",
+    "divisions": []
+  },
+  {
+    "name": "Lowrey Moyer",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-30T16:27:12Z",
+    "divisions": []
+  }
+]
