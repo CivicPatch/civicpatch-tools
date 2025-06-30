@@ -675,7 +675,14 @@
       ],
       "population": 13395,
       "website": "http://fruita.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T16:34:11Z",
+      "meta_hash": "1a4bf81ddf2418759364944c38827fa4",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Steamboat Springs",
