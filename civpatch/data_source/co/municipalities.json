@@ -1662,7 +1662,14 @@
       ],
       "population": 2855,
       "website": "http://www.buenavistaco.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T22:20:17Z",
+      "meta_hash": "704aa0004ff21a12d5a1f27f4440bd96",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Bayfield",
