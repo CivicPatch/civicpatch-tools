@@ -1419,8 +1419,8 @@
       "population": 4781,
       "website": "http://www.townofmead.org/",
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-30T21:35:50Z",
-      "meta_hash": "5f394dfea5b966d092578fb8cd768dcd",
+      "meta_updated_at": "2025-06-30T21:50:45Z",
+      "meta_hash": "13c79d77bcb88ace4ed4fe021ecb1ce3",
       "meta_sources": [
         "state_source",
         "gemini",

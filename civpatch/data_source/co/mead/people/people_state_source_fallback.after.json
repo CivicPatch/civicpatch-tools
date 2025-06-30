@@ -4,16 +4,15 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-06-30T21:33:04Z",
+    "updated_at": "2025-06-30T21:49:46Z",
     "divisions": []
   },
   {
     "name": "Trisha Harris",
     "roles": [
-      "Council Member",
-      "Mayor Pro Tempore"
+      "Council Member"
     ],
-    "updated_at": "2025-06-30T21:33:04Z",
+    "updated_at": "2025-06-30T21:49:46Z",
     "divisions": []
   },
   {
@@ -21,7 +20,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:33:04Z",
+    "updated_at": "2025-06-30T21:49:46Z",
     "divisions": []
   },
   {
@@ -29,7 +28,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:33:04Z",
+    "updated_at": "2025-06-30T21:49:46Z",
     "divisions": []
   },
   {
@@ -37,7 +36,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:33:04Z",
+    "updated_at": "2025-06-30T21:49:46Z",
     "divisions": []
   },
   {
@@ -45,7 +44,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:33:04Z",
+    "updated_at": "2025-06-30T21:49:46Z",
     "divisions": []
   },
   {
@@ -53,7 +52,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:33:04Z",
+    "updated_at": "2025-06-30T21:49:46Z",
     "divisions": []
   }
 ]
