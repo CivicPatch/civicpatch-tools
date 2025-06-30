@@ -1025,10 +1025,10 @@
         "Weld"
       ],
       "population": 7955,
-      "website": "http://www.fortlupton.org/",
+      "website": "https://www.fortluptonco.gov/",
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-30T17:18:36Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-06-30T18:38:06Z",
+      "meta_hash": "ec13811f366ee7ed9f73f9775b2a38ea",
       "meta_sources": [
         "state_source",
         "gemini",
