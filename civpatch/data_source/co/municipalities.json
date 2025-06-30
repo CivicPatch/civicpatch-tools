@@ -1653,7 +1653,14 @@
       ],
       "population": 2913,
       "website": "http://www.friscogov.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T22:02:08Z",
+      "meta_hash": "484ccb9191fa40d860caedf74b1966ee",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Bennett",
