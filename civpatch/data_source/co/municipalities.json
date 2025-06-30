@@ -1579,7 +1579,14 @@
       ],
       "population": 3172,
       "website": "http://www.burlingtoncolo.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T22:13:01Z",
+      "meta_hash": "f6925d520096eb68608e0540117218c6",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Orchard City",
