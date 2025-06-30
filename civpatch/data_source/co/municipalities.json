@@ -1620,10 +1620,10 @@
         "Weld"
       ],
       "population": 2955,
-      "website": "http://www.plattevillegov.org/",
+      "website": "https://platteville.colorado.gov/",
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-30T22:05:49Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-06-30T22:27:03Z",
+      "meta_hash": "b07a7f8c7e23d29b34c741f97c5e6b45",
       "meta_sources": [
         "state_source",
         "gemini",
