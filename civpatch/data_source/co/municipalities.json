@@ -1296,7 +1296,14 @@
       ],
       "population": 5339,
       "website": "http://www.brushcolo.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:16:39Z",
+      "meta_hash": "70720ebbbbe016ac35a39e1c21852b6b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Breckenridge",
