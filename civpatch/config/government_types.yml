@@ -92,11 +92,12 @@ government_types:
           - councillor
           - city councilmember
           - city council member
+          - city council
           - town council representative
           - town council member
+          - town councilmember
           - town council
           - representative
-          - city council
     # position_examples: *position_examples
     exclude_positions:
       - youth councilor
