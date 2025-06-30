@@ -1340,7 +1340,14 @@
       ],
       "population": 4858,
       "website": "http://www.manitouspringsgov.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:27:25Z",
+      "meta_hash": "29021c2d30fd9ab011a33a3c9e40f166",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Vail",
