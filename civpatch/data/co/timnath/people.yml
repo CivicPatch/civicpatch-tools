@@ -1,0 +1,43 @@
+---
+- name: Robert Axmacher
+  roles:
+  - Mayor
+  divisions:
+  image: https://timnath.org/wp-content/uploads/2024/05/RobertAxmacher-e1717077813599.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/co/timnath/images/1af13ae50bc8425e178ad4753da7c9a9501efdd105c325156eb5cc1063106511.jpg
+  email: raxmacher@timnathgov.com
+  phone_number: "(970) 224-3211"
+  website: https://timnath.org/mayor-robert-axmacher
+  start_date:
+  end_date: 2028-11
+  sources:
+  - https://timnath.org/mayor-robert-axmacher
+  updated_at: '2025-06-30T17:26:40Z'
+- name: Luke Wagner
+  roles:
+  - Mayor Pro Tempore
+  divisions:
+  image: https://timnath.org/wp-content/uploads/2024/06/luke-wagner.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/co/timnath/images/eec1f3a571812523e9e807b73fa1f34204e96c513da1f814008d9da876f54d2e.jpg
+  email: lwagner@timnathgov.com
+  phone_number: "(970) 224-3211"
+  website: https://timnath.org/mayor-pro-tem-luke-wagner
+  start_date:
+  end_date: 2026-04
+  sources:
+  - https://timnath.org/mayor-pro-tem-luke-wagner
+  updated_at: '2025-06-30T17:26:40Z'
+- name: Bill Jenkins
+  roles:
+  - Council Member
+  divisions:
+  image: https://timnath.org/wp-content/uploads/2024/06/Bill-Jenkins-228x300-1.png
+  cdn_image: https://cdn.civicpatch.org/open-data/co/timnath/images/6a80dfc135f5b2be882a2affe37088ddd77ff9f16672c85b63c0087dabc2c667.png
+  email: bjenkins@timnathgov.com
+  phone_number: "(970) 224-3211"
+  website: https://timnath.org/council-member-bill-jenkins
+  start_date:
+  end_date: 2028-11
+  sources:
+  - https://timnath.org/council-member-bill-jenkins
+  updated_at: '2025-06-30T17:26:40Z'
