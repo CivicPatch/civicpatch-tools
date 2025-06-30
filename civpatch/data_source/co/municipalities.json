@@ -1514,7 +1514,14 @@
       ],
       "population": 3876,
       "website": "https://cityofrockyford.colorado.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:37:09Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Florence",
