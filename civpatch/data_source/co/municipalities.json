@@ -751,7 +751,14 @@
       ],
       "population": 10399,
       "website": "http://www.townofmonument.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T16:33:46Z",
+      "meta_hash": "bea0c8d05e148dbebb0e670c59e85f28",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Berthoud",
