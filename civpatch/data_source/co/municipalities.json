@@ -740,7 +740,14 @@
       ],
       "population": 10437,
       "website": "http://www.rifleco.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T16:43:20Z",
+      "meta_hash": "a558aed3732af36ead5f92bbf0ec604a",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Monument",
