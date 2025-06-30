@@ -1,4 +1,4 @@
-[Skip to Main Content](https://vailgov.com/business/economic-development/vail-economic-advisory-council/)
+[Skip to Main Content](https://vailgov.com/government/town-council/-folder-16/)
 
 # Vail, CO
 
@@ -6,7 +6,7 @@
 
 [Search](https:void%280%29;)
 
-[CLOSE](https://vailgov.com/business/economic-development/vail-economic-advisory-council)
+[CLOSE](https://vailgov.com/government/town-council/-folder-16)
 
 [Go](https:void%280%29;)
 
@@ -208,15 +208,59 @@
 
 ## Jump to subpage...
 
-- [Town Manager's Office](https://www.vail.gov/government/departments/town-manager-s-office)[-](https:void%280%29 "Expand/Collapse subpages under Sidenav Item with Children")
+- [Town Council](https://www.vail.gov/government/town-council)[-](https:void%280%29 "Expand/Collapse subpages under Sidenav Item with Children")
   
-  - [Town Manager](https://www.vail.gov/government/departments/town-manager-s-office/town-manager)
-  - [Town Attorney](https://www.vail.gov/government/departments/town-manager-s-office/town-attorney)
-  - [Vail Economic Advisory Council (VEAC)](https://www.vail.gov/government/departments/town-manager-s-office/vail-economic-advisory-council)
+  - [Council Meeting Registration](https://www.vail.gov/government/town-council-meeting-registration/council-meeting-registration)
+  - [Council Agendas &amp; Meeting Materials](https://www.vail.gov/government/town-council/council-agendas-meeting-materials)
+  - [Council Minutes](https://www.vail.gov/government/town-council/council-minutes)
+  - [Council Highlights](https://www.vail.gov/government/town-council/council-highlights)
+  - [Council Meetings Online](https://www.vail.gov/government/town-council/council-meetings-online)
+  - [Community Participation](https://www.vail.gov/government/town-council/community-participation)
+  - [Town Code](https://www.vail.gov/government/town-council/town-code)
+  - [Town Council Strategic Plan](https://www.vail.gov/government/town-council/town-council-strategic-plan)
 
-[Government](https://vailgov.com/government) » [Departments](https://vailgov.com/government/departments) » [Town Manager's Office](https://vailgov.com/government/departments/town-manager-s-office)
+## Watch Vail Town Council Live
 
-# Vail Economic Advisory Council (VEAC)
+**The Vail Town Council meets the first and third Tuesday of each month.**
+
+ 
+
+[Council Agendas](https://vailgov.com/agendas)
+
+ 
+
+## Resources
+
+[Email All Council Members](mailto:towncouncil@vailgov.com)
+
+[Election Information](https://www.vail.gov/government/departments/town-clerk-s-office/election-information)
+
+[Town Council Past Meeting Agendas](https://vailgovrecords.com/WebLink/Browse.aspx?id=530230&dbid=0&repo=TownofVailLaserfiche)
+
+[Town Code](https://codelibrary.amlegal.com/codes/vailco/latest/overview)
+
+[Town Ordinances](https://vailgovrecords.com/WebLink/Browse.aspx?id=541763&dbid=0&repo=TownofVailLaserfiche)
+
+[Town Resolutions](https://vailgovrecords.com/WebLink/Browse.aspx?startid=529165&row=1)
+
+[Town Proclamations](https://vailgovrecords.com/WebLink/Browse.aspx?startid=529111&row=1)
+
+## Council Documents
+
+[Resources](https://vailgov.com/government/town-council/-folder-19) » [Public Health Orders](https://vailgov.com/government/town-council/-folder-16)
+
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Requiring Face Coverings in Town Buildings 8-2021](https://vailgov.com/home/showpublisheddocument/2139/637653085144870000 "Click to download Emergency Order Requiring Face Coverings in Town Buildings 8-2021 PDF file")
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Regarding Private Gatherings and Indoor Dining at Restaurants and Bars in the Town of Vail](https://vailgov.com/home/showpublisheddocument/44/637426294921900000 "Click to download Emergency Order Regarding Private Gatherings and Indoor Dining at Restaurants and Bars in the Town of Vail PDF file")
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Requiring Face Coverings In The Town of Vail - Mandatory Mask Use Area Map](https://vailgov.com/home/showpublisheddocument/48/637426294927370000 "Click to download Emergency Order Requiring Face Coverings In The Town of Vail - Mandatory Mask Use Area Map PDF file")
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Regarding Public Hearings](https://vailgov.com/home/showpublisheddocument/46/637426294924570000 "Click to download Emergency Order Regarding Public Hearings PDF file")
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Postponing the Public Hearing for Rezoning of 366 Hanson Ranch Road](https://vailgov.com/home/showpublisheddocument/42/637426294919270000 "Click to download Emergency Order Postponing the Public Hearing for Rezoning of 366 Hanson Ranch Road PDF file")
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Postponing the Public Hearing for Rezoning of 2211 North Frontage Road and Special District No. 42 Highline Doubletree](https://vailgov.com/home/showpublisheddocument/40/637426294916430000 "Click to download Emergency Order Postponing the Public Hearing for Rezoning of 2211 North Frontage Road and Special District No. 42 Highline Doubletree PDF file")
+
+![Vail Town Council](https://vailgov.com/home/showpublishedimage/8444/638415359933800000)
+
+[Government](https://vailgov.com/government)
+
+# Town Council
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -230,70 +274,78 @@
 
 [Print](https:window.print%28%29; "Click to print this page")
 
-## Meetings
+## ![Town Council Seal_COLOR](https://www.vail.gov/home/showpublishedimage/9480/638597690854500000)Mission
 
-The Vail Economic Advisory Council (VEAC) meets from 8 a.m. to 10 a.m. the second Tuesday of the month at locations throughout Vail. Meetings are open to the public.
+The mission of the Town of Vail is to provide exceptional public services, to people who live, work, and play here so they can connect to the community and to nature, create memories, find opportunities to thrive, and have the time of their lives. 
 
-## Responsibilities
+## **Vision**
 
-The volunteer board makes recommendations to the Vail Town Manager and Vail Town Council regarding economic issues and short and long-term strategies, plus works with the community to coordinate economic-related efforts.
+To be the premier mountain resort community in the world. 
 
-**Its purpose is to:**
+* * *
 
-- Advise the Vail Town Council, Vail Town Manager and community on economic issues that will sustain, enhance and diversify the town’s economy.
-- Focus on the overall economic future of Vail (West Vail to East Vail) and develop an organized plan of action using specific information gained from past studies, as well as existing studies.
-- Propose a future structure for economic sustainability efforts.
+## Council Meetings
 
-## VEAC Members
+Public meetings of the Vail Town Council are held the first and third Tuesdays of the month. Meetings begin in the afternoon followed by an evening business meeting beginning at 6 p.m. [Agendas, memos and supporting documents are posted four days in advance of the sessions](https://www.vail.gov/government/town-council/council-agendas-meeting-materials).
 
-(Appointed by Vail Town Manager) 
+**Watch Vail Town Council Afternoon and Evening Meetings Online:**
 
-- Matt Morgan – Sweet Basil
-- Lori Pohl – 1st Bank
-- Kim Rediker – Antlers at Vail
-- Matt Ivy – Vail Racquet Club
-- Brian Nolan – Blue Moose Pizza
-- Mark Gordon – Christiana Realty
-- Chris Romer – Vail Valley Partnership
-- Michael Connolly – Triumph Mountain Properties
-- Beth Howard – Vail Resorts
-- Mike Lange – Vacasa
-- Sarah Franke – Vail Valley Foundation
-- Meredith McFarlane – Four Seasons Vail
-- Mike Imhof – Vail Valley Foundation
-- Mike Ortiz – Vail Rec District
-- Bob Boselli – O'bos Enterprises
-- Alison Wadey – Vail Chamber
-- John Dawsey – Vail Resorts
-- Pete Seibert – Town Council Representative
-- Travis Coggin – Town Council Representative
-- Mike Brumbaugh – Venture Sports
-- Johannes Faessler – Sonnenalp
-- Caitlin Murray  – Bravo! Vail
-- Andy LaBolle – East West Resorts
+The meetings can be viewed live online on the first and third Tuesday of each month at [High Five Access Media](https://www.highfivemedia.org/show/live-five).
 
-The Town Manager Russell Forrest, Finance Director Kathleen Halloran and Economic Development Director, Mia Vlaar provide staff support to the VEAC.
+Please read the [Town of Vail Remote Meeting Policy](https://www.vail.gov/home/showpublisheddocument/60/637426295751500000) which is in effect now.
 
-## Contact
+- Live on Tuesdays
+- First replay on Thursday at 8 a.m.
+- Second replay on Sunday at 8 a.m.
+- Last three council meetings, other than the most recent play Thursday between midnight and 6 a.m.
 
-**Mia Vlaar**  
-Economic Development Director  
-970-479-2454  
-970-476-7013 Fax  
-[Email](mailto:mvlaar@vailgov.com)
+[View past meetings online and television programming information.](https://www.highfivemedia.org/town-vail)
 
-**Liz Gladitsch**  
-Economic Development Specialist  
-970-477-3417  
-[Email](mailto:lgladitsch@vailgov.com)
+The Town Council's work plan will be updated regularly on the town's website.
 
-## Resources
+**Provide Public Input at Town Council Meetings:**
 
-[VEAC Meeting Minutes](https://vailgovrecords.com/WebLink/Browse.aspx?id=368997)
+To provide public input to the Town Council prior to any meeting, please email [publicinput.vailtowncouncil@vail.gov](mailto:publicinput.vailtowncouncil@vailgov.com). Emails will be accepted until noon on the day of the meeting.
 
-[Government Calendar](https://www.vail.gov/government/government-calendar)
+* * *
 
-[Economic Development](https://www.vail.gov/business/economic-development)
+## Council Members
+
+![Vail Town Council 2023](https://www.vail.gov/home/showpublishedimage/8336/638373849789730000)
+
+*(Listed from left to right)*
+
+ **Name**  **Title**  **Current** **Term**  **Email**  Dave Chapin  Council Member  November 2023 - November 2027
+
+ ![](https://www.vail.gov/home/showpublishedimage/7879/638314221880200000)
+
+ Pete Seibert  Council Member  November 2021 - November 2025
+
+ ![](https://www.vail.gov/home/showpublishedimage/7879/638314221880200000)
+
+ Jonathan Staufer  Council Member  November 2023 - November 2027
+
+  ![](https://www.vail.gov/home/showpublishedimage/7879/638314221880200000)
+
+ Travis Coggin  Mayor   November 2021 - November 2025
+
+  ![](https://www.vail.gov/home/showpublishedimage/7879/638314221880200000)
+
+ Barry Davis  Mayor Pro Tem  November 2021 - November 2025
+
+  ![](https://www.vail.gov/home/showpublishedimage/7879/638314221880200000)
+
+ Sam Biszantz  Council Member  November 2023 - November 2025
+
+  ![](https://www.vail.gov/home/showpublishedimage/7879/638314221880200000)
+
+ Reid Phillips  Council Member  November 2023 - November 2027
+
+![](https://www.vail.gov/home/showpublishedimage/7879/638314221880200000)
+
+## Videos
+
+Vail Town Council 2023 Retreat
 
 ## Contact
 
