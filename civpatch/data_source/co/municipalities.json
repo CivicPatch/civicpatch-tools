@@ -893,7 +893,14 @@
       ],
       "population": 8766,
       "website": "https://www.cortezco.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T16:58:07Z",
+      "meta_hash": "fa75e864978d73def0418f3b07321ea6",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Milliken",
