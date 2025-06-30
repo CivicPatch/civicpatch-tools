@@ -1513,10 +1513,10 @@
         "Otero"
       ],
       "population": 3876,
-      "website": "https://cityofrockyford.colorado.gov/",
+      "website": "https://www.cityofrockyfordco.gov/",
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-30T21:37:09Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-06-30T21:55:44Z",
+      "meta_hash": "351b2b08f9a05e71b45527decb05abc6",
       "meta_sources": [
         "state_source",
         "gemini",
