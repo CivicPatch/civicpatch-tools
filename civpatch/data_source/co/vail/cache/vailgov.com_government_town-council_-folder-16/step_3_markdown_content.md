@@ -1,4 +1,4 @@
-[Skip to Main Content](https://vailgov.com/government/town-council/-folder-17/)
+[Skip to Main Content](https://vailgov.com/government/town-council/-folder-16/)
 
 # Vail, CO
 
@@ -6,7 +6,7 @@
 
 [Search](https:void%280%29;)
 
-[CLOSE](https://vailgov.com/government/town-council/-folder-17)
+[CLOSE](https://vailgov.com/government/town-council/-folder-16)
 
 [Go](https:void%280%29;)
 
@@ -247,13 +247,14 @@
 
 ## Council Documents
 
-[Resources](https://vailgov.com/government/town-council/-folder-19) » [Resolutions](https://vailgov.com/government/town-council/-folder-17)
+[Resources](https://vailgov.com/government/town-council/-folder-19) » [Public Health Orders](https://vailgov.com/government/town-council/-folder-16)
 
-- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Resolution No. 12, Series of 2020 Vail Town Council Declaring a Local Disaster Emergency](https://vailgov.com/home/showpublisheddocument/50/637426295513830000 "Click to download Resolution No. 12, Series of 2020 Vail Town Council Declaring a Local Disaster Emergency PDF file")
-- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Resolution No. 15, Series of 2020 Extending the Declaration of a Local Disaster](https://vailgov.com/home/showpublisheddocument/52/637426295516470000 "Click to download Resolution No. 15, Series of 2020 Extending the Declaration of a Local Disaster PDF file")
-- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Resolution No. 18, Series of 2020 Extending the Local Disaster](https://vailgov.com/home/showpublisheddocument/54/637426295519130000 "Click to download Resolution No. 18, Series of 2020 Extending the Local Disaster PDF file")
-- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Resolution No. 27, Series of 2020 Extending the Local Disaster](https://vailgov.com/home/showpublisheddocument/56/637426295521770000 "Click to download Resolution No. 27, Series of 2020 Extending the Local Disaster PDF file")
-- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Resolution No. 41, Series of 2020 Extending the Declaration of a Local Disaster](https://vailgov.com/home/showpublisheddocument/58/637426295524600000 "Click to download Resolution No. 41, Series of 2020 Extending the Declaration of a Local Disaster PDF file")
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Requiring Face Coverings in Town Buildings 8-2021](https://vailgov.com/home/showpublisheddocument/2139/637653085144870000 "Click to download Emergency Order Requiring Face Coverings in Town Buildings 8-2021 PDF file")
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Regarding Private Gatherings and Indoor Dining at Restaurants and Bars in the Town of Vail](https://vailgov.com/home/showpublisheddocument/44/637426294921900000 "Click to download Emergency Order Regarding Private Gatherings and Indoor Dining at Restaurants and Bars in the Town of Vail PDF file")
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Requiring Face Coverings In The Town of Vail - Mandatory Mask Use Area Map](https://vailgov.com/home/showpublisheddocument/48/637426294927370000 "Click to download Emergency Order Requiring Face Coverings In The Town of Vail - Mandatory Mask Use Area Map PDF file")
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Regarding Public Hearings](https://vailgov.com/home/showpublisheddocument/46/637426294924570000 "Click to download Emergency Order Regarding Public Hearings PDF file")
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Postponing the Public Hearing for Rezoning of 366 Hanson Ranch Road](https://vailgov.com/home/showpublisheddocument/42/637426294919270000 "Click to download Emergency Order Postponing the Public Hearing for Rezoning of 366 Hanson Ranch Road PDF file")
+- ![application/pdf](https://vailgov.com/DefaultContent/Default/_gfx/document_icons/pdf.png)[Emergency Order Postponing the Public Hearing for Rezoning of 2211 North Frontage Road and Special District No. 42 Highline Doubletree](https://vailgov.com/home/showpublisheddocument/40/637426294916430000 "Click to download Emergency Order Postponing the Public Hearing for Rezoning of 2211 North Frontage Road and Special District No. 42 Highline Doubletree PDF file")
 
 ![Vail Town Council](https://vailgov.com/home/showpublishedimage/8444/638415359933800000)
 

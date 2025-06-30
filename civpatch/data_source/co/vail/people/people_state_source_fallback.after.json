@@ -4,7 +4,7 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-06-30T21:32:59Z",
+    "updated_at": "2025-06-30T21:55:17Z",
     "divisions": []
   },
   {
@@ -12,15 +12,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:32:59Z",
-    "divisions": []
-  },
-  {
-    "name": "Pete Seibert",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-06-30T21:32:59Z",
+    "updated_at": "2025-06-30T21:55:17Z",
     "divisions": []
   },
   {
@@ -28,7 +20,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:32:59Z",
+    "updated_at": "2025-06-30T21:55:17Z",
     "divisions": []
   },
   {
@@ -36,7 +28,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:32:59Z",
+    "updated_at": "2025-06-30T21:55:17Z",
     "divisions": []
   },
   {
@@ -44,7 +36,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:32:59Z",
+    "updated_at": "2025-06-30T21:55:17Z",
     "divisions": []
   },
   {
@@ -52,7 +44,15 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:32:59Z",
+    "updated_at": "2025-06-30T21:55:17Z",
+    "divisions": []
+  },
+  {
+    "name": "Pete Seibert",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-30T21:55:17Z",
     "divisions": []
   }
 ]

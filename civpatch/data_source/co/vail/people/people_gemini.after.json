@@ -1,5 +1,24 @@
 [
   {
+    "name": "Dave Chapin",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 479-2100",
+    "email": "towncouncil@vailgov.com",
+    "website": null,
+    "start_date": "2023-11",
+    "end_date": "2027-11",
+    "sources": [
+      "https://www.vail.gov/government/town-council",
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+      "https://vailgov.com/government/town-council/-folder-16"
+    ],
+    "updated_at": "2025-06-30T22:04:57Z"
+  },
+  {
     "name": "Pete Seibert",
     "roles": [
       "Council Member"
@@ -8,17 +27,35 @@
     "image": null,
     "phone_number": "(970) 479-2100",
     "email": "towncouncil@vailgov.com",
-    "website": "https://www.vail.gov/government/town-council",
+    "website": null,
     "start_date": "2021-11",
     "end_date": "2025-11",
     "sources": [
+      "https://www.vail.gov/government/town-council",
       "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review",
       "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
-      "https://vailgov.com/government/town-council/-folder-17",
-      "https://vailgov.com/government/town-council",
-      "https://www.vail.gov/government/town-council"
+      "https://vailgov.com/government/town-council/-folder-16"
     ],
-    "updated_at": "2025-06-30T21:40:49Z"
+    "updated_at": "2025-06-30T22:04:57Z"
+  },
+  {
+    "name": "Jonathan Staufer",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(970) 479-2100",
+    "email": "towncouncil@vailgov.com",
+    "website": null,
+    "start_date": "2023-11",
+    "end_date": "2027-11",
+    "sources": [
+      "https://www.vail.gov/government/town-council",
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+      "https://vailgov.com/government/town-council/-folder-16"
+    ],
+    "updated_at": "2025-06-30T22:04:57Z"
   },
   {
     "name": "Travis Coggin",
@@ -30,16 +67,16 @@
     "image": null,
     "phone_number": "(970) 479-2100",
     "email": "towncouncil@vailgov.com",
-    "website": "https://www.vail.gov/government/town-council",
+    "website": null,
     "start_date": "2021-11",
     "end_date": "2025-11",
     "sources": [
+      "https://www.vail.gov/government/town-council",
       "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review",
       "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
-      "https://vailgov.com/government/town-council/-folder-17",
-      "https://vailgov.com/government/town-council"
+      "https://vailgov.com/government/town-council/-folder-16"
     ],
-    "updated_at": "2025-06-30T21:40:49Z"
+    "updated_at": "2025-06-30T22:04:57Z"
   },
   {
     "name": "Barry Davis",
@@ -51,54 +88,16 @@
     "image": null,
     "phone_number": "(970) 479-2100",
     "email": "towncouncil@vailgov.com",
-    "website": "https://www.vail.gov/government/town-council",
+    "website": null,
     "start_date": "2021-11",
     "end_date": "2025-11",
     "sources": [
+      "https://www.vail.gov/government/town-council",
       "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review",
       "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
-      "https://vailgov.com/government/town-council/-folder-17",
-      "https://vailgov.com/government/town-council"
+      "https://vailgov.com/government/town-council/-folder-16"
     ],
-    "updated_at": "2025-06-30T21:40:49Z"
-  },
-  {
-    "name": "Dave Chapin",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [],
-    "image": null,
-    "phone_number": "(970) 479-2100",
-    "email": "towncouncil@vailgov.com",
-    "website": "https://www.vail.gov/government/town-council",
-    "start_date": "2023-11",
-    "end_date": "2027-11",
-    "sources": [
-      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
-      "https://vailgov.com/government/town-council/-folder-17",
-      "https://vailgov.com/government/town-council"
-    ],
-    "updated_at": "2025-06-30T21:40:49Z"
-  },
-  {
-    "name": "Jonathan Staufer",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [],
-    "image": null,
-    "phone_number": "(970) 479-2100",
-    "email": "towncouncil@vailgov.com",
-    "website": "https://www.vail.gov/government/town-council",
-    "start_date": "2023-11",
-    "end_date": "2027-11",
-    "sources": [
-      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
-      "https://vailgov.com/government/town-council/-folder-17",
-      "https://vailgov.com/government/town-council"
-    ],
-    "updated_at": "2025-06-30T21:40:49Z"
+    "updated_at": "2025-06-30T22:04:57Z"
   },
   {
     "name": "Sam Biszantz",
@@ -109,16 +108,15 @@
     "image": null,
     "phone_number": "(970) 479-2100",
     "email": "towncouncil@vailgov.com",
-    "website": "https://www.vail.gov/government/town-council",
+    "website": null,
     "start_date": "2023-11",
     "end_date": "2025-11",
     "sources": [
+      "https://www.vail.gov/government/town-council",
       "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
-      "https://vailgov.com/government/town-council/-folder-17",
-      "https://vailgov.com/business/economic-development/vail-local-marketing-district-advisory-council",
-      "https://vailgov.com/government/town-council"
+      "https://vailgov.com/government/town-council/-folder-16"
     ],
-    "updated_at": "2025-06-30T21:40:49Z"
+    "updated_at": "2025-06-30T22:04:57Z"
   },
   {
     "name": "Reid Phillips",
@@ -129,14 +127,14 @@
     "image": null,
     "phone_number": "(970) 479-2100",
     "email": "towncouncil@vailgov.com",
-    "website": "https://www.vail.gov/government/town-council",
+    "website": null,
     "start_date": "2023-11",
     "end_date": "2027-11",
     "sources": [
+      "https://www.vail.gov/government/town-council",
       "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
-      "https://vailgov.com/government/town-council/-folder-17",
-      "https://vailgov.com/government/town-council"
+      "https://vailgov.com/government/town-council/-folder-16"
     ],
-    "updated_at": "2025-06-30T21:40:49Z"
+    "updated_at": "2025-06-30T22:04:57Z"
   }
 ]

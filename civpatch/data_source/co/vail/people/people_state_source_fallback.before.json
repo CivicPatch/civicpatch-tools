@@ -4,48 +4,48 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-06-30T21:32:59Z"
+    "updated_at": "2025-06-30T21:55:17Z"
   },
   {
     "name": "Barry Davis",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:32:59Z"
-  },
-  {
-    "name": "Pete Seibert",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-06-30T21:32:59Z"
+    "updated_at": "2025-06-30T21:55:17Z"
   },
   {
     "name": "Jonathan Staufer",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:32:59Z"
+    "updated_at": "2025-06-30T21:55:17Z"
   },
   {
     "name": "Dave Chapin",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:32:59Z"
+    "updated_at": "2025-06-30T21:55:17Z"
   },
   {
     "name": "Reid Phillips",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:32:59Z"
+    "updated_at": "2025-06-30T21:55:17Z"
   },
   {
     "name": "Sam Biszantz",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:32:59Z"
+    "updated_at": "2025-06-30T21:55:17Z"
+  },
+  {
+    "name": "Pete Seibert",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-30T21:55:17Z"
   }
 ]
