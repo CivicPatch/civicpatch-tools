@@ -1168,7 +1168,14 @@
       ],
       "population": 6072,
       "website": "http://www.avon.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T17:33:54Z",
+      "meta_hash": "5d8e02d1a63adf3b27261ffc7f326674",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Estes Park",
