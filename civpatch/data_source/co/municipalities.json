@@ -1461,7 +1461,14 @@
       ],
       "population": 3984,
       "website": "http://www.basalt.net/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:42:10Z",
+      "meta_hash": "e156920e28e3f3089bc5caaf0c3bc501",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Rocky Ford",
