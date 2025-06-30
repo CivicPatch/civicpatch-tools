@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "services/google_search"
+require "services/serp_api_search"
 require "services/brave"
 require "utils/array_helper"
 
@@ -8,6 +9,7 @@ module Resolvers
   class SearchResolver
     SEARCH_SERVICES = {
       "google" => Services::GoogleSearch,
+      "serpapi" => Services::SerpAPISearch,
       "brave" => Services::Brave
     }.freeze
 
@@ -26,7 +28,6 @@ module Resolvers
 
       SEARCH_SERVICES.each do |search_engine_name, search_service|
         keyword_with_type = "#{municipality_context[:municipality_entry]["type"]} #{query_keywords}"
-        or_terms = or_terms_list.join("|")
         puts "Searching with #{search_engine_name} for #{keyword_with_type}"
         results = search_service.municipal_search(municipality_context, keyword_with_type, or_terms_list)
         Utils::CostsHelper.log_search_engine_call(municipality_context[:state],
