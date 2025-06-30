@@ -15,12 +15,13 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://frederickco.gov/Directory.aspx?EID=20"
     ],
-    "updated_at": "2025-06-30T16:24:09Z"
+    "updated_at": "2025-06-30T16:48:01Z"
   },
   {
     "name": "Kevin R. Brown",
     "roles": [
-      "Mayor Pro Tempore"
+      "Mayor Pro Tempore",
+      "Trustee"
     ],
     "divisions": [],
     "image": "https://www.frederickco.gov/ImageRepository/Document?documentId=19347",
@@ -33,12 +34,64 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://frederickco.gov/Directory.aspx?EID=19"
     ],
-    "updated_at": "2025-06-30T16:24:09Z"
+    "updated_at": "2025-06-30T16:48:01Z"
+  },
+  {
+    "name": "Adam Mahan",
+    "roles": [
+      "Trustee"
+    ],
+    "divisions": [],
+    "image": "https://www.frederickco.gov/ImageRepository/Document?documentId=19348",
+    "phone_number": null,
+    "email": "boardoftrustees@frederickco.gov",
+    "website": "https://frederickco.gov/Directory.aspx?EID=23",
+    "start_date": null,
+    "end_date": "2028-04",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+    ],
+    "updated_at": "2025-06-30T16:48:01Z"
+  },
+  {
+    "name": "Mark Lamach",
+    "roles": [
+      "Trustee"
+    ],
+    "divisions": [],
+    "image": "https://www.frederickco.gov/ImageRepository/Document?documentId=19351",
+    "phone_number": "(720) 382-5501",
+    "email": "MLamach@frederickco.gov",
+    "website": "https://frederickco.gov/Directory.aspx?EID=117",
+    "start_date": null,
+    "end_date": "2028-04",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
+      "https://frederickco.gov/Directory.aspx?EID=117"
+    ],
+    "updated_at": "2025-06-30T16:48:01Z"
+  },
+  {
+    "name": "Dan March",
+    "roles": [
+      "Trustee"
+    ],
+    "divisions": [],
+    "image": "https://www.frederickco.gov/ImageRepository/Document?documentId=19350",
+    "phone_number": null,
+    "email": "boardoftrustees@frederickco.gov",
+    "website": "https://frederickco.gov/Directory.aspx?EID=23",
+    "start_date": null,
+    "end_date": "2026-04",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+    ],
+    "updated_at": "2025-06-30T16:48:01Z"
   },
   {
     "name": "Windi Padia",
     "roles": [
-      "Board Member"
+      "Trustee"
     ],
     "divisions": [],
     "image": "https://www.frederickco.gov/ImageRepository/Document?documentId=19346",
@@ -51,12 +104,12 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://frederickco.gov/Directory.aspx?EID=264"
     ],
-    "updated_at": "2025-06-30T16:24:09Z"
+    "updated_at": "2025-06-30T16:48:01Z"
   },
   {
     "name": "Chad teVelde",
     "roles": [
-      "Board Member"
+      "Trustee"
     ],
     "divisions": [],
     "image": "https://www.frederickco.gov/ImageRepository/Document?documentId=19349",
@@ -69,6 +122,6 @@
       "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
       "https://www.frederickco.gov/directory.aspx?EID=94"
     ],
-    "updated_at": "2025-06-30T16:24:09Z"
+    "updated_at": "2025-06-30T16:48:01Z"
   }
 ]

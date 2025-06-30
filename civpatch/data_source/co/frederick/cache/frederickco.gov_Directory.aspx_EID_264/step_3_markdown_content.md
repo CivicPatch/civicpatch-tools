@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://frederickco.gov/Directory.aspx?EID=20%2F)
+[Skip to Main Content](https://frederickco.gov/Directory.aspx?EID=264%2F)
 
 [Town Offices Closed](https://frederickco.gov/AlertCenter.aspx) [Town Offices closed Friday, July 4, for Independence Day. Read On...](https://frederickco.gov/AlertCenter.aspx?AID=Town-Offices-closed-Friday-July-4-for-In-38)
 
@@ -19,37 +19,25 @@ Search
 
 <!--THE END-->
 
-![](https://frederickco.gov/ImageRepository/Document?documentID=22529)
+![](https://frederickco.gov/ImageRepository/Document?documentID=22531)
 
 1. [Home](https://frederickco.gov)
 2. Staff Directory
 
-![Tracie Crites](https://frederickco.gov/ImageRepository/Document?documentID=19352 "Tracie Crites")
+![Windi Padia](https://frederickco.gov/ImageRepository/Document?documentID=19346 "Windi Padia")
 
-# Tracie Crites
+# Windi Padia
 
  
 
 [Mayor and Board of Trustees](https://frederickco.gov/Directory.aspx?DID=15)  
-Title: Mayor  
-Phone: 720.382.5504  
-[Email](mailto:tcrites@frederickco.gov)
+Title: Trustee  
+Phone: 720.382.5503  
+[Email](mailto:WPadia@frederickco.gov)
 
-A Montana native, Tracie moved to Colorado after graduating from Carroll College in 2007. She and her husband Rhett and their 3 children: Emerson (8), Isla (7), and Hamilton (5) have called Frederick home for the last 6 years
+Windi was appointed to the Town Board of Trustees in 2020 and was elected to serve on the Board in 2022. Originally from southern Colorado, she and her family have called Frederick home since 2004. Windi has spent her career in parks, wildlife and natural resources management and currently serves as the Chief Operating Officer for a large public organization. Windi holds a bachelor’s in ecology from Princeton University and a master’s of public administration from CU-Denver.
 
-Accomplishments:
-
-- Mayor, April 2020 to present
-- Trustee, April 2018 to 2020
-- Frederick POST Commission Board Liaison 2018 to 2020
-- Frederick Urban Renewal Authority 2016 to present
-- Carbon Valley Parks and Recreation District Board of Director 2016 to 2018
-- Carbon Valley Parks and Recreation District Board President 2017 to 2018
-- Advisory member for Women in Technology
-- Fundraiser for the Larimer Humane Society and Project Sanctuary
-- Founder of the March of Dimes-Carroll College Collegiate Council
-
-In her free time, Tracie enjoys trips with her family to Estes Park and cheering on her beloved Colorado Rockies.
+Windi enjoys all that Frederick living has to offer and is often gardening in the backyard or outside on the trails checking out the parks and roads projects.
 
  
 
