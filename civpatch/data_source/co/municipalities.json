@@ -1329,7 +1329,14 @@
       ],
       "population": 4923,
       "website": "http://www.newcastlecolorado.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:19:14Z",
+      "meta_hash": "0ee90d88f08bed42b35f04a0f0040ff9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Manitou Springs",
