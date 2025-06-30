@@ -1146,7 +1146,14 @@
       ],
       "population": 6297,
       "website": "http://www.cityofdacono.com",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T17:35:26Z",
+      "meta_hash": "44a29eabe2a6481d8cdd382d97d400d6",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Sheridan",
