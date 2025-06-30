@@ -1727,7 +1727,14 @@
       ],
       "population": 2607,
       "website": "http://www.telluride-co.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T22:10:55Z",
+      "meta_hash": "98d996ee20cdd36bb630f25ff79c328e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Palisade",
