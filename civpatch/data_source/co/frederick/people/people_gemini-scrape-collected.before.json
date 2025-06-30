@@ -1,0 +1,354 @@
+[
+  {
+    "name": "Tracie Crites",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
+      "https://frederickco.gov/Directory.aspx?EID=20"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role is explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated as her current title and tenure ('April 2020 to present')."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "720.382.5504",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person under 'Phone:' label.",
+        "source": "https://frederickco.gov/Directory.aspx?EID=20"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tcrites@frederickco.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person via a mailto link and text label 'Email'.",
+        "source": "https://frederickco.gov/Directory.aspx?EID=20"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://frederickco.gov/Directory.aspx?EID=20",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's directory entry is provided.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2020-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date 'April 2020' is explicitly stated for her current 'Mayor' role.",
+        "source": "https://frederickco.gov/Directory.aspx?EID=20"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The term expiration date is explicitly stated as 'April 2028'.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "updated_at": "2025-06-30T16:24:43Z"
+  },
+  {
+    "name": "Kevin R. Brown",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
+      "https://frederickco.gov/Directory.aspx?EID=19"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role is explicitly stated as 'Mayor Pro Tem'."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Trustee' is explicitly stated under the person's name and is part of the 'Mayor and Board of Trustees', which is the main governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "720.382.5502",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the person's name and title. ",
+        "source": "https://frederickco.gov/Directory.aspx?EID=19"
+      }
+    ],
+    "emails": [
+      {
+        "data": "krbrown@frederickco.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link text for the person.",
+        "source": "https://frederickco.gov/Directory.aspx?EID=19"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://frederickco.gov/Directory.aspx?EID=19",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's directory entry is provided.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The term expiration date is explicitly stated as 'April 2028'.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "updated_at": "2025-06-30T16:24:43Z"
+  },
+  {
+    "name": "Adam Mahan",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role is explicitly stated as 'Trustee'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://frederickco.gov/Directory.aspx?EID=23",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's directory entry is provided.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The term expiration date is explicitly stated as 'April 2028'.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "updated_at": "2025-06-30T16:24:43Z"
+  },
+  {
+    "name": "Mark Lamach",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
+      "https://frederickco.gov/Directory.aspx?EID=117"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role is explicitly stated as 'Trustee'."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Trustee' is explicitly stated as his title and is a valid target role (type of board member)."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "720.382.5501",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person.",
+        "source": "https://frederickco.gov/Directory.aspx?EID=117"
+      }
+    ],
+    "emails": [
+      {
+        "data": "MLamach@frederickco.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person.",
+        "source": "https://frederickco.gov/Directory.aspx?EID=117"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://frederickco.gov/Directory.aspx?EID=117",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's directory entry is provided.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The term expiration date is explicitly stated as 'April 2028'.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "updated_at": "2025-06-30T16:24:43Z"
+  },
+  {
+    "name": "Dan March",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role is explicitly stated as 'Trustee'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://frederickco.gov/Directory.aspx?EID=23",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's directory entry is provided.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The term expiration date is explicitly stated as 'April 2026'.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "updated_at": "2025-06-30T16:24:43Z"
+  },
+  {
+    "name": "Windi Padia",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
+      "https://frederickco.gov/Directory.aspx?EID=264"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role is explicitly stated as 'Trustee'."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role 'Trustee' is explicitly stated under 'Title:'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "720.382.5503",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided next to 'Phone:'.",
+        "source": "https://frederickco.gov/Directory.aspx?EID=264"
+      }
+    ],
+    "emails": [
+      {
+        "data": "WPadia@frederickco.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "source": "https://frederickco.gov/Directory.aspx?EID=264"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://frederickco.gov/Directory.aspx?EID=264",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's directory entry is provided.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text states 'was elected to serve on the Board in 2022', which is the most recent start date.",
+        "source": "https://frederickco.gov/Directory.aspx?EID=264"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The term expiration date is explicitly stated as 'April 2026'.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "updated_at": "2025-06-30T16:24:43Z"
+  },
+  {
+    "name": "Chad teVelde",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
+      "https://www.frederickco.gov/directory.aspx?EID=94"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role is explicitly stated as 'Trustee'."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Trustee' is explicitly stated under the person's name and associated with the 'Mayor and Board of Trustees' section, indicating a direct and clear extraction from the source text. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "CteVelde@frederickco.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person's profile page, formatted as a mailto link, ensuring high accuracy and direct extraction from the source text without inference or ambiguity. ",
+        "source": "https://www.frederickco.gov/directory.aspx?EID=94"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.frederickco.gov/directory.aspx?EID=94",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's directory entry is provided.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The term expiration date is explicitly stated as 'April 2026'.",
+        "source": "https://www.frederickco.gov/406/Mayor-Board-of-Trustees"
+      }
+    ],
+    "updated_at": "2025-06-30T16:24:43Z"
+  }
+]

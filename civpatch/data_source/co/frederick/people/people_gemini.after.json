@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Tracie Crites",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(720) 382-5504",
+    "email": "tcrites@frederickco.gov",
+    "website": "https://frederickco.gov/Directory.aspx?EID=20",
+    "start_date": "2020-04",
+    "end_date": "2028-04",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
+      "https://frederickco.gov/Directory.aspx?EID=20"
+    ],
+    "updated_at": "2025-06-30T16:24:43Z"
+  },
+  {
+    "name": "Kevin R. Brown",
+    "roles": [
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(720) 382-5502",
+    "email": "krbrown@frederickco.gov",
+    "website": "https://frederickco.gov/Directory.aspx?EID=19",
+    "start_date": null,
+    "end_date": "2028-04",
+    "sources": [
+      "https://www.frederickco.gov/406/Mayor-Board-of-Trustees",
+      "https://frederickco.gov/Directory.aspx?EID=19"
+    ],
+    "updated_at": "2025-06-30T16:24:43Z"
+  }
+]

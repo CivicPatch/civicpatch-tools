@@ -654,7 +654,14 @@
       ],
       "population": 14513,
       "website": "http://www.frederickco.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T16:24:44Z",
+      "meta_hash": "34392d4ee5033b9c2ae73a9bedf6fc54",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Federal Heights",

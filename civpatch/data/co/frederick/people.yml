@@ -1,0 +1,31 @@
+---
+- name: Tracie Crites
+  roles:
+  - Mayor
+  divisions:
+  image: https://www.frederickco.gov/ImageRepository/Document?documentId=19352
+  cdn_image: https://cdn.civicpatch.org/open-data/co/frederick/images/285a8b7d16b0de31d344ce3afb823834760e076e99ffc9ba5e00e1460c7dc48b.jpg
+  email: tcrites@frederickco.gov
+  phone_number: "(720) 382-5504"
+  website: https://frederickco.gov/Directory.aspx?EID=20
+  start_date: 2020-04
+  end_date: 2028-04
+  sources:
+  - https://www.frederickco.gov/406/Mayor-Board-of-Trustees
+  - https://frederickco.gov/Directory.aspx?EID=20
+  updated_at: '2025-06-30T16:24:44Z'
+- name: Kevin R. Brown
+  roles:
+  - Mayor Pro Tempore
+  divisions:
+  image: https://www.frederickco.gov/ImageRepository/Document?documentId=19347
+  cdn_image: https://cdn.civicpatch.org/open-data/co/frederick/images/898779dfbc46e562553e996f187259e9619bea50a718ae5b5986c5ba2fafa658.jpg
+  email: krbrown@frederickco.gov
+  phone_number: "(720) 382-5502"
+  website: https://frederickco.gov/Directory.aspx?EID=19
+  start_date:
+  end_date: 2028-04
+  sources:
+  - https://www.frederickco.gov/406/Mayor-Board-of-Trustees
+  - https://frederickco.gov/Directory.aspx?EID=19
+  updated_at: '2025-06-30T16:24:44Z'
