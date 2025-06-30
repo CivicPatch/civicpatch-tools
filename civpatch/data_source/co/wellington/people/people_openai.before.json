@@ -6,7 +6,7 @@
     ],
     "divisions": [],
     "image": null,
-    "phone_number": "970-568-3381",
+    "phone_number": null,
     "email": "cannoned@wellingtoncolorado.gov",
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
     "start_date": null,
@@ -15,7 +15,7 @@
       "https://www.townofwellington.com",
       "https://www.townofwellington.com/161/Board-of-Trustees"
     ],
-    "updated_at": "2025-06-30T16:28:01Z"
+    "updated_at": "2025-06-30T16:54:15Z"
   },
   {
     "name": "Rebekka Dailey",
@@ -24,7 +24,7 @@
     ],
     "divisions": [],
     "image": null,
-    "phone_number": "970-568-3381",
+    "phone_number": null,
     "email": null,
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
     "start_date": null,
@@ -32,7 +32,7 @@
     "sources": [
       "https://www.townofwellington.com"
     ],
-    "updated_at": "2025-06-30T16:28:01Z"
+    "updated_at": "2025-06-30T16:54:15Z"
   },
   {
     "name": "Brian Mason",
@@ -41,7 +41,7 @@
     ],
     "divisions": [],
     "image": null,
-    "phone_number": "970-568-3381",
+    "phone_number": null,
     "email": null,
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
     "start_date": null,
@@ -49,7 +49,7 @@
     "sources": [
       "https://www.townofwellington.com"
     ],
-    "updated_at": "2025-06-30T16:28:01Z"
+    "updated_at": "2025-06-30T16:54:15Z"
   },
   {
     "name": "Lowrey Moyer",
@@ -58,7 +58,7 @@
     ],
     "divisions": [],
     "image": null,
-    "phone_number": "970-568-3381",
+    "phone_number": null,
     "email": null,
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
     "start_date": null,
@@ -66,7 +66,7 @@
     "sources": [
       "https://www.townofwellington.com"
     ],
-    "updated_at": "2025-06-30T16:28:01Z"
+    "updated_at": "2025-06-30T16:54:15Z"
   },
   {
     "name": "Shirrell Tietz",
@@ -75,7 +75,7 @@
     ],
     "divisions": [],
     "image": null,
-    "phone_number": "970-568-3381",
+    "phone_number": null,
     "email": null,
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
     "start_date": null,
@@ -83,7 +83,7 @@
     "sources": [
       "https://www.townofwellington.com"
     ],
-    "updated_at": "2025-06-30T16:28:01Z"
+    "updated_at": "2025-06-30T16:54:15Z"
   },
   {
     "name": "David Wiegand",
@@ -92,7 +92,7 @@
     ],
     "divisions": [],
     "image": null,
-    "phone_number": "970-568-3381",
+    "phone_number": null,
     "email": null,
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
     "start_date": null,
@@ -100,7 +100,7 @@
     "sources": [
       "https://www.townofwellington.com"
     ],
-    "updated_at": "2025-06-30T16:28:01Z"
+    "updated_at": "2025-06-30T16:54:15Z"
   },
   {
     "name": "Calar Chaussee",
@@ -108,7 +108,7 @@
       "Mayor"
     ],
     "divisions": [],
-    "image": null,
+    "image": "https://www.townofwellington.com/ImageRepository/Document?documentId=4264",
     "phone_number": "970-568-3381",
     "email": null,
     "website": "https://www.townofwellington.com/161/Board-of-Trustees",
@@ -117,6 +117,6 @@
     "sources": [
       "https://www.townofwellington.com"
     ],
-    "updated_at": "2025-06-30T16:28:01Z"
+    "updated_at": "2025-06-30T16:54:15Z"
   }
 ]

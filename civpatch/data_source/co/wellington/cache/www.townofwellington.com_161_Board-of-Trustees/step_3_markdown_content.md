@@ -18,7 +18,7 @@ Search
 
 Search
 
-![](https://www.townofwellington.com/ImageRepository/Document?documentID=4283)
+![](https://www.townofwellington.com/ImageRepository/Document?documentID=4282)
 
 1. [Home](https://www.townofwellington.com)
 2. [Government](https://www.townofwellington.com/27/Government)
