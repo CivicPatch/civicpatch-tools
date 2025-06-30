@@ -983,7 +983,14 @@
       ],
       "population": 8088,
       "website": "http://www.lochbuie.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T17:01:27Z",
+      "meta_hash": "8ea69f277d4114f4531bd276fdac4ef1",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Gypsum",
