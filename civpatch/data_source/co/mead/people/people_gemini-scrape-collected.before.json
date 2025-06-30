@@ -2,34 +2,10 @@
   {
     "name": "Colleen Whitlow",
     "sources": [
-      "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-37",
-      "https://www.townofmead.org/boardoftrustees/page/mead-mayor-report-1",
-      "https://www.townofmead.org/boardoftrustees/page/mayors-mead",
-      "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-36",
       "https://www.townofmead.org/boardoftrustees"
     ],
     "images": [],
     "roles": [
-      {
-        "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor Colleen Whitlow' in the text."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Colleen Whitlow is explicitly identified as 'Mead Mayor' in the report title and image alt text, and 'Coffee with the Mayor' events are listed."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor' with '2018-Present' dates served."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor Colleen Whitlow'."
-      },
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
@@ -46,22 +22,8 @@
         "source": "https://www.townofmead.org/boardoftrustees"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.townofmead.org/boardoftrustees/page/mead-mayor-report-1",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This URL is the specific page for the 'Mead Mayor Report' and features Colleen Whitlow prominently, serving as her profile/report page.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/mead-mayor-report-1"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2018",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as '2018-Present' for dates served.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/mayors-mead"
-      }
-    ],
+    "websites": [],
+    "start_dates": [],
     "end_dates": [
       {
         "data": "2026-11",
@@ -70,7 +32,7 @@
         "source": "https://www.townofmead.org/boardoftrustees"
       }
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   },
   {
     "name": "Trisha Harris",
@@ -105,7 +67,7 @@
         "source": "https://www.townofmead.org/boardoftrustees"
       }
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   },
   {
     "name": "David Adams",
@@ -140,7 +102,7 @@
         "source": "https://www.townofmead.org/boardoftrustees"
       }
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   },
   {
     "name": "Jeremiah R. Crane",
@@ -175,7 +137,7 @@
         "source": "https://www.townofmead.org/boardoftrustees"
       }
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   },
   {
     "name": "Brad Hagen",
@@ -210,7 +172,7 @@
         "source": "https://www.townofmead.org/boardoftrustees"
       }
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   },
   {
     "name": "Herman Schranz",
@@ -245,6 +207,6 @@
         "source": "https://www.townofmead.org/boardoftrustees"
       }
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   }
 ]

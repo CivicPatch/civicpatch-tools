@@ -8,17 +8,13 @@
     "image": null,
     "phone_number": null,
     "email": "cwhitlow@townofmead.org",
-    "website": "https://www.townofmead.org/boardoftrustees/page/mead-mayor-report-1",
-    "start_date": "2018",
+    "website": null,
+    "start_date": null,
     "end_date": "2026-11",
     "sources": [
-      "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-37",
-      "https://www.townofmead.org/boardoftrustees/page/mead-mayor-report-1",
-      "https://www.townofmead.org/boardoftrustees/page/mayors-mead",
-      "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-36",
       "https://www.townofmead.org/boardoftrustees"
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   },
   {
     "name": "Trisha Harris",
@@ -35,7 +31,7 @@
     "sources": [
       "https://www.townofmead.org/boardoftrustees"
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   },
   {
     "name": "David Adams",
@@ -52,7 +48,7 @@
     "sources": [
       "https://www.townofmead.org/boardoftrustees"
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   },
   {
     "name": "Jeremiah R. Crane",
@@ -69,7 +65,7 @@
     "sources": [
       "https://www.townofmead.org/boardoftrustees"
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   },
   {
     "name": "Brad Hagen",
@@ -86,7 +82,7 @@
     "sources": [
       "https://www.townofmead.org/boardoftrustees"
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   },
   {
     "name": "Herman Schranz",
@@ -103,6 +99,6 @@
     "sources": [
       "https://www.townofmead.org/boardoftrustees"
     ],
-    "updated_at": "2025-06-30T21:35:49Z"
+    "updated_at": "2025-06-30T21:50:42Z"
   }
 ]

@@ -2,92 +2,25 @@
   {
     "name": "Colleen Whitlow",
     "sources": [
-      "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-37",
-      "https://www.townofmead.org/boardoftrustees/page/mead-mayor-report-1",
-      "https://www.townofmead.org/boardoftrustees/page/mayors-mead",
-      "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-36",
       "https://www.townofmead.org/boardoftrustees"
     ],
     "images": [
       {
-        "data": "https://www.townofmead.org/sites/g/files/vyhlif12701/files/styles/full_node_primary/public/media/boardoftrustees/image/43186/coffee_with_the_mayor.png?itok=qua9LzHG",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "The image is near the mention of 'Coffee with the Mayor' event featuring Mayor Colleen Whitlow; likely related to her.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-37"
-      },
-      {
-        "data": "https://www.townofmead.org/sites/g/files/vyhlif12701/files/styles/full_node_primary/public/media/boardoftrustees/image/43461/mayor_whitlow_bk_bg.jpg?itok=JlATD9T5",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The image is directly associated with the mayor report and labeled with her name.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/mead-mayor-report-1"
-      },
-      {
-        "data": "https://www.townofmead.org/sites/g/files/vyhlif12701/files/styles/full_node_primary/public/media/boardoftrustees/image/43186/coffee_with_the_mayor.png?itok=qua9LzHG",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Image near the mention of 'Coffee with the Mayor' event featuring Mayor Colleen Whitlow; likely related to her.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-36"
-      },
-      {
         "data": "https://www.townofmead.org/sites/g/files/vyhlif12701/files/styles/full_node_primary/public/media/boardoftrustees/image/28171/Mayor%20Whitlow%20bk%20bg.jpg?itok=oyy1CsI9",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image is labeled as 'image of Mayor Colleen Whitlow' and is near her name.",
+        "llm_confidence_reason": "Image URL is directly associated with Colleen Whitlow's section.",
         "source": "https://www.townofmead.org/boardoftrustees"
       }
     ],
     "roles": [
       {
         "data": "Mayor",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text explicitly refers to 'Mayor Colleen Whitlow' hosting the event 'Coffee with the Mayor', indicating she is the Mayor."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The page is titled 'Mead Mayor Report' and features an image captioned 'image of Colleen Whitlow' near the mayor report content, strongly indicating she is the Mayor."
-      },
-      {
-        "data": "Mayor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as Mayor from 2018-Present on the official town page."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text explicitly refers to 'Mayor Colleen Whitlow' hosting the Coffee with the Mayor event, indicating she is the Mayor."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the text."
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the content."
       }
     ],
     "divisions": [],
-    "phone_numbers": [
-      {
-        "data": "970.535.4477",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The phone number is listed under 'Contact Information' for the Town of Mead, likely the main contact for town officials including the Mayor.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-37"
-      },
-      {
-        "data": "970-535-4477",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "The general contact phone number for the Board of Trustees is listed as 970.535.4477; no direct personal phone found, so this is the best available.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/mead-mayor-report-1"
-      },
-      {
-        "data": "970-535-4477",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "General Board of Trustees contact phone number listed on the page; no direct personal number found.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/mayors-mead"
-      },
-      {
-        "data": "970-535-4477",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "General contact phone number for the Town of Mead, likely the main contact for the Mayor's office.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-36"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "cwhitlow@townofmead.org",
@@ -100,44 +33,264 @@
       {
         "data": "https://www.townofmead.org/boardoftrustees",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "The Board of Trustees page is the main page for the governing body including the Mayor.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-37"
-      },
-      {
-        "data": "https://www.townofmead.org/boardoftrustees/page/mead-mayor-report-1",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The URL is the page containing the mayor report and information about Colleen Whitlow as Mayor.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/mead-mayor-report-1"
-      },
-      {
-        "data": "https://www.townofmead.org/boardoftrustees/page/mayors-mead",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Page URL is the official source listing the Mayor.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/mayors-mead"
-      },
-      {
-        "data": "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-36",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Page URL is about 'Coffee with the Mayor' event hosted by Mayor Colleen Whitlow.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/coffee-mayor-36"
+        "llm_confidence_reason": "General Board of Trustees page URL; no personal website found.",
+        "source": "https://www.townofmead.org/boardoftrustees"
       }
     ],
-    "start_dates": [
-      {
-        "data": "2018",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Start year explicitly stated as 2018.",
-        "source": "https://www.townofmead.org/boardoftrustees/page/mayors-mead"
-      }
-    ],
+    "start_dates": [],
     "end_dates": [
       {
         "data": "2026-11",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires November 2026 as stated.",
+        "llm_confidence_reason": "Term expires November 2026 explicitly stated.",
         "source": "https://www.townofmead.org/boardoftrustees"
       }
     ],
-    "updated_at": "2025-06-30T21:35:08Z"
+    "updated_at": "2025-06-30T21:50:22Z"
+  },
+  {
+    "name": "Trisha Harris",
+    "sources": [
+      "https://www.townofmead.org/boardoftrustees"
+    ],
+    "images": [
+      {
+        "data": "https://www.townofmead.org/sites/g/files/vyhlif12701/files/styles/full_node_primary/public/media/boardoftrustees/image/28191/Mayor%20Pro%20Tem%20Harris%20bk%20bg.jpg?itok=Uq29-XfC",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly associated with Trisha Harris's section.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Pro-Tem' in the content."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tharris@townofmead.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly linked as 'click here to email Trustee Harris'.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.townofmead.org/boardoftrustees",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board of Trustees page URL; no personal website found.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-11",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires November 2026 explicitly stated.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "updated_at": "2025-06-30T21:50:22Z"
+  },
+  {
+    "name": "David Adams",
+    "sources": [
+      "https://www.townofmead.org/boardoftrustees"
+    ],
+    "images": [
+      {
+        "data": "https://www.townofmead.org/sites/g/files/vyhlif12701/files/styles/full_node_primary/public/media/boardoftrustees/image/28181/Trustee%20Adams%20bk%20bg.jpg?itok=wCEwoyG9",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly associated with David Adams's section.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Trustee' in the content."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dadams@townofmead.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly linked as 'click here to email Trustee Adams'.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.townofmead.org/boardoftrustees",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board of Trustees page URL; no personal website found.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-11",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires November 2026 explicitly stated.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "updated_at": "2025-06-30T21:50:22Z"
+  },
+  {
+    "name": "Jeremiah R. Crane",
+    "sources": [
+      "https://www.townofmead.org/boardoftrustees"
+    ],
+    "images": [
+      {
+        "data": "https://www.townofmead.org/sites/g/files/vyhlif12701/files/styles/full_node_primary/public/media/boardoftrustees/image/43496/trustee_crane_bk_bg.jpg?itok=3IKpkFT4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly associated with Jeremiah R. Crane's section.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Trustee' in the content."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jcrane@townofmead.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly linked as 'click here to email Trustee Crane'.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.townofmead.org/boardoftrustees",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board of Trustees page URL; no personal website found.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-11",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires November 2028 explicitly stated.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "updated_at": "2025-06-30T21:50:22Z"
+  },
+  {
+    "name": "Brad Hagen",
+    "sources": [
+      "https://www.townofmead.org/boardoftrustees"
+    ],
+    "images": [
+      {
+        "data": "https://www.townofmead.org/sites/g/files/vyhlif12701/files/styles/full_node_primary/public/media/boardoftrustees/image/43491/trustee_hagen_bk_bg.jpg?itok=xxiQqGKR",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly associated with Brad Hagen's section.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Trustee' in the content."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bhagen@townofmead.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly linked as 'click here to email Trustee Hagen'.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.townofmead.org/boardoftrustees",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board of Trustees page URL; no personal website found.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-11",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires November 2028 explicitly stated.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "updated_at": "2025-06-30T21:50:22Z"
+  },
+  {
+    "name": "Herman Schranz",
+    "sources": [
+      "https://www.townofmead.org/boardoftrustees"
+    ],
+    "images": [
+      {
+        "data": "https://www.townofmead.org/sites/g/files/vyhlif12701/files/styles/full_node_primary/public/media/boardoftrustees/image/28201/Trustee%20Schranz%20bk%20bg.jpg?itok=gWyFwVhk",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly associated with Herman Schranz's section.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Trustee' in the content."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "hschranz@townofmead.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly linked as 'click here to email Trustee Schranz'.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.townofmead.org/boardoftrustees",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board of Trustees page URL; no personal website found.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-11",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires November 2026 explicitly stated.",
+        "source": "https://www.townofmead.org/boardoftrustees"
+      }
+    ],
+    "updated_at": "2025-06-30T21:50:22Z"
   }
 ]
