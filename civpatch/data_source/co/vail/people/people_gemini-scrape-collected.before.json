@@ -1,0 +1,724 @@
+[
+  {
+    "name": "Pete Seibert",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review",
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+      "https://vailgov.com/government/town-council/-folder-17",
+      "https://vailgov.com/government/town-council",
+      "https://www.vail.gov/government/town-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was elected to the Town Council. "
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number is listed under a general 'Contact' section for the Town Council.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "towncouncil@vailgov.com",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email 'Email All Council Members' is provided as a general contact for the council, implying it's applicable to all members.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vail.gov/government/town-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No individual website is provided; using the general Town Council page as the most relevant link.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was elected in the November 2021 election. ",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the text.",
+        "source": "https://www.vail.gov/government/town-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was elected in November 2021 for a four-year term, making the end date November 2025. ",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the text.",
+        "source": "https://www.vail.gov/government/town-council"
+      }
+    ],
+    "updated_at": "2025-06-30T21:40:49Z"
+  },
+  {
+    "name": "Travis Coggin",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review",
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+      "https://vailgov.com/government/town-council/-folder-17",
+      "https://vailgov.com/government/town-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was re-elected to the Town Council. His Mayor Pro Tem role ended in December 2023, so only the current council member role is extracted. "
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the 'Title' column."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number is listed under a general 'Contact' section for the Town Council.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "towncouncil@vailgov.com",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email 'Email All Council Members' is provided as a general contact for the council, implying it's applicable to all members.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vail.gov/government/town-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No individual website is provided; using the general Town Council page as the most relevant link.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was re-elected in the November 2021 election. ",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was re-elected in November 2021 for a four-year term, making the end date November 2025. ",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "updated_at": "2025-06-30T21:40:49Z"
+  },
+  {
+    "name": "Barry Davis",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review",
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+      "https://vailgov.com/government/town-council/-folder-17",
+      "https://vailgov.com/government/town-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was elected to the Town Council. "
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the 'Title' column."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number is listed under a general 'Contact' section for the Town Council.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "towncouncil@vailgov.com",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email 'Email All Council Members' is provided as a general contact for the council, implying it's applicable to all members.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vail.gov/government/town-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No individual website is provided; using the general Town Council page as the most relevant link.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was elected in the November 2021 election. ",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was elected in November 2021 for a four-year term, making the end date November 2025. ",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "updated_at": "2025-06-30T21:40:49Z"
+  },
+  {
+    "name": "Dave Chapin",
+    "sources": [
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+      "https://vailgov.com/government/town-council/-folder-17",
+      "https://vailgov.com/government/town-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the 'Title' column."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number is listed under a general 'Contact' section for the Town Council.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "towncouncil@vailgov.com",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email 'Email All Council Members' is provided as a general contact for the council, implying it's applicable to all members.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vail.gov/government/town-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No individual website is provided; using the general Town Council page as the most relevant link.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2027-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2027-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "updated_at": "2025-06-30T21:40:49Z"
+  },
+  {
+    "name": "Jonathan Staufer",
+    "sources": [
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+      "https://vailgov.com/government/town-council/-folder-17",
+      "https://vailgov.com/government/town-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the 'Title' column."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number is listed under a general 'Contact' section for the Town Council.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "towncouncil@vailgov.com",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email 'Email All Council Members' is provided as a general contact for the council, implying it's applicable to all members.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vail.gov/government/town-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No individual website is provided; using the general Town Council page as the most relevant link.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2027-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2027-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "updated_at": "2025-06-30T21:40:49Z"
+  },
+  {
+    "name": "Sam Biszantz",
+    "sources": [
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+      "https://vailgov.com/government/town-council/-folder-17",
+      "https://vailgov.com/business/economic-development/vail-local-marketing-district-advisory-council",
+      "https://vailgov.com/government/town-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'currently Councilperson Sam Biszantz' in the context of a 'Town Council member' seat."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the 'Title' column."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number is listed under a general 'Contact' section for the Town Council.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "towncouncil@vailgov.com",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email 'Email All Council Members' is provided as a general contact for the council, implying it's applicable to all members.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vail.gov/government/town-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No individual website is provided; using the general Town Council page as the most relevant link.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2025-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "updated_at": "2025-06-30T21:40:49Z"
+  },
+  {
+    "name": "Reid Phillips",
+    "sources": [
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+      "https://vailgov.com/government/town-council/-folder-17",
+      "https://vailgov.com/government/town-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated in the 'Title' column."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the 'Title' column."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number is listed under a general 'Contact' section for the Town Council.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "towncouncil@vailgov.com",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email 'Email All Council Members' is provided as a general contact for the council, implying it's applicable to all members.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vail.gov/government/town-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No individual website is provided; using the general Town Council page as the most relevant link.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      },
+      {
+        "data": "2027-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council/-folder-17"
+      },
+      {
+        "data": "2027-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated in the 'Current Term' column.",
+        "source": "https://vailgov.com/government/town-council"
+      }
+    ],
+    "updated_at": "2025-06-30T21:40:49Z"
+  }
+]

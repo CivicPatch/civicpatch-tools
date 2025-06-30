@@ -1,0 +1,729 @@
+[
+  {
+    "name": "Dave Chapin",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2017-year-in-review",
+      "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2017-year-in-review",
+      "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review",
+      "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review",
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+    ],
+    "images": [
+      {
+        "data": "https://www.vail.gov/home/showpublishedimage/7879/638314221880200000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image URL is directly adjacent to the name and role.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'reappointment of Dave Chapin as mayor' indicating active mayor role."
+      },
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Also referenced as a member of Town Council in addition to mayor role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states Dave Chapin was reappointed to serve as mayor following the post-election organizational meeting."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Recognized for finishing out his third term as mayor in 2021; implies term ended in 2021."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member in the primary governing body section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General contact number for Town Council provided; no personal number found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "emails": [
+      {
+        "data": "info@vailgov.com",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email provided; no personal email found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Page URL listing council members.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2017",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Mentioned as mayor in 2017 Year in Review, implying term active in 2017.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2017-year-in-review"
+      },
+      {
+        "data": "2017",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Active in 2017 as mayor and council member.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2017-year-in-review"
+      },
+      {
+        "data": "2019-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Dave Chapin was reappointed mayor following the November 2019 election and swearing-in ceremony.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date explicitly stated as November 2023.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Finished out third term as mayor in 2021.",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      },
+      {
+        "data": "2027-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end date explicitly stated as November 2027.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "updated_at": "2025-06-30T21:34:57Z"
+  },
+  {
+    "name": "Jenn Bruno",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2017-year-in-review"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tempore",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states 'reappointment of Jenn Bruno as mayor pro-tem' indicating active role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2017",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Mentioned as mayor pro-tem in 2017 Year in Review, implying term active in 2017.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2017-year-in-review"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-30T21:34:57Z"
+  },
+  {
+    "name": "Kim Langmaid",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2017-year-in-review",
+      "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review",
+      "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed as town council member accepting award on behalf of Vail community."
+      },
+      {
+        "data": "Mayor Pro Tempore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text explicitly states Kim Langmaid was appointed mayor pro tem following the post-election organizational meeting."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states Kim Langmaid was appointed mayor during the Town Council’s organizational meeting in December 2021."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2017",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Mentioned as town council member in 2017 Year in Review.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2017-year-in-review"
+      },
+      {
+        "data": "2019-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Kim Langmaid was appointed mayor pro tem following the November 2019 election and swearing-in ceremony.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review"
+      },
+      {
+        "data": "2021-12",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Appointed mayor in December 2021.",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-06-30T21:34:57Z"
+  },
+  {
+    "name": "Kevin Foley",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Kevin Foley was re-elected to a four-year term on the Town Council in November 2019."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2019-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Re-elected in November 2019 election.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Four-year term starting November 2019 implies term ends in 2023.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review"
+      }
+    ],
+    "updated_at": "2025-06-30T21:34:57Z"
+  },
+  {
+    "name": "Jen Mason",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Jen Mason was re-elected to a four-year term on the Town Council in November 2019."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2019-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Re-elected in November 2019 election.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Four-year term starting November 2019 implies term ends in 2023.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review"
+      }
+    ],
+    "updated_at": "2025-06-30T21:34:57Z"
+  },
+  {
+    "name": "Brian Stockmar",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Brian Stockmar was elected to a two-year term on the Town Council in November 2019."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2019-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in November 2019 election.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Two-year term starting November 2019 implies term ends in 2021.",
+        "source": "https://www.vailgov.com/community/community-engagement-recognition/year-in-review/2019-year-in-review"
+      }
+    ],
+    "updated_at": "2025-06-30T21:34:57Z"
+  },
+  {
+    "name": "Travis Coggin",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review",
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+    ],
+    "images": [
+      {
+        "data": "https://www.vail.gov/home/showpublishedimage/7879/638314221880200000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image URL is directly adjacent to the name and role.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor Pro Tempore",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states Travis Coggin was selected mayor pro tem during the Town Council’s organizational meeting in December 2021."
+      },
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Re-elected to Town Council in November 2021 election."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Mayor in the primary governing body section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General contact number for Town Council provided; no personal number found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "emails": [
+      {
+        "data": "info@vailgov.com",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email provided; no personal email found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Page URL listing council members.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-12",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Selected mayor pro tem in December 2021; re-elected to council in Nov 2021.",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date explicitly stated as November 2021.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end date explicitly stated as November 2025.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "updated_at": "2025-06-30T21:34:57Z"
+  },
+  {
+    "name": "Pete Seibert",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review",
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+    ],
+    "images": [
+      {
+        "data": "https://www.vail.gov/home/showpublishedimage/7879/638314221880200000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image URL is directly adjacent to the name and role.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Elected to Town Council in November 2021 election."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member in the primary governing body section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General contact number for Town Council provided; no personal number found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "emails": [
+      {
+        "data": "info@vailgov.com",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email provided; no personal email found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Page URL listing council members.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in November 2021 election.",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date explicitly stated as November 2021.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end date explicitly stated as November 2025.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "updated_at": "2025-06-30T21:34:57Z"
+  },
+  {
+    "name": "Barry Davis",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review",
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+    ],
+    "images": [
+      {
+        "data": "https://www.vail.gov/home/showpublishedimage/7879/638314221880200000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image URL is directly adjacent to the name and role.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Elected to Town Council in November 2021 election."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Mayor Pro Tem in the primary governing body section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General contact number for Town Council provided; no personal number found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "emails": [
+      {
+        "data": "info@vailgov.com",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email provided; no personal email found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Page URL listing council members.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in November 2021 election.",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date explicitly stated as November 2021.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end date explicitly stated as November 2025.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "updated_at": "2025-06-30T21:34:57Z"
+  },
+  {
+    "name": "Jonathan Staufer",
+    "sources": [
+      "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review",
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+    ],
+    "images": [
+      {
+        "data": "https://www.vail.gov/home/showpublishedimage/7879/638314221880200000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image URL is directly adjacent to the name and role.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Elected to Town Council in November 2021 election for a two-year term."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member in the primary governing body section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General contact number for Town Council provided; no personal number found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "emails": [
+      {
+        "data": "info@vailgov.com",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email provided; no personal email found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Page URL listing council members.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in November 2021 election.",
+        "source": "https://www.vailgov.com/community/community-engagement/year-in-review/2021-year-in-review"
+      },
+      {
+        "data": "2023-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date explicitly stated as November 2023.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end date explicitly stated as November 2027.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "updated_at": "2025-06-30T21:34:57Z"
+  },
+  {
+    "name": "Sam Biszantz",
+    "sources": [
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+    ],
+    "images": [
+      {
+        "data": "https://www.vail.gov/home/showpublishedimage/7879/638314221880200000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image URL is directly adjacent to the name and role.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member in the primary governing body section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General contact number for Town Council provided; no personal number found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "emails": [
+      {
+        "data": "info@vailgov.com",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email provided; no personal email found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Page URL listing council members.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date explicitly stated as November 2023.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end date explicitly stated as November 2025.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "updated_at": "2025-06-30T21:34:57Z"
+  },
+  {
+    "name": "Reid Phillips",
+    "sources": [
+      "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+    ],
+    "images": [
+      {
+        "data": "https://www.vail.gov/home/showpublishedimage/7879/638314221880200000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image URL is directly adjacent to the name and role.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member in the primary governing body section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-479-2100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General contact number for Town Council provided; no personal number found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "emails": [
+      {
+        "data": "info@vailgov.com",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email provided; no personal email found.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Page URL listing council members.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term start date explicitly stated as November 2023.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term end date explicitly stated as November 2027.",
+        "source": "https://www.vailgov.com/government/town-council/council-members/-sortn-SName/-sortd-asc"
+      }
+    ],
+    "updated_at": "2025-06-30T21:34:57Z"
+  }
+]

@@ -1407,7 +1407,14 @@
       ],
       "population": 4835,
       "website": "http://vailgov.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:40:52Z",
+      "meta_hash": "d416fc6c3e3a47d06515fcdcaec1a15d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Mead",
