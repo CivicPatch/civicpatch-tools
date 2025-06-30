@@ -1750,10 +1750,10 @@
         "Lake"
       ],
       "population": 2633,
-      "website": "https://cityofleadville.colorado.gov/",
+      "website": "https://www.leadville-co.gov/",
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-06-30T22:08:44Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-06-30T22:38:40Z",
+      "meta_hash": "f3d5fe1f66101c427dd8a6c7d038155b",
       "meta_sources": [
         "state_source",
         "gemini",
