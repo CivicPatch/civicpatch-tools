@@ -1274,7 +1274,14 @@
       ],
       "population": 5802,
       "website": "http://www.eatonco.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:15:37Z",
+      "meta_hash": "7d961e08300b9a35ad0d51feeac024f0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Salida",
