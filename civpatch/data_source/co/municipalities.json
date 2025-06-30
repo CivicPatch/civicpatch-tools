@@ -1157,7 +1157,14 @@
       ],
       "population": 6105,
       "website": "http://www.ci.sheridan.co.us/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T17:38:05Z",
+      "meta_hash": "87dea224ad7642d436af144a421f4fcc",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Avon",
