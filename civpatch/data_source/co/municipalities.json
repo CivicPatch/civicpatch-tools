@@ -721,7 +721,14 @@
       ],
       "population": 13224,
       "website": "http://www.steamboatsprings.net/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T16:27:08Z",
+      "meta_hash": "442373bdf63f3c71e84c14aeb97bff89",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Superior",
