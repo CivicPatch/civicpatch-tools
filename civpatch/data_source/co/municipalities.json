@@ -1440,7 +1440,14 @@
       ],
       "population": 4402,
       "website": "http://www.silverthorne.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:34:16Z",
+      "meta_hash": "d2dbf26e40de02db27bb425ec7255dbc",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Monte Vista",
