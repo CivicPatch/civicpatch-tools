@@ -1079,7 +1079,14 @@
       ],
       "population": 7322,
       "website": "http://www.lajuntacolorado.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T17:20:06Z",
+      "meta_hash": "714c68ae5076be986921c12cab9b84bb",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Aspen",
