@@ -18,7 +18,7 @@ Loading
 
 <!--THE END-->
 
-![](https://www.greenwoodvillage.com/ImageRepository/Document?documentID=26167)
+![](https://www.greenwoodvillage.com/ImageRepository/Document?documentID=23461)
 
 1. [Home](https://www.greenwoodvillage.com)
 2. [Government](https://www.greenwoodvillage.com/11/Government)
