@@ -4,48 +4,49 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-06-28T18:47:52Z"
+    "updated_at": "2025-06-30T16:28:41Z"
   },
   {
     "name": "Frank A. Jimenez",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Mayor Pro Tem"
     ],
-    "updated_at": "2025-06-28T18:47:52Z"
+    "updated_at": "2025-06-30T16:28:41Z"
   },
   {
     "name": "Raymond Byrd",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-28T18:47:52Z"
+    "updated_at": "2025-06-30T16:28:41Z"
   },
   {
     "name": "Sean Doherty",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-28T18:47:52Z"
+    "updated_at": "2025-06-30T16:28:41Z"
   },
   {
     "name": "Matt Holcomb",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-28T18:47:52Z"
+    "updated_at": "2025-06-30T16:28:41Z"
   },
   {
     "name": "Lorna Morton",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-28T18:47:52Z"
+    "updated_at": "2025-06-30T16:28:41Z"
   },
   {
     "name": null,
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-28T18:47:52Z"
+    "updated_at": "2025-06-30T16:28:41Z"
   }
 ]
