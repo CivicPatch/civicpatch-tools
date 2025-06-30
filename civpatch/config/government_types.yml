@@ -80,6 +80,7 @@ government_types:
       - role: board member
         aliases:
           - town board member
+      - role: trustee
       - role: council member
         aliases:
           - city councilor
