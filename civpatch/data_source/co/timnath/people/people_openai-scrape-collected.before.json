@@ -1,0 +1,170 @@
+[
+  {
+    "name": "Bill Jenkins",
+    "sources": [
+      "https://timnath.org/council-member-bill-jenkins"
+    ],
+    "images": [
+      {
+        "data": "https://timnath.org/wp-content/uploads/2024/06/Bill-Jenkins-228x300-1.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is a portrait near the name and role.",
+        "source": "https://timnath.org/council-member-bill-jenkins"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member' and 'Councilmember' on the Timnath Town Council page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-224-3211",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General town contact phone number listed near the council member info; no direct personal phone found.",
+        "source": "https://timnath.org/council-member-bill-jenkins"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bjenkins@timnathgov.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly provided as 'Email Council Member Jenkins' mailto link.",
+        "source": "https://timnath.org/council-member-bill-jenkins"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://timnath.org/council-member-bill-jenkins",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page URL is the official profile page for Bill Jenkins.",
+        "source": "https://timnath.org/council-member-bill-jenkins"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-11",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration explicitly stated as 'Term Expires: November 2028'.",
+        "source": "https://timnath.org/council-member-bill-jenkins"
+      }
+    ],
+    "updated_at": "2025-06-30T17:26:25Z"
+  },
+  {
+    "name": "Robert Axmacher",
+    "sources": [
+      "https://timnath.org/mayor-robert-axmacher"
+    ],
+    "images": [
+      {
+        "data": "https://timnath.org/wp-content/uploads/2024/05/RobertAxmacher-e1717077813599.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is a headshot near the name and title.",
+        "source": "https://timnath.org/mayor-robert-axmacher"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor in the page title and text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-224-3211",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General town contact number provided; no direct personal phone found.",
+        "source": "https://timnath.org/mayor-robert-axmacher"
+      }
+    ],
+    "emails": [
+      {
+        "data": "raxmacher@timnathgov.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly provided as Mayor's email.",
+        "source": "https://timnath.org/mayor-robert-axmacher"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://timnath.org/mayor-robert-axmacher",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Page URL is the official mayor page.",
+        "source": "https://timnath.org/mayor-robert-axmacher"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-11",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration explicitly stated as November 2028.",
+        "source": "https://timnath.org/mayor-robert-axmacher"
+      }
+    ],
+    "updated_at": "2025-06-30T17:26:25Z"
+  },
+  {
+    "name": "Luke Wagner",
+    "sources": [
+      "https://timnath.org/mayor-pro-tem-luke-wagner"
+    ],
+    "images": [
+      {
+        "data": "https://timnath.org/wp-content/uploads/2024/06/luke-wagner.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly under the heading with his name and role.",
+        "source": "https://timnath.org/mayor-pro-tem-luke-wagner"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor Pro Tempore",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page title and text explicitly state 'Mayor Pro-Tem Luke Wagner' and 'Mayor Pro-Tem' as his role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "970-224-3211",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town contact phone number is provided; no direct personal phone found.",
+        "source": "https://timnath.org/mayor-pro-tem-luke-wagner"
+      }
+    ],
+    "emails": [
+      {
+        "data": "lwagner@timnathgov.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly given as 'Email Mayor Pro-Tem Wagner' with this address.",
+        "source": "https://timnath.org/mayor-pro-tem-luke-wagner"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://timnath.org/mayor-pro-tem-luke-wagner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the page containing the detailed profile.",
+        "source": "https://timnath.org/mayor-pro-tem-luke-wagner"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration is explicitly stated as 'Term Expires: April 2026'.",
+        "source": "https://timnath.org/mayor-pro-tem-luke-wagner"
+      }
+    ],
+    "updated_at": "2025-06-30T17:26:25Z"
+  }
+]
