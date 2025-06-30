@@ -1436,7 +1436,14 @@
       ],
       "population": 4613,
       "website": "http://www.glendale.co.us/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:35:40Z",
+      "meta_hash": "1e6e3976bd5785a4df021f2416906b39",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Silverthorne",
