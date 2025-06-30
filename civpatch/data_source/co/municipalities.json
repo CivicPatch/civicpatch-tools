@@ -1270,7 +1270,14 @@
       ],
       "population": 5904,
       "website": "https://estespark.colorado.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:15:49Z",
+      "meta_hash": "a6880baf7812065d223ec0d13dcbb2a2",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Eaton",
