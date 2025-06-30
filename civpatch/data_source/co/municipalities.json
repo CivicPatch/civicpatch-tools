@@ -1080,7 +1080,14 @@
       ],
       "population": 7683,
       "website": "http://www.townofseverance.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-06-30T21:15:39Z",
+      "meta_hash": "8b848dddd258c0d88916bd25e921b49c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Eagle",
