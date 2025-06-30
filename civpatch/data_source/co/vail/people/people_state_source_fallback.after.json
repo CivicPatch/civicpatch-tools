@@ -4,7 +4,7 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-06-30T21:21:24Z",
+    "updated_at": "2025-06-30T21:47:01Z",
     "divisions": []
   },
   {
@@ -12,39 +12,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:21:24Z",
-    "divisions": []
-  },
-  {
-    "name": "Sam Biszantz",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-06-30T21:21:24Z",
-    "divisions": []
-  },
-  {
-    "name": "Dave Chapin",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-06-30T21:21:24Z",
-    "divisions": []
-  },
-  {
-    "name": "Reid Phillips",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-06-30T21:21:24Z",
-    "divisions": []
-  },
-  {
-    "name": "Pete Seibert",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-06-30T21:21:24Z",
+    "updated_at": "2025-06-30T21:47:01Z",
     "divisions": []
   },
   {
@@ -52,7 +20,39 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-06-30T21:21:24Z",
+    "updated_at": "2025-06-30T21:47:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Dave Chapin",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-30T21:47:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Reid Phillips",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-30T21:47:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Sam Biszantz",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-30T21:47:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Pete Seibert",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-06-30T21:47:01Z",
     "divisions": []
   }
 ]
