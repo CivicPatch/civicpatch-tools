@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.nashuanh.gov/directory.aspx?did=4%2F)
+[Skip to Main Content](https://www.nashuanh.gov/directory.aspx?EID=225%2F)
 
 ![Nashua, NH](https://www.nashuanh.gov/ImageRepository/Document?documentID=17274)
 
@@ -34,103 +34,16 @@ Loading
 1. [Home](https://www.nashuanh.gov)
 2. Staff Directory
 
-# Mayor's Office
+# Jim Donchess
 
  
 
-Physical Address:
+[Mayor's Office](https://www.nashuanh.gov/Directory.aspx?DID=4)  
+Title: Mayor  
+Phone: 603-589-3260  
+[NashuaMayor@NashuaNH.gov](mailto:NashuaMayor@NashuaNH.gov)
 
-229 Main Street  
-Nashua, NH 03060
-
-Mailing Address:
-
-P.O. Box 2019  
-Nashua, NH 03061
-
-Phone:
-
-603-589-3260
-
-Fax:
-
-603-594-3450
-
-[NashuaMayor@NashuaNH.gov](mailto:NashuaMayor@NashuaNH.gov)  
-Link: [Mayor's Office Page](https://www.nashuanh.gov/148/Mayors-Office)
-
-**Hours:**  
-8:00 AM - 5:00 PM
-
-Staff
-
-Name Title Email Phone Additional Phone [Donchess, Jim](https://www.nashuanh.gov/directory.aspx?EID=225) Mayor [NashuaMayor@NashuaNH.gov](mailto:NashuaMayor@NashuaNH.gov) 603-589-3260  
-
-Census Count Committee 
-
-Physical Address:
-
-229 Main Street  
-Nashua, NH 03061
-
-Mailing Address:
-
-P.O. Box 2019  
-Nashua, NH 03061
-
-Phone:
-
-603-589-3260
-
-Fax:
-
-603-594-3450
-
-Citizen Services 
-
-229 Main Street Nashua NH 03060
-
-[Directions](https://www.google.com/maps/place/229+Main+Street+Nashua+NH+03060)
-
-Physical Address:View Map
-
-229 Main Street  
-Nashua, NH 03060
-
-Mailing Address:
-
-P.O. Box 2019  
-Nashua, NH 03061
-
-Phone:
-
-603-589-3260
-
-Fax:
-
-603-594-3450
-
-[Email the Department](mailto:NashuaMayor@NashuaNH.gov)
-
-Hours  
-Monday - Friday  
-8 a.m. - 5 p.m.
-
-Nashua DCC Trainers 
-
-Physical Address:
-
-Nashua, NH 03061
-
-Mailing Address:
-
-Nashua, NH 03061
-
-Phone:
-
-(603) 589-3260
-
-[NashuaDCCtrainers@nashuanh.gov](mailto:NashuaDCCtrainers@nashuanh.gov)
+ 
 
 [Return to Staff Directory](https://www.nashuanh.gov/Directory.aspx)
 
@@ -205,7 +118,7 @@ Reports](https://www.nashuanh.gov/460/City-Financial-Reports)
 
 Government Websites by [CivicPlus®](https://connect.civicplus.com/referral)
 
-[![Google Translate Icon](https://www.nashuanh.gov/Assets/Images/GoogleTranslate.gif)Enable Google Translate](https://www.nashuanh.gov/directory.aspx?did=4%2F "Enable Google Translate")
+[![Google Translate Icon](https://www.nashuanh.gov/Assets/Images/GoogleTranslate.gif)Enable Google Translate](https://www.nashuanh.gov/directory.aspx?EID=225%2F "Enable Google Translate")
 
 Loading
 
