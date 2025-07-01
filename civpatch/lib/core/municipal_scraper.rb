@@ -42,7 +42,7 @@ module Core
                people_config: municipality_context[:config]["people"] }
       exit_early = false
 
-      avoid_keywords = %w[alerts news event calendar archive meeting commission alert documentcenter]
+      avoid_keywords = %w[alerts news event calendar archive meeting alert documentcenter]
 
       %w[seeded search crawler].each do |scrape_with|
         break unless should_continue_scraping?(context, data)

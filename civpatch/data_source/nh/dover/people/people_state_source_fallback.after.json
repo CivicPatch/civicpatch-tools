@@ -4,15 +4,16 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-07-01T18:13:05Z",
+    "updated_at": "2025-07-01T19:13:02Z",
     "divisions": []
   },
   {
     "name": "Dennis Shanahan",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Deputy Mayor"
     ],
-    "updated_at": "2025-07-01T18:13:05Z",
+    "updated_at": "2025-07-01T19:13:02Z",
     "divisions": []
   },
   {
@@ -20,7 +21,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z",
+    "updated_at": "2025-07-01T19:13:02Z",
     "divisions": []
   },
   {
@@ -28,7 +29,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z",
+    "updated_at": "2025-07-01T19:13:02Z",
     "divisions": []
   },
   {
@@ -36,7 +37,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z",
+    "updated_at": "2025-07-01T19:13:02Z",
     "divisions": []
   },
   {
@@ -44,7 +45,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z",
+    "updated_at": "2025-07-01T19:13:02Z",
     "divisions": []
   },
   {
@@ -52,7 +53,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z",
+    "updated_at": "2025-07-01T19:13:02Z",
     "divisions": []
   },
   {
@@ -60,7 +61,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z",
+    "updated_at": "2025-07-01T19:13:02Z",
     "divisions": []
   },
   {
@@ -68,7 +69,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z",
+    "updated_at": "2025-07-01T19:13:02Z",
     "divisions": []
   }
 ]
