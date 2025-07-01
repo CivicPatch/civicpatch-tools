@@ -214,6 +214,7 @@ government_types:
           - vice chairman
       - role: alderperson
         aliases:
+        - vice president board of aldermen
         - alder
         - alderman
         - alderwoman

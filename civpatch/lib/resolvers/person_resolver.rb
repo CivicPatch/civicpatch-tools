@@ -59,6 +59,14 @@ module Resolvers
       normalized_name1 = normalized_name1.gsub(/["'`“”]/, "")
       normalized_name2 = normalized_name2.gsub(/["'`“”]/, "")
 
+      # Normalize names by removing common suffixes like "Jr.", "Sr.", etc.
+      normalized_name1 = normalized_name1.gsub(/\b(jr\.?|sr\.?|iii|iv)\b/i, "").strip
+      normalized_name2 = normalized_name2.gsub(/\b(jr\.?|sr\.?|iii|iv)\b/i, "").strip
+
+      # Strip punctuation and extra spaces
+      normalized_name1 = normalized_name1.gsub(/[.,;:!?()]/, "").strip
+      normalized_name2 = normalized_name2.gsub(/[.,;:!?()]/, "").strip
+
       # Ignore initials
       given_name1, last_name1 = parse_name(normalized_name1)
       given_name2, last_name2 = parse_name(normalized_name2)

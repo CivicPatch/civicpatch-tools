@@ -322,4 +322,8 @@ class PersonResolverTest < Minitest::Test
     refute Resolvers::PersonResolver.similar_name?(nil, "Jane Doe")
     refute Resolvers::PersonResolver.similar_name?("Jane Doe", nil)
   end
+
+  def test_similar_name_junior
+    assert Resolvers::PersonResolver.similar_name?("Melbourne Moran, Jr.", "Melbourne Moran Jr.")
+  end
 end
