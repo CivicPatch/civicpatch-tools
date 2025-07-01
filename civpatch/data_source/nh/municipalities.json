@@ -313,8 +313,8 @@
       "government_type": "select_board",
       "email": "joann.duffy@goffstownnh.gov",
       "website": "https://www.goffstownnh.gov",
-      "meta_updated_at": "2025-07-01T19:54:06Z",
-      "meta_hash": "26c72df6a5082a7448b9198b2c1c7904",
+      "meta_updated_at": "2025-07-01T22:41:34Z",
+      "meta_hash": "e729df494c03d9e928e6a13cb1d7dfb0",
       "meta_sources": [
         "state_source",
         "gemini",
