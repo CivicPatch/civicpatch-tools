@@ -304,6 +304,10 @@ class PersonResolverTest < Minitest::Test
     assert Resolvers::PersonResolver.similar_name?("Kim-Khánh Van", "Kim-Khanh Van")
   end
 
+  def test_similar_name_with_initials
+    assert Resolvers::PersonResolver.similar_name?("Mark Lemay", "Mark T. Lemay")
+  end
+
   def test_similar_name_with_quotes
     assert Resolvers::PersonResolver.similar_name?("Edwin H. “Skip” Williams", "Edwin H. Skip Williams")
   end
