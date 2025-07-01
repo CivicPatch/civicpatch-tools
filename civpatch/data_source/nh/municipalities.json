@@ -347,9 +347,13 @@
       "government_type": "select_board",
       "email": "inquries@town.hampton.nh.us",
       "website": "https://hamptonnh.gov",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "1acf0b78a83da0a92ce114448ab9f13a",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T19:54:20Z",
+      "meta_hash": "eeb73e1edd9b8a85bcf92dcb76f6116b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3301533060"
     },
     {
