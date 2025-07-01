@@ -185,8 +185,8 @@
       "government_type": "select_board",
       "email": "smalizia@hudsonnh.gov",
       "website": "http://www.hudsonnh.gov",
-      "meta_updated_at": "2025-07-01T18:37:15Z",
-      "meta_hash": "d28a3f9d7d529e977ad4a49675477180",
+      "meta_updated_at": "2025-07-01T19:37:59Z",
+      "meta_hash": "8b5574e24831ec3bad0cdeb6fb9104ff",
       "meta_sources": [
         "state_source",
         "gemini",
