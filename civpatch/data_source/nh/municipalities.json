@@ -332,9 +332,13 @@
       "government_type": "mayor_council",
       "email": "citymanager@laconianh.gov",
       "website": "http://www.laconianh.gov",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "38162f39f08f9e292accc19198a4f9f4",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T19:57:26Z",
+      "meta_hash": "2e317ae727d3842442b0530918b6daa4",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3340180"
     },
     {
