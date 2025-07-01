@@ -4,62 +4,63 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-07-01T18:13:05Z"
+    "updated_at": "2025-07-01T19:13:02Z"
   },
   {
     "name": "Dennis Shanahan",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Deputy Mayor"
     ],
-    "updated_at": "2025-07-01T18:13:05Z"
+    "updated_at": "2025-07-01T19:13:02Z"
   },
   {
     "name": "Lindsey Williams",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z"
+    "updated_at": "2025-07-01T19:13:02Z"
   },
   {
     "name": "Linnea Nemeth",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z"
+    "updated_at": "2025-07-01T19:13:02Z"
   },
   {
     "name": "April Richer",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z"
+    "updated_at": "2025-07-01T19:13:02Z"
   },
   {
     "name": "Robert Warach",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z"
+    "updated_at": "2025-07-01T19:13:02Z"
   },
   {
     "name": "Anthony Retrosi",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z"
+    "updated_at": "2025-07-01T19:13:02Z"
   },
   {
     "name": "Debra Hackett",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z"
+    "updated_at": "2025-07-01T19:13:02Z"
   },
   {
     "name": "Fergus Cullen",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T18:13:05Z"
+    "updated_at": "2025-07-01T19:13:02Z"
   }
 ]
