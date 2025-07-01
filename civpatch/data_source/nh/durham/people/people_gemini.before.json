@@ -1,17 +1,18 @@
 [
   {
     "name": "Joe Friedman",
-    "positions": [
+    "roles": [
       "Chair",
+      "Council Member",
       "Town Councilor",
       "Chair Pro Tem",
-      "Town Council"
+      "council member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": "603-868-5571",
-    "email": "council@ci.durham.nh.us",
-    "website": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
     "start_date": "2025-03",
     "end_date": "2028-03",
     "sources": [
@@ -19,147 +20,160 @@
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Eric Lund",
-    "positions": [
+    "roles": [
       "Chair Pro Tem",
-      "Council Member",
-      "Alt. Town Council Rep"
+      "Council Member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": "603-868-5571",
-    "email": "council@ci.durham.nh.us",
-    "website": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
+    "phone_number": null,
+    "email": null,
+    "website": null,
     "start_date": "2025-03",
     "end_date": "2028-03",
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/boc_planning/board-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Wayne Burton",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": "603-868-5571",
-    "email": "council@ci.durham.nh.us",
-    "website": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
+    "phone_number": null,
+    "email": null,
+    "website": null,
     "start_date": "2023-03",
     "end_date": "2026-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Darrell Ford",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": "603-868-5571",
-    "email": "council@ci.durham.nh.us",
-    "website": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
+    "phone_number": null,
+    "email": null,
+    "website": null,
     "start_date": "2024-03",
     "end_date": "2027-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Emily Friedrichs",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": "603-868-5571",
-    "email": "council@ci.durham.nh.us",
-    "website": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
+    "phone_number": null,
+    "email": null,
+    "website": null,
     "start_date": "2023-03",
     "end_date": "2026-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Heather Grant",
-    "positions": [
-      "Council Member",
-      "Town Council Rep"
+    "roles": [
+      "Council Member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": "603-868-5571",
-    "email": "council@ci.durham.nh.us",
-    "website": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
+    "phone_number": null,
+    "email": null,
+    "website": null,
     "start_date": "2024-03",
     "end_date": "2027-03",
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/boc_planning/board-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Sally Needell",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": "603-868-5571",
-    "email": "council@ci.durham.nh.us",
-    "website": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
+    "phone_number": null,
+    "email": null,
+    "website": null,
     "start_date": "2023-03",
     "end_date": "2026-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Curtis Register",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": "603-868-5571",
-    "email": "council@ci.durham.nh.us",
-    "website": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
+    "phone_number": null,
+    "email": null,
+    "website": null,
     "start_date": "2024-03",
     "end_date": "2027-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Robin Vogt",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": "603-868-5571",
-    "email": "council@ci.durham.nh.us",
-    "website": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
+    "phone_number": null,
+    "email": null,
+    "website": null,
     "start_date": "2025-03",
     "end_date": "2028-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
+  },
+  {
+    "name": "Todd I. Selig",
+    "roles": [
+      "Administrator"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(603) 868-5571",
+    "email": "tselig@ci.durham.nh.us",
+    "website": null,
+    "start_date": "2001",
+    "end_date": null,
+    "sources": [
+      "https://www.ci.durham.nh.us/administration/our-administrator"
+    ],
+    "updated_at": "2025-07-01T20:05:00Z"
   }
 ]
