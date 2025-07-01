@@ -52,9 +52,13 @@
       "government_type": "mayor_council",
       "email": "tthompson@concordnh.gov",
       "website": "http://www.concordnh.gov",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "79faa579b126c7ecc4f4174b6a8df704",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T18:30:02Z",
+      "meta_hash": "84e555c122db64a3b8662375f12209c3",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3314200"
     },
     {

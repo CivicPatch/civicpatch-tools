@@ -1,10 +1,8 @@
-This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
-
-[Skip To Main Content](https://www.concordnh.gov/Directory.aspx?EID=220%2F)
+[Skip To Main Content](https://www.concordnh.gov/Directory.aspx?DID=18%2F)
 
 Loading
 
-[Skip to Main Content](https://www.concordnh.gov/Directory.aspx?EID=220%2F)
+[Skip to Main Content](https://www.concordnh.gov/Directory.aspx?DID=18%2F)
 
 ![Concord New Hampshire Homepage](https://www.concordnh.gov/ImageRepository/Document?documentID=21222)
 
@@ -24,29 +22,13 @@ Search
 1. [Home](https://www.concordnh.gov)
 2. Staff Directory
 
-# Karen McNamara
+# Mayor
 
  
 
-[Ward Councilors](https://www.concordnh.gov/Directory.aspx?DID=11)  
-Title: Ward Four City Councilor  
-Phone: 603-545-5578  
-[kmcnamaraward4@gmail.com](mailto:kmcnamaraward4@gmail.com)
+Staff
 
-### Contact
-
-Residents wishing to contact Councilor McNamara to discuss issues concerning Ward Four or other city-related matters may call her at 603-545-5578, write to her at 18 Prince Street, Concord, NH 03301, or email her.
-
-### Committee Assignments
-
-- Ad Hoc Food Truck Committee (Chair)
-- Fiscal Policy Advisory Committee
-- Parking Committee
-- Rules Committee
-- Solid Waste Advisory Committee
-- Tax Exemption Policy Committee
-
- 
+Name Title Email Phone Additional Phone [Champlin, Byron O.](https://www.concordnh.gov/directory.aspx?EID=257) Mayor [bchamplin@concordnh.gov](mailto:BChamplin@concordnh.gov) 603-228-0097  
 
 [Return to Staff Directory](https://www.concordnh.gov/Directory.aspx)
 
@@ -137,5 +119,3 @@ Excel Download
 PowerPoint Download
 
 Document Download
-
-Explore your accessibility options
