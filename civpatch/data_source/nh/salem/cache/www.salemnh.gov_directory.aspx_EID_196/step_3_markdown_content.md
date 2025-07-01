@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.salemnh.gov/Directory.aspx?did=55%2F)
+[Skip to Main Content](https://www.salemnh.gov/directory.aspx?EID=196%2F)
 
 ![Salem, New Hampshire Home](https://www.salemnh.gov/ImageRepository/Document?documentID=70)
 
@@ -18,33 +18,23 @@ Search
 1. [Home](https://www.salemnh.gov)
 2. Staff Directory
 
-# Town Council
+# Lisa Withrow
 
  
 
-33 Geremonty Drive Salem NH 03079
+[Town Council](https://www.salemnh.gov/Directory.aspx?DID=55)  
+Title: Secretary
 
-[Directions](https://www.google.com/maps/place/33+Geremonty+Drive+Salem+NH+03079)
+**Term Expires: March 2027**
 
-Physical Address:View Map
+Committee Representation:
 
-33 Geremonty Drive  
-Salem, NH 03079
+- Communications Committee
+- Historic District Commission
+- Museum Committee
+- Town Wide Road Stabilization Committee
 
-Phone:
-
-603-890-2120
-
-Fax:
-
-603-890-2220
-
-[Email Town Council](mailto:Salem_Town_Council@salemnh.gov)  
-Link: [Town Council Page](https://www.salemnh.gov/537/Town-Council)
-
-Staff
-
-Name Title Email Phone Additional Phone [Bettencourt, DJ](https://www.salemnh.gov/directory.aspx?EID=191) Vice-Chair       [Bryant , Robert F.](https://www.salemnh.gov/directory.aspx?EID=189) Councilor       [Devine, Joseph R.](https://www.salemnh.gov/directory.aspx?EID=188) Interim Town Manager       [Hatch, Jeffrey](https://www.salemnh.gov/directory.aspx?EID=192) Councilor       [Pelletier, Paul](https://www.salemnh.gov/directory.aspx?EID=193) Councilor       [Stacey, Cathy Ann](https://www.salemnh.gov/directory.aspx?EID=194) Councilor       [Stramaglia, Keith](https://www.salemnh.gov/directory.aspx?EID=195) Councilor       [Sweeney, Joseph F.](https://www.salemnh.gov/directory.aspx?EID=190) Chair       [Withrow, Lisa](https://www.salemnh.gov/directory.aspx?EID=196) Secretary       [Wright, Bonnie](https://www.salemnh.gov/directory.aspx?EID=197) Councilor      
+ 
 
 [Return to Staff Directory](https://www.salemnh.gov/Directory.aspx)
 
