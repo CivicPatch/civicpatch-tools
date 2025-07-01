@@ -90,9 +90,13 @@
       "government_type": "mayor_council",
       "email": "j.bizier@dover.nh.gov",
       "website": "http://www.dover.nh.gov",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "d939f16c5b53339a216e27da9166e124",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T18:18:56Z",
+      "meta_hash": "7ffea340b5d2cadf249e41bebb605a96",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3318820"
     },
     {

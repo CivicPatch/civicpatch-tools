@@ -1,479 +1,107 @@
 [
   {
-    "name": "Robert Carrier",
-    "image": null,
-    "source_image": null,
+    "name": "J. Michael Joyal, Jr.",
     "sources": [
-      "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
+      "https://www.dover.nh.gov/government/city-operations/executive/city-manager"
     ],
-    "positions": [
-      "Mayor"
+    "images": [],
+    "roles": [
+      {
+        "data": "City Manager",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'City Manager' is explicitly stated next to the person's name and image."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
-        "data": "(603) 396-0204",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
+        "data": "603-516-6023",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The phone number is listed for the 'City Manager's Office' and is the primary contact for that department, implying it's the contact for the City Manager.",
+        "source": "https://www.dover.nh.gov/government/city-operations/executive/city-manager"
       }
     ],
     "emails": [
       {
-        "data": "r.carrier@dover.nh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
+        "data": "m.joyal@dover.nh.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and directly linked to the person.",
+        "source": "https://www.dover.nh.gov/government/city-operations/executive/city-manager"
       }
     ],
     "websites": [
       {
-        "data": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "No individual website found, using the general City Council page.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
+        "data": "https://www.dover.nh.gov/government/city-operations/executive/city-manager",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A website link specifically labeled 'Website' and associated with the 'City Manager' is provided.",
+        "source": "https://www.dover.nh.gov/government/city-operations/executive/city-manager"
       }
     ],
-    "start_dates": [
-      {
-        "data": "2024-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "End date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "updated_at": "2025-05-08"
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-01T18:18:56Z"
   },
   {
     "name": "Dennis Shanahan",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
+      "https://www.dover.nh.gov/government/city-operations/community-services/engineering/environmental/stormwater-management/storm-water-utility-2023"
     ],
-    "positions": [
-      "Deputy Mayor",
-      "City Councilor",
-      "Ward 5"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "(603) 534-3750",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor' and voted on an ordinance at a City Council meeting in December 2023, indicating a current role."
       }
     ],
-    "emails": [
-      {
-        "data": "d.shanahan@dover.nh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "No individual website found, using the general City Council page.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2024-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "End date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "updated_at": "2025-05-08"
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-01T18:18:56Z"
   },
   {
     "name": "Lindsey Williams",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
+      "https://www.dover.nh.gov/government/city-operations/community-services/engineering/environmental/stormwater-management/storm-water-utility-2023"
     ],
-    "positions": [
-      "City Councilor",
-      "At-Large"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "(603) 534-2119",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor' and voted on an ordinance at a City Council meeting in December 2023, indicating a current role."
       }
     ],
-    "emails": [
-      {
-        "data": "l.williams@dover.nh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "No individual website found, using the general City Council page.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2024-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "End date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "updated_at": "2025-05-08"
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-01T18:18:56Z"
   },
   {
-    "name": "Linnea Nemeth",
-    "image": null,
-    "source_image": null,
+    "name": "Deborah Thibodeaux",
     "sources": [
-      "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
+      "https://www.dover.nh.gov/government/city-operations/community-services/engineering/environmental/stormwater-management/storm-water-utility-2023"
     ],
-    "positions": [
-      "City Councilor",
-      "At-Large"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "(603) 403-2958",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor' and voted on an ordinance at a City Council meeting in December 2023, indicating a current role."
       }
     ],
-    "emails": [
-      {
-        "data": "l.nemeth@dover.nh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "No individual website found, using the general City Council page.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2024-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "End date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "updated_at": "2025-05-08"
-  },
-  {
-    "name": "April Richer",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-    ],
-    "positions": [
-      "City Councilor",
-      "Ward 1"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 724-4288",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "emails": [
-      {
-        "data": "a.richer@dover.nh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "No individual website found, using the general City Council page.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2024-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "End date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "updated_at": "2025-05-08"
-  },
-  {
-    "name": "Robert Warach",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-    ],
-    "positions": [
-      "City Councilor",
-      "Ward 2"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 550-6574",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "emails": [
-      {
-        "data": "r.warach@dover.nh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "No individual website found, using the general City Council page.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2024-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "End date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "updated_at": "2025-05-08"
-  },
-  {
-    "name": "Anthony Retrosi",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-    ],
-    "positions": [
-      "City Councilor",
-      "Ward 3"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 969-0132",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "emails": [
-      {
-        "data": "t.retrosi@dover.nh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "No individual website found, using the general City Council page.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2024-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "End date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "updated_at": "2025-05-08"
-  },
-  {
-    "name": "Debra Hackett",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-    ],
-    "positions": [
-      "City Councilor",
-      "Ward 4"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 534-3623",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "emails": [
-      {
-        "data": "d.hackett@dover.nh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "No individual website found, using the general City Council page.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2024-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "End date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "updated_at": "2025-05-08"
-  },
-  {
-    "name": "Fergus Cullen",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-    ],
-    "positions": [
-      "City Councilor",
-      "Ward 6"
-    ],
-    "phone_numbers": [
-      {
-        "data": "(603) 520-5450",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "emails": [
-      {
-        "data": "f.cullen@dover.nh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly associated with the name in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "No individual website found, using the general City Council page.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2024-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2025-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "End date explicitly listed in a structured list.",
-        "source": "https://www.dover.nh.gov/government/boards-and-commissions/city-council/"
-      }
-    ],
-    "updated_at": "2025-05-08"
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-01T18:18:56Z"
   }
 ]
