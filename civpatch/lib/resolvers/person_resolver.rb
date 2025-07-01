@@ -42,7 +42,7 @@ module Resolvers
 
       # given_name has bug with namae. Replace?
       # Kim-Khanh Van turns into given=nil, particle= "Kim-Khanh"
-      given_name = (name&.given || name&.particle).split(" ").first
+      given_name = (name&.given || name&.particle)&.split(" ")&.first
       last_name = name&.family
 
       [given_name, last_name]
