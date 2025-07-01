@@ -1096,41 +1096,36 @@ Use the up and down arrows to select a result. Press enter to go to the selected
 - [Visitors](https://www.manchesternh.gov/Visitors)
 - [Contact Us](https://www.manchesternh.gov/Contact-Us)
 
-[Home](https://www.manchesternh.gov) » [Government](https://www.manchesternh.gov/Government) » [Mayor and Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen) » [Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen) » [Ward 11 Alderman](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman)
+[Home](https://www.manchesternh.gov) » [Government](https://www.manchesternh.gov/Government) » [Mayor and Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen) » [Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen) » [Ward 10 Alderman](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman)
 
-# Ward 11 Alderman
+# Ward 10 Alderman
 
-![Ward 11 Alderman – Norm Vincent](https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldVincent.jpg?ver=2024-01-08-151401-173 "Ward 11 Alderman – Norm Vincent")  
-Norm Vincent  
-Ward 11 Alderman
+![Alderman Bill Barry](https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/Barry_210.jpg?ver=2020-01-23-092211-287 "Alderman Bill Barry")  
+Bill Barry  
+Ward 10 Alderman
 
-#### Ward 11 Alderman - Norm Vincent
+#### Ward 10 Alderman - Bill Barry
 
-Norm Vincent  
-853 Montgomery Street  
+Bill Barry  
+69 Pasture Drive  
 Manchester, NH 03102
 
-Phone: (603) 384-6293  
-[Email](https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman)
+Phone: (603) 627-7189  
+[Email](https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-10-Alderman)
 
-[Ward 11 Map](https://www.manchesternh.gov/Portals/2/Departments/city_clerk/wards/Ward11Map.pdf)
+[Ward 10 Map](https://www.manchesternh.gov/Portals/2/Departments/city_clerk/wards/Ward10Map.pdf)
 
 ##### Standing Committees
 
-- Accounts, Enrollment and Revenue
-- Human Resources and Insurance
-- Lands and Buildings
-- Public Safety, Health, and Traffic (Chair)
+- Bills On Second Reading
+- Public Safety, Health, and Traffic
 
 ##### Special Committees
 
-- Airport Activities
-- Alcohol, Other Drugs &amp; Youth Services
-- Baseball/Civic Center
-- Solid Waste Activities
-- Youth Sports
+- Alcohol, Other Drugs and &amp; Youth Services
+- Solid Waste Activites
 
-# Email Ward 11 Alderman
+# Email Ward 10 Alderman
 
 Email
 
@@ -1142,7 +1137,7 @@ Message
 
 CAPTCHA
 
-![](https://www.manchesternh.gov/ImageChallenge.captcha.aspx?captcha=5D97E7561F2AB3FD7C4AEC7AED924043F63090A8EA2E64FE72FEDDC033EB34FF31A2C69D2E76F0E87D492C026FB05829B2D5E1DAA0488957CF3EDD45BC62D69A90B9D69F8AF22493D83933CDF9581C19C3A9E41DD431004C1026464572049016EDB32FFEEE79529036AD2865E513407F8BD3C5AFFEDBD247E8D90841&alias=www.manchesternh.gov)
+![](https://www.manchesternh.gov/ImageChallenge.captcha.aspx?captcha=B60CDE3C68C152DD31142E68844CEA93E46BAAC73B1FBA0FD732E4614A3E70085FFB001483727CCA4F7CA88D5BFBE7A6C19A209F947FE3D2FA6F229E5BAFF82BF9B032D481DC7D5340FA34639B8AFB05DF46D2E6C7B19AAD32DFCB6EFBDA3554082379A4E40815E14164FADA24D55A3FB1B3DE85438916D5065F6D2B&alias=www.manchesternh.gov)
 
 Submit
 
@@ -1243,4 +1238,4 @@ From 8 AM to 5 PM
 
 Copyright 2025 City of Manchester
 
-[Terms of Use](https://www.manchesternh.gov/Terms-of-use) | [Privacy Statement](https://www.manchesternh.gov/Privacy-Statement) | [Site Map](https://www.manchesternh.gov/Site-Map) | [Login](https://www.manchesternh.gov/Employee-Login?returnurl=%2FGovernment%2FMayor-and-Aldermen%2FAldermen%2FWard-11-Alderman "Login")
+[Terms of Use](https://www.manchesternh.gov/Terms-of-use) | [Privacy Statement](https://www.manchesternh.gov/Privacy-Statement) | [Site Map](https://www.manchesternh.gov/Site-Map) | [Login](https://www.manchesternh.gov/Employee-Login?returnurl=%2FGovernment%2FMayor-and-Aldermen%2FAldermen%2FWard-10-Alderman "Login")

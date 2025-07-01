@@ -14,9 +14,13 @@
       "government_type": "aldermen",
       "email": "econdev@manchesternh.gov",
       "website": "http://www.ManchesterNH.gov",
-      "meta_updated_at": "2025-05-11",
-      "meta_hash": "b60bc0121469d8d0fce22737d6e5731d",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T18:32:53Z",
+      "meta_hash": "51be5365c2eba85e48f318080201051b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3345140"
     },
     {

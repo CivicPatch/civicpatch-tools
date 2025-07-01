@@ -1096,41 +1096,36 @@ Use the up and down arrows to select a result. Press enter to go to the selected
 - [Visitors](https://www.manchesternh.gov/Visitors)
 - [Contact Us](https://www.manchesternh.gov/Contact-Us)
 
-[Home](https://www.manchesternh.gov) » [Government](https://www.manchesternh.gov/Government) » [Mayor and Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen) » [Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen) » [Ward 11 Alderman](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman)
+[Home](https://www.manchesternh.gov) » [Government](https://www.manchesternh.gov/Government) » [Mayor and Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen) » [Aldermen](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen) » [Ward 2 Alderman](https://www.manchesternh.gov/Government/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman)
 
-# Ward 11 Alderman
+# Ward 2 Alderman
 
-![Ward 11 Alderman – Norm Vincent](https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldVincent.jpg?ver=2024-01-08-151401-173 "Ward 11 Alderman – Norm Vincent")  
-Norm Vincent  
-Ward 11 Alderman
+![Ward 2 Alderman – Dan Goonan](https://www.manchesternh.gov/Portals/2/Departments/elected_officials/images/AldGoonan.jpg?ver=2024-01-08-151401-173 "Ward 2 Alderman – Dan Goonan")  
+Dan Goonan  
+Ward 2 Alderman
 
-#### Ward 11 Alderman - Norm Vincent
+#### Ward 2 Alderman - Dan Goonan
 
-Norm Vincent  
-853 Montgomery Street  
-Manchester, NH 03102
+Dan Goonan  
+10 Little Brook Way  
+Manchester, NH 03104
 
-Phone: (603) 384-6293  
-[Email](https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-11-Alderman)
+Phone: (603) 493-9052  
+[Email](https://www.manchesternh.gov/Mayor-and-Aldermen/Aldermen/Ward-2-Alderman)
 
-[Ward 11 Map](https://www.manchesternh.gov/Portals/2/Departments/city_clerk/wards/Ward11Map.pdf)
+[Ward 2 Map](https://www.manchesternh.gov/Portals/2/Departments/city_clerk/wards/Ward2Map.pdf)
 
 ##### Standing Committees
 
-- Accounts, Enrollment and Revenue
-- Human Resources and Insurance
 - Lands and Buildings
-- Public Safety, Health, and Traffic (Chair)
+- Public Safety, Health and Traffic
 
 ##### Special Committees
 
-- Airport Activities
-- Alcohol, Other Drugs &amp; Youth Services
 - Baseball/Civic Center
-- Solid Waste Activities
 - Youth Sports
 
-# Email Ward 11 Alderman
+# Email Ward 2 Alderman
 
 Email
 
@@ -1142,7 +1137,7 @@ Message
 
 CAPTCHA
 
-![](https://www.manchesternh.gov/ImageChallenge.captcha.aspx?captcha=5D97E7561F2AB3FD7C4AEC7AED924043F63090A8EA2E64FE72FEDDC033EB34FF31A2C69D2E76F0E87D492C026FB05829B2D5E1DAA0488957CF3EDD45BC62D69A90B9D69F8AF22493D83933CDF9581C19C3A9E41DD431004C1026464572049016EDB32FFEEE79529036AD2865E513407F8BD3C5AFFEDBD247E8D90841&alias=www.manchesternh.gov)
+![](https://www.manchesternh.gov/ImageChallenge.captcha.aspx?captcha=33543B34BE6A1B8A6813355084A7957E8A3147DD48EE896210F2CD4E77331B5AA26279F06054D793A59B60CE56345BB09A3A964E0C07ABF9DD8B2C69F7DC343EC9690BCAD7247F4895BC2E18EE54B1D86D9F60948879957C549A1B3A17AB15C16AE9ADC0CFFA223C767A3D795F8940D6177A892137BFC90070A1860A&alias=www.manchesternh.gov)
 
 Submit
 
@@ -1243,4 +1238,4 @@ From 8 AM to 5 PM
 
 Copyright 2025 City of Manchester
 
-[Terms of Use](https://www.manchesternh.gov/Terms-of-use) | [Privacy Statement](https://www.manchesternh.gov/Privacy-Statement) | [Site Map](https://www.manchesternh.gov/Site-Map) | [Login](https://www.manchesternh.gov/Employee-Login?returnurl=%2FGovernment%2FMayor-and-Aldermen%2FAldermen%2FWard-11-Alderman "Login")
+[Terms of Use](https://www.manchesternh.gov/Terms-of-use) | [Privacy Statement](https://www.manchesternh.gov/Privacy-Statement) | [Site Map](https://www.manchesternh.gov/Site-Map) | [Login](https://www.manchesternh.gov/Employee-Login?returnurl=%2FGovernment%2FMayor-and-Aldermen%2FAldermen%2FWard-2-Alderman "Login")
