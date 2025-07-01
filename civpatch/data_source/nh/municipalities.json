@@ -263,9 +263,13 @@
       "government_type": "mayor_council",
       "email": "hmattson@keenenh.gov",
       "website": "https://keenenh.gov/",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "afba06e79082daf9e0366fbff50aab02",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T19:53:13Z",
+      "meta_hash": "673072be2ae16aa72fb6e22faa3a28ca",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3339300"
     },
     {
