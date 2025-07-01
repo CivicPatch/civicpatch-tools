@@ -54,7 +54,7 @@ module Scrapers
         "government_type" => response["government_type"]
       }
 
-      pp people_hint.inspect
+      pp people_hint
 
       people_hint
     end

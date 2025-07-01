@@ -2,17 +2,19 @@
   {
     "name": "Lori Radke",
     "roles": [
+      "Chair",
       "Council Member"
     ],
-    "updated_at": "2025-07-01T19:50:31Z",
+    "updated_at": "2025-07-01T22:25:00Z",
     "divisions": []
   },
   {
     "name": "Phil Greazzo",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Vice Chair"
     ],
-    "updated_at": "2025-07-01T19:50:31Z",
+    "updated_at": "2025-07-01T22:25:00Z",
     "divisions": []
   },
   {
@@ -20,7 +22,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T19:50:31Z",
+    "updated_at": "2025-07-01T22:25:00Z",
     "divisions": []
   },
   {
@@ -28,7 +30,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T19:50:31Z",
+    "updated_at": "2025-07-01T22:25:00Z",
     "divisions": []
   },
   {
@@ -36,7 +38,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T19:50:31Z",
+    "updated_at": "2025-07-01T22:25:00Z",
     "divisions": []
   },
   {
@@ -44,7 +46,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T19:50:31Z",
+    "updated_at": "2025-07-01T22:25:00Z",
     "divisions": []
   },
   {
@@ -52,7 +54,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T19:50:31Z",
+    "updated_at": "2025-07-01T22:25:00Z",
     "divisions": []
   }
 ]
