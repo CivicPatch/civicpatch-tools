@@ -3,12 +3,13 @@
     "name": "Joe Friedman",
     "roles": [
       "Chair",
+      "Chair Pro Tem",
       "Council Member"
     ],
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "council@ci.durham.nh.us",
     "website": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
     "start_date": "2025-03",
     "end_date": "2028-03",
@@ -17,24 +18,25 @@
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
     ],
-    "updated_at": "2025-07-01T20:05:00Z"
+    "updated_at": "2025-07-01T22:58:30Z"
   },
   {
     "name": "Eric Lund",
     "roles": [
+      "Chair Pro Tem",
       "Council Member"
     ],
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "council@ci.durham.nh.us",
     "website": null,
     "start_date": "2025-03",
     "end_date": "2028-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:05:00Z"
+    "updated_at": "2025-07-01T22:58:30Z"
   },
   {
     "name": "Wayne Burton",
@@ -44,14 +46,14 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "council@ci.durham.nh.us",
     "website": null,
     "start_date": "2023-03",
     "end_date": "2026-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:05:00Z"
+    "updated_at": "2025-07-01T22:58:30Z"
   },
   {
     "name": "Darrell Ford",
@@ -61,14 +63,14 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "council@ci.durham.nh.us",
     "website": null,
     "start_date": "2024-03",
     "end_date": "2027-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:05:00Z"
+    "updated_at": "2025-07-01T22:58:30Z"
   },
   {
     "name": "Emily Friedrichs",
@@ -78,14 +80,14 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "council@ci.durham.nh.us",
     "website": null,
     "start_date": "2023-03",
     "end_date": "2026-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:05:00Z"
+    "updated_at": "2025-07-01T22:58:30Z"
   },
   {
     "name": "Heather Grant",
@@ -95,14 +97,14 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "council@ci.durham.nh.us",
     "website": null,
     "start_date": "2024-03",
     "end_date": "2027-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:05:00Z"
+    "updated_at": "2025-07-01T22:58:30Z"
   },
   {
     "name": "Sally Needell",
@@ -112,14 +114,14 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "council@ci.durham.nh.us",
     "website": null,
     "start_date": "2023-03",
     "end_date": "2026-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:05:00Z"
+    "updated_at": "2025-07-01T22:58:30Z"
   },
   {
     "name": "Curtis Register",
@@ -129,14 +131,14 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "council@ci.durham.nh.us",
     "website": null,
     "start_date": "2024-03",
     "end_date": "2027-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:05:00Z"
+    "updated_at": "2025-07-01T22:58:30Z"
   },
   {
     "name": "Robin Vogt",
@@ -146,13 +148,13 @@
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "council@ci.durham.nh.us",
     "website": null,
     "start_date": "2025-03",
     "end_date": "2028-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:05:00Z"
+    "updated_at": "2025-07-01T22:58:30Z"
   }
 ]

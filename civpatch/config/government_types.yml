@@ -61,6 +61,7 @@ government_types:
         - vice chairwoman
         - vice-chairman
         - vice-chairwoman
+      - role: chair pro tem
       - role: assistant mayor
       - role: deputy mayor
       - role: vice mayor
