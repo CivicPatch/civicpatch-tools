@@ -1,4 +1,4 @@
-[Skip to main content](https://www.rochesternh.gov/node/178201/)
+[Skip to main content](https://www.rochesternh.gov/user/7211/contact/)
 
 ![rochesternh](https://www.rochesternh.gov/sites/all/themes/custom/sites/rochesternh/vts_rochesternh/logo.png)
 
@@ -133,92 +133,44 @@ Keywords
     - [Voting in Rochester](https://www.rochesternh.gov/how-to-vote-in-rochester-nh)
     - [What Tax Map is My Street On](https://www.rochesternh.gov/assessing/pages/what-tax-map-is-my-street-on)
 
-![Print](https://www.rochesternh.gov/sites/all/modules/contrib/print/icons/print_icon.png "Print")
+## Primary tabs
+
+- [View](https://www.rochesternh.gov/users/pturner)
+- [Contact(active tab)](https://www.rochesternh.gov/user/7211/contact)
 
 ## You are here
 
 1. [Home](https://www.rochesternh.gov) ››
-2. [Mayor &amp; City Council](https://www.rochesternh.gov/mayor-city-council)
+2. [pturner](https://www.rochesternh.gov/users/pturner)
 
-# Leslie "Les" Horne
+# Contact Patricia Turner
 
-![1](https://www.rochesternh.gov/sites/g/files/vyhlif9211/f/styles/news_image/public/people/leshorne.jpg?itok=JAV2_cWb)
+Your name *
 
-E-mail:
+Your e-mail address *
 
-[Contact Leslie "Les" Horne](https://www.rochesternh.gov/user/7516/contact)
+To [pturner](https://www.rochesternh.gov/users/pturner "View user profile.")
 
-2 Nola Ave  
-Rochester, NH 03867  
-h) 512-466-5856
+Subject *
 
-### Board Memberships
+Message *
 
-Board/CommitteeJob titleMembership StatusThis contact is
+Attachments
 
-Board/CommitteeJob titleMembership StatusThis contact is
+Files must be less than **2 MB**.  
+Allowed file types: **txt doc pdf docx jpg gif png**.
 
-[Mayor &amp; City Council](https://www.rochesternh.gov/mayor-city-council)
+Attachment #1
 
-Councilor (Ward 2/Seat B)
+Attachment #2
 
-Active Membership
+Attachment #3
 
-Appointed
+CAPTCHA
 
-[Finance Committee](https://www.rochesternh.gov/finance-committee)
+This question is for testing whether or not you are a human visitor and to prevent automated spam submissions.
 
-Member
-
-Active Membership
-
-Appointed
-
-[Community Development Committee](https://www.rochesternh.gov/community-development-committee)
-
-Member
-
-Active Membership
-
-Appointed
-
-[Appointments Review Committee](https://www.rochesternh.gov/appointments-review-committee)
-
-Member
-
-Active Membership
-
-Appointed
-
-[Opioid Abatement Committee](https://www.rochesternh.gov/opioid-abatement-committee)
-
-Member
-
-Active Membership
-
-Appointed
-
-- [City Charter](https://www.rochesternh.gov/mayor-city-council/links/city-charter)
-- [City Council Goals - Adopted 7/2/2024](https://www.rochesternh.gov/mayor-city-council/files/city-council-goals-adopted-722024)
-- [City Council Rules of Order - As Adopted on 12/3/2024](https://www.rochesternh.gov/mayor-city-council/files/city-council-rules-of-order-as-adopted-on-1232024)
-- [City Council Standing Committees 2024/2025](https://www.rochesternh.gov/mayor-city-council/files/city-council-standing-committees-20242025)
-- [City Manager's Page](https://www.rochesternh.gov/city-council/links/city-managers-page)
-- [Code of Ethics and Conduct For Elected and Appointed Officials](https://www.rochesternh.gov/mayor-city-council/files/code-of-ethics-and-conduct-for-elected-and-appointed-officials)
-- [Find Your Ward by Street Address](https://www.rochesternh.gov/mayor-city-council/links/find-your-ward-by-street-address)
-- [Mayoral Ad-hoc Committees](https://www.rochesternh.gov/mayor-city-council/pages/mayoral-ad-hoc%C2%A0committees)
-- [Online Public Input](https://www.rochesternh.gov/public-input)
-
-## Contact Info
-
-Address:
-
-31 Wakefield Street
-
-Rochester, NH 03867
-
-United States
-
-See map: [Google Maps](https://maps.google.com/?q=31%20Wakefield%20Street%2C%20Rochester%2C%20NH%2C%2003867%2C%20us)
+Leave this field blank
 
 ![City Seal](https://www.rochesternh.gov/sites/g/files/vyhlif9211/f/resize/imce/web_1-125x125.png)  
 31 Wakefield St.  |  Rochester, NH 03867  
@@ -226,4 +178,4 @@ See map: [Google Maps](https://maps.google.com/?q=31%20Wakefield%20Street%2C%20R
 
 [Government Websites by CivicPlus ®](https://www.civicplus.com)
 
-- [Login](https://www.rochesternh.gov/user/login?current=node%2F178201)
+- [Login](https://www.rochesternh.gov/user/login?current=user%2F7211%2Fcontact)
