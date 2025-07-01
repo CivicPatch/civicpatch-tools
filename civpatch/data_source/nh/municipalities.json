@@ -396,9 +396,13 @@
       "government_type": "select_board",
       "email": "townadmin@windhamnh.gov",
       "website": "http://www.windhamnh.gov",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "4179735d16d643119e62c8877eb38781",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T19:59:19Z",
+      "meta_hash": "293fb385b23961daefa40085671a3631",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3301585780"
     },
     {
