@@ -377,9 +377,13 @@
       "government_type": "select_board",
       "email": "pmcelroy@exeternh.gov",
       "website": "http://exeternh.gov",
-      "meta_updated_at": "2025-05-09",
-      "meta_hash": "db9605c9851f1c711e3cff77c56aeeab",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T19:57:06Z",
+      "meta_hash": "d90a4af6d30a82720755c15ce550e067",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3301525380"
     },
     {
