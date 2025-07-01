@@ -166,9 +166,13 @@
       "government_type": "mayor_council",
       "email": "mmalaguti@londonderrynh.org",
       "website": "http://www.londonderrynh.org",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "e69c83d4d1ccf0dce849fce148a2f629",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T18:39:33Z",
+      "meta_hash": "c0dafad3c53d11fa5049a7c3decd0f73",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3301543220"
     },
     {
