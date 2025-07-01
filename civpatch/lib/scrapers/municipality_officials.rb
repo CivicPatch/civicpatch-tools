@@ -48,11 +48,15 @@ module Scrapers
     private_class_method def self.with_search_fallback(municipality_context)
       gemini = Services::GoogleGemini::Client.new
       response = gemini.research_municipality(municipality_context)
-      {
+      people_hint = {
         "type" => "state_source_fallback",
         "people" => response["people"],
         "government_type" => response["government_type"]
       }
+
+      pp people_hint.inspect
+
+      people_hint
     end
   end
 end

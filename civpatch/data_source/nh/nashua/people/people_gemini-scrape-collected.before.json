@@ -3,20 +3,14 @@
     "name": "Jim Donchess",
     "sources": [
       "https://www.nashuanh.gov/directory.aspx?did=4",
-      "https://www.nashuanh.gov/directory.aspx?EID=225",
       "https://www.nashuanh.gov/148/Mayors-Office"
     ],
     "images": [],
     "roles": [
       {
-        "data": "mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Mayor' is explicitly listed next to Jim Donchess's name in the 'Staff' table under 'Mayor's Office'. "
-      },
-      {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Mayor' directly under the person's name."
+        "llm_confidence_reason": "Role is explicitly listed next to the name in a table."
       },
       {
         "data": "Mayor",
@@ -29,14 +23,8 @@
       {
         "data": "603-589-3260",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly listed next to the name in a table format and also as a general contact for the Mayor's Office, confirming its association with the Mayor role and Jim Donchess himself. ",
+        "llm_confidence_reason": "Phone number is explicitly listed next to the name in a table.",
         "source": "https://www.nashuanh.gov/directory.aspx?did=4"
-      },
-      {
-        "data": "603-589-3260",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
-        "source": "https://www.nashuanh.gov/directory.aspx?EID=225"
       },
       {
         "data": "603-589-3260",
@@ -49,14 +37,8 @@
       {
         "data": "NashuaMayor@NashuaNH.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly listed next to the name in a table format and also as a general contact for the Mayor's Office, confirming its association with the Mayor role and Jim Donchess himself. The email is also a mailto link, further confirming its validity and direct association with the Mayor's office and Jim Donchess as the Mayor. ",
+        "llm_confidence_reason": "Email address is explicitly listed next to the name in a table.",
         "source": "https://www.nashuanh.gov/directory.aspx?did=4"
-      },
-      {
-        "data": "NashuaMayor@NashuaNH.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
-        "source": "https://www.nashuanh.gov/directory.aspx?EID=225"
       },
       {
         "data": "NashuaMayor@NashuaNH.gov",
@@ -69,7 +51,7 @@
       {
         "data": "https://www.nashuanh.gov/148/Mayors-Office",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "A link to the 'Mayor's Office Page' is provided directly under the 'Mayor's Office' section, which is the relevant department for Jim Donchess. While not a direct personal profile, it is the most relevant official website provided for the Mayor.",
+        "llm_confidence_reason": "The website is listed as 'Mayor's Office Page' directly below the contact information for the Mayor's Office, which includes Jim Donchess.",
         "source": "https://www.nashuanh.gov/directory.aspx?did=4"
       }
     ],
@@ -82,33 +64,33 @@
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Ben Clemons",
+    "name": "BEN CLEMONS",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN-AT-LARGE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN-AT-LARGE'"
       }
     ],
     "divisions": [
       {
-        "data": "at-large",
+        "data": "AT-LARGE",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN-AT-LARGE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN-AT-LARGE'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-305-9969",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -116,23 +98,16 @@
       {
         "data": "CLEMONSB@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2019-03-12",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: March 12 2019'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -140,37 +115,37 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2027'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Richard A. Dowd",
+    "name": "RICHARD A. DOWD",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD TWO'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD TWO'"
       }
     ],
     "divisions": [
       {
-        "data": "Ward Two",
+        "data": "WARD TWO",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD TWO'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD TWO'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-598-3528",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -178,23 +153,16 @@
       {
         "data": "DOWDR@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2012-01-08",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Jan 8 2012'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -202,37 +170,37 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Tyler Gouveia",
+    "name": "TYLER GOUVEIA",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD ONE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD ONE'"
       }
     ],
     "divisions": [
       {
-        "data": "Ward One",
+        "data": "WARD ONE",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD ONE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD ONE'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-809-1786",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -240,23 +208,16 @@
       {
         "data": "GOUVEIAT@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2021-11-02",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Nov 2 2021'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -264,37 +225,37 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Ernest A. Jette",
+    "name": "ERNEST A. JETTE",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD FIVE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD FIVE'"
       }
     ],
     "divisions": [
       {
-        "data": "Ward Five",
+        "data": "WARD FIVE",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD FIVE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD FIVE'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-883-3459",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -302,23 +263,16 @@
       {
         "data": "JETTEE@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2018-01-07",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Jan 7 2018'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -326,37 +280,37 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Shoshanna Kelly",
+    "name": "SHOSHANNA KELLY",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderwoman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERWOMAN-AT-LARGE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERWOMAN-AT-LARGE'"
       }
     ],
     "divisions": [
       {
-        "data": "at-large",
+        "data": "AT-LARGE",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERWOMAN-AT-LARGE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERWOMAN-AT-LARGE'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-589-3030",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -364,23 +318,16 @@
       {
         "data": "KELLYS@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2018-01-07",
+        "data": "2022-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Jan 7 2018'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -388,37 +335,37 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Patricia Klee",
+    "name": "PATRICIA KLEE",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD THREE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD THREE'"
       }
     ],
     "divisions": [
       {
-        "data": "Ward Three",
+        "data": "WARD THREE",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD THREE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD THREE'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-966-0979",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -426,23 +373,16 @@
       {
         "data": "KLEEP@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2018-01-07",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Jan 7 2018'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -450,37 +390,37 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Thomas Lopez",
+    "name": "THOMAS LOPEZ",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD FOUR'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD FOUR'"
       }
     ],
     "divisions": [
       {
-        "data": "Ward Four",
+        "data": "WARD FOUR",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD FOUR'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD FOUR'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-589-3030",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Office Phone number is explicitly provided.",
+        "llm_confidence_reason": "Office Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -488,23 +428,16 @@
       {
         "data": "LOPEZT@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2016-01-10",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Jan 10 2016'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -512,37 +445,37 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Melbourne Moran, Jr.",
+    "name": "MELBOURNE MORAN, JR.",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN-AT-LARGE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN-AT-LARGE'"
       }
     ],
     "divisions": [
       {
-        "data": "at-large",
+        "data": "AT-LARGE",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN-AT-LARGE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN-AT-LARGE'"
       }
     ],
     "phone_numbers": [
       {
         "data": "1-978-483-0182",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -550,23 +483,16 @@
       {
         "data": "MORANM@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2021-11-02",
+        "data": "2022-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Nov 2 2021'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -574,14 +500,14 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Michael B. O'Brien, Sr.",
+    "name": "MICHAEL B. O'BRIEN, SR",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
@@ -590,7 +516,7 @@
       {
         "data": "vice president board of aldermen",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'VICE PRESIDENT BOARD OF ALDERMEN'."
+        "llm_confidence_reason": "Explicitly stated as 'VICE PRESIDENT BOARD OF ALDERMEN'"
       }
     ],
     "divisions": [],
@@ -598,7 +524,7 @@
       {
         "data": "603-888-8051",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -606,23 +532,16 @@
       {
         "data": "OBRIENM@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2016-01-10",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Jan 10 2016'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -630,11 +549,11 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2027'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
     "name": "Tim Sennott",
@@ -644,23 +563,23 @@
     "images": [],
     "roles": [
       {
-        "data": "alderman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD SEVEN'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD SEVEN'"
       }
     ],
     "divisions": [
       {
-        "data": "Ward Seven",
+        "data": "WARD SEVEN",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD SEVEN'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD SEVEN'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-347-8971",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -668,23 +587,16 @@
       {
         "data": "SENNOTTT@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2023-11-14",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: November 14, 2023'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -692,37 +604,37 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "John Sullivan",
+    "name": "JOHN SULLIVAN",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD NINE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD NINE'"
       }
     ],
     "divisions": [
       {
-        "data": "Ward Nine",
+        "data": "WARD NINE",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD NINE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD NINE'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-365-7785",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -730,23 +642,16 @@
       {
         "data": "SULLIVANJ@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2021-11-02",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Nov 2 2021'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -754,37 +659,37 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Derek Thibeault",
+    "name": "DEREK THIBEAULT",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD EIGHT'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD EIGHT'"
       }
     ],
     "divisions": [
       {
-        "data": "Ward Eight",
+        "data": "WARD EIGHT",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD EIGHT'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD EIGHT'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-305-8046",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -792,23 +697,16 @@
       {
         "data": "THIBEAULTD@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2021-11-02",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Nov 2 2021'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -816,37 +714,37 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Chris Thibodeau",
+    "name": "CHRIS THIBODEAU",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD SIX'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD SIX'"
       }
     ],
     "divisions": [
       {
-        "data": "Ward Six",
+        "data": "WARD SIX",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD SIX'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERMAN WARD SIX'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-565-0594",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -854,23 +752,16 @@
       {
         "data": "THIBODEAUCH@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2023-11-07",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Nov 7 2023'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -878,37 +769,37 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Gloria Timmons",
+    "name": "GLORIA TIMMONS",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "alderwoman",
+        "data": "alderperson",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERWOMAN-AT-LARGE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERWOMAN-AT-LARGE'"
       }
     ],
     "divisions": [
       {
-        "data": "at-large",
+        "data": "AT-LARGE",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'ALDERWOMAN-AT-LARGE'."
+        "llm_confidence_reason": "Explicitly stated as 'ALDERWOMAN-AT-LARGE'"
       }
     ],
     "phone_numbers": [
       {
         "data": "603-521-7988",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -916,23 +807,16 @@
       {
         "data": "TIMMONSG@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2021-11-02",
+        "data": "2022-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Nov 2 2021'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -940,14 +824,14 @@
       {
         "data": "2025-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31, 2025'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   },
   {
-    "name": "Lori Wilshire",
+    "name": "LORI WILSHIRE",
     "sources": [
       "https://www.nashuanh.gov/514/Board-of-Aldermen"
     ],
@@ -956,7 +840,7 @@
       {
         "data": "president board of aldermen",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'PRESIDENT BOARD OF ALDERMEN'."
+        "llm_confidence_reason": "Explicitly stated as 'PRESIDENT BOARD OF ALDERMEN'"
       }
     ],
     "divisions": [],
@@ -964,7 +848,7 @@
       {
         "data": "603-809-4203",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Home Phone number is explicitly provided.",
+        "llm_confidence_reason": "Home Phone number explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -972,23 +856,16 @@
       {
         "data": "WILSHIREL@NASHUANH.GOV",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "websites": [
-      {
-        "data": "https://www.nashuanh.gov/514/Board-of-Aldermen",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The provided link is a general page for the Board of Aldermen, not a specific profile page for the individual, but it's the only link associated.",
-        "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
-        "data": "2008-01-06",
+        "data": "2024-01-09",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Original Appointment Date: Jan 6 2008'.",
+        "llm_confidence_reason": "Oath Administered date used as the start of the current term",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
@@ -996,10 +873,10 @@
       {
         "data": "2027-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'End of Term: Dec 31 2027'.",
+        "llm_confidence_reason": "End of Term date explicitly provided",
         "source": "https://www.nashuanh.gov/514/Board-of-Aldermen"
       }
     ],
-    "updated_at": "2025-07-01T18:19:07Z"
+    "updated_at": "2025-07-01T18:45:42Z"
   }
 ]
