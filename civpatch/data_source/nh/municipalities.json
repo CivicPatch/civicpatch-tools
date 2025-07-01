@@ -282,9 +282,13 @@
       "government_type": "mayor_council",
       "email": "sclancy@cityofportsmouth.com",
       "website": "http://cityofportsmouth.com",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "96afb9261597a5a24c47693ee030f02d",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T19:54:57Z",
+      "meta_hash": "a53214b3a9d54045d877a313f121daf5",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3362900"
     },
     {
