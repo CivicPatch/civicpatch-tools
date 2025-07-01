@@ -128,9 +128,13 @@
       "government_type": "mayor_council",
       "email": "jdevine@salemnh.gov",
       "website": "https://www.salemnh.gov",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "d513c9583e179477a14e93475d36f720",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T18:26:18Z",
+      "meta_hash": "739d08739ade2f9f496e930b4175451c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3301566660"
     },
     {
