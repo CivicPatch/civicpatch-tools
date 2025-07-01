@@ -1,58 +1,53 @@
 [
   {
     "name": "Joe Friedman",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members",
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
     ],
-    "positions": [
-      "Chair",
-      "Town Councilor",
-      "Chair Pro Tem",
-      "Town Council"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General Administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
+        "data": "Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Chair' is explicitly stated next to the person's name and in the image alt text, indicating a direct and unambiguous extraction of the role for this individual. This leads to high confidence in its accuracy and presence in the text for this individual's role. The role is also a target role for extraction as per the schema requirements for municipal roles. The role is also active as of today's date (2025-07-01)."
       },
       {
-        "data": "(603) 868-5571",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "Phone number is listed under a general 'Contact Information' section for 'Town Administration', not specifically for Joe Friedman.",
-        "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
-      }
-    ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Town Councilor' is explicitly stated in the image alt text and implied by the section 'Current Council Members', indicating a direct and unambiguous extraction of the role for this individual. This leads to high confidence in its accuracy and presence in the text for this individual's role. The role is also a target role for extraction as per the schema requirements for municipal roles. The role is also active as of today's date (2025-07-01)."
       },
       {
-        "data": "tselig@ci.durham.nh.us",
-        "llm_confidence": 0.1,
-        "llm_confidence_reason": "Email is listed under a general 'Contact Information' section for 'Town Administration', not specifically for Joe Friedman.",
-        "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
+        "data": "Town Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the page title and body as 'Town Council'."
+      },
+      {
+        "data": "Chair Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as '2024 Elected Chair Pro Tem', indicating a current role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'JOE FRIEDMAN - Town Council', which directly maps to the target role 'council member'."
       }
     ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
     "websites": [
       {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
+        "data": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the current page is a direct profile page for Joe Friedman.",
+        "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
       },
       {
         "data": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the specific page for Joe Friedman.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct page for Joe Friedman's Town Council profile, making it the most relevant website.",
         "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
       }
     ],
@@ -60,13 +55,13 @@
       {
         "data": "2025-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "The start date is explicitly stated as '3/25' in the text, which converts to 2025-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       },
       {
         "data": "2022",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated '2022-Present Durham Town Council'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as '2022-Present Durham Town Council'.",
         "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
       }
     ],
@@ -74,54 +69,39 @@
       {
         "data": "2028-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "The end date is explicitly stated as '3/28' in the text, which converts to 2028-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Eric Lund",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/boc_planning/board-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "positions": [
-      "Chair Pro Tem",
-      "Council Member",
-      "Alt. Town Council Rep"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General Administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
+        "data": "Chair Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Chair Pro Tem' is explicitly stated next to the person's name and in the image alt text, indicating a direct and unambiguous extraction of the role for this individual. This leads to high confidence in its accuracy and presence in the text for this individual's role. The role is also a target role for extraction as per the schema requirements for municipal roles. The role is also active as of today's date (2025-07-01)."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Town Councilor' is explicitly stated in the image alt text and implied by the section 'Current Council Members', indicating a direct and unambiguous extraction of the role for this individual. This leads to high confidence in its accuracy and presence in the text for this individual's role. The role is also a target role for extraction as per the schema requirements for municipal roles. The role is also active as of today's date (2025-07-01)."
       }
     ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2025-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "The start date is explicitly stated as '3/25' in the text, which converts to 2025-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -129,57 +109,34 @@
       {
         "data": "2028-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "The end date is explicitly stated as '3/28' in the text, which converts to 2028-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      },
-      {
-        "data": "2026-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed in the table under 'Term Expiration Date'.",
-        "source": "https://www.ci.durham.nh.us/boc_planning/board-members"
       }
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Wayne Burton",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General Administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Town Councilor' is explicitly stated in the image alt text and implied by the section 'Current Council Members', indicating a direct and unambiguous extraction of the role for this individual. This leads to high confidence in its accuracy and presence in the text for this individual's role. The role is also a target role for extraction as per the schema requirements for municipal roles. The role is also active as of today's date (2025-07-01)."
       }
     ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2023-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "The start date is explicitly stated as '3/23' in the text, which converts to 2023-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -187,51 +144,34 @@
       {
         "data": "2026-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "The end date is explicitly stated as '3/26' in the text, which converts to 2026-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Darrell Ford",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General Administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Town Councilor' is explicitly stated in the image alt text and implied by the section 'Current Council Members', indicating a direct and unambiguous extraction of the role for this individual. This leads to high confidence in its accuracy and presence in the text for this individual's role. The role is also a target role for extraction as per the schema requirements for municipal roles. The role is also active as of today's date (2025-07-01)."
       }
     ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2024-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "The start date is explicitly stated as '3/24' in the text, which converts to 2024-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -239,51 +179,34 @@
       {
         "data": "2027-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "The end date is explicitly stated as '3/27' in the text, which converts to 2027-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Emily Friedrichs",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General Administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Town Councilor' is explicitly stated in the image alt text and implied by the section 'Current Council Members', indicating a direct and unambiguous extraction of the role for this individual. This leads to high confidence in its accuracy and presence in the text for this individual's role. The role is also a target role for extraction as per the schema requirements for municipal roles. The role is also active as of today's date (2025-07-01)."
       }
     ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2023-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "The start date is explicitly stated as '3/23' in the text, which converts to 2023-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -291,53 +214,34 @@
       {
         "data": "2026-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "The end date is explicitly stated as '3/26' in the text, which converts to 2026-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Heather Grant",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/boc_planning/board-members"
+      "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "positions": [
-      "Council Member",
-      "Town Council Rep"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General Administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Town Councilor' is explicitly stated in the image alt text and implied by the section 'Current Council Members', indicating a direct and unambiguous extraction of the role for this individual. This leads to high confidence in its accuracy and presence in the text for this individual's role. The role is also a target role for extraction as per the schema requirements for municipal roles. The role is also active as of today's date (2025-07-01)."
       }
     ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2024-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "The start date is explicitly stated as '3/24' in the text, which converts to 2024-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -345,57 +249,34 @@
       {
         "data": "2027-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "The end date is explicitly stated as '3/27' in the text, which converts to 2027-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      },
-      {
-        "data": "2026-03",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed in the table under 'Term Expiration Date'.",
-        "source": "https://www.ci.durham.nh.us/boc_planning/board-members"
       }
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Sally Needell",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General Administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Town Councilor' is explicitly stated in the image alt text and implied by the section 'Current Council Members', indicating a direct and unambiguous extraction of the role for this individual. This leads to high confidence in its accuracy and presence in the text for this individual's role. The role is also a target role for extraction as per the schema requirements for municipal roles. The role is also active as of today's date (2025-07-01)."
       }
     ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2023-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "The start date is explicitly stated as '3/23' in the text, which converts to 2023-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -403,51 +284,34 @@
       {
         "data": "2026-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "The end date is explicitly stated as '3/26' in the text, which converts to 2026-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Curtis Register",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General Administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Town Councilor' is explicitly stated in the image alt text and implied by the section 'Current Council Members', indicating a direct and unambiguous extraction of the role for this individual. This leads to high confidence in its accuracy and presence in the text for this individual's role. The role is also a target role for extraction as per the schema requirements for municipal roles. The role is also active as of today's date (2025-07-01)."
       }
     ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2024-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "The start date is explicitly stated as '3/24' in the text, which converts to 2024-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -455,51 +319,34 @@
       {
         "data": "2027-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "The end date is explicitly stated as '3/27' in the text, which converts to 2027-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
   },
   {
     "name": "Robin Vogt",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "603-868-5571",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General Administrator's office number, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Town Councilor' is explicitly stated in the image alt text and implied by the section 'Current Council Members', indicating a direct and unambiguous extraction of the role for this individual. This leads to high confidence in its accuracy and presence in the text for this individual's role. The role is also a target role for extraction as per the schema requirements for municipal roles. The role is also active as of today's date (2025-07-01)."
       }
     ],
-    "emails": [
-      {
-        "data": "council@ci.durham.nh.us",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "General council email, not specific to individual.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-        "llm_confidence": 0.5,
-        "llm_confidence_reason": "Page lists all council members, no individual profile page found.",
-        "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      }
-    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
     "start_dates": [
       {
         "data": "2025-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term start date.",
+        "llm_confidence_reason": "The start date is explicitly stated as '3/25' in the text, which converts to 2025-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -507,10 +354,52 @@
       {
         "data": "2028-03",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly listed term end date.",
+        "llm_confidence_reason": "The end date is explicitly stated as '3/28' in the text, which converts to 2028-03. This is a direct extraction with no ambiguity, leading to high confidence in its accuracy and presence in the text for this individual's term. The role is also active as of today's date (2025-07-01).",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-01T20:05:00Z"
+  },
+  {
+    "name": "Todd I. Selig",
+    "sources": [
+      "https://www.ci.durham.nh.us/administration/our-administrator"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Administrator",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Administrator for the Town of Durham'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(603) 868-5571",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The phone number is listed under 'Contact Information' and is the general town number, but it's the only one provided in close proximity to the administrator's contact details.",
+        "source": "https://www.ci.durham.nh.us/administration/our-administrator"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tselig@ci.durham.nh.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.ci.durham.nh.us/administration/our-administrator"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2001",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'has been the Administrator for the Town of Durham since 2001'.",
+        "source": "https://www.ci.durham.nh.us/administration/our-administrator"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-01T20:05:00Z"
   }
 ]
