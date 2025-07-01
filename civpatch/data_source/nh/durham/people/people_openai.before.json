@@ -12,14 +12,14 @@
     "phone_number": null,
     "email": null,
     "website": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
-    "start_date": "2025-03",
+    "start_date": "2022",
     "end_date": "2028-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members",
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
     ],
-    "updated_at": "2025-07-01T20:03:09Z"
+    "updated_at": "2025-07-01T22:58:07Z"
   },
   {
     "name": "Eric Lund",
@@ -36,12 +36,12 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:03:09Z"
+    "updated_at": "2025-07-01T22:58:07Z"
   },
   {
     "name": "Wayne Burton",
     "roles": [
-      "Town Councilor"
+      "Town Council Member"
     ],
     "divisions": [],
     "image": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/wayne_burton.jpg?itok=3Y8Z3fig",
@@ -53,12 +53,12 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:03:09Z"
+    "updated_at": "2025-07-01T22:58:07Z"
   },
   {
     "name": "Darrell Ford",
     "roles": [
-      "Town Councilor"
+      "Town Council Member"
     ],
     "divisions": [],
     "image": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/darrell_ford_3.jpg?itok=oDwivqkM",
@@ -70,12 +70,12 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:03:09Z"
+    "updated_at": "2025-07-01T22:58:07Z"
   },
   {
     "name": "Emily Friedrichs",
     "roles": [
-      "Town Councilor"
+      "Town Council Member"
     ],
     "divisions": [],
     "image": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/emily_friedrichs_cropped_2.jpg?itok=fSc1fxvw",
@@ -87,12 +87,12 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:03:09Z"
+    "updated_at": "2025-07-01T22:58:07Z"
   },
   {
     "name": "Heather Grant",
     "roles": [
-      "Town Councilor"
+      "Town Council Member"
     ],
     "divisions": [],
     "image": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/heather_grant.jpg?itok=3Jd00TJK",
@@ -104,12 +104,12 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:03:09Z"
+    "updated_at": "2025-07-01T22:58:07Z"
   },
   {
     "name": "Sally Needell",
     "roles": [
-      "Town Councilor"
+      "Town Council Member"
     ],
     "divisions": [],
     "image": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/sally_needell.jpg?itok=p2tdpk9P",
@@ -121,12 +121,12 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:03:09Z"
+    "updated_at": "2025-07-01T22:58:07Z"
   },
   {
     "name": "Curtis Register",
     "roles": [
-      "Town Councilor"
+      "Town Council Member"
     ],
     "divisions": [],
     "image": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/curtis_register_2.jpg?itok=JtKq9nGx",
@@ -138,12 +138,12 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:03:09Z"
+    "updated_at": "2025-07-01T22:58:07Z"
   },
   {
     "name": "Robin Vogt",
     "roles": [
-      "Town Councilor"
+      "Town Council Member"
     ],
     "divisions": [],
     "image": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/robin_vogt.jpeg?itok=lczrFPNa",
@@ -155,6 +155,6 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T20:03:09Z"
+    "updated_at": "2025-07-01T22:58:07Z"
   }
 ]
