@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.laconianh.gov/Directory.aspx?DID=37%2F)
+[Skip to Main Content](https://www.laconianh.gov/directory.aspx?did=37%2F)
 
 ![Laconia, NH](https://www.laconianh.gov/ImageRepository/Document?documentID=7235)
 
@@ -20,7 +20,7 @@ Loading
 4. [For Residents](https://www.laconianh.gov/31/For-Residents)
 5. [How Do I...](https://www.laconianh.gov/9/How-Do-I)
 
-![](https://www.laconianh.gov/ImageRepository/Document?documentID=6596)
+![](https://www.laconianh.gov/ImageRepository/Document?documentID=6595)
 
 # City Council
 
