@@ -39,9 +39,10 @@ module Resolvers
       # Example: "David (Narh) Amanor" => []
       # Example: "Abigail Elder => []"
       name = Namae.parse(person_name).first
+
       # given_name has bug with namae. Replace?
       # Kim-Khanh Van turns into given=nil, particle= "Kim-Khanh"
-      given_name = name&.given || name&.particle
+      given_name = (name&.given || name&.particle).split(" ").first
       last_name = name&.family
 
       [given_name, last_name]
