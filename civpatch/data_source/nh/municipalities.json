@@ -147,9 +147,13 @@
       "government_type": "mayor_council",
       "email": "commdev@merrimacknh.gov",
       "website": "http://www.merrimacknh.gov",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "cd1f85e066441db87ff96b1b9160d174",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T18:33:25Z",
+      "meta_hash": "4bc7409b8490539be1315b4bfa747903",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3301147540"
     },
     {

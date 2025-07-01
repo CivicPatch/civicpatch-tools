@@ -1,4 +1,4 @@
-[Skip to main content](https://www.merrimacknh.gov/people/nancy-murphy/)
+[Skip to main content](https://www.merrimacknh.gov/user/4366/contact/)
 
 ![Merrimack NH](https://www.merrimacknh.gov/sites/all/themes/custom/sites/merrimacknh/vts_merrimacknh/logo.png)
 
@@ -159,72 +159,46 @@ Keywords
     - [Voting Registration Information](https://www.sos.nh.gov/elections/register-vote)
     - [Check Your Voter Registration and/or Party Affiliation Status](https://app.sos.nh.gov/viphome)
 
-![Print](https://www.merrimacknh.gov/sites/all/modules/contrib/print/icons/print_icon.png "Print")
+## Primary tabs
+
+- [View](https://www.merrimacknh.gov/users/mmurphy)
+- [Contact(active tab)](https://www.merrimacknh.gov/user/4366/contact)
 
 ## You are here
 
 1. [Home](https://www.merrimacknh.gov) ››
-2. [Town Council](https://www.merrimacknh.gov/town-council)
+2. [mmurphy](https://www.merrimacknh.gov/users/mmurphy)
 
-# Nancy Murphy
+# Contact Mackenzie Murphy
 
-![Nancy Murphy](https://www.merrimacknh.gov/sites/g/files/vyhlif3456/f/styles/news_image/public/people/nancy_murphy_2021_0.jpg?itok=OFsoOo6C)
+Your name *
 
-E-mail:
+Your e-mail address *
 
-[Contact Nancy Murphy](https://www.merrimacknh.gov/user/4351/contact)
+To [mmurphy](https://www.merrimacknh.gov/users/mmurphy "View user profile.")
 
-Phone: 
+Subject *
 
-(603) 424-0254
+Message *
 
- **Address:** 20 Brenda Lane
+Attachments
 
-### Board Memberships
+Files must be less than **2 MB**.  
+Allowed file types: **txt doc pdf docx jpg gif png**.
 
-Board/CommitteeJob titleMembership Status
+Attachment #1
 
-Board/CommitteeJob titleMembership Status
+Attachment #2
 
-Commission on the Environmental and Public Health Impacts of Perfluorinated Chemicals - Town of Merrimack Rep.
+Attachment #3
 
-Active Membership
+CAPTCHA
 
-[Town Council](https://www.merrimacknh.gov/town-council)
+This question is for testing whether or not you are a human visitor and to prevent automated spam submissions.
 
-Councilor (Term Expires 4/2027)
-
-Active Membership
-
-- [Public Hearings / Legal Notices](https://www.merrimacknh.gov/town-council/pages/public-hearings-legal-notices)
-- [Rules of Procedure](https://www.merrimacknh.gov/town-council/files/rules-of-procedure)
-- [Town Code](https://www.merrimacknh.gov/town-council/links/town-code)
-- [Town Council Contact Sheet](https://www.merrimacknh.gov/town-council/pages/town-council-contact-sheet)
-- [Town Council Meeting Agenda Request Form](https://www.merrimacknh.gov/town-council/files/town-council-meeting-agenda-request-form)
-
-## Contact Info
-
-Phone:
-
-(603) 424-2331
-
-Fax:
-
-(603) 424-0461
-
-Address:
-
-Town Council Office
-
-6 Baboosic Lake Road
-
-Merrimack, NH 03054
-
-United States
-
-See map: [Google Maps](https://maps.google.com/?q=6%20Baboosic%20Lake%20Road%2C%20Merrimack%2C%20NH%2C%2003054%2C%20us)
+Leave this field blank
 
 Merrimack Town Hall, 6 Baboosic Lake Road, Merrimack, NH 03054  
 [Website Disclaimer](https://www.merrimacknh.gov/website-disclaimer-and-privacy-policy)     [Government Websites by CivicPlus ®](https://www.civicplus.com)
 
-- [Login](https://www.merrimacknh.gov/user/login?current=node%2F63061)
+- [Login](https://www.merrimacknh.gov/user/login?current=user%2F4366%2Fcontact)
