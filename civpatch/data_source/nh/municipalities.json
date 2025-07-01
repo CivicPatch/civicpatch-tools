@@ -217,9 +217,13 @@
       "government_type": "select_board",
       "email": "smalizia@hudsonnh.gov",
       "website": "http://www.hudsonnh.gov",
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "976ff2c1f3d0afe86acf1e5fc74219df",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-01T18:37:15Z",
+      "meta_hash": "d28a3f9d7d529e977ad4a49675477180",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3301137940"
     },
     {
