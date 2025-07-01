@@ -84,6 +84,7 @@ government_types:
       - role: council member
         aliases:
           - city councilor
+          - town councilor
           - council member at-large
           - councilmember
           - councilwoman

@@ -2,50 +2,52 @@
   {
     "name": "Lori Radke",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Chair"
     ],
-    "updated_at": "2025-07-01T19:50:31Z"
+    "updated_at": "2025-07-01T22:24:59Z"
   },
   {
     "name": "Phil Greazzo",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Vice Chair"
     ],
-    "updated_at": "2025-07-01T19:50:31Z"
+    "updated_at": "2025-07-01T22:24:59Z"
   },
   {
     "name": "William Carter",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T19:50:31Z"
+    "updated_at": "2025-07-01T22:24:59Z"
   },
   {
     "name": "Gail Levesque",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T19:50:31Z"
+    "updated_at": "2025-07-01T22:24:59Z"
   },
   {
     "name": "Kathleen Bemiss",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T19:50:31Z"
+    "updated_at": "2025-07-01T22:24:59Z"
   },
   {
     "name": "Michael Strand",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T19:50:31Z"
+    "updated_at": "2025-07-01T22:24:59Z"
   },
   {
     "name": "Becky Soule",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-01T19:50:31Z"
+    "updated_at": "2025-07-01T22:24:59Z"
   }
 ]
