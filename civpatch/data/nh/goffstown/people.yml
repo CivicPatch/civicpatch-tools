@@ -1,69 +1,82 @@
 ---
 - name: Peter Georgantas
-  positions:
-  - Chair
-  - Select Board Member
+  roles:
+  - Select Board Chair
+  divisions:
+  image:
+  cdn_image:
   email: PGeorgantas@GoffstownNH.gov
   phone_number: "(603) 384-6261"
-  website: https://www.goffstownnh.gov/381/Select-Board/
+  website:
   start_date: '2023'
   end_date: '2026'
-  image:
-  source_image:
   sources:
   - https://www.goffstownnh.gov/381/Select-Board
-  - https://www.goffstownnh.gov/381/Select-Board/
-  updated_at: '2025-05-08'
-- name: Mark T. Lemay
-  positions:
-  - Vice Chair
-  - Select Board Member
+  updated_at: '2025-07-01T19:54:06Z'
+- name: Mark Lemay
+  roles:
+  - Select Board Vice Chair
+  divisions:
+  image:
+  cdn_image:
   email: Mark.Lemay@GoffstownNH.gov
   phone_number: "(603) 305-0507"
-  website: https://www.goffstownnh.gov/381/Select-Board/
+  website:
   start_date: '2024'
   end_date: '2027'
-  image:
-  source_image:
   sources:
   - https://www.goffstownnh.gov/381/Select-Board
-  updated_at: '2025-05-08'
+  updated_at: '2025-07-01T19:54:06Z'
+- name: Mark T. Lemay
+  roles:
+  - Select Board Vice Chair
+  divisions:
+  image:
+  cdn_image:
+  email: Mark.Lemay@GoffstownNH.gov
+  phone_number: "(603) 305-0507"
+  website:
+  start_date: '2024'
+  end_date: '2027'
+  sources:
+  - https://www.goffstownnh.gov/381/Select-Board
+  updated_at: '2025-07-01T19:54:06Z'
 - name: Jim Craig
-  positions:
-  - Select Board Member
+  roles: []
+  divisions:
+  image:
+  cdn_image:
   email: Jim.Craig@GoffstownNH.gov
   phone_number: "(603) 361-4253"
-  website: https://www.goffstownnh.gov/381/Select-Board/
+  website:
   start_date: '2024'
   end_date: '2027'
-  image:
-  source_image:
   sources:
   - https://www.goffstownnh.gov/381/Select-Board
-  updated_at: '2025-05-08'
+  updated_at: '2025-07-01T19:54:06Z'
 - name: Joshua Douglas
-  positions:
-  - Select Board Member
+  roles: []
+  divisions:
+  image:
+  cdn_image:
   email: Joshua.Douglas@GoffstownNH.gov
   phone_number:
-  website: https://www.goffstownnh.gov/381/Select-Board/
+  website:
   start_date: '2025'
   end_date: '2028'
-  image:
-  source_image:
   sources:
   - https://www.goffstownnh.gov/381/Select-Board
-  updated_at: '2025-05-08'
+  updated_at: '2025-07-01T19:54:06Z'
 - name: Richard Manzo
-  positions:
-  - Select Board Member
+  roles: []
+  divisions:
+  image:
+  cdn_image:
   email: Richard.Manzo@GoffstownNH.gov
   phone_number: "(603) 289-5929"
-  website: https://www.goffstownnh.gov/381/Select-Board/
+  website:
   start_date: '2025'
   end_date: '2028'
-  image:
-  source_image:
   sources:
   - https://www.goffstownnh.gov/381/Select-Board
-  updated_at: '2025-05-08'
+  updated_at: '2025-07-01T19:54:06Z'
