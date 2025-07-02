@@ -2022,7 +2022,14 @@
       "government_type": "select_board",
       "email": "msawyer@ossipee.org",
       "website": "http://www.ossipee.org",
-      "geoid": "3300358740"
+      "geoid": "3300358740",
+      "meta_updated_at": "2025-07-02T17:36:22Z",
+      "meta_hash": "76b2ea12b5a8cc7659191897837c7d6d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Strafford",
