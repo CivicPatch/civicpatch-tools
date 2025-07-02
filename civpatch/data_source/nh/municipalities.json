@@ -1787,7 +1787,14 @@
       "government_type": "select_board",
       "email": "hcarlson@fremont.nh.gov",
       "website": "http://www.Fremont.NH.gov",
-      "geoid": "3301527940"
+      "geoid": "3301527940",
+      "meta_updated_at": "2025-07-02T17:10:51Z",
+      "meta_hash": "39cd0d1470397280032577dd87c8459d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Allenstown",
