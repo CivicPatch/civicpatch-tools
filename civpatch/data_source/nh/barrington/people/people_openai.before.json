@@ -1,84 +1,104 @@
 [
   {
-    "name": "Tracy Hardekopf",
-    "positions": [
-      "Chair",
+    "name": "Morgan Carter",
+    "roles": [
       "Select Board Member"
     ],
-    "image": "https://www.barrington.nh.gov/sites/g/files/vyhlif2766/f/styles/group_main_image/public/departments/2025_select_board_composite.png?itok=zlqqKnSR",
+    "divisions": [],
+    "image": null,
     "phone_number": null,
-    "email": "thardekopf@barrington.nh.gov",
-    "website": "https://www.barrington.nh.gov/office-select-board-select-board",
-    "start_date": null,
+    "email": null,
+    "website": null,
+    "start_date": "2023",
     "end_date": "2026",
     "sources": [
-      "https://www.barrington.nh.gov/office-select-board-select-board"
+      "https://www.barrington.nh.gov/2023warrant"
     ],
-    "updated_at": "2025-05-27"
+    "updated_at": "2025-07-02T03:23:14Z"
+  },
+  {
+    "name": "Kenneth Grant",
+    "roles": [
+      "Select Board Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2023",
+    "end_date": "2026",
+    "sources": [
+      "https://www.barrington.nh.gov/2023warrant"
+    ],
+    "updated_at": "2025-07-02T03:23:14Z"
+  },
+  {
+    "name": "Tracy Hardekopf",
+    "roles": [
+      "Select Board Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2023",
+    "end_date": "2026",
+    "sources": [
+      "https://www.barrington.nh.gov/2023warrant"
+    ],
+    "updated_at": "2025-07-02T03:23:14Z"
+  },
+  {
+    "name": "Michael D. Houst",
+    "roles": [
+      "Select Board Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2023",
+    "end_date": "2026",
+    "sources": [
+      "https://www.barrington.nh.gov/2023warrant"
+    ],
+    "updated_at": "2025-07-02T03:23:14Z"
+  },
+  {
+    "name": "Robert W. Russell",
+    "roles": [
+      "Select Board Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2023",
+    "end_date": "2026",
+    "sources": [
+      "https://www.barrington.nh.gov/2023warrant"
+    ],
+    "updated_at": "2025-07-02T03:23:14Z"
   },
   {
     "name": "James Saccoccia",
-    "positions": [
-      "Vice-Chair",
+    "roles": [
       "Select Board Member"
     ],
-    "image": "https://www.barrington.nh.gov/sites/g/files/vyhlif2766/f/styles/group_main_image/public/departments/2025_select_board_composite.png?itok=zlqqKnSR",
+    "divisions": [],
+    "image": null,
     "phone_number": null,
-    "email": "jsaccoccia@barrington.nh.gov",
-    "website": "https://www.barrington.nh.gov/office-select-board-select-board",
-    "start_date": null,
+    "email": null,
+    "website": null,
+    "start_date": "2023",
     "end_date": "2026",
     "sources": [
-      "https://www.barrington.nh.gov/office-select-board-select-board"
+      "https://www.barrington.nh.gov/2023warrant"
     ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Dannen Mannschreck",
-    "positions": [
-      "Select Board Member"
-    ],
-    "image": "https://www.barrington.nh.gov/sites/g/files/vyhlif2766/f/styles/group_main_image/public/departments/2025_select_board_composite.png?itok=zlqqKnSR",
-    "phone_number": null,
-    "email": "dmannschreck@barrington.nh.gov",
-    "website": "https://www.barrington.nh.gov/office-select-board-select-board",
-    "start_date": null,
-    "end_date": "2027",
-    "sources": [
-      "https://www.barrington.nh.gov/office-select-board-select-board"
-    ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Joyce Cappiello",
-    "positions": [
-      "Select Board Member"
-    ],
-    "image": "https://www.barrington.nh.gov/sites/g/files/vyhlif2766/f/styles/group_main_image/public/departments/2025_select_board_composite.png?itok=zlqqKnSR",
-    "phone_number": null,
-    "email": "jcappiello@barrington.nh.gov",
-    "website": "https://www.barrington.nh.gov/office-select-board-select-board",
-    "start_date": null,
-    "end_date": "2028",
-    "sources": [
-      "https://www.barrington.nh.gov/office-select-board-select-board"
-    ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Alexandra Simocko",
-    "positions": [
-      "Select Board Member"
-    ],
-    "image": "https://www.barrington.nh.gov/sites/g/files/vyhlif2766/f/styles/group_main_image/public/departments/2025_select_board_composite.png?itok=zlqqKnSR",
-    "phone_number": null,
-    "email": "asimocko@barrington.nh.gov",
-    "website": "https://www.barrington.nh.gov/office-select-board-select-board",
-    "start_date": null,
-    "end_date": "2028",
-    "sources": [
-      "https://www.barrington.nh.gov/office-select-board-select-board"
-    ],
-    "updated_at": "2025-05-27"
+    "updated_at": "2025-07-02T03:23:14Z"
   }
 ]
