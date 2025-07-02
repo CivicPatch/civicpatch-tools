@@ -1967,7 +1967,14 @@
       "government_type": "select_board",
       "email": "townmanager@enfield.nh.us",
       "website": "http://www.enfield.nh.us",
-      "geoid": "3300924340"
+      "geoid": "3300924340",
+      "meta_updated_at": "2025-07-02T17:36:19Z",
+      "meta_hash": "8baf591b79013b25666a040437838fbb",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Danville",
