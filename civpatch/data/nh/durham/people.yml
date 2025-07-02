@@ -2,21 +2,19 @@
 - name: Joe Friedman
   roles:
   - Chair
-  - Chair Pro Tem
   - Council Member
   divisions:
   image: https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/friedman_joe_-_town_council.jpg?itok=3pM9_FXu
   cdn_image: https://cdn.civicpatch.org/open-data/nh/durham/images/b6c59932870ab27db346b2078d7724774e60aa3c8f6863d07076cd5a84692a7f.jpg
   email: council@ci.durham.nh.us
   phone_number:
-  website: https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor
+  website: https://www.ci.durham.nh.us/administration/joe-friedman-town-council
   start_date: 2025-03
   end_date: 2028-03
   sources:
   - https://www.ci.durham.nh.us/towncouncil/current-council-members
-  - https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor
   - https://www.ci.durham.nh.us/administration/joe-friedman-town-council
-  updated_at: '2025-07-01T22:58:33Z'
+  updated_at: '2025-07-02T02:19:05Z'
 - name: Eric Lund
   roles:
   - Chair Pro Tem
@@ -30,7 +28,7 @@
   end_date: 2028-03
   sources:
   - https://www.ci.durham.nh.us/towncouncil/current-council-members
-  updated_at: '2025-07-01T22:58:33Z'
+  updated_at: '2025-07-02T02:19:05Z'
 - name: Curtis Register
   roles:
   - Council Member
@@ -44,7 +42,7 @@
   end_date: 2027-03
   sources:
   - https://www.ci.durham.nh.us/towncouncil/current-council-members
-  updated_at: '2025-07-01T22:58:33Z'
+  updated_at: '2025-07-02T02:19:05Z'
 - name: Darrell Ford
   roles:
   - Council Member
@@ -58,7 +56,7 @@
   end_date: 2027-03
   sources:
   - https://www.ci.durham.nh.us/towncouncil/current-council-members
-  updated_at: '2025-07-01T22:58:33Z'
+  updated_at: '2025-07-02T02:19:05Z'
 - name: Emily Friedrichs
   roles:
   - Council Member
@@ -72,7 +70,7 @@
   end_date: 2026-03
   sources:
   - https://www.ci.durham.nh.us/towncouncil/current-council-members
-  updated_at: '2025-07-01T22:58:33Z'
+  updated_at: '2025-07-02T02:19:05Z'
 - name: Heather Grant
   roles:
   - Council Member
@@ -86,7 +84,7 @@
   end_date: 2027-03
   sources:
   - https://www.ci.durham.nh.us/towncouncil/current-council-members
-  updated_at: '2025-07-01T22:58:33Z'
+  updated_at: '2025-07-02T02:19:05Z'
 - name: Robin Vogt
   roles:
   - Council Member
@@ -100,7 +98,7 @@
   end_date: 2028-03
   sources:
   - https://www.ci.durham.nh.us/towncouncil/current-council-members
-  updated_at: '2025-07-01T22:58:33Z'
+  updated_at: '2025-07-02T02:19:05Z'
 - name: Sally Needell
   roles:
   - Council Member
@@ -114,7 +112,7 @@
   end_date: 2026-03
   sources:
   - https://www.ci.durham.nh.us/towncouncil/current-council-members
-  updated_at: '2025-07-01T22:58:33Z'
+  updated_at: '2025-07-02T02:19:05Z'
 - name: Wayne Burton
   roles:
   - Council Member
@@ -128,4 +126,4 @@
   end_date: 2026-03
   sources:
   - https://www.ci.durham.nh.us/towncouncil/current-council-members
-  updated_at: '2025-07-01T22:58:33Z'
+  updated_at: '2025-07-02T02:19:05Z'

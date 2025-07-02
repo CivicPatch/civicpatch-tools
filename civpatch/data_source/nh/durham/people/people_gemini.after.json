@@ -3,22 +3,20 @@
     "name": "Joe Friedman",
     "roles": [
       "Chair",
-      "Chair Pro Tem",
       "Council Member"
     ],
     "divisions": [],
     "image": null,
     "phone_number": null,
     "email": "council@ci.durham.nh.us",
-    "website": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
+    "website": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council",
     "start_date": "2025-03",
     "end_date": "2028-03",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Eric Lund",
@@ -36,7 +34,7 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Wayne Burton",
@@ -53,7 +51,7 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Darrell Ford",
@@ -70,7 +68,7 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Emily Friedrichs",
@@ -87,7 +85,7 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Heather Grant",
@@ -104,7 +102,7 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Sally Needell",
@@ -121,7 +119,7 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Curtis Register",
@@ -138,7 +136,7 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Robin Vogt",
@@ -155,6 +153,6 @@
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members"
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   }
 ]
