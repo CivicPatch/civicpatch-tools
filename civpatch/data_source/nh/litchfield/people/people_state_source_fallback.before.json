@@ -1,37 +1,37 @@
 [
   {
-    "name": "John Brunelle",
-    "positions": [
+    "name": "F. Robert Leary",
+    "roles": [
       "Selectman"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:05:20Z"
+  },
+  {
+    "name": "Kimberly Queenan",
+    "roles": [
+      "Selectman"
+    ],
+    "updated_at": "2025-07-02T03:05:20Z"
+  },
+  {
+    "name": "John Brunelle",
+    "roles": [
+      "Selectman"
+    ],
+    "updated_at": "2025-07-02T03:05:20Z"
   },
   {
     "name": "G. Stephen Gannon",
-    "positions": [
+    "roles": [
       "Selectman"
     ],
-    "updated_at": "2025-05-29"
-  },
-  {
-    "name": "F. Robert Leary",
-    "positions": [
-      "Selectman"
-    ],
-    "updated_at": "2025-05-29"
-  },
-  {
-    "name": "Kim Queenan",
-    "positions": [
-      "Selectman"
-    ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:05:20Z"
   },
   {
     "name": "Dianne Plansky",
-    "positions": [
+    "roles": [
       "Selectman"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:05:20Z"
   }
 ]

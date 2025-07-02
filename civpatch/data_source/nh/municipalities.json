@@ -792,9 +792,13 @@
       "email": "townhall@litchfieldnh.gov",
       "website": "http://litchfieldnh.gov",
       "geoid": "3301142260",
-      "meta_updated_at": "2025-05-29",
-      "meta_hash": "b3f3b9369a0c66015402b6d5b689e675",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T03:07:41Z",
+      "meta_hash": "a99adcca3dbe5f47b17dd890765b52ba",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Seabrook",
