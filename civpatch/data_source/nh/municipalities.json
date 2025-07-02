@@ -570,9 +570,13 @@
       "email": "mmears@somersworthnh.gov",
       "website": "http://www.somersworthnh.gov",
       "geoid": "3369940",
-      "meta_updated_at": "2025-05-27",
-      "meta_hash": "1206f8ddb33d2ee21d8f3d3825ac2bb4",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T02:37:32Z",
+      "meta_hash": "4676a9e553e223755bc006b25faa5193",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Amherst",
