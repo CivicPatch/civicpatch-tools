@@ -551,9 +551,13 @@
       "email": "TownMgr@HanoverNH.org",
       "website": "http://www.hanovernh.org",
       "geoid": "3300933860",
-      "meta_updated_at": "2025-05-27",
-      "meta_hash": "cdb443391aa6d4f1194f047a218ffde6",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T02:32:36Z",
+      "meta_hash": "2d67294431aff8bb16b5d6c8550387b6",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Somersworth",
