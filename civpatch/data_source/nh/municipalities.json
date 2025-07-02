@@ -1302,7 +1302,14 @@
       "government_type": "select_board",
       "email": "townadministrator@hennikernh.gov",
       "website": "http://www.henniker.org",
-      "geoid": "3301335540"
+      "geoid": "3301335540",
+      "meta_updated_at": "2025-07-02T16:23:03Z",
+      "meta_hash": "74eb8338b4d2f7255a49c8c018849abb",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "New Boston",
