@@ -2091,7 +2091,14 @@
       "government_type": "select_board",
       "email": "admin@pittsfieldnh.gov",
       "website": "http://www.pittsfieldnh.gov",
-      "geoid": "3301361940"
+      "geoid": "3301361940",
+      "meta_updated_at": "2025-07-02T17:39:50Z",
+      "meta_hash": "f3c73ef07b1159f05871dfc6f1046c57",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Greenland",
