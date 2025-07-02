@@ -1322,7 +1322,14 @@
       "government_type": "select_board",
       "email": "townadmin@townofauburnnh.com",
       "website": "http://www.auburnnh.us",
-      "geoid": "3301502820"
+      "geoid": "3301502820",
+      "meta_updated_at": "2025-07-02T03:43:13Z",
+      "meta_hash": "e4a0908cf883bc3e0ea990f9a46fbe38",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hillsborough",
