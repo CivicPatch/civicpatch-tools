@@ -17,7 +17,7 @@ Search
 
 <!--THE END-->
 
-![](https://litchfieldnh.gov/ImageRepository/Document?documentID=331)
+![](https://litchfieldnh.gov/ImageRepository/Document?documentID=69)
 
 1. [Home](https://litchfieldnh.gov)
 2. [Government](https://litchfieldnh.gov/27/Government)
