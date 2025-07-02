@@ -1665,7 +1665,14 @@
       "government_type": "select_board",
       "email": "townadmin@northfieldnh.gov",
       "website": "http://www.northfieldnh.org",
-      "geoid": "3301354260"
+      "geoid": "3301354260",
+      "meta_updated_at": "2025-07-02T16:44:56Z",
+      "meta_hash": "a365aaf50fa2e737ac9c49f5ecf382a2",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Deerfield",
