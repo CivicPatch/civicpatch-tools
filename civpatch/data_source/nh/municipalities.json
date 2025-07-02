@@ -2114,7 +2114,14 @@
       "government_type": "select_board",
       "email": "psanderson@greenland-nh.com",
       "website": "http://www.greenland-nh.com",
-      "geoid": "3301531700"
+      "geoid": "3301531700",
+      "meta_updated_at": "2025-07-02T17:40:52Z",
+      "meta_hash": "99f8e16733fa96ad13f8eeffc2d35985",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Candia",
