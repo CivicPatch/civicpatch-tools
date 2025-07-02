@@ -811,9 +811,13 @@
       "email": "wmanzi@seabrooknh.org",
       "website": "http://www.seabrooknh.info",
       "geoid": "3301568260",
-      "meta_updated_at": "2025-05-29",
-      "meta_hash": "4642be256aa7bb5ec0198192d22b7ccc",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T03:24:10Z",
+      "meta_hash": "e45a346a333f5e557aa5d9f1a5752ea5",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hollis",
