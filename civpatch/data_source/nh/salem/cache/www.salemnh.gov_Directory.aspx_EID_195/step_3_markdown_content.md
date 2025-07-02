@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.salemnh.gov/directory.aspx?EID=195%2F)
+[Skip to Main Content](https://www.salemnh.gov/Directory.aspx?EID=195%2F)
 
 ![Salem, New Hampshire Home](https://www.salemnh.gov/ImageRepository/Document?documentID=70)
 
