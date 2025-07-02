@@ -1,72 +1,72 @@
 [
   {
     "name": "Desiree McLaughlin",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Ted Starkweather",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Delaney Carrier",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Timothy Johnston",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Olivia Zink",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Thomas Boyce",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Susan Hallett-Cook",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-27"
+    "updated_at": "2025-07-02T03:05:21Z"
   },
   {
     "name": "Leigh Webb",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-05-27"
+    "updated_at": "2025-07-02T03:05:21Z"
   },
   {
     "name": "Al Warner",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-05-27"
+    "updated_at": "2025-07-02T03:05:21Z"
   },
   {
     "name": "Ed Prive",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-05-27"
+    "updated_at": "2025-07-02T03:05:21Z"
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-02T03:05:21Z"
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-02T03:05:21Z"
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-02T03:05:21Z"
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-02T03:05:21Z"
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-02T03:05:21Z"
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-02T03:05:21Z"
   }
 ]
