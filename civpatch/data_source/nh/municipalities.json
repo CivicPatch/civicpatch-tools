@@ -728,8 +728,8 @@
       "email": "administration@barrington.nh.gov",
       "website": "http://www.barrington.nh.gov",
       "geoid": "3301703460",
-      "meta_updated_at": "2025-07-02T03:24:02Z",
-      "meta_hash": "0c15eb3778c766e0d97239c7ab918795",
+      "meta_updated_at": "2025-07-02T03:32:03Z",
+      "meta_hash": "b25efa9673ede6e21a42291c3a82fc9d",
       "meta_sources": [
         "state_source",
         "gemini",
