@@ -770,9 +770,13 @@
       "email": "sally.theriault@comcast.net",
       "website": "http://www.hampsteadnh.us",
       "geoid": "3301532900",
-      "meta_updated_at": "2025-05-27",
-      "meta_hash": "329f1a26ece446ae5fc557ec4c33d626",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T03:07:26Z",
+      "meta_hash": "5cba54fe81da850c6ab131f3eae42461",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Franklin",
