@@ -23,13 +23,13 @@
       {
         "data": "603-384-6261",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name and role.",
+        "llm_confidence_reason": "Phone number listed directly under his name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       },
       {
         "data": "603-384-6261",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under his name.",
+        "llm_confidence_reason": "Phone number listed directly under name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
@@ -37,13 +37,13 @@
       {
         "data": "PGeorgantas@GoffstownNH.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly next to name.",
+        "llm_confidence_reason": "Email listed directly next to his name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       },
       {
         "data": "PGeorgantas@GoffstownNH.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly next to his name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address listed directly next to name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
@@ -76,7 +76,7 @@
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
-    "updated_at": "2025-07-01T22:38:30Z"
+    "updated_at": "2025-07-02T01:55:12Z"
   },
   {
     "name": "Mark T. Lemay",
@@ -102,13 +102,13 @@
       {
         "data": "603-305-0507",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name and role.",
+        "llm_confidence_reason": "Phone number listed directly under his name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       },
       {
         "data": "603-305-0507",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under his name.",
+        "llm_confidence_reason": "Phone number listed directly under name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
@@ -116,13 +116,13 @@
       {
         "data": "Mark.Lemay@GoffstownNH.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly next to name.",
+        "llm_confidence_reason": "Email listed directly next to his name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       },
       {
         "data": "Mark.Lemay@GoffstownNH.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly next to his name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address listed directly next to name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
@@ -155,7 +155,7 @@
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
-    "updated_at": "2025-07-01T22:38:30Z"
+    "updated_at": "2025-07-02T01:55:12Z"
   },
   {
     "name": "Jim Craig",
@@ -167,12 +167,12 @@
     "roles": [
       {
         "data": "Select Board Member",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as Member of the Select Board."
       },
       {
         "data": "Select Board Member",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Listed as Member of the Select Board."
       }
     ],
@@ -181,13 +181,13 @@
       {
         "data": "603-361-4253",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name and role.",
+        "llm_confidence_reason": "Phone number listed directly under his name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       },
       {
         "data": "603-361-4253",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under his name.",
+        "llm_confidence_reason": "Phone number listed directly under name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
@@ -195,13 +195,13 @@
       {
         "data": "Jim.Craig@GoffstownNH.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly next to name.",
+        "llm_confidence_reason": "Email listed directly next to his name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       },
       {
         "data": "Jim.Craig@GoffstownNH.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly next to his name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address listed directly next to name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
@@ -234,7 +234,7 @@
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
-    "updated_at": "2025-07-01T22:38:30Z"
+    "updated_at": "2025-07-02T01:55:12Z"
   },
   {
     "name": "Joshua Douglas",
@@ -246,12 +246,12 @@
     "roles": [
       {
         "data": "Select Board Member",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as Member of the Select Board."
       },
       {
         "data": "Select Board Member",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Listed as Member of the Select Board."
       }
     ],
@@ -261,13 +261,13 @@
       {
         "data": "Joshua.Douglas@GoffstownNH.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly next to name.",
+        "llm_confidence_reason": "Email listed directly next to his name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       },
       {
         "data": "Joshua.Douglas@GoffstownNH.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly next to his name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address listed directly next to name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
@@ -300,7 +300,7 @@
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
-    "updated_at": "2025-07-01T22:38:30Z"
+    "updated_at": "2025-07-02T01:55:12Z"
   },
   {
     "name": "Richard Manzo",
@@ -312,12 +312,12 @@
     "roles": [
       {
         "data": "Select Board Member",
-        "llm_confidence": 0.98,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as Member of the Select Board."
       },
       {
         "data": "Select Board Member",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.98,
         "llm_confidence_reason": "Listed as Member of the Select Board."
       }
     ],
@@ -326,13 +326,13 @@
       {
         "data": "603-289-5929",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under name and role.",
+        "llm_confidence_reason": "Phone number listed directly under his name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       },
       {
         "data": "603-289-5929",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under his name.",
+        "llm_confidence_reason": "Phone number listed directly under name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
@@ -340,13 +340,13 @@
       {
         "data": "Richard.Manzo@GoffstownNH.gov",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly next to name.",
+        "llm_confidence_reason": "Email listed directly next to his name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       },
       {
         "data": "Richard.Manzo@GoffstownNH.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly next to his name.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email address listed directly next to name.",
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
@@ -379,6 +379,6 @@
         "source": "https://www.goffstownnh.gov/381/Select-Board"
       }
     ],
-    "updated_at": "2025-07-01T22:38:30Z"
+    "updated_at": "2025-07-02T01:55:12Z"
   }
 ]
