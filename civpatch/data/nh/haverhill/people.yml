@@ -56,7 +56,8 @@
   - https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR
   updated_at: '2025-07-02T17:12:01Z'
 - name: Rod O'Shana
-  roles: []
+  roles:
+  - Interim Chair
   divisions:
   image:
   cdn_image:
