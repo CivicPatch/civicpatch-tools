@@ -1352,7 +1352,14 @@
       "government_type": "select_board",
       "email": "Not Available",
       "website": "http://www.town.hillsborough.nh.us",
-      "geoid": "3301136180"
+      "geoid": "3301136180",
+      "meta_updated_at": "2025-07-02T03:44:31Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hopkinton",
