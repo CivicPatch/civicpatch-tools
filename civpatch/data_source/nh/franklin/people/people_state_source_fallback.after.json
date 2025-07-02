@@ -1,72 +1,49 @@
 [
   {
     "name": "Desiree McLaughlin",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Al Warner",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Delaney Carrier",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Ed Prive",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-27"
+    "updated_at": "2025-07-02T03:05:21Z",
+    "divisions": []
   },
   {
     "name": "Leigh Webb",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-05-27"
+    "updated_at": "2025-07-02T03:05:21Z",
+    "divisions": []
   },
   {
-    "name": "Olivia Zink",
-    "positions": [
+    "name": "Al Warner",
+    "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-05-27"
+    "updated_at": "2025-07-02T03:05:21Z",
+    "divisions": []
   },
   {
-    "name": "Susan Hallett-Cook",
-    "positions": [
+    "name": "Ed Prive",
+    "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-05-27"
+    "updated_at": "2025-07-02T03:05:21Z",
+    "divisions": []
   },
   {
-    "name": "Ted Starkweather",
-    "positions": [
+    "name": null,
+    "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Thomas Boyce",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-27"
-  },
-  {
-    "name": "Timothy Johnston",
-    "positions": [
-      "Council Member"
-    ],
-    "updated_at": "2025-05-27"
+    "updated_at": "2025-07-02T03:05:21Z",
+    "divisions": [],
+    "images": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "sources": []
   }
 ]
