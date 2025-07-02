@@ -1,6 +1,24 @@
 [
   {
-    "name": "Charles Turcotte",
+    "name": "Franklin W. Sterling",
+    "roles": [
+      "Select Board Chair"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.townofjaffrey.com/directory.aspx?eid=81",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.townofjaffrey.com/558/Select-Board",
+      "https://www.townofjaffrey.com/directory.aspx?eid=81"
+    ],
+    "updated_at": "2025-07-02T16:53:57Z"
+  },
+  {
+    "name": "Charlie Turcotte",
     "roles": [
       "Select Board Member"
     ],
@@ -8,12 +26,31 @@
     "image": null,
     "phone_number": null,
     "email": null,
-    "website": null,
+    "website": "https://www.townofjaffrey.com/directory.aspx?eid=82",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.townofjaffrey.com/516/Cemetery-Committee"
+      "https://www.townofjaffrey.com/558/Select-Board",
+      "https://www.townofjaffrey.com/directory.aspx?eid=82"
     ],
-    "updated_at": "2025-07-02T16:41:44Z"
+    "updated_at": "2025-07-02T16:53:57Z"
+  },
+  {
+    "name": "Andrew Lawn",
+    "roles": [
+      "Select Board Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.townofjaffrey.com/directory.aspx?eid=83",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.townofjaffrey.com/558/Select-Board",
+      "https://www.townofjaffrey.com/directory.aspx?eid=83"
+    ],
+    "updated_at": "2025-07-02T16:53:57Z"
   }
 ]
