@@ -3,26 +3,19 @@
     "name": "Joe Friedman",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
     ],
     "images": [
       {
         "data": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/friedman_joe_-_town_council.jpg?itok=3pM9_FXu",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is directly next to the name and role.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       },
       {
-        "data": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_primary/public/imageattachments/administration/page/73350/joe_friedman_cropped.jpg?itok=TIpv6_g3",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is a portrait near the name and role of Joe Friedman.",
-        "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
-      },
-      {
         "data": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_primary/public/imageattachments/administration/page/69511/friedman_joe_-_town_council.jpg?itok=oaxjZoHV",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is a portrait near the name and title indicating Joe Friedman as Town Council member.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image is a headshot near Joe Friedman's name and role on the page.",
         "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
       }
     ],
@@ -30,17 +23,7 @@
       {
         "data": "Chair",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title 'Chair' is explicitly stated and is a recognized leadership role in the Town Council."
-      },
-      {
-        "data": "Town Councilor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Town Councilor' and '2022-Present Durham Town Council' in the text."
-      },
-      {
-        "data": "Chair Pro Tem",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated '2024 Elected Chair Pro Tem' in the text."
+        "llm_confidence_reason": "Title 'Chair' is explicitly stated next to name and matches a primary governing body role."
       },
       {
         "data": "Town Council Member",
@@ -53,15 +36,9 @@
     "emails": [],
     "websites": [
       {
-        "data": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The URL provided is the official profile page for Joe Friedman on the Durham town website.",
-        "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
-      },
-      {
         "data": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The URL of the page is a profile page for Joe Friedman as Town Council member.",
+        "llm_confidence_reason": "The URL of the page is a profile page for Joe Friedman as a Town Council member.",
         "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
       }
     ],
@@ -71,12 +48,6 @@
         "llm_confidence": 0.9,
         "llm_confidence_reason": "Term start date '3/25' interpreted as March 2025.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      },
-      {
-        "data": "2022",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Text states '2022-Present Durham Town Council' indicating start in 2022.",
-        "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
       }
     ],
     "end_dates": [
@@ -87,7 +58,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:07Z"
+    "updated_at": "2025-07-02T02:18:43Z"
   },
   {
     "name": "Eric Lund",
@@ -97,8 +68,8 @@
     "images": [
       {
         "data": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/lund_eric_-_town_council.jpg?itok=3IrQ2KYD",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is directly next to the name and role.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
@@ -106,7 +77,7 @@
       {
         "data": "Chair Pro Tem",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title 'Chair Pro Tem' explicitly stated and is a recognized leadership role in the Town Council."
+        "llm_confidence_reason": "Title 'Chair Pro Tem' explicitly stated and is a recognized governing body role."
       }
     ],
     "divisions": [],
@@ -129,7 +100,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:07Z"
+    "updated_at": "2025-07-02T02:18:43Z"
   },
   {
     "name": "Wayne Burton",
@@ -139,16 +110,16 @@
     "images": [
       {
         "data": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/wayne_burton.jpg?itok=3Y8Z3fig",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is directly next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
     "roles": [
       {
-        "data": "Town Council Member",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as Town Councilor without additional title, role normalized to 'Town Council Member'."
+        "data": "Town Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Town Councilor' is indicated by image alt text and context as a council member."
       }
     ],
     "divisions": [],
@@ -171,7 +142,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:07Z"
+    "updated_at": "2025-07-02T02:18:43Z"
   },
   {
     "name": "Darrell Ford",
@@ -181,16 +152,16 @@
     "images": [
       {
         "data": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/darrell_ford_3.jpg?itok=oDwivqkM",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is directly next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
     "roles": [
       {
-        "data": "Town Council Member",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as Town Councilor without additional title, role normalized to 'Town Council Member'."
+        "data": "Town Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Town Councilor' is indicated by image alt text and context as a council member."
       }
     ],
     "divisions": [],
@@ -213,7 +184,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:07Z"
+    "updated_at": "2025-07-02T02:18:43Z"
   },
   {
     "name": "Emily Friedrichs",
@@ -223,16 +194,16 @@
     "images": [
       {
         "data": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/emily_friedrichs_cropped_2.jpg?itok=fSc1fxvw",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is directly next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
     "roles": [
       {
-        "data": "Town Council Member",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as Town Councilor without additional title, role normalized to 'Town Council Member'."
+        "data": "Town Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Town Councilor' is indicated by image alt text and context as a council member."
       }
     ],
     "divisions": [],
@@ -255,7 +226,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:07Z"
+    "updated_at": "2025-07-02T02:18:43Z"
   },
   {
     "name": "Heather Grant",
@@ -265,16 +236,16 @@
     "images": [
       {
         "data": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/heather_grant.jpg?itok=3Jd00TJK",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is directly next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
     "roles": [
       {
-        "data": "Town Council Member",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as Town Councilor without additional title, role normalized to 'Town Council Member'."
+        "data": "Town Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Town Councilor' is indicated by image alt text and context as a council member."
       }
     ],
     "divisions": [],
@@ -297,7 +268,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:07Z"
+    "updated_at": "2025-07-02T02:18:43Z"
   },
   {
     "name": "Sally Needell",
@@ -307,16 +278,16 @@
     "images": [
       {
         "data": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/sally_needell.jpg?itok=p2tdpk9P",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is directly next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
     "roles": [
       {
-        "data": "Town Council Member",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as Town Councilor without additional title, role normalized to 'Town Council Member'."
+        "data": "Town Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Town Councilor' is indicated by image alt text and context as a council member."
       }
     ],
     "divisions": [],
@@ -339,7 +310,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:07Z"
+    "updated_at": "2025-07-02T02:18:43Z"
   },
   {
     "name": "Curtis Register",
@@ -349,16 +320,16 @@
     "images": [
       {
         "data": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/curtis_register_2.jpg?itok=JtKq9nGx",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is directly next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
     "roles": [
       {
-        "data": "Town Council Member",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as Town Councilor without additional title, role normalized to 'Town Council Member'."
+        "data": "Town Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Town Councilor' is indicated by image alt text and context as a council member."
       }
     ],
     "divisions": [],
@@ -381,7 +352,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:07Z"
+    "updated_at": "2025-07-02T02:18:43Z"
   },
   {
     "name": "Robin Vogt",
@@ -391,16 +362,16 @@
     "images": [
       {
         "data": "https://www.ci.durham.nh.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/towncouncil/page/21511/robin_vogt.jpeg?itok=lczrFPNa",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is directly next to the name.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
     "roles": [
       {
-        "data": "Town Council Member",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as Town Councilor without additional title, role normalized to 'Town Council Member'."
+        "data": "Town Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Town Councilor' is indicated by image alt text and context as a council member."
       }
     ],
     "divisions": [],
@@ -423,6 +394,6 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:07Z"
+    "updated_at": "2025-07-02T02:18:43Z"
   }
 ]

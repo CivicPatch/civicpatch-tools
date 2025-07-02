@@ -3,7 +3,6 @@
     "name": "Joe Friedman",
     "sources": [
       "https://www.ci.durham.nh.us/towncouncil/current-council-members",
-      "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
       "https://www.ci.durham.nh.us/administration/joe-friedman-town-council"
     ],
     "images": [],
@@ -17,16 +16,6 @@
         "data": "Chair",
         "llm_confidence": 1,
         "llm_confidence_reason": "The role is explicitly stated in the bold text next to the name."
-      },
-      {
-        "data": "Town Councilor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Joe Friedman - Town Councilor' in the page title and '2022-Present Durham Town Council' in the body text, indicating a current role. "
-      },
-      {
-        "data": "Chair Pro Tem",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as '2024 Elected Chair Pro Tem' indicating a current role."
       },
       {
         "data": "Town Council",
@@ -46,12 +35,6 @@
     ],
     "websites": [
       {
-        "data": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL of the current page is a direct profile page for Joe Friedman.",
-        "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
-      },
-      {
         "data": "https://www.ci.durham.nh.us/administration/joe-friedman-town-council",
         "llm_confidence": 1,
         "llm_confidence_reason": "The current page URL is a dedicated profile page for Joe Friedman.",
@@ -64,12 +47,6 @@
         "llm_confidence": 1,
         "llm_confidence_reason": "The start date is explicitly stated in the text as '3/25'.",
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
-      },
-      {
-        "data": "2022",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as '2022-Present Durham Town Council'.",
-        "source": "https://www.ci.durham.nh.us/administration/joe-friedman-town-councilor"
       }
     ],
     "end_dates": [
@@ -80,7 +57,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Eric Lund",
@@ -127,7 +104,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Wayne Burton",
@@ -169,7 +146,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Darrell Ford",
@@ -211,7 +188,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Emily Friedrichs",
@@ -253,7 +230,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Heather Grant",
@@ -295,7 +272,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Sally Needell",
@@ -337,7 +314,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Curtis Register",
@@ -379,7 +356,7 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   },
   {
     "name": "Robin Vogt",
@@ -421,6 +398,6 @@
         "source": "https://www.ci.durham.nh.us/towncouncil/current-council-members"
       }
     ],
-    "updated_at": "2025-07-01T22:58:30Z"
+    "updated_at": "2025-07-02T02:19:01Z"
   }
 ]
