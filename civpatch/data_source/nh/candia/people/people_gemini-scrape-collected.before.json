@@ -1,0 +1,205 @@
+[
+  {
+    "name": "Brien Brock",
+    "sources": [
+      "https://www.candianh.org/directory"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "select board chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated next to the name under the 'Board of Selectmen' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "603-483-8101",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the general office phone number for the Board of Selectmen, not a direct line for the individual.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bbrock@candianh.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End year is explicitly stated in parentheses next to the name.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "updated_at": "2025-07-02T17:39:31Z"
+  },
+  {
+    "name": "Patrick Moran",
+    "sources": [
+      "https://www.candianh.org/directory"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "select board vice chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated next to the name under the 'Board of Selectmen' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "603-483-8101",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the general office phone number for the Board of Selectmen, not a direct line for the individual.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End year is explicitly stated in parentheses next to the name.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "updated_at": "2025-07-02T17:39:31Z"
+  },
+  {
+    "name": "Boyd Chivers",
+    "sources": [
+      "https://www.candianh.org/directory"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "select board member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'Board of Selectmen' without a specific title, implying a general member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "603-483-8101",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the general office phone number for the Board of Selectmen, not a direct line for the individual.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bchivers@candianh.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End year is explicitly stated in parentheses next to the name.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "updated_at": "2025-07-02T17:39:31Z"
+  },
+  {
+    "name": "Stephanie Helmig",
+    "sources": [
+      "https://www.candianh.org/directory"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "select board member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'Board of Selectmen' without a specific title, implying a general member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "603-483-8101",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the general office phone number for the Board of Selectmen, not a direct line for the individual.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "emails": [
+      {
+        "data": "shelmig@townofcandia.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End year is explicitly stated in parentheses next to the name.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "updated_at": "2025-07-02T17:39:31Z"
+  },
+  {
+    "name": "Susan Young",
+    "sources": [
+      "https://www.candianh.org/directory"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "select board member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'Board of Selectmen' without a specific title, implying a general member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "603-483-8101",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This is the general office phone number for the Board of Selectmen, not a direct line for the individual.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "emails": [
+      {
+        "data": "syoung@candianh.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End year is explicitly stated in parentheses next to the name.",
+        "source": "https://www.candianh.org/directory"
+      }
+    ],
+    "updated_at": "2025-07-02T17:39:31Z"
+  }
+]
