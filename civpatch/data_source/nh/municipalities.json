@@ -1803,7 +1803,14 @@
       "government_type": "select_board",
       "email": "dgoodine@allenstownnh.gov",
       "website": "http://www.allenstownnh.gov",
-      "geoid": "3301300660"
+      "geoid": "3301300660",
+      "meta_updated_at": "2025-07-02T17:11:13Z",
+      "meta_hash": "9d3da3cae7db9c93f2544feb911736e4",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Northwood",
