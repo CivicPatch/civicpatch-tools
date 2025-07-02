@@ -1,37 +1,38 @@
 [
   {
-    "name": "Cindy McHugh",
-    "roles": [
-      "Select Board Member"
-    ],
-    "updated_at": "2025-07-02T16:52:24Z"
-  },
-  {
     "name": "William Huebner",
     "roles": [
-      "Select Board Member"
+      "Selectman",
+      "Chair"
     ],
-    "updated_at": "2025-07-02T16:52:24Z"
+    "updated_at": "2025-07-02T17:04:55Z"
+  },
+  {
+    "name": "Cindy McHugh",
+    "roles": [
+      "Selectman"
+    ],
+    "updated_at": "2025-07-02T17:04:55Z"
   },
   {
     "name": "Steve Barry",
     "roles": [
-      "Select Board Member"
+      "Selectman"
     ],
-    "updated_at": "2025-07-02T16:52:24Z"
+    "updated_at": "2025-07-02T17:04:55Z"
   },
   {
     "name": "Jared Messina",
     "roles": [
-      "Select Board Member"
+      "Selectman"
     ],
-    "updated_at": "2025-07-02T16:52:24Z"
+    "updated_at": "2025-07-02T17:04:55Z"
   },
   {
     "name": "Greg Whitmore",
     "roles": [
-      "Select Board Member"
+      "Selectman"
     ],
-    "updated_at": "2025-07-02T16:52:24Z"
+    "updated_at": "2025-07-02T17:04:55Z"
   }
 ]
