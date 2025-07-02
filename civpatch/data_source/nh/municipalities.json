@@ -1927,7 +1927,14 @@
       "government_type": "town_meeting",
       "email": "townadmin@townofdanville.org",
       "website": "http://www.townofdanville.org",
-      "geoid": "3301517140"
+      "geoid": "3301517140",
+      "meta_updated_at": "2025-07-02T17:16:32Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "New London",
