@@ -2031,7 +2031,14 @@
       "government_type": "select_board",
       "email": "administrator@strafford.nh.gov",
       "website": "http://www.strafford.nh.gov",
-      "geoid": "3301773860"
+      "geoid": "3301773860",
+      "meta_updated_at": "2025-07-02T17:35:33Z",
+      "meta_hash": "ee59d00e3da749ee6a22e4bc7015d35a",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Winchester",
