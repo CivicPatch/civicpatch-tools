@@ -1,4 +1,4 @@
-[Skip to main content](https://www.somersworthnh.gov/mayor-city-council/)
+[Skip to main content](https://www.somersworthnh.gov/user/2083/contact/)
 
 ![Somersworth NH](https://www.somersworthnh.gov/sites/all/themes/custom/sites/somersworthnh/vts_somersworthnh/logo.png)
 
@@ -204,484 +204,44 @@ Keywords
     - [School District](https://www.sau56.org)
     - [Voting Information](https://www.somersworthnh.gov/welcome-somersworth/pages/voting-information)
 
-[High Street Lane Closure Starting Monday, June 30th - Wednesday, July 2nd](https://www.somersworthnh.gov/home/urgent-alerts/high-street-lane-closure-starting-monday-june-30th-wednesday-july-2nd) [Read more »](https://www.somersworthnh.gov/home/urgent-alerts/high-street-lane-closure-starting-monday-june-30th-wednesday-july-2nd)
+## Primary tabs
 
-![Print](https://www.somersworthnh.gov/sites/all/modules/contrib/print/icons/print_icon.png "Print")
+- [View](https://www.somersworthnh.gov/users/mayor-matt-gerding)
+- [Contact(active tab)](https://www.somersworthnh.gov/user/2083/contact)
 
 ## You are here
 
 1. [Home](https://www.somersworthnh.gov) ››
-2. [Inside City Hall](https://www.somersworthnh.gov/city-hall-directory)
+2. [Mayor Matt Gerding](https://www.somersworthnh.gov/users/mayor-matt-gerding)
 
-# Mayor &amp; City Council
+# Contact Matt Gerding
 
-## [View Contact Info](https://www.somersworthnh.gov/mayor-city-council)
+Your name *
 
-### Hours of Operation
+Your e-mail address *
 
-**Mayor’s Office Hours**  
-Residents are encouraged to attend the office hours to share with the Mayor any concerns or ideas they may have or contact the Mayor at his office: (603) 692-9501 or home: (603) 343-4114.  
- 
+To [Mayor Matt Gerding](https://www.somersworthnh.gov/users/mayor-matt-gerding "View user profile.")
 
-**Mayor’s Office Hours:**
+Subject *
 
-Monday: 4:00 pm - 6:00 pm  
-Wednesday: 4:00 pm 6:00 pm  
- 
+Message *
 
-**Mayor's Facebook Page:**  
-[Facebook](https://www.facebook.com/Mayor-Dana-Hilliard-642524009121467)
+Attachments
 
-### How to Reach Us
+Files must be less than **2 MB**.  
+Allowed file types: **txt doc pdf docx jpg gif png**.
 
-Phone: 
+Attachment #1
 
-(603) 692–9503
+Attachment #2
 
-### Address
+Attachment #3
 
-City Hall
+CAPTCHA
 
-One Government Way
+This question is for testing whether or not you are a human visitor and to prevent automated spam submissions.
 
-Somersworth, NH 03878
-
-United States
-
-See map: [Google Maps](https://maps.google.com/?q=One%20Government%20Way%2C%20Somersworth%2C%20NH%2C%2003878%2C%20us)
-
-### Key Contacts
-
-[Brenda Ann Breda, Executive Assistant](https://www.somersworthnh.gov/user/25/contact)
-
-(603) 692-9503
-
-[Robert M. Belmore, City Manager](https://www.somersworthnh.gov/user/24/contact)
-
-(603) 692-9503
-
-[**Click here to e-mail the entire City Council and Mayor**](https://www.somersworthnh.gov/mayor-city-council/webforms/contact-mayor-and-city-council)
-
-![Mayor Matt Gerding](https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/mattgerdingmayor-250x250.jpeg)
-
-          Mayor Matt Gerding
-
-## Mayor Matt Gerding
-
-One Government Way  
-Somersworth, NH 03878  
-Office: (603) 692-9501  
-Home: (603) 841-5720  
-Term Expires: January 2026  
-[Contact Mayor Matt Gerding](mailto:mgerding@somersworthnh.gov)
-
- 
-
- 
-
-To schedule an appointment, please [email](mailto:mgerding@somersworthnh.gov) Mayor Gerding or call Brenda Breda at (603) 692-9503.
-
-**Mayor's Office Hours:**  
-Monday:  4:00 p.m. - 6:00 p.m.  
-Wednesday: 4:00 p.m. - 6:00 p.m.
-
- 
-
-* * *
-
-##### ![Councilor Martin Pepin](https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_martin_pepin-151x229.jpg)
-
-#### Councilor Martin Pepin
-
-***Ward 1***
-
-54 Rocky Hill Road  
-Somersworth, NH 03878  
-Telephone: (603) 692-4436  
-Term Expires: January 2026  
-[Contact Martin Pepin](mailto:mpepin@comcast.net)
-
-##### [*View Committee Memberships*](https://www.somersworthnh.gov/people/marty-pepin)
-
-* * *
-
-##### ![Councilor Kenneth S. Vincent](https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_kenneth_s._vincent-164x165.jpg)
-
-#### Councilor Kenneth S. Vincent
-
-***Ward 2***
-
-19 Vincent Way  
-Somersworth, NH 03878  
-Telephone: (603) 396-4120  
-Term Expires: January 2026  
-[Contact Kenneth S. Vincent](mailto:thevince@comcast.net)
-
-##### [*View Committee Memberships*](https://www.somersworthnh.gov/people/ken-vincent)
-
-* * *
-
-![Councilor Martin P. Dumont Sr.](https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/bob_gibson_0-188x250.jpg)
-
-#### Councilor Robert G. Gibson
-
-***Ward 3***
-
-664 Sherwood Glen  
-Somersworth, NH 03878  
-Telephone: (603) 841-0541  
-Term Expires: January 2026  
-[Contact Robert Gibson](mailto:rgibson@somersworthnh.gov)
-
-##### [*View Committee Memberships*](https://www.somersworthnh.gov/people/robert-gibson)
-
-* * *
-
-#### ![Crystal Paradis](https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/crystal-pc_002-188x252.jpg)
-
-#### Councilor Crystal Paradis-Catanzaro
-
-***Ward 4***
-
-One Government Way  
-Somersworth, NH  03878  
-Telephone: (603) 205-1561  
-Term Expires: January 2026  
-[Contact Crystal Paradis-Catanzaro](mailto:crystal@somersworthnh.gov)
-
-##### [*View Commmittee Memberships*](https://www.somersworthnh.gov/people/crystal-paradis-catanzaro)
-
-* * *
-
-##### ![Councilor](https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_richard_r._michaud-226x169-181x174.jpg)
-
-#### Councilor Richard R. Michaud
-
-***Ward 5***
-
-293 Main Street  
-Somersworth, NH 03878  
-Telephone: (603) 692-4612  
-Term Expires: January 2026  
-[Contact Richard R. Michaud](mailto:rmichaud@somersworthnh.gov)
-
-##### [*View Committee Memberships*](https://www.somersworthnh.gov/people/richard-r-michaud)
-
-## Councilors - At Large
-
-* * *
-
-![Councilor David A. Witham](https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_david_a._witham-175x201.jpg)
-
-#### Councilor David A. Witham (Deputy Mayor)
-
-One Government Way  
-Somersworth, NH 03878  
-Telephone: (603) 692-4086  
-Term Expires: January 2026  
-[Contact David A. Witham](mailto:dwitham@somersworthnh.gov)
-
-##### [*View Committee Memberships*](https://www.somersworthnh.gov/people/david-witham-0)
-
-* * *
-
-#### ![Laura Barry](https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/laura_barry-180x201.jpg)
-
-#### Councilor Laura Barry ***Councilor At-Large***
-
-One Government Way  
-Somersworth, NH 03878  
-Telephone: (406) 698-1795  
-Term Expires: January 2026  
-[Contact Laura Barry](mailto:lbarry@somersworthnh.gov)
-
-##### [*View Committee Memberships*](https://www.somersworth.com/people/laura-barry-0)
-
- 
-
-* * *
-
-![Councilor Nancie Cameron](https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/councilor_nancie_cameron-153x230.jpg)
-
-#### Councilor Nancie Cameron
-
-***Councilor At-Large***
-
-1B Silver Street  
-Somersworth NH 03878  
-Telephone: (603) 781-5302  
-Term Expires: January 2026  
-[Contact Nancie Cameron](mailto:bballmom824@yahoo.com)
-
-##### [*View Committee Memberships*](https://www.somersworthnh.gov/people/nancie-cameron)
-
-* * *
-
-#### Councilor Paul Goodwin
-
-***Councilor At-Large***
-
-One Government Way  
-Somersworth, NH 03878  
-Telephone: (603) 692-6016  
-Term Expires: January 2026  
-[Contact Paul Goodwin](mailto:pgoodwin@somersworthnh.gov)
-
-##### [*View Committee Memberships*](https://www.somersworthnh.gov/people/paul-goodwin)
-
-![Paul Goodwin](https://www.somersworthnh.gov/sites/g/files/vyhlif1226/f/resize/imce/paul_goodwin-175x201.jpg)
-
-## Mayor &amp; Councilors
-
-NameTitlePhone
-
-[Matt Gerding](https://www.somersworthnh.gov/user/2083/contact)
-
-Mayor
-
-(603) 692-9501
-
-[Marty Pepin](https://www.somersworthnh.gov/user/163/contact)
-
-Ward 1 City Councilor
-
-(603) 692-4436
-
-[Ken Vincent](https://www.somersworthnh.gov/user/173/contact)
-
-Ward 2 City Councilor
-
-(603) 396-4120
-
-[Robert Gibson](https://www.somersworthnh.gov/user/3376/contact)
-
-Ward 3 City Councilor
-
-(603) 841-0541
-
-[Crystal Paradis- Catanzaro](https://www.somersworthnh.gov/user/3706/contact)
-
-Ward 4 City Councilor
-
-(603) 205-1561
-
-[Richard R. Michaud](https://www.somersworthnh.gov/node/1033)
-
-Ward 5 City Councilor
-
-(603) 692-4612
-
-[Dave Witham](https://www.somersworthnh.gov/user/123/contact)
-
-Deputy Mayor / Councilor At-large
-
-(603) 692-4086
-
-[Nancie Cameron](https://www.somersworthnh.gov/user/133/contact)
-
-Councilor At-large
-
-(603) 781-5302
-
-[Paul Goodwin](https://www.somersworthnh.gov/user/3711/contact)
-
-Councilor At-large
-
-(603) 692-6016
-
-[Laura Barry](https://www.somersworthnh.gov/user/3936/contact)
-
-Councilor At-large
-
-(406) 698-1795
-
-- [Citizen's Place Flag Policy &amp; Request Form](https://www.somersworthnh.gov/mayor-city-council/files/citizens-place-flag-policy-request-form)
-- [City Council Goal Setting Sessions](https://www.somersworthnh.gov/mayor-city-council/pages/city-council-goal-setting-sessions)
-- [Council Rules &amp; Regulations](https://www.somersworthnh.gov/mayor-city-council/files/council-rules-regulations)
-- [Volunteer Boards &amp; Committee Application](https://www.somersworthnh.gov/mayor-city-council/pages/volunteer-boards-committee-application)
-
-## Frequently Asked Questions
-
-[Who do I contact to discuss Somersworth's Services &amp; Management?](https://www.somersworthnh.gov/mayor-city-council/faq/who-do-i-contact-discuss-somersworths-services-management)
-
-[Where and when does the Somersworth City Council meet?](https://www.somersworthnh.gov/mayor-city-council/faq/where-and-when-does-somersworth-city-council-meet)
-
-[Who are the City Council and Mayor?](https://www.somersworthnh.gov/mayor-city-council/faq/who-are-city-council-and-mayor)
-
-## Mayor &amp; City Council Calendar
-
-### [July](https://www.somersworthnh.gov/node/236/events/month/236/2025-07 "View full page month")
-
-- [«](https://www.somersworthnh.gov/mayor-city-council?month=2025-06 "Navigate to previous month")
-- [»](https://www.somersworthnh.gov/mayor-city-council?month=2025-08 "Navigate to next month")
-
-S M T W T F S
-
- 
-
- 
-
-1
-
- 
-
-2
-
- 
-
-3
-
- 
-
-4
-
- 
-
-5
-
- 
-
-6
-
- 
-
-7
-
- 
-
-8
-
- 
-
-9
-
- 
-
-10
-
- 
-
-11
-
- 
-
-12
-
- 
-
-13
-
- 
-
-[14](https://www.somersworthnh.gov/node/236/events/day/2025-07-14)
-
-- [City Council Meeting](https://www.somersworthnh.gov/mayor-city-council/events/90846)
-  
-  7:00pm
-
- 
-
-15
-
- 
-
-16
-
- 
-
-17
-
- 
-
-18
-
- 
-
-19
-
- 
-
-20
-
- 
-
-21
-
- 
-
-22
-
- 
-
-23
-
- 
-
-24
-
- 
-
-25
-
- 
-
-26
-
- 
-
-27
-
- 
-
-28
-
- 
-
-29
-
- 
-
-30
-
- 
-
-31
-
- 
-
- 
-
- 
-
-[All upcoming events](https://www.somersworthnh.gov/node/236/events/month/236/2025-07)
-
-## Agendas
-
-- [Public Notice](https://www.somersworthnh.gov/mayor-city-council/agenda/public-notice-5)
-  
-  June 16, 2025 - 7:00pm
-- [Public Notice &amp; Agenda](https://www.somersworthnh.gov/mayor-city-council/agenda/public-notice-agenda-165)
-  
-  June 16, 2025 - 7:00pm
-- [Public Notice &amp; Agenda Workshop](https://www.somersworthnh.gov/mayor-city-council/agenda/public-notice-agenda-workshop-1)
-  
-  June 9, 2025 - 4:30am
-
-[View all](https://www.somersworthnh.gov/node/236/agenda)
-
-## Minutes
-
-- [Minutes](https://www.somersworthnh.gov/mayor-city-council/minutes/minutes-196)
-  
-  June 16, 2025
-- [Minutes Workshop](https://www.somersworthnh.gov/mayor-city-council/minutes/minutes-workshop-2)
-  
-  June 9, 2025
-- [Minutes](https://www.somersworthnh.gov/mayor-city-council/minutes/minutes-195)
-  
-  June 2, 2025
-
-[View all](https://www.somersworthnh.gov/node/236/minutes)
+Leave this field blank
 
 #### City of Somersworth
 
@@ -700,4 +260,4 @@ Wednesday: 8:00 am to 6:00 pm
 [Website Disclaimer](https://www.somersworthnh.gov/home/pages/website-disclaimer)  
 [Websites by CivicPlus®](https://www.civicplus.com)
 
-- [Admin Login](https://www.somersworthnh.gov/user/login?current=node%2F236)
+- [Admin Login](https://www.somersworthnh.gov/user/login?current=user%2F2083%2Fcontact)
