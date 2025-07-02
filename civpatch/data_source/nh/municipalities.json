@@ -1601,7 +1601,14 @@
       "government_type": "select_board",
       "email": "townadmin@newipswichnh.gov",
       "website": "http://www.newipswichnh.gov",
-      "geoid": "3301151940"
+      "geoid": "3301151940",
+      "meta_updated_at": "2025-07-02T17:15:04Z",
+      "meta_hash": "10a1b1eb705c7b085c0263929487eb8b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Wakefield",
