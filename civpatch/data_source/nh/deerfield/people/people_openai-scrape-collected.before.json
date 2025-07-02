@@ -2,8 +2,7 @@
   {
     "name": "Cindy McHugh",
     "sources": [
-      "https://www.townofdeerfieldnh.com/board-selectmen",
-      "https://www.townofdeerfieldnh.com/user/24/contact"
+      "https://www.townofdeerfieldnh.com/board-selectmen"
     ],
     "images": [],
     "roles": [
@@ -14,27 +13,28 @@
       }
     ],
     "divisions": [],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "(603) 463-8811 Ext. 309",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board contact phone number provided; no individual phone found.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      }
+    ],
     "emails": [
       {
         "data": "cindy.mchugh@townofdeerfieldnh.com",
-        "llm_confidence": 0.4,
-        "llm_confidence_reason": "Email not explicitly given but inferred from contact link pattern; low confidence due to lack of explicit email in text.",
+        "llm_confidence": 0.3,
+        "llm_confidence_reason": "No explicit email found in text, but contact link suggests possible email format; low confidence.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       }
     ],
     "websites": [
       {
         "data": "https://www.townofdeerfieldnh.com/user/24/contact",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Direct contact page URL for Cindy McHugh on official town website.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct contact page URL for Cindy McHugh found.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
-      },
-      {
-        "data": "https://www.townofdeerfieldnh.com/users/cmchugh",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The URL is the user profile page for Cindy McHugh on the official Deerfield NH website.",
-        "source": "https://www.townofdeerfieldnh.com/user/24/contact"
       }
     ],
     "start_dates": [],
@@ -42,11 +42,11 @@
       {
         "data": "2027-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date explicitly stated as March 2027.",
+        "llm_confidence_reason": "Term expiration date given as March 2027.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       }
     ],
-    "updated_at": "2025-07-02T16:54:20Z"
+    "updated_at": "2025-07-02T17:06:42Z"
   },
   {
     "name": "William Huebner",
@@ -62,20 +62,27 @@
       }
     ],
     "divisions": [],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "(603) 463-8811 Ext. 309",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board contact phone number provided; no individual phone found.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      }
+    ],
     "emails": [
       {
         "data": "william.huebner@townofdeerfieldnh.com",
-        "llm_confidence": 0.4,
-        "llm_confidence_reason": "Email not explicitly given but inferred from contact link pattern; low confidence due to lack of explicit email in text.",
+        "llm_confidence": 0.3,
+        "llm_confidence_reason": "No explicit email found; inferred from contact link pattern with low confidence.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       }
     ],
     "websites": [
       {
         "data": "https://www.townofdeerfieldnh.com/user/1606/contact",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Direct contact page URL for William Huebner on official town website.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct contact page URL for William Huebner found.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       }
     ],
@@ -84,11 +91,11 @@
       {
         "data": "2026-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date explicitly stated as March 2026.",
+        "llm_confidence_reason": "Term expiration date given as March 2026.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       }
     ],
-    "updated_at": "2025-07-02T16:54:20Z"
+    "updated_at": "2025-07-02T17:06:42Z"
   },
   {
     "name": "Steve Barry",
@@ -105,20 +112,27 @@
       }
     ],
     "divisions": [],
-    "phone_numbers": [],
+    "phone_numbers": [
+      {
+        "data": "(603) 463-8811 Ext. 309",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board contact phone number provided; no individual phone found.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      }
+    ],
     "emails": [
       {
         "data": "steve.barry@townofdeerfieldnh.com",
-        "llm_confidence": 0.4,
-        "llm_confidence_reason": "Email not explicitly given but inferred from contact link pattern; low confidence due to lack of explicit email in text.",
+        "llm_confidence": 0.3,
+        "llm_confidence_reason": "No explicit email found; inferred from contact link pattern with low confidence.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       }
     ],
     "websites": [
       {
         "data": "https://www.townofdeerfieldnh.com/user/1761/contact",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Direct contact page URL for Steve Barry on official town website.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Direct contact page URL for Steve Barry found.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       },
       {
@@ -133,11 +147,11 @@
       {
         "data": "2026-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date explicitly stated as March 2026.",
+        "llm_confidence_reason": "Term expiration date given as March 2026.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       }
     ],
-    "updated_at": "2025-07-02T16:54:20Z"
+    "updated_at": "2025-07-02T17:06:42Z"
   },
   {
     "name": "Jared Messina",
@@ -162,6 +176,12 @@
     "phone_numbers": [
       {
         "data": "(603) 463-8811 Ext. 309",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board contact phone number provided; no individual phone found.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      },
+      {
+        "data": "(603) 463-8811 Ext. 309",
         "llm_confidence": 0.9,
         "llm_confidence_reason": "Phone number listed under Contact Info near Jared Messina's name.",
         "source": "https://www.townofdeerfieldnh.com/people/jared-messina"
@@ -172,7 +192,7 @@
       {
         "data": "https://www.townofdeerfieldnh.com/people/jared-messina",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Official town profile page URL for Jared Messina.",
+        "llm_confidence_reason": "Profile page URL found for Jared Messina.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       },
       {
@@ -187,7 +207,7 @@
       {
         "data": "2028-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date explicitly stated as March 2028.",
+        "llm_confidence_reason": "Term expiration date given as March 2028.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       },
       {
@@ -197,7 +217,7 @@
         "source": "https://www.townofdeerfieldnh.com/people/jared-messina"
       }
     ],
-    "updated_at": "2025-07-02T16:54:20Z"
+    "updated_at": "2025-07-02T17:06:42Z"
   },
   {
     "name": "Greg Whitmore",
@@ -215,15 +235,21 @@
       {
         "data": "Select Board Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text states 'Board of Selectmen' membership with title 'Member' and active status, which corresponds to Select Board Member role."
+        "llm_confidence_reason": "The text states 'Board of Selectmen' and 'Member (March 2028)' indicating an active elected member of the Select Board, which is synonymous with Select Board Member."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(603) 463-8811 Ext. 309",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General Board contact phone number provided; no individual phone found.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      },
+      {
+        "data": "(603) 463-8811 Ext. 309",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under Contact Info section near Greg Whitmore's name.",
+        "llm_confidence_reason": "Phone number is listed under Contact Info near Greg Whitmore's name.",
         "source": "https://www.townofdeerfieldnh.com/people/greg-whitmore-0"
       }
     ],
@@ -232,13 +258,13 @@
       {
         "data": "https://www.townofdeerfieldnh.com/people/greg-whitmore-0",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Official town profile page URL for Greg Whitmore.",
+        "llm_confidence_reason": "Profile page URL found for Greg Whitmore.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       },
       {
         "data": "https://www.townofdeerfieldnh.com/board-selectmen",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "Website link for Board of Selectmen is provided and logically associated with Greg Whitmore's role.",
+        "llm_confidence_reason": "The Board of Selectmen page is linked and associated with Greg Whitmore's role.",
         "source": "https://www.townofdeerfieldnh.com/people/greg-whitmore-0"
       }
     ],
@@ -247,7 +273,7 @@
       {
         "data": "2028-03",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term end date explicitly stated as March 2028.",
+        "llm_confidence_reason": "Term expiration date given as March 2028.",
         "source": "https://www.townofdeerfieldnh.com/board-selectmen"
       },
       {
@@ -257,6 +283,6 @@
         "source": "https://www.townofdeerfieldnh.com/people/greg-whitmore-0"
       }
     ],
-    "updated_at": "2025-07-02T16:54:20Z"
+    "updated_at": "2025-07-02T17:06:42Z"
   }
 ]
