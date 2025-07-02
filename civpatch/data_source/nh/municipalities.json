@@ -1434,10 +1434,10 @@
       "phone_number": "(603) 673-8855",
       "government_type": "select_board",
       "email": "town@brooklinenh.us",
-      "website": "http://www.brooklinenh.us",
+      "website": "https://www.brooklinenh.gov",
       "geoid": "3301108100",
-      "meta_updated_at": "2025-07-02T16:26:58Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-02T16:39:31Z",
+      "meta_hash": "6d94a271bf17669b11bb198aa8048f8b",
       "meta_sources": [
         "state_source",
         "gemini",
