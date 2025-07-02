@@ -1564,7 +1564,14 @@
       "government_type": "select_board",
       "email": "bospc@nottingham-nh.gov",
       "website": "http://www.nottingham-nh.gov",
-      "geoid": "3301557460"
+      "geoid": "3301557460",
+      "meta_updated_at": "2025-07-02T16:28:23Z",
+      "meta_hash": "7044ee2496807b319e64552ccb12cada",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "New Ipswich",
