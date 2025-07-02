@@ -1499,7 +1499,14 @@
       "government_type": "select_board",
       "email": "planning@chesternh.org",
       "website": "http://www.chesternh.org",
-      "geoid": "3301512100"
+      "geoid": "3301512100",
+      "meta_updated_at": "2025-07-02T16:28:20Z",
+      "meta_hash": "6b855cabe7f54d5790b90a6f0281f466",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Nottingham",
