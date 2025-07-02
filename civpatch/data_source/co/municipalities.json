@@ -1845,7 +1845,14 @@
       ],
       "population": 2346,
       "website": "http://www.cityofholyoke-co.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-02T18:05:06Z",
+      "meta_hash": "49f742fb0a585643902de6b29d6addb8",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Las Animas",
