@@ -1176,7 +1176,14 @@
       "government_type": "select_board",
       "email": "townadmin@rindgenh.org",
       "website": "http://www.rindgenh.org",
-      "geoid": "3300564580"
+      "geoid": "3300564580",
+      "meta_updated_at": "2025-07-02T03:38:34Z",
+      "meta_hash": "c57a49c05891f65b543f7380436c5cbd",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Peterborough",
