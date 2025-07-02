@@ -23,7 +23,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Mayor of Rangely in the content."
+        "llm_confidence_reason": "Explicitly stated as Mayor in the content."
       },
       {
         "data": "Mayor",
@@ -41,8 +41,8 @@
       },
       {
         "data": "(970) 675-8476",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town phone number listed under Contact Us; no personal phone found, so town phone is best available.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Single main phone number listed under 'Contact Us' likely for town offices including Mayor.",
         "source": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees"
       }
     ],
@@ -55,28 +55,28 @@
       },
       {
         "data": "town@rangelyco.gov",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town email listed under Contact Us; no personal email found.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General town email provided under 'Contact Us' section; no personal email given.",
         "source": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees"
       }
     ],
     "websites": [
       {
         "data": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page URL is the official town council mayor and trustees page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council mayor & trustees page.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       },
       {
         "data": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Page URL is the official town council mayor and trustees page where Ron Granger is listed.",
+        "llm_confidence_reason": "Page URL is official town council page listing Mayor and Trustees including Ron Granger.",
         "source": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T18:05:14Z"
+    "updated_at": "2025-07-02T18:20:03Z"
   },
   {
     "name": "Andy Shaffer",
@@ -87,45 +87,45 @@
       {
         "data": "https://townofrangely.colorado.gov/sites/townofrangely/files/styles/extra_large_thumbnail_650x650_/public/Andy%20Shaffer.PNG",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image directly associated with Andy Shaffer, Pro Tem.",
+        "llm_confidence_reason": "Image directly associated with Andy Shaffer.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "roles": [
       {
-        "data": "Mayor Pro Tempore",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Pro Tem, which is Mayor Pro Tempore."
+        "data": "Trustee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Pro Tem, which is a trustee role in the town council context."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(970) 675-8476",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town phone number listed; no personal phone found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town phone number only; no personal phone found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "emails": [
       {
         "data": "town@rangelyco.gov",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town email listed; no personal email found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email only; no personal email found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "websites": [
       {
         "data": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page URL is the official town council mayor and trustees page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council mayor & trustees page.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T18:05:14Z"
+    "updated_at": "2025-07-02T18:20:03Z"
   },
   {
     "name": "Tim Webber",
@@ -142,39 +142,39 @@
     ],
     "roles": [
       {
-        "data": "Town Council Member",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as member of Town Council."
+        "data": "Trustee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as a member of the Town Council."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(970) 675-8476",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town phone number listed; no personal phone found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town phone number only; no personal phone found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "emails": [
       {
         "data": "town@rangelyco.gov",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town email listed; no personal email found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email only; no personal email found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "websites": [
       {
         "data": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page URL is the official town council mayor and trustees page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council mayor & trustees page.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T18:05:14Z"
+    "updated_at": "2025-07-02T18:20:03Z"
   },
   {
     "name": "Kyle Wren",
@@ -191,39 +191,39 @@
     ],
     "roles": [
       {
-        "data": "Town Council Member",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as eager to serve on Rangely’s Town Council."
+        "data": "Trustee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as a member of the Town Council."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(970) 675-8476",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town phone number listed; no personal phone found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town phone number only; no personal phone found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "emails": [
       {
         "data": "town@rangelyco.gov",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town email listed; no personal email found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email only; no personal email found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "websites": [
       {
         "data": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page URL is the official town council mayor and trustees page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council mayor & trustees page.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T18:05:14Z"
+    "updated_at": "2025-07-02T18:20:03Z"
   },
   {
     "name": "Todd Thayne",
@@ -240,39 +240,39 @@
     ],
     "roles": [
       {
-        "data": "Town Council Member",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as serving on Rangely Town Council."
+        "data": "Trustee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as a member of the Town Council."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(970) 675-8476",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town phone number listed; no personal phone found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town phone number only; no personal phone found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "emails": [
       {
         "data": "town@rangelyco.gov",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town email listed; no personal email found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email only; no personal email found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "websites": [
       {
         "data": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page URL is the official town council mayor and trustees page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council mayor & trustees page.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T18:05:14Z"
+    "updated_at": "2025-07-02T18:20:03Z"
   },
   {
     "name": "Shawn Morgan",
@@ -289,39 +289,39 @@
     ],
     "roles": [
       {
-        "data": "Town Council Member",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as member of Town Council."
+        "data": "Trustee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as a member of the Town Council."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(970) 675-8476",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town phone number listed; no personal phone found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town phone number only; no personal phone found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "emails": [
       {
         "data": "town@rangelyco.gov",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town email listed; no personal email found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email only; no personal email found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "websites": [
       {
         "data": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page URL is the official town council mayor and trustees page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council mayor & trustees page.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T18:05:14Z"
+    "updated_at": "2025-07-02T18:20:03Z"
   },
   {
     "name": "Robby D. Elam",
@@ -338,38 +338,38 @@
     ],
     "roles": [
       {
-        "data": "Town Trustee",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as serving as a Town Trustee."
+        "data": "Trustee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as a Town Trustee on the Town Council."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(970) 675-8476",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town phone number listed; no personal phone found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town phone number only; no personal phone found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "emails": [
       {
         "data": "town@rangelyco.gov",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General town email listed; no personal email found.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General town email only; no personal email found.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "websites": [
       {
         "data": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Page URL is the official town council mayor and trustees page.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council mayor & trustees page.",
         "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T18:05:14Z"
+    "updated_at": "2025-07-02T18:20:03Z"
   }
 ]
