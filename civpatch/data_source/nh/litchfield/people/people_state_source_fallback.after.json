@@ -1,34 +1,36 @@
 [
   {
-    "name": "F. Robert Leary",
-    "roles": [
-      "Select Board Member"
-    ],
-    "updated_at": "2025-07-02T03:05:20Z",
-    "divisions": []
-  },
-  {
-    "name": "Kimberly Queenan",
-    "roles": [
-      "Select Board Member"
-    ],
-    "updated_at": "2025-07-02T03:05:20Z",
-    "divisions": []
-  },
-  {
     "name": "John Brunelle",
     "roles": [
+      "Select Board Chair",
       "Select Board Member"
     ],
-    "updated_at": "2025-07-02T03:05:20Z",
+    "updated_at": "2025-07-02T03:14:50Z",
     "divisions": []
   },
   {
     "name": "G. Stephen Gannon",
     "roles": [
+      "Select Board Member",
+      "Select Board Vice Chair"
+    ],
+    "updated_at": "2025-07-02T03:14:50Z",
+    "divisions": []
+  },
+  {
+    "name": "F. Robert Leary",
+    "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-07-02T03:05:20Z",
+    "updated_at": "2025-07-02T03:14:50Z",
+    "divisions": []
+  },
+  {
+    "name": "Kim Queenan",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-07-02T03:14:50Z",
     "divisions": []
   },
   {
@@ -36,7 +38,7 @@
     "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-07-02T03:05:20Z",
+    "updated_at": "2025-07-02T03:14:50Z",
     "divisions": []
   }
 ]

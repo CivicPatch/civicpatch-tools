@@ -1,37 +1,39 @@
 [
   {
-    "name": "F. Robert Leary",
-    "roles": [
-      "Selectman"
-    ],
-    "updated_at": "2025-07-02T03:05:20Z"
-  },
-  {
-    "name": "Kimberly Queenan",
-    "roles": [
-      "Selectman"
-    ],
-    "updated_at": "2025-07-02T03:05:20Z"
-  },
-  {
     "name": "John Brunelle",
     "roles": [
-      "Selectman"
+      "Selectman",
+      "Chairman"
     ],
-    "updated_at": "2025-07-02T03:05:20Z"
+    "updated_at": "2025-07-02T03:14:50Z"
   },
   {
     "name": "G. Stephen Gannon",
     "roles": [
+      "Selectman",
+      "Vice Chairman"
+    ],
+    "updated_at": "2025-07-02T03:14:50Z"
+  },
+  {
+    "name": "F. Robert Leary",
+    "roles": [
       "Selectman"
     ],
-    "updated_at": "2025-07-02T03:05:20Z"
+    "updated_at": "2025-07-02T03:14:50Z"
+  },
+  {
+    "name": "Kim Queenan",
+    "roles": [
+      "Selectman"
+    ],
+    "updated_at": "2025-07-02T03:14:50Z"
   },
   {
     "name": "Dianne Plansky",
     "roles": [
       "Selectman"
     ],
-    "updated_at": "2025-07-02T03:05:20Z"
+    "updated_at": "2025-07-02T03:14:50Z"
   }
 ]

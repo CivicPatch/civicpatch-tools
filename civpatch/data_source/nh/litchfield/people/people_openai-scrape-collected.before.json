@@ -25,7 +25,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T03:07:32Z"
+    "updated_at": "2025-07-02T03:15:21Z"
   },
   {
     "name": "G. Stephen Gannon",
@@ -53,7 +53,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T03:07:32Z"
+    "updated_at": "2025-07-02T03:15:21Z"
   },
   {
     "name": "F. Robert Leary",
@@ -65,7 +65,7 @@
       {
         "data": "Select Board Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as Member of the Board of Selectmen, which is equivalent to Select Board Member."
+        "llm_confidence_reason": "Listed as Member of the Board of Selectmen, which corresponds to Select Board Member."
       }
     ],
     "divisions": [],
@@ -81,7 +81,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T03:07:32Z"
+    "updated_at": "2025-07-02T03:15:21Z"
   },
   {
     "name": "Kim Queenan",
@@ -93,7 +93,7 @@
       {
         "data": "Select Board Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as Member of the Board of Selectmen, which is equivalent to Select Board Member."
+        "llm_confidence_reason": "Listed as Member of the Board of Selectmen, which corresponds to Select Board Member."
       }
     ],
     "divisions": [],
@@ -109,7 +109,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T03:07:32Z"
+    "updated_at": "2025-07-02T03:15:21Z"
   },
   {
     "name": "Dianne Plansky",
@@ -121,7 +121,7 @@
       {
         "data": "Select Board Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as Member of the Board of Selectmen, which is equivalent to Select Board Member."
+        "llm_confidence_reason": "Listed as Member of the Board of Selectmen, which corresponds to Select Board Member."
       }
     ],
     "divisions": [],
@@ -137,6 +137,6 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T03:07:32Z"
+    "updated_at": "2025-07-02T03:15:21Z"
   }
 ]
