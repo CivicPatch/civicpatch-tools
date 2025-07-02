@@ -1,1 +1,265 @@
-[]
+[
+  {
+    "name": "Cindy McHugh",
+    "sources": [
+      "https://www.townofdeerfieldnh.com/board-selectmen",
+      "https://www.townofdeerfieldnh.com/user/24/contact"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Vice Chair' is explicitly stated next to the person's name in the 'Board Members' section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The Board of Selectmen for the Town of Deerfield are elected at large'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofdeerfieldnh.com/user/24/contact",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's contact/profile page is provided next to their name.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'March 2027' is explicitly stated next to the person's name and role in the 'Board Members' section, indicating the term expiration month and year. Converted to YYYY-MM format as per guidelines for 'Month YYYY'.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      }
+    ],
+    "updated_at": "2025-07-02T16:54:52Z"
+  },
+  {
+    "name": "William Huebner",
+    "sources": [
+      "https://www.townofdeerfieldnh.com/board-selectmen",
+      "https://www.townofdeerfieldnh.com/user/1606/contact"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Chair' is explicitly stated next to the person's name in the 'Board Members' section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The Board of Selectmen for the Town of Deerfield are elected at large'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofdeerfieldnh.com/user/1606/contact",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's contact/profile page is provided next to their name.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      },
+      {
+        "data": "https://www.townofdeerfieldnh.com/users/whuebner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly linked to 'whuebner' and appears to be a user profile page.",
+        "source": "https://www.townofdeerfieldnh.com/user/1606/contact"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'March 2026' is explicitly stated next to the person's name and role in the 'Board Members' section, indicating the term expiration month and year. Converted to YYYY-MM format as per guidelines for 'Month YYYY'.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      }
+    ],
+    "updated_at": "2025-07-02T16:54:52Z"
+  },
+  {
+    "name": "Steve Barry",
+    "sources": [
+      "https://www.townofdeerfieldnh.com/board-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Member' is explicitly stated next to the person's name in the 'Board Members' section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The Board of Selectmen for the Town of Deerfield are elected at large'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofdeerfieldnh.com/user/1761/contact",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's contact/profile page is provided next to their name.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'March 2026' is explicitly stated next to the person's name and role in the 'Board Members' section, indicating the term expiration month and year. Converted to YYYY-MM format as per guidelines for 'Month YYYY'.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      }
+    ],
+    "updated_at": "2025-07-02T16:54:52Z"
+  },
+  {
+    "name": "Jared Messina",
+    "sources": [
+      "https://www.townofdeerfieldnh.com/board-selectmen",
+      "https://www.townofdeerfieldnh.com/people/jared-messina"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Member' is explicitly stated next to the person's name in the 'Board Members' section."
+      },
+      {
+        "data": "select board member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Member' of the 'Board of Selectmen', which is the target governing body."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The Board of Selectmen for the Town of Deerfield are elected at large'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 463-8811 Ext. 309",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed under 'Contact Info' on his dedicated profile page, indicating it is his official contact.",
+        "source": "https://www.townofdeerfieldnh.com/people/jared-messina"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofdeerfieldnh.com/people/jared-messina",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's contact/profile page is provided next to their name.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      },
+      {
+        "data": "https://www.townofdeerfieldnh.com/people/jared-messina",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the specific profile page for Jared Messina, indicating it is his primary website.",
+        "source": "https://www.townofdeerfieldnh.com/people/jared-messina"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'March 2028' is explicitly stated next to the person's name and role in the 'Board Members' section, indicating the term expiration month and year. Converted to YYYY-MM format as per guidelines for 'Month YYYY'.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      },
+      {
+        "data": "2028-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'March 2028' is explicitly stated next to his role.",
+        "source": "https://www.townofdeerfieldnh.com/people/jared-messina"
+      }
+    ],
+    "updated_at": "2025-07-02T16:54:52Z"
+  },
+  {
+    "name": "Greg Whitmore",
+    "sources": [
+      "https://www.townofdeerfieldnh.com/board-selectmen",
+      "https://www.townofdeerfieldnh.com/people/greg-whitmore-0"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Member' is explicitly stated next to the person's name in the 'Board Members' section."
+      },
+      {
+        "data": "select board member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Member' of the 'Board of Selectmen', which directly maps to 'select board member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The Board of Selectmen for the Town of Deerfield are elected at large'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(603) 463-8811 Ext. 309",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly listed under 'Contact Info' for Greg Whitmore.",
+        "source": "https://www.townofdeerfieldnh.com/people/greg-whitmore-0"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.townofdeerfieldnh.com/people/greg-whitmore-0",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's contact/profile page is provided next to their name.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      },
+      {
+        "data": "https://www.townofdeerfieldnh.com/people/greg-whitmore-0",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Greg Whitmore.",
+        "source": "https://www.townofdeerfieldnh.com/people/greg-whitmore-0"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'March 2028' is explicitly stated next to the person's name and role in the 'Board Members' section, indicating the term expiration month and year. Converted to YYYY-MM format as per guidelines for 'Month YYYY'.",
+        "source": "https://www.townofdeerfieldnh.com/board-selectmen"
+      },
+      {
+        "data": "2028-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'March 2028' is explicitly stated next to the role.",
+        "source": "https://www.townofdeerfieldnh.com/people/greg-whitmore-0"
+      }
+    ],
+    "updated_at": "2025-07-02T16:54:52Z"
+  }
+]
