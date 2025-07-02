@@ -1,18 +1,18 @@
 [
   {
-    "name": "James Bailey, III",
-    "roles": [
-      "Select Board Member"
-    ],
-    "updated_at": "2025-07-02T03:42:12Z",
-    "divisions": []
-  },
-  {
     "name": "Iris Campbell",
     "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-07-02T03:42:12Z",
+    "updated_at": "2025-07-02T03:49:42Z",
+    "divisions": []
+  },
+  {
+    "name": "James Bailey, III",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-07-02T03:49:42Z",
     "divisions": []
   },
   {
@@ -20,7 +20,7 @@
     "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-07-02T03:42:12Z",
+    "updated_at": "2025-07-02T03:49:42Z",
     "divisions": []
   }
 ]
