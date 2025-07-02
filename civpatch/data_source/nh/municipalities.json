@@ -1704,7 +1704,14 @@
       "government_type": "select_board",
       "email": "epsomtown@metrocast.net",
       "website": "http://www.epsomnh.org",
-      "geoid": "3301324900"
+      "geoid": "3301324900",
+      "meta_updated_at": "2025-07-02T16:45:47Z",
+      "meta_hash": "e13a2d9d26676e5ec5cdfa1dac89a92b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Newton",
