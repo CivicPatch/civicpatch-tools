@@ -475,9 +475,13 @@
       "email": "agarron@hooksett.org",
       "website": "http://www.hooksett.org",
       "geoid": "3301337300",
-      "meta_updated_at": "2025-05-21",
-      "meta_hash": "dca4371fc179bb6a7f6757af8dbaf253",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T02:34:54Z",
+      "meta_hash": "705c36d4e4f806755811a4883479e73e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Lebanon",
