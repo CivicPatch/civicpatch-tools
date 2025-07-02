@@ -1,23 +1,23 @@
 [
   {
-    "name": "James Bailey, III",
-    "roles": [
-      "Selectman"
-    ],
-    "updated_at": "2025-07-02T03:42:12Z"
-  },
-  {
     "name": "Iris Campbell",
     "roles": [
-      "Selectman"
+      "Select Board Member"
     ],
-    "updated_at": "2025-07-02T03:42:12Z"
+    "updated_at": "2025-07-02T03:49:42Z"
+  },
+  {
+    "name": "James Bailey, III",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-07-02T03:49:42Z"
   },
   {
     "name": "Richard Pelletier",
     "roles": [
-      "Selectman"
+      "Select Board Member"
     ],
-    "updated_at": "2025-07-02T03:42:12Z"
+    "updated_at": "2025-07-02T03:49:42Z"
   }
 ]
