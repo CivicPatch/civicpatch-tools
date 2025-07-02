@@ -498,9 +498,13 @@
       "email": "crystal.taplin@lebanonnh.gov",
       "website": "http://www.lebanonnh.gov",
       "geoid": "3341300",
-      "meta_updated_at": "2025-05-27",
-      "meta_hash": "735dbf9f689c37be03e6674cc13aa9e7",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T02:41:05Z",
+      "meta_hash": "d18b02111966de184c8e6aeba40dff3e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Pelham",
