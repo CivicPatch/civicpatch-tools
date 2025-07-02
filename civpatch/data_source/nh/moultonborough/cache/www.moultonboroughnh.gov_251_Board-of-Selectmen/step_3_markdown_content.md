@@ -18,7 +18,7 @@ Search
 
 <!--THE END-->
 
-![](https://www.moultonboroughnh.gov/ImageRepository/Document?documentID=92)
+![](https://www.moultonboroughnh.gov/ImageRepository/Document?documentID=94)
 
 1. [Home](https://www.moultonboroughnh.gov)
 2. [Government](https://www.moultonboroughnh.gov/27/Government)

@@ -2,50 +2,37 @@
   {
     "name": "Kevin D. Quinlan",
     "sources": [
-      "https://www.moultonboroughnh.gov/251/Board-of-Selectmen",
-      "https://www.moultonboroughnh.gov/formcenter/Board-of-Selectmen-18/Contact-Kevin-D-Quinlan-71"
+      "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Chair",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text explicitly states 'Kevin D. Quinlan, Chair' and lists the year 2026, indicating an active role."
-      },
-      {
-        "data": "select board member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Kevin D. Quinlan is associated with the 'Board of Selectmen' through a contact form, strongly implying he is a member of this board."
+        "data": "Select Board Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair' for the Board of Selectmen."
       }
     ],
     "divisions": [],
-    "phone_numbers": [
-      {
-        "data": "603-476-2347",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under the general contact information for the Board of Selectmen, which is the main governing body.",
-        "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [],
     "websites": [
       {
         "data": "https://www.moultonboroughnh.gov/formcenter/Board-of-Selectmen-18/Contact-Kevin-D-Quinlan-71",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is a direct link associated with the person's name and role.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link associated with the person's name.",
         "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
       }
     ],
-    "start_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "The year 2026 is listed next to the name and role, likely indicating the end of the term, but it's the only date provided and could imply a start date in a previous year.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The year '2026' is explicitly stated next to the name, indicating the term end year.",
         "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-07-02T16:44:52Z"
+    "updated_at": "2025-07-02T16:58:56Z"
   },
   {
     "name": "Jonathan W. Tolman",
@@ -55,87 +42,67 @@
     "images": [],
     "roles": [
       {
-        "data": "Vice Chair",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text explicitly states 'Jonathan W. Tolman, Vice Chair' and lists the year 2026, indicating an active role."
+        "data": "Select Board Vice Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Chair' for the Board of Selectmen."
       }
     ],
     "divisions": [],
-    "phone_numbers": [
-      {
-        "data": "603-476-2347",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under the general contact information for the Board of Selectmen, which is the main governing body.",
-        "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [],
     "websites": [
       {
         "data": "https://www.moultonboroughnh.gov/formcenter/Board-of-Selectmen-18/Contact-Jonathan-W-Tolman-81",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is a direct link associated with the person's name and role.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link associated with the person's name.",
         "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
       }
     ],
-    "start_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "The year 2026 is listed next to the name and role, likely indicating the end of the term, but it's the only date provided and could imply a start date in a previous year.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The year '2026' is explicitly stated next to the name, indicating the term end year.",
         "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-07-02T16:44:52Z"
+    "updated_at": "2025-07-02T16:58:56Z"
   },
   {
     "name": "Karel A. Crawford",
     "sources": [
-      "https://www.moultonboroughnh.gov/251/Board-of-Selectmen",
-      "https://www.moultonboroughnh.gov/formcenter/Board-of-Selectmen-18/Contact-Karel-A-Crawford-73"
+      "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text explicitly states 'Karel A. Crawford, Member' and lists the year 2028, indicating an active role."
-      },
-      {
-        "data": "select board member",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The URL path and form category 'Board of Selectmen' strongly suggest Karel A. Crawford is a member of this body, which is equivalent to a select board member."
+        "data": "Select Board Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Member' for the Board of Selectmen."
       }
     ],
     "divisions": [],
-    "phone_numbers": [
-      {
-        "data": "603-476-2347",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under the general contact information for the Board of Selectmen, which is the main governing body.",
-        "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [],
     "websites": [
       {
         "data": "https://www.moultonboroughnh.gov/formcenter/Board-of-Selectmen-18/Contact-Karel-A-Crawford-73",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is a direct link associated with the person's name and role.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link associated with the person's name.",
         "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
       }
     ],
-    "start_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "The year 2028 is listed next to the name and role, likely indicating the end of the term, but it's the only date provided and could imply a start date in a previous year.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The year '2028' is explicitly stated next to the name, indicating the term end year.",
         "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-07-02T16:44:52Z"
+    "updated_at": "2025-07-02T16:58:56Z"
   },
   {
     "name": "James F. Gray",
@@ -146,39 +113,32 @@
     "images": [],
     "roles": [
       {
-        "data": "Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text explicitly states 'James F. Gray, Member' and lists the year 2027, indicating an active role."
+        "data": "Select Board Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Member' for the Board of Selectmen."
       }
     ],
     "divisions": [],
-    "phone_numbers": [
-      {
-        "data": "603-476-2347",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under the general contact information for the Board of Selectmen, which is the main governing body.",
-        "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
-      }
-    ],
+    "phone_numbers": [],
     "emails": [],
     "websites": [
       {
         "data": "https://www.moultonboroughnh.gov/formcenter/Board-of-Selectmen-18/Contact-James-F-Gray-94",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is a direct link associated with the person's name and role.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link associated with the person's name.",
         "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
       }
     ],
-    "start_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
         "data": "2027",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "The year 2027 is listed next to the name and role, likely indicating the end of the term, but it's the only date provided and could imply a start date in a previous year.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The year '2027' is explicitly stated next to the name, indicating the term end year.",
         "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-07-02T16:44:52Z"
+    "updated_at": "2025-07-02T16:58:56Z"
   },
   {
     "name": "Charles M. McGee",
@@ -189,43 +149,42 @@
     "images": [],
     "roles": [
       {
-        "data": "Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text explicitly states 'Charles M. McGee, Member' and lists the year 2027, indicating an active role."
+        "data": "Select Board Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Member' for the Board of Selectmen."
       },
       {
         "data": "select board member",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "The text mentions 'Board of Selectmen' and a contact form specifically for 'Charles M. McGee', strongly implying he is a member of this governing body."
+        "llm_confidence_reason": "The URL path explicitly includes 'Board-of-Selectmen' and 'Contact-Charles-M-McGee', indicating he is a member of this body, which aligns with the 'select board member' role."
       }
     ],
-    "divisions": [],
-    "phone_numbers": [
+    "divisions": [
       {
-        "data": "603-476-2347",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under the general contact information for the Board of Selectmen, which is the main governing body.",
-        "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
+        "data": "Board of Selectmen",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The URL path explicitly includes 'Board-of-Selectmen' and 'Contact-Charles-M-McGee', strongly linking him to this body."
       }
     ],
+    "phone_numbers": [],
     "emails": [],
     "websites": [
       {
         "data": "https://www.moultonboroughnh.gov/formcenter/Board-of-Selectmen-18/Contact-Charles-M-McGee-95",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "This is a direct link associated with the person's name and role.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link associated with the person's name.",
         "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
       }
     ],
-    "start_dates": [
+    "start_dates": [],
+    "end_dates": [
       {
         "data": "2027",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "The year 2027 is listed next to the name and role, likely indicating the end of the term, but it's the only date provided and could imply a start date in a previous year.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The year '2027' is explicitly stated next to the name, indicating the term end year.",
         "source": "https://www.moultonboroughnh.gov/251/Board-of-Selectmen"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-07-02T16:44:52Z"
+    "updated_at": "2025-07-02T16:58:56Z"
   }
 ]

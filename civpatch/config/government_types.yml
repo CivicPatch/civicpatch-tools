@@ -180,6 +180,7 @@ government_types:
         - selectboard
         - selectboard member
         - select board member
+        - member
     search_keywords:
       selectmen:
         - board of selectmen
