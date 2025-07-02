@@ -1,0 +1,154 @@
+[
+  {
+    "name": "Rod O'Shana",
+    "sources": [
+      "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Interim Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Rod O'Shana, Interim Chair'."
+      },
+      {
+        "data": "Selectboard member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Rod O'Shana as part of the five-member Selectboard."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "roshana@haverhill-nh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is clearly associated with the individual's name and role.",
+        "source": "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-07-03",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The document mentions 'Select Board Standard Operating Procedures (updated 7-3-2023)', which is the closest date associated with the Selectboard's operations, implying a recent update or confirmation of roles around this time.",
+        "source": "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-02T17:12:01Z"
+  },
+  {
+    "name": "Joe Longacre",
+    "sources": [
+      "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectboard member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Joe Longacre as part of the five-member Selectboard."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jlongacre@haverhill-nh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is clearly associated with the individual's name.",
+        "source": "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T17:12:01Z"
+  },
+  {
+    "name": "Theresa Paige",
+    "sources": [
+      "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectboard member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Theresa Paige as part of the five-member Selectboard."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tpaige@haverhill-nh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is clearly associated with the individual's name.",
+        "source": "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T17:12:01Z"
+  },
+  {
+    "name": "Ron C. Hurlburt",
+    "sources": [
+      "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectboard member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Ron C. Hurlburt as part of the five-member Selectboard."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "rhurlburt@haverhill-nh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is clearly associated with the individual's name.",
+        "source": "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T17:12:01Z"
+  },
+  {
+    "name": "Kevin Knapp",
+    "sources": [
+      "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectboard member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text lists Kevin Knapp as part of the five-member Selectboard."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "kknapp@haverhill-nh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is clearly associated with the individual's name.",
+        "source": "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T17:12:01Z"
+  }
+]
