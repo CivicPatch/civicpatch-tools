@@ -18,8 +18,8 @@ module Core
     INCLUDE_API_CONTENT = {
       mwjsPeople: {
         pattern: "mwjsPeople",
-        start_string: "var mwjsMemberData=",
-        end_string: ",onerror"
+        start_string: "people\":",
+        end_string: "]}"
       }
     }.freeze
     IGNORE_EXTENSIONS = [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx"].freeze
@@ -65,11 +65,21 @@ module Core
           return nil unless html_page?(content_type)
         end
 
-        sleep(options[:wait_for]) if options[:wait_for].present?
+        # Explicitly wait for the desired duration while processing responses
+        if options[:wait_for].present?
+          sleep_duration = options[:wait_for].to_f
+          start_time = Time.now
+          while Time.now - start_time < sleep_duration
+            # Allow Playwright to process events during the sleep
+            page.wait_for_timeout(100) # Wait for 100ms intervals
+          end
+        end
 
         yield(page) if block_given?
 
-        process_page(page, url, options, api_data)
+        api_content = api_data.join(";")
+
+        process_page(page, url, options, api_content)
       end
     end
 
@@ -98,7 +108,9 @@ module Core
 
       page_source = process_images(page, page_source, options, url) if options[:image_dir].present?
       page_source = Utils::UrlHelper.format_links_to_absolute(page_source, url)
-      page_source = format_page_html(page_source, api_data, url) if api_data.present?
+
+      puts "API data found? #{api_data.present?}" if api_data.present?
+      page_source = format_page_html(page_source, api_data) if api_data.present?
 
       page_source
     rescue StandardError => e
@@ -107,10 +119,10 @@ module Core
       nil
     end
 
-    private_class_method def self.format_page_html(page_source, api_content, url)
+    private_class_method def self.format_page_html(page_source, api_content)
       doc = Nokolexbor::HTML(page_source)
       body = doc.at_css("body")
-      body.add_child(Nokolexbor::HTML.fragment(api_content))
+      body.add_child(Nokolexbor::HTML(api_content))
 
       doc.to_html
     end
@@ -130,17 +142,16 @@ module Core
       return unless response.url.include?(INCLUDE_API_CONTENT[:mwjsPeople][:pattern])
 
       begin
-        text = response.text
+        text = response.body
+        extract_api_content(INCLUDE_API_CONTENT[:mwjsPeople][:pattern], text, response.url)
       rescue StandardError => e
         puts "Error getting response text: #{e.message}"
         puts e.backtrace
-        return nil
+        nil
       end
-
-      extract_api_content(INCLUDE_API_CONTENT[:mwjsPeople][:pattern], text)
     end
 
-    private_class_method def self.extract_api_content(pattern, text)
+    private_class_method def self.extract_api_content(pattern, text, url)
       INCLUDE_API_CONTENT.each_value do |config|
         next unless config[:pattern] == pattern
 

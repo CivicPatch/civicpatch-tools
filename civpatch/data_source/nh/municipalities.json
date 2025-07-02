@@ -382,8 +382,8 @@
       "government_type": "select_board",
       "email": "administration@milford.nh.gov",
       "website": "http://www.milford.nh.gov/",
-      "meta_updated_at": "2025-07-01T20:04:49Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-02T01:52:12Z",
+      "meta_hash": "9f570f4a041e97e18bb772d643c590c9",
       "meta_sources": [
         "state_source",
         "gemini",
