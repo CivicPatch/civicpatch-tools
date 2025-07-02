@@ -1210,7 +1210,14 @@
       "government_type": "select_board",
       "email": "dmelone@peterboroughnh.gov",
       "website": "http://www.peterboroughnh.gov",
-      "geoid": "3301160580"
+      "geoid": "3301160580",
+      "meta_updated_at": "2025-07-02T03:36:33Z",
+      "meta_hash": "b81deb87f8f8c19fc9f8ff650230bc00",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Wolfeboro",
