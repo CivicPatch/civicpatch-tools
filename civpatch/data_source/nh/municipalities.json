@@ -1224,7 +1224,14 @@
       "government_type": "select_board",
       "email": "cdonovan@newportnh.gov",
       "website": "http://www.newportnh.gov",
-      "geoid": "3301952580"
+      "geoid": "3301952580",
+      "meta_updated_at": "2025-07-02T03:36:51Z",
+      "meta_hash": "71d1e52e495625c0abda684764f3516f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Kingston",
