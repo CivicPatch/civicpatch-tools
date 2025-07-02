@@ -1,34 +1,10 @@
 [
   {
-    "name": "Rod O'Shana",
-    "roles": [
-      "Select Board Member"
-    ],
-    "updated_at": "2025-07-02T17:08:40Z",
-    "divisions": []
-  },
-  {
-    "name": "Joe Longacre",
-    "roles": [
-      "Select Board Member"
-    ],
-    "updated_at": "2025-07-02T17:08:40Z",
-    "divisions": []
-  },
-  {
     "name": "Theresa Paige",
     "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-07-02T17:08:40Z",
-    "divisions": []
-  },
-  {
-    "name": "Ron C. Hurlburt",
-    "roles": [
-      "Select Board Member"
-    ],
-    "updated_at": "2025-07-02T17:08:40Z",
+    "updated_at": "2025-07-02T17:39:21Z",
     "divisions": []
   },
   {
@@ -36,7 +12,22 @@
     "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-07-02T17:08:40Z",
+    "updated_at": "2025-07-02T17:39:21Z",
     "divisions": []
+  },
+  {
+    "name": null,
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-07-02T17:39:21Z",
+    "divisions": [],
+    "images": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "sources": []
   }
 ]

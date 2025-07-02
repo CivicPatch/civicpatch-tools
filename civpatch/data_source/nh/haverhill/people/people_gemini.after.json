@@ -2,19 +2,19 @@
   {
     "name": "Rod O'Shana",
     "roles": [
-      "Select Board Member"
+      "Select Board Chair"
     ],
     "divisions": [],
     "image": null,
     "phone_number": null,
     "email": "roshana@haverhill-nh.com",
     "website": null,
-    "start_date": "2023-07-03",
+    "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
     ],
-    "updated_at": "2025-07-02T17:12:01Z"
+    "updated_at": "2025-07-02T17:40:01Z"
   },
   {
     "name": "Joe Longacre",
@@ -31,7 +31,7 @@
     "sources": [
       "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
     ],
-    "updated_at": "2025-07-02T17:12:01Z"
+    "updated_at": "2025-07-02T17:40:01Z"
   },
   {
     "name": "Theresa Paige",
@@ -48,7 +48,7 @@
     "sources": [
       "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
     ],
-    "updated_at": "2025-07-02T17:12:01Z"
+    "updated_at": "2025-07-02T17:40:01Z"
   },
   {
     "name": "Ron C. Hurlburt",
@@ -65,7 +65,7 @@
     "sources": [
       "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
     ],
-    "updated_at": "2025-07-02T17:12:01Z"
+    "updated_at": "2025-07-02T17:40:01Z"
   },
   {
     "name": "Kevin Knapp",
@@ -82,6 +82,6 @@
     "sources": [
       "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
     ],
-    "updated_at": "2025-07-02T17:12:01Z"
+    "updated_at": "2025-07-02T17:40:01Z"
   }
 ]

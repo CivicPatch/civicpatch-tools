@@ -1878,8 +1878,8 @@
       "email": "townmanager@haverhill-nh.com",
       "website": "http://www.haverhill-nh.com",
       "geoid": "3300934820",
-      "meta_updated_at": "2025-07-02T17:12:01Z",
-      "meta_hash": "299850d2704c21b2d73b66b848f7c98d",
+      "meta_updated_at": "2025-07-02T17:40:01Z",
+      "meta_hash": "d7866a1450085672086d1063537cc059",
       "meta_sources": [
         "state_source",
         "gemini",
