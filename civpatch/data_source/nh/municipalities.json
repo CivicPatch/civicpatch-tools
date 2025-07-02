@@ -1786,7 +1786,14 @@
       "government_type": "select_board",
       "email": "townmanager@haverhill-nh.com",
       "website": "http://www.haverhill-nh.com",
-      "geoid": "3300934820"
+      "geoid": "3300934820",
+      "meta_updated_at": "2025-07-02T17:30:45Z",
+      "meta_hash": "c09d492834d22fd848183fcb5dcc8eed",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "North Hampton",
