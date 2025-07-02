@@ -4,15 +4,7 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-07-02T18:04:13Z",
-    "divisions": []
-  },
-  {
-    "name": "Alisa Granger",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-07-02T18:04:13Z",
+    "updated_at": "2025-07-02T18:18:58Z",
     "divisions": []
   },
   {
@@ -20,7 +12,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-02T18:04:13Z",
+    "updated_at": "2025-07-02T18:18:58Z",
     "divisions": []
   },
   {
@@ -28,15 +20,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-02T18:04:13Z",
-    "divisions": []
-  },
-  {
-    "name": "Tim Webber",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-07-02T18:04:13Z",
+    "updated_at": "2025-07-02T18:18:58Z",
     "divisions": []
   },
   {
@@ -44,7 +28,15 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-02T18:04:13Z",
+    "updated_at": "2025-07-02T18:18:58Z",
+    "divisions": []
+  },
+  {
+    "name": "Tim Webber",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-02T18:18:58Z",
     "divisions": []
   },
   {
@@ -52,7 +44,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-02T18:04:13Z",
+    "updated_at": "2025-07-02T18:18:58Z",
     "divisions": []
   }
 ]

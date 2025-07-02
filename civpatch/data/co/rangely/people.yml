@@ -13,13 +13,13 @@
   sources:
   - https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees
   - https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees
-  updated_at: '2025-07-02T18:07:18Z'
-- name: Andy Shaffer
+  updated_at: '2025-07-02T18:21:54Z'
+- name: Robby Elam
   roles:
-  - Mayor Pro Tempore
+  - Trustee
   divisions:
-  image: https://townofrangely.colorado.gov/sites/townofrangely/files/styles/extra_large_thumbnail_650x650_/public/Andy%20Shaffer.PNG
-  cdn_image: https://cdn.civicpatch.org/open-data/co/rangely/images/de3abdf64d09fdfee3be4570964cff8503ac6e5f8a777e9b89aed3ed64fff090.png
+  image: https://townofrangely.colorado.gov/sites/townofrangely/files/inline-images/Robby%20Elam.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/co/rangely/images/5f1170522bb07839174def60fa57342d68bbee94a64591d5c5423a2bc5833304.jpg
   email: town@rangelyco.gov
   phone_number: "(970) 675-8476"
   website: https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees
@@ -28,7 +28,7 @@
   sources:
   - https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees
   - https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees
-  updated_at: '2025-07-02T18:07:18Z'
+  updated_at: '2025-07-02T18:21:54Z'
 - name: Kyle Wren
   roles: []
   divisions:
@@ -42,7 +42,7 @@
   sources:
   - https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees
   - https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees
-  updated_at: '2025-07-02T18:07:18Z'
+  updated_at: '2025-07-02T18:21:54Z'
 - name: Shawn Morgan
   roles: []
   divisions:
@@ -56,7 +56,7 @@
   sources:
   - https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees
   - https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees
-  updated_at: '2025-07-02T18:07:18Z'
+  updated_at: '2025-07-02T18:21:54Z'
 - name: Tim Webber
   roles: []
   divisions:
@@ -70,7 +70,7 @@
   sources:
   - https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees
   - https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees
-  updated_at: '2025-07-02T18:07:18Z'
+  updated_at: '2025-07-02T18:21:54Z'
 - name: Todd Thayne
   roles: []
   divisions:
@@ -83,5 +83,4 @@
   end_date:
   sources:
   - https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees
-  - https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees
-  updated_at: '2025-07-02T18:07:18Z'
+  updated_at: '2025-07-02T18:21:54Z'
