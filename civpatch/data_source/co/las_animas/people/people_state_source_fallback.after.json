@@ -4,23 +4,7 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-07-02T18:00:38Z",
-    "divisions": []
-  },
-  {
-    "name": "Richard “Rick” Stwalley",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-07-02T18:00:38Z",
-    "divisions": []
-  },
-  {
-    "name": "Eraclio “Rocky” Quintanilla",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-07-02T18:00:38Z",
+    "updated_at": "2025-07-02T18:24:31Z",
     "divisions": []
   },
   {
@@ -28,7 +12,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-02T18:00:38Z",
+    "updated_at": "2025-07-02T18:24:31Z",
     "divisions": []
   },
   {
@@ -36,23 +20,39 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-02T18:00:38Z",
+    "updated_at": "2025-07-02T18:24:31Z",
     "divisions": []
   },
   {
-    "name": "Jesse Garcia",
+    "name": "Joseph Frazier",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-02T18:00:38Z",
+    "updated_at": "2025-07-02T18:24:31Z",
     "divisions": []
   },
   {
-    "name": "Joe Frazier",
+    "name": "Jesus Garcia",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-02T18:00:38Z",
+    "updated_at": "2025-07-02T18:24:31Z",
+    "divisions": []
+  },
+  {
+    "name": "Eracilio Quintanilla",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-02T18:24:31Z",
+    "divisions": []
+  },
+  {
+    "name": "Richard Stwalley",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-02T18:24:31Z",
     "divisions": []
   }
 ]
