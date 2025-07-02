@@ -1834,7 +1834,14 @@
       ],
       "population": 2358,
       "website": "http://www.cityofwray.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-02T18:07:49Z",
+      "meta_hash": "7f016dd9285da5864837d28a90bf6972",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Holyoke",
