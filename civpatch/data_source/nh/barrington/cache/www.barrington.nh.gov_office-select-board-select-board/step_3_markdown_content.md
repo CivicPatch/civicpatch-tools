@@ -1,4 +1,4 @@
-[Skip to main content](https://www.barrington.nh.gov/office-select-board/pages/overlook-circle/)
+[Skip to main content](https://www.barrington.nh.gov/office-select-board-select-board/)
 
 ![Barrington NH](https://www.barrington.nh.gov/sites/all/themes/custom/sites/barringtonnh/vts_barringtonnh/logo.png)
 
@@ -381,98 +381,75 @@ Keywords
 
 1. [Home](https://www.barrington.nh.gov) ››
 2. [Departments](https://www.barrington.nh.gov/departments) ››
-3. [Town Administrator](https://www.barrington.nh.gov/town-administrator) ››
-4. [Completed Projects - 2023](https://www.barrington.nh.gov/town-administrator/pages/completed-projects-2023)
+3. [Town Administrator](https://www.barrington.nh.gov/town-administrator)
 
-# Overlook Circle
+# Office of the Select Board
 
-Closed February 27, 2023
+*To contact us, please use the [Contact Us](https://www.barrington.nh.gov/home/webforms/contact-us) in the left hand column.*
 
-The Select Board voted on February 27, 2023 pursuant to RSA 674:40-a III to accept Overlook Circle.  Overlook Circle is now a Class V, Town-maintained, road.  The information below will remain available for historical context.
+**2025 Budget, Deliberative Session, and Voting**
+
+The first session for the transaction of all Town Meeting business (deliberative session), other than voting by official ballot, shall be held Saturday, February 1st, 2025 at 9:00 A.M. at the Middle School, 51 Haley Dr. Barrington.  The first session shall consist of explanation, discussion, and debate of each warrant article.  Warrant articles may be amended, subject to the following limitations: Warrant articles whose wording is prescribed by law shall not be amended. Warrant articles shall be placed on the official ballot for final vote on the main motion, as amended.
+
+The second session of the annual meeting, to vote on questions required by law to be inserted on said official ballot and to vote on all warrant articles from the first session shall be held Tuesday, March 11th, 2025 at the Middle School, 51 Haley Dr.  The polls shall be open from 8:00 A.M. to 7:00 P.M.
+
+[2025 Voter Guide](https://www.barrington.nh.gov/2025voterguide)
+
+[2025 Warrant Website](https://www.barrington.nh.gov/2025warrant)
+
+[2025 Budget Website](https://www.barrington.nh.gov/2025budget)
+
+[2025 Deliberative Session](https://youtu.be/9ErB9Qlugko)
 
  
 
-\*\**
+## Staff Contacts
 
-Overlook Circle is a private road in a residential subdivision on the west side of Barrington, near Strafford.  A dispute exists between the residents of Overlook Circle, the developer, engineers, and the Town regarding the road construction and future maintenance.  The Town has not accepted ownership of Overlook Circle due to construction deficiencies.  Although the Town is sympathetic to the taxpayers on Overlook Circle, the Select Board concluded that it would be irresponsible for the Town to accept ownership of a private road which was not properly built.  The Town has been upfront and transparent with the residents of Overlook Circle and will continue to make informed decisions which are best for the Town.  This webpage is intended to aid in transparency by providing background and details of the Overlook Circle dispute.
+Name Title Phone Tiffany Caudle Municipal Office Administrator (603) 664-0146 Conner MacIver Town Administrator (603) 664-9007
 
-## Project Background (2014-2022)
+## Select Board Members
 
-On May 12, 2014 the Planning Board issued a Notice of Decision providing approval for a 20-lot residential subdivision (River’s Peak Subdivision by Cabernet Builders).  The [final plans](https://www.barrington.nh.gov/maps/files/2014riverspeakfinalpln) were submitted and signed on October 9, 2014.  All documents related to the application and Planning Board review can be found at: [www.barrington.nh.gov/maps/pages/map-215-0](https://www.barrington.nh.gov/maps/pages/map-215-0).
+MemberTitleTerm ExpiresE-Mail
 
-The road construction began in the fall of 2015 and homes were constructed between 2016 and 2019.  The road was completed with a wearing course of pavement in November of 2019.  
+Tracy Hardekopf
 
-The Town’s [Subdivision Regulations](https://www.barrington.nh.gov/planning-board/files/subdivision-regulations) address road construction standards in Chapter 12.8.  Specifically, Chapters 12.8.1 and 12.8.2 address the road base and pavement standards.  Additionally, each subdivision project must be built to the plan approved by the Planning Board.  During Planning Board review, there are site-specific waivers or requirements put in place which are incorporated into the final plan.  The [final plan](https://www.barrington.nh.gov/maps/files/2014riverspeakfinalpln) for this project can be found on the Town’s website and the cover pages are recorded at the Strafford Country Registry of Deeds at P0108-0032 and P0108-0032.
+Chair
 
-During construction, the developer is required to hire the Town’s third-party engineer to observe construction and ensure compliance with Town regulations and the approved plan.  Following the placement of the wearing course of pavement on November 7, 2019, there was a dispute between the developer and the third-party engineer regarding pavement thickness and surface temperature.  As a result, the third-party engineer provided an opinion that the wearing course was not installed consistent with the Town’s regulations and the approved plan. 
+2026
 
-In an attempt to resolve the dispute, the Town requested permission from the developer to take borings (at the Town’s expense) in early 2020.  After more than a year, permission was granted, and the Town took eight borings throughout Overlook Circle on August 13, 2021.  At the direction of the Select Board, a separate engineering firm reviewed the Town’s regulations, the approved subdivision plans, the third-party engineer’s reports, and the results from the borings.  They prepared [a report](https://www.barrington.nh.gov/office-select-board/files/922409-overlook-cir-deficiencies-memo-final) of their findings.  In summary, they found that the road, as constructed, does not meet the Town’s standards in multiple areas.  Specifically, the road base is not crushed gravel, the pavement thickness is inconsistent (and in multiple cases too thin), and the pavement compaction is less than the industry standard (a common result of cold-weather application).  In addition, the road transition radius was not constructed according to the plan and the lot line monumentations required in the regulations were not completed.  A full timeline of review and documentation is available at: [www.barrington.nh.gov/maps/pages/map-215-0](https://www.barrington.nh.gov/maps/pages/map-215-0).
+[thardekopf@barrington.nh.gov](mailto:thardekopf@barrington.nh.gov)
 
-## Select Board Consider Overlook Circle Acceptance (February 28, 2022)
+James Saccoccia
 
-State law ([RSA 674:40-a](https://www.gencourt.state.nh.us/rsa/html/LXIV/674/674-40-a.htm)) allows a Town to authorize the governing body (Select Board) to accept roads as shown on a subdivision plat or site plan approved by the Planning Board.  In 1994 (Article 34) the Town approved the following article:
+Vice-Chair
 
-*To see if the Town will vote to authorize the Board of Selectmen to accept, in their discretion, the dedication of any street shown on a subdivision plan and has been determined to serve a public purpose approved by the Planning Board, provided that such street has been constructed to applicable town specifications as determined by the Board of Selectmen or their agent.*
+2026
 
-When the Town accepts a road, it assumes full maintenance and repair responsibilities by changing the classification from a private road to a Class V road.  [RSA 674:40-a III](https://www.gencourt.state.nh.us/rsa/html/LXIV/674/674-40-a.htm) requires the Select Board to hold a public hearing on the proposed acceptance prior to taking action. 
+[jsaccoccia@barrington.nh.gov](mailto:jsaccoccia@barrington.nh.gov)
 
-The hearing to consider the acceptance of Overlook Circle was scheduled for February 28, 2022.  As indicated in State law and the Town warrant article cited above, acceptance of a road is a discretionary decision of the Select Board.  Further, the Town warrant article requires that the road be constructed to the applicable Town specifications in order to be accepted by the Select Board
+Dannen Mannschreck
 
-The Town sent letters to all residents of Overlook Circle, inviting them to the Public Hearing and sharing details of the process and the engineer's deficiencies report.
+Member
 
-- [Overlook Circle Letter to Residents 20220215](https://www.barrington.nh.gov/office-select-board/files/overlook-circle-letter-residents-20220215)
-- [922409 Overlook Cir Deficiencies Memo Final](https://www.barrington.nh.gov/office-select-board/files/922409-overlook-cir-deficiencies-memo-final)
+2027
 
-The Developer’s attorney provided the following information in support of their request for the Select Board to accept the road.
+[dmannschreck@barrington.nh.gov](mailto:dmannschreck@barrington.nh.gov)
 
-- [Attorney Steiner Letter to Select Board 20220224](https://www.barrington.nh.gov/office-select-board/files/attorney-steiner-letter-select-board-20220224)
+Joyce Cappiello
 
-After careful consideration, the Select Board voted to not accept Overlook Circle due to the identified deficiencies.
+Member
 
-*Motion to not accept Overlook Circle pursuant to RSA 674:40-a III because it was not built to the Town’s specifications as required by Town Meeting as evidenced in the September 27, 2021 memo from Hoyle, Tanner, and Associates by Chairperson Knapp, seconded by Selectperson Bailey. Roll Call Vote: Mannschreck – Aye, Bailey – Aye, Saccoccia – Aye, Knapp – Aye.*
+2028
 
-[Overlook Circle Acceptance Public Hearing Minutes](https://www.barrington.nh.gov/office-select-board/minutes/select-board-meeting-minutes-february-28-2022)
+[jcappiello@barrington.nh.gov](mailto:jcappiello@barrington.nh.gov)
 
-[Overlook Circle Acceptance Public Hearing Video Recording](https://youtu.be/Xsxvdijpkqk?t=246)
+Alexandra Simocko
 
-## Court Complaint - 219-2022-CV-00350 (November 30, 2022)
+Member
 
-On November 30, 2022, 18 households on Overlook Circle filed a complaint in Superior Court asking the court to resolve the dispute regarding future road maintenance.  The complaint names the following:
+2028
 
-- Ian James, LLC
-- Better Built Homes, LLC
-- Better Built Homes Construction Management, LLC
-- Dubois &amp; King, Inc.
-- The Town of Barrington
-- Hoyle, Tanner &amp; Associates, Inc.
-- GMI Asphalt, LLC
-
-Court Filing Documents
-
-- [Civil Complaint - 219-2022-CV-00350](https://www.barrington.nh.gov/office-select-board/files/civil-complaint-219-2022-cv-00350)
-- [Summons on Complaint - 219-2022-CV-00350](https://www.barrington.nh.gov/office-select-board/files/summons-complaint-219-2022-cv-00350)
-- [Motion for Remote Temporary Hearing - 219-2022-CV-00350](https://www.barrington.nh.gov/office-select-board/files/motion-remote-temporary-hearing-219-2022-cv-00350)
-  
-  - This motion asks the court to determine which entity should be responsible for winter road maintenance while the civil complaint is being resolved.
-  - A hearing has been scheduled for January 13, 2023 at 9am.
-
-## Preliminary Injunction - 219-2022-CV-00350 (January 13, 2023)
-
-On January 13, 2023, Judge Daniel E. Will held a hearing on the [request for a preliminary injunction](https://www.barrington.nh.gov/office-select-board/files/motion-remote-temporary-hearing-219-2022-cv-00350).  Judge Will requested additional information be provided by all parties to aid in his review of the request
-
-- [Homeowners' Memorandum of Law 20230118](https://www.barrington.nh.gov/office-select-board/files/homeowners-memorandum-law-20230118)
-- [Objection by Ian James LLC to Preliminary Injunction 20230119](https://www.barrington.nh.gov/office-select-board/files/objection-ian-james-llc-preliminary-injunction-20230119)
-- [Town Objection to Request for Preliminary Injunction 20230118](https://www.barrington.nh.gov/office-select-board/files/town-objection-request-preliminary-injunction-20230118)
-
-On January 26, 2023, Judge Will ordered the Town to perform winter maintenance on Overlook Circle while the [Civil Complaint](https://www.barrington.nh.gov/office-select-board/files/civil-complaint-219-2022-cv-00350) was being reviewed through the courts.
-
-- [Judge Will Order on Preliminary Injunction 20230126](https://www.barrington.nh.gov/office-select-board/files/judge-will-order-preliminary-injunction-20230126)
-
-## Select Board Reconsider Overlook Circle Acceptance (February 27, 2023)
-
-Although the boring results indicate that the developer erred in constructing the road to the Town’s specifications, the superior court has found on a preliminary basis that the Town’s former engineer (acting as an agent of the Town) did not sufficiently notify the developer of those errors.  Unfortunately, the residents of Overlook Circle are blameless and have been negatively affected by the circumstances.  The Town took many steps in the interest of Barrington’s residents including trying to call the construction bond, hiring a new engineer, and ending the relationship with the original third-party engineer.  Additionally, the Town advocated in court that the developer was responsible for the identified construction deficiencies of Overlook Circle.  One positive (and important) detail is that Overlook Circle has withstood almost three full winters without obvious signs of premature failure.  After evaluating the steps taken and options moving forward, the Select Board chose to reconsider the acceptance of Overlook Circle.  All related claims against the Town would be dropped if Overlook Circle is accepted as a Class V, Town-maintained road.
-
-The Select Board voted to accept Overlook Circle.  
+[asimocko@barrington.nh.gov](mailto:asimocko@barrington.nh.gov)
 
 - [Select Board Meeting Agendas/Minutes/Videos](https://www.barrington.nh.gov/selectmens-office-board-selectmen/links/board-selectmen-meeting-videos)
 - [Town Administrator Webpage](https://www.barrington.nh.gov/selectmens-office-board-selectmen/links/town-administrator)
@@ -491,6 +468,11 @@ The Select Board voted to accept Overlook Circle.  
 - [Mission, Vision, and Values](https://www.barrington.nh.gov/SB-missionvisionvalues)
 
 ## Contact Info
+
+Hours of Operation:
+
+Mon, Tues, Thurs: 8am-5pm  
+Wed: 8am-6pm                           Fri: CLOSED
 
 Phone:
 
@@ -512,6 +494,212 @@ United States
 
 See map: [Google Maps](https://maps.google.com/?q=4%20Signature%20Drive%20%28Off%20Rte.%20125%29%20%20%2C%20Barrington%2C%20%2C%2003825%2C%20us)
 
+Meetings - When: Varies; Generally 2 Mondays/month (Additional meetings as necessary)
+
+Meetings - Where: Town Hall Meeting Room, 4 Signature Drive
+
+Meetings - Time: 6:30 pm (Unless otherwise noted)
+
+## [Frequently Asked Questions](https://www.barrington.nh.gov/node/32/faq)
+
+[Why is the 2023 Town Budget/Warrant Public Hearing on a Tuesday? (1/5/2023)](https://www.barrington.nh.gov/office-select-board/faq/why-2023-town-budgetwarrant-public-hearing-tuesday-152023)
+
+- ![2025 Select Board Composite](https://www.barrington.nh.gov/sites/g/files/vyhlif2766/f/styles/group_main_image/public/departments/2025_select_board_composite.png?itok=zlqqKnSR "2025 Select Board Composite")
+
+<!--THE END-->
+
+<!--THE END-->
+
+- [Previous](https://www.barrington.nh.gov/office-select-board-select-board)
+- [Next](https://www.barrington.nh.gov/office-select-board-select-board)
+
+## [Office of the Select Board Calendar](https://www.barrington.nh.gov/node/32/events/month)
+
+### [July](https://www.barrington.nh.gov/node/32/events/month/32/2025-07 "View full page month")
+
+- [«](https://www.barrington.nh.gov/office-select-board-select-board?month=2025-06 "Navigate to previous month")
+- [»](https://www.barrington.nh.gov/office-select-board-select-board?month=2025-08 "Navigate to next month")
+
+S M T W T F S
+
+ 
+
+ 
+
+1
+
+ 
+
+2
+
+ 
+
+3
+
+ 
+
+4
+
+ 
+
+5
+
+ 
+
+6
+
+ 
+
+7
+
+ 
+
+8
+
+ 
+
+9
+
+ 
+
+10
+
+ 
+
+11
+
+ 
+
+12
+
+ 
+
+13
+
+ 
+
+[14](https://www.barrington.nh.gov/node/32/events/day/2025-07-14)
+
+- [Select Board Meeting – July 14, 2025](https://www.barrington.nh.gov/office-select-board/events/151496)
+  
+  6:30pm
+
+ 
+
+15
+
+ 
+
+16
+
+ 
+
+17
+
+ 
+
+18
+
+ 
+
+19
+
+ 
+
+20
+
+ 
+
+21
+
+ 
+
+22
+
+ 
+
+23
+
+ 
+
+24
+
+ 
+
+25
+
+ 
+
+26
+
+ 
+
+27
+
+ 
+
+28
+
+ 
+
+29
+
+ 
+
+30
+
+ 
+
+31
+
+ 
+
+ 
+
+ 
+
+[All upcoming events](https://www.barrington.nh.gov/node/32/events/month/32/2025-07)
+
+## [Agendas](https://www.barrington.nh.gov/node/32/agenda)
+
+- [Select Board Meeting Agenda – June 16, 2025](https://www.barrington.nh.gov/sbagenda20250616)
+  
+  June 16, 2025 - 6:00pm
+- [Select Board Meeting Agenda – June 9, 2025](https://www.barrington.nh.gov/sbagenda20250609)
+  
+  June 9, 2025 - 6:30pm
+- [Select Board Special Meeting (Interviews) Agenda – June 2, 2025](https://www.barrington.nh.gov/office-select-board/agenda/select-board-special-meeting-interviews-agenda-%E2%80%93-june-2-2025)
+  
+  June 2, 2025 - 6:00pm
+- [Select Board Meeting Agenda – May 12, 2025](https://www.barrington.nh.gov/sbagenda20250512)
+  
+  May 12, 2025 - 6:30pm
+- [Select Board Meeting Agenda – April 21, 2025](https://www.barrington.nh.gov/sbagenda20250421)
+  
+  April 17, 2025 - 6:30pm
+
+[View all](https://www.barrington.nh.gov/node/32/agenda)
+
+## [Minutes](https://www.barrington.nh.gov/selectboardminutes)
+
+- [Select Board Meeting Minutes - June 9, 2025](https://www.barrington.nh.gov/office-select-board/minutes/select-board-meeting-minutes-june-9-2025)
+  
+  June 9, 2025
+- [Select Board Meeting Minutes - May 12, 2025](https://www.barrington.nh.gov/office-select-board/minutes/select-board-meeting-minutes-may-12-2025)
+  
+  May 12, 2025
+- [Select Board Meeting Minutes - April 21, 2025](https://www.barrington.nh.gov/office-select-board/minutes/select-board-meeting-minutes-april-21-2025)
+  
+  April 21, 2025
+- [Select Board Meeting Minutes - April 7, 2025](https://www.barrington.nh.gov/office-select-board/minutes/select-board-meeting-minutes-april-7-2025-0)
+  
+  April 7, 2025
+- [Select Board Meeting Minutes - April 7, 2025](https://www.barrington.nh.gov/office-select-board/minutes/select-board-meeting-minutes-april-7-2025)
+  
+  April 7, 2025
+
+[View all](https://www.barrington.nh.gov/selectboardminutes)
+
 #### Barrington New Hampshire
 
 P.O. Box 660  
@@ -519,4 +707,4 @@ P.O. Box 660
 Barrington, NH 03825 PH: (603) 664-9007  
 [Website Disclaimer](https://www.barrington.nh.gov/home/files/website-disclaimer-privacy-policy) | [Government Websites by CivicPlus ®](https://www.civicplus.com)
 
-- [Login](https://www.barrington.nh.gov/user/login?current=node%2F120816)
+- [Login](https://www.barrington.nh.gov/user/login?current=node%2F32)
