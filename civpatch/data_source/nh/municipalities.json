@@ -791,10 +791,10 @@
       "phone_number": "(603) 934-3900",
       "government_type": "mayor_council",
       "email": "citymgr@franklinnh.org",
-      "website": "http://www.franklinnh.org",
+      "website": "https://www.franklinnh.gov",
       "geoid": "3327380",
-      "meta_updated_at": "2025-07-02T03:16:51Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-02T03:29:39Z",
+      "meta_hash": "e6ec09a87fa242967cd44d0bd25b9f84",
       "meta_sources": [
         "state_source",
         "gemini",
