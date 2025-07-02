@@ -1876,10 +1876,10 @@
         "Bent"
       ],
       "population": 2300,
-      "website": "https://cityoflasanimas.colorado.gov/#main-content",
+      "website": "https://cityoflasanimasco.gov",
       "government_type": "mayor_council",
-      "meta_updated_at": "2025-07-02T18:01:54Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-02T18:27:00Z",
+      "meta_hash": "30a18be8c44c24c02c8cebdb6d755548",
       "meta_sources": [
         "state_source",
         "gemini",
