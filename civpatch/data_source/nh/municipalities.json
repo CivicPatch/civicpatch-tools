@@ -1502,7 +1502,14 @@
       "government_type": "select_board",
       "email": "mscruton@town.rye.nh.us",
       "website": "http://www.town.rye.nh.us/",
-      "geoid": "3301566180"
+      "geoid": "3301566180",
+      "meta_updated_at": "2025-07-02T16:27:09Z",
+      "meta_hash": "c413c9b4f5f523082182f34f3ebacca4",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Jaffrey",
