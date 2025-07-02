@@ -2266,7 +2266,14 @@
       "government_type": "select_board",
       "email": "jfarrell@wiltonnh.gov",
       "website": "https://www.wiltonnh.gov/",
-      "geoid": "3301185220"
+      "geoid": "3301185220",
+      "meta_updated_at": "2025-07-02T19:09:36Z",
+      "meta_hash": "608466b223b3815a6324a9cb5c73b2c6",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Canaan",
