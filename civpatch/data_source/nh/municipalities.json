@@ -2047,7 +2047,14 @@
       "government_type": "select_board",
       "email": "kminer@winchester.nh.gov",
       "website": "http://www.winchester-nh.gov",
-      "geoid": "3300585540"
+      "geoid": "3300585540",
+      "meta_updated_at": "2025-07-02T17:35:51Z",
+      "meta_hash": "c41c1de0ed6e9845b1f8911f6c65c174",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Pittsfield",
