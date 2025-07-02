@@ -601,9 +601,13 @@
       "email": "dshankle@amherstnh.gov",
       "website": "http://www.amherstnh.gov/",
       "geoid": "3301101300",
-      "meta_updated_at": "2025-05-27",
-      "meta_hash": "1cdda24d626a2aebd40f16f1868d3f28",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T02:38:06Z",
+      "meta_hash": "87ce249495d8ff727ed10fb8b4269e0d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Raymond",

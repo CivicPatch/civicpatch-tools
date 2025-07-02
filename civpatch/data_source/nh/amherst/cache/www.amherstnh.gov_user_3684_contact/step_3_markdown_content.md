@@ -1,4 +1,4 @@
-[Skip to main content](https://www.amherstnh.gov/board-selectmen/)
+[Skip to main content](https://www.amherstnh.gov/user/3684/contact/)
 
 ![Town of Amherst NH](https://www.amherstnh.gov/sites/all/themes/custom/sites/amherstnh/vts_amherstnh/logo.png)
 
@@ -478,261 +478,48 @@ Keywords
   
   Stay
 
-[Thornton Ferry Rd Bridge Closure](https://www.amherstnh.gov/home/urgent-alerts/thornton-ferry-rd-bridge-closure) [Read more »](https://www.amherstnh.gov/home/urgent-alerts/thornton-ferry-rd-bridge-closure)
+## Primary tabs
 
-![Print](https://www.amherstnh.gov/sites/all/modules/contrib/print/icons/print_icon.png "Print")
+- [View](https://www.amherstnh.gov/users/tgrella)
+- [Contact(active tab)](https://www.amherstnh.gov/user/3684/contact)
 
 ## You are here
 
 1. [Home](https://www.amherstnh.gov) ››
-2. [Boards &amp; Committees](https://www.amherstnh.gov/boards)
+2. [tgrella](https://www.amherstnh.gov/users/tgrella)
 
-# Board of Selectmen
+# Contact Tom Grella
 
-The Board of Selectmen consists of five elected members who serve for a three-year term as the governing body of the town. They oversee the general operations of the Town as approved by Town Meeting.
+Your name *
 
-The annual budget is prepared by the Selectmen and presented to town citizens in a Deliberative Session before a final ballot vote at the polls the second week in March. The Selectmen also act as the Board of Assessors, granting or denying abatements, and as the Board of Health, approving or denying health regulations.
+Your e-mail address *
 
-The Selectmen meet Monday evenings, and citizens are welcome to attend these public meetings. Meeting times vary, so please check each upcoming agenda for the exact time.
+To [tgrella](https://www.amherstnh.gov/users/tgrella "View user profile.")
 
-Video of past Selectmen meetings are available on-line via video streaming, and you can also download the published minutes of past Selectmen meetings.
+Subject *
 
-[Email the Full Board of Selectmen](mailto:bos@amherstnh.gov)
+Message *
 
-## Staff Contacts
+Attachments
 
-Name Phone [Lincoln Daley](https://www.amherstnh.gov/user/7321/contact) (603) 673-6041 x209
+Files must be less than **2 MB**.  
+Allowed file types: **txt doc pdf docx jpg gif png**.
 
-## Board Members
+Attachment #1
 
-Name Title [Tom Grella](https://www.amherstnh.gov/user/3684/contact) Member (2026) [Pam Coughlin](https://www.amherstnh.gov/user/7301/contact) Clerk (2028) [Danielle Pray](https://www.amherstnh.gov/people/danielle-pray) Chair (2027) [Cynthia Dokmo](https://www.amherstnh.gov/user/4454/contact) Vice Chair (2027) [John D'Angelo](https://www.amherstnh.gov/user/2313/contact) Member (2028)
+Attachment #2
 
-![Feed](https://www.amherstnh.gov/misc/feed.png)
+Attachment #3
 
-- [2025 Board of Selectmen Meeting Calendar](https://www.amherstnh.gov/board-selectmen/files/2025-board-selectmen-meeting-calendar)
-- [2025 Election Information](https://www.amherstnh.gov/board-selectmen/pages/2025-election-information)
-- [Amherst Impact Fee Report and Schedule 2023](https://www.amherstnh.gov/board-selectmen/pages/amherst-impact-fee-report-and-schedule-2023)
-- [Amherst Impact Fee Reporting and Expenditure Policy, DRAFT v1.1 (with B Mayberry Letter)](https://www.amherstnh.gov/amherst-board-selectmen/files/amherst-impact-fee-reporting-and-expenditure-policy-draft-v11-b)
-- [Annual Town Reports](https://www.amherstnh.gov/board-selectmen/pages/annual-town-reports)
-- [BOS Rules of Order, Revised and Approved 2024.08.26](https://www.amherstnh.gov/board-selectmen/files/bos-rules-order-revised-and-approved-20240826)
-- [Board of Selectmen Initiatives](https://www.amherstnh.gov/board-selectmen/pages/board-selectmen-initiatives)
-- [Budget Perpetual Calendar and FY26 Schedule](https://www.amherstnh.gov/board-selectmen/pages/budget-perpetual-calendar-and-fy26-schedule)
-- [FY25 Town Deliberative Presentation, February 7, 2024](https://www.amherstnh.gov/board-selectmen/files/fy25-town-deliberative-presentation-february-7-2024)
-- [PFAS Occurrence in Amherst and Funding Opportunities](https://www.amherstnh.gov/amherst-board-selectmen/files/pfas-occurrence-amherst-and-funding-opportunities)
-- [Rules, Regulations, &amp; Ordinances](https://www.amherstnh.gov/board-selectmen/pages/rules-regulations-ordinances)
-- [Strategic Planning](https://www.amherstnh.gov/board-selectmen/pages/strategic-planning-budget-process)
-- [Town &amp; Selectmen Policies](https://www.amherstnh.gov/board-selectmen/pages/town-selectmen-policies)
-- [Town Common/ Village Green Use Request Form and Policy, Revised May 2024](https://www.amherstnh.gov/board-selectmen/files/town-common-village-green-use-request-form-and-policy-revised-may-2024)
-- [Village Streets Study](https://www.amherstnh.gov/board-selectmen/pages/village-streets-study)
+CAPTCHA
 
-## [News](https://www.amherstnh.gov/news)
+This question is for testing whether or not you are a human visitor and to prevent automated spam submissions.
 
-[First Summer Concert will have delayed start tonight](https://www.amherstnh.gov/home/news/first-summer-concert-will-have-delayed-start-tonight)
-
-[Fourth of July Schedule for 2025](https://www.amherstnh.gov/home/news/fourth-july-schedule-2025)
-
-[Fourth of July Committee is seeking volunteers](https://www.amherstnh.gov/home/news/fourth-july-committee-seeking-volunteers)
-
-[Announcing Cashless Policy at the Transfer Station, effective July 1, 2025](https://www.amherstnh.gov/home/news/announcing-cashless-policy-transfer-station-effective-july-1-2025)
-
-[Volunteer Opportunities!](https://www.amherstnh.gov/home/news/volunteer-opportunities)
-
-[View all](https://www.amherstnh.gov/news/1)
-
-## [Board of Selectmen Calendar](https://www.amherstnh.gov/node/176/events/month)
-
-### [July](https://www.amherstnh.gov/node/176/events/month/176/2025-07 "View full page month")
-
-- [«](https://www.amherstnh.gov/board-selectmen?month=2025-06 "Navigate to previous month")
-- [»](https://www.amherstnh.gov/board-selectmen?month=2025-08 "Navigate to next month")
-
-S M T W T F S
-
- 
-
- 
-
-1
-
- 
-
-2
-
- 
-
-3
-
- 
-
-4
-
- 
-
-5
-
- 
-
-6
-
- 
-
-7
-
- 
-
-8
-
- 
-
-9
-
- 
-
-10
-
- 
-
-11
-
- 
-
-12
-
- 
-
-13
-
- 
-
-[14](https://www.amherstnh.gov/node/176/events/day/2025-07-14)
-
-- [Board of Selectmen Meeting](https://www.amherstnh.gov/board-selectmen/events/79821)
-  
-  6:30pm
-
- 
-
-15
-
- 
-
-16
-
- 
-
-17
-
- 
-
-18
-
- 
-
-19
-
- 
-
-20
-
- 
-
-21
-
- 
-
-22
-
- 
-
-23
-
- 
-
-24
-
- 
-
-25
-
- 
-
-26
-
- 
-
-27
-
- 
-
-[28](https://www.amherstnh.gov/node/176/events/day/2025-07-28)
-
-- [Board of Selectmen Meeting](https://www.amherstnh.gov/board-selectmen/events/79826)
-  
-  6:30pm
-
- 
-
-29
-
- 
-
-30
-
- 
-
-31
-
- 
-
- 
-
- 
-
-[All upcoming events](https://www.amherstnh.gov/node/176/events/month/176/2025-07)
-
-## [Agendas](https://www.amherstnh.gov/node/176/agenda)
-
-- [BOS Meeting Agenda and Packet](https://www.amherstnh.gov/board-selectmen/agenda/bos-meeting-agenda-and-packet-4)
-  
-  June 23, 2025 - 6:30pm
-- [BOS Meeting Agenda and Packet](https://www.amherstnh.gov/board-selectmen/agenda/bos-meeting-agenda-and-packet-3)
-  
-  June 9, 2025 - 6:30pm
-- [Board of Selectmen Meeting Agenda](https://www.amherstnh.gov/board-selectmen/agenda/board-selectmen-meeting-agenda-81)
-  
-  June 4, 2025 - 3:00pm
-- [Board of Selectmen Meeting Agenda and Packet, revised](https://www.amherstnh.gov/board-selectmen/agenda/board-selectmen-meeting-agenda-and-packet-revised-0)
-  
-  May 27, 2025 - 6:00pm
-- [Board of Selectmen Meeting Agenda and Packet](https://www.amherstnh.gov/board-selectmen/agenda/board-selectmen-meeting-agenda-and-packet-57)
-  
-  May 23, 2025 - 11:57am
-
-[View all](https://www.amherstnh.gov/node/176/agenda)
-
-## [Minutes](https://www.amherstnh.gov/node/176/minutes)
-
-- [BOS Meeting Minutes, DRAFT](https://www.amherstnh.gov/board-selectmen/minutes/bos-meeting-minutes-draft-0)
-  
-  June 9, 2025
-- [BOS Meeting Minutes, DRAFT](https://www.amherstnh.gov/board-selectmen/minutes/bos-meeting-minutes-draft)
-  
-  June 4, 2025
-- [BOS Minutes, Approved](https://www.amherstnh.gov/board-selectmen/minutes/bos-minutes-approved)
-  
-  May 27, 2025
-- [BOS Minutes, Approved](https://www.amherstnh.gov/board-selectmen/minutes/bos-minutes-approved-0)
-  
-  May 22, 2025
-- [BOS Meeting Minutes, Approved](https://www.amherstnh.gov/board-selectmen/minutes/bos-meeting-minutes-approved-5)
-  
-  May 14, 2025
-
-[View all](https://www.amherstnh.gov/node/176/minutes)
+Leave this field blank
 
 Town of Amherst, 2 Main Street, Amherst NH 03031  603-673-6041
 
 [Website Disclaimer](https://www.amherstnh.gov/home/pages/website-disclaimer-privacy-policy)  
 [Government Websites by CivicPlus ®](https://www.civicplus.com)
 
-- [Login](https://www.amherstnh.gov/user/login?current=node%2F176)
+- [Login](https://www.amherstnh.gov/user/login?current=user%2F3684%2Fcontact)
