@@ -735,9 +735,13 @@
       "email": "nbolton@weare.nh.gov",
       "website": "http://www.weare.nh.gov",
       "geoid": "3301179780",
-      "meta_updated_at": "2025-05-29",
-      "meta_hash": "3b54b42184e07a4f695692bb77af0b81",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T03:02:53Z",
+      "meta_hash": "518be4b0b1ad71d663c2ef4e1e7b24e2",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hampstead",
