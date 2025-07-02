@@ -520,9 +520,13 @@
       "government_type": "select_board",
       "email": "selectmen@pelhamweb.com",
       "website": "http://www.pelhamweb.com",
-      "meta_updated_at": "2025-05-09",
-      "meta_hash": "0a77259bcb972f5032bdd0e02bed1891",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-02T03:04:38Z",
+      "meta_hash": "b23bfa780d77ac2a7e6862277ece8968",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "3301159940"
     },
     {
