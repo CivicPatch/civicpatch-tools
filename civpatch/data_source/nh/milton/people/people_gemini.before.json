@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Andrew Rawson",
+    "roles": [
+      "Chairman"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "arawson@miltonnh-us.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.miltonnh-us.com/board-selectmen"
+    ],
+    "updated_at": "2025-07-02T17:14:32Z"
+  },
+  {
+    "name": "Matthew Morrill",
+    "roles": [
+      "Vice-Chair"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "mmorrill@miltonnh-us.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.miltonnh-us.com/board-selectmen"
+    ],
+    "updated_at": "2025-07-02T17:14:32Z"
+  },
+  {
+    "name": "Humphrey Williams",
+    "roles": [
+      "Selectmen"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "hwilliams@miltonnh-us.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.miltonnh-us.com/board-selectmen"
+    ],
+    "updated_at": "2025-07-02T17:14:32Z"
+  }
+]

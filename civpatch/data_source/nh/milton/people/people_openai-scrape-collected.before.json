@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Andrew Rawson",
+    "sources": [
+      "https://www.miltonnh-us.com/board-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Select Board Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title 'Chairman' of Board of Selectmen matches Select Board Chair role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "arawson@miltonnh-us.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Andrew Rawson's name.",
+        "source": "https://www.miltonnh-us.com/board-selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T17:14:26Z"
+  },
+  {
+    "name": "Matthew Morrill",
+    "sources": [
+      "https://www.miltonnh-us.com/board-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Select Board Vice Chair",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title 'Vice-Chair' of Board of Selectmen matches Select Board Vice Chair role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mmorrill@miltonnh-us.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Matthew Morrill's name.",
+        "source": "https://www.miltonnh-us.com/board-selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T17:14:26Z"
+  },
+  {
+    "name": "Humphrey Williams",
+    "sources": [
+      "https://www.miltonnh-us.com/board-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Select Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title 'Selectmen' indicates member of Board of Selectmen, normalized to Select Board Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "arawson@miltonnh-us.com",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Email listed as 'arawson@miltonnh-us.com' next to Humphrey Williams, likely a copy-paste error but no other email found.",
+        "source": "https://www.miltonnh-us.com/board-selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T17:14:26Z"
+  }
+]

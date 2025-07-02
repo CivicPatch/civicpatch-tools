@@ -1,0 +1,29 @@
+---
+- name: Andrew Rawson
+  roles:
+  - Select Board Chair
+  divisions:
+  image:
+  cdn_image:
+  email: arawson@miltonnh-us.com
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.miltonnh-us.com/board-selectmen
+  updated_at: '2025-07-02T17:14:32Z'
+- name: Matthew Morrill
+  roles:
+  - Select Board Vice Chair
+  divisions:
+  image:
+  cdn_image:
+  email: mmorrill@miltonnh-us.com
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.miltonnh-us.com/board-selectmen
+  updated_at: '2025-07-02T17:14:32Z'

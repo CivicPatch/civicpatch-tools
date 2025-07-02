@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Andrew Rawson",
+    "sources": [
+      "https://www.miltonnh-us.com/board-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Chairman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the table next to the name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "arawson@miltonnh-us.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided in the table next to the name.",
+        "source": "https://www.miltonnh-us.com/board-selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T17:14:32Z"
+  },
+  {
+    "name": "Matthew Morrill",
+    "sources": [
+      "https://www.miltonnh-us.com/board-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice-Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the table next to the name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mmorrill@miltonnh-us.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided in the table next to the name.",
+        "source": "https://www.miltonnh-us.com/board-selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T17:14:32Z"
+  },
+  {
+    "name": "Humphrey Williams",
+    "sources": [
+      "https://www.miltonnh-us.com/board-selectmen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectmen",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the table next to the name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "hwilliams@miltonnh-us.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided in the table next to the name.",
+        "source": "https://www.miltonnh-us.com/board-selectmen"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T17:14:32Z"
+  }
+]

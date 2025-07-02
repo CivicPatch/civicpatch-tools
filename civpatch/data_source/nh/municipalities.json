@@ -1895,7 +1895,14 @@
       "government_type": "select_board",
       "email": "miltonta@miltonnh-us.com",
       "website": "http://www.miltonnh-us.com",
-      "geoid": "3301748660"
+      "geoid": "3301748660",
+      "meta_updated_at": "2025-07-02T17:14:32Z",
+      "meta_hash": "76bba5c2e09fc5fe077270da3085f785",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Enfield",
