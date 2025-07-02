@@ -2227,7 +2227,14 @@
       "government_type": "select_board",
       "email": "townadmin@hinsdalenh.org",
       "website": "http://hinsdale.govoffice.com",
-      "geoid": "3300536660"
+      "geoid": "3300536660",
+      "meta_updated_at": "2025-07-02T19:10:52Z",
+      "meta_hash": "76a0fc55305dbac87d4a72d9de872d57",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Gilmanton",
