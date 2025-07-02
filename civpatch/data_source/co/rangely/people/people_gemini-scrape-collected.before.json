@@ -1,0 +1,251 @@
+[
+  {
+    "name": "Ron Granger",
+    "sources": [
+      "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees",
+      "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated as 'Mayor' directly next to the person's name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T18:07:16Z"
+  },
+  {
+    "name": "Andy Shaffer",
+    "sources": [
+      "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees",
+      "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tempore",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role is explicitly stated as 'Pro Tem' which is commonly short for 'Mayor Pro Tempore' in the context of a Mayor and Trustees section."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under the 'Mayor & Trustees' section, indicating they hold a Trustee position."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Pro Tem' under the 'Mayor & Trustees' section, implying Mayor Pro Tem."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T18:07:16Z"
+  },
+  {
+    "name": "Tim Webber",
+    "sources": [
+      "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees",
+      "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Tim Webber joined the Town Council' and he is listed under 'Mayor & Trustees', confirming his role as a Trustee."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Stated 'joined the Town Council' and listed under 'Mayor & Trustees' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2020-10",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Tim Webber joined the Town Council in October 2020'.",
+        "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees"
+      },
+      {
+        "data": "2020-10",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date 'October 2020' explicitly stated.",
+        "source": "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-02T18:07:16Z"
+  },
+  {
+    "name": "Kyle Wren",
+    "sources": [
+      "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees",
+      "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'he is eager to serve on Rangely’s Town Council' and he is listed under 'Mayor & Trustees', indicating his role as a Trustee."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Stated 'eager to serve on Rangely’s Town Council' and listed under 'Mayor & Trustees' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T18:07:16Z"
+  },
+  {
+    "name": "Todd Thayne",
+    "sources": [
+      "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees",
+      "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Excited to serve on the Rangely Town Council' and he is listed under 'Mayor & Trustees', indicating his role as a Trustee."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Stated 'Excited to serve on the Rangely Town Council' and listed under 'Mayor & Trustees' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T18:07:16Z"
+  },
+  {
+    "name": "Shawn Morgan",
+    "sources": [
+      "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees",
+      "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'As a member of the Town Council' and he is listed under 'Mayor & Trustees', confirming his role as a Trustee."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Stated 'As a member of the Town Council' and listed under 'Mayor & Trustees' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T18:07:16Z"
+  },
+  {
+    "name": "Robby D. Elam",
+    "sources": [
+      "https://townofrangely.colorado.gov/divisions/administrative-services/town-council/mayor-trustees",
+      "https://townofrangely.colorado.gov/departments/administrative-services/town-council/mayor-trustees"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'his recent endeavor to serve as a Town Trustee', confirming his role."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Stated 'recent endeavor to serve as a Town Trustee' and listed under 'Mayor & Trustees' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T18:07:16Z"
+  },
+  {
+    "name": "Allen Parker",
+    "sources": [
+      "https://townofrangely.colorado.gov/divisions/administrative-services/town-manager"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Town Manager",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Town Manager' and is a target role ('council manager'). "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(970) 675-8476",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person's name and role in the text. ",
+        "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-manager"
+      }
+    ],
+    "emails": [
+      {
+        "data": "aparker@rangelyco.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person's name and role in the text, including a mailto link confirmation. ",
+        "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-manager"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date 'April 2025' is explicitly stated for when he joined as Town Manager. ",
+        "source": "https://townofrangely.colorado.gov/divisions/administrative-services/town-manager"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-02T18:07:16Z"
+  }
+]
