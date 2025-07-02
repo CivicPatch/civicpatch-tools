@@ -1699,7 +1699,14 @@
       "government_type": "select_board",
       "email": "townclerktaxcollector@newtonnh.net",
       "website": "http://www.newton-nh.gov",
-      "geoid": "3301552900"
+      "geoid": "3301552900",
+      "meta_updated_at": "2025-07-02T16:47:52Z",
+      "meta_hash": "611012f3163de7253a4b881ae2d2bd8c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Charlestown",
