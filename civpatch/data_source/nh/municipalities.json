@@ -1840,7 +1840,14 @@
       "government_type": "select_board",
       "email": "nirvine@northwoodnh.org",
       "website": "http://www.northwoodnh.org",
-      "geoid": "3301556820"
+      "geoid": "3301556820",
+      "meta_updated_at": "2025-07-02T17:12:33Z",
+      "meta_hash": "92088e976c3919bbe2102d3fdf8cc819",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Haverhill",
