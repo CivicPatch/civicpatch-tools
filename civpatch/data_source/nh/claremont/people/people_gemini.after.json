@@ -7,132 +7,163 @@
     "divisions": [],
     "image": null,
     "phone_number": "(603) 558-0860",
-    "email": null,
+    "email": "dgirard@council.claremontnh.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.claremontnh.com/city-council"
     ],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
-    "name": "Debora Matteau",
+    "name": "Deb Matteau",
     "roles": [
       "Assistant Mayor"
     ],
     "divisions": [],
     "image": null,
     "phone_number": "(603) 543-3638",
-    "email": null,
+    "email": "dmatteau@council.claremontnh.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.claremontnh.com/city-council"
     ],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "Andrew O'Hearne",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 1"
+    ],
     "image": null,
     "phone_number": "(603) 558-1038",
-    "email": null,
+    "email": "aohearne@council.claremontnh.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.claremontnh.com/city-council"
     ],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "Brian Zutter",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 2"
+    ],
     "image": null,
     "phone_number": "(207) 712-2155",
-    "email": null,
+    "email": "bzutter@council.claremontnh.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.claremontnh.com/city-council"
     ],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "Jonathan Hayden",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "Ward 3"
+    ],
     "image": null,
     "phone_number": "(719) 822-5769",
-    "email": null,
+    "email": "jhayden@council.claremontnh.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.claremontnh.com/city-council"
     ],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
+  },
+  {
+    "name": "William Greenrose",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "At-large"
+    ],
+    "image": null,
+    "phone_number": "(617) 595-6286",
+    "email": "wgreenrose@council.claremontnh.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.claremontnh.com/city-council"
+    ],
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "Wayne Hemingway",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "At-large"
+    ],
     "image": null,
     "phone_number": "(603) 477-4407",
-    "email": null,
+    "email": "whemingway@council.claremontnh.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.claremontnh.com/city-council"
     ],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "Nicholas Koloski",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "At-large"
+    ],
     "image": null,
     "phone_number": "(603) 543-7570",
-    "email": null,
+    "email": "nkoloski@council.claremontnh.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.claremontnh.com/city-council"
     ],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "William Limoges",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "At-large"
+    ],
     "image": null,
     "phone_number": "(603) 543-7325",
-    "email": null,
+    "email": "wlimoges@council.claremontnh.com",
     "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.claremontnh.com/city-council"
     ],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   }
 ]

@@ -9,7 +9,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Dale Girard is explicitly listed as 'Mayor'."
+        "llm_confidence_reason": "Role is explicitly stated as a heading under the name."
       }
     ],
     "divisions": [],
@@ -17,15 +17,22 @@
       {
         "data": "(603) 558-0860",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is clearly associated with Dale Girard.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://www.claremontnh.com/city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "dgirard@council.claremontnh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
+        "source": "https://www.claremontnh.com/city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "Debora Matteau",
@@ -37,7 +44,7 @@
       {
         "data": "Assistant Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Debora Matteau is explicitly listed as 'Assistant Mayor'."
+        "llm_confidence_reason": "Role is explicitly stated as a heading under the name."
       }
     ],
     "divisions": [],
@@ -45,15 +52,22 @@
       {
         "data": "(603) 543-3638",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is clearly associated with Debora Matteau.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://www.claremontnh.com/city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "dmatteau@council.claremontnh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
+        "source": "https://www.claremontnh.com/city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "Andrew O'Hearne",
@@ -63,25 +77,38 @@
     "images": [],
     "roles": [
       {
-        "data": "Councilor, Ward I",
+        "data": "Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Andrew O'Hearne is explicitly listed as 'Councilor, Ward I'."
+        "llm_confidence_reason": "Role is explicitly stated as a heading under the name."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated as part of the role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "(603) 558-1038",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is clearly associated with Andrew O'Hearne.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://www.claremontnh.com/city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "aohearne@council.claremontnh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
+        "source": "https://www.claremontnh.com/city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "Brian Zutter",
@@ -91,25 +118,38 @@
     "images": [],
     "roles": [
       {
-        "data": "Councilor, Ward II",
+        "data": "Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Brian Zutter is explicitly listed as 'Councilor, Ward II'."
+        "llm_confidence_reason": "Role is explicitly stated as a heading under the name."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward II",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated as part of the role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "(207) 712-2155",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is clearly associated with Brian Zutter.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://www.claremontnh.com/city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "bzutter@council.claremontnh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
+        "source": "https://www.claremontnh.com/city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "Jonathan Hayden",
@@ -119,25 +159,38 @@
     "images": [],
     "roles": [
       {
-        "data": "Councilor, Ward III",
+        "data": "Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Jonathan Hayden is explicitly listed as 'Councilor, Ward III'."
+        "llm_confidence_reason": "Role is explicitly stated as a heading under the name."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated as part of the role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "(719) 822-5769",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is clearly associated with Jonathan Hayden.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://www.claremontnh.com/city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "jhayden@council.claremontnh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
+        "source": "https://www.claremontnh.com/city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "William Greenrose",
@@ -147,25 +200,38 @@
     "images": [],
     "roles": [
       {
-        "data": "At Large Councilor",
+        "data": "Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "William Greenrose is explicitly listed as 'At Large Councilor'."
+        "llm_confidence_reason": "Role is explicitly stated as a heading under the name."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated as part of the role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "(617) 595-6286",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is clearly associated with William Greenrose.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://www.claremontnh.com/city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "wgreenrose@council.claremontnh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
+        "source": "https://www.claremontnh.com/city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "Wayne Hemingway",
@@ -175,25 +241,38 @@
     "images": [],
     "roles": [
       {
-        "data": "Councilor, At Large",
+        "data": "Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Wayne Hemingway is explicitly listed as 'Councilor, At Large'."
+        "llm_confidence_reason": "Role is explicitly stated as a heading under the name."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated as part of the role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "(603) 477-4407",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is clearly associated with Wayne Hemingway.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://www.claremontnh.com/city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "whemingway@council.claremontnh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
+        "source": "https://www.claremontnh.com/city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "Nicholas Koloski",
@@ -203,25 +282,38 @@
     "images": [],
     "roles": [
       {
-        "data": "Councilor, At Large",
+        "data": "Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Nicholas Koloski is explicitly listed as 'Councilor, At Large'."
+        "llm_confidence_reason": "Role is explicitly stated as a heading under the name."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated as part of the role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "(603) 543-7570",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is clearly associated with Nicholas Koloski.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://www.claremontnh.com/city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "nkoloski@council.claremontnh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
+        "source": "https://www.claremontnh.com/city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   },
   {
     "name": "William Limoges",
@@ -231,24 +323,37 @@
     "images": [],
     "roles": [
       {
-        "data": "Councilor, At Large",
+        "data": "Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "William Limoges is explicitly listed as 'Councilor, At Large'."
+        "llm_confidence_reason": "Role is explicitly stated as a heading under the name."
       }
     ],
-    "divisions": [],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated as part of the role."
+      }
+    ],
     "phone_numbers": [
       {
         "data": "(603) 543-7325",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is clearly associated with William Limoges.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://www.claremontnh.com/city-council"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "wlimoges@council.claremontnh.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
+        "source": "https://www.claremontnh.com/city-council"
+      }
+    ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T02:35:00Z"
+    "updated_at": "2025-07-02T02:55:00Z"
   }
 ]
