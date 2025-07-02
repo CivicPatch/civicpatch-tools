@@ -1403,7 +1403,14 @@
       "government_type": "select_board",
       "email": "townadmin@hopkinton-nh.gov",
       "website": "http://www.hopkinton-nh.gov",
-      "geoid": "3301337540"
+      "geoid": "3301337540",
+      "meta_updated_at": "2025-07-02T16:23:08Z",
+      "meta_hash": "0498ac6bd3471b3498f6b2afc8e7dda9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Alton",
