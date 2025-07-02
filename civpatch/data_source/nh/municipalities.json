@@ -1867,7 +1867,14 @@
       "government_type": "select_board",
       "email": "townadministrator@leenh.org",
       "website": "http://www.leenh.org",
-      "geoid": "3301741460"
+      "geoid": "3301741460",
+      "meta_updated_at": "2025-07-02T17:16:24Z",
+      "meta_hash": "21c46ddc269631e32012b96fff2e95f6",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Brentwood",
