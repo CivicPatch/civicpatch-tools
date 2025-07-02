@@ -1764,7 +1764,14 @@
       "government_type": "select_board",
       "email": "ctown@charlestown-nh.gov",
       "website": "http://www.charlestown-nh.gov",
-      "geoid": "3301911380"
+      "geoid": "3301911380",
+      "meta_updated_at": "2025-07-02T16:48:26Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fremont",
