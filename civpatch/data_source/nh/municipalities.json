@@ -1290,7 +1290,14 @@
       "government_type": "select_board",
       "email": "s.silver@newbostonnh.gov",
       "website": "http://www.newbostonnh.gov",
-      "geoid": "3301150740"
+      "geoid": "3301150740",
+      "meta_updated_at": "2025-07-02T03:41:39Z",
+      "meta_hash": "edb8515ed27ecf0297b203259917c7ba",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Littleton",
