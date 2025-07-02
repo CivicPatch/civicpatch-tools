@@ -1893,7 +1893,14 @@
       "government_type": "select_board",
       "email": "mtully@northhampton-nh.gov",
       "website": "http://www.northhampton-nh.gov",
-      "geoid": "3301554580"
+      "geoid": "3301554580",
+      "meta_updated_at": "2025-07-02T17:16:26Z",
+      "meta_hash": "32713631e11f0b6c48d904fe71375c16",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Lee",
