@@ -1,1 +1,103 @@
-[]
+[
+  {
+    "name": "Cindy McHugh",
+    "roles": [
+      "Vice Chair"
+    ],
+    "divisions": [
+      "At-Large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.townofdeerfieldnh.com/user/24/contact",
+    "start_date": null,
+    "end_date": "2027-03",
+    "sources": [
+      "https://www.townofdeerfieldnh.com/board-selectmen",
+      "https://www.townofdeerfieldnh.com/user/24/contact"
+    ],
+    "updated_at": "2025-07-02T16:54:52Z"
+  },
+  {
+    "name": "William Huebner",
+    "roles": [
+      "Chair"
+    ],
+    "divisions": [
+      "At-Large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.townofdeerfieldnh.com/user/1606/contact",
+    "start_date": null,
+    "end_date": "2026-03",
+    "sources": [
+      "https://www.townofdeerfieldnh.com/board-selectmen",
+      "https://www.townofdeerfieldnh.com/user/1606/contact"
+    ],
+    "updated_at": "2025-07-02T16:54:52Z"
+  },
+  {
+    "name": "Steve Barry",
+    "roles": [
+      "Member"
+    ],
+    "divisions": [
+      "At-Large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.townofdeerfieldnh.com/user/1761/contact",
+    "start_date": null,
+    "end_date": "2026-03",
+    "sources": [
+      "https://www.townofdeerfieldnh.com/board-selectmen"
+    ],
+    "updated_at": "2025-07-02T16:54:52Z"
+  },
+  {
+    "name": "Jared Messina",
+    "roles": [
+      "Member",
+      "select board member"
+    ],
+    "divisions": [
+      "At-Large"
+    ],
+    "image": null,
+    "phone_number": "(603) 463-8811 Ext. 309",
+    "email": null,
+    "website": "https://www.townofdeerfieldnh.com/people/jared-messina",
+    "start_date": null,
+    "end_date": "2028-03",
+    "sources": [
+      "https://www.townofdeerfieldnh.com/board-selectmen",
+      "https://www.townofdeerfieldnh.com/people/jared-messina"
+    ],
+    "updated_at": "2025-07-02T16:54:52Z"
+  },
+  {
+    "name": "Greg Whitmore",
+    "roles": [
+      "Member",
+      "select board member"
+    ],
+    "divisions": [
+      "At-Large"
+    ],
+    "image": null,
+    "phone_number": "(603) 463-8811 Ext. 309",
+    "email": null,
+    "website": "https://www.townofdeerfieldnh.com/people/greg-whitmore-0",
+    "start_date": null,
+    "end_date": "2028-03",
+    "sources": [
+      "https://www.townofdeerfieldnh.com/board-selectmen",
+      "https://www.townofdeerfieldnh.com/people/greg-whitmore-0"
+    ],
+    "updated_at": "2025-07-02T16:54:52Z"
+  }
+]

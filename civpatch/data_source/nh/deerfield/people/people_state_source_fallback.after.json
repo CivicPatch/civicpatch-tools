@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "name": "Cindy McHugh",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-07-02T16:52:24Z",
+    "divisions": []
+  },
+  {
+    "name": "William Huebner",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-07-02T16:52:24Z",
+    "divisions": []
+  },
+  {
+    "name": "Steve Barry",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-07-02T16:52:24Z",
+    "divisions": []
+  },
+  {
+    "name": "Jared Messina",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-07-02T16:52:24Z",
+    "divisions": []
+  },
+  {
+    "name": "Greg Whitmore",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-07-02T16:52:24Z",
+    "divisions": []
+  }
+]
