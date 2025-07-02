@@ -1133,7 +1133,14 @@
       "government_type": "select_board",
       "email": "tbrown@meredithnh.org",
       "website": "http://www.meredithnh.org",
-      "geoid": "3300147140"
+      "geoid": "3300147140",
+      "meta_updated_at": "2025-07-02T03:28:48Z",
+      "meta_hash": "a6aa6b94113337fd3242b51d87e5432f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Sandown",
