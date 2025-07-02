@@ -2,161 +2,176 @@
   {
     "name": "John Brunelle",
     "sources": [
-      "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+      "https://litchfieldnh.gov/203/Board-of-Selectmen"
     ],
     "images": [],
-    "positions": [
-      "Chairman",
-      "Board of Selectmen",
-      "Select Board Member"
+    "roles": [
+      {
+        "data": "Chairman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "603-424-4046",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General phone number for the Board of Selectmen listed in the contact section, not specific to the individual.",
-        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed as the general contact for the Board of Selectmen, which these individuals are members of, implying it's a relevant contact for their role.",
+        "source": "https://litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "emails": [
       {
         "data": "jbrunelle@litchfieldnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address extracted directly from mailto link associated with the name.",
-        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name as a mailto link.",
+        "source": "https://litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:07:41Z"
   },
   {
     "name": "G. Stephen Gannon",
     "sources": [
-      "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+      "https://litchfieldnh.gov/203/Board-of-Selectmen"
     ],
     "images": [],
-    "positions": [
-      "Vice Chairman",
-      "Board of Selectmen",
-      "Select Board Member"
+    "roles": [
+      {
+        "data": "Vice Chairman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "603-424-4046",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General phone number for the Board of Selectmen listed in the contact section, not specific to the individual.",
-        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed as the general contact for the Board of Selectmen, which these individuals are members of, implying it's a relevant contact for their role.",
+        "source": "https://litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "emails": [
       {
         "data": "sgannon@litchfieldnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address extracted directly from mailto link associated with the name.",
-        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name as a mailto link.",
+        "source": "https://litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:07:41Z"
   },
   {
     "name": "F. Robert Leary",
     "sources": [
-      "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+      "https://litchfieldnh.gov/203/Board-of-Selectmen"
     ],
     "images": [],
-    "positions": [
-      "Member",
-      "Board of Selectmen",
-      "Select Board Member"
+    "roles": [
+      {
+        "data": "Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "603-424-4046",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General phone number for the Board of Selectmen listed in the contact section, not specific to the individual.",
-        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed as the general contact for the Board of Selectmen, which these individuals are members of, implying it's a relevant contact for their role.",
+        "source": "https://litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "emails": [
       {
         "data": "rleary@litchfieldnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address extracted directly from mailto link associated with the name.",
-        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name as a mailto link.",
+        "source": "https://litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:07:41Z"
   },
   {
     "name": "Kim Queenan",
     "sources": [
-      "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+      "https://litchfieldnh.gov/203/Board-of-Selectmen"
     ],
     "images": [],
-    "positions": [
-      "Member",
-      "Board of Selectmen",
-      "Select Board Member"
+    "roles": [
+      {
+        "data": "Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "603-424-4046",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General phone number for the Board of Selectmen listed in the contact section, not specific to the individual.",
-        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed as the general contact for the Board of Selectmen, which these individuals are members of, implying it's a relevant contact for their role.",
+        "source": "https://litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "emails": [
       {
         "data": "kqueenan@litchfieldnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address extracted directly from mailto link associated with the name.",
-        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name as a mailto link.",
+        "source": "https://litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:07:41Z"
   },
   {
     "name": "Dianne Plansky",
     "sources": [
-      "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+      "https://litchfieldnh.gov/203/Board-of-Selectmen"
     ],
     "images": [],
-    "positions": [
-      "Member",
-      "Board of Selectmen",
-      "Select Board Member"
+    "roles": [
+      {
+        "data": "Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "603-424-4046",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General phone number for the Board of Selectmen listed in the contact section, not specific to the individual.",
-        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed as the general contact for the Board of Selectmen, which these individuals are members of, implying it's a relevant contact for their role.",
+        "source": "https://litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "emails": [
       {
         "data": "dplansky@litchfieldnh.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address extracted directly from mailto link associated with the name.",
-        "source": "https://www.litchfieldnh.gov/203/Board-of-Selectmen"
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name as a mailto link.",
+        "source": "https://litchfieldnh.gov/203/Board-of-Selectmen"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:07:41Z"
   }
 ]

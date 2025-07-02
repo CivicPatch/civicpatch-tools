@@ -1,37 +1,42 @@
 [
   {
-    "name": "Dianne Plansky",
-    "positions": [
-      "Select Board Member"
-    ],
-    "updated_at": "2025-05-29"
-  },
-  {
     "name": "F. Robert Leary",
-    "positions": [
+    "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:05:20Z",
+    "divisions": []
   },
   {
-    "name": "G. Stephen Gannon",
-    "positions": [
+    "name": "Kimberly Queenan",
+    "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:05:20Z",
+    "divisions": []
   },
   {
     "name": "John Brunelle",
-    "positions": [
+    "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:05:20Z",
+    "divisions": []
   },
   {
-    "name": "Kim Queenan",
-    "positions": [
+    "name": "G. Stephen Gannon",
+    "roles": [
       "Select Board Member"
     ],
-    "updated_at": "2025-05-29"
+    "updated_at": "2025-07-02T03:05:20Z",
+    "divisions": []
+  },
+  {
+    "name": "Dianne Plansky",
+    "roles": [
+      "Select Board Member"
+    ],
+    "updated_at": "2025-07-02T03:05:20Z",
+    "divisions": []
   }
 ]
