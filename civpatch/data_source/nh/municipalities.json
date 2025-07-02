@@ -915,9 +915,13 @@
       "email": "selectmen@gilfordnh.org",
       "website": "http://www.gilfordnh.org",
       "geoid": "3300128740",
-      "meta_updated_at": "2025-05-29",
-      "meta_hash": "1a83ff0eb7284d4d338d666a6b31f480",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T03:24:46Z",
+      "meta_hash": "8fa47a9cde225c021aa1cd9d71be162f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Stratham",
