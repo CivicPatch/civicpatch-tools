@@ -1451,7 +1451,14 @@
       "government_type": "select_board",
       "email": "townclerk@loudonnh.org",
       "website": "http://www.loudonnh.org",
-      "geoid": "3301343380"
+      "geoid": "3301343380",
+      "meta_updated_at": "2025-07-02T16:22:54Z",
+      "meta_hash": "7273f0b03174146ba96ba0026d32866d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Rye",
