@@ -1208,7 +1208,14 @@
       "government_type": "select_board",
       "email": "townmanager@wolfeboronh.us",
       "website": "http://www.wolfeboronh.us",
-      "geoid": "3300386420"
+      "geoid": "3300386420",
+      "meta_updated_at": "2025-07-02T03:39:58Z",
+      "meta_hash": "90c5c6da75b2bdb153d378b2401d4e83",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Newport",
