@@ -1642,7 +1642,14 @@
       "government_type": "select_board",
       "email": "kmontgomery@barnstead.org",
       "website": "http://www.barnstead.org",
-      "geoid": "3300103220"
+      "geoid": "3300103220",
+      "meta_updated_at": "2025-07-02T16:41:32Z",
+      "meta_hash": "5d15f1bacaecf0e2799adab9e885d4ab",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Northfield",
