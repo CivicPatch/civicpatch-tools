@@ -9,7 +9,7 @@
       {
         "data": "Select Board Chair",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Text states 'Rod O'Shana, Interim Chair' of the five member Selectboard, which is the primary governing body."
+        "llm_confidence_reason": "Listed as 'Interim Chair' of the five member Selectboard, which is the primary governing body."
       }
     ],
     "divisions": [],
@@ -17,15 +17,15 @@
     "emails": [
       {
         "data": "roshana@haverhill-nh.com",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly listed next to Rod O'Shana's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
         "source": "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T17:08:57Z"
+    "updated_at": "2025-07-02T17:39:52Z"
   },
   {
     "name": "Joe Longacre",
@@ -36,8 +36,8 @@
     "roles": [
       {
         "data": "Select Board Member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed as a member of the five member Selectboard, no other role specified."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as member of the five member Selectboard."
       }
     ],
     "divisions": [],
@@ -45,15 +45,15 @@
     "emails": [
       {
         "data": "jlongacre@haverhill-nh.com",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly listed next to Joe Longacre's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
         "source": "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T17:08:57Z"
+    "updated_at": "2025-07-02T17:39:52Z"
   },
   {
     "name": "Theresa Paige",
@@ -64,8 +64,8 @@
     "roles": [
       {
         "data": "Select Board Member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed as a member of the five member Selectboard, no other role specified."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as member of the five member Selectboard."
       }
     ],
     "divisions": [],
@@ -73,15 +73,15 @@
     "emails": [
       {
         "data": "tpaige@haverhill-nh.com",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly listed next to Theresa Paige's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
         "source": "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T17:08:57Z"
+    "updated_at": "2025-07-02T17:39:52Z"
   },
   {
     "name": "Ron C. Hurlburt",
@@ -92,8 +92,8 @@
     "roles": [
       {
         "data": "Select Board Member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed as a member of the five member Selectboard, no other role specified."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as member of the five member Selectboard."
       }
     ],
     "divisions": [],
@@ -101,15 +101,15 @@
     "emails": [
       {
         "data": "rhurlburt@haverhill-nh.com",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly listed next to Ron C. Hurlburt's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
         "source": "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T17:08:57Z"
+    "updated_at": "2025-07-02T17:39:52Z"
   },
   {
     "name": "Kevin Knapp",
@@ -120,8 +120,8 @@
     "roles": [
       {
         "data": "Select Board Member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed as a member of the five member Selectboard, no other role specified."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as member of the five member Selectboard."
       }
     ],
     "divisions": [],
@@ -129,14 +129,14 @@
     "emails": [
       {
         "data": "kknapp@haverhill-nh.com",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly listed next to Kevin Knapp's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to name.",
         "source": "https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-02T17:08:57Z"
+    "updated_at": "2025-07-02T17:39:52Z"
   }
 ]

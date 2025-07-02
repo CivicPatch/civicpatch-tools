@@ -171,6 +171,7 @@ government_types:
       - role: deputy mayor  
       - role: select board member
         aliases:
+        - selectmen
         - selectman
         - selectwoman
         - select board

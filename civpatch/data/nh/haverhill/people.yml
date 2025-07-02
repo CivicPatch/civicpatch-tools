@@ -1,4 +1,18 @@
 ---
+- name: Rod O'Shana
+  roles:
+  - Select Board Chair
+  divisions:
+  image:
+  cdn_image:
+  email: roshana@haverhill-nh.com
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR
+  updated_at: '2025-07-02T17:40:01Z'
 - name: Joe Longacre
   roles:
   - Select Board Member
@@ -12,7 +26,7 @@
   end_date:
   sources:
   - https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR
-  updated_at: '2025-07-02T17:12:01Z'
+  updated_at: '2025-07-02T17:40:01Z'
 - name: Kevin Knapp
   roles:
   - Select Board Member
@@ -26,7 +40,7 @@
   end_date:
   sources:
   - https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR
-  updated_at: '2025-07-02T17:12:01Z'
+  updated_at: '2025-07-02T17:40:01Z'
 - name: Ron C. Hurlburt
   roles:
   - Select Board Member
@@ -40,7 +54,7 @@
   end_date:
   sources:
   - https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR
-  updated_at: '2025-07-02T17:12:01Z'
+  updated_at: '2025-07-02T17:40:01Z'
 - name: Theresa Paige
   roles:
   - Select Board Member
@@ -54,18 +68,4 @@
   end_date:
   sources:
   - https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR
-  updated_at: '2025-07-02T17:12:01Z'
-- name: Rod O'Shana
-  roles:
-  - Interim Chair
-  divisions:
-  image:
-  cdn_image:
-  email: roshana@haverhill-nh.com
-  phone_number:
-  website:
-  start_date: '2023-07-03'
-  end_date:
-  sources:
-  - https://www.haverhill-nh.com/index.asp?SEC=D524A071-D2AB-4F6E-AD70-07EEFC68CFB6&Type=B_DIR
-  updated_at: '2025-07-02T17:12:01Z'
+  updated_at: '2025-07-02T17:40:01Z'
