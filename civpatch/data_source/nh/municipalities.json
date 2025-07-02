@@ -693,9 +693,13 @@
       "email": "info@berlinnh.gov",
       "website": "http://www.berlinnh.gov",
       "geoid": "3305140",
-      "meta_updated_at": "2025-05-28",
-      "meta_hash": "c421ff372133420066bc7b6e21723cc1",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T03:03:09Z",
+      "meta_hash": "7a900279fa1a662ce9f959b974a6a88b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Barrington",
