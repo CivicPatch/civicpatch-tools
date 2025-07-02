@@ -1419,7 +1419,14 @@
       "government_type": "select_board",
       "email": "administrator@alton.nh.gov",
       "website": "http://www.alton.nh.gov",
-      "geoid": "3300101060"
+      "geoid": "3300101060",
+      "meta_updated_at": "2025-07-02T16:23:43Z",
+      "meta_hash": "a9b73dd48b1341dd299fe6d5e86fc15e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Brookline",
