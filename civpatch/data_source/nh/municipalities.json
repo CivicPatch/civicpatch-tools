@@ -1341,7 +1341,14 @@
       "government_type": "select_board",
       "email": "chief@littletonpd.org",
       "website": "http://www.townoflittleton.org",
-      "geoid": "3300942580"
+      "geoid": "3300942580",
+      "meta_updated_at": "2025-07-02T03:45:58Z",
+      "meta_hash": "262a1986cdc34adc66ab49e873b459d7",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Auburn",
