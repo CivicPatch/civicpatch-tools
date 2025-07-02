@@ -892,9 +892,13 @@
       "email": "gcolby@plaistow.com",
       "website": "http://www.plaistow.com",
       "geoid": "3301562500",
-      "meta_updated_at": "2025-05-29",
-      "meta_hash": "364b1b7ba2cac0ec6c863fc273f8a717",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T03:21:24Z",
+      "meta_hash": "23219c5f9e57a68ab4533df937e0061c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Gilford",
