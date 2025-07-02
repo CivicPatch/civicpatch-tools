@@ -881,9 +881,13 @@
       "email": "dstack@bownh.gov",
       "website": "http://www.bownh.gov",
       "geoid": "3301306500",
-      "meta_updated_at": "2025-05-29",
-      "meta_hash": "21b531d9719047119ca2d4f5d1441205",
-      "meta_sources": []
+      "meta_updated_at": "2025-07-02T03:26:41Z",
+      "meta_hash": "9e1df1f14596afd8531bcdda902ab9bf",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Plaistow",
