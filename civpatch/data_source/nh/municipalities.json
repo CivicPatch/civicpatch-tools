@@ -1164,7 +1164,14 @@
       "government_type": "select_board",
       "email": "townofsandown@sandown.us",
       "website": "http://www.sandown.us/",
-      "geoid": "3301567620"
+      "geoid": "3301567620",
+      "meta_updated_at": "2025-07-02T03:30:37Z",
+      "meta_hash": "67daad4b8a2e26b38e79b25112429787",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Rindge",
