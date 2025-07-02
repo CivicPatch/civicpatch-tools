@@ -2243,7 +2243,14 @@
       "government_type": "select_board",
       "email": "hcarpenter@gilmantonnh.org",
       "website": "http://www.gilmantonnh.org",
-      "geoid": "3300128980"
+      "geoid": "3300128980",
+      "meta_updated_at": "2025-07-02T19:08:22Z",
+      "meta_hash": "63f076521326f350a4849ff248fb95eb",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Wilton",
