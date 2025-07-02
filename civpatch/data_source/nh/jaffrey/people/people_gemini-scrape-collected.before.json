@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Charles Turcotte",
+    "sources": [
+      "https://www.townofjaffrey.com/516/Cemetery-Committee"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Select Board Representative",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role is explicitly stated in the text and aligns with the prompt's guidance for identifying council members."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-02T16:41:44Z"
+  }
+]
