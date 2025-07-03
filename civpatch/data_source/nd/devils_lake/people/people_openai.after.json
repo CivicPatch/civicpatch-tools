@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Jim Moe",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://secure-cdn.scdn6.secure.raxcdn.com/media/userfiles/subsite_207/images/city-commission/Jim-Moe-33.jpg",
+    "phone_number": null,
+    "email": "jimm@dvlnd.com",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-06-30",
+    "sources": [
+      "https://www.dvlnd.com/government/city-commission"
+    ],
+    "updated_at": "2025-07-03T21:30:12Z"
+  },
+  {
+    "name": "Rob Hach",
+    "roles": [
+      "Vice President"
+    ],
+    "divisions": [],
+    "image": "https://secure-cdn.scdn6.secure.raxcdn.com/media/userfiles/subsite_207/images/city-commission/Rob-Hach-33.jpg",
+    "phone_number": null,
+    "email": "robh@dvlnd.com",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-06-30",
+    "sources": [
+      "https://www.dvlnd.com/government/city-commission"
+    ],
+    "updated_at": "2025-07-03T21:30:12Z"
+  }
+]
