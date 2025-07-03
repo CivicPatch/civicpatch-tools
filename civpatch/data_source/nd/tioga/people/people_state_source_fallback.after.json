@@ -4,7 +4,15 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-07-03T21:38:19Z",
+    "updated_at": "2025-07-03T22:11:02Z",
+    "divisions": []
+  },
+  {
+    "name": "Brett Rieniets",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T22:11:02Z",
     "divisions": []
   },
   {
@@ -12,7 +20,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:38:19Z",
+    "updated_at": "2025-07-03T22:11:02Z",
     "divisions": []
   },
   {
@@ -20,7 +28,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:38:19Z",
+    "updated_at": "2025-07-03T22:11:02Z",
     "divisions": []
   },
   {
@@ -28,7 +36,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:38:19Z",
+    "updated_at": "2025-07-03T22:11:02Z",
     "divisions": []
   },
   {
@@ -36,7 +44,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:38:19Z",
+    "updated_at": "2025-07-03T22:11:02Z",
     "divisions": []
   }
 ]

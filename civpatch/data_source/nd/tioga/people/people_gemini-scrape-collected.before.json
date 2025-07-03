@@ -1,107 +1,228 @@
 [
   {
-    "name": "Kevin Litten",
+    "name": "Steven Dye",
     "sources": [
-      "https://www.tiogand.net/city-hall/community-statistics"
+      "https://www.tiogand.net/boards/commission"
     ],
     "images": [],
     "roles": [
       {
-        "data": "President of City Commission",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated in the text"
-      }
-    ],
-    "divisions": [],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-07-03T21:41:17Z"
-  },
-  {
-    "name": "Jessica Steele",
-    "sources": [
-      "https://www.tiogand.net/city-hall/community-statistics"
-    ],
-    "images": [],
-    "roles": [
-      {
-        "data": "Police Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated in the text"
-      }
-    ],
-    "divisions": [],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-07-03T21:41:17Z"
-  },
-  {
-    "name": "Shawn Travis",
-    "sources": [
-      "https://www.tiogand.net/city-hall/community-statistics"
-    ],
-    "images": [],
-    "roles": [
-      {
-        "data": "Finance Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated in the text"
-      }
-    ],
-    "divisions": [],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-07-03T21:41:17Z"
-  },
-  {
-    "name": "Tim Christianson",
-    "sources": [
-      "https://www.tiogand.net/city-hall/community-statistics"
-    ],
-    "images": [],
-    "roles": [
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is a direct match to a target role."
+      },
       {
         "data": "Water Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated in the text"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is a contextual variation of a target role, explicitly stated."
       }
     ],
     "divisions": [],
-    "phone_numbers": [],
-    "emails": [],
+    "phone_numbers": [
+      {
+        "data": "(620)-290-2067",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "watercommissioner@cityoftioga.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
     "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-07-03T21:41:17Z"
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date directly extracted from the text in YYYY format.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date directly extracted from the text in YYYY format.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T22:11:40Z"
   },
   {
-    "name": "Larry Maize",
+    "name": "Kyle Ralston",
     "sources": [
-      "https://www.tiogand.net/city-hall/community-statistics"
+      "https://www.tiogand.net/boards/commission"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Streets Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated in the text"
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is a direct match to a target role."
+      },
+      {
+        "data": "Street Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is a contextual variation of a target role, explicitly stated."
+      },
+      {
+        "data": "Police Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is a contextual variation of a target role, explicitly stated."
       }
     ],
     "divisions": [],
-    "phone_numbers": [],
-    "emails": [],
+    "phone_numbers": [
+      {
+        "data": "(701)741-7887",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "streetcommissioner@cityoftioga.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
     "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-07-03T21:41:17Z"
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date directly extracted from the text in YYYY format.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date directly extracted from the text in YYYY format.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T22:11:40Z"
+  },
+  {
+    "name": "Brett Rieniets",
+    "sources": [
+      "https://www.tiogand.net/boards/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commission President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is a direct match to a target role."
+      },
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is a direct match to a target role, implied by 'Commission President'."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is a direct match to a target role, implied by 'Commission President'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701)-641-2354",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "commissionpresident@cityoftioga.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date directly extracted from the text in YYYY format.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date directly extracted from the text in YYYY format.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T22:11:40Z"
+  },
+  {
+    "name": "Jaden Iverson",
+    "sources": [
+      "https://www.tiogand.net/boards/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is a direct match to a target role."
+      },
+      {
+        "data": "Finance Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is a contextual variation of a target role, explicitly stated."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701)-641-7974",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "financecommissioner@cityoftioga.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date directly extracted from the text in YYYY format.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date directly extracted from the text in YYYY format.",
+        "source": "https://www.tiogand.net/boards/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T22:11:40Z"
   }
 ]
