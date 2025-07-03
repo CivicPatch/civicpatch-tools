@@ -1,0 +1,39 @@
+[
+  {
+    "name": "Scott Decker",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/government/image/146/scott-decker-e1576099460444.jpg?itok=E0-oUk63",
+    "phone_number": "(701) 456-7744",
+    "email": null,
+    "website": "https://www.dickinsongov.com/government/directory-listing/scott-decker",
+    "start_date": "2016",
+    "end_date": null,
+    "sources": [
+      "https://www.dickinsongov.com/government/page/mayor-scott-decker",
+      "https://www.dickinsongov.com/city-commission",
+      "https://www.dickinsongov.com/government/directory-listing/scott-decker"
+    ],
+    "updated_at": "2025-07-03T19:19:35Z"
+  },
+  {
+    "name": "Dr. Robert Baer",
+    "roles": [
+      "Vice Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/city-commission/image/18031/dr_b.jpg?itok=hxG0xeu4",
+    "phone_number": "(701) 590-0238",
+    "email": null,
+    "website": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.dickinsongov.com/city-commission",
+      "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+    ],
+    "updated_at": "2025-07-03T19:19:35Z"
+  }
+]

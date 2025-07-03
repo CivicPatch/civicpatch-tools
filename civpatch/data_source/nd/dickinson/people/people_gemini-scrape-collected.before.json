@@ -1,0 +1,356 @@
+[
+  {
+    "name": "Scott Decker",
+    "sources": [
+      "https://www.dickinsongov.com/government/page/mayor-scott-decker",
+      "https://www.dickinsongov.com/city-commission",
+      "https://www.dickinsongov.com/government/directory-listing/scott-decker",
+      "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
+      "https://www.dickinsongov.com/city-commission/directory-listing/scott-decker"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Scott J. Decker' and 'elected Dickinson City Mayor'."
+      },
+      {
+        "data": "President of the city commission",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected Dickinson City Mayor and President of the city commission'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Mayor' next to the name."
+      },
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and is a target role for the main governing body."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor Scott J. Decker' and 'elected Dickinson City Mayor' indicating a current role."
+      },
+      {
+        "data": "council president",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'President' under 'Position' and 'elected Dickinson City Mayor and President of the city commission' indicating a current role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated next to his name.",
+        "source": "https://www.dickinsongov.com/government/page/mayor-scott-decker"
+      },
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
+        "source": "https://www.dickinsongov.com/government/directory-listing/scott-decker"
+      },
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is directly and clearly stated in the text.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/scott-decker"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.dickinsongov.com/government/page/mayor-scott-decker",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the direct profile page for Mayor Scott Decker.",
+        "source": "https://www.dickinsongov.com/government/page/mayor-scott-decker"
+      },
+      {
+        "data": "https://www.dickinsongov.com/government/directory-listing/scott-decker",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked to the name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/government/directory-listing/scott-decker",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct profile link for Scott Decker is provided.",
+        "source": "https://www.dickinsongov.com/government/directory-listing/scott-decker"
+      },
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/scott-decker",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL is explicitly provided.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+      },
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/scott-decker",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is provided at the top of the section and is clearly a profile page for Scott Decker.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/scott-decker"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2016",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected Dickinson City Mayor and President of the city commission in 2016'.",
+        "source": "https://www.dickinsongov.com/government/page/mayor-scott-decker"
+      },
+      {
+        "data": "2016",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was 'elected Dickinson City Mayor and President of the city commission in 2016'.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/scott-decker"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:20:33Z"
+  },
+  {
+    "name": "Dr. Robert Baer",
+    "sources": [
+      "https://www.dickinsongov.com/city-commission",
+      "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Vice President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and is a target role for the main governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.590.0238",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "701.590.0238",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed next to the person's name.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked to the name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL is explicitly provided.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:20:33Z"
+  },
+  {
+    "name": "Jason Fridrich",
+    "sources": [
+      "https://www.dickinsongov.com/city-commission",
+      "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
+      "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and is a target role for the main governing body."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Position Commissioner' directly under the name"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is clearly and directly stated next to the name",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked to the name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL is explicitly provided.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+      },
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Jason Fridrich.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:20:33Z"
+  },
+  {
+    "name": "Joe Ridl",
+    "sources": [
+      "https://www.dickinsongov.com/city-commission",
+      "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
+      "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and is a target role for the main governing body."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated under Joe Ridl's name and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.690.6103",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "701.690.6103",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to Joe Ridl's name.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked to the name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL is explicitly provided.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+      },
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Joe Ridl.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:20:33Z"
+  },
+  {
+    "name": "John Odermann",
+    "sources": [
+      "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
+      "https://www.dickinsongov.com/city-commission/directory-listing/john-odermann"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and is a target role for the main governing body."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Commissioner' is explicitly stated under John Odermann's name and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/john-odermann"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/john-odermann",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile page URL is explicitly provided.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+      },
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/john-odermann",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL for John Odermann is provided at the top of the section.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/john-odermann"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:20:33Z"
+  }
+]

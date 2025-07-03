@@ -1,0 +1,307 @@
+[
+  {
+    "name": "Scott Decker",
+    "sources": [
+      "https://www.dickinsongov.com/government/page/mayor-scott-decker",
+      "https://www.dickinsongov.com/city-commission",
+      "https://www.dickinsongov.com/government/directory-listing/scott-decker"
+    ],
+    "images": [
+      {
+        "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/full_node_primary/public/media/government/image/141/scott-decker-e1576099460444.jpg?itok=IRxCUYCI",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a portrait near the name and title 'Mayor Scott Decker'.",
+        "source": "https://www.dickinsongov.com/government/page/mayor-scott-decker"
+      },
+      {
+        "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/government/image/146/scott-decker-e1576099460444.jpg?itok=E0-oUk63",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to Scott Decker's name and role.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/government/image/146/scott-decker-e1576099460444.jpg?itok=E0-oUk63",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to Scott Decker's name and position.",
+        "source": "https://www.dickinsongov.com/government/directory-listing/scott-decker"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Mayor Scott J. Decker' and 'elected Dickinson City Mayor'."
+      },
+      {
+        "data": "City Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "He was first elected as a Dickinson City Commissioner in 2014, indicating prior role in the primary governing body."
+      },
+      {
+        "data": "City Commission President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "He was elected President of the city commission in 2016, indicating a leadership role in the primary governing body."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor on the page."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Position Mayor' for Scott Decker."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is listed directly next to the name and role.",
+        "source": "https://www.dickinsongov.com/government/page/mayor-scott-decker"
+      },
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Scott Decker's name and role.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is listed under Scott Decker's contact information.",
+        "source": "https://www.dickinsongov.com/government/directory-listing/scott-decker"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.dickinsongov.com/government/page/mayor-scott-decker",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Page URL is the official mayor page for Scott Decker.",
+        "source": "https://www.dickinsongov.com/government/page/mayor-scott-decker"
+      },
+      {
+        "data": "https://www.dickinsongov.com/government/directory-listing/scott-decker",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page linked from name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/government/directory-listing/scott-decker",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page URL is the official profile page for Scott Decker.",
+        "source": "https://www.dickinsongov.com/government/directory-listing/scott-decker"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2016",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "He was elected Dickinson City Mayor and President of the city commission in 2016.",
+        "source": "https://www.dickinsongov.com/government/page/mayor-scott-decker"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:19:35Z"
+  },
+  {
+    "name": "Dr. Robert Baer",
+    "sources": [
+      "https://www.dickinsongov.com/city-commission",
+      "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+    ],
+    "images": [
+      {
+        "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/city-commission/image/18031/dr_b.jpg?itok=hxG0xeu4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to Dr. Robert Baer's name and role.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/city-commission/image/18031/dr_b.jpg?itok=hxG0xeu4",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a headshot near the name and role of Dr. Robert Baer on the official city commission page.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role stated as Vice President of City Commission, normalized to Vice Mayor."
+      },
+      {
+        "data": "Vice President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Position Vice President' for Dr. Robert Baer in the City Commission section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.590.0238",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Dr. Robert Baer's name and role.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "701.590.0238",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under Dr. Robert Baer's name and position.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page linked from name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL provided is the official city commission directory listing page for Dr. Robert Baer.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:19:35Z"
+  },
+  {
+    "name": "Jason Fridrich",
+    "sources": [
+      "https://www.dickinsongov.com/city-commission",
+      "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich"
+    ],
+    "images": [
+      {
+        "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/city-commission/image/18026/jf.jpg?itok=1JFdun5R",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to Jason Fridrich's name and role.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/city-commission/image/18026/jf.jpg?itok=1JFdun5R",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to Jason Fridrich's name and position on the official city commission page.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role explicitly stated as Commissioner."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Position Commissioner' for Jason Fridrich on the Dickinson city commission page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Jason Fridrich's name and role.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "701.456.7744",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is listed directly under Jason Fridrich's contact information.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page linked from name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the official city commission directory listing page for Jason Fridrich.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:19:35Z"
+  },
+  {
+    "name": "Joe Ridl",
+    "sources": [
+      "https://www.dickinsongov.com/city-commission",
+      "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
+    ],
+    "images": [
+      {
+        "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/city-commission/image/18021/jr.jpg?itok=VZVXiy8J",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to Joe Ridl's name and role.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/city-commission/image/18021/jr.jpg?itok=VZVXiy8J",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image is a headshot near Joe Ridl's name and position on the page.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role explicitly stated as Commissioner."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page explicitly states Joe Ridl's position as 'Commissioner' on the City Commission."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.690.6103",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Joe Ridl's name and role.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "701.690.6103",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is listed directly under Joe Ridl's name and position.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Profile page linked from name.",
+        "source": "https://www.dickinsongov.com/city-commission"
+      },
+      {
+        "data": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the official city commission directory page for Joe Ridl.",
+        "source": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:19:35Z"
+  }
+]
