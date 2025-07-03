@@ -539,7 +539,14 @@
       ],
       "population": 1424,
       "website": "https://cityofparkriver.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T22:07:45Z",
+      "meta_hash": "d3b456d3968378efbdc81e97ef935f45",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "New Rockford",

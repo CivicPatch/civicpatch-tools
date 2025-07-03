@@ -1,0 +1,61 @@
+---
+- name: Corrine Bell
+  roles:
+  - Council Member
+  divisions:
+  - Ward 1
+  image:
+  cdn_image:
+  email: Corribell@icloud.com
+  phone_number: "(701) 331-0988"
+  website:
+  start_date:
+  end_date: '2028'
+  sources:
+  - https://cityofparkriver.com/government/city-officials-staff
+  updated_at: '2025-07-03T22:07:45Z'
+- name: Dennis Kubat
+  roles:
+  - Council Member
+  divisions:
+  - Ward 1
+  image:
+  cdn_image:
+  email: denniskubat@yahoo.com
+  phone_number: "(701) 284-7307"
+  website:
+  start_date:
+  end_date: '2026'
+  sources:
+  - https://cityofparkriver.com/government/city-officials-staff
+  updated_at: '2025-07-03T22:07:45Z'
+- name: Leah Skjerven
+  roles:
+  - Council Member
+  divisions:
+  - Ward 2
+  image:
+  cdn_image:
+  email: skjerven@polarcomm.com
+  phone_number: "(701) 284-6519"
+  website:
+  start_date:
+  end_date: '2026'
+  sources:
+  - https://cityofparkriver.com/government/city-officials-staff
+  updated_at: '2025-07-03T22:07:45Z'
+- name: Kenneth Gilespie
+  roles:
+  - Council Member
+  divisions:
+  - Ward 3
+  image:
+  cdn_image:
+  email: kennyg@polarcomm.com
+  phone_number: "(701) 360-1195"
+  website:
+  start_date:
+  end_date: '2028'
+  sources:
+  - https://cityofparkriver.com/government/city-officials-staff
+  updated_at: '2025-07-03T22:07:45Z'
