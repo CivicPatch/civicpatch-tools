@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Kevin Litten",
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "President of City Commission",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated in the text"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:41:17Z"
+  },
+  {
+    "name": "Jessica Steele",
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Police Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated in the text"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:41:17Z"
+  },
+  {
+    "name": "Shawn Travis",
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Finance Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated in the text"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:41:17Z"
+  },
+  {
+    "name": "Tim Christianson",
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Water Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated in the text"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:41:17Z"
+  },
+  {
+    "name": "Larry Maize",
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Streets Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated in the text"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:41:17Z"
+  }
+]
