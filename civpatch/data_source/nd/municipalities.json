@@ -31,7 +31,14 @@
       ],
       "population": 59166,
       "website": "http://www.grandforksgov.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T19:18:09Z",
+      "meta_hash": "cafa76c0013ca1fe17e9e58bb1ded541",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Minot",
