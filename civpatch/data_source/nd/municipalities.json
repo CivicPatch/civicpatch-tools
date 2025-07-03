@@ -467,7 +467,14 @@
       ],
       "population": 1650,
       "website": "https://harveynd.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T22:04:37Z",
+      "meta_hash": "b3be31a767ec82c4723a8ca19f118c62",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hillsboro",
