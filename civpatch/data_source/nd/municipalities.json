@@ -20,7 +20,14 @@
       ],
       "population": 73622,
       "website": "https://www.bismarcknd.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T19:16:51Z",
+      "meta_hash": "3156f34b05d4be293673e09dff1e225c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Grand Forks",

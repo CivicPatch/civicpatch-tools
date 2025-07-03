@@ -1,0 +1,252 @@
+[
+  {
+    "name": "Michael Schmitz",
+    "sources": [
+      "https://www.bismarcknd.gov/2377/History-of-Bismarck-Mayors",
+      "https://www.bismarcknd.gov/2378/History-of-the-Bismarck-City-Commissione",
+      "https://bismarcknd.gov/directory.aspx?EID=1672"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Michael Schmitz | 2022-Present' in the list of mayors and 'Today, the Mayor serves as chair of the five-person City Commission'."
+      },
+      {
+        "data": "chair",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated 'Today, the Mayor serves as chair of the five-person City Commission'."
+      },
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'President' for the 2024 term."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'Commissioners and the Commission President, the Mayor, are elected to four-year terms', directly linking 'President' to 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Title: Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-355-1300",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly listed next to the person's name and title. ",
+        "source": "https://bismarcknd.gov/directory.aspx?EID=1672"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://bismarcknd.gov/directory.aspx?EID=1672",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Directly linked from 'Mayor Mike Schmitz' in the text, indicating a personal profile page.",
+        "source": "https://www.bismarcknd.gov/2377/History-of-Bismarck-Mayors"
+      },
+      {
+        "data": "https://bismarcknd.gov/directory.aspx?EID=1672",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to 'Mayor Mike Schmitz' is provided, which appears to be a profile page.",
+        "source": "https://www.bismarcknd.gov/2378/History-of-the-Bismarck-City-Commissione"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as '2022-Present' for Michael Schmitz",
+        "source": "https://www.bismarcknd.gov/2377/History-of-Bismarck-Mayors"
+      },
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Michael Schmitz was elected as Mayor of Bismarck in 2022'.",
+        "source": "https://bismarcknd.gov/directory.aspx?EID=1672"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Expires in 2026'.",
+        "source": "https://bismarcknd.gov/directory.aspx?EID=1672"
+      }
+    ],
+    "updated_at": "2025-07-03T19:16:50Z"
+  },
+  {
+    "name": "Anne Cleary",
+    "sources": [
+      "https://www.bismarcknd.gov/2378/History-of-the-Bismarck-City-Commissione",
+      "https://www.bismarcknd.gov/FormCenter"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'The Bismarck City Commission is a five-person governing body' and lists this person as a member for 2024."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Cleary' under the 'City Commission' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:16:50Z"
+  },
+  {
+    "name": "Greg Zenker",
+    "sources": [
+      "https://www.bismarcknd.gov/2378/History-of-the-Bismarck-City-Commissione",
+      "https://www.bismarcknd.gov/929/Forestry-Advisory-Board",
+      "https://www.bismarcknd.gov/FormCenter"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'The Bismarck City Commission is a five-person governing body' and lists this person as a member for 2024."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Members' and associated with 'City Commission'"
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Zenker' under the 'City Commission' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Member Since Greg Zenker (City Commission) 2024'",
+        "source": "https://www.bismarcknd.gov/929/Forestry-Advisory-Board"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:16:50Z"
+  },
+  {
+    "name": "Michael Connelly",
+    "sources": [
+      "https://www.bismarcknd.gov/2378/History-of-the-Bismarck-City-Commissione",
+      "https://www.bismarcknd.gov/FormCenter",
+      "https://www.bismarcknd.gov/645/Committee-for-People-with-Disabilities"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'The Bismarck City Commission is a five-person governing body' and lists this person as a member for 2024."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Connelly' under the 'City Commission' section."
+      },
+      {
+        "data": "commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Bismarck City Commission' member, which is the main governing body and aligns with 'commissioner' role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:16:50Z"
+  },
+  {
+    "name": "John Risch III",
+    "sources": [
+      "https://www.bismarcknd.gov/2378/History-of-the-Bismarck-City-Commissione",
+      "https://www.bismarcknd.gov/FormCenter"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'The Bismarck City Commission is a five-person governing body' and lists this person as a member for 2024."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Risch' under the 'City Commission' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:16:50Z"
+  },
+  {
+    "name": "Mike Schmitz",
+    "sources": [
+      "https://www.bismarcknd.gov/604/Boards-Committees",
+      "https://www.bismarcknd.gov",
+      "https://www.bismarcknd.gov/FormCenter"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Mike Schmitz' under 'City Commission'"
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Mike Schmitz' in the text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Schmitz' under the 'City Commission' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://bismarcknd.gov/directory.aspx?EID=1672",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked profile page for the person.",
+        "source": "https://www.bismarcknd.gov/604/Boards-Committees"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T19:16:50Z"
+  }
+]
