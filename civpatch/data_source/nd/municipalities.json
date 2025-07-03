@@ -684,7 +684,14 @@
       ],
       "population": 1117,
       "website": "http://www.candond.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T23:57:39Z",
+      "meta_hash": "7f64b6d455754841a3d02d043ed150d9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Thompson",
