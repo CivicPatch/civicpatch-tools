@@ -323,7 +323,14 @@
       ],
       "population": 2281,
       "website": "https://hazennd.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T21:35:54Z",
+      "meta_hash": "a913ef03469b34818e0bcb9648a6a6f7",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Lisbon",
