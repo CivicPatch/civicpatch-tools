@@ -6,14 +6,23 @@ require "core/config_manager"
 require "scrapers/municipalities"
 require "openai"
 
+require "scrapers/nd/municipalities"
+
 namespace :one_off do
   task "init_state" do
-    state = "co"
+    state = "nd"
     municipalities = Scrapers::Municipalities.fetch(state)
 
     puts "found #{municipalities.length} municipalities in #{state}"
 
     Core::StateManager.update_municipalities(state, municipalities)
+
+    # Services::Census.download_municipalities(state)
+    # Services::Census.convert_to_geojson(state, Core::PathHelper.project_path(File.join("data", state, ".maps")))
+  end
+
+  task "test_wiki" do
+    results = Scrapers::Nd::Municipalities.fetch
   end
 
   task "determine_average_token_count" do
