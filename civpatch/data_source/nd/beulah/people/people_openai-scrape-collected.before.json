@@ -1,0 +1,365 @@
+[
+  {
+    "name": "Sean Cheatley",
+    "sources": [
+      "https://www.beulahnd.org/government/city_officials_and_employees.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Mayor of Beulah City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "BeulahNDMayor@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Mayor Sean Cheatley.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term year explicitly stated as 2026.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:30:10Z"
+  },
+  {
+    "name": "Tim Aichele",
+    "sources": [
+      "https://www.beulahnd.org/government/city_officials_and_employees.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Ward 1."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "aicheletimothy@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Tim Aichele.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term year explicitly stated as 2026.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:30:10Z"
+  },
+  {
+    "name": "Cameron Brown",
+    "sources": [
+      "https://www.beulahnd.org/government/city_officials_and_employees.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Ward 1."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "rcbrown.bcc@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Cameron Brown.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term year explicitly stated as 2028.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:30:10Z"
+  },
+  {
+    "name": "Jason Isaak",
+    "sources": [
+      "https://www.beulahnd.org/government/city_officials_and_employees.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member President."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Ward 2."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jasonisaak52@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Jason Isaak.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term year explicitly stated as 2026.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:30:10Z"
+  },
+  {
+    "name": "Adam Baker",
+    "sources": [
+      "https://www.beulahnd.org/government/city_officials_and_employees.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member Vice President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member Vice President."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Ward 2."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "beulahbakerw2@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Adam Baker.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term year explicitly stated as 2028.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:30:10Z"
+  },
+  {
+    "name": "Auston Biles",
+    "sources": [
+      "https://www.beulahnd.org/government/city_officials_and_employees.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Ward 3."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Auston.Biles@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Auston Biles.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term year explicitly stated as 2026.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:30:10Z"
+  },
+  {
+    "name": "Kameron Plienis",
+    "sources": [
+      "https://www.beulahnd.org/government/city_officials_and_employees.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Ward 3."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "kameronbeulah@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Kameron Plienis.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term year explicitly stated as 2028.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:30:10Z"
+  },
+  {
+    "name": "Gary Miller",
+    "sources": [
+      "https://www.beulahnd.org/government/city_officials_and_employees.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Ward 4."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "gmillerward4@westriv.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Gary Miller.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term year explicitly stated as 2026.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:30:10Z"
+  },
+  {
+    "name": "Bill Keller",
+    "sources": [
+      "https://www.beulahnd.org/government/city_officials_and_employees.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Ward 4."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "billkeller311@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Bill Keller.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term year explicitly stated as 2028.",
+        "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:30:10Z"
+  }
+]
