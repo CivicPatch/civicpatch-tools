@@ -1,8 +1,114 @@
 [
   {
+    "name": "Levi Reese",
+    "sources": [
+      "https://hillsboro-nd.com/commission",
+      "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'President' is explicitly stated as the title for Levi Reese in the text, directly under their name and image."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'Levi Reese has been a Commissioner since 2018' and he is part of the 'City Commission'."
+      },
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The title 'President' is explicitly stated under his name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "levi.reese@hillsboro-nd.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person's profile section.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct and unique URL is provided as a hyperlink associated with Levi Reese's name, indicating a personal profile page.",
+        "source": "https://hillsboro-nd.com/commission"
+      },
+      {
+        "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is directly linked to his name in the breadcrumbs and appears to be his profile page.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2018",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Levi Reese has been a Commissioner since 2018'.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:25:33Z"
+  },
+  {
+    "name": "Jon Myers",
+    "sources": [
+      "https://hillsboro-nd.com/commission",
+      "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=22A9A233-9842-417A-84A1-7174C3B30E4C"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated as the title for Jon Myers in the text, directly under their name and image."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Commissioner' and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jon.myers@hillsboro-nd.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with Jon Myers.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=22A9A233-9842-417A-84A1-7174C3B30E4C"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=22A9A233-9842-417A-84A1-7174C3B30E4C",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct and unique URL is provided as a hyperlink associated with Jon Myers's name, indicating a personal profile page.",
+        "source": "https://hillsboro-nd.com/commission"
+      },
+      {
+        "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=22A9A233-9842-417A-84A1-7174C3B30E4C",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current URL is a dedicated profile page for Jon Myers.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=22A9A233-9842-417A-84A1-7174C3B30E4C"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:25:33Z"
+  },
+  {
     "name": "Paul Geray",
     "sources": [
-      "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171",
+      "https://hillsboro-nd.com/commission",
       "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
     ],
     "images": [],
@@ -10,12 +116,12 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Commissioner-Vice President' and 'Commissioner' is a target role."
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated as part of the title 'Commissioner-Vice President' for Paul Geray in the text, directly under their name and image. This is a valid target role and is currently active as of today's date (2025-07-03)."
       },
       {
         "data": "Vice President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Commissioner-Vice President' and 'Vice President' is a target role."
+        "llm_confidence_reason": "The role 'Vice President' is explicitly stated as part of the title 'Commissioner-Vice President' for Paul Geray in the text, directly under their name and image. This is a valid target role and is currently active as of today's date (2025-07-03)."
       },
       {
         "data": "Commissioner",
@@ -35,12 +141,6 @@
         "data": "paul.geray@hillsboro-nd.us",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
-        "source": "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171"
-      },
-      {
-        "data": "paul.geray@hillsboro-nd.us",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
       }
     ],
@@ -48,17 +148,11 @@
       {
         "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is provided as a direct link to Paul Geray's profile page in the breadcrumbs.",
-        "source": "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171"
+        "llm_confidence_reason": "A direct and unique URL is provided as a hyperlink associated with Paul Geray's name, indicating a personal profile page.",
+        "source": "https://hillsboro-nd.com/commission"
       }
     ],
     "start_dates": [
-      {
-        "data": "2021",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Paul Geray has been a Commissioner since 2021'.",
-        "source": "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171"
-      },
       {
         "data": "2021",
         "llm_confidence": 1.0,
@@ -67,6 +161,100 @@
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:07:47Z"
+    "updated_at": "2025-07-03T22:25:33Z"
+  },
+  {
+    "name": "Jason Pohlkamp",
+    "sources": [
+      "https://hillsboro-nd.com/commission",
+      "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=E91589B5-0C6E-42AA-A63B-1EE1A3F620D0"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated as the title for Jason Pohlkamp in the text, directly under their name and image."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Commissioner' under 'Title'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jason.pohlkamp@hillsboro-nd.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=E91589B5-0C6E-42AA-A63B-1EE1A3F620D0"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=E91589B5-0C6E-42AA-A63B-1EE1A3F620D0",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct and unique URL is provided as a hyperlink associated with Jason Pohlkamp's name, indicating a personal profile page.",
+        "source": "https://hillsboro-nd.com/commission"
+      },
+      {
+        "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=E91589B5-0C6E-42AA-A63B-1EE1A3F620D0",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is the direct profile page for Jason Pohlkamp, serving as his primary web presence.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=E91589B5-0C6E-42AA-A63B-1EE1A3F620D0"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:25:33Z"
+  },
+  {
+    "name": "Nicole Evans",
+    "sources": [
+      "https://hillsboro-nd.com/commission",
+      "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=4B852E8A-5C31-4B2D-B0F3-8E329C44E252"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated as the title for Nicole Evans in the text, directly under their name and image."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated as her title."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "nicole.evans@hillsboro-nd.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person's profile page. ",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=4B852E8A-5C31-4B2D-B0F3-8E329C44E252"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=4B852E8A-5C31-4B2D-B0F3-8E329C44E252",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct and unique URL is provided as a hyperlink associated with Nicole Evans's name, indicating a personal profile page.",
+        "source": "https://hillsboro-nd.com/commission"
+      },
+      {
+        "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=4B852E8A-5C31-4B2D-B0F3-8E329C44E252",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Nicole Evans.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=4B852E8A-5C31-4B2D-B0F3-8E329C44E252"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:25:33Z"
   }
 ]
