@@ -3,11 +3,11 @@
     "name": "Bernie Dardis",
     "roles": [
       "Mayor",
-      "Commission President"
+      "Commission President",
+      "President of the Board of City Commissioners",
+      "mayor"
     ],
-    "divisions": [
-      "at-large"
-    ],
+    "divisions": [],
     "image": null,
     "phone_number": "701-367-2784",
     "email": null,
@@ -16,18 +16,21 @@
     "end_date": "2026-06",
     "sources": [
       "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
-      "https://www.westfargond.gov/365/City-Commission"
+      "https://www.westfargond.gov/365/City-Commission",
+      "https://www.westfargond.gov/1376/Commissioner-Brad-Olson",
+      "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson",
+      "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel",
+      "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
     ],
-    "updated_at": "2025-07-03T19:15:03Z"
+    "updated_at": "2025-07-03T20:40:37Z"
   },
   {
     "name": "Brad Olson",
     "roles": [
-      "Commissioner"
+      "Commissioner",
+      "commissioner"
     ],
-    "divisions": [
-      "at-large"
-    ],
+    "divisions": [],
     "image": null,
     "phone_number": "701-715-2177",
     "email": null,
@@ -37,18 +40,20 @@
     "sources": [
       "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
       "https://www.westfargond.gov/365/City-Commission",
-      "https://www.westfargond.gov/1376/Commissioner-Brad-Olson"
+      "https://www.westfargond.gov/1376/Commissioner-Brad-Olson",
+      "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson",
+      "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel",
+      "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
     ],
-    "updated_at": "2025-07-03T19:15:03Z"
+    "updated_at": "2025-07-03T20:40:37Z"
   },
   {
     "name": "Roben Anderson",
     "roles": [
-      "Commissioner"
+      "Commissioner",
+      "commissioner"
     ],
-    "divisions": [
-      "at-large"
-    ],
+    "divisions": [],
     "image": null,
     "phone_number": "701-831-7489",
     "email": null,
@@ -58,18 +63,20 @@
     "sources": [
       "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
       "https://www.westfargond.gov/365/City-Commission",
-      "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson"
+      "https://www.westfargond.gov/1376/Commissioner-Brad-Olson",
+      "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson",
+      "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel",
+      "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
     ],
-    "updated_at": "2025-07-03T19:15:03Z"
+    "updated_at": "2025-07-03T20:40:37Z"
   },
   {
     "name": "Amy Zundel",
     "roles": [
-      "Commissioner"
+      "Commissioner",
+      "commissioner"
     ],
-    "divisions": [
-      "at-large"
-    ],
+    "divisions": [],
     "image": null,
     "phone_number": "701-831-7272",
     "email": null,
@@ -79,18 +86,20 @@
     "sources": [
       "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
       "https://www.westfargond.gov/365/City-Commission",
-      "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel"
+      "https://www.westfargond.gov/1376/Commissioner-Brad-Olson",
+      "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson",
+      "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel",
+      "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
     ],
-    "updated_at": "2025-07-03T19:15:03Z"
+    "updated_at": "2025-07-03T20:40:37Z"
   },
   {
     "name": "Rory Jorgensen",
     "roles": [
-      "Commissioner"
+      "Commissioner",
+      "commissioner"
     ],
-    "divisions": [
-      "at-large"
-    ],
+    "divisions": [],
     "image": null,
     "phone_number": "701-831-7273",
     "email": null,
@@ -100,8 +109,11 @@
     "sources": [
       "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
       "https://www.westfargond.gov/365/City-Commission",
+      "https://www.westfargond.gov/1376/Commissioner-Brad-Olson",
+      "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson",
+      "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel",
       "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
     ],
-    "updated_at": "2025-07-03T19:15:03Z"
+    "updated_at": "2025-07-03T20:40:37Z"
   }
 ]
