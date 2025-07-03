@@ -2,7 +2,8 @@
   {
     "name": "Lyn James",
     "roles": [
-      "President of the City Commission"
+      "President of City Commission",
+      "Commissioner"
     ],
     "divisions": [],
     "image": null,
@@ -14,12 +15,13 @@
     "sources": [
       "https://bowmannd.com/cities/city-of-bowman/departments/commission"
     ],
-    "updated_at": "2025-07-03T22:43:59Z"
+    "updated_at": "2025-07-03T23:56:09Z"
   },
   {
     "name": "Sarah Bullis",
     "roles": [
-      "Financial Commissioner"
+      "Financial Commissioner",
+      "Commissioner"
     ],
     "divisions": [],
     "image": null,
@@ -31,13 +33,14 @@
     "sources": [
       "https://bowmannd.com/cities/city-of-bowman/departments/commission"
     ],
-    "updated_at": "2025-07-03T22:43:59Z"
+    "updated_at": "2025-07-03T23:56:09Z"
   },
   {
     "name": "Ryan Shear",
     "roles": [
       "Street & Garbage Commissioner",
-      "Vice President of the City Commission"
+      "Vice President of City Commission",
+      "Commissioner"
     ],
     "divisions": [],
     "image": null,
@@ -49,12 +52,13 @@
     "sources": [
       "https://bowmannd.com/cities/city-of-bowman/departments/commission"
     ],
-    "updated_at": "2025-07-03T22:43:59Z"
+    "updated_at": "2025-07-03T23:56:09Z"
   },
   {
     "name": "Myron Vail",
     "roles": [
-      "Water/Sewer Commissioner"
+      "Water/Sewer Commissioner",
+      "Commissioner"
     ],
     "divisions": [],
     "image": null,
@@ -66,12 +70,13 @@
     "sources": [
       "https://bowmannd.com/cities/city-of-bowman/departments/commission"
     ],
-    "updated_at": "2025-07-03T22:43:59Z"
+    "updated_at": "2025-07-03T23:56:09Z"
   },
   {
     "name": "Benjamin Schaaf",
     "roles": [
-      "Police Commissioner"
+      "Police Commissioner",
+      "Commissioner"
     ],
     "divisions": [],
     "image": null,
@@ -83,6 +88,6 @@
     "sources": [
       "https://bowmannd.com/cities/city-of-bowman/departments/commission"
     ],
-    "updated_at": "2025-07-03T22:43:59Z"
+    "updated_at": "2025-07-03T23:56:09Z"
   }
 ]

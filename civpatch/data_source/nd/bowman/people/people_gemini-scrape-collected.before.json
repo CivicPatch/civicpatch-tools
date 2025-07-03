@@ -7,9 +7,14 @@
     "images": [],
     "roles": [
       {
-        "data": "President of the City Commission",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated and current."
+        "data": "President of City Commission",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from 'President of City Commission' and 'City Commissioner'."
       }
     ],
     "divisions": [],
@@ -17,8 +22,8 @@
     "emails": [
       {
         "data": "ljames@cityofbowman.com",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
@@ -26,20 +31,20 @@
     "start_dates": [
       {
         "data": "2024",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Start date is explicitly stated as part of the current term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text for the most recent term.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "End date is explicitly stated as part of the current term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text for the most recent term.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:43:59Z"
+    "updated_at": "2025-07-03T23:56:09Z"
   },
   {
     "name": "Sarah Bullis",
@@ -50,8 +55,13 @@
     "roles": [
       {
         "data": "Financial Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated and current."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from 'Financial Commissioner'."
       }
     ],
     "divisions": [],
@@ -59,8 +69,8 @@
     "emails": [
       {
         "data": "sbullis@cityofbowman.com",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
@@ -68,20 +78,20 @@
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Start date is explicitly stated as part of the current term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "End date is explicitly stated as part of the current term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:43:59Z"
+    "updated_at": "2025-07-03T23:56:09Z"
   },
   {
     "name": "Ryan Shear",
@@ -92,13 +102,18 @@
     "roles": [
       {
         "data": "Street & Garbage Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated and current."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text."
       },
       {
-        "data": "Vice President of the City Commission",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated and current."
+        "data": "Vice President of City Commission",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from 'Street & Garbage Commissioner' and 'City Commissioner'."
       }
     ],
     "divisions": [],
@@ -106,8 +121,8 @@
     "emails": [
       {
         "data": "rshear@cityofbowman.com",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
@@ -115,20 +130,20 @@
     "start_dates": [
       {
         "data": "2024",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Start date is explicitly stated as part of the current term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text for the most recent term.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "End date is explicitly stated as part of the current term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text for the most recent term.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:43:59Z"
+    "updated_at": "2025-07-03T23:56:09Z"
   },
   {
     "name": "Myron Vail",
@@ -139,8 +154,13 @@
     "roles": [
       {
         "data": "Water/Sewer Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated and current."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from 'Water/Sewer Commissioner' and 'City Commissioner'."
       }
     ],
     "divisions": [],
@@ -148,8 +168,8 @@
     "emails": [
       {
         "data": "mvail@cityofbowman.com",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
@@ -157,20 +177,20 @@
     "start_dates": [
       {
         "data": "2024",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Start date is explicitly stated as part of the current term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text for the most recent term.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "End date is explicitly stated as part of the current term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text for the most recent term.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:43:59Z"
+    "updated_at": "2025-07-03T23:56:09Z"
   },
   {
     "name": "Benjamin Schaaf",
@@ -181,8 +201,13 @@
     "roles": [
       {
         "data": "Police Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Role is explicitly stated and current."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from 'Police Commissioner' and 'City Commissioner'."
       }
     ],
     "divisions": [],
@@ -190,8 +215,8 @@
     "emails": [
       {
         "data": "bschaaf@cityofbowman.com",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text as the display text for the email link.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
@@ -199,19 +224,19 @@
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Start date is explicitly stated as part of the current term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text for the most recent term.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "End date is explicitly stated as part of the current term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in text for the most recent term.",
         "source": "https://bowmannd.com/cities/city-of-bowman/departments/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:43:59Z"
+    "updated_at": "2025-07-03T23:56:09Z"
   }
 ]

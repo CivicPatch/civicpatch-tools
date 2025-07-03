@@ -3,7 +3,7 @@
     "name": "Lyn James",
     "roles": [
       "City Commissioner",
-      "City Council President"
+      "Council President"
     ],
     "divisions": [],
     "image": null,
@@ -15,7 +15,7 @@
     "sources": [
       "https://bowmannd.com/cities/city-of-bowman/departments/commission"
     ],
-    "updated_at": "2025-07-03T22:43:50Z"
+    "updated_at": "2025-07-03T23:55:50Z"
   },
   {
     "name": "Sarah Bullis",
@@ -32,13 +32,13 @@
     "sources": [
       "https://bowmannd.com/cities/city-of-bowman/departments/commission"
     ],
-    "updated_at": "2025-07-03T22:43:50Z"
+    "updated_at": "2025-07-03T23:55:50Z"
   },
   {
     "name": "Ryan Shear",
     "roles": [
       "City Commissioner",
-      "City Council Vice President"
+      "Vice Chair"
     ],
     "divisions": [],
     "image": "https://bowmannd.com/wp-content/uploads/2020/09/ryan.jpg",
@@ -50,10 +50,10 @@
     "sources": [
       "https://bowmannd.com/cities/city-of-bowman/departments/commission"
     ],
-    "updated_at": "2025-07-03T22:43:50Z"
+    "updated_at": "2025-07-03T23:55:50Z"
   },
   {
-    "name": "Myron Vail",
+    "name": "Myron Tiger Vail",
     "roles": [
       "City Commissioner"
     ],
@@ -67,7 +67,7 @@
     "sources": [
       "https://bowmannd.com/cities/city-of-bowman/departments/commission"
     ],
-    "updated_at": "2025-07-03T22:43:50Z"
+    "updated_at": "2025-07-03T23:55:50Z"
   },
   {
     "name": "Benjamin Schaaf",
@@ -84,6 +84,6 @@
     "sources": [
       "https://bowmannd.com/cities/city-of-bowman/departments/commission"
     ],
-    "updated_at": "2025-07-03T22:43:50Z"
+    "updated_at": "2025-07-03T23:55:50Z"
   }
 ]
