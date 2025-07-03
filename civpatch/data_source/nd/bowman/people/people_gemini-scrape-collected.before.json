@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Lyn James",
+    "sources": [
+      "https://www.bowmannd.com/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'President' of the 'Bowman City Commission'."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'President' of the 'Bowman City Commission', implying she is a Commissioner."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:08:51Z"
+  }
+]
