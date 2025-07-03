@@ -3,9 +3,16 @@
     "name": "Levi Reese",
     "roles": [
       "Commissioner",
-      "President"
+      "Commissioner President",
+      "Council President"
     ],
-    "divisions": [],
+    "divisions": [
+      "Beautification",
+      "Finance",
+      "Personnel",
+      "Planning And Zoning",
+      "Rec/pool"
+    ],
     "image": null,
     "phone_number": null,
     "email": "levi.reese@hillsboro-nd.us",
@@ -16,14 +23,18 @@
       "https://hillsboro-nd.com/commission",
       "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A"
     ],
-    "updated_at": "2025-07-03T22:25:33Z"
+    "updated_at": "2025-07-03T23:39:45Z"
   },
   {
     "name": "Jon Myers",
     "roles": [
       "Commissioner"
     ],
-    "divisions": [],
+    "divisions": [
+      "Buildings & Grounds",
+      "Streets",
+      "Streets, Buildings & Grounds"
+    ],
     "image": null,
     "phone_number": null,
     "email": "jon.myers@hillsboro-nd.us",
@@ -34,15 +45,19 @@
       "https://hillsboro-nd.com/commission",
       "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=22A9A233-9842-417A-84A1-7174C3B30E4C"
     ],
-    "updated_at": "2025-07-03T22:25:33Z"
+    "updated_at": "2025-07-03T23:39:45Z"
   },
   {
     "name": "Paul Geray",
     "roles": [
       "Commissioner",
-      "Vice President"
+      "Commissioner Vice President"
     ],
-    "divisions": [],
+    "divisions": [
+      "Beautification",
+      "Edc",
+      "Electric"
+    ],
     "image": null,
     "phone_number": null,
     "email": "paul.geray@hillsboro-nd.us",
@@ -53,14 +68,18 @@
       "https://hillsboro-nd.com/commission",
       "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
     ],
-    "updated_at": "2025-07-03T22:25:33Z"
+    "updated_at": "2025-07-03T23:39:45Z"
   },
   {
     "name": "Jason Pohlkamp",
     "roles": [
       "Commissioner"
     ],
-    "divisions": [],
+    "divisions": [
+      "Cemetery",
+      "Garbage",
+      "Public Safety (policing & Fire)"
+    ],
     "image": null,
     "phone_number": null,
     "email": "jason.pohlkamp@hillsboro-nd.us",
@@ -71,14 +90,18 @@
       "https://hillsboro-nd.com/commission",
       "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=E91589B5-0C6E-42AA-A63B-1EE1A3F620D0"
     ],
-    "updated_at": "2025-07-03T22:25:33Z"
+    "updated_at": "2025-07-03T23:39:45Z"
   },
   {
     "name": "Nicole Evans",
     "roles": [
       "Commissioner"
     ],
-    "divisions": [],
+    "divisions": [
+      "Airport",
+      "Visitor's Committee",
+      "Water & Sewer"
+    ],
     "image": null,
     "phone_number": null,
     "email": "nicole.evans@hillsboro-nd.us",
@@ -89,6 +112,6 @@
       "https://hillsboro-nd.com/commission",
       "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=4B852E8A-5C31-4B2D-B0F3-8E329C44E252"
     ],
-    "updated_at": "2025-07-03T22:25:33Z"
+    "updated_at": "2025-07-03T23:39:45Z"
   }
 ]

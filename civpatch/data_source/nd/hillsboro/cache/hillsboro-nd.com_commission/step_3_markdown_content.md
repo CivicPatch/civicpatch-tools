@@ -98,10 +98,10 @@ Search
   - [Traill County, ND](https://www.co.traill.nd.us)
   - [ND Assisted Living Guide](https://www.caring.com/senior-living/assisted-living/north-dakota)
 - [Contact](https://hillsboro-nd.com/contact)
-- [86.1°  broken clouds](https://openweathermap.org/city/5263167)
+- [82.5°  broken clouds](https://openweathermap.org/city/5263167)
 - ![Facebook](https://hillsboro-nd.com/repository/designs/images/social/fb.png)![Instagram](https://hillsboro-nd.com/repository/designs/images/social/in.png)![X](https://hillsboro-nd.com/repository/designs/images/social/x.png)![YouTube](https://hillsboro-nd.com/repository/designs/images/social/yt.png)
 
-[86.1°  broken clouds](https://openweathermap.org/city/5263167)
+[82.5°  broken clouds](https://openweathermap.org/city/5263167)
 
 Search
 
