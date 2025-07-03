@@ -1,0 +1,16 @@
+---
+- name: Bernie Dardis
+  roles:
+  - Mayor
+  divisions: []
+  image: https://www.westfargond.gov/ImageRepository/Document?documentId=4357
+  cdn_image: https://cdn.civicpatch.org/open-data/nd/west_fargo/images/7bbbed9dc8a76c6d443ac456107b6c0dfca20b3118923e8b97a3756f2cfe7d57.jpg
+  email:
+  phone_number: "(701) 367-2784"
+  website: https://www.westfargond.gov/1375/Mayor-Bernie-Dardis
+  start_date:
+  end_date: 2026-06
+  sources:
+  - https://www.westfargond.gov/1375/Mayor-Bernie-Dardis
+  - https://www.westfargond.gov/365/City-Commission
+  updated_at: '2025-07-03T19:15:03Z'

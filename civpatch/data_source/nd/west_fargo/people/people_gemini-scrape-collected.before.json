@@ -1,0 +1,385 @@
+[
+  {
+    "name": "Bernie Dardis",
+    "sources": [
+      "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
+      "https://www.westfargond.gov/365/City-Commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Bernie Dardis'."
+      },
+      {
+        "data": "Commission President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Stated in the image alt text 'Commission President Bernie Dardis', which is a strong indicator of a role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor Bernie Dardis'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'four Commissioners and a Mayor are elected at large'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "701-367-2784",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the name 'Mayor Bernie Dardis'.",
+        "source": "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis"
+      },
+      {
+        "data": "701-715-8343",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed next to the name.",
+        "source": "https://www.westfargond.gov/365/City-Commission"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to 'Mayor Bernie Dardis' at the top of the content.",
+        "source": "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis"
+      },
+      {
+        "data": "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's page is provided.",
+        "source": "https://www.westfargond.gov/365/City-Commission"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'June 2026' is explicitly stated under 'Term Expires'.",
+        "source": "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis"
+      }
+    ],
+    "updated_at": "2025-07-03T19:15:03Z"
+  },
+  {
+    "name": "Brad Olson",
+    "sources": [
+      "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
+      "https://www.westfargond.gov/365/City-Commission",
+      "https://www.westfargond.gov/1376/Commissioner-Brad-Olson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Brad Olson'."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Commissioner Brad Olson'."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly identifies him as 'Commissioner Brad Olson' and lists him under 'City Commission', confirming his current role. Therefore, the confidence is 1 as the data is directly extracted and accurate."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'four Commissioners and a Mayor are elected at large'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "701-715-2177",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed next to the name.",
+        "source": "https://www.westfargond.gov/365/City-Commission"
+      },
+      {
+        "data": "701-715-2177",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The phone number is explicitly stated as 'Phone: 701-715-2177' directly under his name and title, indicating high relevance and accuracy. Therefore, the confidence is 1 as the data is directly extracted and accurate.",
+        "source": "https://www.westfargond.gov/1376/Commissioner-Brad-Olson"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.westfargond.gov/1376/Commissioner-Brad-Olson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to 'Commissioner Brad Olson'.",
+        "source": "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis"
+      },
+      {
+        "data": "https://www.westfargond.gov/1376/Commissioner-Brad-Olson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's page is provided.",
+        "source": "https://www.westfargond.gov/365/City-Commission"
+      },
+      {
+        "data": "https://www.westfargond.gov/1376/Commissioner-Brad-Olson",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL is directly associated with 'Commissioner Brad Olson' as a specific profile page. Therefore, the confidence is 1 as the data is directly extracted and accurate.",
+        "source": "https://www.westfargond.gov/1376/Commissioner-Brad-Olson"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Term Expires: June 2026'.",
+        "source": "https://www.westfargond.gov/1376/Commissioner-Brad-Olson"
+      }
+    ],
+    "updated_at": "2025-07-03T19:15:03Z"
+  },
+  {
+    "name": "Roben Anderson",
+    "sources": [
+      "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
+      "https://www.westfargond.gov/365/City-Commission",
+      "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Roben Anderson'."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Commissioner Roben Anderson'."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated as 'Commissioner Roben Anderson' and is a target role, indicating high confidence in its extraction. "
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'four Commissioners and a Mayor are elected at large'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "701-831-7489",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed next to the name.",
+        "source": "https://www.westfargond.gov/365/City-Commission"
+      },
+      {
+        "data": "701-831-7489",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The phone number '701-831-7489' is explicitly stated directly under 'Commissioner Roben Anderson' with the label 'Phone:', indicating a direct and unambiguous association. ",
+        "source": "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to 'Commissioner Roben Anderson'.",
+        "source": "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis"
+      },
+      {
+        "data": "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's page is provided.",
+        "source": "https://www.westfargond.gov/365/City-Commission"
+      },
+      {
+        "data": "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL 'https://www.westfargond.gov/1378/Commissioner-Roben-Anderson/' is the direct page for Commissioner Roben Anderson, serving as a primary profile page. ",
+        "source": "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date 'June 2026' is explicitly stated under 'Term Expires:' for Roben Anderson, allowing for direct and accurate extraction and conversion to YYYY-MM format. ",
+        "source": "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson"
+      }
+    ],
+    "updated_at": "2025-07-03T19:15:03Z"
+  },
+  {
+    "name": "Amy Zundel",
+    "sources": [
+      "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
+      "https://www.westfargond.gov/365/City-Commission",
+      "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Amy Zundel'."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Commissioner Amy Zundel'."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly identifies her as 'Commissioner Amy Zundel' and lists her under 'Commissioner Amy Zundel' heading, confirming her role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'four Commissioners and a Mayor are elected at large'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "701-831-7272",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed next to the name.",
+        "source": "https://www.westfargond.gov/365/City-Commission"
+      },
+      {
+        "data": "701-831-7272",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is directly listed under 'Phone:' for Commissioner Amy Zundel, ensuring high accuracy and direct association. ",
+        "source": "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to 'Commissioner Amy Zundel'.",
+        "source": "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis"
+      },
+      {
+        "data": "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's page is provided.",
+        "source": "https://www.westfargond.gov/365/City-Commission"
+      },
+      {
+        "data": "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly associated with 'Commissioner Amy Zundel' as a specific profile page link.",
+        "source": "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Term Expires: June 2028'.",
+        "source": "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel"
+      }
+    ],
+    "updated_at": "2025-07-03T19:15:03Z"
+  },
+  {
+    "name": "Rory Jorgensen",
+    "sources": [
+      "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis",
+      "https://www.westfargond.gov/365/City-Commission",
+      "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Rory Jorgensen'."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Commissioner Rory Jorgensen'."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated as 'Commissioner Rory Jorgensen' and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'four Commissioners and a Mayor are elected at large'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "701-831-7273",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed next to the name.",
+        "source": "https://www.westfargond.gov/365/City-Commission"
+      },
+      {
+        "data": "701-831-7273",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number '701-831-7273' is explicitly stated directly under 'Commissioner Rory Jorgensen' with the label 'Phone:'",
+        "source": "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly linked to 'Commissioner Rory Jorgensen'.",
+        "source": "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis"
+      },
+      {
+        "data": "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's page is provided.",
+        "source": "https://www.westfargond.gov/365/City-Commission"
+      },
+      {
+        "data": "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as the current page's URL, which is dedicated to Commissioner Rory Jorgensen.",
+        "source": "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'June 2028' is explicitly stated under 'Term Expires:' for Rory Jorgensen, making the extraction highly confident and accurate as per the required YYYY-MM format conversion for 'Month YYYY'.",
+        "source": "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
+      }
+    ],
+    "updated_at": "2025-07-03T19:15:03Z"
+  }
+]
