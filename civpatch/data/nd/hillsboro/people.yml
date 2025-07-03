@@ -1,0 +1,16 @@
+---
+- name: Paul Geray
+  roles:
+  - Commissioner
+  divisions:
+  image: https://hillsboro-nd.com/vertical/Sites/%7B7383026E-3DE1-4DA9-9A29-A3887DB2DE61%7D/uploads/Paul-_headshot_Web.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/nd/hillsboro/images/f3c28d721741c953737c3f38b939e801ed9a2785f0c65918daaaf75fcfc42a09.jpg
+  email: paul.geray@hillsboro-nd.us
+  phone_number:
+  website: https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894
+  start_date: '2021'
+  end_date:
+  sources:
+  - https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171
+  - https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894
+  updated_at: '2025-07-03T22:07:47Z'

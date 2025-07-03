@@ -1,0 +1,81 @@
+[
+  {
+    "name": "Paul Geray",
+    "sources": [
+      "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171",
+      "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
+    ],
+    "images": [
+      {
+        "data": "https://hillsboro-nd.com/vertical/Sites/%7B7383026E-3DE1-4DA9-9A29-A3887DB2DE61%7D/uploads/Paul-_headshot_Web.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image is a headshot near the name and role of Paul Geray, indicating it is his official portrait.",
+        "source": "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171"
+      },
+      {
+        "data": "https://hillsboro-nd.com/vertical/Sites/%7B7383026E-3DE1-4DA9-9A29-A3887DB2DE61%7D/uploads/Paul-_headshot_Web.jpg",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "The image is a headshot near the name Paul Geray on the page.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Paul Geray has been a Commissioner since 2021' and his title is 'Commissioner-Vice President', indicating an active role in the primary governing body."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Paul Geray has been a Commissioner since 2021' and his title is 'Commissioner-Vice President', which matches the target role 'commissioner'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "paul.geray@hillsboro-nd.us",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email is explicitly listed under Paul Geray's contact information.",
+        "source": "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171"
+      },
+      {
+        "data": "paul.geray@hillsboro-nd.us",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email is explicitly listed near the name and title.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is the profile page for Paul Geray on the official Hillsboro, ND website.",
+        "source": "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171"
+      },
+      {
+        "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the URL of the profile page for Paul Geray.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text states 'Paul Geray has been a Commissioner since 2021', indicating the start year.",
+        "source": "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171"
+      },
+      {
+        "data": "2021",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text states 'Paul Geray has been a Commissioner since 2021'.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:07:15Z"
+  }
+]
