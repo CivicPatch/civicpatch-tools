@@ -441,7 +441,14 @@
       ],
       "population": 1909,
       "website": "http://www.cityoflangdon.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T22:01:53Z",
+      "meta_hash": "445e619b5a096ab4fd2ae9eac9357a6e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Mayville",
