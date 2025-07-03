@@ -1,0 +1,183 @@
+[
+  {
+    "name": "Eric Parvey",
+    "sources": [
+      "https://mapletonnd.com/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "218-791-8438",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://mapletonnd.com/city"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:51:19Z"
+  },
+  {
+    "name": "Scott Suchor",
+    "sources": [
+      "https://mapletonnd.com/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name and is a target role."
+      },
+      {
+        "data": "Vice President - Public Works & Safety",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Contextual variation of a target role, clearly associated with the person."
+      },
+      {
+        "data": "Vice President - Personnel",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Contextual variation of a target role, clearly associated with the person."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-318-2502",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://mapletonnd.com/city"
+      }
+    ],
+    "emails": [
+      {
+        "data": "scott.suchor@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated next to the name.",
+        "source": "https://mapletonnd.com/city"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:51:19Z"
+  },
+  {
+    "name": "Jason Astrup",
+    "sources": [
+      "https://mapletonnd.com/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name and is a target role."
+      },
+      {
+        "data": "President - Bldgs/Grounds",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Contextual variation of a target role, clearly associated with the person."
+      },
+      {
+        "data": "President - Finance",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Contextual variation of a target role, clearly associated with the person."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-373-5263",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://mapletonnd.com/city"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:51:19Z"
+  },
+  {
+    "name": "Dan Klaver",
+    "sources": [
+      "https://mapletonnd.com/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "651-815-8961",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://mapletonnd.com/city"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dan.klaver1@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated next to the name.",
+        "source": "https://mapletonnd.com/city"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:51:19Z"
+  },
+  {
+    "name": "Adam Laskey",
+    "sources": [
+      "https://mapletonnd.com/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-367-9501",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://mapletonnd.com/city"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Adam.J.Laskey@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated next to the name.",
+        "source": "https://mapletonnd.com/city"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:51:19Z"
+  }
+]
