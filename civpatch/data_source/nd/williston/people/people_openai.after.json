@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "name": "Howard Klug",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(701) 577-8100",
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofwilliston.com/residents/state_of_the_city.php"
+    ],
+    "updated_at": "2025-07-03T21:12:28Z"
+  }
+]

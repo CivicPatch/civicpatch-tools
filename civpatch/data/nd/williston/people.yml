@@ -1,1 +1,15 @@
---- []
+---
+- name: Howard Klug
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(701) 577-8100"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.cityofwilliston.com/residents/state_of_the_city.php
+  updated_at: '2025-07-03T21:12:57Z'

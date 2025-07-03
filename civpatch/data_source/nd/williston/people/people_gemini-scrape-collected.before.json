@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "name": "Howard Klug",
+    "sources": [
+      "https://www.cityofwilliston.com/residents/state_of_the_city.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated and is a target role, and the context of the '2025 State of the City' implies current active status."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:12:57Z"
+  }
+]

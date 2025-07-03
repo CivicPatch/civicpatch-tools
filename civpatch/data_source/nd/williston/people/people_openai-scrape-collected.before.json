@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "name": "Howard Klug",
+    "sources": [
+      "https://www.cityofwilliston.com/residents/state_of_the_city.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly mentioned as 'City of Williston Mayor Howard Klug' in the list of speakers for the State of the City event."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 577-8100",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city phone number provided in the contact section; no direct phone number for Howard Klug found.",
+        "source": "https://www.cityofwilliston.com/residents/state_of_the_city.php"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:12:28Z"
+  }
+]
