@@ -9,7 +9,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text."
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor' directly next to the name."
       }
     ],
     "divisions": [],
@@ -18,7 +18,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:04:32Z"
+    "updated_at": "2025-07-03T22:40:24Z"
   },
   {
     "name": "Tyler Hoggarth",
@@ -30,7 +30,7 @@
       {
         "data": "Councilman",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text."
+        "llm_confidence_reason": "Role explicitly stated as 'Councilman' directly next to the name."
       }
     ],
     "divisions": [],
@@ -39,7 +39,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:04:32Z"
+    "updated_at": "2025-07-03T22:40:24Z"
   },
   {
     "name": "Troy Roundy",
@@ -51,7 +51,7 @@
       {
         "data": "Councilman",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text."
+        "llm_confidence_reason": "Role explicitly stated as 'Councilman' directly next to the name."
       }
     ],
     "divisions": [],
@@ -60,7 +60,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:04:32Z"
+    "updated_at": "2025-07-03T22:40:24Z"
   },
   {
     "name": "Doug Smith",
@@ -72,7 +72,7 @@
       {
         "data": "Councilman",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text."
+        "llm_confidence_reason": "Role explicitly stated as 'Councilman' directly next to the name."
       }
     ],
     "divisions": [],
@@ -81,7 +81,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:04:32Z"
+    "updated_at": "2025-07-03T22:40:24Z"
   },
   {
     "name": "Trygg Olson",
@@ -93,7 +93,7 @@
       {
         "data": "Councilman",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text."
+        "llm_confidence_reason": "Role explicitly stated as 'Councilman' directly next to the name."
       }
     ],
     "divisions": [],
@@ -102,7 +102,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:04:32Z"
+    "updated_at": "2025-07-03T22:40:24Z"
   },
   {
     "name": "Jesse Nelson",
@@ -114,7 +114,7 @@
       {
         "data": "Councilman",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text."
+        "llm_confidence_reason": "Role explicitly stated as 'Councilman' directly next to the name."
       }
     ],
     "divisions": [],
@@ -123,7 +123,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:04:32Z"
+    "updated_at": "2025-07-03T22:40:24Z"
   },
   {
     "name": "Neil Fandrich",
@@ -135,7 +135,7 @@
       {
         "data": "Councilman",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text."
+        "llm_confidence_reason": "Role explicitly stated as 'Coucilman' directly next to the name, which is a common misspelling of Councilman."
       }
     ],
     "divisions": [],
@@ -144,6 +144,6 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:04:32Z"
+    "updated_at": "2025-07-03T22:40:24Z"
   }
 ]
