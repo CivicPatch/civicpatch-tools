@@ -14,8 +14,8 @@
       },
       {
         "data": "https://hillsboro-nd.com/vertical/Sites/%7B7383026E-3DE1-4DA9-9A29-A3887DB2DE61%7D/uploads/levi_reese_Web.jpg",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is a portrait near the name Levi Reese and labeled as 'Levi Reese, President'.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a portrait near the name Levi Reese and labeled as 'Levi Reese, President'.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A"
       }
     ],
@@ -28,7 +28,7 @@
       {
         "data": "Commissioner President",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title 'President' is listed under 'Commissioner' role context, so normalized to 'Commissioner President' as per instructions."
+        "llm_confidence_reason": "Title 'President' is listed under 'Commissioner' context, so normalized to 'Commissioner President' as per instructions."
       }
     ],
     "divisions": [],
@@ -36,14 +36,14 @@
       {
         "data": "(701) 636-4620",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed as main contact phone for Hillsboro City Hall, no direct personal phone found.",
+        "llm_confidence_reason": "Phone number is listed as main city hall contact near the official info; no direct personal phone found.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A"
       }
     ],
     "emails": [
       {
         "data": "levi.reese@hillsboro-nd.us",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Email is explicitly listed next to Levi Reese's name.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A"
       }
@@ -52,7 +52,7 @@
       {
         "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is a profile page linked from the name.",
+        "llm_confidence_reason": "URL is a profile page linked directly from the name.",
         "source": "https://hillsboro-nd.com/commission"
       },
       {
@@ -65,13 +65,13 @@
     "start_dates": [
       {
         "data": "2018",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Text states Levi Reese has been a Commissioner since 2018.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'Levi Reese has been a Commissioner since 2018'.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:38:58Z"
+    "updated_at": "2025-07-03T23:43:54Z"
   },
   {
     "name": "Jon Myers",
@@ -102,7 +102,7 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The page explicitly lists Jon Myers with the title 'Commissioner' under the government section."
+        "llm_confidence_reason": "The page explicitly lists Jon Myers with the title 'Commissioner' under his name."
       }
     ],
     "divisions": [],
@@ -110,7 +110,7 @@
       {
         "data": "(701) 636-4620",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The phone number is listed as the main contact phone for Hillsboro City Hall, no direct personal phone number for Jon Myers is given, but this is the best available contact.",
+        "llm_confidence_reason": "The phone number is listed as the general city hall contact number near the profile; no direct personal number is given.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=22A9A233-9842-417A-84A1-7174C3B30E4C"
       }
     ],
@@ -118,7 +118,7 @@
       {
         "data": "jon.myers@hillsboro-nd.us",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The email is explicitly listed under Jon Myers' profile.",
+        "llm_confidence_reason": "Email is explicitly listed under Jon Myers' profile.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=22A9A233-9842-417A-84A1-7174C3B30E4C"
       }
     ],
@@ -126,19 +126,19 @@
       {
         "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=22A9A233-9842-417A-84A1-7174C3B30E4C",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is a profile page linked from the name.",
+        "llm_confidence_reason": "URL is a profile page linked directly from the name.",
         "source": "https://hillsboro-nd.com/commission"
       },
       {
         "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=22A9A233-9842-417A-84A1-7174C3B30E4C",
         "llm_confidence": 1,
-        "llm_confidence_reason": "This is the direct URL to Jon Myers' profile page.",
+        "llm_confidence_reason": "This is the URL of Jon Myers' profile page.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=22A9A233-9842-417A-84A1-7174C3B30E4C"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:38:58Z"
+    "updated_at": "2025-07-03T23:43:54Z"
   },
   {
     "name": "Paul Geray",
@@ -156,7 +156,7 @@
       {
         "data": "https://hillsboro-nd.com/vertical/Sites/%7B7383026E-3DE1-4DA9-9A29-A3887DB2DE61%7D/uploads/Paul-_headshot_Web.jpg",
         "llm_confidence": 0.99,
-        "llm_confidence_reason": "The image is a headshot near the name Paul Geray, clearly representing him.",
+        "llm_confidence_reason": "The image is a headshot near the name 'Paul Geray' on the page.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
       }
     ],
@@ -178,7 +178,7 @@
       {
         "data": "paul.geray@hillsboro-nd.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email is explicitly listed under Paul Geray's contact information.",
+        "llm_confidence_reason": "Email is explicitly provided next to the name and title.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
       }
     ],
@@ -186,13 +186,13 @@
       {
         "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is a profile page linked from the name.",
+        "llm_confidence_reason": "URL is a profile page linked directly from the name.",
         "source": "https://hillsboro-nd.com/commission"
       },
       {
         "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL is the profile page for Paul Geray on the official Hillsboro, ND website.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL is the profile page for Paul Geray.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
       }
     ],
@@ -200,12 +200,12 @@
       {
         "data": "2021",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text states 'Paul Geray has been a Commissioner since 2021' indicating start date.",
+        "llm_confidence_reason": "The text states 'Paul Geray has been a Commissioner since 2021'.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:38:58Z"
+    "updated_at": "2025-07-03T23:43:54Z"
   },
   {
     "name": "Jason Pohlkamp",
@@ -223,7 +223,7 @@
       {
         "data": "https://hillsboro-nd.com/vertical/Sites/%7B7383026E-3DE1-4DA9-9A29-A3887DB2DE61%7D/uploads/jason_Web.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The image is directly adjacent to Jason Pohlkamp's name and profile.",
+        "llm_confidence_reason": "The image URL is directly associated with Jason Pohlkamp's profile on the page.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=E91589B5-0C6E-42AA-A63B-1EE1A3F620D0"
       }
     ],
@@ -236,7 +236,7 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The page explicitly lists Jason Pohlkamp's title as 'Commissioner'."
+        "llm_confidence_reason": "The page explicitly lists Jason Pohlkamp's title as 'Commissioner' under his name."
       }
     ],
     "divisions": [],
@@ -245,7 +245,7 @@
       {
         "data": "jason.pohlkamp@hillsboro-nd.us",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly listed under Jason Pohlkamp's contact information.",
+        "llm_confidence_reason": "The email is explicitly listed next to Jason Pohlkamp's contact information.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=E91589B5-0C6E-42AA-A63B-1EE1A3F620D0"
       }
     ],
@@ -253,19 +253,19 @@
       {
         "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=E91589B5-0C6E-42AA-A63B-1EE1A3F620D0",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is a profile page linked from the name.",
+        "llm_confidence_reason": "URL is a profile page linked directly from the name.",
         "source": "https://hillsboro-nd.com/commission"
       },
       {
         "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=E91589B5-0C6E-42AA-A63B-1EE1A3F620D0",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The URL is the direct profile page for Jason Pohlkamp.",
+        "llm_confidence_reason": "The URL provided is the direct profile page for Jason Pohlkamp.",
         "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=E91589B5-0C6E-42AA-A63B-1EE1A3F620D0"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:38:58Z"
+    "updated_at": "2025-07-03T23:43:54Z"
   },
   {
     "name": "Nicole Evans",
@@ -313,7 +313,7 @@
       {
         "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=4B852E8A-5C31-4B2D-B0F3-8E329C44E252",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is a profile page linked from the name.",
+        "llm_confidence_reason": "URL is a profile page linked directly from the name.",
         "source": "https://hillsboro-nd.com/commission"
       },
       {
@@ -325,6 +325,6 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:38:58Z"
+    "updated_at": "2025-07-03T23:43:54Z"
   }
 ]
