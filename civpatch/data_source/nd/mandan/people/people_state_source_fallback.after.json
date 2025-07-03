@@ -1,0 +1,42 @@
+[
+  {
+    "name": "James Froelich",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-03T19:19:11Z",
+    "divisions": []
+  },
+  {
+    "name": "Mike Braun",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T19:19:11Z",
+    "divisions": []
+  },
+  {
+    "name": "Joseph Camisa Jr.",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T19:19:11Z",
+    "divisions": []
+  },
+  {
+    "name": "Brad Olson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T19:19:11Z",
+    "divisions": []
+  },
+  {
+    "name": "Dennis Rohr",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T19:19:11Z",
+    "divisions": []
+  }
+]

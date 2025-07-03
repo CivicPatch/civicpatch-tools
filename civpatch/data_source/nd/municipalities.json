@@ -86,7 +86,14 @@
       ],
       "population": 24206,
       "website": "http://cityofmandan.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T19:21:34Z",
+      "meta_hash": "37e646379d30f13f52889de681bcdcbd",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Jamestown",
