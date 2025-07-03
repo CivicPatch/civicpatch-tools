@@ -5,6 +5,7 @@ module Services
     STATE_TO_STATEFP = {
       "co" => "08",
       "nh" => "33",
+      "nd" => "38",
       "or" => "41",
       "wa" => "53"
     }.freeze
@@ -25,14 +26,14 @@ module Services
 
         outfile = Tempfile.new(binmode: true)
         begin
-          response = HTTParty.get(url, stream_body: true)
+          response = HTTParty.get(url, stream_body: true, verify: false)
           unless response.success? # Check if response code is 2xx
             puts "Error: Failed to download #{url}. HTTP Status: #{response.code} - #{response.message}"
             next # Skip to the next map type
           end
         end
 
-        HTTParty.get(url, stream_body: true) do |fragment|
+        HTTParty.get(url, stream_body: true, verify: false) do |fragment|
           next if [301, 302].include?(fragment.code)
 
           outfile.write(fragment)

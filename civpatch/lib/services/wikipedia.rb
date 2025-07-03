@@ -14,14 +14,14 @@ module Services
     #  population: 2
     # }
 
-    def self.fetch_municipalities(state, title, table_data_config)
+    def self.fetch_municipalities(title)
       response = fetch_with_wikipedia(title)
       nokogiri_doc = Nokogiri::HTML(response)
       table = nokogiri_doc.css("table.wikitable.sortable")[0]
 
       table_rows = table.css("tr")
 
-      parse_municipalities_from_table(state, table_rows, table_data_config)
+      # parse_municipalities_from_table(state, table_rows, table_data_config)
     end
 
     def self.parse_cities_from_table(state, table_rows, _row_data_config)

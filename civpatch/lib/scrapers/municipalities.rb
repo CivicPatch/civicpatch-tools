@@ -2,6 +2,7 @@
 
 require "services/census"
 require_relative "co/municipalities"
+require_relative "nd/municipalities"
 require_relative "nh/municipalities"
 require_relative "or/municipalities"
 require_relative "wa/municipalities"
@@ -38,6 +39,8 @@ module Scrapers
         Scrapers::Wa::Municipalities
       when "co"
         Scrapers::Co::Municipalities
+      when "nd"
+        Scrapers::Nd::Municipalities
       else
         raise "No scraper found for #{state}"
       end
@@ -91,42 +94,58 @@ module Scrapers
       end
     end
 
+    def self.municipalities_filter(state)
+      case state
+      when "nd"
+        ["places"]
+      else
+        ["places", "cousub"]
+      end
+    end
+
     def self.fetch_census_municipality_codes(state, statefp)
       places_txt_url = CENSUS_URL_MAPPINGS["places_txt_url"].call(state, statefp)
       puts "Fetching census municipality codes from places: #{places_txt_url}"
-      response = HTTParty.get(places_txt_url)
+      response = HTTParty.get(places_txt_url, verify: false)
       places_csv = CSV.parse(response.body, headers: true, col_sep: "|")
+      filter = municipalities_filter(state)
 
-      places = places_csv.map(&:to_h)
-                         .reject { |row| row["TYPE"] == "CENSUS DESIGNATED PLACE" }
-                         .map do |municipality_codes|
-        name, type = get_municipality_name_and_type(municipality_codes["PLACENAME"])
-        {
-          "name" => name,
-          "type" => type,
-          # https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html
-          "geoid" => "#{statefp}#{municipality_codes["PLACEFP"]}",
-          "counties" => format_counties(municipality_codes["COUNTIES"]),
-        }
+      if filter.include?("places")
+        places = places_csv.map(&:to_h)
+                           .reject { |row| row["TYPE"] == "CENSUS DESIGNATED PLACE" }
+                           .map do |municipality_codes|
+          name, type = get_municipality_name_and_type(municipality_codes["PLACENAME"])
+          {
+            "name" => name,
+            "type" => type,
+            # https://www.census.gov/programs-surveys/geography/guidance/geo-identifiers.html
+            "geoid" => "#{statefp}#{municipality_codes["PLACEFP"]}",
+            "counties" => format_counties(municipality_codes["COUNTIES"]),
+          }
+        end
+      else
+        places = []
       end
 
       county_subdivisions_txt_url = CENSUS_URL_MAPPINGS["cousub_txt_url"].call(state, statefp)
       puts "Fetching census municipality codes from county subdivisions: #{county_subdivisions_txt_url}"
-      response = HTTParty.get(county_subdivisions_txt_url)
+      response = HTTParty.get(county_subdivisions_txt_url, verify: false)
       county_subdivisions_csv = CSV.parse(response.body, headers: true, col_sep: "|")
 
-      county_subdivisions = county_subdivisions_csv
-                            .select { |row| %w[A B].include?(row["FUNCSTAT"]) }
-                            .map do |municipality_codes|
-        name, type = get_municipality_name_and_type(municipality_codes["COUSUBNAME"])
-        {
-          "name" => name,
-          "type" => type,
-          "geoid" => "#{statefp}#{municipality_codes["COUNTYFP"]}#{municipality_codes["COUSUBFP"]}",
-          # "fips" => "#{statefp}-#{municipality_codes["COUSUBFP"]}",
-          # "gnis" => format_gnis(municipality_codes["COUSUBNS"]),
-          "counties" => format_counties(municipality_codes["COUNTYNAME"])
-        }
+      if filter.include?("cousub")
+        county_subdivisions = county_subdivisions_csv
+                              .select { |row| %w[A B F].include?(row["FUNCSTAT"]) }
+                              .map do |municipality_codes|
+          name, type = get_municipality_name_and_type(municipality_codes["COUSUBNAME"])
+          {
+            "name" => name,
+            "type" => type,
+            "geoid" => "#{statefp}#{municipality_codes["COUNTYFP"]}#{municipality_codes["COUSUBFP"]}",
+            "counties" => format_counties(municipality_codes["COUNTYNAME"])
+          }
+        end
+      else
+        county_subdivisions = []
       end
 
       places + county_subdivisions
