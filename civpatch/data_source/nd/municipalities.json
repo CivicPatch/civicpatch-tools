@@ -42,7 +42,14 @@
       ],
       "population": 48377,
       "website": "http://www.minotnd.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T19:15:39Z",
+      "meta_hash": "97a6c8fe799f4c155df68171b72e6ce2",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "West Fargo",
