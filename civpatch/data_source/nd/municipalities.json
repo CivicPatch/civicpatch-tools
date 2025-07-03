@@ -596,7 +596,14 @@
       ],
       "population": 1357,
       "website": "http://www.surreynd.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T23:54:31Z",
+      "meta_hash": "fcd34ad55afea8258ebf5d36773c7062",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Mapleton",
