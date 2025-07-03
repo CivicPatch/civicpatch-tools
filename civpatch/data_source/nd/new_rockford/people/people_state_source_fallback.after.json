@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Richter",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-03T23:50:22Z",
+    "divisions": []
+  },
+  {
+    "name": "Ystaas",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T23:50:22Z",
+    "divisions": []
+  },
+  {
+    "name": "Hewitt",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T23:50:22Z",
+    "divisions": []
+  },
+  {
+    "name": "McKnight",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T23:50:22Z",
+    "divisions": []
+  },
+  {
+    "name": "Belquist",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T23:50:22Z",
+    "divisions": []
+  }
+]

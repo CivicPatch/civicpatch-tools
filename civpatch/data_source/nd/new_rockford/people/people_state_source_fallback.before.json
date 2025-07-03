@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Richter",
+    "roles": [
+      "Mayor",
+      "President of City Commission"
+    ],
+    "updated_at": "2025-07-03T23:50:22Z"
+  },
+  {
+    "name": "Ystaas",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T23:50:22Z"
+  },
+  {
+    "name": "Hewitt",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T23:50:22Z"
+  },
+  {
+    "name": "McKnight",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T23:50:22Z"
+  },
+  {
+    "name": "Belquist",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T23:50:22Z"
+  }
+]
