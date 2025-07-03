@@ -14,12 +14,13 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:39:32Z"
+    "updated_at": "2025-07-03T21:48:07Z"
   },
   {
     "name": "Rob Hach",
     "roles": [
-      "Vice Mayor"
+      "Vice President",
+      "City Commissioner"
     ],
     "divisions": [],
     "image": "https://secure-cdn.scdn6.secure.raxcdn.com/media/userfiles/subsite_207/images/city-commission/Rob-Hach-33.jpg",
@@ -31,12 +32,12 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:39:32Z"
+    "updated_at": "2025-07-03T21:48:07Z"
   },
   {
     "name": "Joe Knowski",
     "roles": [
-      "Commissioner"
+      "City Commissioner"
     ],
     "divisions": [],
     "image": null,
@@ -48,12 +49,12 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:39:32Z"
+    "updated_at": "2025-07-03T21:48:07Z"
   },
   {
     "name": "Jason Pierce",
     "roles": [
-      "Commissioner"
+      "City Commissioner"
     ],
     "divisions": [],
     "image": "https://secure-cdn.scdn6.secure.raxcdn.com/media/userfiles/subsite_207/images/city-commission/Jason-Pierce-33.jpg",
@@ -65,12 +66,12 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:39:32Z"
+    "updated_at": "2025-07-03T21:48:07Z"
   },
   {
     "name": "Lisa Uhlenkamp",
     "roles": [
-      "Commissioner"
+      "City Commissioner"
     ],
     "divisions": [],
     "image": null,
@@ -82,6 +83,6 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:39:32Z"
+    "updated_at": "2025-07-03T21:48:07Z"
   }
 ]
