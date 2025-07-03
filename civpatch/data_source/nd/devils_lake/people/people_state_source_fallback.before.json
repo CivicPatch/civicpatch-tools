@@ -4,34 +4,34 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-07-03T21:29:40Z"
+    "updated_at": "2025-07-03T21:38:57Z"
   },
   {
     "name": "Rob Hach",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:29:40Z"
+    "updated_at": "2025-07-03T21:38:57Z"
   },
   {
     "name": "Joe Knowski",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:29:40Z"
+    "updated_at": "2025-07-03T21:38:57Z"
   },
   {
     "name": "Jason Pierce",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:29:40Z"
+    "updated_at": "2025-07-03T21:38:57Z"
   },
   {
-    "name": "Lisa Uhlenkamp",
+    "name": null,
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:29:40Z"
+    "updated_at": "2025-07-03T21:38:57Z"
   }
 ]

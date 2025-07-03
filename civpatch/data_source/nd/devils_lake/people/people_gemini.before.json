@@ -3,7 +3,12 @@
     "name": "Jim Moe",
     "roles": [
       "Mayor",
-      "President"
+      "President of the Board of City Commissioners",
+      "Police Commissioner",
+      "Finance Commissioner",
+      "Municipal Judge",
+      "City Attorney Commissioner",
+      "Water Issues Commissioner"
     ],
     "divisions": [
       "at-large"
@@ -17,13 +22,15 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Rob Hach",
     "roles": [
       "Vice President",
-      "Commissioner"
+      "Sanitation Commissioner",
+      "Assessor/Building Official Commissioner",
+      "Engineering Commissioner"
     ],
     "divisions": [
       "at-large"
@@ -37,12 +44,14 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Joe Knowski",
     "roles": [
-      "Commissioner"
+      "Commissioner",
+      "Sewer Commissioner",
+      "Water Commissioner"
     ],
     "divisions": [
       "at-large"
@@ -56,12 +65,13 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Jason Pierce",
     "roles": [
-      "Commissioner"
+      "Commissioner",
+      "Fire Commissioner"
     ],
     "divisions": [
       "at-large"
@@ -75,12 +85,14 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Lisa Uhlenkamp",
     "roles": [
-      "Commissioner"
+      "Commissioner",
+      "Street Commissioner",
+      "Cemetery and Weed Commissioner"
     ],
     "divisions": [
       "at-large"
@@ -94,6 +106,6 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   }
 ]

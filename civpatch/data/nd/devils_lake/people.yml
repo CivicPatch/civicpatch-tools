@@ -12,10 +12,51 @@
   end_date: '2026-06-30'
   sources:
   - https://www.dvlnd.com/government/city-commission
-  updated_at: '2025-07-03T21:30:22Z'
-- name: Rob Hach
+  updated_at: '2025-07-03T21:39:49Z'
+- name: Jason Pierce
   roles:
-  - Vice President
+  - Commissioner
+  divisions: []
+  image: https://secure-cdn.scdn6.secure.raxcdn.com/media/userfiles/subsite_207/images/city-commission/Jason-Pierce-33.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/nd/devils_lake/images/13e6af5978c16551915914b3435b6e3e4c51922771c56a0fe76b8e9c84a65ccc.jpg
+  email: jasonp@dvlnd.com
+  phone_number:
+  website:
+  start_date:
+  end_date: '2026-06-30'
+  sources:
+  - https://www.dvlnd.com/government/city-commission
+  updated_at: '2025-07-03T21:39:49Z'
+- name: Joe Knowski
+  roles:
+  - Commissioner
+  divisions: []
+  image:
+  cdn_image:
+  email: joek@dvlnd.com
+  phone_number:
+  website:
+  start_date:
+  end_date: '2028-06-30'
+  sources:
+  - https://www.dvlnd.com/government/city-commission
+  updated_at: '2025-07-03T21:39:49Z'
+- name: Lisa Uhlenkamp
+  roles:
+  - Commissioner
+  divisions: []
+  image:
+  cdn_image:
+  email: lisau@dvlnd.com
+  phone_number:
+  website:
+  start_date:
+  end_date: '2028-06-30'
+  sources:
+  - https://www.dvlnd.com/government/city-commission
+  updated_at: '2025-07-03T21:39:49Z'
+- name: Rob Hach
+  roles: []
   divisions: []
   image: https://secure-cdn.scdn6.secure.raxcdn.com/media/userfiles/subsite_207/images/city-commission/Rob-Hach-33.jpg
   cdn_image: https://cdn.civicpatch.org/open-data/nd/devils_lake/images/2a1f1c47218ab4bc0cd094aa396e997419efc370cc721bed4ba44b52823ccc5f.jpg
@@ -26,4 +67,4 @@
   end_date: '2026-06-30'
   sources:
   - https://www.dvlnd.com/government/city-commission
-  updated_at: '2025-07-03T21:30:22Z'
+  updated_at: '2025-07-03T21:39:49Z'

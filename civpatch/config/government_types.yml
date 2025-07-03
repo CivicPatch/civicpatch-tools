@@ -81,6 +81,8 @@ government_types:
       - role: council manager
       - role: commission president
       - role: commissioner
+        aliases:
+          - city commissioner
       - role: board member
         aliases:
           - town board member

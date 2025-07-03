@@ -2,8 +2,7 @@
   {
     "name": "Jim Moe",
     "roles": [
-      "Mayor",
-      "President"
+      "Mayor"
     ],
     "divisions": [
       "At-large"
@@ -17,12 +16,11 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Rob Hach",
     "roles": [
-      "Commissioner",
       "Vice President"
     ],
     "divisions": [
@@ -37,7 +35,7 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Joe Knowski",
@@ -56,7 +54,7 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Jason Pierce",
@@ -75,7 +73,7 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Lisa Uhlenkamp",
@@ -94,6 +92,6 @@
     "sources": [
       "https://www.dvlnd.com/government/city-commission"
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   }
 ]

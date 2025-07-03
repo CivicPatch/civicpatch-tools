@@ -35,11 +35,11 @@
       {
         "data": "2026-06-30",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires June 30th, 2026 as stated.",
+        "llm_confidence_reason": "Term expiration date explicitly stated as June 30th, 2026.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
-    "updated_at": "2025-07-03T21:30:12Z"
+    "updated_at": "2025-07-03T21:39:31Z"
   },
   {
     "name": "Rob Hach",
@@ -50,20 +50,15 @@
       {
         "data": "https://secure-cdn.scdn6.secure.raxcdn.com/media/userfiles/subsite_207/images/city-commission/Rob-Hach-33.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is a headshot near the name Rob Hach.",
+        "llm_confidence_reason": "Image URL is a headshot near the name Rob Hach, Vice President.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
     "roles": [
       {
-        "data": "Vice President",
+        "data": "Vice Mayor",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as Vice President of the City Commission, which is a leadership role within the governing body."
-      },
-      {
-        "data": "City Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Member of the City Commission as per page context."
+        "llm_confidence_reason": "Listed as Vice President of the City Commission, normalized to Vice Mayor as a common equivalent role."
       }
     ],
     "divisions": [],
@@ -82,11 +77,11 @@
       {
         "data": "2026-06-30",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires June 30th, 2026 as stated.",
+        "llm_confidence_reason": "Term expiration date explicitly stated as June 30th, 2026.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
-    "updated_at": "2025-07-03T21:30:12Z"
+    "updated_at": "2025-07-03T21:39:31Z"
   },
   {
     "name": "Joe Knowski",
@@ -96,9 +91,9 @@
     "images": [],
     "roles": [
       {
-        "data": "City Commissioner",
+        "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as Commissioner and member of the City Commission."
+        "llm_confidence_reason": "Explicitly listed as Commissioner."
       }
     ],
     "divisions": [],
@@ -117,11 +112,11 @@
       {
         "data": "2028-06-30",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires June 30th, 2028 as stated.",
+        "llm_confidence_reason": "Term expiration date explicitly stated as June 30th, 2028.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
-    "updated_at": "2025-07-03T21:30:12Z"
+    "updated_at": "2025-07-03T21:39:31Z"
   },
   {
     "name": "Jason Pierce",
@@ -132,15 +127,15 @@
       {
         "data": "https://secure-cdn.scdn6.secure.raxcdn.com/media/userfiles/subsite_207/images/city-commission/Jason-Pierce-33.jpg",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is a headshot near the name Jason Pierce.",
+        "llm_confidence_reason": "Image URL is a headshot near the name Jason Pierce, Commissioner.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
     "roles": [
       {
-        "data": "City Commissioner",
+        "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as Commissioner and member of the City Commission."
+        "llm_confidence_reason": "Explicitly listed as Commissioner."
       }
     ],
     "divisions": [],
@@ -159,11 +154,11 @@
       {
         "data": "2026-06-30",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires June 30th, 2026 as stated.",
+        "llm_confidence_reason": "Term expiration date explicitly stated as June 30th, 2026.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
-    "updated_at": "2025-07-03T21:30:12Z"
+    "updated_at": "2025-07-03T21:39:31Z"
   },
   {
     "name": "Lisa Uhlenkamp",
@@ -173,9 +168,9 @@
     "images": [],
     "roles": [
       {
-        "data": "City Commissioner",
+        "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as Commissioner and member of the City Commission."
+        "llm_confidence_reason": "Explicitly listed as Commissioner."
       }
     ],
     "divisions": [],
@@ -194,10 +189,10 @@
       {
         "data": "2028-06-30",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires June 30th, 2028 as stated.",
+        "llm_confidence_reason": "Term expiration date explicitly stated as June 30th, 2028.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
-    "updated_at": "2025-07-03T21:30:12Z"
+    "updated_at": "2025-07-03T21:39:31Z"
   }
 ]
