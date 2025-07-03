@@ -4,7 +4,7 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-07-03T21:29:40Z",
+    "updated_at": "2025-07-03T21:38:57Z",
     "divisions": []
   },
   {
@@ -12,7 +12,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:29:40Z",
+    "updated_at": "2025-07-03T21:38:57Z",
     "divisions": []
   },
   {
@@ -20,7 +20,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:29:40Z",
+    "updated_at": "2025-07-03T21:38:57Z",
     "divisions": []
   },
   {
@@ -28,15 +28,15 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:29:40Z",
+    "updated_at": "2025-07-03T21:38:57Z",
     "divisions": []
   },
   {
-    "name": "Lisa Uhlenkamp",
+    "name": null,
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:29:40Z",
+    "updated_at": "2025-07-03T21:38:57Z",
     "divisions": []
   }
 ]

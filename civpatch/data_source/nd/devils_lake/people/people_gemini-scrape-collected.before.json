@@ -9,19 +9,44 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Jim Moe, Mayor'."
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' next to the name."
       },
       {
-        "data": "President",
+        "data": "President of the Board of City Commissioners",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The 'About the Commission' section states 'The mayor serves as President of the Board of City Commissioners'."
+        "llm_confidence_reason": "The text states 'The mayor serves as President of the Board of City Commissioners'."
+      },
+      {
+        "data": "Police Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Police Commissioner'."
+      },
+      {
+        "data": "Finance Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Finance Commissioner'."
+      },
+      {
+        "data": "Municipal Judge",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Municipal Judge'."
+      },
+      {
+        "data": "City Attorney Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'City Attorney Commissioner'."
+      },
+      {
+        "data": "Water Issues Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Water Issues Commissioner'."
       }
     ],
     "divisions": [
       {
         "data": "at-large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The 'About the Commission' section explicitly states that the mayor and commissioners are 'elected at large'."
+        "llm_confidence_reason": "The text explicitly states that the mayor and commissioners are 'elected at large'."
       }
     ],
     "phone_numbers": [],
@@ -29,7 +54,7 @@
       {
         "data": "jimm@dvlnd.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email'.",
+        "llm_confidence_reason": "Email address is directly provided next to the name.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
@@ -39,11 +64,11 @@
       {
         "data": "2026-06-30",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The 'Term Expires' date is explicitly provided next to the name and labeled 'Term Expires'.",
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 'June 30th, 2026'.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Rob Hach",
@@ -55,19 +80,29 @@
       {
         "data": "Vice President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Rob Hach, Vice President'."
+        "llm_confidence_reason": "Explicitly stated as 'Vice President' next to the name."
       },
       {
-        "data": "Commissioner",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text states he is 'Vice President' and part of the 'Board of City Commissioners', implying he is also a Commissioner."
+        "data": "Sanitation Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Sanitation Commissioner'."
+      },
+      {
+        "data": "Assessor/Building Official Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Assessor/Building Official Commissioner'."
+      },
+      {
+        "data": "Engineering Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Engineering Commissioner'."
       }
     ],
     "divisions": [
       {
         "data": "at-large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The 'About the Commission' section explicitly states that the mayor and commissioners are 'elected at large'."
+        "llm_confidence_reason": "The text explicitly states that the mayor and commissioners are 'elected at large'."
       }
     ],
     "phone_numbers": [],
@@ -75,7 +110,7 @@
       {
         "data": "robh@dvlnd.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email'.",
+        "llm_confidence_reason": "Email address is directly provided next to the name.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
@@ -85,11 +120,11 @@
       {
         "data": "2026-06-30",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The 'Term Expires' date is explicitly provided next to the name and labeled 'Term Expires'.",
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 'June 30th, 2026'.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Joe Knowski",
@@ -101,14 +136,24 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Joe Knowski, Commissioner'."
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner' next to the name."
+      },
+      {
+        "data": "Sewer Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Sewer Commissioner'."
+      },
+      {
+        "data": "Water Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Water Commissioner'."
       }
     ],
     "divisions": [
       {
         "data": "at-large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The 'About the Commission' section explicitly states that the mayor and commissioners are 'elected at large'."
+        "llm_confidence_reason": "The text explicitly states that the mayor and commissioners are 'elected at large'."
       }
     ],
     "phone_numbers": [],
@@ -116,7 +161,7 @@
       {
         "data": "joek@dvlnd.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email'.",
+        "llm_confidence_reason": "Email address is directly provided next to the name.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
@@ -126,11 +171,11 @@
       {
         "data": "2028-06-30",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The 'Term Expires' date is explicitly provided next to the name and labeled 'Term Expires'.",
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 'June 30th, 2028'.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Jason Pierce",
@@ -142,14 +187,19 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Jason Pierce, Commissioner'."
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner' next to the name."
+      },
+      {
+        "data": "Fire Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Fire Commissioner'."
       }
     ],
     "divisions": [
       {
         "data": "at-large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The 'About the Commission' section explicitly states that the mayor and commissioners are 'elected at large'."
+        "llm_confidence_reason": "The text explicitly states that the mayor and commissioners are 'elected at large'."
       }
     ],
     "phone_numbers": [],
@@ -157,7 +207,7 @@
       {
         "data": "jasonp@dvlnd.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email'.",
+        "llm_confidence_reason": "Email address is directly provided next to the name.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
@@ -167,11 +217,11 @@
       {
         "data": "2026-06-30",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The 'Term Expires' date is explicitly provided next to the name and labeled 'Term Expires'.",
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 'June 30th, 2026'.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   },
   {
     "name": "Lisa Uhlenkamp",
@@ -183,14 +233,24 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Lisa Uhlenkamp, Commissioner'."
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner' next to the name."
+      },
+      {
+        "data": "Street Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Street Commissioner'."
+      },
+      {
+        "data": "Cemetery and Weed Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed under 'Portfolios' as 'Cemetery and Weed Commissioner'."
       }
     ],
     "divisions": [
       {
         "data": "at-large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The 'About the Commission' section explicitly states that the mayor and commissioners are 'elected at large'."
+        "llm_confidence_reason": "The text explicitly states that the mayor and commissioners are 'elected at large'."
       }
     ],
     "phone_numbers": [],
@@ -198,7 +258,7 @@
       {
         "data": "lisau@dvlnd.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name and labeled 'Email'.",
+        "llm_confidence_reason": "Email address is directly provided next to the name.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
@@ -208,10 +268,10 @@
       {
         "data": "2028-06-30",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The 'Term Expires' date is explicitly provided next to the name and labeled 'Term Expires'.",
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 'June 30th, 2028'.",
         "source": "https://www.dvlnd.com/government/city-commission"
       }
     ],
-    "updated_at": "2025-07-03T21:30:22Z"
+    "updated_at": "2025-07-03T21:39:48Z"
   }
 ]
