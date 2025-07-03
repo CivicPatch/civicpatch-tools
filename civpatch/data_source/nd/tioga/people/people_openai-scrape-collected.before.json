@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Kevin Litten",
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'President of City Commission' indicating he is a Commissioner and the President of the City Commission, which is the primary governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:40:41Z"
+  },
+  {
+    "name": "Jessica Steele",
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed as 'Police Commissioner' indicating membership in the City Commission."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:40:41Z"
+  },
+  {
+    "name": "Shawn Travis",
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed as 'Finance Commissioner' indicating membership in the City Commission."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:40:41Z"
+  },
+  {
+    "name": "Tim Christianson",
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed as 'Water Commissioner' indicating membership in the City Commission."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:40:41Z"
+  },
+  {
+    "name": "Larry Maize",
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Listed as 'Streets Commissioner' indicating membership in the City Commission."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T21:40:41Z"
+  }
+]

@@ -1,0 +1,87 @@
+[
+  {
+    "name": "Kevin Litten",
+    "roles": [
+      "President of City Commission"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "updated_at": "2025-07-03T21:41:17Z"
+  },
+  {
+    "name": "Jessica Steele",
+    "roles": [
+      "Police Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "updated_at": "2025-07-03T21:41:17Z"
+  },
+  {
+    "name": "Shawn Travis",
+    "roles": [
+      "Finance Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "updated_at": "2025-07-03T21:41:17Z"
+  },
+  {
+    "name": "Tim Christianson",
+    "roles": [
+      "Water Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "updated_at": "2025-07-03T21:41:17Z"
+  },
+  {
+    "name": "Larry Maize",
+    "roles": [
+      "Streets Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.tiogand.net/city-hall/community-statistics"
+    ],
+    "updated_at": "2025-07-03T21:41:17Z"
+  }
+]
