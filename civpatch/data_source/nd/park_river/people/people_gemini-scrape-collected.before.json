@@ -7,23 +7,23 @@
     "images": [],
     "roles": [
       {
-        "data": "Council member",
+        "data": "Council-member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Council-member'."
+        "llm_confidence_reason": "Role is explicitly stated and matches target role 'council member'."
       }
     ],
     "divisions": [
       {
         "data": "Ward 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "701.331.0988",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Phone number is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -31,7 +31,7 @@
       {
         "data": "Corribell@icloud.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Email address is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -41,11 +41,11 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Term Expires: 2028'.",
+        "llm_confidence_reason": "Term expiration year is explicitly stated.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   },
   {
     "name": "Cory Seim",
@@ -55,23 +55,28 @@
     "images": [],
     "roles": [
       {
-        "data": "Council member Vice President",
+        "data": "Council-member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Council-member Vice President'."
+        "llm_confidence_reason": "Role is explicitly stated and matches target role 'council member'."
+      },
+      {
+        "data": "Vice President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches target role 'vice president'."
       }
     ],
     "divisions": [
       {
         "data": "Ward 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "701.331.0539",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Phone number is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -79,7 +84,7 @@
       {
         "data": "coryseim@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Email address is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -89,11 +94,11 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Term Expires: 2028'.",
+        "llm_confidence_reason": "Term expiration year is explicitly stated.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   },
   {
     "name": "Kenneth Gilespie",
@@ -103,23 +108,23 @@
     "images": [],
     "roles": [
       {
-        "data": "Council member",
+        "data": "Council-member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Council-member'."
+        "llm_confidence_reason": "Role is explicitly stated and matches target role 'council member'."
       }
     ],
     "divisions": [
       {
         "data": "Ward 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "701.360.1195",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Phone number is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -127,7 +132,7 @@
       {
         "data": "kennyg@polarcomm.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Email address is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -137,11 +142,11 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Term Expires: 2028'.",
+        "llm_confidence_reason": "Term expiration year is explicitly stated.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   },
   {
     "name": "Dennis Kubat",
@@ -151,23 +156,23 @@
     "images": [],
     "roles": [
       {
-        "data": "Council member",
+        "data": "Council-member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Council-member'."
+        "llm_confidence_reason": "Role is explicitly stated and matches target role 'council member'."
       }
     ],
     "divisions": [
       {
         "data": "Ward 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "701.284.7307",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Phone number is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -175,7 +180,7 @@
       {
         "data": "denniskubat@yahoo.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Email address is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -185,11 +190,11 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Term Expires: 2026'.",
+        "llm_confidence_reason": "Term expiration year is explicitly stated.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   },
   {
     "name": "Leah Skjerven",
@@ -199,23 +204,23 @@
     "images": [],
     "roles": [
       {
-        "data": "Council member",
+        "data": "Council-member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Council-member'."
+        "llm_confidence_reason": "Role is explicitly stated and matches target role 'council member'."
       }
     ],
     "divisions": [
       {
         "data": "Ward 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "701.284.6519",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Phone number is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -223,7 +228,7 @@
       {
         "data": "skjerven@polarcomm.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Email address is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -233,11 +238,11 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Term Expires: 2026'.",
+        "llm_confidence_reason": "Term expiration year is explicitly stated.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   },
   {
     "name": "Kyle Halvorson",
@@ -247,28 +252,33 @@
     "images": [],
     "roles": [
       {
-        "data": "Council member President",
+        "data": "Council-member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Council-member President'."
+        "llm_confidence_reason": "Role is explicitly stated and matches target role 'council member'."
+      },
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches target role 'president'."
       },
       {
         "data": "Acting Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as '(Acting Mayor)'."
+        "llm_confidence_reason": "Role is explicitly stated and is a contextual variation of 'mayor'."
       }
     ],
     "divisions": [
       {
         "data": "Ward 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text."
+        "llm_confidence_reason": "Explicitly stated in the text."
       }
     ],
     "phone_numbers": [
       {
         "data": "701.331.9991",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Phone number is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -276,7 +286,7 @@
       {
         "data": "kylehalvorson@polarcomm.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated in the text.",
+        "llm_confidence_reason": "Email address is explicitly provided.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
@@ -286,10 +296,10 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly stated as 'Term Expires: 2026'.",
+        "llm_confidence_reason": "Term expiration year is explicitly stated.",
         "source": "https://cityofparkriver.com/government/city-officials-staff"
       }
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   }
 ]

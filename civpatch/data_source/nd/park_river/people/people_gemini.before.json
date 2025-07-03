@@ -2,7 +2,7 @@
   {
     "name": "Corrine Bell",
     "roles": [
-      "Council member"
+      "Council-member"
     ],
     "divisions": [
       "Ward 1"
@@ -16,12 +16,13 @@
     "sources": [
       "https://cityofparkriver.com/government/city-officials-staff"
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   },
   {
     "name": "Cory Seim",
     "roles": [
-      "Council member Vice President"
+      "Council-member",
+      "Vice President"
     ],
     "divisions": [
       "Ward 2"
@@ -35,12 +36,12 @@
     "sources": [
       "https://cityofparkriver.com/government/city-officials-staff"
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   },
   {
     "name": "Kenneth Gilespie",
     "roles": [
-      "Council member"
+      "Council-member"
     ],
     "divisions": [
       "Ward 3"
@@ -54,12 +55,12 @@
     "sources": [
       "https://cityofparkriver.com/government/city-officials-staff"
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   },
   {
     "name": "Dennis Kubat",
     "roles": [
-      "Council member"
+      "Council-member"
     ],
     "divisions": [
       "Ward 1"
@@ -73,12 +74,12 @@
     "sources": [
       "https://cityofparkriver.com/government/city-officials-staff"
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   },
   {
     "name": "Leah Skjerven",
     "roles": [
-      "Council member"
+      "Council-member"
     ],
     "divisions": [
       "Ward 2"
@@ -92,12 +93,13 @@
     "sources": [
       "https://cityofparkriver.com/government/city-officials-staff"
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   },
   {
     "name": "Kyle Halvorson",
     "roles": [
-      "Council member President",
+      "Council-member",
+      "President",
       "Acting Mayor"
     ],
     "divisions": [
@@ -112,6 +114,6 @@
     "sources": [
       "https://cityofparkriver.com/government/city-officials-staff"
     ],
-    "updated_at": "2025-07-03T22:07:45Z"
+    "updated_at": "2025-07-03T22:27:28Z"
   }
 ]
