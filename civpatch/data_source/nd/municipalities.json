@@ -297,7 +297,14 @@
       ],
       "population": 2509,
       "website": "https://www.cityofrugbynd.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T21:39:28Z",
+      "meta_hash": "da3ff2bdb4aba69d4e702f9f4a2d639a",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Casselton",
