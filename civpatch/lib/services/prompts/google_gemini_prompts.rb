@@ -107,12 +107,20 @@ module Services
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
         - Roles extraction:
             - Extract roles that match the **target roles** provided (e.g., #{roles.join(", ")}).
+            - If a role on the page is ambiguous (e.g., "President"), infer the most accurate match from the target roles list based on **context**:
+                - Example: If "President" is listed under "Council Members," infer it as "Council President."
+                - Example: If "President" appears without clear context, do not infer or extract it.
+            - Provide a confidence score (`llm_confidence`) and a brief reason for the inference.
             - Also extract **contextual variations** of the target roles if they are clearly related (e.g., "Water Commissioner" for "Commissioner").
             - Variations must include the target role as part of the title (e.g., "Water Commissioner" includes "Commissioner").
             - Do NOT extract unrelated roles or roles that do not include the target role (e.g., "Director of Water" should not be extracted for "Commissioner").
             - Include only active roles (today is #{current_date}).
-            - Example (the target roles include "Commissioner"):
-              - Water Commissioner → [Commissioner, Water Commissioner]
+            - Examples:
+              - If the target roles include "Council President":
+                - A person listed as "President" under "Council Members" → Extract as "Council President".
+                - A person listed as "President" without clear context → Do not extract or infer.
+              - If the target roles include "Commissioner":
+                - A person listed as "Water Commissioner" → Extract as "Commissioner" and "Water Commissioner".  - A person listed as "Director of Water" → Do not extract as "Commissioner".
         - Division extraction:
           - Extract divisions if they are explicitly mentioned in the text
             and are relevant to the person's role in regards to the main governing body.

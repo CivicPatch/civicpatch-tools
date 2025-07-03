@@ -79,33 +79,31 @@ module Services
           - Name: Extract full names ONLY (e.g., "Denyse McGriff", not "Mayor Denyse McGriff"). Titles go in \'positions\'.
           - Roles:
             - Extract ONLY active roles matching Target Roles/Examples (municipal legislative/executive).
-            - **Focus on Main Governing Body**: Prioritize extracting members of the primary municipal governing body
-              (e.g., Town Council, City Council, Select Board).
-            - **EXCLUDE**: Do NOT extract roles that are clearly advisory, honorary, student/youth positions
-              (e.g., "Youth Councilor", "Student Representative", "Vice Chair of the Finance and Administration Committee"),
-              or non-voting unless they are explicitly listed in the Target Municipal Roles.
-              Focus on the primary elected/appointed governing body members.
-              We are only interested in roles that are related to the main governing body of the municipality.
-            - **EXCLUDE**: Do NOT extract roles for any committees, authorities, commissions, or boards that are not the main governing body, even if the title sounds official (e.g., "Vice Chair of Transit Authority", "Chair of Finance Committee", "Member, Planning Board"). Only include roles that match the Target roles list exactly.
-            - **Normalize role titles:** If a role is a clear synonym or a reordering of a Target Role (e.g., "President, City Council" vs "City Council President"), treat them as equivalent and output the normalized Target Role as listed in the Target Roles.
-              - For example, if the text says "President, City Council" and the Target Role is "City Council President", output "City Council President".
+            - **Focus on Context**: Use the governing body or surrounding context to determine the correct role for ambiguous titles like "President."
+              - If "President" is listed under "Council Members" or a similar governing body, infer it as "Council President."
+              - If "President" is listed under "Commissioners" or a similar governing body, infer it as "Commissioner President."
+              - Do NOT infer roles without sufficient context.
+            - Normalize role titles: If a role is a clear synonym or a reordering of a Target Role (e.g., "President, City Council" vs "City Council President"), treat them as equivalent and output the normalized Target Role as listed in the Target Roles.
+            - Examples:
+              - If the target roles include "Council President":
+                - A person listed as "President" under "Council Members" → Extract as "Council President".
+                - A person listed as "President" under "Commissioners" → Do not extract as "Council President".
+              - If the target roles include "Commissioner President":
+                - A person listed as "President" under "Commissioners" → Extract as "Commissioner President".
+                - A person listed as "President" under "Council Members" → Do not extract as "Commissioner President".
             - Divisions should NOT be included under roles.
           - Divisions:
-            - A person can have multiple divisions. List them separately.
-              Examples:
-                - "Citywide Position 7" -> "Citywide", "Position 7"
-                - "At-Large Position 2" -> "At-Large", "Position 2"
-                - "At-Large 1, Position 2" -> "At-Large 1", "Position 2"
-            - It is important to return the division as an array of objects, not a string.
-            - Loose associations (the person lives in a district, but not elected from it)
-              should not be listed
-            - List the type of the division first, then the name (e.g., "Ward 1", "District 2").
+            - Extract divisions if explicitly mentioned and relevant to the person's role.
+            - Examples:
+              - "Citywide Position 7" -> "Citywide", "Position 7"
+              - "At-Large Position 2" -> "At-Large", "Position 2"
+            - Loose associations (e.g., the person lives in a district but is not elected from it) should not be listed
           - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style.
           - Contact Details (Phone/Email/Website):
             - Associate details logically if near the person's name/section.
             - Pick the most relevant contact detail if multiple are present.
             - Phone numbers:
-              - Phone Prefixes: Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
+              - Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
             - Markdown Links: Extract email/phone from the VISIBLE TEXT of links like `[TEXT](...)`, ignore the target URL.
             - `website` data MUST be a valid http/https URL. Prefer profile pages. EXCLUDE mailto:, tel:.
             - `email` data should ONLY contain email addresses.
@@ -115,14 +113,13 @@ module Services
               - “Elected [date]”, “Appointed [date]”, “Term: [date1] to [date2]”, “Since [date]”.
               - For vague phrases like "Spring 2025", extract the year only.
             - If more than one term is mentioned, extract the most recent term dates.
-            - If more than one start date is mentioned, use the most recent one (actual start date is preferred over elected term date).
             - Examples:
               - "Elected Nov 2024 for term ending Dec 2028" -> start_date: "2024-11", end_date: "2028-12"
               - "Served January 2018 until December 2021 - Re-elected and serving January 2022 and until December 2025" -> start_date: "2022-01", end_date: "2025-12"
               - "Elected in 2017 and re-elected in 2021 for the 2022-2025 term." -> start_date: "2022", end_date: "2025"
 
           **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting,
-            paying close attention to the date extraction, conversion, and term identification rules.
+            paying close attention to the role inference, date extraction, and term identification rules.
         INSTRUCTIONS
 
         content = <<~CONTENT
