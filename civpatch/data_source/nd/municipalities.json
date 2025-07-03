@@ -658,7 +658,14 @@
       ],
       "population": 1246,
       "website": "https://cavaliernd.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T23:59:15Z",
+      "meta_hash": "b2b3ac0f73e6dc4153dd9526d3822c19",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Rolla",
