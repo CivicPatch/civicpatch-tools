@@ -257,7 +257,14 @@
         "Cass"
       ],
       "website": "https://www.cityofhorace.com/",
-      "population": 3085
+      "population": 3085,
+      "meta_updated_at": "2025-07-03T21:30:18Z",
+      "meta_hash": "94caf6cf3a9a627f80508a1c6d37c30e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Beulah",
