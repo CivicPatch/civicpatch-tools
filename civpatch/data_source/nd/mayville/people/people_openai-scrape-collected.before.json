@@ -1,0 +1,226 @@
+[
+  {
+    "name": "Karl Jorgenson",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Mayor of Mayville in the City Council section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-430-2061",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Mayor Karl Jorgenson.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:14Z"
+  },
+  {
+    "name": "William Bohnsack",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed under Aldermen in the City Council section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-788-2710",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under William Bohnsack.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bohnsack@hotmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under William Bohnsack.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:14Z"
+  },
+  {
+    "name": "Charlie Moen",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed under Aldermen in the City Council section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-330-7605",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Charlie Moen.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Charlie310@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Charlie Moen.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:14Z"
+  },
+  {
+    "name": "Aaron Soholt",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed under Aldermen in the City Council section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-430-0059",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Aaron Soholt.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:14Z"
+  },
+  {
+    "name": "Ray Petersen",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed under Aldermen in the City Council section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-414-0106",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Ray Petersen.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rdp@gra.midco.net",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Ray Petersen.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:14Z"
+  },
+  {
+    "name": "Brian Halvorson",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed under Aldermen in the City Council section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-238-7454",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Brian Halvorson.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:14Z"
+  },
+  {
+    "name": "Larry O’Brien",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed under Aldermen in the City Council section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-371-4749",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Larry O’Brien.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "larry@obrienseed.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Larry O’Brien.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:14Z"
+  }
+]

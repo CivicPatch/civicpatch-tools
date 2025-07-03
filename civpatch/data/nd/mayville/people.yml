@@ -1,0 +1,15 @@
+---
+- name: Karl Jorgenson
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(701) 430-2061"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.mayvilleportland.com/live-work/citizens-handbook/mayville
+  updated_at: '2025-07-03T22:01:28Z'

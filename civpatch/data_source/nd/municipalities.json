@@ -445,7 +445,14 @@
       ],
       "population": 1854,
       "website": "http://www.mayvilleportland.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T22:01:28Z",
+      "meta_hash": "be8e1a96407fc5611fec96b5556f3166",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Oakes",

@@ -1,0 +1,226 @@
+[
+  {
+    "name": "Karl Jorgenson",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role is explicitly stated as 'Mayor' directly under the person's name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-430-2061",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name and role.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:28Z"
+  },
+  {
+    "name": "William Bohnsack",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'Aldermen' heading, indicating their role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-788-2710",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bohnsack@hotmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly stated as a mailto link next to the person's name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:28Z"
+  },
+  {
+    "name": "Charlie Moen",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'Aldermen' heading, indicating their role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-330-7605",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Charlie310@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly stated as a mailto link next to the person's name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:28Z"
+  },
+  {
+    "name": "Aaron Soholt",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'Aldermen' heading, indicating their role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-430-0059",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:28Z"
+  },
+  {
+    "name": "Ray Petersen",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'Aldermen' heading, indicating their role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-414-0106",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rdp@gra.midco.net",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly stated as a mailto link next to the person's name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:28Z"
+  },
+  {
+    "name": "Brian Halvorson",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'Aldermen' heading, indicating their role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-238-7454",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:28Z"
+  },
+  {
+    "name": "Larry O’Brien",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The person is listed under the 'Aldermen' heading, indicating their role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-371-4749",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "larry@obrienseed.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly stated as a mailto link next to the person's name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:01:28Z"
+  }
+]
