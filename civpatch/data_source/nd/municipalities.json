@@ -334,7 +334,14 @@
       ],
       "population": 2204,
       "website": "https://cityoflisbon.net/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T21:37:59Z",
+      "meta_hash": "5a42045144c6420474fd5593408555e7",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Tioga",
