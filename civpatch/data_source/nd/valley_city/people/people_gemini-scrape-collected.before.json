@@ -1,0 +1,253 @@
+[
+  {
+    "name": "Dave Carlsrud",
+    "sources": [
+      "https://www.valleycity.us",
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The image filename '2024-Relaxed-Mayor-Dave-scaled-45x45.jpg' and the title 'Mayor’s Message' strongly indicate 'Dave' is the Mayor, and 'Dave Carlsrud' is a likely council member provided in the prompt."
+      },
+      {
+        "data": "President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'President' is explicitly stated directly below the person's name and in the contact section, clearly indicating their current position within the governing body. This direct and unambiguous association ensures high accuracy and relevance to the individual's role. The role is also a target role, confirming its suitability for extraction."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 845-8126",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided and directly associated with the person's contact information section, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other phone numbers are present for this individual, confirming it is the primary contact number.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dcarlsrud@valleycity.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided and directly associated with the person's contact information section, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other email addresses are present for this individual, confirming it is the primary contact.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The start date '2022' is explicitly stated as part of the 'Term: 2022-2026' directly associated with Dave Carlsrud, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other start dates are present for this individual, confirming it is the primary start date for their current term.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date '2026' is explicitly stated as part of the 'Term: 2022-2026' directly associated with Dave Carlsrud, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other end dates are present for this individual, confirming it is the primary end date for their current term. The date is also in the future, confirming the role is active.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:37:11Z"
+  },
+  {
+    "name": "Duane Magnuson",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated directly below the person's name and in the contact section, clearly indicating their current position within the governing body. This direct and unambiguous association ensures high accuracy and relevance to the individual's role. The role is also a target role, confirming its suitability for extraction. Although the contact section lists 'Dewey Magnuson', the main heading and image alt text use 'Duane Magnuson', which is used for the name, and the role is consistent."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 845-8796",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided and directly associated with the person's contact information section, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other phone numbers are present for this individual, confirming it is the primary contact number.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dmagnuson@valleycity.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided and directly associated with the person's contact information section, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other email addresses are present for this individual, confirming it is the primary contact.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The start date '2022' is explicitly stated as part of the 'Term: 2022-2026' directly associated with Duane Magnuson, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other start dates are present for this individual, confirming it is the primary start date for their current term.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date '2026' is explicitly stated as part of the 'Term: 2022-2026' directly associated with Duane Magnuson, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other end dates are present for this individual, confirming it is the primary end date for their current term. The date is also in the future, confirming the role is active.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:37:11Z"
+  },
+  {
+    "name": "Mike Bishop",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated directly below the person's name and in the contact section, clearly indicating their current position within the governing body. This direct and unambiguous association ensures high accuracy and relevance to the individual's role. The role is also a target role, confirming its suitability for extraction."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 840-8583",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided and directly associated with the person's contact information section, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other phone numbers are present for this individual, confirming it is the primary contact number.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mbishop@valleycity.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided and directly associated with the person's contact information section, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other email addresses are present for this individual, confirming it is the primary contact.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The start date '2024' is explicitly stated as part of the 'Term: 2024 - 2028' directly associated with Mike Bishop, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other start dates are present for this individual, confirming it is the primary start date for their current term.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date '2028' is explicitly stated as part of the 'Term: 2024 - 2028' directly associated with Mike Bishop, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other end dates are present for this individual, confirming it is the primary end date for their current term. The date is also in the future, confirming the role is active.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:37:11Z"
+  },
+  {
+    "name": "Jeff Erickson",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated directly below the person's name and in the contact section, clearly indicating their current position within the governing body. This direct and unambiguous association ensures high accuracy and relevance to the individual's role. The role is also a target role, confirming its suitability for extraction."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 490-1843",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided and directly associated with the person's contact information section, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other phone numbers are present for this individual, confirming it is the primary contact number.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jerickson@valleycity.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided and directly associated with the person's contact information section, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other email addresses are present for this individual, confirming it is the primary contact.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The start date '2022' is explicitly stated as part of the 'Term: 2022-2026' directly associated with Jeff Erickson, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other start dates are present for this individual, confirming it is the primary start date for their current term.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date '2026' is explicitly stated as part of the 'Term: 2022-2026' directly associated with Jeff Erickson, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other end dates are present for this individual, confirming it is the primary end date for their current term. The date is also in the future, confirming the role is active.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:37:11Z"
+  },
+  {
+    "name": "Dick Gulmon",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated directly below the person's name and in the contact section, clearly indicating their current position within the governing body. This direct and unambiguous association ensures high accuracy and relevance to the individual's role. The role is also a target role, confirming its suitability for extraction."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 490-0078",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided and directly associated with the person's contact information section, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other phone numbers are present for this individual, confirming it is the primary contact number.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rgulmon@valleycity.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided and directly associated with the person's contact information section, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other email addresses are present for this individual, confirming it is the primary contact.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The start date '2024' is explicitly stated as part of the 'Term: 2024 - 2028' directly associated with Dick Gulmon, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other start dates are present for this individual, confirming it is the primary start date for their current term.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date '2028' is explicitly stated as part of the 'Term: 2024 - 2028' directly associated with Dick Gulmon, ensuring high accuracy and relevance to the individual's role in the governing body. The format is standard and unambiguous, leading to full confidence in its extraction and correctness for the specified field. No other end dates are present for this individual, confirming it is the primary end date for their current term. The date is also in the future, confirming the role is active.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:37:11Z"
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "name": "Dave Carlsrud",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [
+      {
+        "data": "https://www.valleycity.us/wp-content/uploads/2021/02/Mayor-Carlsrud-Website-120x150.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image near name and title 'President Dave Carlsrud'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "roles": [
+      {
+        "data": "City Commission President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title 'President Dave Carlsrud' and 'City Commission' context indicate role as City Commission President."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 845-8126",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under 'Dave Carlsrud, President'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dcarlsrud@valleycity.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed under 'Dave Carlsrud, President'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2022-2026, start date taken as 2022.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2022-2026, end date taken as 2026.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:36:50Z"
+  },
+  {
+    "name": "Dewey Magnuson",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [
+      {
+        "data": "https://www.valleycity.us/wp-content/uploads/2018/06/Duane-Magnuson-2018-e1530108056893-150x150.jpg",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Image near name 'Commissioner Duane Magnuson'; name spelling discrepancy noted but likely same person.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "roles": [
+      {
+        "data": "City Commissioner",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title 'Commissioner Dewey Magnuson' in City Commission context."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 845-8796",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under 'Dewey Magnuson, Commissioner'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dmagnuson@valleycity.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed under 'Dewey Magnuson, Commissioner'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2022-2026, start date taken as 2022.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2022-2026, end date taken as 2026.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:36:50Z"
+  },
+  {
+    "name": "Mike Bishop",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [
+      {
+        "data": "https://www.valleycity.us/wp-content/uploads/2018/06/Mike-Bishop-150x150.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image near name 'Commissioner Mike Bishop'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "roles": [
+      {
+        "data": "City Commissioner",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title 'Commissioner Mike Bishop' in City Commission context."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 840-8583",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under 'Mike Bishop, Commissioner'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mbishop@valleycity.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed under 'Mike Bishop, Commissioner'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2024-2028, start date taken as 2024.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2024-2028, end date taken as 2028.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:36:50Z"
+  },
+  {
+    "name": "Dick Gulmon",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [
+      {
+        "data": "https://www.valleycity.us/wp-content/uploads/2020/06/Gulmon-Dick-107x150.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image near name 'Commissioner Dick Gulmon'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "roles": [
+      {
+        "data": "City Commissioner",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title 'Commissioner Dick Gulmon' in City Commission context."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 490-0078",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under 'Dick Gulmon, Commissioner'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rgulmon@valleycity.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed under 'Dick Gulmon, Commissioner'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2024-2028, start date taken as 2024.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2024-2028, end date taken as 2028.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:36:50Z"
+  },
+  {
+    "name": "Jeff Erickson",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [
+      {
+        "data": "https://www.valleycity.us/wp-content/uploads/2018/06/Jeff-Erickson-e1530108427287-150x150.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image near name 'Commissioner Jeff Erickson'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "roles": [
+      {
+        "data": "City Commissioner",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title 'Commissioner Jeff Erickson' in City Commission context."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 490-1843",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed under 'Jeff Erickson, Commissioner'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jerickson@valleycity.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email listed under 'Jeff Erickson, Commissioner'.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2022-2026, start date taken as 2022.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2022-2026, end date taken as 2026.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:36:50Z"
+  }
+]

@@ -1,0 +1,87 @@
+[
+  {
+    "name": "Dave Carlsrud",
+    "roles": [
+      "City Commission President"
+    ],
+    "divisions": [],
+    "image": "https://www.valleycity.us/wp-content/uploads/2021/02/Mayor-Carlsrud-Website-120x150.jpg",
+    "phone_number": "(701) 845-8126",
+    "email": "dcarlsrud@valleycity.us",
+    "website": null,
+    "start_date": "2022",
+    "end_date": "2026",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "updated_at": "2025-07-03T21:36:50Z"
+  },
+  {
+    "name": "Dewey Magnuson",
+    "roles": [
+      "City Commissioner"
+    ],
+    "divisions": [],
+    "image": "https://www.valleycity.us/wp-content/uploads/2018/06/Duane-Magnuson-2018-e1530108056893-150x150.jpg",
+    "phone_number": "(701) 845-8796",
+    "email": "dmagnuson@valleycity.us",
+    "website": null,
+    "start_date": "2022",
+    "end_date": "2026",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "updated_at": "2025-07-03T21:36:50Z"
+  },
+  {
+    "name": "Mike Bishop",
+    "roles": [
+      "City Commissioner"
+    ],
+    "divisions": [],
+    "image": "https://www.valleycity.us/wp-content/uploads/2018/06/Mike-Bishop-150x150.jpg",
+    "phone_number": "(701) 840-8583",
+    "email": "mbishop@valleycity.us",
+    "website": null,
+    "start_date": "2024",
+    "end_date": "2028",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "updated_at": "2025-07-03T21:36:50Z"
+  },
+  {
+    "name": "Dick Gulmon",
+    "roles": [
+      "City Commissioner"
+    ],
+    "divisions": [],
+    "image": "https://www.valleycity.us/wp-content/uploads/2020/06/Gulmon-Dick-107x150.jpg",
+    "phone_number": "(701) 490-0078",
+    "email": "rgulmon@valleycity.us",
+    "website": null,
+    "start_date": "2024",
+    "end_date": "2028",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "updated_at": "2025-07-03T21:36:50Z"
+  },
+  {
+    "name": "Jeff Erickson",
+    "roles": [
+      "City Commissioner"
+    ],
+    "divisions": [],
+    "image": "https://www.valleycity.us/wp-content/uploads/2018/06/Jeff-Erickson-e1530108427287-150x150.jpg",
+    "phone_number": "(701) 490-1843",
+    "email": "jerickson@valleycity.us",
+    "website": null,
+    "start_date": "2022",
+    "end_date": "2026",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "updated_at": "2025-07-03T21:36:50Z"
+  }
+]

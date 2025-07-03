@@ -1,0 +1,89 @@
+[
+  {
+    "name": "Dave Carlsrud",
+    "roles": [
+      "mayor",
+      "President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(701) 845-8126",
+    "email": "dcarlsrud@valleycity.us",
+    "website": null,
+    "start_date": "2022",
+    "end_date": "2026",
+    "sources": [
+      "https://www.valleycity.us",
+      "https://www.valleycity.us/commission"
+    ],
+    "updated_at": "2025-07-03T21:37:11Z"
+  },
+  {
+    "name": "Duane Magnuson",
+    "roles": [
+      "Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(701) 845-8796",
+    "email": "dmagnuson@valleycity.us",
+    "website": null,
+    "start_date": "2022",
+    "end_date": "2026",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "updated_at": "2025-07-03T21:37:11Z"
+  },
+  {
+    "name": "Mike Bishop",
+    "roles": [
+      "Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(701) 840-8583",
+    "email": "mbishop@valleycity.us",
+    "website": null,
+    "start_date": "2024",
+    "end_date": "2028",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "updated_at": "2025-07-03T21:37:11Z"
+  },
+  {
+    "name": "Jeff Erickson",
+    "roles": [
+      "Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(701) 490-1843",
+    "email": "jerickson@valleycity.us",
+    "website": null,
+    "start_date": "2022",
+    "end_date": "2026",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "updated_at": "2025-07-03T21:37:11Z"
+  },
+  {
+    "name": "Dick Gulmon",
+    "roles": [
+      "Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(701) 490-0078",
+    "email": "rgulmon@valleycity.us",
+    "website": null,
+    "start_date": "2024",
+    "end_date": "2028",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "updated_at": "2025-07-03T21:37:11Z"
+  }
+]
