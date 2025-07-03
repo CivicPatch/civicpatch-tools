@@ -1,8 +1,8 @@
-[Skip to main content](https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171%2F)
+[Skip to main content](https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A%2F)
 
 - ![Hillsboro, ND](https://hillsboro-nd.com/repository/designs/templates/GO_hillsboro-nd_2024_resp/images/logo.png)
-- [search](https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171)
-- [menu](https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171)
+- [search](https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A)
+- [menu](https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A)
 
 Search
 
@@ -208,25 +208,25 @@ Navigation, primary
 
 - [Government](https://hillsboro-nd.com/government) &gt;
 - [City Commission](https://hillsboro-nd.com/commission) &gt;
-- [Paul Geray](https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894)
+- [Levi Reese](https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=BD216FA0-8FD3-4B93-AA7C-33A593B3945A)
 
-![Paul Geray](https://hillsboro-nd.com/vertical/Sites/%7B7383026E-3DE1-4DA9-9A29-A3887DB2DE61%7D/uploads/Paul-_headshot_Web.jpg)
+![Levi Reese, President](https://hillsboro-nd.com/vertical/Sites/%7B7383026E-3DE1-4DA9-9A29-A3887DB2DE61%7D/uploads/levi_reese_Web.jpg)
 
-# Paul Geray
+# Levi Reese
 
-Paul Geray has been a Commissioner since 2021
+Levi Reese has been a Commissioner since 2018
 
 #### Title:
 
-Commissioner-Vice President
+President
 
 #### Department:
 
-EDC, Electric, and Beautification
+Finance, Personnel, Beautification, Rec/Pool, Planning and Zoning
 
 #### Email:
 
-[paul.geray@hillsboro-nd.us](mailto:paul.geray@hillsboro-nd.us)
+[levi.reese@hillsboro-nd.us](mailto:levi.reese@hillsboro-nd.us)
 
 ## Government
 
