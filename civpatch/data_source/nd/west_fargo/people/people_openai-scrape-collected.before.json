@@ -9,13 +9,13 @@
       {
         "data": "https://www.westfargond.gov/ImageRepository/Document?documentId=4357",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is a portrait near the name Bernie Dardis and labeled as Commission President Bernie Dardis.",
+        "llm_confidence_reason": "The image near the name and title is a portrait of Bernie Dardis.",
         "source": "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis"
       },
       {
-        "data": "https://www.westfargond.gov/ImageRepository/Document?documentID=9931",
+        "data": "https://www.westfargond.gov/ImageRepository/Document?documentId=9931",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image near Mayor Bernie Dardis's name and contact info.",
+        "llm_confidence_reason": "Image near Mayor Bernie Dardis section, likely his portrait.",
         "source": "https://www.westfargond.gov/365/City-Commission"
       }
     ],
@@ -23,7 +23,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page title and content explicitly identify Bernie Dardis as Mayor."
+        "llm_confidence_reason": "The page title and content explicitly state Bernie Dardis is the Mayor of West Fargo."
       },
       {
         "data": "Commission President",
@@ -33,7 +33,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Mayor Bernie Dardis and President of the Board of City Commissioners."
+        "llm_confidence_reason": "Explicitly stated as Mayor and President of the Board of City Commissioners."
       }
     ],
     "divisions": [],
@@ -75,7 +75,7 @@
         "source": "https://www.westfargond.gov/1375/Mayor-Bernie-Dardis"
       }
     ],
-    "updated_at": "2025-07-03T19:14:26Z"
+    "updated_at": "2025-07-03T20:39:41Z"
   },
   {
     "name": "Brad Olson",
@@ -95,7 +95,7 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as Commissioner Brad Olson on the City Commission."
+        "llm_confidence_reason": "Explicitly listed as Commissioner on the City Commission."
       },
       {
         "data": "Commissioner",
@@ -129,7 +129,7 @@
       {
         "data": "https://www.westfargond.gov/1376/Commissioner-Brad-Olson",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The URL is the official city page dedicated to Commissioner Brad Olson.",
+        "llm_confidence_reason": "The URL is the official West Fargo city page dedicated to Commissioner Brad Olson.",
         "source": "https://www.westfargond.gov/1376/Commissioner-Brad-Olson"
       }
     ],
@@ -142,7 +142,7 @@
         "source": "https://www.westfargond.gov/1376/Commissioner-Brad-Olson"
       }
     ],
-    "updated_at": "2025-07-03T19:14:26Z"
+    "updated_at": "2025-07-03T20:39:41Z"
   },
   {
     "name": "Roben Anderson",
@@ -153,8 +153,8 @@
     "images": [
       {
         "data": "https://www.westfargond.gov/ImageRepository/Document?documentId=8059",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The image is directly next to the name 'Roben Anderson' and is a portrait style image.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image is directly associated with Roben Anderson's section on the page.",
         "source": "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson"
       }
     ],
@@ -162,7 +162,7 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as Commissioner Roben Anderson on the City Commission."
+        "llm_confidence_reason": "Explicitly listed as Commissioner on the City Commission."
       },
       {
         "data": "Commissioner",
@@ -181,7 +181,7 @@
       {
         "data": "701-831-7489",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is explicitly listed under 'Phone' for Commissioner Roben Anderson.",
+        "llm_confidence_reason": "Phone number is explicitly listed under Commissioner Roben Anderson's contact information.",
         "source": "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson"
       }
     ],
@@ -196,7 +196,7 @@
       {
         "data": "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The URL is the official city page dedicated to Commissioner Roben Anderson.",
+        "llm_confidence_reason": "The URL provided is the official profile page for Commissioner Roben Anderson.",
         "source": "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson"
       }
     ],
@@ -209,7 +209,7 @@
         "source": "https://www.westfargond.gov/1378/Commissioner-Roben-Anderson"
       }
     ],
-    "updated_at": "2025-07-03T19:14:26Z"
+    "updated_at": "2025-07-03T20:39:41Z"
   },
   {
     "name": "Amy Zundel",
@@ -220,8 +220,8 @@
     "images": [
       {
         "data": "https://www.westfargond.gov/ImageRepository/Document?documentId=9754",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The image is labeled 'City Commissioner Amy Zundel' and is prominently displayed near her name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image is labeled 'City Commissioner Amy Zundel' and is prominently displayed on the page.",
         "source": "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel"
       }
     ],
@@ -229,12 +229,12 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as Commissioner Amy Zundel on the City Commission."
+        "llm_confidence_reason": "Explicitly listed as Commissioner on the City Commission."
       },
       {
         "data": "Commissioner",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page title and content explicitly state 'Commissioner Amy Zundel' as an active role."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page title and content explicitly state 'Commissioner Amy Zundel' indicating her role as a City Commissioner."
       }
     ],
     "divisions": [],
@@ -247,8 +247,8 @@
       },
       {
         "data": "701-831-7272",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly listed under her contact information.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly listed under 'Phone: 701-831-7272 Contact Commissioner Zundel'.",
         "source": "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel"
       }
     ],
@@ -262,8 +262,8 @@
       },
       {
         "data": "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL provided is the official city page for Commissioner Amy Zundel.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL is the official city page dedicated to Commissioner Amy Zundel.",
         "source": "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel"
       }
     ],
@@ -271,12 +271,12 @@
     "end_dates": [
       {
         "data": "2028-06",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration is explicitly stated as June 2028.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration is explicitly stated as 'Term Expires: June 2028'.",
         "source": "https://www.westfargond.gov/1379/Commissioner-Amy-Zundel"
       }
     ],
-    "updated_at": "2025-07-03T19:14:26Z"
+    "updated_at": "2025-07-03T20:39:41Z"
   },
   {
     "name": "Rory Jorgensen",
@@ -287,7 +287,7 @@
     "images": [
       {
         "data": "https://www.westfargond.gov/ImageRepository/Document?documentId=9755",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "The image is directly associated with Commissioner Rory Jorgensen on the page.",
         "source": "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
       }
@@ -296,12 +296,12 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as Commissioner Rory Jorgensen on the City Commission."
+        "llm_confidence_reason": "Explicitly listed as Commissioner on the City Commission."
       },
       {
         "data": "Commissioner",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page title and content explicitly state 'Commissioner Rory Jorgensen' as the role."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page title and content explicitly state 'Commissioner Rory Jorgensen' indicating an active municipal role as Commissioner."
       }
     ],
     "divisions": [],
@@ -314,8 +314,8 @@
       },
       {
         "data": "701-831-7273",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is listed under Commissioner Rory Jorgensen's contact information.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly listed under Commissioner Rory Jorgensen's contact information.",
         "source": "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
       }
     ],
@@ -329,8 +329,8 @@
       },
       {
         "data": "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is the official city page for Commissioner Rory Jorgensen.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the official city page for Commissioner Rory Jorgensen.",
         "source": "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
       }
     ],
@@ -338,11 +338,11 @@
     "end_dates": [
       {
         "data": "2028-06",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Term expiration is explicitly stated as June 2028.",
         "source": "https://www.westfargond.gov/1380/Commissioner-Rory-Jorgensen"
       }
     ],
-    "updated_at": "2025-07-03T19:14:26Z"
+    "updated_at": "2025-07-03T20:39:41Z"
   }
 ]
