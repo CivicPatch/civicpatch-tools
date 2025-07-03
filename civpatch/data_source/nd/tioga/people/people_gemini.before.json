@@ -15,7 +15,7 @@
     "sources": [
       "https://www.tiogand.net/boards/commission"
     ],
-    "updated_at": "2025-07-03T22:11:40Z"
+    "updated_at": "2025-07-03T22:20:56Z"
   },
   {
     "name": "Kyle Ralston",
@@ -34,14 +34,13 @@
     "sources": [
       "https://www.tiogand.net/boards/commission"
     ],
-    "updated_at": "2025-07-03T22:11:40Z"
+    "updated_at": "2025-07-03T22:20:56Z"
   },
   {
     "name": "Brett Rieniets",
     "roles": [
-      "Commission President",
       "President",
-      "Commissioner"
+      "Commission President"
     ],
     "divisions": [],
     "image": null,
@@ -53,7 +52,7 @@
     "sources": [
       "https://www.tiogand.net/boards/commission"
     ],
-    "updated_at": "2025-07-03T22:11:40Z"
+    "updated_at": "2025-07-03T22:20:56Z"
   },
   {
     "name": "Jaden Iverson",
@@ -71,6 +70,6 @@
     "sources": [
       "https://www.tiogand.net/boards/commission"
     ],
-    "updated_at": "2025-07-03T22:11:40Z"
+    "updated_at": "2025-07-03T22:20:56Z"
   }
 ]
