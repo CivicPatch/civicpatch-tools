@@ -1,1 +1,163 @@
-[]
+[
+  {
+    "name": "Stuart Merry",
+    "sources": [
+      "https://cityofgarrisonnd.com/mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor in the content under 'Contact Info' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 463-2600",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city phone number provided; no direct phone number for Stuart Merry found.",
+        "source": "https://cityofgarrisonnd.com/mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://cityofgarrisonnd.com/mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official mayor page for City of Garrison.",
+        "source": "https://cityofgarrisonnd.com/mayor"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:47:44Z"
+  },
+  {
+    "name": "Shannon Jeffers",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page lists Shannon Jeffers as 'President' under the Council section, which is normalized to 'Council President'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:47:44Z"
+  },
+  {
+    "name": "Bree Stumvoll",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page lists Bree Stumvoll as 'Vice President' under the Council section, normalized to 'Council Vice President'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:47:44Z"
+  },
+  {
+    "name": "David Reinarts",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Council Member' on the page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:47:44Z"
+  },
+  {
+    "name": "Billee Jo Iglehart",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Council Member' on the page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:47:44Z"
+  },
+  {
+    "name": "Otto Kinn",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Council Member' on the page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:47:44Z"
+  },
+  {
+    "name": "Brittney Gilbert",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Council Member' on the page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:47:44Z"
+  }
+]
