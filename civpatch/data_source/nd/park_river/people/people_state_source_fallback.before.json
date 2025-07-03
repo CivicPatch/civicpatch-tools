@@ -1,0 +1,51 @@
+[
+  {
+    "name": null,
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-03T22:07:02Z"
+  },
+  {
+    "name": "Corrine Bell",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T22:07:02Z"
+  },
+  {
+    "name": "Cory Seim",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T22:07:02Z"
+  },
+  {
+    "name": "Kenneth Gilespie",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T22:07:02Z"
+  },
+  {
+    "name": "Dennis Kubat",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T22:07:02Z"
+  },
+  {
+    "name": "Leah Skjerven",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T22:07:02Z"
+  },
+  {
+    "name": "Kyle Halvorson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T22:07:02Z"
+  }
+]
