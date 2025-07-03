@@ -2,7 +2,8 @@
   {
     "name": "Scott Decker",
     "roles": [
-      "Mayor"
+      "Mayor",
+      "President"
     ],
     "divisions": [],
     "image": null,
@@ -20,7 +21,27 @@
       "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl",
       "https://www.dickinsongov.com/city-commission/directory-listing/scott-decker"
     ],
-    "updated_at": "2025-07-03T20:52:11Z"
+    "updated_at": "2025-07-03T21:07:22Z"
+  },
+  {
+    "name": "Dr. Robert Baer",
+    "roles": [
+      "Vice President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(701) 590-0238",
+    "email": null,
+    "website": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.dickinsongov.com/city-commission",
+      "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
+      "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich",
+      "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
+    ],
+    "updated_at": "2025-07-03T21:07:22Z"
   },
   {
     "name": "Jason Fridrich",
@@ -40,7 +61,7 @@
       "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich",
       "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
     ],
-    "updated_at": "2025-07-03T20:52:11Z"
+    "updated_at": "2025-07-03T21:07:22Z"
   },
   {
     "name": "Joe Ridl",
@@ -60,7 +81,7 @@
       "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich",
       "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
     ],
-    "updated_at": "2025-07-03T20:52:11Z"
+    "updated_at": "2025-07-03T21:07:22Z"
   },
   {
     "name": "John Odermann",
@@ -80,6 +101,6 @@
       "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl",
       "https://www.dickinsongov.com/city-commission/directory-listing/john-odermann"
     ],
-    "updated_at": "2025-07-03T20:52:11Z"
+    "updated_at": "2025-07-03T21:07:22Z"
   }
 ]

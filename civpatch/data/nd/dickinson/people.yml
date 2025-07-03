@@ -18,7 +18,24 @@
   - https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich
   - https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl
   - https://www.dickinsongov.com/city-commission/directory-listing/scott-decker
-  updated_at: '2025-07-03T20:52:12Z'
+  updated_at: '2025-07-03T21:07:23Z'
+- name: Dr. Robert Baer
+  roles:
+  - Vice President
+  divisions:
+  image: https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/city-commission/image/18031/dr_b.jpg?itok=hxG0xeu4
+  cdn_image: https://cdn.civicpatch.org/open-data/nd/dickinson/images/b61257d3e1ed86ce39ecb9ce48c56decaf135a5f4228d17e787433cdb6627392.jpg
+  email:
+  phone_number: "(701) 590-0238"
+  website: https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer
+  start_date:
+  end_date:
+  sources:
+  - https://www.dickinsongov.com/city-commission
+  - https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer
+  - https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich
+  - https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl
+  updated_at: '2025-07-03T21:07:23Z'
 - name: Jason Fridrich
   roles:
   - Commissioner
@@ -35,7 +52,7 @@
   - https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer
   - https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich
   - https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl
-  updated_at: '2025-07-03T20:52:12Z'
+  updated_at: '2025-07-03T21:07:23Z'
 - name: Joe Ridl
   roles:
   - Commissioner
@@ -52,4 +69,4 @@
   - https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer
   - https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich
   - https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl
-  updated_at: '2025-07-03T20:52:12Z'
+  updated_at: '2025-07-03T21:07:23Z'
