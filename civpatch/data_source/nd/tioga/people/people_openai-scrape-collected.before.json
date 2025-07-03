@@ -9,23 +9,23 @@
       {
         "data": "Commissioner",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title 'Water Commissioner' indicates a commissioner role on the City Commission, which is the primary governing body."
+        "llm_confidence_reason": "Title 'Water Commissioner' indicates a commissioner role in the primary governing body, which is a commission form of government."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(620)-290-2067",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under Steven Dye's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed near name.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
     "emails": [
       {
         "data": "watercommissioner@cityoftioga.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under Steven Dye's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed near name.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -34,7 +34,7 @@
       {
         "data": "2024",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term indicated as 2024-2028, so start date is 2024.",
+        "llm_confidence_reason": "Term 2024-2028 indicates start year 2024.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -42,11 +42,11 @@
       {
         "data": "2028",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term indicated as 2024-2028, so end date is 2028.",
+        "llm_confidence_reason": "Term 2024-2028 indicates end year 2028.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:11:27Z"
+    "updated_at": "2025-07-03T22:20:45Z"
   },
   {
     "name": "Kyle Ralston",
@@ -58,23 +58,23 @@
       {
         "data": "Commissioner",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Titles 'Street Commissioner' and 'Police Commissioner' indicate commissioner roles on the City Commission, the primary governing body."
+        "llm_confidence_reason": "Titles 'Street Commissioner' and 'Police Commissioner' indicate commissioner roles in the primary governing body."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(701)741-7887",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed under Kyle Ralston's Street Commissioner role.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed near name.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
     "emails": [
       {
         "data": "streetcommissioner@cityoftioga.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed under Street Commissioner role for Kyle Ralston.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email explicitly listed near name; note slight typo in email text but assumed correct.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -83,7 +83,7 @@
       {
         "data": "2022",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term indicated as 2022-2026 for Street Commissioner role.",
+        "llm_confidence_reason": "Term 2022-2026 indicates start year 2022.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -91,11 +91,11 @@
       {
         "data": "2026",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term indicated as 2022-2026 for Street Commissioner role.",
+        "llm_confidence_reason": "Term 2022-2026 indicates end year 2026.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:11:27Z"
+    "updated_at": "2025-07-03T22:20:45Z"
   },
   {
     "name": "Brett Rieniets",
@@ -106,24 +106,24 @@
     "roles": [
       {
         "data": "Commission President",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Title explicitly given as 'Commission President' which is a primary governing body role."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Title explicitly 'Commission President' which is a normalized target role."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(701)-641-2354",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under Brett Rieniets' name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed near name.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
     "emails": [
       {
         "data": "commissionpresident@cityoftioga.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under Brett Rieniets' name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed near name.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -132,7 +132,7 @@
       {
         "data": "2024",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term indicated as 2024-2028.",
+        "llm_confidence_reason": "Term 2024-2028 indicates start year 2024.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -140,11 +140,11 @@
       {
         "data": "2028",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term indicated as 2024-2028.",
+        "llm_confidence_reason": "Term 2024-2028 indicates end year 2028.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:11:27Z"
+    "updated_at": "2025-07-03T22:20:45Z"
   },
   {
     "name": "Jaden Iverson",
@@ -156,23 +156,23 @@
       {
         "data": "Commissioner",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title 'Finance Commissioner' indicates a commissioner role on the City Commission, the primary governing body."
+        "llm_confidence_reason": "Title 'Finance Commissioner' indicates commissioner role in the primary governing body."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(701)-641-7974",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly under Jaden Iverson's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed near name.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
     "emails": [
       {
         "data": "financecommissioner@cityoftioga.com",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly under Jaden Iverson's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed near name.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -181,7 +181,7 @@
       {
         "data": "2024",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term indicated as 2024-2028.",
+        "llm_confidence_reason": "Term 2024-2028 indicates start year 2024.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -189,10 +189,10 @@
       {
         "data": "2028",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term indicated as 2024-2028.",
+        "llm_confidence_reason": "Term 2024-2028 indicates end year 2028.",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:11:27Z"
+    "updated_at": "2025-07-03T22:20:45Z"
   }
 ]

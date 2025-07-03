@@ -9,12 +9,12 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is a direct match to a target role."
+        "llm_confidence_reason": "The role 'Water Commissioner' is explicitly stated and 'Commissioner' is a direct match to the target roles, ensuring high accuracy and direct association. "
       },
       {
         "data": "Water Commissioner",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is a contextual variation of a target role, explicitly stated."
+        "llm_confidence_reason": "The role 'Water Commissioner' is explicitly stated next to the person's name, ensuring high accuracy and direct association. "
       }
     ],
     "divisions": [],
@@ -22,7 +22,7 @@
       {
         "data": "(620)-290-2067",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number directly extracted from the text.",
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -30,7 +30,7 @@
       {
         "data": "watercommissioner@cityoftioga.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly extracted from the text.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, formatted as a direct email link, ensuring high accuracy and direct association with the individual and their role. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -39,7 +39,7 @@
       {
         "data": "2024",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start date directly extracted from the text in YYYY format.",
+        "llm_confidence_reason": "The start date is explicitly stated as part of the term '2024-2028' directly next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -47,11 +47,11 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date directly extracted from the text in YYYY format.",
+        "llm_confidence_reason": "The end date is explicitly stated as part of the term '2024-2028' directly next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:11:40Z"
+    "updated_at": "2025-07-03T22:20:56Z"
   },
   {
     "name": "Kyle Ralston",
@@ -63,17 +63,17 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is a direct match to a target role."
+        "llm_confidence_reason": "The role 'Street Commissioner' is explicitly stated and 'Commissioner' is a direct match to the target roles, ensuring high accuracy and direct association. "
       },
       {
         "data": "Street Commissioner",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is a contextual variation of a target role, explicitly stated."
+        "llm_confidence_reason": "The role 'Street Commissioner' is explicitly stated next to the person's name, ensuring high accuracy and direct association. "
       },
       {
         "data": "Police Commissioner",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is a contextual variation of a target role, explicitly stated."
+        "llm_confidence_reason": "The role 'Police Commissioner' is explicitly stated next to the person's name, ensuring high accuracy and direct association. "
       }
     ],
     "divisions": [],
@@ -81,7 +81,7 @@
       {
         "data": "(701)741-7887",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number directly extracted from the text.",
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -89,7 +89,7 @@
       {
         "data": "streetcommissioner@cityoftioga.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly extracted from the text.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, formatted as a direct email link, ensuring high accuracy and direct association with the individual and their role. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -98,7 +98,7 @@
       {
         "data": "2022",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start date directly extracted from the text in YYYY format.",
+        "llm_confidence_reason": "The start date is explicitly stated as part of the term '2022-2026' directly next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -106,11 +106,11 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date directly extracted from the text in YYYY format.",
+        "llm_confidence_reason": "The end date is explicitly stated as part of the term '2022-2026' directly next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:11:40Z"
+    "updated_at": "2025-07-03T22:20:56Z"
   },
   {
     "name": "Brett Rieniets",
@@ -120,19 +120,14 @@
     "images": [],
     "roles": [
       {
-        "data": "Commission President",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is a direct match to a target role."
-      },
-      {
         "data": "President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is a direct match to a target role, implied by 'Commission President'."
+        "llm_confidence_reason": "The role 'Commission President' is explicitly stated and 'President' is a direct match to the target roles, ensuring high accuracy and direct association. "
       },
       {
-        "data": "Commissioner",
+        "data": "Commission President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is a direct match to a target role, implied by 'Commission President'."
+        "llm_confidence_reason": "The role 'Commission President' is explicitly stated next to the person's name, ensuring high accuracy and direct association. "
       }
     ],
     "divisions": [],
@@ -140,7 +135,7 @@
       {
         "data": "(701)-641-2354",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number directly extracted from the text.",
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -148,7 +143,7 @@
       {
         "data": "commissionpresident@cityoftioga.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly extracted from the text.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, formatted as a direct email link, ensuring high accuracy and direct association with the individual and their role. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -157,7 +152,7 @@
       {
         "data": "2024",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start date directly extracted from the text in YYYY format.",
+        "llm_confidence_reason": "The start date is explicitly stated as part of the term '2024-2028' directly next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -165,11 +160,11 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date directly extracted from the text in YYYY format.",
+        "llm_confidence_reason": "The end date is explicitly stated as part of the term '2024-2028' directly next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:11:40Z"
+    "updated_at": "2025-07-03T22:20:56Z"
   },
   {
     "name": "Jaden Iverson",
@@ -181,12 +176,12 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is a direct match to a target role."
+        "llm_confidence_reason": "The role 'Finance Commissioner' is explicitly stated and 'Commissioner' is a direct match to the target roles, ensuring high accuracy and direct association. "
       },
       {
         "data": "Finance Commissioner",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is a contextual variation of a target role, explicitly stated."
+        "llm_confidence_reason": "The role 'Finance Commissioner' is explicitly stated next to the person's name, ensuring high accuracy and direct association. "
       }
     ],
     "divisions": [],
@@ -194,7 +189,7 @@
       {
         "data": "(701)-641-7974",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number directly extracted from the text.",
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -202,7 +197,7 @@
       {
         "data": "financecommissioner@cityoftioga.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly extracted from the text.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, formatted as a direct email link, ensuring high accuracy and direct association with the individual and their role. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -211,7 +206,7 @@
       {
         "data": "2024",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start date directly extracted from the text in YYYY format.",
+        "llm_confidence_reason": "The start date is explicitly stated as part of the term '2024-2028' directly next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
@@ -219,10 +214,10 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date directly extracted from the text in YYYY format.",
+        "llm_confidence_reason": "The end date is explicitly stated as part of the term '2024-2028' directly next to the person's name and role, ensuring high accuracy and direct association. ",
         "source": "https://www.tiogand.net/boards/commission"
       }
     ],
-    "updated_at": "2025-07-03T22:11:40Z"
+    "updated_at": "2025-07-03T22:20:56Z"
   }
 ]

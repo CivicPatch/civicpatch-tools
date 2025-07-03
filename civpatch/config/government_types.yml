@@ -70,6 +70,7 @@ government_types:
       - role: council president
         aliases:
         - city council president
+        - council member president
       - role: council president pro tem
         aliases:
         - council president pro-tem
@@ -78,6 +79,8 @@ government_types:
       - role: council vice president
         aliases:
           - council vice-president
+          - council member vice president
+          - council member vice-president
       - role: council manager
       - role: commission president
       - role: commissioner
