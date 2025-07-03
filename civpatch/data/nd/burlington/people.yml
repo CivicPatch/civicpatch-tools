@@ -1,0 +1,43 @@
+---
+- name: Jack Anderson
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.burlingtonnd.org/council-and-staff
+  updated_at: '2025-07-03T23:52:39Z'
+- name: Jerick Hedges
+  roles:
+  - Council Vice President
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.burlingtonnd.org/council-and-staff
+  updated_at: '2025-07-03T23:52:39Z'
+- name: Kelsey Flick
+  roles:
+  - Commissioner
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.burlingtonnd.org/council-and-staff
+  updated_at: '2025-07-03T23:52:39Z'

@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Jack Anderson",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-03T23:50:53Z",
+    "divisions": []
+  },
+  {
+    "name": "Jerick Hedges",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T23:50:53Z",
+    "divisions": []
+  },
+  {
+    "name": "Devra Smestad",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T23:50:53Z",
+    "divisions": []
+  },
+  {
+    "name": "Jarrod Nelson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T23:50:53Z",
+    "divisions": []
+  }
+]

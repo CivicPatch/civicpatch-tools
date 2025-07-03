@@ -629,7 +629,14 @@
       ],
       "population": 1291,
       "website": "https://www.burlingtonnd.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T23:52:39Z",
+      "meta_hash": "c0a40478da206976062891ed6fec6ab0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Larimore",

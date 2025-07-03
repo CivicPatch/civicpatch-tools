@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Jack Anderson",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:52:39Z"
+  },
+  {
+    "name": "Jerick Hedges",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Vice President'."
+      },
+      {
+        "data": "Water, Sewer, Street Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Water, Sewer, Street Commissioner', which is a contextual variation of 'Commissioner'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:52:39Z"
+  },
+  {
+    "name": "Devra Smestad",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Finance Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Finance Commissioner', which is a contextual variation of 'Commissioner'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:52:39Z"
+  },
+  {
+    "name": "Jarrod Nelson",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Police Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Police Commissioner', which is a contextual variation of 'Commissioner'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:52:39Z"
+  },
+  {
+    "name": "Kelsey Flick",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Commissioner'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:52:39Z"
+  }
+]

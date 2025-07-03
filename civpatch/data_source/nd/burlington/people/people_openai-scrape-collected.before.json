@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Jack Anderson",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Mayor under Burlington City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:52:15Z"
+  },
+  {
+    "name": "Jerick Hedges",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Council Vice President under Burlington City Council."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Water, Sewer, Street Commissioner; Commissioner is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:52:15Z"
+  },
+  {
+    "name": "Devra Smestad",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Finance Commissioner under Burlington City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:52:15Z"
+  },
+  {
+    "name": "Jarrod Nelson",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Police Commissioner under Burlington City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:52:15Z"
+  },
+  {
+    "name": "Kelsey Flick",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Commissioner with responsibility for Building Permits under Burlington City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T23:52:15Z"
+  }
+]

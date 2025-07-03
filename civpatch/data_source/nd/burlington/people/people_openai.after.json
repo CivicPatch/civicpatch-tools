@@ -1,0 +1,88 @@
+[
+  {
+    "name": "Jack Anderson",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "updated_at": "2025-07-03T23:52:15Z"
+  },
+  {
+    "name": "Jerick Hedges",
+    "roles": [
+      "Commissioner",
+      "Council Vice President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "updated_at": "2025-07-03T23:52:15Z"
+  },
+  {
+    "name": "Devra Smestad",
+    "roles": [
+      "Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "updated_at": "2025-07-03T23:52:15Z"
+  },
+  {
+    "name": "Jarrod Nelson",
+    "roles": [
+      "Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "updated_at": "2025-07-03T23:52:15Z"
+  },
+  {
+    "name": "Kelsey Flick",
+    "roles": [
+      "Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "updated_at": "2025-07-03T23:52:15Z"
+  }
+]
