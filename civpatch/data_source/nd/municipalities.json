@@ -621,7 +621,14 @@
       ],
       "population": 1320,
       "website": "http://mapletonnd.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T23:51:20Z",
+      "meta_hash": "5844baaa2bda48b4b1910e61896fee55",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Washburn",
