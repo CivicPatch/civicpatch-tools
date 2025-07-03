@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Scott Decker",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-03T20:49:28Z",
+    "divisions": []
+  },
+  {
+    "name": "Robert Baer",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:49:28Z",
+    "divisions": []
+  },
+  {
+    "name": "Jason Fridrich",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:49:28Z",
+    "divisions": []
+  },
+  {
+    "name": "Joe Ridl",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:49:28Z",
+    "divisions": []
+  },
+  {
+    "name": "John Odermann",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:49:28Z",
+    "divisions": []
+  }
+]
