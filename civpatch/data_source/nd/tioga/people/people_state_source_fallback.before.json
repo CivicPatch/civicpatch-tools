@@ -4,34 +4,41 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-07-03T21:38:19Z"
+    "updated_at": "2025-07-03T22:11:02Z"
+  },
+  {
+    "name": "Brett Rieniets",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T22:11:02Z"
   },
   {
     "name": "Kyle Ralston",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:38:19Z"
+    "updated_at": "2025-07-03T22:11:02Z"
   },
   {
     "name": "Jessica Steele",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:38:19Z"
+    "updated_at": "2025-07-03T22:11:02Z"
   },
   {
     "name": "Jaden Iverson",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:38:19Z"
+    "updated_at": "2025-07-03T22:11:02Z"
   },
   {
     "name": "Steven Dye",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:38:19Z"
+    "updated_at": "2025-07-03T22:11:02Z"
   }
 ]

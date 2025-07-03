@@ -106,38 +106,19 @@ module Services
         Guidelines:
         - For "llm_confidence": Use 0-1 scale with reason for your confidence
         - Roles extraction:
-            **Target Municipal Roles** and **Examples** provided, AND are **currently active** as of #{current_date}.
-          - **Handling Resignations/Vacancies**: If the text explicitly states that a person has **resigned,
-            vacated their role, is deceased, or their role is otherwise noted as vacant
-            (e.g., "applications being accepted")**, DO NOT include them as a current office holder or extract their
-            role, even if a future term date is also mentioned. The statement of resignation or vacancy takes
-            precedence over listed term dates for determining current active status.
-          - **Check for Past Dates**: Before extracting a specific role title (e.g., "Council President", "Chair"),
-            examine the surrounding text for associated dates or date ranges (e.g., "served as ... from 2011-2012",
-            "President in 2015", "(2011-2012)"). If such dates clearly indicate the role was held **only in the past**
-            and is not the person's current role, **DO NOT extract that specific role title.** Focus only on roles
-            the person currently holds according to the text.
-          - **EXCLUDE**: Do NOT extract roles that are advisory, honorary, student/youth positions,
-            or non-voting unless they are explicitly listed in the Target Municipal Roles.
-            Focus on the primary elected/appointed governing body members.
-            We are only interested in roles that are related to the main governing body of the municipality.
-          - **EXCLUDE**: Do NOT extract roles for any committees, authorities, commissions, or boards that are not the
-            main governing body, even if the title sounds official (e.g., "Vice Chair of Transit Authority",
-            "Chair of Finance Committee", "Member, Planning Board").
-          - Include only active roles (today is #{current_date}).
+            - Extract roles that match the **target roles** provided (e.g., #{roles.join(", ")}).
+            - Also extract **contextual variations** of the target roles if they are clearly related (e.g., "Water Commissioner" for "Commissioner").
+            - Variations must include the target role as part of the title (e.g., "Water Commissioner" includes "Commissioner").
+            - Do NOT extract unrelated roles or roles that do not include the target role (e.g., "Director of Water" should not be extracted for "Commissioner").
+            - Include only active roles (today is #{current_date}).
+            - Example (the target roles include "Commissioner"):
+              - Water Commissioner → [Commissioner, Water Commissioner]
         - Division extraction:
           - Extract divisions if they are explicitly mentioned in the text
             and are relevant to the person's role in regards to the main governing body.
           - Example: "Council Member for District 3" or "At-Large Councilor" should be extracted as
             "District 3" and "At-Large", respectively.
           - A person can have multiple divisions. List them separately.
-            - Examples:
-              - "Citywide Position 7" -> "Citywide", "Position 7"
-              - "At-Large 1, Seat 2" -> "At-Large 1", "Seat 2"
-              - "At-Large B" -> "At-Large B"
-              - "1st Ward" -> "Ward 1"
-          - Loose associations (the person lives in a district, but not elected from it)
-            should not be listed
         - Name extraction: Extract full names ONLY, not titles
           - CORRECT: "Lisa Brown" (not "Mayor Brown" or "Mayor Lisa Brown")
           - Titles belong in positions array, not in names
@@ -195,23 +176,23 @@ module Services
               - For tables, the date must appear in the same row or entry as the person's name.
               - For text, the date must be explicitly linked to the person (e.g., "John Doe was elected in 2020").
 
-          - **Handling Ambiguities**:
-            - If the text uses vague terms like "last year" or "the usual date", set the date to `null`.
-            - If the person has resigned, vacated their role, or is deceased, exclude them entirely from the output.
+            - **Handling Ambiguities**:
+              - If the text uses vague terms like "last year" or "the usual date", set the date to `null`.
+              - If the person has resigned, vacated their role, or is deceased, exclude them entirely from the output.
 
-          - **Key Examples**:
-            - "Term Expires January 2027" → `end_date`: `{"data": "2027-01"}`
-            - "Serving through 2025" → `end_date`: `{"data": "2025"}`
-            - "Term: Jan 2023 to Dec 31, 2026" → `start_date`: `{"data": "2023-01"}`, `end_date`: `{"data": "2026-12-31"}`
-            - "Elected last year" → `start_date`: `null`
-            - "Term began on the usual date" → `start_date`: `null`
-            - "elected in Nov 2020, reelected Nov 2024" → `start_date`: `{"data": "2024-11"}`
-            - "term ending December 2028" → `end_date`: `{"data": "2028-12"}`
-            - "Elected Nov 2024 for term ending Dec 2028. Resigned April 15." → Exclude this person from the output.
+            - **Key Examples**:
+              - "Term Expires January 2027" → `end_date`: `{"data": "2027-01"}`
+              - "Serving through 2025" → `end_date`: `{"data": "2025"}`
+              - "Term: Jan 2023 to Dec 31, 2026" → `start_date`: `{"data": "2023-01"}`, `end_date`: `{"data": "2026-12-31"}`
+              - "Elected last year" → `start_date`: `null`
+              - "Term began on the usual date" → `start_date`: `null`
+              - "elected in Nov 2020, reelected Nov 2024" → `start_date`: `{"data": "2024-11"}`
+              - "term ending December 2028" → `end_date`: `{"data": "2028-12"}`
+              - "Elected Nov 2024 for term ending Dec 2028. Resigned April 15." → Exclude this person from the output.
 
-          - **Final Check**:
-            - Ensure the extracted date is explicitly written in the text and clearly associated with the correct individual.
-            - If not, the output must be `null`. No exceptions for inference or misattribution.
+            - **Final Check**:
+              - Ensure the extracted date is explicitly written in the text and clearly associated with the correct individual.
+              - If not, the output must be `null`. No exceptions for inference or misattribution.
         - Today is #{current_date}. Context only, do not use for date calculation.
         - Association: Contact details (phone, email) listed under common headings like 'Contact' or 'Contact Us'
           that appear structurally close (e.g., immediately following section) to a specific person's name or section
