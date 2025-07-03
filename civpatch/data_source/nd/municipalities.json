@@ -97,7 +97,14 @@
       ],
       "population": 15849,
       "website": "https://www.jamestownnd.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T19:21:47Z",
+      "meta_hash": "77646d63ac521bedff136d5a009a8b15",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Wahpeton",
