@@ -1,0 +1,503 @@
+[
+  {
+    "name": "Tim Mahoney",
+    "sources": [
+      "https://fargond.gov/city-government/mayor-s-office",
+      "https://www.fargond.gov/city-government/departments/city-commission/members",
+      "https://www.fargond.gov/city-government/mayor-s-office"
+    ],
+    "images": [
+      {
+        "data": "https://download.fargond.gov/resize/720/660/1/fargo_mayor_dr._tim_mahoney_-_flag_background_vertical.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a portrait of Tim Mahoney near his name and title.",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "https://download.fargond.gov/resize/213/233/1/fargo_mayor_dr._tim_mahoney_-_flag_background_vertical.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with Tim Mahoney's section.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://download.fargond.gov/resize/720/660/1/fargo_mayor_dr._tim_mahoney_-_flag_background_vertical.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a portrait of Dr. Tim Mahoney near his name and mayoral title.",
+        "source": "https://www.fargond.gov/city-government/mayor-s-office"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor of Fargo, elected in 2015 and re-elected in 2022."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor of Fargo."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text explicitly states 'Dr. Tim Mahoney was elected Mayor of Fargo' and 're-elected Mayor in June 2022'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number listed directly under Mayor Tim Mahoney's contact info.",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed under Mayor Tim Mahoney's contact info.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is listed under Mayor's Office contact and associated with Dr. Tim Mahoney.",
+        "source": "https://www.fargond.gov/city-government/mayor-s-office"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayor@fargond.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email link labeled 'Email Mayor Tim Mahoney' but actual email not visible; inferred from contact-us link context.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://fargond.gov/city-government/mayor-s-office",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official Mayor's Office page URL.",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/mayor-s-office",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link labeled 'View Profile' for Mayor Tim Mahoney.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/mayor-s-office",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official mayor's office webpage URL.",
+        "source": "https://www.fargond.gov/city-government/mayor-s-office"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2015",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected Mayor in early 2015.",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "2015",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states elected Mayor in early 2015.",
+        "source": "https://www.fargond.gov/city-government/mayor-s-office"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-06",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expires June 2026 as explicitly stated.",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "2026-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term Expires: June 2026 explicitly stated.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "2026-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires June 2026 as explicitly stated.",
+        "source": "https://www.fargond.gov/city-government/mayor-s-office"
+      }
+    ],
+    "updated_at": "2025-07-03T19:15:13Z"
+  },
+  {
+    "name": "Denise Kolpack",
+    "sources": [
+      "https://www.fargond.gov/city-government/departments/city-commission/members",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+    ],
+    "images": [
+      {
+        "data": "https://download.fargond.gov/resize/213/233/0/fargo_deputy_mayor_denise_kolpack_-_flag_background_vertical.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with Denise Kolpack's section.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://download.fargond.gov/resize/720/660/0/fargo_deputy_mayor_denise_kolpack_-_flag_background_vertical.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image is a clear portrait of Denise Kolpack near her name and title on the page.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Deputy Mayor."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page title and text explicitly state 'Deputy Mayor Denise Kolpack' and describe her election to the Fargo City Commission."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.715.4895",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed under Deputy Mayor Denise Kolpack's contact info.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed near her contact info and under Mayor's Office phone, associated with her.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      }
+    ],
+    "emails": [
+      {
+        "data": "denise.kolpack@fargond.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email link labeled 'Email Deputy Mayor Denise Kolpack' but actual email not visible; inferred from contact-us link context.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link labeled 'View Profile' for Deputy Mayor Denise Kolpack.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the official city webpage dedicated to Deputy Mayor Denise Kolpack.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states she was elected to the Fargo City Commission in June 2022.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term Expires: June 2026 explicitly stated.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "2026-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration is explicitly stated as June 2026.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      }
+    ],
+    "updated_at": "2025-07-03T19:15:13Z"
+  },
+  {
+    "name": "Dave Piepkorn",
+    "sources": [
+      "https://www.fargond.gov/city-government/departments/city-commission/members",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn"
+    ],
+    "images": [
+      {
+        "data": "https://download.fargond.gov/resize/213/233/0/fargo_city_commissioner_dave_piepkorn_-_flag_background_vertical.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with Dave Piepkorn's section.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://download.fargond.gov/resize/720/660/0/fargo_city_commissioner_dave_piepkorn_-_flag_background_vertical.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image is a clear portrait of Dave Piepkorn on the page dedicated to him.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as City Commissioner."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Commissioner Dave Piepkorn' and he is a member of the Fargo City Commission, which matches the target roles."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.809.5449",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed under Commissioner Dave Piepkorn's contact info.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "701.809.5449",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly listed as contact for Commissioner Piepkorn.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dave.piepkorn@fargond.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email link labeled 'Email Commissioner Dave Piepkorn' but actual email not visible; inferred from contact-us link context.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link labeled 'View Profile' for Commissioner Dave Piepkorn.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the official profile page URL for Commissioner Dave Piepkorn.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-06",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "He was re-elected in 2022 and the term expires June 2026, so the current term likely started June 2022.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term Expires: June 2026 explicitly stated.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "2026-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Term Expires: June 2026'.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn"
+      }
+    ],
+    "updated_at": "2025-07-03T19:15:13Z"
+  },
+  {
+    "name": "John Strand",
+    "sources": [
+      "https://www.fargond.gov/city-government/departments/city-commission/members",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand"
+    ],
+    "images": [
+      {
+        "data": "https://download.fargond.gov/resize/213/233/1/fargo_city_commissioner_john_strand_-_flag_background_vertical.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with John Strand's section.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://download.fargond.gov/resize/720/660/1/fargo_city_commissioner_john_strand_-_flag_background_vertical.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image is a clear portrait of John Strand near his name and role on the page.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as City Commissioner."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Commissioner John Strand' and he is a member of the Fargo City Commission."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.715.3269",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed under Commissioner John Strand's contact info.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly listed as contact for Commissioner Strand.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand"
+      }
+    ],
+    "emails": [
+      {
+        "data": "john.strand@fargond.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email link labeled 'Email Commissioner John Strand' but actual email not visible; inferred from contact-us link context.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link labeled 'View Profile' for Commissioner John Strand.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the official profile page URL for Commissioner John Strand.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2016-06",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states he was elected in June 2016, which is the start of his current service.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term Expires: June 2028 explicitly stated.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "2028-06",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expires June 2028 as explicitly stated.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand"
+      }
+    ],
+    "updated_at": "2025-07-03T19:15:13Z"
+  },
+  {
+    "name": "Michelle Turnberg",
+    "sources": [
+      "https://www.fargond.gov/city-government/departments/city-commission/members",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg"
+    ],
+    "images": [
+      {
+        "data": "https://download.fargond.gov/resize/213/233/0/fargo_city_commissioner_michelle_turnberg_-_flag_background_vertical.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with Michelle Turnberg's section.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://download.fargond.gov/resize/720/660/0/fargo_city_commissioner_michelle_turnberg_-_flag_background_vertical.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image is a clear portrait of Michelle Turnberg on the page dedicated to her.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as City Commissioner."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Commissioner Michelle Turnberg' and 'elected to the Fargo City Commission'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.831.5915",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed under Commissioner Michelle Turnberg's contact info.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is explicitly listed as contact for Commissioner Turnberg.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg"
+      }
+    ],
+    "emails": [
+      {
+        "data": "michelle.turnberg@fargond.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email link labeled 'Email Commissioner Michelle Turnberg' but actual email not visible; inferred from contact-us link context.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile link labeled 'View Profile' for Commissioner Michelle Turnberg.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the official city webpage for Commissioner Michelle Turnberg.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states she was elected in June 2024.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term Expires: June 2028 explicitly stated.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "2028-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states term expires June 2028.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg"
+      }
+    ],
+    "updated_at": "2025-07-03T19:15:13Z"
+  }
+]

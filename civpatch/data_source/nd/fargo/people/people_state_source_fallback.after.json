@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Tim Mahoney",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-03T19:13:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Denise Kolpack",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T19:13:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Dave Piepkorn",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T19:13:01Z",
+    "divisions": []
+  },
+  {
+    "name": "John Strand",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T19:13:01Z",
+    "divisions": []
+  },
+  {
+    "name": "Michelle Turnberg",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T19:13:01Z",
+    "divisions": []
+  }
+]

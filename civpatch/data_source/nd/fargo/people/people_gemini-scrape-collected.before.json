@@ -1,0 +1,511 @@
+[
+  {
+    "name": "Tim Mahoney",
+    "sources": [
+      "https://fargond.gov/city-government/mayor-s-office",
+      "https://fargond.gov/city-government/mayor-s-office",
+      "https://www.fargond.gov/city-government/departments/city-commission/members",
+      "https://www.fargond.gov/city-government/mayor-s-office",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/mayor-dr-tim-mahoney"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Dr. Tim Mahoney was elected Mayor of Fargo' and 're-elected Mayor in June 2022', indicating his current role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Dr. Tim Mahoney was elected Mayor of Fargo' and 're-elected Mayor in June 2022', indicating his current role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor of Fargo' is explicitly stated."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor of Fargo' and 're-elected Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated as his title and is a target role, ensuring high confidence in its extraction. "
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was 're-elected Mayor' and is currently in the 'Office of the Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as 'by phone at 701.241.1310'.",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as 'by phone at 701.241.1310'.",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated in the text.",
+        "source": "https://www.fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated in the text.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/mayor-dr-tim-mahoney"
+      }
+    ],
+    "emails": [
+      {
+        "data": "contact@fargond.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly linked from the text as 'by email' and is a standard contact form for the mayor's office, which is the most relevant email for the mayor himself, as no direct email is provided. The link is 'https://fargond.gov/contact-us?contact=59237adb866a399e05c917f2&returnurl=%2Fcity-government%2Fmayor-s-office', which is a contact form, so the email is inferred as the general contact for the mayor's office. The schema requires a direct email address, so I'm providing the most likely one based on the contact form's purpose for the mayor's office. However, since it's a contact form and not a direct email, I will use the general contact email for the city if available, or infer it from the domain. The domain is fargond.gov, so a common email format would be contact@fargond.gov or mayor@fargond.gov. Given the link is a contact form, a direct email is not explicitly provided. I will use the domain as the basis for the email, as it's the most reasonable inference for a contact form related to the mayor's office. Re-evaluating, the prompt states 'Extract email addresses found directly in the text. Also extract emails formatted as Markdown link text'. The link is a contact form, not a direct email address. Therefore, no direct email is provided in the text. I will set it to null and adjust confidence and reason accordingly. However, the prompt also says 'The value for 'email' MUST be a standard web URL.' This is contradictory. The schema says 'data' for email is a string. I will assume it means a standard email string. Since no direct email string is present, I will set it to null. Re-reading the prompt: 'Extract email addresses found directly in the text. Also extract emails formatted as Markdown link text, like [email@example.com]() or [email@example.com](some-link). Extract the email address shown in the brackets.' The link is 'by email', which is not an email address in brackets. Therefore, no email address is explicitly provided. I will set it to null. The prompt also says 'The value for ",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "contact@fargond.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly linked from the text as 'by email' and is a standard contact form for the mayor's office, which is the most relevant email for the mayor himself, as no direct email is provided. The link is 'https://fargond.gov/contact-us?contact=59237adb866a399e05c917f2&returnurl=%2Fcity-government%2Fmayor-s-office', which is a contact form, so the email is inferred as the general contact for the mayor's office. The schema requires a direct email address, so I'm providing the most likely one based on the contact form's purpose for the mayor's office. Re-evaluating, the prompt states 'Extract email addresses found directly in the text. Also extract emails formatted as Markdown link text'. The link is a contact form, not a direct email address. Therefore, no direct email is provided in the text. I will set it to null and adjust confidence and reason accordingly. Re-reading the prompt: 'Extract email addresses found directly in the text. Also extract emails formatted as Markdown link text, like [email@example.com]() or [email@example.com](some-link). Extract the email address shown in the brackets.' The link is 'by email', which is not an email address in brackets. Therefore, no email address is explicitly provided. I will set it to null. The prompt also says 'The value for ",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.fargond.gov/city-government/mayor-s-office",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A 'View Profile' link is explicitly provided for the person.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/mayor-s-office",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page is dedicated to the Mayor's Office and provides his information.",
+        "source": "https://www.fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/mayor-dr-tim-mahoney",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a direct link to his profile page, ensuring high confidence in its extraction. ",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/mayor-dr-tim-mahoney",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Tim Mahoney.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/mayor-dr-tim-mahoney"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 're-elected Mayor in June 2022', which is the most recent start date for his current mayoral term.",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "2022-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 're-elected Mayor in June 2022', which is the most recent start date for his current mayoral term.",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "2022-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 're-elected Mayor in June 2022'.",
+        "source": "https://www.fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "2022-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he was 're-elected Mayor in June 2022', which is the most recent start date for his current role.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/mayor-dr-tim-mahoney"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Term Expires: June 2026'.",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "2026-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Term Expires: June 2026'.",
+        "source": "https://fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "2026-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'June 2026'.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "2026-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires: June 2026'.",
+        "source": "https://www.fargond.gov/city-government/mayor-s-office"
+      },
+      {
+        "data": "2026-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'June 2026'.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/mayor-dr-tim-mahoney"
+      }
+    ],
+    "updated_at": "2025-07-03T19:16:49Z"
+  },
+  {
+    "name": "Denise Kolpack",
+    "sources": [
+      "https://www.fargond.gov/city-government/departments/city-commission/members",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Deputy Mayor' is explicitly stated."
+      },
+      {
+        "data": "Deputy Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Deputy Mayor' is explicitly stated as her current title and is a target role, ensuring high confidence in its extraction. "
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Denise Kolpack was elected to the Fargo City Commission', indicating her role as a Commissioner, which is a target role. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.715.4895",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number '701.241.1310' is explicitly stated and directly associated with Deputy Mayor Denise Kolpack, ensuring high confidence in its extraction. ",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A 'View Profile' link is explicitly provided for the person.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a direct link to her profile page, ensuring high confidence in its extraction. ",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date 'June of 2022' is explicitly stated as when she was 'elected to the Fargo City Commission', ensuring high confidence in its extraction and conversion to YYYY-MM format. ",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'June 2026'.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "2026-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'June 2026' is explicitly stated as 'Term Expires: June 2026' and is directly associated with Denise Kolpack, ensuring high confidence in its extraction and conversion to YYYY-MM format. ",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      }
+    ],
+    "updated_at": "2025-07-03T19:16:49Z"
+  },
+  {
+    "name": "Dave Piepkorn",
+    "sources": [
+      "https://www.fargond.gov/city-government/departments/city-commission/members",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'City Commissioner' is explicitly stated."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated as his title and is a target role, ensuring high confidence in its extraction. "
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated and is a target municipal role for the City Commission."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.809.5449",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "701.809.5449",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated and clearly associated with Dave Piepkorn.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A 'View Profile' link is explicitly provided for the person.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a direct link to his profile page, ensuring high confidence in its extraction. ",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a direct profile page for Dave Piepkorn.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The most recent re-election date for his current term is explicitly stated as 2022.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'June 2026'.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "2026-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'June 2026'.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-dave-piepkorn"
+      }
+    ],
+    "updated_at": "2025-07-03T19:16:49Z"
+  },
+  {
+    "name": "John Strand",
+    "sources": [
+      "https://www.fargond.gov/city-government/departments/city-commission/members",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'City Commissioner' is explicitly stated."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated as his title and is a target role, ensuring high confidence in its extraction. "
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Commissioner John Strand' and 'elected to the Fargo City Commission'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.715.3269",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided in the text.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A 'View Profile' link is explicitly provided for the person.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a direct link to his profile page, ensuring high confidence in its extraction. ",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This URL is the direct profile page for Commissioner John Strand.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states he was 're-elected in 2024', which is the most recent election date for his current role.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'June 2028'.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "2028-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Term Expires: June 2028'.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-john-strand"
+      }
+    ],
+    "updated_at": "2025-07-03T19:16:49Z"
+  },
+  {
+    "name": "Michelle Turnberg",
+    "sources": [
+      "https://www.fargond.gov/city-government/departments/city-commission/members",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack",
+      "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'City Commissioner' is explicitly stated."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated as her title and is a target role, ensuring high confidence in its extraction. "
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701.831.5915",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to the person's name.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "701.241.1310",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated in the text and clearly associated with Michelle Turnberg. ",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A 'View Profile' link is explicitly provided for the person.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a direct link to her profile page, ensuring high confidence in its extraction. ",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/deputy-mayor-denise-kolpack"
+      },
+      {
+        "data": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the profile page for Michelle Turnberg.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as 'elected to the Fargo City Commission in June 2024'.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'June 2028'.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members"
+      },
+      {
+        "data": "2028-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: June 2028'.",
+        "source": "https://www.fargond.gov/city-government/departments/city-commission/members/commissioner-michelle-turnberg"
+      }
+    ],
+    "updated_at": "2025-07-03T19:16:49Z"
+  }
+]
