@@ -412,7 +412,14 @@
       ],
       "population": 2194,
       "website": "https://bottineau.govoffice.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T22:01:33Z",
+      "meta_hash": "447e586886754bdae25614e9ca313eaa",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Carrington",
