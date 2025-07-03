@@ -2,13 +2,14 @@
   {
     "name": "Scott Decker",
     "roles": [
-      "Mayor"
+      "Mayor",
+      "City Commission President"
     ],
     "divisions": [],
     "image": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/government/image/146/scott-decker-e1576099460444.jpg?itok=E0-oUk63",
     "phone_number": "701.456.7744",
     "email": null,
-    "website": "https://www.dickinsongov.com/government/page/mayor-scott-decker",
+    "website": "https://www.dickinsongov.com/government/directory-listing/scott-decker",
     "start_date": "2016",
     "end_date": null,
     "sources": [
@@ -16,12 +17,11 @@
       "https://www.dickinsongov.com/city-commission",
       "https://www.dickinsongov.com/government/directory-listing/scott-decker"
     ],
-    "updated_at": "2025-07-03T20:50:55Z"
+    "updated_at": "2025-07-03T21:06:02Z"
   },
   {
     "name": "Dr. Robert Baer",
     "roles": [
-      "Vice Mayor",
       "Vice President"
     ],
     "divisions": [],
@@ -35,7 +35,7 @@
       "https://www.dickinsongov.com/city-commission",
       "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
     ],
-    "updated_at": "2025-07-03T20:50:55Z"
+    "updated_at": "2025-07-03T21:06:02Z"
   },
   {
     "name": "Jason Fridrich",
@@ -53,7 +53,7 @@
       "https://www.dickinsongov.com/city-commission",
       "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich"
     ],
-    "updated_at": "2025-07-03T20:50:55Z"
+    "updated_at": "2025-07-03T21:06:02Z"
   },
   {
     "name": "Joe Ridl",
@@ -71,6 +71,6 @@
       "https://www.dickinsongov.com/city-commission",
       "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
     ],
-    "updated_at": "2025-07-03T20:50:55Z"
+    "updated_at": "2025-07-03T21:06:02Z"
   }
 ]

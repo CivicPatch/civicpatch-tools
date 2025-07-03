@@ -4,15 +4,15 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-07-03T20:49:28Z",
+    "updated_at": "2025-07-03T21:04:20Z",
     "divisions": []
   },
   {
-    "name": "Robert Baer",
+    "name": "Dr. Robert Baer",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T20:49:28Z",
+    "updated_at": "2025-07-03T21:04:20Z",
     "divisions": []
   },
   {
@@ -20,15 +20,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T20:49:28Z",
-    "divisions": []
-  },
-  {
-    "name": "Joe Ridl",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-07-03T20:49:28Z",
+    "updated_at": "2025-07-03T21:04:20Z",
     "divisions": []
   },
   {
@@ -36,7 +28,15 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T20:49:28Z",
+    "updated_at": "2025-07-03T21:04:20Z",
+    "divisions": []
+  },
+  {
+    "name": "Joe Ridl",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T21:04:20Z",
     "divisions": []
   }
 ]

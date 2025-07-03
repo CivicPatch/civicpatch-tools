@@ -10,7 +10,7 @@
       {
         "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/full_node_primary/public/media/government/image/141/scott-decker-e1576099460444.jpg?itok=IRxCUYCI",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image is directly associated with Scott Decker's mayoral profile.",
+        "llm_confidence_reason": "Image is a portrait near the name and title 'Mayor Scott Decker'.",
         "source": "https://www.dickinsongov.com/government/page/mayor-scott-decker"
       },
       {
@@ -22,7 +22,7 @@
       {
         "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/government/image/146/scott-decker-e1576099460444.jpg?itok=E0-oUk63",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly next to Scott Decker's name and position.",
+        "llm_confidence_reason": "Image URL is directly associated with Scott Decker's profile.",
         "source": "https://www.dickinsongov.com/government/directory-listing/scott-decker"
       }
     ],
@@ -31,6 +31,11 @@
         "data": "Mayor",
         "llm_confidence": 1,
         "llm_confidence_reason": "The text explicitly states 'Mayor Scott J. Decker' and 'elected Dickinson City Mayor'."
+      },
+      {
+        "data": "City Commission President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states he was elected 'President of the city commission' which is equivalent to City Commission President."
       },
       {
         "data": "Mayor",
@@ -48,7 +53,7 @@
       {
         "data": "701.456.7744",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is listed next to Scott Decker's name and role.",
+        "llm_confidence_reason": "Phone number is listed next to the name and role as '701.456.7744'.",
         "source": "https://www.dickinsongov.com/government/page/mayor-scott-decker"
       },
       {
@@ -69,19 +74,19 @@
       {
         "data": "https://www.dickinsongov.com/government/page/mayor-scott-decker",
         "llm_confidence": 1,
-        "llm_confidence_reason": "This is the official webpage for Mayor Scott Decker.",
+        "llm_confidence_reason": "The page URL and link labeled 'Mayor Scott Decker' is the official profile page.",
         "source": "https://www.dickinsongov.com/government/page/mayor-scott-decker"
       },
       {
         "data": "https://www.dickinsongov.com/government/directory-listing/scott-decker",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page URL linked from Scott Decker's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page URL directly linked from Scott Decker's name.",
         "source": "https://www.dickinsongov.com/city-commission"
       },
       {
-        "data": "https://www.dickinsongov.com/government/page/mayor-scott-decker",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The page includes a link titled 'Mayor Scott Decker' which likely leads to his official profile.",
+        "data": "https://www.dickinsongov.com/government/directory-listing/scott-decker",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the official profile page for Scott Decker.",
         "source": "https://www.dickinsongov.com/government/directory-listing/scott-decker"
       }
     ],
@@ -89,12 +94,12 @@
       {
         "data": "2016",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Text states he was elected Mayor in 2016; no more precise date given.",
+        "llm_confidence_reason": "Text states he was elected Mayor and President of the city commission in 2016.",
         "source": "https://www.dickinsongov.com/government/page/mayor-scott-decker"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T20:50:55Z"
+    "updated_at": "2025-07-03T21:06:02Z"
   },
   {
     "name": "Dr. Robert Baer",
@@ -112,15 +117,15 @@
       {
         "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/city-commission/image/18031/dr_b.jpg?itok=hxG0xeu4",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Image is a headshot near the name and role of Dr. Robert Baer on the official city commission page.",
+        "llm_confidence_reason": "Image is a headshot near the name and title of Dr. Robert Baer on the official city commission page.",
         "source": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
       }
     ],
     "roles": [
       {
-        "data": "Vice Mayor",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Role stated as Vice President of City Commission, normalized to Vice Mayor as per target roles."
+        "data": "Vice President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Vice President of the City Commission."
       },
       {
         "data": "Vice President",
@@ -147,20 +152,20 @@
     "websites": [
       {
         "data": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page URL linked from Dr. Robert Baer's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page URL directly linked from Dr. Robert Baer's name.",
         "source": "https://www.dickinsongov.com/city-commission"
       },
       {
         "data": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The URL provided is the official profile page for Dr. Robert Baer on the Dickinson city government website.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The URL provided is the official profile page for Dr. Robert Baer on the Dickinson city website.",
         "source": "https://www.dickinsongov.com/city-commission/directory-listing/dr-robert-baer"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T20:50:55Z"
+    "updated_at": "2025-07-03T21:06:02Z"
   },
   {
     "name": "Jason Fridrich",
@@ -178,7 +183,7 @@
       {
         "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/city-commission/image/18026/jf.jpg?itok=1JFdun5R",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image is directly next to the name and labeled as Jason Fridrich's photo.",
+        "llm_confidence_reason": "Image URL is directly next to the name and clearly a headshot.",
         "source": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich"
       }
     ],
@@ -186,7 +191,7 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Role explicitly stated as Commissioner."
+        "llm_confidence_reason": "Explicitly stated as Commissioner of the City Commission."
       },
       {
         "data": "Commissioner",
@@ -213,20 +218,20 @@
     "websites": [
       {
         "data": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page URL linked from Jason Fridrich's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page URL directly linked from Jason Fridrich's name.",
         "source": "https://www.dickinsongov.com/city-commission"
       },
       {
         "data": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The URL provided is the official city commission directory page for Jason Fridrich.",
+        "llm_confidence_reason": "The URL provided is the official profile page for Jason Fridrich.",
         "source": "https://www.dickinsongov.com/city-commission/directory-listing/jason-fridrich"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T20:50:55Z"
+    "updated_at": "2025-07-03T21:06:02Z"
   },
   {
     "name": "Joe Ridl",
@@ -244,7 +249,7 @@
       {
         "data": "https://www.dickinsongov.com/sites/g/files/vyhlif13786/files/styles/directory_listings_body_with_photo/public/media/city-commission/image/18021/jr.jpg?itok=VZVXiy8J",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The image is directly adjacent to Joe Ridl's name and position on the official city commission page.",
+        "llm_confidence_reason": "The image is directly next to Joe Ridl's name and position, clearly a portrait.",
         "source": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
       }
     ],
@@ -252,12 +257,12 @@
       {
         "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Role explicitly stated as Commissioner."
+        "llm_confidence_reason": "Explicitly stated as Commissioner of the City Commission."
       },
       {
         "data": "Commissioner",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The text explicitly states 'Position Commissioner' for Joe Ridl on the Dickinson city commission page."
+        "llm_confidence_reason": "The page explicitly states Joe Ridl's position as 'Commissioner' on the City Commission."
       }
     ],
     "divisions": [],
@@ -279,19 +284,19 @@
     "websites": [
       {
         "data": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Profile page URL linked from Joe Ridl's name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page URL directly linked from Joe Ridl's name.",
         "source": "https://www.dickinsongov.com/city-commission"
       },
       {
         "data": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl",
         "llm_confidence": 1,
-        "llm_confidence_reason": "This is the official profile page URL for Joe Ridl on the Dickinson city website.",
+        "llm_confidence_reason": "The URL provided is the official city commission directory page for Joe Ridl.",
         "source": "https://www.dickinsongov.com/city-commission/directory-listing/joe-ridl"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T20:50:55Z"
+    "updated_at": "2025-07-03T21:06:02Z"
   }
 ]

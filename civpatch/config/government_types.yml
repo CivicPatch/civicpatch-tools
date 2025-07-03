@@ -65,6 +65,8 @@ government_types:
       - role: assistant mayor
       - role: deputy mayor
       - role: vice mayor
+      - role: president
+      - role: vice president
       - role: council president
         aliases:
         - city council president
