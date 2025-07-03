@@ -176,7 +176,14 @@
       ],
       "population": 6207,
       "website": "https://www.cityofwatfordcity.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T20:57:22Z",
+      "meta_hash": "7194de9b294abc2a1b8273cfc20efd8d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Lincoln",
