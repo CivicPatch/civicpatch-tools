@@ -301,7 +301,14 @@
       ],
       "population": 2479,
       "website": "http://www.casselton.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T21:33:47Z",
+      "meta_hash": "f2393cccfa2eb3122aacf7ca030bc0fe",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Stanley",
