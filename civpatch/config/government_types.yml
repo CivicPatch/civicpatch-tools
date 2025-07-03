@@ -92,6 +92,7 @@ government_types:
       - role: trustee
       - role: council member
         aliases:
+          - council-member
           - city councilor
           - town councilor
           - council member at-large

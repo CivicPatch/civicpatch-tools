@@ -1,10 +1,10 @@
 [
   {
-    "name": null,
+    "name": "Kyle Halvorson",
     "roles": [
-      "Mayor"
+      "Council Member"
     ],
-    "updated_at": "2025-07-03T22:07:02Z",
+    "updated_at": "2025-07-03T22:26:41Z",
     "divisions": []
   },
   {
@@ -12,7 +12,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T22:07:02Z",
+    "updated_at": "2025-07-03T22:26:41Z",
     "divisions": []
   },
   {
@@ -20,7 +20,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T22:07:02Z",
+    "updated_at": "2025-07-03T22:26:41Z",
     "divisions": []
   },
   {
@@ -28,7 +28,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T22:07:02Z",
+    "updated_at": "2025-07-03T22:26:41Z",
     "divisions": []
   },
   {
@@ -36,7 +36,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T22:07:02Z",
+    "updated_at": "2025-07-03T22:26:41Z",
     "divisions": []
   },
   {
@@ -44,15 +44,7 @@
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T22:07:02Z",
-    "divisions": []
-  },
-  {
-    "name": "Kyle Halvorson",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-07-03T22:07:02Z",
+    "updated_at": "2025-07-03T22:26:41Z",
     "divisions": []
   }
 ]
