@@ -9,7 +9,14 @@
       ],
       "population": 125990,
       "website": "https://fargond.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T20:52:28Z",
+      "meta_hash": "b4af07e261d373d37edfac31514cc5cb",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Bismarck",
