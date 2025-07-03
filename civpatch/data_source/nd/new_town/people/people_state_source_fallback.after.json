@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Jay Standish",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-03T21:29:29Z",
+    "divisions": []
+  },
+  {
+    "name": "Frank Sillitti",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T21:29:29Z",
+    "divisions": []
+  },
+  {
+    "name": "Doug Bratvold",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T21:29:29Z",
+    "divisions": []
+  },
+  {
+    "name": "Jesse Baker",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T21:29:29Z",
+    "divisions": []
+  },
+  {
+    "name": "Nathaniel Mayer",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T21:29:29Z",
+    "divisions": []
+  }
+]
