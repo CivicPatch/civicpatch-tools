@@ -2,19 +2,87 @@
   {
     "name": "Lyn James",
     "roles": [
-      "President",
-      "Commissioner"
+      "President of the City Commission"
     ],
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": null,
+    "email": "ljames@cityofbowman.com",
     "website": null,
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2024",
+    "end_date": "2028",
     "sources": [
-      "https://www.bowmannd.com/city"
+      "https://bowmannd.com/cities/city-of-bowman/departments/commission"
     ],
-    "updated_at": "2025-07-03T22:08:51Z"
+    "updated_at": "2025-07-03T22:43:59Z"
+  },
+  {
+    "name": "Sarah Bullis",
+    "roles": [
+      "Financial Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "sbullis@cityofbowman.com",
+    "website": null,
+    "start_date": "2022",
+    "end_date": "2026",
+    "sources": [
+      "https://bowmannd.com/cities/city-of-bowman/departments/commission"
+    ],
+    "updated_at": "2025-07-03T22:43:59Z"
+  },
+  {
+    "name": "Ryan Shear",
+    "roles": [
+      "Street & Garbage Commissioner",
+      "Vice President of the City Commission"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "rshear@cityofbowman.com",
+    "website": null,
+    "start_date": "2024",
+    "end_date": "2028",
+    "sources": [
+      "https://bowmannd.com/cities/city-of-bowman/departments/commission"
+    ],
+    "updated_at": "2025-07-03T22:43:59Z"
+  },
+  {
+    "name": "Myron Vail",
+    "roles": [
+      "Water/Sewer Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "mvail@cityofbowman.com",
+    "website": null,
+    "start_date": "2024",
+    "end_date": "2028",
+    "sources": [
+      "https://bowmannd.com/cities/city-of-bowman/departments/commission"
+    ],
+    "updated_at": "2025-07-03T22:43:59Z"
+  },
+  {
+    "name": "Benjamin Schaaf",
+    "roles": [
+      "Police Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "bschaaf@cityofbowman.com",
+    "website": null,
+    "start_date": "2022",
+    "end_date": "2026",
+    "sources": [
+      "https://bowmannd.com/cities/city-of-bowman/departments/commission"
+    ],
+    "updated_at": "2025-07-03T22:43:59Z"
   }
 ]
