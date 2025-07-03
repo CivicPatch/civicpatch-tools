@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Dave Carlsrud",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-03T20:53:50Z",
+    "divisions": []
+  },
+  {
+    "name": "Duane Magnuson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:53:50Z",
+    "divisions": []
+  },
+  {
+    "name": "Mike Bishop",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:53:50Z",
+    "divisions": []
+  },
+  {
+    "name": "Jeff Erickson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:53:50Z",
+    "divisions": []
+  },
+  {
+    "name": "Dick Gulmon",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:53:50Z",
+    "divisions": []
+  }
+]

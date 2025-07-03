@@ -1,0 +1,247 @@
+[
+  {
+    "name": "Dave Carlsrud",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 845-8126",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dcarlsrud@valleycity.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Start date is explicitly stated as part of the term information.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "End date is explicitly stated as part of the term information.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:00:17Z"
+  },
+  {
+    "name": "Duane Magnuson",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 845-8796",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dmagnuson@valleycity.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Start date is explicitly stated as part of the term information.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "End date is explicitly stated as part of the term information.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:00:17Z"
+  },
+  {
+    "name": "Mike Bishop",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 840-8583",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mbishop@valleycity.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Start date is explicitly stated as part of the term information.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "End date is explicitly stated as part of the term information.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:00:17Z"
+  },
+  {
+    "name": "Jeff Erickson",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 490-1843",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jerickson@valleycity.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Start date is explicitly stated as part of the term information.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "End date is explicitly stated as part of the term information.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:00:17Z"
+  },
+  {
+    "name": "Dick Gulmon",
+    "sources": [
+      "https://www.valleycity.us/commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 490-0078",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rgulmon@valleycity.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Start date is explicitly stated as part of the term information.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "End date is explicitly stated as part of the term information.",
+        "source": "https://www.valleycity.us/commission"
+      }
+    ],
+    "updated_at": "2025-07-03T21:00:17Z"
+  }
+]

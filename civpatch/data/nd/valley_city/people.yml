@@ -1,0 +1,43 @@
+---
+- name: Dick Gulmon
+  roles:
+  - Commissioner
+  divisions:
+  image: https://www.valleycity.us/wp-content/uploads/2020/06/Gulmon-Dick-107x150.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/nd/valley_city/images/30cea40120926c972f6947488fa9bdd5f0ce267975ecb7dfba7d473069d85469.png
+  email: rgulmon@valleycity.us
+  phone_number: "(701) 490-0078"
+  website:
+  start_date: '2024'
+  end_date: '2028'
+  sources:
+  - https://www.valleycity.us/commission
+  updated_at: '2025-07-03T21:00:19Z'
+- name: Jeff Erickson
+  roles:
+  - Commissioner
+  divisions:
+  image: https://www.valleycity.us/wp-content/uploads/2018/06/Jeff-Erickson-e1530108427287-150x150.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/nd/valley_city/images/c31f8429ac7cbc298d1eb94957534835da17f29990a90d0de3ad85d30faa8130.png
+  email: jerickson@valleycity.us
+  phone_number: "(701) 490-1843"
+  website:
+  start_date: '2022'
+  end_date: '2026'
+  sources:
+  - https://www.valleycity.us/commission
+  updated_at: '2025-07-03T21:00:19Z'
+- name: Mike Bishop
+  roles:
+  - Commissioner
+  divisions:
+  image: https://www.valleycity.us/wp-content/uploads/2018/06/Mike-Bishop-150x150.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/nd/valley_city/images/0e68cd22c6fabb00de53697005afbe1dbb1b23238b5a6e44e4c9ed7a045d239f.png
+  email: mbishop@valleycity.us
+  phone_number: "(701) 840-8583"
+  website:
+  start_date: '2024'
+  end_date: '2028'
+  sources:
+  - https://www.valleycity.us/commission
+  updated_at: '2025-07-03T21:00:19Z'
