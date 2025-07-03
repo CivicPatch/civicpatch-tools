@@ -1,1 +1,149 @@
-[]
+[
+  {
+    "name": "Stuart Merry",
+    "sources": [
+      "https://cityofgarrisonnd.com/mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Stuart Merry Mayor' directly under 'Contact Info' and the page is titled 'Mayor', indicating a direct and current role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:48:21Z"
+  },
+  {
+    "name": "Shannon Jeffers",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'President' under 'Contact Info' for the City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:48:21Z"
+  },
+  {
+    "name": "Bree Stumvoll",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice President' under 'Contact Info' for the City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:48:21Z"
+  },
+  {
+    "name": "David Reinarts",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member' under 'Contact Info' for the City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:48:21Z"
+  },
+  {
+    "name": "Billee Jo Iglehart",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member' under 'Contact Info' for the City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:48:21Z"
+  },
+  {
+    "name": "Otto Kinn",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member' under 'Contact Info' for the City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:48:21Z"
+  },
+  {
+    "name": "Brittney Gilbert",
+    "sources": [
+      "https://cityofgarrisonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member' under 'Contact Info' for the City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:48:21Z"
+  }
+]
