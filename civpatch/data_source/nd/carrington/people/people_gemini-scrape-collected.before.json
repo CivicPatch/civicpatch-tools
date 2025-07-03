@@ -1,0 +1,149 @@
+[
+  {
+    "name": "Tom Erdmann",
+    "sources": [
+      "https://www.carringtonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:04:32Z"
+  },
+  {
+    "name": "Tyler Hoggarth",
+    "sources": [
+      "https://www.carringtonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:04:32Z"
+  },
+  {
+    "name": "Troy Roundy",
+    "sources": [
+      "https://www.carringtonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:04:32Z"
+  },
+  {
+    "name": "Doug Smith",
+    "sources": [
+      "https://www.carringtonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:04:32Z"
+  },
+  {
+    "name": "Trygg Olson",
+    "sources": [
+      "https://www.carringtonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:04:32Z"
+  },
+  {
+    "name": "Jesse Nelson",
+    "sources": [
+      "https://www.carringtonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:04:32Z"
+  },
+  {
+    "name": "Neil Fandrich",
+    "sources": [
+      "https://www.carringtonnd.com/council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:04:32Z"
+  }
+]
