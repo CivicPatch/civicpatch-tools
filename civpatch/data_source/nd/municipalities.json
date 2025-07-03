@@ -8,7 +8,7 @@
         "Cass"
       ],
       "population": 125990,
-      "website": "http://www.ci.fargo.nd.us/",
+      "website": "https://fargond.gov/",
       "government_type": "mayor_council"
     },
     {
@@ -19,7 +19,7 @@
         "Burleigh"
       ],
       "population": 73622,
-      "website": "http://www.bismarck.org/",
+      "website": "https://www.bismarcknd.gov/",
       "government_type": "mayor_council"
     },
     {
@@ -96,7 +96,7 @@
         "Stutsman"
       ],
       "population": 15849,
-      "website": "http://www.jamestownnd.com/",
+      "website": "https://www.jamestownnd.gov/",
       "government_type": "mayor_council"
     },
     {
@@ -162,7 +162,7 @@
         "Walsh"
       ],
       "population": 4170,
-      "website": "http://www.graftongov.com/",
+      "website": "https://www.graftonnd.gov/",
       "government_type": "mayor_council"
     },
     {
@@ -172,6 +172,7 @@
       "counties": [
         "Cass"
       ],
+      "website": "https://www.cityofhorace.com/",
       "population": 3085
     },
     {
@@ -193,7 +194,7 @@
         "Mountrail"
       ],
       "population": 2764,
-      "website": "http://www.newtownchamber.com/",
+      "website": "https://www.newtownchamber.org",
       "government_type": "mayor_council"
     },
     {
@@ -237,7 +238,7 @@
         "Mercer"
       ],
       "population": 2281,
-      "website": "http://www.hazennd.org/",
+      "website": "https://hazennd.gov/",
       "government_type": "mayor_council"
     },
     {
@@ -248,7 +249,7 @@
         "Ransom"
       ],
       "population": 2204,
-      "website": "http://www.lisbonnd.com/",
+      "website": "https://cityoflisbon.net/",
       "government_type": "mayor_council"
     },
     {
@@ -270,7 +271,7 @@
         "Bottineau"
       ],
       "population": 2194,
-      "website": "http://www.bottineau.com/",
+      "website": "https://bottineau.govoffice.com/",
       "government_type": "mayor_council"
     },
     {
@@ -336,7 +337,7 @@
         "Traill"
       ],
       "population": 1649,
-      "website": "http://www.hillsborond.com/",
+      "website": "https://hillsboro-nd.com/",
       "government_type": "mayor_council"
     },
     {
@@ -369,7 +370,7 @@
         "Walsh"
       ],
       "population": 1424,
-      "website": "http://www.parkrivernd.govoffice2.com/",
+      "website": "https://cityofparkriver.com/",
       "government_type": "mayor_council"
     },
     {
@@ -424,7 +425,7 @@
         "Ward"
       ],
       "population": 1291,
-      "website": "http://www.burlington2.govoffice.com/",
+      "website": "https://www.burlingtonnd.org/",
       "government_type": "mayor_council"
     },
     {
@@ -446,7 +447,7 @@
         "Pembina"
       ],
       "population": 1246,
-      "website": "http://www.cavaliernd.com/",
+      "website": "https://cavaliernd.gov/",
       "government_type": "mayor_council"
     },
     {
@@ -457,7 +458,7 @@
         "Rolette"
       ],
       "population": 1223,
-      "website": "http://rolla.nd.utma.com/",
+      "website": "https://ndrolla.com/",
       "government_type": "mayor_council"
     },
     {
@@ -501,7 +502,7 @@
         "McHenry"
       ],
       "population": 1086,
-      "website": "http://www.velva.net/",
+      "website": "https://velvand.com/",
       "government_type": "mayor_council"
     },
     {
