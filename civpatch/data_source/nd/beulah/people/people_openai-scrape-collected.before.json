@@ -27,12 +27,12 @@
       {
         "data": "2026",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term year explicitly stated as 2026.",
+        "llm_confidence_reason": "Term listed as 2026, interpreted as term ending or current term year.",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Tim Aichele",
@@ -51,7 +51,7 @@
       {
         "data": "Ward 1",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward 1 explicitly stated."
+        "llm_confidence_reason": "Ward 1 explicitly listed."
       }
     ],
     "phone_numbers": [],
@@ -68,12 +68,12 @@
       {
         "data": "2026",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term year explicitly stated as 2026.",
+        "llm_confidence_reason": "Term listed as 2026.",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Cameron Brown",
@@ -92,7 +92,7 @@
       {
         "data": "Ward 1",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward 1 explicitly stated."
+        "llm_confidence_reason": "Ward 1 explicitly listed."
       }
     ],
     "phone_numbers": [],
@@ -109,12 +109,12 @@
       {
         "data": "2028",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term year explicitly stated as 2028.",
+        "llm_confidence_reason": "Term listed as 2028.",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Jason Isaak",
@@ -126,14 +126,19 @@
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as Council Member President."
+        "llm_confidence_reason": "Explicitly listed as Council Member."
+      },
+      {
+        "data": "Council Member President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council Member President, normalized to Council Member President."
       }
     ],
     "divisions": [
       {
         "data": "Ward 2",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward 2 explicitly stated."
+        "llm_confidence_reason": "Ward 2 explicitly listed."
       }
     ],
     "phone_numbers": [],
@@ -150,12 +155,12 @@
       {
         "data": "2026",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term year explicitly stated as 2026.",
+        "llm_confidence_reason": "Term listed as 2026.",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Adam Baker",
@@ -167,14 +172,19 @@
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as Council Member Vice President."
+        "llm_confidence_reason": "Explicitly listed as Council Member."
+      },
+      {
+        "data": "Council Member Vice President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council Member Vice President, normalized to Council Member Vice President."
       }
     ],
     "divisions": [
       {
         "data": "Ward 2",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward 2 explicitly stated."
+        "llm_confidence_reason": "Ward 2 explicitly listed."
       }
     ],
     "phone_numbers": [],
@@ -191,12 +201,12 @@
       {
         "data": "2028",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term year explicitly stated as 2028.",
+        "llm_confidence_reason": "Term listed as 2028.",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Auston Biles",
@@ -215,7 +225,7 @@
       {
         "data": "Ward 3",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward 3 explicitly stated."
+        "llm_confidence_reason": "Ward 3 explicitly listed."
       }
     ],
     "phone_numbers": [],
@@ -232,12 +242,12 @@
       {
         "data": "2026",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term year explicitly stated as 2026.",
+        "llm_confidence_reason": "Term listed as 2026.",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Kameron Plienis",
@@ -256,7 +266,7 @@
       {
         "data": "Ward 3",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward 3 explicitly stated."
+        "llm_confidence_reason": "Ward 3 explicitly listed."
       }
     ],
     "phone_numbers": [],
@@ -273,12 +283,12 @@
       {
         "data": "2028",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term year explicitly stated as 2028.",
+        "llm_confidence_reason": "Term listed as 2028.",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Gary Miller",
@@ -297,7 +307,7 @@
       {
         "data": "Ward 4",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward 4 explicitly stated."
+        "llm_confidence_reason": "Ward 4 explicitly listed."
       }
     ],
     "phone_numbers": [],
@@ -314,12 +324,12 @@
       {
         "data": "2026",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term year explicitly stated as 2026.",
+        "llm_confidence_reason": "Term listed as 2026.",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Bill Keller",
@@ -338,7 +348,7 @@
       {
         "data": "Ward 4",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Ward 4 explicitly stated."
+        "llm_confidence_reason": "Ward 4 explicitly listed."
       }
     ],
     "phone_numbers": [],
@@ -355,11 +365,11 @@
       {
         "data": "2028",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term year explicitly stated as 2028.",
+        "llm_confidence_reason": "Term listed as 2028.",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   }
 ]
