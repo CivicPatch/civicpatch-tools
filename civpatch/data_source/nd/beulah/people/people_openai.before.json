@@ -14,7 +14,7 @@
     "sources": [
       "https://www.beulahnd.org/government/city_officials_and_employees.php"
     ],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Tim Aichele",
@@ -33,7 +33,7 @@
     "sources": [
       "https://www.beulahnd.org/government/city_officials_and_employees.php"
     ],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Cameron Brown",
@@ -52,12 +52,13 @@
     "sources": [
       "https://www.beulahnd.org/government/city_officials_and_employees.php"
     ],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Jason Isaak",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Council Member President"
     ],
     "divisions": [
       "Ward 2"
@@ -71,12 +72,13 @@
     "sources": [
       "https://www.beulahnd.org/government/city_officials_and_employees.php"
     ],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Adam Baker",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Council Member Vice President"
     ],
     "divisions": [
       "Ward 2"
@@ -90,7 +92,7 @@
     "sources": [
       "https://www.beulahnd.org/government/city_officials_and_employees.php"
     ],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Auston Biles",
@@ -109,7 +111,7 @@
     "sources": [
       "https://www.beulahnd.org/government/city_officials_and_employees.php"
     ],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Kameron Plienis",
@@ -128,7 +130,7 @@
     "sources": [
       "https://www.beulahnd.org/government/city_officials_and_employees.php"
     ],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Gary Miller",
@@ -147,7 +149,7 @@
     "sources": [
       "https://www.beulahnd.org/government/city_officials_and_employees.php"
     ],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   },
   {
     "name": "Bill Keller",
@@ -166,6 +168,6 @@
     "sources": [
       "https://www.beulahnd.org/government/city_officials_and_employees.php"
     ],
-    "updated_at": "2025-07-03T21:44:02Z"
+    "updated_at": "2025-07-03T22:32:13Z"
   }
 ]

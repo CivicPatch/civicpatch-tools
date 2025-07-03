@@ -4,62 +4,62 @@
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-07-03T21:43:09Z"
+    "updated_at": "2025-07-03T22:31:30Z"
   },
   {
     "name": "Tim Aichele",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:43:09Z"
-  },
-  {
-    "name": "Cameron Brown",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-07-03T21:43:09Z"
-  },
-  {
-    "name": "Jason Isaak",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-07-03T21:43:09Z"
+    "updated_at": "2025-07-03T22:31:30Z"
   },
   {
     "name": "Adam Baker",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:43:09Z"
+    "updated_at": "2025-07-03T22:31:30Z"
   },
   {
     "name": "Auston Biles",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:43:09Z"
+    "updated_at": "2025-07-03T22:31:30Z"
+  },
+  {
+    "name": "Cameron Brown",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T22:31:30Z"
+  },
+  {
+    "name": "Jason Isaak",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T22:31:30Z"
   },
   {
     "name": "Bill Keller",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:43:09Z"
-  },
-  {
-    "name": "Kameron Plienis",
-    "roles": [
-      "Council Member"
-    ],
-    "updated_at": "2025-07-03T21:43:09Z"
+    "updated_at": "2025-07-03T22:31:30Z"
   },
   {
     "name": "Gary Miller",
     "roles": [
       "Council Member"
     ],
-    "updated_at": "2025-07-03T21:43:09Z"
+    "updated_at": "2025-07-03T22:31:30Z"
+  },
+  {
+    "name": "Kameron Plienis",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T22:31:30Z"
   }
 ]

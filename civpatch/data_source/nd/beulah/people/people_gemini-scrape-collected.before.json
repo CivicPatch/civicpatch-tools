@@ -9,7 +9,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Mayor' is explicitly stated next to the name, clearly identifying the individual's position."
+        "llm_confidence_reason": "Role explicitly stated next to the name"
       }
     ],
     "divisions": [],
@@ -18,7 +18,7 @@
       {
         "data": "BeulahNDMayor@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email explicitly stated next to the name and role",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
@@ -28,11 +28,11 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'Term - 2026' is explicitly stated next to the name and role, clearly associated with the individual's term.",
+        "llm_confidence_reason": "End date explicitly stated as 'Term - 2026'",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
-    "updated_at": "2025-07-03T21:44:17Z"
+    "updated_at": "2025-07-03T22:32:26Z"
   },
   {
     "name": "Tim Aichele",
@@ -44,14 +44,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the name, clearly identifying the individual's position."
+        "llm_confidence_reason": "Role explicitly stated next to the name"
       }
     ],
     "divisions": [
       {
         "data": "Ward 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division 'Ward 1' is explicitly stated next to the name and role, clearly associated with the individual."
+        "llm_confidence_reason": "Division explicitly stated next to the name"
       }
     ],
     "phone_numbers": [],
@@ -59,7 +59,7 @@
       {
         "data": "aicheletimothy@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email explicitly stated next to the name and role",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
@@ -69,11 +69,11 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'Term - 2026' is explicitly stated next to the name and role, clearly associated with the individual's term.",
+        "llm_confidence_reason": "End date explicitly stated as 'Term - 2026'",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
-    "updated_at": "2025-07-03T21:44:17Z"
+    "updated_at": "2025-07-03T22:32:26Z"
   },
   {
     "name": "Cameron Brown",
@@ -85,14 +85,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the name, clearly identifying the individual's position."
+        "llm_confidence_reason": "Role explicitly stated next to the name"
       }
     ],
     "divisions": [
       {
         "data": "Ward 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division 'Ward 1' is explicitly stated next to the name and role, clearly associated with the individual."
+        "llm_confidence_reason": "Division explicitly stated next to the name"
       }
     ],
     "phone_numbers": [],
@@ -100,7 +100,7 @@
       {
         "data": "rcbrown.bcc@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email explicitly stated next to the name and role",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
@@ -110,11 +110,11 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'Term - 2028' is explicitly stated next to the name and role, clearly associated with the individual's term.",
+        "llm_confidence_reason": "End date explicitly stated as 'Term - 2028'",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
-    "updated_at": "2025-07-03T21:44:17Z"
+    "updated_at": "2025-07-03T22:32:26Z"
   },
   {
     "name": "Jason Isaak",
@@ -126,14 +126,14 @@
       {
         "data": "Council Member President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Council Member President' is explicitly stated next to the name, clearly identifying the individual's position."
+        "llm_confidence_reason": "Role explicitly stated next to the name"
       }
     ],
     "divisions": [
       {
         "data": "Ward 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division 'Ward 2' is explicitly stated next to the name and role, clearly associated with the individual."
+        "llm_confidence_reason": "Division explicitly stated next to the name"
       }
     ],
     "phone_numbers": [],
@@ -141,7 +141,7 @@
       {
         "data": "jasonisaak52@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email explicitly stated next to the name and role",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
@@ -151,11 +151,11 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'Term - 2026' is explicitly stated next to the name and role, clearly associated with the individual's term.",
+        "llm_confidence_reason": "End date explicitly stated as 'Term - 2026'",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
-    "updated_at": "2025-07-03T21:44:17Z"
+    "updated_at": "2025-07-03T22:32:26Z"
   },
   {
     "name": "Adam Baker",
@@ -167,14 +167,14 @@
       {
         "data": "Council Member Vice President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Council Member Vice President' is explicitly stated next to the name, clearly identifying the individual's position."
+        "llm_confidence_reason": "Role explicitly stated next to the name"
       }
     ],
     "divisions": [
       {
         "data": "Ward 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division 'Ward 2' is explicitly stated next to the name and role, clearly associated with the individual."
+        "llm_confidence_reason": "Division explicitly stated next to the name"
       }
     ],
     "phone_numbers": [],
@@ -182,7 +182,7 @@
       {
         "data": "beulahbakerw2@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email explicitly stated next to the name and role",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
@@ -192,11 +192,11 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'Term - 2028' is explicitly stated next to the name and role, clearly associated with the individual's term.",
+        "llm_confidence_reason": "End date explicitly stated as 'Term - 2028'",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
-    "updated_at": "2025-07-03T21:44:17Z"
+    "updated_at": "2025-07-03T22:32:26Z"
   },
   {
     "name": "Auston Biles",
@@ -208,14 +208,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the name, clearly identifying the individual's position."
+        "llm_confidence_reason": "Role explicitly stated next to the name"
       }
     ],
     "divisions": [
       {
         "data": "Ward 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division 'Ward 3' is explicitly stated next to the name and role, clearly associated with the individual."
+        "llm_confidence_reason": "Division explicitly stated next to the name"
       }
     ],
     "phone_numbers": [],
@@ -223,7 +223,7 @@
       {
         "data": "Auston.Biles@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email explicitly stated next to the name and role",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
@@ -233,11 +233,11 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'Term - 2026' is explicitly stated next to the name and role, clearly associated with the individual's term.",
+        "llm_confidence_reason": "End date explicitly stated as 'Term - 2026'",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
-    "updated_at": "2025-07-03T21:44:17Z"
+    "updated_at": "2025-07-03T22:32:26Z"
   },
   {
     "name": "Kameron Plienis",
@@ -249,14 +249,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the name, clearly identifying the individual's position."
+        "llm_confidence_reason": "Role explicitly stated next to the name"
       }
     ],
     "divisions": [
       {
         "data": "Ward 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division 'Ward 3' is explicitly stated next to the name and role, clearly associated with the individual."
+        "llm_confidence_reason": "Division explicitly stated next to the name"
       }
     ],
     "phone_numbers": [],
@@ -264,7 +264,7 @@
       {
         "data": "kameronbeulah@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email explicitly stated next to the name and role",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
@@ -274,11 +274,11 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'Term - 2028' is explicitly stated next to the name and role, clearly associated with the individual's term.",
+        "llm_confidence_reason": "End date explicitly stated as 'Term - 2028'",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
-    "updated_at": "2025-07-03T21:44:17Z"
+    "updated_at": "2025-07-03T22:32:26Z"
   },
   {
     "name": "Gary Miller",
@@ -290,14 +290,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the name, clearly identifying the individual's position."
+        "llm_confidence_reason": "Role explicitly stated next to the name"
       }
     ],
     "divisions": [
       {
         "data": "Ward 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division 'Ward 4' is explicitly stated next to the name and role, clearly associated with the individual."
+        "llm_confidence_reason": "Division explicitly stated next to the name"
       }
     ],
     "phone_numbers": [],
@@ -305,7 +305,7 @@
       {
         "data": "gmillerward4@westriv.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email explicitly stated next to the name and role",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
@@ -315,11 +315,11 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'Term - 2026' is explicitly stated next to the name and role, clearly associated with the individual's term.",
+        "llm_confidence_reason": "End date explicitly stated as 'Term - 2026'",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
-    "updated_at": "2025-07-03T21:44:17Z"
+    "updated_at": "2025-07-03T22:32:26Z"
   },
   {
     "name": "Bill Keller",
@@ -331,14 +331,14 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The role 'Council Member' is explicitly stated next to the name, clearly identifying the individual's position."
+        "llm_confidence_reason": "Role explicitly stated next to the name"
       }
     ],
     "divisions": [
       {
         "data": "Ward 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The division 'Ward 4' is explicitly stated next to the name and role, clearly associated with the individual."
+        "llm_confidence_reason": "Division explicitly stated next to the name"
       }
     ],
     "phone_numbers": [],
@@ -346,7 +346,7 @@
       {
         "data": "billkeller311@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly stated next to the name and role, clearly associated with the individual.",
+        "llm_confidence_reason": "Email explicitly stated next to the name and role",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
@@ -356,10 +356,10 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The end date 'Term - 2028' is explicitly stated next to the name and role, clearly associated with the individual's term.",
+        "llm_confidence_reason": "End date explicitly stated as 'Term - 2028'",
         "source": "https://www.beulahnd.org/government/city_officials_and_employees.php"
       }
     ],
-    "updated_at": "2025-07-03T21:44:17Z"
+    "updated_at": "2025-07-03T22:32:26Z"
   }
 ]
