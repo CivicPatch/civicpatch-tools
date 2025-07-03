@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Paul Geray",
+    "sources": [
+      "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171",
+      "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Commissioner-Vice President' and 'Commissioner' is a target role."
+      },
+      {
+        "data": "Vice President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Commissioner-Vice President' and 'Vice President' is a target role."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner' and 'Commissioner-Vice President'."
+      },
+      {
+        "data": "Vice President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner-Vice President'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "paul.geray@hillsboro-nd.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171"
+      },
+      {
+        "data": "paul.geray@hillsboro-nd.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is provided as a direct link to Paul Geray's profile page in the breadcrumbs.",
+        "source": "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Paul Geray has been a Commissioner since 2021'.",
+        "source": "https://hillsboro-nd.com/?DE=910C033C-B12F-4246-880C-A0B7E84EB894&SEC=F0672B65-AA3C-44DF-B028-F6082646B171"
+      },
+      {
+        "data": "2021",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'has been a Commissioner since 2021'.",
+        "source": "https://hillsboro-nd.com/index.asp?SEC=F0672B65-AA3C-44DF-B028-F6082646B171&DE=910C033C-B12F-4246-880C-A0B7E84EB894"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-03T22:07:47Z"
+  }
+]

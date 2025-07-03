@@ -527,7 +527,14 @@
       ],
       "population": 1649,
       "website": "https://hillsboro-nd.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T22:07:47Z",
+      "meta_hash": "aab6a99dd3eefe86d3027a7db5b11443",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Bowman",
