@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Howard Klug",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-03T20:48:31Z"
+  },
+  {
+    "name": "Brad Bekkedahl",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:48:31Z"
+  },
+  {
+    "name": "James Bervig",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:48:31Z"
+  },
+  {
+    "name": "Lucas Gjovig",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:48:31Z"
+  },
+  {
+    "name": "Victoria Siemieniewski",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:48:31Z"
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-03T20:48:31Z"
+  }
+]
