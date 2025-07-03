@@ -154,7 +154,14 @@
       ],
       "population": 7192,
       "website": "http://www.dvlnd.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-03T20:52:18Z",
+      "meta_hash": "46440cb4978bc0c0c40f51a9725d5b27",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Valley City",

@@ -1,0 +1,233 @@
+[
+  {
+    "name": "Jim Moe",
+    "sources": [
+      "https://www.dvlnd.com/government/city-commission"
+    ],
+    "images": [
+      {
+        "data": "https://secure-cdn.scdn6.secure.raxcdn.com/media/userfiles/subsite_207/images/city-commission/Jim-Moe-33.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name and title.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor and President of the Board of City Commissioners."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jimm@dvlnd.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.dvlnd.com/government/city-commission",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city commission page URL associated with the person.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-06-30",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as June 30th, 2026.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "updated_at": "2025-07-03T20:52:06Z"
+  },
+  {
+    "name": "Rob Hach",
+    "sources": [
+      "https://www.dvlnd.com/government/city-commission"
+    ],
+    "images": [
+      {
+        "data": "https://secure-cdn.scdn6.secure.raxcdn.com/media/userfiles/subsite_207/images/city-commission/Rob-Hach-33.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name and title.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Vice President of the City Commission, normalized to Council Vice President."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "robh@dvlnd.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.dvlnd.com/government/city-commission",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city commission page URL associated with the person.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-06-30",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as June 30th, 2026.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "updated_at": "2025-07-03T20:52:06Z"
+  },
+  {
+    "name": "Joe Knowski",
+    "sources": [
+      "https://www.dvlnd.com/government/city-commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Commissioner."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "joek@dvlnd.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.dvlnd.com/government/city-commission",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city commission page URL associated with the person.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-06-30",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as June 30th, 2028.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "updated_at": "2025-07-03T20:52:06Z"
+  },
+  {
+    "name": "Jason Pierce",
+    "sources": [
+      "https://www.dvlnd.com/government/city-commission"
+    ],
+    "images": [
+      {
+        "data": "https://secure-cdn.scdn6.secure.raxcdn.com/media/userfiles/subsite_207/images/city-commission/Jason-Pierce-33.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name and title.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Commissioner."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jasonp@dvlnd.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.dvlnd.com/government/city-commission",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city commission page URL associated with the person.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-06-30",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as June 30th, 2026.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "updated_at": "2025-07-03T20:52:06Z"
+  },
+  {
+    "name": "Lisa Uhlenkamp",
+    "sources": [
+      "https://www.dvlnd.com/government/city-commission"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Commissioner."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "lisau@dvlnd.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.dvlnd.com/government/city-commission",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city commission page URL associated with the person.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-06-30",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as June 30th, 2028.",
+        "source": "https://www.dvlnd.com/government/city-commission"
+      }
+    ],
+    "updated_at": "2025-07-03T20:52:06Z"
+  }
+]
