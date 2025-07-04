@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Mark Lelm",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-04T04:57:32Z"
+  },
+  {
+    "name": "Keith Hapip",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:32Z"
+  },
+  {
+    "name": "Tim Dockter",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:32Z"
+  },
+  {
+    "name": "Jamie Weber",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:32Z"
+  },
+  {
+    "name": "Miranda Harvey",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:32Z"
+  }
+]
