@@ -1,0 +1,256 @@
+[
+  {
+    "name": "Karl Jorgenson",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-430-2061",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:01Z"
+  },
+  {
+    "name": "William Bohnsack",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Identified as an 'Alderman', which is a common term for a council member."
+      },
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Alderman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-788-2710",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bohnsack@hotmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated next to the name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:01Z"
+  },
+  {
+    "name": "Charlie Moen",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Identified as an 'Alderman', which is a common term for a council member."
+      },
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Alderman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-330-7605",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Charlie310@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated next to the name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:01Z"
+  },
+  {
+    "name": "Aaron Soholt",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Identified as an 'Alderman', which is a common term for a council member."
+      },
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Alderman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-430-0059",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:01Z"
+  },
+  {
+    "name": "Ray Petersen",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Identified as an 'Alderman', which is a common term for a council member."
+      },
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Alderman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-414-0106",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rdp@gra.midco.net",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated next to the name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:01Z"
+  },
+  {
+    "name": "Brian Halvorson",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Identified as an 'Alderman', which is a common term for a council member."
+      },
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Alderman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-238-7454",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:01Z"
+  },
+  {
+    "name": "Larry O’Brien",
+    "sources": [
+      "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Identified as an 'Alderman', which is a common term for a council member."
+      },
+      {
+        "data": "Alderman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Alderman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-371-4749",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "emails": [
+      {
+        "data": "larry@obrienseed.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated next to the name.",
+        "source": "https://www.mayvilleportland.com/live-work/citizens-handbook/mayville"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:01Z"
+  }
+]

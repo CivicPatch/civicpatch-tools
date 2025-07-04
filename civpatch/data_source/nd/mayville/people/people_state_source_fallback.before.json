@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Karl Jorgenson",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-04T04:57:33Z"
+  },
+  {
+    "name": "William Bohnsack",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:33Z"
+  },
+  {
+    "name": "Charlie Moen",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:33Z"
+  },
+  {
+    "name": "Aaron Soholt",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:33Z"
+  },
+  {
+    "name": "Ray Petersen",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:33Z"
+  },
+  {
+    "name": "Brian Halvorson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:33Z"
+  },
+  {
+    "name": "Larry O'Brien",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:33Z"
+  }
+]
