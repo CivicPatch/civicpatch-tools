@@ -21,6 +21,25 @@ namespace :one_off do
     # Services::Census.convert_to_geojson(state, Core::PathHelper.project_path(File.join("data", state, ".maps")))
   end
 
+  task "remove_government_type" do
+    state = "nd"
+    municipalities = Core::StateManager.get_municipalities(state)["municipalities"]
+
+    municipalities.each do |municipality|
+      next if municipality["government_type"].blank?  # Skip if government_type is already blank    
+      puts "Removing government_type for #{municipality["name"]} - #{municipality["geoid"]}"
+      municipality["government_type"] = nil  # Set government_type to nil
+    end
+
+    Core::StateManager.update_municipalities(state, municipalities)
+
+    municipallities_file = {}
+    municipallities_file["municipalities"] = municipalities
+
+    municipalitiees_path = Core::PathHelper.project_path(File.join("data_source", state, "municipalities.json"))
+    File.write(municipalitiees_path, JSON.pretty_generate(municipallities_file))
+  end
+
   task "test_wiki" do
     results = Scrapers::Nd::Municipalities.fetch
   end

@@ -31,6 +31,55 @@ divisions:
 #  * position 8 at-large -> ["position 8", "at-large"]
 #  * position no 8 -> ["position 8"]
 government_types:
+  mayor_commission:
+    roles:
+      - role: mayor
+      - role: mayor pro tempore
+        aliases: 
+        - mayor pro-tem
+        - mayor pro tem
+      - role: assistant mayor
+      - role: deputy mayor
+      - role: vice mayor
+      - role: commissioner president
+        aliases:
+          - commission president
+      - role: commissioner vice president
+        aliases:
+          - commissioner vice-president
+          - commissioner-vice president
+          - commission vice-president
+          - commission vice president
+      - role: commissioner
+        aliases:
+          - city commissioner
+    search_keywords: # Keys are for google search, values are for web crawling
+      mayor:
+        - mayor and city council
+        - about mayor
+        - meet the mayor
+        - about the mayor
+        - mayor
+        - council president
+        - council manager
+      commissioners:
+        - meet the council
+        - city council members
+        - council bios
+        - council members
+        - councilmembers
+        - city council
+        - board of trustees
+        - city hall
+        - council
+      elected officials:
+        - elected officials
+        - city administration
+        - index
+        - government
+        - bios
+        - meet
+        - about
   mayor_council:
     roles:
       - role: mayor
@@ -80,18 +129,6 @@ government_types:
           - council member vice president
           - council member vice-president
       - role: council manager
-      - role: commissioner president
-        aliases:
-          - commission president
-      - role: commissioner vice president
-        aliases:
-          - commissioner vice-president
-          - commissioner-vice president
-          - commission vice-president
-          - commission vice president
-      - role: commissioner
-        aliases:
-          - city commissioner
       - role: board member
         aliases:
           - town board member
