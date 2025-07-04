@@ -14,7 +14,43 @@
     "sources": [
       "https://mapletonnd.com/city"
     ],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
+  },
+  {
+    "name": "Scott Suchor",
+    "roles": [
+      "Council Member",
+      "Council Vice President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(701) 318-2502",
+    "email": "scott.suchor@gmail.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://mapletonnd.com/city"
+    ],
+    "updated_at": "2025-07-04T03:06:57Z"
+  },
+  {
+    "name": "Jason Astrup",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(701) 373-5263",
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://mapletonnd.com/city"
+    ],
+    "updated_at": "2025-07-04T03:06:57Z"
   },
   {
     "name": "Dan Klaver",
@@ -31,7 +67,7 @@
     "sources": [
       "https://mapletonnd.com/city"
     ],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   },
   {
     "name": "Adam Laskey",
@@ -48,6 +84,6 @@
     "sources": [
       "https://mapletonnd.com/city"
     ],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   }
 ]

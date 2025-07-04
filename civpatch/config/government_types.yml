@@ -116,6 +116,7 @@ government_types:
       - role: vice mayor
       - role: council president
         aliases:
+        - president
         - city council president
         - council member president
       - role: council president pro tem
@@ -125,6 +126,8 @@ government_types:
       - role: deputy council president
       - role: council vice president
         aliases:
+          - vice president
+          - vice-president
           - council vice-president
           - council member vice president
           - council member vice-president

@@ -14,14 +14,13 @@
     "sources": [
       "https://mapletonnd.com/city"
     ],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   },
   {
     "name": "Scott Suchor",
     "roles": [
       "Vice President",
-      "Vice President - Public Works & Safety",
-      "Vice President - Personnel"
+      "Council Member"
     ],
     "divisions": [],
     "image": null,
@@ -33,14 +32,13 @@
     "sources": [
       "https://mapletonnd.com/city"
     ],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   },
   {
     "name": "Jason Astrup",
     "roles": [
       "President",
-      "President - Bldgs/Grounds",
-      "President - Finance"
+      "Council Member"
     ],
     "divisions": [],
     "image": null,
@@ -52,7 +50,7 @@
     "sources": [
       "https://mapletonnd.com/city"
     ],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   },
   {
     "name": "Dan Klaver",
@@ -69,7 +67,7 @@
     "sources": [
       "https://mapletonnd.com/city"
     ],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   },
   {
     "name": "Adam Laskey",
@@ -86,6 +84,6 @@
     "sources": [
       "https://mapletonnd.com/city"
     ],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   }
 ]

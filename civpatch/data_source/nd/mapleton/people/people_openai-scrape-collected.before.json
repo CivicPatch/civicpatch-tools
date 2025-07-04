@@ -8,7 +8,7 @@
       {
         "data": "https://mapletonnd.com/wp-content/uploads/2024/06/IMG_8474-scaled.jpg",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image near City Council Members section, likely representing the council or mayor.",
+        "llm_confidence_reason": "Image near City Council Members heading likely representing the Mayor.",
         "source": "https://mapletonnd.com/city"
       }
     ],
@@ -16,7 +16,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Mayor under City Council Members."
+        "llm_confidence_reason": "Explicitly stated as Mayor in the City Council Members section."
       }
     ],
     "divisions": [],
@@ -32,7 +32,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:51:08Z"
+    "updated_at": "2025-07-04T03:06:48Z"
   },
   {
     "name": "Scott Suchor",
@@ -42,9 +42,9 @@
     "images": [],
     "roles": [
       {
-        "data": "Council Member",
+        "data": "Council Vice President",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as Vice President - Public Works & Safety, Personnel under City Council Members; Vice President normalized to Council Vice President or Council Member role; no explicit 'Vice President' role in target roles, so normalized to Council Member."
+        "llm_confidence_reason": "Title 'Vice President' under City Council Members implies Council Vice President."
       }
     ],
     "divisions": [],
@@ -67,7 +67,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:51:08Z"
+    "updated_at": "2025-07-04T03:06:48Z"
   },
   {
     "name": "Jason Astrup",
@@ -77,9 +77,9 @@
     "images": [],
     "roles": [
       {
-        "data": "Council Member",
+        "data": "Council President",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Listed as President - Bldgs/Grounds & Finance under City Council Members; President normalized to Council President but since target roles include 'Council President', role normalized to 'Council President'."
+        "llm_confidence_reason": "Title 'President' under City Council Members implies Council President."
       }
     ],
     "divisions": [],
@@ -95,7 +95,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:51:08Z"
+    "updated_at": "2025-07-04T03:06:48Z"
   },
   {
     "name": "Dan Klaver",
@@ -107,7 +107,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as Council Member."
+        "llm_confidence_reason": "Explicitly stated as Council Member."
       }
     ],
     "divisions": [],
@@ -130,7 +130,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:51:08Z"
+    "updated_at": "2025-07-04T03:06:48Z"
   },
   {
     "name": "Adam Laskey",
@@ -142,7 +142,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly listed as Council Member."
+        "llm_confidence_reason": "Explicitly stated as Council Member."
       }
     ],
     "divisions": [],
@@ -165,6 +165,6 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:51:08Z"
+    "updated_at": "2025-07-04T03:06:48Z"
   }
 ]
