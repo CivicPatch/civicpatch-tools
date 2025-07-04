@@ -1,0 +1,163 @@
+[
+  {
+    "name": "Mike Schreiner",
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Board Member, President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'President' of the Velva City Commission, which is the primary governing body; 'Board Member' is used to indicate commission membership."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-388-2746",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Mike Schreiner's name.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Schreiner.velvacity@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Mike Schreiner's name.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:04:52Z"
+  },
+  {
+    "name": "Mary Liz Davis",
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Board Member, Vice President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'VP' (Vice President) of the Velva City Commission; 'Board Member' indicates commission membership."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-720-3761",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Mary Liz Davis's name.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "davis.velvacity@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Mary Liz Davis's name.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:04:52Z"
+  },
+  {
+    "name": "Ben Zietz",
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a Commissioner on the Velva City Commission, which is the primary governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-720-2051",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Ben Zietz's name.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "zietz.velvacity@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Ben Zietz's name.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:04:52Z"
+  },
+  {
+    "name": "Gene Jenson",
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a Commissioner on the Velva City Commission, which is the primary governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ndhunter1982@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email listed directly under Gene Jenson's name.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:04:52Z"
+  },
+  {
+    "name": "Dave Keller",
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as a Commissioner on the Velva City Commission, which is the primary governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-338-2660",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Dave Keller's name.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:04:52Z"
+  }
+]

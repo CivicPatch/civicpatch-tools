@@ -1,0 +1,198 @@
+[
+  {
+    "name": "Mike Schreiner",
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as a 'Commissioner' and is a target role."
+      },
+      {
+        "data": "Police/Fire/Finance/Revenue Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role is explicitly stated as 'President - Police/Fire/Finance/Revenue' and 'Commissioner' is the base role for the group."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-388-2746",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Schreiner.velvacity@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:05:05Z"
+  },
+  {
+    "name": "Mary Liz Davis",
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as a 'Commissioner' and is a target role."
+      },
+      {
+        "data": "Finance/Revenue Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role is explicitly stated as 'VP - Finance/Revenue & Sewage Commissioner' and 'Commissioner' is the base role for the group."
+      },
+      {
+        "data": "Sewage Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role is explicitly stated as 'VP - Finance/Revenue & Sewage Commissioner' and 'Commissioner' is the base role for the group."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-720-3761",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "davis.velvacity@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:05:05Z"
+  },
+  {
+    "name": "Ben Zietz",
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as a 'Commissioner' and is a target role."
+      },
+      {
+        "data": "Water Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role is explicitly stated as 'Water & Sewage Commissioner' and 'Commissioner' is the base role for the group."
+      },
+      {
+        "data": "Sewage Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role is explicitly stated as 'Water & Sewage Commissioner' and 'Commissioner' is the base role for the group."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-720-2051",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "zietz.velvacity@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:05:05Z"
+  },
+  {
+    "name": "Gene Jenson",
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as a 'Commissioner' and is a target role."
+      },
+      {
+        "data": "Streets/Improvements/Cemetery Oversight Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role is explicitly stated as 'Streets/Improvements/Cemetery Oversight Commissioner' and 'Commissioner' is the base role for the group."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ndhunter1982@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:05:05Z"
+  },
+  {
+    "name": "Dave Keller",
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as a 'Commissioner' and is a target role."
+      },
+      {
+        "data": "Streets/Improvements/Waterworks Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role is explicitly stated as 'Streets/Improvements/Waterworks Commissioner' and 'Commissioner' is the base role for the group."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-338-2660",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://velvand.com/commissioners-1"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:05:05Z"
+  }
+]

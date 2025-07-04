@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Mike Schreiner",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-04T05:04:13Z"
+  },
+  {
+    "name": "Mary Liz Davis",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T05:04:13Z"
+  },
+  {
+    "name": "Ben Zietz",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T05:04:13Z"
+  },
+  {
+    "name": "Gene Jenson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T05:04:13Z"
+  },
+  {
+    "name": "Dave Keller",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T05:04:13Z"
+  }
+]

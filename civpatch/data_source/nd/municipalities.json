@@ -755,7 +755,14 @@
       ],
       "population": 1086,
       "website": "https://velvand.com/",
-      "government_type": null
+      "government_type": null,
+      "meta_updated_at": "2025-07-04T05:05:05Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hettinger",

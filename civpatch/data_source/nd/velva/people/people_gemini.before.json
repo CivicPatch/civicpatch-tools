@@ -1,0 +1,94 @@
+[
+  {
+    "name": "Mike Schreiner",
+    "roles": [
+      "Commissioner",
+      "Police/Fire/Finance/Revenue Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "701-388-2746",
+    "email": "Schreiner.velvacity@gmail.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "updated_at": "2025-07-04T05:05:05Z"
+  },
+  {
+    "name": "Mary Liz Davis",
+    "roles": [
+      "Commissioner",
+      "Finance/Revenue Commissioner",
+      "Sewage Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "701-720-3761",
+    "email": "davis.velvacity@gmail.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "updated_at": "2025-07-04T05:05:05Z"
+  },
+  {
+    "name": "Ben Zietz",
+    "roles": [
+      "Commissioner",
+      "Water Commissioner",
+      "Sewage Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "701-720-2051",
+    "email": "zietz.velvacity@gmail.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "updated_at": "2025-07-04T05:05:05Z"
+  },
+  {
+    "name": "Gene Jenson",
+    "roles": [
+      "Commissioner",
+      "Streets/Improvements/Cemetery Oversight Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "ndhunter1982@gmail.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "updated_at": "2025-07-04T05:05:05Z"
+  },
+  {
+    "name": "Dave Keller",
+    "roles": [
+      "Commissioner",
+      "Streets/Improvements/Waterworks Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "701-338-2660",
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://velvand.com/commissioners-1"
+    ],
+    "updated_at": "2025-07-04T05:05:05Z"
+  }
+]
