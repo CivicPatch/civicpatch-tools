@@ -668,7 +668,14 @@
       ],
       "population": 1260,
       "website": "http://www.larimorend.com/",
-      "government_type": null
+      "government_type": null,
+      "meta_updated_at": "2025-07-04T05:09:10Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Cavalier",
