@@ -657,7 +657,14 @@
       ],
       "population": 1291,
       "website": "https://www.burlingtonnd.org/",
-      "government_type": null
+      "government_type": null,
+      "meta_updated_at": "2025-07-04T05:03:33Z",
+      "meta_hash": "5da3d8b2346b69a0340efacd356d24be",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Larimore",

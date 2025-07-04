@@ -1,0 +1,132 @@
+[
+  {
+    "name": "Jack Anderson",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:03:33Z"
+  },
+  {
+    "name": "Jerick Hedges",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Vice President'."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Water, Sewer, Street Commissioner' implies 'Commissioner'."
+      },
+      {
+        "data": "Water, Sewer, Street Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Water, Sewer, Street Commissioner'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:03:33Z"
+  },
+  {
+    "name": "Devra Smestad",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Finance Commissioner' implies 'Commissioner'."
+      },
+      {
+        "data": "Finance Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Finance Commissioner'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:03:33Z"
+  },
+  {
+    "name": "Jarrod Nelson",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Police Commissioner' implies 'Commissioner'."
+      },
+      {
+        "data": "Police Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Police Commissioner'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:03:33Z"
+  },
+  {
+    "name": "Kelsey Flick",
+    "sources": [
+      "https://www.burlingtonnd.org/council-and-staff"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Commissioner'."
+      },
+      {
+        "data": "Building Permits Commissioner",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Role 'Building Permits' is a descriptor for 'Commissioner'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:03:33Z"
+  }
+]
