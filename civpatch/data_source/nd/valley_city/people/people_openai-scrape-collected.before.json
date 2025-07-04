@@ -1,0 +1,193 @@
+[
+  {
+    "name": "Dave Carlsrud",
+    "sources": [
+      "https://www.valleycity.us/author/jhintz",
+      "https://www.valleycity.us/2024/05/03/commission-agenda-13",
+      "https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes"
+    ],
+    "images": [
+      {
+        "data": "https://www.valleycity.us/wp-content/uploads/2024/06/2024-Relaxed-Mayor-Dave-1080x380.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image near Mayor’s Message posts and labeled as Mayor Dave.",
+        "source": "https://www.valleycity.us/author/jhintz"
+      },
+      {
+        "data": "https://www.valleycity.us/wp-content/uploads/2024/06/2024-Relaxed-Mayor-Dave-scaled-45x45.jpg",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Image near recent Mayor's Message posts with name Dave, likely Dave Carlsrud, a member of the City Commission.",
+        "source": "https://www.valleycity.us/2024/05/03/commission-agenda-13"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Referred to as 'President Carlsrud' in City Commission meetings, indicating role as Council President or equivalent."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Photo captioned '2024 Relaxed Mayor Dave' and multiple 'Mayor’s Message' posts signed by Dave Carlsrud indicate he is the Mayor."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in roll call for City Commission meeting, indicating membership on the City Commission, which is the primary governing body."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Referred to as 'President Carlsrud' presiding over the City Commission meeting, indicating a leadership role equivalent to Council President."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 845-1700",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Hall phone number provided; no direct personal phone found.",
+        "source": "https://www.valleycity.us/author/jhintz"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Image labeled 2024 Mayor and active in 2025 documents; likely term started in 2024.",
+        "source": "https://www.valleycity.us/author/jhintz"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:44Z"
+  },
+  {
+    "name": "Mike Bishop",
+    "sources": [
+      "https://www.valleycity.us/author/jhintz",
+      "https://www.valleycity.us/2024/05/03/commission-agenda-13",
+      "https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Commissioner Bishop in City Commission meetings and roll calls."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in roll call for City Commission meeting, indicating membership on the City Commission, which is the primary governing body."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Commissioner Bishop' present at the City Commission meeting, indicating membership on the City Commission (primary governing body)."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:44Z"
+  },
+  {
+    "name": "Duane Magnuson",
+    "sources": [
+      "https://www.valleycity.us/author/jhintz",
+      "https://www.valleycity.us/2024/05/03/commission-agenda-13",
+      "https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Commissioner Magnuson in City Commission meetings and roll calls."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in roll call for City Commission meeting, indicating membership on the City Commission, which is the primary governing body."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Commissioner Magnuson' present at the City Commission meeting, indicating membership on the City Commission (primary governing body)."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:44Z"
+  },
+  {
+    "name": "Jeff Erickson",
+    "sources": [
+      "https://www.valleycity.us/author/jhintz",
+      "https://www.valleycity.us/2024/05/03/commission-agenda-13",
+      "https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Commissioner Erickson in City Commission meetings and roll calls."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in roll call for City Commission meeting, indicating membership on the City Commission, which is the primary governing body."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Commissioner Erickson' present at the City Commission meeting, indicating membership on the City Commission (primary governing body)."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:44Z"
+  },
+  {
+    "name": "Dick Gulmon",
+    "sources": [
+      "https://www.valleycity.us/author/jhintz",
+      "https://www.valleycity.us/2024/05/03/commission-agenda-13"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Commissioner Gulmon in City Commission meetings and roll calls."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed in roll call for City Commission meeting, indicating membership on the City Commission, which is the primary governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T04:59:44Z"
+  }
+]

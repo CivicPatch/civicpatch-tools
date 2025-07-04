@@ -200,7 +200,14 @@
       ],
       "population": 6575,
       "website": "http://www.valleycity.us/",
-      "government_type": null
+      "government_type": null,
+      "meta_updated_at": "2025-07-04T05:01:27Z",
+      "meta_hash": "e9518d93930cfb317d0051e6dbcba1a1",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Watford City",

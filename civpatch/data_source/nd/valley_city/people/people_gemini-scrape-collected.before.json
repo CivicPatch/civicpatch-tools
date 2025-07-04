@@ -1,0 +1,329 @@
+[
+  {
+    "name": "Dave Carlsrud",
+    "sources": [
+      "https://www.valleycity.us/author/jhintz",
+      "https://www.valleycity.us/2024/05/03/commission-agenda-13",
+      "https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes",
+      "https://www.valleycity.us",
+      "https://www.valleycity.us/career",
+      "https://www.valleycity.us/administrator",
+      "https://www.valleycity.us/city-attorney",
+      "https://www.valleycity.us/how-do-i/home-owner-resources-flood",
+      "https://www.valleycity.us/contact-us",
+      "https://www.valleycity.us/2023/06/26/fireworks-safety",
+      "https://www.valleycity.us/public-works",
+      "https://www.valleycity.us/municipal-court",
+      "https://www.valleycity.us/vcpd"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Dave' and in 'Mayor’s Message' sections."
+      },
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'President Carlsrud' presiding over City Commission meetings."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as a 'Commissioner' in roll calls for the City Commission, which is equivalent to a council member."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly referred to as 'Mayor Dave' in a recent post title, indicating his role as Mayor of Valley City. This is a target role."
+      },
+      {
+        "data": "President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'President Carlsrud'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'President' in the context of a City Commission meeting."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The image filename '2024-Relaxed-Mayor-Dave-scaled-45x45.jpg' and 'Mayor’s Message' strongly indicate 'Dave' is the Mayor, and 'Dave Carlsrud' is a likely candidate provided in the prompt."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly mentioned as 'Mayor Dave' in recent posts and confirmed by the 'Employer Profile' section stating 'one President (Mayor)'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Mayor Dave' in the context of 'Mayor's Message' posts, indicating he holds the role of Mayor."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly mentioned as 'Mayor Dave' and 'Mayor's Message' in the content, and 'Mayor' is a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly mentioned as 'Mayor Dave' in recent posts."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly mentioned as 'Mayor Dave' in recent posts, confirming the role of Mayor."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Dave' in recent posts, indicating the role of Mayor."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly mentioned as 'Mayor Dave' in recent posts."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly mentioned as 'Mayor Dave' and in 'Mayor’s Message' within the content, and 'mayor' is a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly mentioned as 'Mayor Dave' in recent posts related to 'Mayor's Message' and 'Commission Agenda'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:01:27Z"
+  },
+  {
+    "name": "Duane Magnuson",
+    "sources": [
+      "https://www.valleycity.us/author/jhintz",
+      "https://www.valleycity.us/2024/05/03/commission-agenda-13",
+      "https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Commissioner Magnuson' in City Commission meeting minutes and agendas."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed in the 'Roll Call' for the City Commission Meeting, implying a role as a member of the governing body."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Magnuson'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Commissioner' in the context of a City Commission meeting."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:01:27Z"
+  },
+  {
+    "name": "Mike Bishop",
+    "sources": [
+      "https://www.valleycity.us/author/jhintz",
+      "https://www.valleycity.us/2024/05/03/commission-agenda-13",
+      "https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Commissioner Bishop' in City Commission meeting minutes and agendas."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed in the 'Roll Call' for the City Commission Meeting, implying a role as a member of the governing body."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Bishop'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Commissioner' in the context of a City Commission meeting."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:01:27Z"
+  },
+  {
+    "name": "Jeff Erickson",
+    "sources": [
+      "https://www.valleycity.us/author/jhintz",
+      "https://www.valleycity.us/2024/05/03/commission-agenda-13",
+      "https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Commissioner Erickson' in City Commission meeting minutes and agendas."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly listed as 'Commissioner Jeff Erickson' for the Planning and Zoning Commission, which is a type of commissioner."
+      },
+      {
+        "data": "Planning and Zoning Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly listed as 'Commissioner Jeff Erickson' for the Planning and Zoning Commission, which is a specific type of commissioner."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed in the 'Roll Call' for the City Commission Meeting, implying a role as a member of the governing body."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Erickson'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Commissioner' in the context of a City Commission meeting."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:01:27Z"
+  },
+  {
+    "name": "Dick Gulmon",
+    "sources": [
+      "https://www.valleycity.us/author/jhintz",
+      "https://www.valleycity.us/2024/05/03/commission-agenda-13"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Commissioner Gulmon' in City Commission meeting minutes and agendas."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed in the 'Roll Call' for the City Commission Meeting, implying a role as a member of the governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:01:27Z"
+  },
+  {
+    "name": "Commissioner Powell",
+    "sources": [
+      "https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Powell'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Commissioner' in the context of a City Commission meeting."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:01:27Z"
+  },
+  {
+    "name": "Gwen Crawford",
+    "sources": [
+      "https://www.valleycity.us/administrator"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Administrator",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'City Administrator' directly above the person's name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(701) 845-8120",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person's role as City Administrator. ",
+        "source": "https://www.valleycity.us/administrator"
+      }
+    ],
+    "emails": [
+      {
+        "data": "gcrawford@valleycity.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person.",
+        "source": "https://www.valleycity.us/administrator"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.valleycity.us/administrator",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page is dedicated to the 'City Administrator' and features Gwen Crawford, making it her likely profile page.",
+        "source": "https://www.valleycity.us/administrator"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:01:27Z"
+  }
+]

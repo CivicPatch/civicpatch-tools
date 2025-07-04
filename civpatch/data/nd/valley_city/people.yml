@@ -1,0 +1,91 @@
+---
+- name: Dave Carlsrud
+  roles:
+  - Mayor
+  - Council President
+  divisions:
+  image: https://www.valleycity.us/wp-content/uploads/2024/06/2024-Relaxed-Mayor-Dave-1080x380.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/nd/valley_city/images/26656d6e63b6ae704791dec219c7ce1585ce4be72b8df9e7d01cbe419ac75d71.png
+  email:
+  phone_number: "(701) 845-1700"
+  website:
+  start_date: '2024'
+  end_date:
+  sources:
+  - https://www.valleycity.us/author/jhintz
+  - https://www.valleycity.us/2024/05/03/commission-agenda-13
+  - https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes
+  - https://www.valleycity.us
+  - https://www.valleycity.us/career
+  - https://www.valleycity.us/administrator
+  - https://www.valleycity.us/city-attorney
+  - https://www.valleycity.us/how-do-i/home-owner-resources-flood
+  - https://www.valleycity.us/contact-us
+  - https://www.valleycity.us/2023/06/26/fireworks-safety
+  - https://www.valleycity.us/public-works
+  - https://www.valleycity.us/municipal-court
+  - https://www.valleycity.us/vcpd
+  updated_at: '2025-07-04T05:01:27Z'
+- name: Dick Gulmon
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.valleycity.us/author/jhintz
+  - https://www.valleycity.us/2024/05/03/commission-agenda-13
+  updated_at: '2025-07-04T05:01:27Z'
+- name: Duane Magnuson
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.valleycity.us/author/jhintz
+  - https://www.valleycity.us/2024/05/03/commission-agenda-13
+  - https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes
+  updated_at: '2025-07-04T05:01:27Z'
+- name: Jeff Erickson
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.valleycity.us/author/jhintz
+  - https://www.valleycity.us/2024/05/03/commission-agenda-13
+  - https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes
+  updated_at: '2025-07-04T05:01:27Z'
+- name: Mike Bishop
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.valleycity.us/author/jhintz
+  - https://www.valleycity.us/2024/05/03/commission-agenda-13
+  - https://www.valleycity.us/2020/04/22/04-13-2020-board-of-equalization-minutes
+  updated_at: '2025-07-04T05:01:27Z'
