@@ -8,16 +8,16 @@
     "roles": [
       {
         "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Mayor in the content under 'Contact Info' section."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page explicitly states Stuart Merry as Mayor of Garrison."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "(701) 463-2600",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "General city phone number provided; no direct phone number for Stuart Merry found.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General city contact number is provided on the page; no direct personal phone found.",
         "source": "https://cityofgarrisonnd.com/mayor"
       }
     ],
@@ -25,14 +25,14 @@
     "websites": [
       {
         "data": "https://cityofgarrisonnd.com/mayor",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Page URL is the official mayor page for City of Garrison.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the official mayor page for the City of Garrison.",
         "source": "https://cityofgarrisonnd.com/mayor"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:47:44Z"
+    "updated_at": "2025-07-04T03:43:52Z"
   },
   {
     "name": "Shannon Jeffers",
@@ -44,7 +44,7 @@
       {
         "data": "Council President",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The page lists Shannon Jeffers as 'President' under the Council section, which is normalized to 'Council President'."
+        "llm_confidence_reason": "The page lists Shannon Jeffers as 'President' under the City Council section, which is interpreted as Council President."
       }
     ],
     "divisions": [],
@@ -53,7 +53,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:47:44Z"
+    "updated_at": "2025-07-04T03:43:52Z"
   },
   {
     "name": "Bree Stumvoll",
@@ -65,7 +65,7 @@
       {
         "data": "Council Vice President",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The page lists Bree Stumvoll as 'Vice President' under the Council section, normalized to 'Council Vice President'."
+        "llm_confidence_reason": "The page lists Bree Stumvoll as 'Vice President' under the City Council section, interpreted as Council Vice President."
       }
     ],
     "divisions": [],
@@ -74,7 +74,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:47:44Z"
+    "updated_at": "2025-07-04T03:43:52Z"
   },
   {
     "name": "David Reinarts",
@@ -95,7 +95,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:47:44Z"
+    "updated_at": "2025-07-04T03:43:52Z"
   },
   {
     "name": "Billee Jo Iglehart",
@@ -116,7 +116,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:47:44Z"
+    "updated_at": "2025-07-04T03:43:52Z"
   },
   {
     "name": "Otto Kinn",
@@ -137,7 +137,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:47:44Z"
+    "updated_at": "2025-07-04T03:43:52Z"
   },
   {
     "name": "Brittney Gilbert",
@@ -158,6 +158,6 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:47:44Z"
+    "updated_at": "2025-07-04T03:43:52Z"
   }
 ]

@@ -9,7 +9,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Stuart Merry Mayor' directly under 'Contact Info' and the page is titled 'Mayor', indicating a direct and current role."
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' directly below the name"
       }
     ],
     "divisions": [],
@@ -18,7 +18,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:48:21Z"
+    "updated_at": "2025-07-04T03:44:28Z"
   },
   {
     "name": "Shannon Jeffers",
@@ -30,7 +30,7 @@
       {
         "data": "President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'President' under 'Contact Info' for the City Council."
+        "llm_confidence_reason": "Role explicitly stated as 'President'."
       }
     ],
     "divisions": [],
@@ -39,7 +39,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:48:21Z"
+    "updated_at": "2025-07-04T03:44:28Z"
   },
   {
     "name": "Bree Stumvoll",
@@ -51,7 +51,7 @@
       {
         "data": "Vice President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Vice President' under 'Contact Info' for the City Council."
+        "llm_confidence_reason": "Role explicitly stated as 'Vice President'."
       }
     ],
     "divisions": [],
@@ -60,7 +60,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:48:21Z"
+    "updated_at": "2025-07-04T03:44:28Z"
   },
   {
     "name": "David Reinarts",
@@ -72,7 +72,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Member' under 'Contact Info' for the City Council."
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member'."
       }
     ],
     "divisions": [],
@@ -81,7 +81,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:48:21Z"
+    "updated_at": "2025-07-04T03:44:28Z"
   },
   {
     "name": "Billee Jo Iglehart",
@@ -93,7 +93,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Member' under 'Contact Info' for the City Council."
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member'."
       }
     ],
     "divisions": [],
@@ -102,7 +102,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:48:21Z"
+    "updated_at": "2025-07-04T03:44:28Z"
   },
   {
     "name": "Otto Kinn",
@@ -114,7 +114,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Member' under 'Contact Info' for the City Council."
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member'."
       }
     ],
     "divisions": [],
@@ -123,7 +123,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:48:21Z"
+    "updated_at": "2025-07-04T03:44:28Z"
   },
   {
     "name": "Brittney Gilbert",
@@ -135,7 +135,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Council Member' under 'Contact Info' for the City Council."
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member'."
       }
     ],
     "divisions": [],
@@ -144,6 +144,6 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T22:48:21Z"
+    "updated_at": "2025-07-04T03:44:28Z"
   }
 ]

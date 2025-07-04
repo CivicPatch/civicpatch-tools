@@ -6,7 +6,7 @@ Alerts
 
 [Contact Us](https://cityofgarrisonnd.com/contact-us)
 
-![](https://cityofgarrisonnd.com/imgD/weatherbit_icons/t02d.png) Today's weather: Thunderstorm with rain 93°/67°
+![](https://cityofgarrisonnd.com/imgD/weatherbit_icons/t02d.png) Today's weather: Thunderstorm with rain 92°/66°
 
 ![City of Garrison  North Dakota - A Place to Call Home...](https://cityofgarrisonnd.com/images/logos_mi/C_111_RWI_CIty_of_Garrison_logo_transparent_background_1352756831_9262.png)
 

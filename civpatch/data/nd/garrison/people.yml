@@ -12,7 +12,35 @@
   end_date:
   sources:
   - https://cityofgarrisonnd.com/mayor
-  updated_at: '2025-07-03T22:48:21Z'
+  updated_at: '2025-07-04T03:44:29Z'
+- name: Shannon Jeffers
+  roles:
+  - Council President
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://cityofgarrisonnd.com/council
+  updated_at: '2025-07-04T03:44:29Z'
+- name: Bree Stumvoll
+  roles:
+  - Council Vice President
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://cityofgarrisonnd.com/council
+  updated_at: '2025-07-04T03:44:29Z'
 - name: Billee Jo Iglehart
   roles:
   - Council Member
@@ -26,7 +54,7 @@
   end_date:
   sources:
   - https://cityofgarrisonnd.com/council
-  updated_at: '2025-07-03T22:48:21Z'
+  updated_at: '2025-07-04T03:44:29Z'
 - name: Brittney Gilbert
   roles:
   - Council Member
@@ -40,7 +68,7 @@
   end_date:
   sources:
   - https://cityofgarrisonnd.com/council
-  updated_at: '2025-07-03T22:48:21Z'
+  updated_at: '2025-07-04T03:44:29Z'
 - name: David Reinarts
   roles:
   - Council Member
@@ -54,7 +82,7 @@
   end_date:
   sources:
   - https://cityofgarrisonnd.com/council
-  updated_at: '2025-07-03T22:48:21Z'
+  updated_at: '2025-07-04T03:44:29Z'
 - name: Otto Kinn
   roles:
   - Council Member
@@ -68,30 +96,4 @@
   end_date:
   sources:
   - https://cityofgarrisonnd.com/council
-  updated_at: '2025-07-03T22:48:21Z'
-- name: Bree Stumvoll
-  roles: []
-  divisions:
-  image:
-  cdn_image:
-  email:
-  phone_number:
-  website:
-  start_date:
-  end_date:
-  sources:
-  - https://cityofgarrisonnd.com/council
-  updated_at: '2025-07-03T22:48:21Z'
-- name: Shannon Jeffers
-  roles: []
-  divisions:
-  image:
-  cdn_image:
-  email:
-  phone_number:
-  website:
-  start_date:
-  end_date:
-  sources:
-  - https://cityofgarrisonnd.com/council
-  updated_at: '2025-07-03T22:48:21Z'
+  updated_at: '2025-07-04T03:44:29Z'

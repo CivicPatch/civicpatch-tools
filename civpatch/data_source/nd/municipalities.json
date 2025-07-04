@@ -563,9 +563,9 @@
       ],
       "population": 1462,
       "website": "https://cityofgarrisonnd.com",
-      "government_type": "mayor_council",
-      "meta_updated_at": "2025-07-03T22:48:21Z",
-      "meta_hash": "a29f9813b07a955f3948cdd83fc1b3ea",
+      "government_type": null,
+      "meta_updated_at": "2025-07-04T03:44:29Z",
+      "meta_hash": "fd60ea06f3eb36f57d033fa2c6a09dd1",
       "meta_sources": [
         "state_source",
         "gemini",
