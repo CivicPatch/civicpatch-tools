@@ -12,7 +12,35 @@
   end_date:
   sources:
   - https://mapletonnd.com/city
-  updated_at: '2025-07-03T23:51:20Z'
+  updated_at: '2025-07-04T03:06:57Z'
+- name: Jason Astrup
+  roles:
+  - Council President
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(701) 373-5263"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://mapletonnd.com/city
+  updated_at: '2025-07-04T03:06:57Z'
+- name: Scott Suchor
+  roles:
+  - Council Vice President
+  divisions:
+  image:
+  cdn_image:
+  email: scott.suchor@gmail.com
+  phone_number: "(701) 318-2502"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://mapletonnd.com/city
+  updated_at: '2025-07-04T03:06:57Z'
 - name: Adam Laskey
   roles:
   - Council Member
@@ -26,7 +54,7 @@
   end_date:
   sources:
   - https://mapletonnd.com/city
-  updated_at: '2025-07-03T23:51:20Z'
+  updated_at: '2025-07-04T03:06:57Z'
 - name: Dan Klaver
   roles:
   - Council Member
@@ -40,4 +68,4 @@
   end_date:
   sources:
   - https://mapletonnd.com/city
-  updated_at: '2025-07-03T23:51:20Z'
+  updated_at: '2025-07-04T03:06:57Z'

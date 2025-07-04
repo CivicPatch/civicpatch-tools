@@ -9,7 +9,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated next to the name and is a target role."
+        "llm_confidence_reason": "Role is explicitly stated and is a target role"
       }
     ],
     "divisions": [],
@@ -17,7 +17,7 @@
       {
         "data": "218-791-8438",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the person's name",
         "source": "https://mapletonnd.com/city"
       }
     ],
@@ -25,7 +25,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   },
   {
     "name": "Scott Suchor",
@@ -36,18 +36,13 @@
     "roles": [
       {
         "data": "Vice President",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated next to the name and is a target role."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Vice President' is listed under 'City Council Members', implying 'Council Vice President' which is a target role"
       },
       {
-        "data": "Vice President - Public Works & Safety",
+        "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Contextual variation of a target role, clearly associated with the person."
-      },
-      {
-        "data": "Vice President - Personnel",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Contextual variation of a target role, clearly associated with the person."
+        "llm_confidence_reason": "Implied by being listed under 'City Council Members'"
       }
     ],
     "divisions": [],
@@ -55,7 +50,7 @@
       {
         "data": "701-318-2502",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the person's name",
         "source": "https://mapletonnd.com/city"
       }
     ],
@@ -63,14 +58,14 @@
       {
         "data": "scott.suchor@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly stated next to the name.",
+        "llm_confidence_reason": "Email is explicitly stated next to the person's name",
         "source": "https://mapletonnd.com/city"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   },
   {
     "name": "Jason Astrup",
@@ -81,18 +76,13 @@
     "roles": [
       {
         "data": "President",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated next to the name and is a target role."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'President' is listed under 'City Council Members', implying 'Council President' which is a target role"
       },
       {
-        "data": "President - Bldgs/Grounds",
+        "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Contextual variation of a target role, clearly associated with the person."
-      },
-      {
-        "data": "President - Finance",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Contextual variation of a target role, clearly associated with the person."
+        "llm_confidence_reason": "Implied by being listed under 'City Council Members'"
       }
     ],
     "divisions": [],
@@ -100,7 +90,7 @@
       {
         "data": "701-373-5263",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the person's name",
         "source": "https://mapletonnd.com/city"
       }
     ],
@@ -108,7 +98,7 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   },
   {
     "name": "Dan Klaver",
@@ -120,7 +110,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated next to the name and is a target role."
+        "llm_confidence_reason": "Role is explicitly stated and is a target role"
       }
     ],
     "divisions": [],
@@ -128,7 +118,7 @@
       {
         "data": "651-815-8961",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the person's name",
         "source": "https://mapletonnd.com/city"
       }
     ],
@@ -136,14 +126,14 @@
       {
         "data": "dan.klaver1@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly stated next to the name.",
+        "llm_confidence_reason": "Email is explicitly stated next to the person's name",
         "source": "https://mapletonnd.com/city"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   },
   {
     "name": "Adam Laskey",
@@ -155,7 +145,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated next to the name and is a target role."
+        "llm_confidence_reason": "Role is explicitly stated and is a target role"
       }
     ],
     "divisions": [],
@@ -163,7 +153,7 @@
       {
         "data": "701-367-9501",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the person's name",
         "source": "https://mapletonnd.com/city"
       }
     ],
@@ -171,13 +161,13 @@
       {
         "data": "Adam.J.Laskey@gmail.com",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly stated next to the name.",
+        "llm_confidence_reason": "Email is explicitly stated next to the person's name",
         "source": "https://mapletonnd.com/city"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-03T23:51:19Z"
+    "updated_at": "2025-07-04T03:06:57Z"
   }
 ]

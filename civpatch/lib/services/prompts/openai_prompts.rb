@@ -12,6 +12,7 @@ module Services
         municipality_entry = context[:municipality_entry]
 
         maybe_target_people = (people_hint || []).map { |person| person&.dig("name") }.compact
+        current_date = Time.now.strftime("%Y-%m-%d")
 
         content_type = if person_name.present?
                          "First, determine if the content contains information about the target person: #{person_name}."
@@ -75,29 +76,29 @@ module Services
           - end_date: (Object or null) {data: "YYYY" or "YYYY-MM" or "YYYY-MM-DD", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}.
 
           Extraction Guidelines:
-          - General: Merge details for the same person. Assign confidence (0-1 scale) + brief reason for each field\'s data.
-          - Name: Extract full names ONLY (e.g., "Denyse McGriff", not "Mayor Denyse McGriff"). Titles go in \'positions\'.
-          - Roles:
-            - Extract ONLY active roles matching Target Roles/Examples (municipal legislative/executive).
-            - **Focus on Context**: Use the governing body or surrounding context to determine the correct role for ambiguous titles like "President."
-              - If "President" is listed under "Council Members" or a similar governing body, infer it as "Council President."
-              - If "President" is listed under "Commissioners" or a similar governing body, infer it as "Commissioner President."
-              - Do NOT infer roles without sufficient context.
-            - Normalize role titles: If a role is a clear synonym or a reordering of a Target Role (e.g., "President, City Council" vs "City Council President"), treat them as equivalent and output the normalized Target Role as listed in the Target Roles.
-            - Examples:
-              - If the target roles include "Council President":
-                - A person listed as "President" under "Council Members" → Extract as "Council President".
-                - A person listed as "President" under "Commissioners" → Do not extract as "Council President".
-              - If the target roles include "Commissioner President":
-                - A person listed as "President" under "Commissioners" → Extract as "Commissioner President".
-                - A person listed as "President" under "Council Members" → Do not extract as "Commissioner President".
-            - Divisions should NOT be included under roles.
+          - Roles extraction:
+            - Extract roles that match the **target roles** provided (e.g., #{roles.join(", ")}).
+            - If a role includes additional descriptors or variations, normalize it to the closest matching target role when possible.
+              - Example: "Vice President" under a governing body → Normalize to the closest matching target role, such as "Council Vice President" or "Commissioner Vice President."
+            - If a role cannot be normalized to a target role but is clearly valid (e.g., "Vice President"), extract it as-is.
+            - Use the governing body or surrounding context to determine the correct role for ambiguous titles.
+              - Example: If "Vice President" is listed under "Council Members," infer it as "Council Vice President."
+              - Example: If "Vice President" appears without clear context, extract it as "Vice President."
+            - Provide a confidence score (`llm_confidence`) and a brief reason for the inference or extraction.
+            - Include only active roles (today is #{current_date}).
+
           - Divisions:
             - Extract divisions if explicitly mentioned and relevant to the person's role.
             - Examples:
-              - "Citywide Position 7" -> "Citywide", "Position 7"
-              - "At-Large Position 2" -> "At-Large", "Position 2"
-            - Loose associations (e.g., the person lives in a district but is not elected from it) should not be listed
+              - "Citywide Position 7" → Extract as "Citywide" and "Position 7."
+              - "At-Large Position 2" → Extract as "At-Large" and "Position 2."
+            - Do not infer divisions if they are not explicitly stated.
+
+          - General Guidelines:
+            - Merge details for the same person into a single record.
+            - Assign confidence (0-1 scale) and provide a brief reason for each field's data.
+            - Extract full names only (e.g., "John Smith," not "Mayor John Smith"). Titles belong in the roles field.
+            - Ensure extracted data is accurate and relevant to the governing body or target roles.
           - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style.
           - Contact Details (Phone/Email/Website):
             - Associate details logically if near the person's name/section.

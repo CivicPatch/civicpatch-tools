@@ -1,4 +1,4 @@
-Press Alt+1 for screen-reader mode, Alt+0 to cancel[Accessibility Screen-Reader Guide, Feedback, and Issue Reporting | New window](https://accessibe.com/blog/knowledgebase/screen-reader-guide)
+Press Option+1 for screen-reader mode, Option+0 to cancel[Accessibility Screen-Reader Guide, Feedback, and Issue Reporting | New window](https://accessibe.com/blog/knowledgebase/screen-reader-guide)
 
 ![City of Mapleton, ND](https://mapletonnd.com/wp-content/uploads/2024/06/city-of-mapleton_white.png)
 

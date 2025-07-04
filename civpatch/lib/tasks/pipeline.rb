@@ -71,12 +71,13 @@ namespace :pipeline do
     source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
     people = source_directory_list["people"]
+    government_type = government_type || source_directory_list["government_type"]
     Core::PeopleManager.update_people(municipality_context, people, "#{source_directory_list["type"]}.before")
     people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
     formatted_people = Core::PeopleManager.format_people(government_type, people_config, people_with_canoncial_names)
     Core::PeopleManager.update_people(municipality_context, formatted_people, "#{source_directory_list["type"]}.after")
 
-    [formatted_people, people_config]
+    [formatted_people, people_config, government_type]
   end
 
   def fetch_with_scrape(municipality_context, people_hint)
@@ -137,10 +138,11 @@ namespace :pipeline do
     municipality_entry = context[:municipality_entry]
     prepare_directories(state, municipality_entry)
 
-    people_hint, people_config = fetch_with_state_source(context)
+    people_hint, people_config, government_type = fetch_with_state_source(context)
     context = Core::ContextManager
               .update_context_config(context,
-                                     people: people_config)
+                                    government_type: government_type,
+                                    people: people_config)
 
     people_config = fetch_with_scrape(context, people_hint)
     context = Core::ContextManager
