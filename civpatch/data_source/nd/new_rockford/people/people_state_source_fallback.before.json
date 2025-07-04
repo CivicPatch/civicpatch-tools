@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Erdmann",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-04T04:57:56Z"
+  },
+  {
+    "name": "Richter",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:56Z"
+  },
+  {
+    "name": "Fleming",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:56Z"
+  },
+  {
+    "name": "Dauenhauer",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-04T04:57:56Z"
+  }
+]
