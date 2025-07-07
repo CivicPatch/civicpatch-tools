@@ -2,36 +2,41 @@
   {
     "name": "Mark Lelm",
     "roles": [
-      "Mayor"
+      "Mayor",
+      "President of Commission"
     ],
-    "updated_at": "2025-07-04T04:57:32Z"
+    "updated_at": "2025-07-07T18:19:00Z"
   },
   {
     "name": "Keith Hapip",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Commission Vice-President"
     ],
-    "updated_at": "2025-07-04T04:57:32Z"
+    "updated_at": "2025-07-07T18:19:00Z"
   },
   {
     "name": "Tim Dockter",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Commissioner"
     ],
-    "updated_at": "2025-07-04T04:57:32Z"
+    "updated_at": "2025-07-07T18:19:00Z"
   },
   {
     "name": "Jamie Weber",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Commissioner"
     ],
-    "updated_at": "2025-07-04T04:57:32Z"
+    "updated_at": "2025-07-07T18:19:00Z"
   },
   {
     "name": "Miranda Harvey",
     "roles": [
-      "Council Member"
+      "Council Member",
+      "Commissioner"
     ],
-    "updated_at": "2025-07-04T04:57:32Z"
+    "updated_at": "2025-07-07T18:19:00Z"
   }
 ]
