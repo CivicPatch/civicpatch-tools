@@ -1,1 +1,219 @@
-[]
+[
+  {
+    "name": "Don Flaherty",
+    "sources": [
+      "https://ellendalend.gov/city/"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor, Don Flaherty' in the City Council members list."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-710-1268",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly follows the name and role.",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Flaherty@drtel.net",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly linked to Don Flaherty in the City Council members list.",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Justin Meidinger",
+    "sources": [
+      "https://ellendalend.gov/city/"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'President' among City Council members, inferred as Council President."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-535-0347",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly follows the name and role.",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jmmeid@hotmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly linked to Justin Meidinger in the City Council members list.",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Bruce Crabtree",
+    "sources": [
+      "https://ellendalend.gov/city/"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Vice President' among City Council members, inferred as Council Vice President."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-471-0872",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly follows the name and role.",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Tammy Belgarde",
+    "sources": [
+      "https://ellendalend.gov/city/"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed among City Council members without specific role, default to Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-330-5402",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly follows the name.",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tammy.belgarde@swissmail.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly linked to Tammy Belgarde.",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Tom Denison",
+    "sources": [
+      "https://ellendalend.gov/city/"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed among City Council members without specific role, default to Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "612-581-3231",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly follows the name.",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Jon Langeliers",
+    "sources": [
+      "https://ellendalend.gov/city/"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed among City Council members without specific role, default to Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-870-2965",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly follows the name.",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Patrick Lee",
+    "sources": [
+      "https://ellendalend.gov/city/"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed among City Council members without specific role, default to Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-535-1931",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly follows the name.",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:23Z"
+  }
+]

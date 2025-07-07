@@ -1,1 +1,128 @@
-[]
+[
+  {
+    "name": "Don Flaherty",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "701-710-1268",
+    "email": "Flaherty@drtel.net",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://ellendalend.gov/city/",
+      "https://ellendalend.gov/city"
+    ],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Justin Meidinger",
+    "roles": [
+      "Council President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "701-535-0347",
+    "email": "jmmeid@hotmail.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://ellendalend.gov/city/",
+      "https://ellendalend.gov/city"
+    ],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Bruce Crabtree",
+    "roles": [
+      "Council Vice President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "701-471-0872",
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://ellendalend.gov/city/",
+      "https://ellendalend.gov/city"
+    ],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Tammy Belgarde",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "701-330-5402",
+    "email": "tammy.belgarde@swissmail.org",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://ellendalend.gov/city/",
+      "https://ellendalend.gov/city"
+    ],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Tom Denison",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "612-581-3231",
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://ellendalend.gov/city/",
+      "https://ellendalend.gov/city"
+    ],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Jon Langeliers",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "701-870-2965",
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://ellendalend.gov/city/",
+      "https://ellendalend.gov/city"
+    ],
+    "updated_at": "2025-07-07T18:23:23Z"
+  },
+  {
+    "name": "Patrick Lee",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "701-535-1931",
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://ellendalend.gov/city/",
+      "https://ellendalend.gov/city"
+    ],
+    "updated_at": "2025-07-07T18:23:23Z"
+  }
+]

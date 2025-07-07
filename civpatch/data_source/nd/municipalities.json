@@ -716,8 +716,8 @@
       "population": 1125,
       "website": "https://ellendalend.gov/",
       "government_type": null,
-      "meta_updated_at": "2025-07-04T05:04:43Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-07T18:23:36Z",
+      "meta_hash": "5a04abcdf80602eaf5697574e169da60",
       "meta_sources": [
         "state_source",
         "gemini",

@@ -1,1 +1,229 @@
-[]
+[
+  {
+    "name": "Don Flaherty",
+    "sources": [
+      "https://ellendalend.gov/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated next to the person's name, directly under the 'CITY COUNCIL' heading, confirming its accuracy and relevance to the governing body. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-710-1268",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and role, indicating high accuracy and direct association with the individual's contact information for their public role. ",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Flaherty@drtel.net",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, formatted as a mailto link text, indicating high accuracy and direct association with the individual's contact information for their public role. The domain is also consistent with local providers, further supporting its validity for this context. ",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:36Z"
+  },
+  {
+    "name": "Justin Meidinger",
+    "sources": [
+      "https://ellendalend.gov/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'President' is explicitly stated next to the person's name, directly under the 'CITY COUNCIL' heading, confirming its accuracy and relevance to the governing body. "
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'President' is explicitly stated next to the person's name, directly under the 'CITY COUNCIL' heading, confirming its accuracy and relevance to the governing body. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-535-0347",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and role, indicating high accuracy and direct association with the individual's contact information for their public role. ",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jmmeid@hotmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, formatted as a mailto link text, indicating high accuracy and direct association with the individual's contact information for their public role. The domain is also consistent with common email providers, further supporting its validity for this context. ",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:36Z"
+  },
+  {
+    "name": "Bruce Crabtree",
+    "sources": [
+      "https://ellendalend.gov/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Vice President' is explicitly stated next to the person's name, directly under the 'CITY COUNCIL' heading, confirming its accuracy and relevance to the governing body. "
+      },
+      {
+        "data": "Council Vice President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Vice President' is explicitly stated next to the person's name, directly under the 'CITY COUNCIL' heading, confirming its accuracy and relevance to the governing body. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-471-0872",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name and role, indicating high accuracy and direct association with the individual's contact information for their public role. ",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:36Z"
+  },
+  {
+    "name": "Tammy Belgarde",
+    "sources": [
+      "https://ellendalend.gov/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'CITY COUNCIL' heading, implying their role as a council member, although not explicitly stated next to their name. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-330-5402",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name, indicating high accuracy and direct association with the individual's contact information for their public role. ",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tammy.belgarde@swissmail.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name, formatted as a mailto link text, indicating high accuracy and direct association with the individual's contact information for their public role. The domain is also consistent with common email providers, further supporting its validity for this context. ",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:36Z"
+  },
+  {
+    "name": "Tom Denison",
+    "sources": [
+      "https://ellendalend.gov/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'CITY COUNCIL' heading, implying their role as a council member, although not explicitly stated next to their name. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "612-581-3231",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name, indicating high accuracy and direct association with the individual's contact information for their public role. ",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:36Z"
+  },
+  {
+    "name": "Jon Langeliers",
+    "sources": [
+      "https://ellendalend.gov/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'CITY COUNCIL' heading, implying their role as a council member, although not explicitly stated next to their name. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-870-2965",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name, indicating high accuracy and direct association with the individual's contact information for their public role. ",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:36Z"
+  },
+  {
+    "name": "Patrick Lee",
+    "sources": [
+      "https://ellendalend.gov/city"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed directly under the 'CITY COUNCIL' heading, implying their role as a council member, although not explicitly stated next to their name. "
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "701-535-1931",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name, indicating high accuracy and direct association with the individual's contact information for their public role. ",
+        "source": "https://ellendalend.gov/city"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-07T18:23:36Z"
+  }
+]

@@ -1,1 +1,99 @@
---- []
+---
+- name: Don Flaherty
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email: Flaherty@drtel.net
+  phone_number: "(701) 710-1268"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://ellendalend.gov/city
+  updated_at: '2025-07-07T18:23:36Z'
+- name: Justin Meidinger
+  roles:
+  - Council President
+  divisions:
+  image:
+  cdn_image:
+  email: jmmeid@hotmail.com
+  phone_number: "(701) 535-0347"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://ellendalend.gov/city
+  updated_at: '2025-07-07T18:23:36Z'
+- name: Bruce Crabtree
+  roles:
+  - Council Vice President
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(701) 471-0872"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://ellendalend.gov/city
+  updated_at: '2025-07-07T18:23:36Z'
+- name: Jon Langeliers
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(701) 870-2965"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://ellendalend.gov/city
+  updated_at: '2025-07-07T18:23:36Z'
+- name: Patrick Lee
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(701) 535-1931"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://ellendalend.gov/city
+  updated_at: '2025-07-07T18:23:36Z'
+- name: Tammy Belgarde
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: tammy.belgarde@swissmail.org
+  phone_number: "(701) 330-5402"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://ellendalend.gov/city
+  updated_at: '2025-07-07T18:23:36Z'
+- name: Tom Denison
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(612) 581-3231"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://ellendalend.gov/city
+  updated_at: '2025-07-07T18:23:36Z'
