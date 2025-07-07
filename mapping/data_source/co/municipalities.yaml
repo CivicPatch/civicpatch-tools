@@ -35,6 +35,7 @@
     - Ward 4
     - Ward 5
     - Ward 6
+  map_url: https://experience.arcgis.com/experience/5a1f496ec38746bf8e90867c6966e295
   population: 386261
   website: https://www.auroragov.org/
 - name: Fort Collins
@@ -180,6 +181,7 @@
     - Ward 2
     - Ward 3
     - Ward 4
+  map_url: https://experience.arcgis.com/experience/6b5bc2af4dcf409e87db2775b5dd29f5/
   population: 40083
   website: http://www.brightonco.gov/
 - name: Northglenn

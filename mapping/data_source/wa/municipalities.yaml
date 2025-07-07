@@ -77,6 +77,7 @@
     - District 6
     - District 7
     - District Dummy # Yakima map has a dupe district...
+  division_attr: Option2
   map_url: https://www.yakimawa.gov/council/city-council-districts
   map_attribute: 
     attr_name: Option2 # This is also kind of silly
@@ -97,6 +98,7 @@
     - Ward 4
     - Ward 5
     - Ward 6
+  map_url: https://www.arcgis.com/apps/instant/basic/index.html?appid=24d3ef4cc43d49559a18d630ddc28ae7
   population: 91482
   website: https://cob.org
 - name: Auburn

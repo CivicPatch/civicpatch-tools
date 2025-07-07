@@ -31,7 +31,7 @@ const VARIABLES = {
 }
 
 const DIVISION_ATTRIBUTES = {
-    "council_district": ["dist", "district"],
+    "council_district": ["district", "dist"],
     "ward": ["ward"]
 }
 
@@ -64,7 +64,10 @@ const HEURISTICS = {
                 const properties = Object.entries(feature.properties);
 
                 for (const division_type of division_types) {
-                    attribute_keys_to_look_for = DIVISION_ATTRIBUTES[division_type]
+                    attribute_keys_to_look_for = !!municipality.division_attr 
+                        ? [municipality.division_attr.toLowerCase()] 
+                        : DIVISION_ATTRIBUTES[division_type]
+                    console.log("attribute_keys_to_look_for", attribute_keys_to_look_for)
 
                     candidate = properties.filter(([attr_name, attr_value]) => {
                         return typeof attr_name === 'string' && attribute_keys_to_look_for.some(keyword => attr_name.toLowerCase().includes(keyword));
@@ -91,15 +94,18 @@ const HEURISTICS = {
 PROJECT_ROOT = path.join(__dirname, '../../..');
 
 const patterns = [
-    /rest\/services\/\S+\/\d+\/query/,
-    /rest\/services\/\S+\/FeatureServer\/\d+/
+    /rest\/services\/\S+\/FeatureServer\/\d+/,
+    /rest\/services\/\S+\/MapServer\/\d+/,
+    /rest\/services\/\S+\/MapServer/,
+    /rest\/services\/\S+\/MapServer\/identify/,
 ];
 
-const GEOJSON_QUERY = "?where=1%3D1&outFields=*&f=geojson"
+const GEOJSON_QUERY = "?where=1=1&outSR=4326&outFields=*&f=geojson"
 // TODO: end of query should be replaced with ?where=1%3D1&outFields=*&f=geojson
 
 const excludedPatterns = [
-    /basemaps.arcgis.com/
+    /basemaps.arcgis.com/,
+    /Elevation\/World_Hillshade/
 ];
 
 async function search(search_engine = 'google', query) {
@@ -118,26 +124,58 @@ async function search(search_engine = 'google', query) {
 async function monitorNetworkRequests(page, duration = 20000) { // duration in milliseconds
     const candidate_urls = [];
 
-    const requestListener = (request) => {
+    const requestListener = async (request) => {
         const url = request.url();
         if (!excludedPatterns.some(pattern => pattern.test(url))) {
             fs.writeFileSync(path.join(PROJECT_ROOT, "tmp", "output.txt"), `Request URL: ${url}\n`, { flag: 'a' });
         }
         if (patterns.some(pattern => pattern.test(url)) && !excludedPatterns.some(pattern => pattern.test(url))) {
-           console.log(`ArcGIS API call detected: ${url}`);
            // Transform request to get just geojson
            const urlObj = new URL(url);
 
            // If the end of the path is /FeatureServer/<number>, we need to append "query" to the end of the URL
-          if (/FeatureServer\/\d+$/.test(urlObj.pathname)) {
+          if (/FeatureServer\/\d+$/.test(urlObj.pathname) || /MapServer\/\d+$/.test(urlObj.pathname)) {
             urlObj.pathname += "/query";
             urlObj.search = GEOJSON_QUERY; 
+
+            let updated_url = urlObj.toString();
+            console.log(`Transformed URL: ${updated_url}`); 
+            candidate_urls.push(updated_url);
+          } else if (/MapServer\/identify/.test(urlObj.pathname)) {
+            // If the path is /MapServer/identify, let's grab the layers=visible:0 to form a new request
+
+            const layersParam = urlObj.searchParams.get('layers');
+            if (layersParam) {
+                // If layers=visible:<digit>, we need to grab the layer number
+                layerNumber = layersParam.match(/visible:(\d+)/);
+                if (layerNumber && layerNumber[1]) {
+                    console.log(`Extracted layer number: ${layerNumber[1]}`);
+                    urlObj.pathname = urlObj.pathname.replace(/identify$/, `${layerNumber[1]}/query`);
+                    urlObj.search = GEOJSON_QUERY; // Append the query parameters for GeoJSON
+                } else {
+                    console.error(`Could not extract layer number from layers parameter: ${layersParam}`);
+                }
+            } else {
+                console.error(`No layers parameter found in URL: ${url}`);
+            } 
+
+            let updated_url = urlObj.toString();
+            console.log(`Transformed URL: ${updated_url}`); 
+            candidate_urls.push(updated_url);
+          } else if (/MapServer/.test(urlObj.pathname)) {
+
+            // Can't match from the above, so let's get the map server URL (everything until MapServer)
+            const mapServerUrl = urlObj.toString().replace(/\/MapServer.*/, '/MapServer');
+            const mapServerUrlWithQuery = `${mapServerUrl}?f=json`;
+            const data = await fetch(mapServerUrlWithQuery);
+            const jsonData = await data.json();
+            const layerIds = jsonData.layers.map(layer => layer.id);
+            const layerIdsCandidateUrls = layerIds.map(id => `${mapServerUrl}/${id}/query${GEOJSON_QUERY}`);
+            candidate_urls.push(...layerIdsCandidateUrls);
           }
-          urlObj.search = GEOJSON_QUERY; // Replace the existing search parameters with GEOJSON_QUERY
-          let updated_url = urlObj.toString();
-          console.log(`Transformed URL for GeoJSON: ${updated_url}`); 
-          candidate_urls.push(updated_url);
-        }
+        } 
+
+
     };
 
     page.on('request', requestListener);
@@ -160,7 +198,9 @@ async function searchForMap(url) {
         await page.goto(url);
 
         // Monitor network requests for 10 seconds
-        const candidate_urls = await monitorNetworkRequests(page, 10000);
+        let candidate_urls = await monitorNetworkRequests(page, 10000);
+        candidate_urls = [...new Set(candidate_urls)]; // Remove duplicates
+        console.log(`Found ${candidate_urls.length} candidate URLs.`);
 
         await browser.close();
         return candidate_urls;
@@ -179,24 +219,38 @@ async function processCandidateUrls(candidateUrls, divisions, state, municipalit
 
     for (const url of candidateUrls) {
         console.log(`Processing candidate URL: ${url}`);
-        let geojsonData = null
+        let data = null
         try {
             const response = await fetch(url);
-            geojsonData = await response.json()
+            data = await response.json()
         } catch (err) {
             console.error(`No valid geojson data found at ${url}, err: ${err}`)
+        }
+
+        // Transform data into geojson format if it is not already
+        let geojsonData = null;
+        if (data && data.features) {
+            geojsonData = data; // Already in GeoJSON format
+        } else {
+            console.error(`No valid GeoJSON data found at ${url}. Skipping...`);
+            continue; // Skip this URL if no valid GeoJSON data is found
         }
 
         if (geojsonData && geojsonData.features) {
             const featureCount = geojsonData.features.length;
             const divisionsMatch = HEURISTICS["divisions_match"]["match"](municipality, geojsonData)
+            console.log('List of attributes:', Object.keys(geojsonData.features[0].properties));
 
             if (divisionsMatch) {
                 console.log(`Feature count matches divisions count. Saving GeoJSON...`);
 
                 attributes_match = HEURISTICS["attributes_match"]["match"](municipality, geojsonData)
+                console.log(`Matched attributes:`, attributes_match);
 
-                console.log("attributes match looks like ", attributes_match)
+                if (attributes_match.length === 0) {
+                    console.error(`No matching attributes found for divisions in ${municipalityName}. Skipping...`);
+                    continue; // Skip this URL if no matching attributes are found
+                }
 
                 // Update the properties based on the property id
                 updated_features = geojsonData.features.map(feature => {
@@ -207,7 +261,8 @@ async function processCandidateUrls(candidateUrls, divisions, state, municipalit
 
                 geojsonData.features = updated_features
 
-                const outputPath = path.join(PROJECT_ROOT, 'geocoding', 'data_source', state, municipalityName, 'divisions_map.geojson');
+                municipalityFolderName = municipalityName.toLowerCase().replace(/\s+/g, '_');
+                const outputPath = path.join(PROJECT_ROOT, 'mapping', 'data_source', state, municipalityFolderName, 'divisions_map.geojson');
                 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
                 fs.writeFileSync(outputPath, JSON.stringify(geojsonData, null, 2), 'utf8');
 
@@ -234,7 +289,7 @@ async function crawl(state, geoid) {
         return;
     }
 
-    municipalities_file_path = path.join(PROJECT_ROOT, 'geocoding', 'data_source', state, 'municipalities.yaml');
+    municipalities_file_path = path.join(PROJECT_ROOT, 'mapping', 'data_source', state, 'municipalities.yaml');
     municipalities = fs.existsSync(municipalities_file_path) ? yaml.load(fs.readFileSync(municipalities_file_path)) : [];
     municipality = municipalities.find(m => m.geoid === geoid);
 

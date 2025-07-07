@@ -11,7 +11,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "i": "^0.3.7",
     "js-yaml": "^4.1.0",
+    "npm": "^11.4.2",
     "patchright": "^1.52.5"
   }
 }
