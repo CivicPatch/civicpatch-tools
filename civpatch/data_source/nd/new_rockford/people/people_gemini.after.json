@@ -2,7 +2,8 @@
   {
     "name": "Stuart Richter",
     "roles": [
-      "Board Member"
+      "Commissioner",
+      "Commissioner President"
     ],
     "divisions": [],
     "image": null,
@@ -12,14 +13,15 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofnewrockford.com/nrabc"
+      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
+      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
     ],
-    "updated_at": "2025-07-04T05:00:25Z"
+    "updated_at": "2025-07-07T18:31:16Z"
   },
   {
-    "name": "Mike Yri",
+    "name": "Dillon Hewitt",
     "roles": [
-      "Board Member"
+      "Commissioner"
     ],
     "divisions": [],
     "image": null,
@@ -29,14 +31,15 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofnewrockford.com/nrabc"
+      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
+      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
     ],
-    "updated_at": "2025-07-04T05:00:25Z"
+    "updated_at": "2025-07-07T18:31:16Z"
   },
   {
-    "name": "Kerri Allmaras",
+    "name": "Kelly McKnight",
     "roles": [
-      "Board Member"
+      "Commissioner"
     ],
     "divisions": [],
     "image": null,
@@ -46,14 +49,15 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofnewrockford.com/nrabc"
+      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
+      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
     ],
-    "updated_at": "2025-07-04T05:00:25Z"
+    "updated_at": "2025-07-07T18:31:16Z"
   },
   {
-    "name": "Chelsey Zeltinger",
+    "name": "Justin Ystaas",
     "roles": [
-      "Board Member"
+      "Commissioner"
     ],
     "divisions": [],
     "image": null,
@@ -63,14 +67,16 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofnewrockford.com/nrabc"
+      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
+      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
     ],
-    "updated_at": "2025-07-04T05:00:25Z"
+    "updated_at": "2025-07-07T18:31:16Z"
   },
   {
-    "name": "Melinda Martin",
+    "name": "Jim Belquist",
     "roles": [
-      "Board Member"
+      "Commissioner",
+      "Mayor"
     ],
     "divisions": [],
     "image": null,
@@ -80,59 +86,10 @@
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.cityofnewrockford.com/nrabc"
+      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
+      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8",
+      "https://www.cityofnewrockford.com/index.asp?SEC=3B97B557-E4D6-4857-93A1-9178A98DF262&DE=0B9D8D58-77DA-4CED-89AF-0E69203C4928"
     ],
-    "updated_at": "2025-07-04T05:00:25Z"
-  },
-  {
-    "name": "Kenny Thompson",
-    "roles": [
-      "Board Member"
-    ],
-    "divisions": [],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.cityofnewrockford.com/nrabc"
-    ],
-    "updated_at": "2025-07-04T05:00:25Z"
-  },
-  {
-    "name": "Amy Ellingson",
-    "roles": [
-      "Board Member"
-    ],
-    "divisions": [],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.cityofnewrockford.com/nrabc"
-    ],
-    "updated_at": "2025-07-04T05:00:25Z"
-  },
-  {
-    "name": "Jackie Engels",
-    "roles": [
-      "Board Member"
-    ],
-    "divisions": [],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": null,
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://www.cityofnewrockford.com/nrabc"
-    ],
-    "updated_at": "2025-07-04T05:00:25Z"
+    "updated_at": "2025-07-07T18:31:16Z"
   }
 ]
