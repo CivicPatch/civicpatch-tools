@@ -1,1 +1,95 @@
-[]
+[
+  {
+    "name": "Stuart Richter",
+    "roles": [
+      "Commissioner President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
+      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
+    ],
+    "updated_at": "2025-07-07T18:30:36Z"
+  },
+  {
+    "name": "Dillon Hewitt",
+    "roles": [
+      "Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
+      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
+    ],
+    "updated_at": "2025-07-07T18:30:36Z"
+  },
+  {
+    "name": "Kelly McKnight",
+    "roles": [
+      "Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
+      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
+    ],
+    "updated_at": "2025-07-07T18:30:36Z"
+  },
+  {
+    "name": "Justin Ystaas",
+    "roles": [
+      "Commissioner"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
+      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
+    ],
+    "updated_at": "2025-07-07T18:30:36Z"
+  },
+  {
+    "name": "Jim Belquist",
+    "roles": [
+      "Commissioner",
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
+      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8",
+      "https://www.cityofnewrockford.com/index.asp?SEC=3B97B557-E4D6-4857-93A1-9178A98DF262&DE=0B9D8D58-77DA-4CED-89AF-0E69203C4928",
+      "https://www.cityofnewrockford.com/index.asp?SEC=3B97B557-E4D6-4857-93A1-9178A98DF262&DE=347BF7F3-593F-4EE2-B5CB-21554300CA05"
+    ],
+    "updated_at": "2025-07-07T18:30:36Z"
+  }
+]
