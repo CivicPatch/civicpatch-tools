@@ -1,146 +1,182 @@
 [
   {
     "name": "Julie Hoy",
-    "positions": [
-      "Mayor",
-      "Council Member"
+    "roles": [
+      "Council Member",
+      "Mayor"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": null,
+    "phone_number": "(503) 588-6255",
     "email": "jhoy@cityofsalem.net",
     "website": "https://www.cityofsalem.net/government/city-council-mayor/mayor",
-    "start_date": null,
+    "start_date": "2024-05",
     "end_date": null,
     "sources": [
       "https://www.cityofsalem.net/government/city-council-mayor",
       "https://www.cityofsalem.net/government/city-council-mayor/mayor"
-    ]
+    ],
+    "updated_at": "2025-07-09T17:11:23Z"
   },
   {
     "name": "Paul Tigan",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
       "Ward 1"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(503) 399-7801",
     "email": "ptigan@cityofsalem.net",
-    "website": null,
+    "website": "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor",
     "start_date": null,
     "end_date": "2028-12-31",
     "sources": [
       "https://www.cityofsalem.net/government/city-council-mayor",
       "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor"
-    ]
+    ],
+    "updated_at": "2025-07-09T17:11:23Z"
   },
   {
     "name": "Linda Nishioka",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
       "Ward 2"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(503) 399-7802",
     "email": "lnishioka@cityofsalem.net",
-    "website": null,
-    "start_date": "2022-05-01",
+    "website": "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor",
+    "start_date": "2022-05",
     "end_date": "2026-12-31",
     "sources": [
       "https://www.cityofsalem.net/government/city-council-mayor",
       "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor"
-    ]
+    ],
+    "updated_at": "2025-07-09T17:11:23Z"
   },
   {
     "name": "Shane Matthews",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
       "Ward 3"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(503) 399-7803",
     "email": "smatthews@cityofsalem.net",
-    "website": null,
+    "website": "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor",
     "start_date": null,
     "end_date": "2028-12-31",
     "sources": [
       "https://www.cityofsalem.net/government/city-council-mayor",
       "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor"
-    ]
+    ],
+    "updated_at": "2025-07-09T17:11:23Z"
   },
   {
     "name": "Deanna Gwyn",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
       "Ward 4"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(503) 399-7804",
     "email": "dgwyn@cityofsalem.net",
-    "website": null,
-    "start_date": "2022-11-01",
+    "website": "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor",
+    "start_date": "2022-11",
     "end_date": "2026-12-31",
     "sources": [
       "https://www.cityofsalem.net/government/city-council-mayor",
       "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor"
-    ]
+    ],
+    "updated_at": "2025-07-09T17:11:23Z"
   },
   {
     "name": "Irvin M. Brown",
-    "positions": [
-      "Council Member",
+    "roles": [
+      "Chair",
+      "Council Member"
+    ],
+    "divisions": [
       "Ward 5"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "(503) 399-7905",
     "email": "ibrown@cityofsalem.net",
-    "website": null,
+    "website": "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor",
     "start_date": null,
     "end_date": "2028-12-31",
     "sources": [
       "https://www.cityofsalem.net/government/city-council-mayor",
       "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor"
-    ]
+    ],
+    "updated_at": "2025-07-09T17:11:23Z"
   },
   {
-    "name": "Vanessa Nordyke",
-    "positions": [
-      "Council Member",
-      "Ward 7"
+    "name": "Mai Vang",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward 6"
     ],
     "image": null,
-    "source_image": null,
-    "phone_number": "(503) 399-7907",
-    "email": "vnordyke@cityofsalem.net",
-    "website": null,
-    "start_date": "2020-05-01",
-    "end_date": "2028-12-31",
-    "sources": [
-      "https://www.cityofsalem.net/government/city-council-mayor",
-      "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor"
-    ]
-  },
-  {
-    "name": "Micki Varney",
-    "positions": [
-      "Council Member",
-      "Ward 8"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": "(503) 399-7808",
-    "email": "mvarney@cityofsalem.net",
-    "website": null,
-    "start_date": "2022-05-01",
+    "phone_number": "(503) 399-7906",
+    "email": "mvang@cityofsalem.net",
+    "website": "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor",
+    "start_date": "2025-05",
     "end_date": "2026-12-31",
     "sources": [
       "https://www.cityofsalem.net/government/city-council-mayor",
       "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor"
-    ]
+    ],
+    "updated_at": "2025-07-09T17:11:23Z"
+  },
+  {
+    "name": "Vanessa Nordyke",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward 7"
+    ],
+    "image": null,
+    "phone_number": "(503) 399-7907",
+    "email": "vnordyke@cityofsalem.net",
+    "website": "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor",
+    "start_date": "2020-05",
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.cityofsalem.net/government/city-council-mayor",
+      "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor"
+    ],
+    "updated_at": "2025-07-09T17:11:23Z"
+  },
+  {
+    "name": "Micki Varney",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward 8"
+    ],
+    "image": null,
+    "phone_number": "(503) 399-7808",
+    "email": "mvarney@cityofsalem.net",
+    "website": "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor",
+    "start_date": "2022-05",
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.cityofsalem.net/government/city-council-mayor",
+      "https://www.cityofsalem.net/government/city-council-mayor/about-city-council/contact-a-city-councilor"
+    ],
+    "updated_at": "2025-07-09T17:11:23Z"
   }
 ]
