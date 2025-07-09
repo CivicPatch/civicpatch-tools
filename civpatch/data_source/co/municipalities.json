@@ -2084,7 +2084,14 @@
       ],
       "population": 1571,
       "website": "https://www.pagosasprings.co.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T00:20:13Z",
+      "meta_hash": "68b2df7b987226f9874c283dc60c6d43",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Kremmling",
