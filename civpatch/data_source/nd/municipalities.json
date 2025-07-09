@@ -599,14 +599,7 @@
       ],
       "population": 1361,
       "website": "http://www.cityofnewrockford.com/",
-      "government_type": null,
-      "meta_updated_at": "2025-07-04T05:00:25Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
-      "meta_sources": [
-        "state_source",
-        "gemini",
-        "openai"
-      ]
+      "government_type": null
     },
     {
       "name": "Surrey",
