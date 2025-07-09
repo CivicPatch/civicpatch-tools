@@ -1,21 +1,97 @@
 [
   {
     "name": "Frank Lonergan",
-    "image": null,
-    "source_image": null,
+    "sources": [
+      "https://www.woodburn-or.gov/citycouncil",
+      "https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Frank Lonergan' and 'Woodburn City Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(503) 982-5228",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "The phone number is for City Hall, but it is listed under 'Contact Information' on the Mayor's dedicated page, implying it's the primary contact for the Mayor's office.",
+        "source": "https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan"
+      }
+    ],
+    "emails": [
+      {
+        "data": "frank.lonergan@ci.woodburn.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and linked.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Mayor Frank Lonergan.",
+        "source": "https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-12-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'officially sworn in as Woodburn’s 43rd Mayor on Monday, December 12, 2022'.",
+        "source": "https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated in 'Term Expires' column.",
+        "source": "https://www.woodburn-or.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-07-09T17:17:31Z"
+  },
+  {
+    "name": "Orlando Bravo",
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "positions": [
-      "Mayor",
-      "Council Member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred role based on being listed under 'City Council' with a 'Ward' designation."
+      },
+      {
+        "data": "Ward I Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred specific role based on being listed under 'City Council' with a 'Ward I' designation."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in 'Ward' column."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
-        "data": "frank.lonergan@ci.woodburn.or.us",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found directly in table under 'Email' column.",
+        "data": "orlando.bravo@ci.woodburn.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and linked.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -23,31 +99,45 @@
     "start_dates": [],
     "end_dates": [
       {
-        "data": "2026-12",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration date found directly in table under 'Term Expires' column, matches YYYY-MM format.",
+        "data": "2028-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated in 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   },
   {
     "name": "Mark Wilk",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "positions": [
-      "Council Member",
-      "Ward II"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred role based on being listed under 'City Council' with a 'Ward' designation."
+      },
+      {
+        "data": "Ward II Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred specific role based on being listed under 'City Council' with a 'Ward II' designation."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward II",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in 'Ward' column."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "mark.wilk@ci.woodburn.or.us",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found directly in table under 'Email' column.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and linked.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -56,30 +146,44 @@
     "end_dates": [
       {
         "data": "2028-12",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration date found directly in table under 'Term Expires' column, matches YYYY-MM format.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated in 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   },
   {
     "name": "Jen Cantu",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "positions": [
-      "Council Member",
-      "Ward III"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred role based on being listed under 'City Council' with a 'Ward' designation."
+      },
+      {
+        "data": "Ward III Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred specific role based on being listed under 'City Council' with a 'Ward III' designation."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in 'Ward' column."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
-        "data": "Jennifer.Cantu@ci.woodburn.or.us",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found directly in table under 'Email' column.",
+        "data": "jennifer.cantu@ci.woodburn.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and linked, corrected from broken markdown.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -88,30 +192,44 @@
     "end_dates": [
       {
         "data": "2026-12",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration date found directly in table under 'Term Expires' column, matches YYYY-MM format.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated in 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   },
   {
     "name": "Sharon Schaub",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "positions": [
-      "Council Member",
-      "Ward IV"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred role based on being listed under 'City Council' with a 'Ward' designation."
+      },
+      {
+        "data": "Ward IV Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred specific role based on being listed under 'City Council' with a 'Ward IV' designation."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward IV",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in 'Ward' column."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "sharon.schaub@ci.woodburn.or.us",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found directly in table under 'Email' column.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and linked.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -120,30 +238,44 @@
     "end_dates": [
       {
         "data": "2026-12",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration date found directly in table under 'Term Expires' column, matches YYYY-MM format.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated in 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   },
   {
     "name": "Mary Beth Cornwell",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "positions": [
-      "Council Member",
-      "Ward V"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred role based on being listed under 'City Council' with a 'Ward' designation."
+      },
+      {
+        "data": "Ward V Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred specific role based on being listed under 'City Council' with a 'Ward V' designation."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward V",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in 'Ward' column."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "marybeth.cornwell@ci.woodburn.or.us",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found directly in table under 'Email' column.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and linked.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -152,30 +284,44 @@
     "end_dates": [
       {
         "data": "2026-12",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration date found directly in table under 'Term Expires' column, matches YYYY-MM format.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated in 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   },
   {
     "name": "Alma Grijalva",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "positions": [
-      "Council Member",
-      "Ward VI"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred role based on being listed under 'City Council' with a 'Ward' designation."
+      },
+      {
+        "data": "Ward VI Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred specific role based on being listed under 'City Council' with a 'Ward VI' designation."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward VI",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in 'Ward' column."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "alma.grijalva@ci.woodburn.or.us",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found directly in table under 'Email' column.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and linked.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
@@ -184,11 +330,11 @@
     "end_dates": [
       {
         "data": "2028-12",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration date found directly in table under 'Term Expires' column, matches YYYY-MM format.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated in 'Term Expires' column.",
         "source": "https://www.woodburn-or.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   }
 ]

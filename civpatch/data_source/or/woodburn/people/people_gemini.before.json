@@ -1,30 +1,52 @@
 [
   {
     "name": "Frank Lonergan",
-    "positions": [
-      "Mayor",
-      "Council Member"
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(503) 982-5228",
+    "email": "frank.lonergan@ci.woodburn.or.us",
+    "website": "https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan",
+    "start_date": "2022-12-12",
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.woodburn-or.gov/citycouncil",
+      "https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan"
+    ],
+    "updated_at": "2025-07-09T17:17:31Z"
+  },
+  {
+    "name": "Orlando Bravo",
+    "roles": [
+      "Council Member",
+      "Ward I Council Member"
+    ],
+    "divisions": [
+      "Ward I"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
-    "email": "frank.lonergan@ci.woodburn.or.us",
+    "email": "orlando.bravo@ci.woodburn.or.us",
     "website": null,
     "start_date": null,
-    "end_date": "2026-12",
+    "end_date": "2028-12",
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   },
   {
     "name": "Mark Wilk",
-    "positions": [
+    "roles": [
       "Council Member",
+      "Ward II Council Member"
+    ],
+    "divisions": [
       "Ward II"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": "mark.wilk@ci.woodburn.or.us",
     "website": null,
@@ -33,34 +55,38 @@
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   },
   {
     "name": "Jen Cantu",
-    "positions": [
+    "roles": [
       "Council Member",
+      "Ward III Council Member"
+    ],
+    "divisions": [
       "Ward III"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
-    "email": "Jennifer.Cantu@ci.woodburn.or.us",
+    "email": "jennifer.cantu@ci.woodburn.or.us",
     "website": null,
     "start_date": null,
     "end_date": "2026-12",
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   },
   {
     "name": "Sharon Schaub",
-    "positions": [
+    "roles": [
       "Council Member",
+      "Ward IV Council Member"
+    ],
+    "divisions": [
       "Ward IV"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": "sharon.schaub@ci.woodburn.or.us",
     "website": null,
@@ -69,16 +95,18 @@
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   },
   {
     "name": "Mary Beth Cornwell",
-    "positions": [
+    "roles": [
       "Council Member",
+      "Ward V Council Member"
+    ],
+    "divisions": [
       "Ward V"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": "marybeth.cornwell@ci.woodburn.or.us",
     "website": null,
@@ -87,16 +115,18 @@
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   },
   {
     "name": "Alma Grijalva",
-    "positions": [
+    "roles": [
       "Council Member",
+      "Ward VI Council Member"
+    ],
+    "divisions": [
       "Ward VI"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": "alma.grijalva@ci.woodburn.or.us",
     "website": null,
@@ -105,6 +135,6 @@
     "sources": [
       "https://www.woodburn-or.gov/citycouncil"
     ],
-    "updated_at": "2025-05-05"
+    "updated_at": "2025-07-09T17:17:31Z"
   }
 ]
