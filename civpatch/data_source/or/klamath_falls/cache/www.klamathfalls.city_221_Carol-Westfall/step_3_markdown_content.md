@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.klamathfalls.city/directory.aspx?EID=117%2F)
+[Skip to Main Content](https://www.klamathfalls.city/221/Carol-Westfall/)
 
 ![Klamath Falls OR Homepage](https://www.klamathfalls.city/ImageRepository/Document?documentID=2457)
 
@@ -15,28 +15,23 @@ Search
 
 <!--THE END-->
 
-![](https://www.klamathfalls.city/ImageRepository/Document?documentID=2499)
+![](https://www.klamathfalls.city/ImageRepository/Document?documentID=2453)
 
 1. [Home](https://www.klamathfalls.city)
-2. Staff Directory
+2. [Our City](https://www.klamathfalls.city/27/Our-City)
+3. [Mayor &amp; Council](https://www.klamathfalls.city/210/Mayor-Council)
+4. Carol Westfall
 
-![IMG_0583](https://www.klamathfalls.city/ImageRepository/Document?documentID=3153 "IMG_0583")
+# Carol Westfall
 
-# Michael Angeli
+# ![Carol Westfall](https://www.klamathfalls.city/ImageRepository/Document?documentId=535)Mayor
 
- 
+[Email Carol Westfall](mailto:cwestfall@klamathfalls.city)
 
-[Mayor &amp; Council](https://www.klamathfalls.city/Directory.aspx?DID=20)  
-Title: Ward 2 Council Member  
-[Email Michael Angeli](mailto:mangeli@klamathfalls.city)
+As Mayor of the City of Klamath Falls, I understand what it takes to run a business and will strive to make it easier for you. By focusing on business, jobs and learning opportunities, and supporting recreational development, Klamath Falls can become a City that not only the citizens are proud of, but also a place our children want to return to.
 
-[Return to Staff Directory](https://www.klamathfalls.city/Directory.aspx)
-
-1. [Seasonal Pedlet Program](https://www.klamathfalls.city/415/Seasonal-Pedlet-Program-City-of-Klamath-)
-2. [Downtown Parks &amp; Events](https://www.downtownklamathfalls.org/parksandevents.html)
-3. [Scarecrow Row](https://www.klamathfalls.city/459/Scarecrow-Row)
-4. [Third Thursdays](https://www.downtownklamathfalls.org/thirdthursday.html)
-5. [Klamath Piano Project](https://www.downtownklamathfalls.org/klamathpianoproject.html)
+1. [Meeting Procedures](https://www.klamathfalls.city/212/Meeting-Procedures)
+2. [Vision &amp; Mission](https://www.klamathfalls.city/237/Vision-Mission)
 
 [City Code](https://ecode360.com/KL4949)
 
@@ -111,8 +106,6 @@ Do Not Show Again Close
 Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
-
-### Live Edit
 
 Original text
 
