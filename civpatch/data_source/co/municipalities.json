@@ -2297,7 +2297,14 @@
       ],
       "population": 1253,
       "website": "http://www.fowlercolorado.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T02:42:23Z",
+      "meta_hash": "e7a6a11a1a8b0bbb25823b9cb4a8bb4f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Keenesburg",
