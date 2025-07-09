@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.eugene-or.gov/2621/)
+[Skip to Main Content](https://www.eugene-or.gov/3458/Mayor-Kaarin-Knudson-Bio/)
 
 ![Home Page](https://www.eugene-or.gov/ImageRepository/Document?documentID=55269)
 
@@ -24,68 +24,86 @@ Loading
 4. [Central Services](https://www.eugene-or.gov/99/Central-Services)
 5. [City Manager's Office](https://www.eugene-or.gov/101/City-Managers-Office)
 6. [Mayor and City Council](https://www.eugene-or.gov/537/Mayor-and-City-Council)
-7. [Council](https://www.eugene-or.gov/2608/Council)
-8. Mike Clark
+7. [Mayor](https://www.eugene-or.gov/224/Mayor)
+8. Mayor Kaarin Knudson Bio
 
-# Mike Clark
+# Mayor Kaarin Knudson
 
-![City Councilor Mike Clark](https://www.eugene-or.gov/ImageRepository/Document?documentID=29514 "City Councilor Mike Clark")
+## ![KaarenCrop](https://www.eugene-or.gov/ImageRepository/Document?documentId=77310)Mayor of Eugene
 
-## Eugene City Councilor, Ward 5
+**Term: January 2025 - January 2029**
 
-**Term: January 2023 - January 2027**
+500 East 4th Avenue, Suite 302, Eugene, OR 97401  
+541-682-5010  
+541-682-5414-fax
 
-500 East 4th Avenue, Suite 302, Eugene, OR 97401
+[**Email Mayor Knudson**](mailto:kknudson@eugene-or.gov)
 
-Phone: 541-682-8345
+Email sent to an elected official becomes a public record that may be subject to inspection and copying by the public. For further information please refer to the [website privacy policy](https://www.eugene-or.gov/1353). When submitting comments, please include your [ward number](https://www.eugene-or.gov/532) or address in your communication to the City Council.                                                                   Providing this information will identify concerns and questions for the [City Councilor representing your ward](https://www.eugene-or.gov/537).
 
-Fax: 541-682-5414
+### Committee Assignments
 
-[**Email Councilor Clark**](mailto:mclark@eugene-or.gov)
+- Metropolitan Policy Committee
+- Intergovernmental Relations Committee (non-voting)
+- Eugene Chamber of Commerce (ex officio)
+- Eugene-Springfield HOME Consortium Governing Board
+- Travel Lane County Board
+- Lane County Poverty and Homelessness Board
+- Lane Council of Governments (alternate)
+- Lane Transit District Strategic Planning Committee (alternate)
 
-Email sent to an elected official becomes a public record that may be subject to inspection and copying by the public. For further information please refer to the [website privacy policy](https://www.eugene-or.gov/1353). When submitting comments, please include your [ward number](https://www.eugene-or.gov/532) or address in your communication to the City Council. Providing this information will identify concerns and questions for the [City Councilor representing your ward](https://www.eugene-or.gov/537).
+Mayor Kaarin Knudson is an architect, writer, and educator with more than 25 years’ experience in design, sustainability, and community building. Trained as a journalist before becoming an architect, her work has always focused on people and place. In 2017, after a decade in architectural practice, she organized the public-interest project Better Housing Together to address Lane County’s housing crisis. This work supported the creation of Eugene’s Affordable Housing Trust Fund, Lane County’s first Affordable Housing Action Plan, and Oregon’s landmark middle housing reforms. In 2024, she was elected with 73% of the primary vote and 96% in the general election. 
 
-### Community Service / Involvement
+ 
 
-- Former Citizen Member, City of Eugene Budget Committee
-- Former Member, City of Eugene Human Rights Commission
-- Former Member, City of Eugene Capital Improvement Program Subcommittee
-- Former Board Member, Convention and Visitors Association of Lane County (CVALCO)
-- Former Board Member, Lane Metro Partnership
-- Former Board Member, Kids’ First (Lane County Child Advocacy Center)
-- Former Member, Pearl Buck Center Resource Development and Marketing Committee
-- Past President, Eugene Active 20-30 Club
-- Past President, Emerald Executive Association
-
-### Current Council Assignments
-
-- Budget Committee
+Mayor Knudson teaches planning and urban design at the University of Oregon, and she speaks at regional and national conferences about sustainable cities, housing, and the work of guiding community change. She is co-author of the new textbook, The Sustainable Urban Design Handbook (Routledge).
 
 ### Professional Background
 
-- Mortgage Specialist
-- President, Marketing Consultants Inc. (Advertising, Marketing, Public Relations)
-- Political Campaign Consultant and Communications Director
-- Television, Radio and Newspaper Advertising Sales
-- Seasonal (Summer) Alaskan Salmon Cannery Worker
+- Registered Architect, State of Oregon
+- Coauthor, *The Sustainable Urban Design Handbook* (Routledge), 2024
+- Founding Director, Better Housing Together, 2017-2024
+- Instructor and Non-tenured Faculty, UO College of Design, 2008-present
+- Urban Design Consultant and Better Practice Design Workshop, 2017-present
+- Planning Specialist and Project Manager, Rowell Brokaw Architects, 2007-2017
+- Graduate Teaching and Research Fellow, University of Oregon, 2004-2007
+- Communications Manager, Peninsula Community Foundation, 2000-2004
+- Editor-in-Chief, WhereNext Media, 1999-2000
 
-### Educational Background
+### Education
 
-- University of Oregon
-- Aloha High School, Beaverton
+- **M. Architecture, 2007**
+- **B.A. in Journalism and Fine Arts, 1999**  
+  Magna cum laude, University of Oregon
+- International study in Japan, Italy, and Turkey
+- Graduation Standard Bearer
 
-### Special Interests and Concerns
+### Community Involvement
 
-- Strengthen public safety
-- Proactively maintain transportation systems and infrastructure
-- Encourage responsible economic development
-- Develop and maintain parks and open spaces
-- Enhance livability
+- President, City Club of Eugene, 2022-2023
+- Board of Directors, Better Housing Together, 2017-2025
+- Affordable Housing Trust Fund Advisory Committee, City of Eugene, 2019-2023
+- Housing Workgroups and Advisory Committee, State of Oregon, 2019-2022
+- City Club of Eugene “Turtle Award” Recipient, 2020
+- UO Hall of Fame Becky Sisley Award, 2019
+- Mayor’s Community Award, City of Eugene, 2018
+- Board of Directors, Architecture Foundation of Oregon, 2017-2020
+- Co-Chair, AIA Design Excellence Lecture Series, 2013-2017
+- Register-Guard “20Under40” Award, 2014
+- AIA Oregon Design Awards – Honor, Merit, and Citation Awards, 2014
+- Council on Foundations, Communications Awards, 2001-2004
+- Oregon NCAA Woman of the Year, 1999
+- NCAA All-American, 800m &amp; mile, UO Track &amp; Field, 1997 and 1999
+- PAC-10 Champions, UO Cross Country, 1995
 
-<!--THE END-->
+[PDF version of this page](https://www.eugene-or.gov/DocumentCenter/View/30664 "Mayor Lucy Vinis Bio")
 
-1. [Mayor and City Council](https://www.eugene-or.gov/537/Mayor-and-City-Council)
-2. [Find Your Ward](https://www.eugene-or.gov/532/Find-Your-Ward)
+1. [Mayor Kaarin Knudson](https://www.eugene-or.gov/3480/Mayor-Kaarin-Knudson)
+2. [Mayor and City Council](https://www.eugene-or.gov/537/Mayor-and-City-Council)
+3. [Mayor Kaarin Knudson Bio](https://www.eugene-or.gov/3458/Mayor-Kaarin-Knudson-Bio)
+4. [2025 State of the City - Year in Review](https://www.eugene-or.gov/4130/2025-State-of-the-City---Year-in-Review)
+5. [Proclamations](https://www.eugene-or.gov/3873/Proclamations)
+6. [Eugene Youth Advisory Council](https://www.eugene-or.gov/4843/Eugene-Youth-Advisory-Council)
 
 [Engage Eugene](https://engage.eugene-or.gov)
 
