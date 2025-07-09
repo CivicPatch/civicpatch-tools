@@ -2298,7 +2298,14 @@
       ],
       "population": 1196,
       "website": "http://www.mancoscolorado.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T02:43:47Z",
+      "meta_hash": "92a3bb2972ad593d3e92a3b5842352ec",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Ridgway",
