@@ -2355,7 +2355,14 @@
       ],
       "population": 1155,
       "website": "http://www.cityofcripplecreek.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T02:47:37Z",
+      "meta_hash": "b4aa492dcabd57b71e1111947b05f1aa",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Georgetown",
