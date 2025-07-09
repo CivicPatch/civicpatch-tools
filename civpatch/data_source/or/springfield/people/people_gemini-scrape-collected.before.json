@@ -1,295 +1,365 @@
 [
   {
     "name": "Sean VanGordon",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://springfield-or.gov/city/mayor-and-city-council/mayor/"
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor"
     ],
-    "positions": [
-      "Mayor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as his current role."
+      },
+      {
+        "data": "City Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that he joined the City Council and served for over a decade."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Gateway Area",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as the area he represented on the City Council."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as the ward he represented on the City Council."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541.726.3702",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact Us' section associated with 'Mayor Sean VanGordon'.",
-        "proximity_to_name": 50,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided under his contact information.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor"
       }
     ],
     "emails": [
       {
         "data": "svangordon@springfield-or.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly under 'Contact Us' section associated with 'Mayor Sean VanGordon'.",
-        "proximity_to_name": 50,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided under his contact information.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor"
       }
     ],
-    "websites": [
+    "websites": [],
+    "start_dates": [
       {
-        "data": "https://springfield-or.gov/city/mayor-and-city-council/mayor/",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "This is the page dedicated to the Mayor, though not a specific personal profile URL.",
-        "proximity_to_name": 0,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor/"
+        "data": "2011",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states he joined the City Council in 2011, which is the earliest explicit start date for his service in the governing body, though his mayoral start date is not specified.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor"
       }
     ],
-    "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-01"
+    "updated_at": "2025-07-09T16:37:58Z"
   },
   {
     "name": "Michelle Webber",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 1",
-      "Council President"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'Councilor Michelle Webber' and context of City Council."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "mwebber@springfield-or.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address provided as a mailto link directly associated with the person.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 50,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Email address explicitly provided.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "URL is associated with the person's name and photo, but it is a general council page, not a specific personal profile.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires Dec. 31, 2026'.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 10,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "updated_at": "2025-05-01"
+    "updated_at": "2025-07-09T16:37:58Z"
   },
   {
     "name": "Steve Moe",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 2"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'Councilor Steve Moe' and context of City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "smoe@springfield-or.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address provided as a mailto link directly associated with the person.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 50,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Email address explicitly provided.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "URL is associated with the person's name and photo, but it is a general council page, not a specific personal profile.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires Dec. 31, 2026'.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 10,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "updated_at": "2025-05-01"
+    "updated_at": "2025-07-09T16:37:58Z"
   },
   {
     "name": "Kori Rodley",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 3"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'Councilor Kori Rodley' and context of City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "krodley@springfield-or.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address provided as a mailto link directly associated with the person.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 50,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Email address explicitly provided.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "URL is associated with the person's name and photo, but it is a general council page, not a specific personal profile.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires Dec. 31, 2028'.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 10,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "updated_at": "2025-05-01"
+    "updated_at": "2025-07-09T16:37:58Z"
   },
   {
     "name": "Beth Blackwell",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 4"
+    "images": [],
+    "roles": [
+      {
+        "data": "city councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'city councilor'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'Councilor Beth Blackwell' and context of City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "bblackwell@springfield-or.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address provided as a mailto link directly associated with the person.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 50,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Email address explicitly provided.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "URL is associated with the person's name and photo, but it is a general council page, not a specific personal profile.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
+      }
+    ],
     "start_dates": [
       {
-        "data": "2023-04-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Stated 'has proudly served as a city councilor since April, 2023'.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 100,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "data": "2025-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'beginning January 2025' for her reelected term.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Stated 'reelected for a four-year term beginning January 2025' and the pattern 'Term Expires Dec. 31, 2028' is present near the initial listing.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 10,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "updated_at": "2025-05-01"
+    "updated_at": "2025-07-09T16:37:58Z"
   },
   {
     "name": "Victoria Doyle",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 5"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'Councilor Victoria Doyle' and context of City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "vdoyle@springfield-or.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address provided as a mailto link directly associated with the person.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 50,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Email address explicitly provided.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "URL is associated with the person's name and photo, but it is a general council page, not a specific personal profile.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires Dec. 31, 2026'.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 10,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "updated_at": "2025-05-01"
+    "updated_at": "2025-07-09T16:37:58Z"
   },
   {
     "name": "Alan Stout",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+      "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 6"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'Councilor Alan Stout' and context of City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "astout@springfield-or.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address provided as a mailto link directly associated with the person.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 50,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Email address explicitly provided.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "URL is associated with the person's name and photo, but it is a general council page, not a specific personal profile.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
+      }
+    ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires Dec. 31, 2028'.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 10,
-        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council/"
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "source": "https://springfield-or.gov/city/mayor-and-city-council/mayor-council"
       }
     ],
-    "updated_at": "2025-05-01"
+    "updated_at": "2025-07-09T16:37:58Z"
   }
 ]
