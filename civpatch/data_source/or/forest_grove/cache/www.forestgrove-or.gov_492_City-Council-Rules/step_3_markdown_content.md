@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.forestgrove-or.gov/365/City-Council/)
+[Skip to Main Content](https://www.forestgrove-or.gov/492/City-Council-Rules/)
 
 ![Forest Grove, OR](https://www.forestgrove-or.gov/ImageRepository/Document?documentID=27)
 
@@ -24,52 +24,27 @@ Search
 
 1. [Home](https://www.forestgrove-or.gov)
 2. [Government](https://www.forestgrove-or.gov/27/Government)
-3. City Council
+3. [City Council](https://www.forestgrove-or.gov/365/City-Council)
+4. City Council Rules
 
-# City Council
+# City Council Rules
 
-![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.forestgrove-or.gov/365/City-Council)
+![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.forestgrove-or.gov/492/City-Council-Rules)
 
-## Council Meetings
+## Overview
 
-Take place at 7 pm on the 2nd and 4th Monday of each month, unless Monday is a holiday. Meetings are held at the Community Auditorium, 1915 Main Street, Forest Grove, OR 97116. Meeting agendas are generally published by 5 pm on the Wednesday before each meeting.
+The City Council consists of a Mayor and six Councilors nominated and elected from the City at large. The Mayor and City Councilors serve four-year terms of office. The Mayor and City Councilors all serve the citizens of our community in a volunteer capacity.
 
-## City Council Members
+The [City Charter (PDF)](https://www.forestgrove-or.gov/DocumentCenter/View/838) provides for a Council-Manager form of city government. The City Council is the policy-making body of the city. They adopt laws and regulations, annual goals and objectives, and budgets that fund a wide range of public services. Council members give direction to city staff through the [City Manager](https://www.forestgrove-or.gov/333/City-Manager) who serves at the pleasure of the City Council. The mayor serves as the leader of the governing body and presides over the Council meetings. The mayor is a voting member of the Council and has no veto authority. The [City Recorder](https://www.forestgrove-or.gov/336/City-Recorder) is the clerk of the City Council.
 
-- Mayor Malynda Wenzl  |  Current Term: 2022-2026
-- Councilor Angel Falconer  |  Current Term: 2025-2029
-- Councilor Donna Gustafson  |  Current Term: 2025-2029
-- Councilor Michael Marshall  |  Current Term: 2022-2026
-- Councilor Karen Martinez  |  Current Term: 2022-2026
-- Councilor Brian Schimmel  |  Current Term: 2025-2029
-- Councilor Mariana Valenzuela  |  Current Term: 2022-2026
+Citizen volunteers play a large role in city government, staffing and overseeing key [advisory boards](https://www.forestgrove-or.gov/352/Boards-Commissions). Citizen involvement is encouraged and there are many volunteer opportunities available.
 
-## Meeting Recordings
+## City Council Rules
 
-Watch the full version of City Council meetings, thanks to our partners at [Tualatin Valley Community Television (TVCTV)](https://tvctv.org).
+City Charter, Section 10, requires City Council to adopt rules governing its meetings and proceedings. The adopted Council Rules can be seen below:
 
-[AGENDAS AND  
-MINUTES](https://forestgroveor.portal.civicclerk.com/?category_id=26)
-
-[CITY COUNCIL  
-GOALS &amp; VALUES](https://www.forestgrove-or.gov/490/City-Council-Goals-and-Values)
-
-[CITY COUNCIL  
-RULES](https://www.forestgrove-or.gov/492/City-Council-Rules)
-
-[CONTACT  
-CITY COUNCIL](https://or-forestgrove.civicplus.com/491/Contact-City-Council)
-
-[MEET THE  
-COUNCIL](https://www.forestgrove-or.gov/611/Meet-the-Council)
-
-## Accommodations
-
-The City is committed to providing equal access to public meetings. Requests for accommodation can be sent to the City Recorder’s Office at least 48 hours before the meeting at: [mwoods@forestgrove-or.gov](mailto:mwoods@forestgrove-or.gov) or 503-992-3235.
-
-## Public Meeting Law (PML) Grievances
-
-Forest Grove’s meeting bodies, including the City Council and all boards and committees, are subject to [Oregon’s Public Meetings Law (PML)](https://www.oregon.gov/ogec/public-meetings-law/pages/default.aspx). Violations of the PML should be reported through the grievance process outlined by state law and the Oregon Government Ethics Commission (OGEC). To report a violation of the PML by a Forest Grove meeting body, submit a written grievance statement to the Office of the City Recorder by email to [mwoods@forestgrove-or.gov](mailto:mwoods@forestgrove-or.gov) or in-person at City Hall (1924 Council St, Forest Grove). Once received the city will initiate the process as outlined by the OGEC at the link above.
+- [2024 City Council Rules (PDF)](https://www.forestgrove-or.gov/DocumentCenter/View/833)
+- 2020 City Council Orientation Guidelines (PDF)
 
 ### Follow Us!
 
@@ -78,22 +53,6 @@ Forest Grove’s meeting bodies, including the City Council and all boards and c
 Stay connected to your city! What's Growing On is our monthly e-newsletter filled with news events and community stories.
 
 [Subscribe Today!](https://mailchi.mp/forestgrove-or/whats-growing-on)
-
-### [Calendar](https://www.forestgrove-or.gov/calendar.aspx?CID=24)
-
-1. #### Thu, Jul. 10
-   
-   [**Economic Development Commission**](https://www.forestgrove-or.gov/Calendar.aspx?EID=1935)
-2. #### Mon, Jul. 14
-   
-   [**City Council Meeting**](https://www.forestgrove-or.gov/Calendar.aspx?EID=1769)
-3. #### Wed, Jul. 16
-   
-   [**One Time Event**](https://www.forestgrove-or.gov/Calendar.aspx?EID=2169)
-
-[View All Events](https://www.forestgrove-or.gov/calendar.aspx?CID=24)
-
-/Calendar.aspx
 
 ### [Contact Us](https://www.forestgrove-or.gov/FormCenter/Contact-Us-Form-27/Contact-Us-92)
 

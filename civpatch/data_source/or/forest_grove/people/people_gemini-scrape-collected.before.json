@@ -1,226 +1,560 @@
 [
   {
     "name": "Malynda Wenzl",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.forestgrove-or.gov/365/City-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov/491",
+      "https://www.forestgrove-or.gov/600/Mayors-Youth-Advisory-Commission",
+      "https://www.forestgrove-or.gov/directory.aspx?EID=58",
+      "https://www.forestgrove-or.gov/704/State-of-the-City"
     ],
-    "positions": [
-      "Mayor"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "images": [],
+    "roles": [
       {
-        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated next to the person's name. "
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Malynda Wenzl'"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected to Council in 2014' before becoming Mayor"
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly identifies this person as 'Forest Grove Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the person's name and is a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated as the person's title."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'City Council', implying a 'Council Member' role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Malynda Wenzl'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'Mayor Malynda Wenzl and the City Council'."
       }
     ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The City Council consists of a Mayor and six Councilors nominated and elected from the City at large.'"
+      },
+      {
+        "data": "City Council",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The person is explicitly listed under 'City Council' heading."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mwenzl@forestgrove-or.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated next to the person's name.",
+        "source": "https://www.forestgrove-or.gov/600/Mayors-Youth-Advisory-Commission"
+      },
+      {
+        "data": "mwenzl@forestgrove-or.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "source": "https://www.forestgrove-or.gov/directory.aspx?EID=58"
+      }
+    ],
+    "websites": [],
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2022-2026'",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as part of the 'Current Term' information for this person. ",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
       },
       {
         "data": "2022-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected Mayor in November of 2022'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected Mayor in November of 2022'. This is the most recent start date for her current primary role as Mayor, superseding her earlier council election date of 2014",
         "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as part of the 'Current Term' information for this person. ",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      },
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'November 2026' is explicitly stated as 'Term Expires'.",
+        "source": "https://www.forestgrove-or.gov/directory.aspx?EID=58"
+      }
+    ],
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Angel Falconer",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov/491"
     ],
-    "positions": [
-      "Council Member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilor' is explicitly stated next to the person's name. "
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Councilor' is a direct match to 'Council Member' based on common terminology for governing bodies. "
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Angel Falconer'"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'newly elected city councilor'"
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly identifies this person as 'Councilor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The City Council consists of a Mayor and six Councilors nominated and elected from the City at large.'"
+      }
     ],
     "phone_numbers": [],
     "emails": [],
-    "websites": [
-      {
-        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
         "data": "2025",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2025-2029'",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as part of the 'Current Term' information for this person. ",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "end_dates": [
+      {
+        "data": "2029",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as part of the 'Current Term' information for this person. ",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      }
+    ],
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Donna Gustafson",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov",
+      "https://www.forestgrove-or.gov/491"
     ],
-    "positions": [
-      "Council Member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilor' is explicitly stated next to the person's name. "
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Councilor' is a direct match to 'Council Member' based on common terminology for governing bodies. "
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Donna Gustafson'"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected to Forest Grove City Council'"
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Donna Gustafson'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Normalized role from 'City Councilor'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly identifies this person as 'Councilor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The City Council consists of a Mayor and six Councilors nominated and elected from the City at large.'"
+      }
     ],
     "phone_numbers": [],
     "emails": [],
-    "websites": [
-      {
-        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
         "data": "2025",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2025-2029'",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as part of the 'Current Term' information for this person. ",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      },
+      {
+        "data": "2020-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to Forest Grove City Council in November 0f 2020'",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2029",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as part of the 'Current Term' information for this person. ",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Michael Marshall",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov/491",
+      "https://www.forestgrove-or.gov/367"
     ],
-    "positions": [
-      "Council Member"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
+    "images": [],
+    "roles": [
       {
-        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilor' is explicitly stated next to the person's name. "
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Councilor' is a direct match to 'Council Member' based on common terminology for governing bodies. "
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Michael Marshall'"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Elected to the City Council'"
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly identifies this person as 'Councilor'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'City Councilor' which is a direct match to 'council member' target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Normalized role from 'City Councilor' which is a direct match to 'council member' target role."
       }
     ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The City Council consists of a Mayor and six Councilors nominated and elected from the City at large.'"
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mmarshall@forestgrove-or.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and directly associated with the person.",
+        "source": "https://www.forestgrove-or.gov/367"
+      }
+    ],
+    "websites": [],
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2022-2026'",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as part of the 'Current Term' information for this person. ",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      },
+      {
+        "data": "2022-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Elected to the City Council in November of 2022'",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as part of the 'Current Term' information for this person. ",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Karen Martinez",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov/491"
     ],
-    "positions": [
-      "Council Member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilor' is explicitly stated next to the person's name. "
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Councilor' is a direct match to 'Council Member' based on common terminology for governing bodies. "
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Karen Martinez'"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected to the City Council'"
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly identifies this person as 'Councilor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The City Council consists of a Mayor and six Councilors nominated and elected from the City at large.'"
+      }
     ],
     "phone_numbers": [],
     "emails": [],
-    "websites": [
-      {
-        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2022-2026'",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as part of the 'Current Term' information for this person. ",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      },
+      {
+        "data": "2022-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to the City Council in November of 2022'",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as part of the 'Current Term' information for this person. ",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Brian Schimmel",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov",
+      "https://www.forestgrove-or.gov/491"
     ],
-    "positions": [
-      "Council Member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilor' is explicitly stated next to the person's name. "
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Councilor' is a direct match to 'Council Member' based on common terminology for governing bodies. "
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Brian Schimmel'"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Schimmel'"
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor Brian Schimmel'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Normalized role from 'City Councilor'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly identifies this person as 'Councilor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The City Council consists of a Mayor and six Councilors nominated and elected from the City at large.'"
+      }
     ],
     "phone_numbers": [],
     "emails": [],
-    "websites": [
-      {
-        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
         "data": "2025",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2025-2029'",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as part of the 'Current Term' information for this person. ",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "end_dates": [
+      {
+        "data": "2029",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as part of the 'Current Term' information for this person. ",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      }
+    ],
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Mariana Valenzuela",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov/491"
     ],
-    "positions": [
-      "Council Member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilor' is explicitly stated next to the person's name. "
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Councilor' is a direct match to 'Council Member' based on common terminology for governing bodies. "
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Mariana Valenzuela'"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected to the council'"
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly identifies this person as 'Councilor'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'The City Council consists of a Mayor and six Councilors nominated and elected from the City at large.'"
+      }
     ],
     "phone_numbers": [],
     "emails": [],
-    "websites": [
-      {
-        "data": "https://www.forestgrove-or.gov/611/Meet-the-Council",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link 'MEET THE COUNCIL' is likely a profile page, but not directly associated with the name.",
-        "source": "https://www.forestgrove-or.gov/365/City-Council"
-      }
-    ],
+    "websites": [],
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly listed as 'Current Term: 2022-2026'",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date is explicitly stated as part of the 'Current Term' information for this person. ",
+        "source": "https://www.forestgrove-or.gov/365/City-Council"
+      },
+      {
+        "data": "2022-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to the council in November 2022'. This is the most recent election date, superseding her earlier appointment date of 2020",
+        "source": "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as part of the 'Current Term' information for this person. ",
         "source": "https://www.forestgrove-or.gov/365/City-Council"
       }
     ],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:45Z"
   }
 ]

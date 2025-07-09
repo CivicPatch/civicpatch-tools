@@ -1,122 +1,180 @@
 [
   {
     "name": "Malynda Wenzl",
-    "positions": [
-      "Mayor"
+    "roles": [
+      "Mayor",
+      "Council member",
+      "mayor",
+      "Council Member"
+    ],
+    "divisions": [
+      "at-large",
+      "City Council"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
-    "email": null,
-    "website": "https://www.forestgrove-or.gov/611/Meet-the-Council",
+    "email": "mwenzl@forestgrove-or.gov",
+    "website": null,
     "start_date": "2022",
-    "end_date": null,
+    "end_date": "2026",
     "sources": [
       "https://www.forestgrove-or.gov/365/City-Council",
-      "https://www.forestgrove-or.gov/611/Meet-the-Council"
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov/491",
+      "https://www.forestgrove-or.gov/600/Mayors-Youth-Advisory-Commission",
+      "https://www.forestgrove-or.gov/directory.aspx?EID=58",
+      "https://www.forestgrove-or.gov/704/State-of-the-City"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Angel Falconer",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor",
+      "Council Member",
+      "Council member",
+      "council member"
+    ],
+    "divisions": [
+      "at-large"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": null,
-    "website": "https://www.forestgrove-or.gov/611/Meet-the-Council",
+    "website": null,
     "start_date": "2025",
-    "end_date": null,
+    "end_date": "2029",
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov/491"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Donna Gustafson",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor",
+      "Council Member",
+      "Council member",
+      "City Councilor",
+      "council member"
+    ],
+    "divisions": [
+      "at-large"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": null,
-    "website": "https://www.forestgrove-or.gov/611/Meet-the-Council",
+    "website": null,
     "start_date": "2025",
-    "end_date": null,
+    "end_date": "2029",
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov",
+      "https://www.forestgrove-or.gov/491"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Michael Marshall",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor",
+      "Council Member",
+      "Council member",
+      "council member",
+      "City Councilor"
+    ],
+    "divisions": [
+      "at-large"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
-    "email": null,
-    "website": "https://www.forestgrove-or.gov/611/Meet-the-Council",
+    "email": "mmarshall@forestgrove-or.gov",
+    "website": null,
     "start_date": "2022",
-    "end_date": null,
+    "end_date": "2026",
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov/491",
+      "https://www.forestgrove-or.gov/367"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Karen Martinez",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor",
+      "Council Member",
+      "Council member",
+      "council member"
+    ],
+    "divisions": [
+      "at-large"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": null,
-    "website": "https://www.forestgrove-or.gov/611/Meet-the-Council",
+    "website": null,
     "start_date": "2022",
-    "end_date": null,
+    "end_date": "2026",
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov/491"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Brian Schimmel",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor",
+      "Council Member",
+      "Council member",
+      "City Councilor",
+      "council member"
+    ],
+    "divisions": [
+      "at-large"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": null,
-    "website": "https://www.forestgrove-or.gov/611/Meet-the-Council",
+    "website": null,
     "start_date": "2025",
-    "end_date": null,
+    "end_date": "2029",
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov",
+      "https://www.forestgrove-or.gov/491"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:45Z"
   },
   {
     "name": "Mariana Valenzuela",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor",
+      "Council Member",
+      "Council member",
+      "council member"
+    ],
+    "divisions": [
+      "at-large"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": null,
-    "website": "https://www.forestgrove-or.gov/611/Meet-the-Council",
+    "website": null,
     "start_date": "2022",
-    "end_date": null,
+    "end_date": "2026",
     "sources": [
-      "https://www.forestgrove-or.gov/365/City-Council"
+      "https://www.forestgrove-or.gov/365/City-Council",
+      "https://www.forestgrove-or.gov/611/Meet-the-Council",
+      "https://www.forestgrove-or.gov/491"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:45Z"
   }
 ]

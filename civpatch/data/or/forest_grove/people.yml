@@ -1,100 +1,151 @@
 ---
 - name: Malynda Wenzl
-  positions:
+  roles:
   - Mayor
+  divisions: []
+  image:
+  cdn_image:
   email: mwenzl@forestgrove-or.gov
   phone_number: "(503) 992-3234"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
   start_date: '2022'
   end_date: '2026'
-  image:
-  source_image:
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  - https://www.forestgrove-or.gov/611/Meet-the-Council/
-  updated_at: '2025-05-06'
-- name: Angelene Falconer
-  positions:
+  - https://www.forestgrove-or.gov/491
+  - https://www.forestgrove-or.gov/600/Mayors-Youth-Advisory-Commission
+  - https://www.forestgrove-or.gov/directory.aspx?EID=58
+  - https://www.forestgrove-or.gov/704/State-of-the-City
+  updated_at: '2025-07-09T17:20:45Z'
+- name: Angel Falconer
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: afalconer@forestgrove-or.gov
   phone_number: "(503) 992-3200"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
   start_date: '2025'
   end_date: '2029'
-  image:
-  source_image:
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  updated_at: '2025-05-06'
-- name: Brian Schimmel
-  positions:
+  - https://www.forestgrove-or.gov/491
+  updated_at: '2025-07-09T17:20:45Z'
+- name: Angelene Falconer
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
+  email: afalconer@forestgrove-or.gov
+  phone_number: "(503) 992-3200"
+  website: https://www.forestgrove-or.gov/611/Meet-the-Council
+  start_date: '2025'
+  end_date: '2029'
+  sources:
+  - https://www.forestgrove-or.gov/365/City-Council
+  - https://www.forestgrove-or.gov/611/Meet-the-Council
+  - https://www.forestgrove-or.gov/491
+  updated_at: '2025-07-09T17:20:45Z'
+- name: Brian Schimmel
+  roles:
+  - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: bschimmel@forestgrove-or.gov
   phone_number: "(503) 992-3200"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
   start_date: '2025'
   end_date: '2029'
-  image:
-  source_image:
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  updated_at: '2025-05-06'
+  - https://www.forestgrove-or.gov
+  - https://www.forestgrove-or.gov/491
+  updated_at: '2025-07-09T17:20:45Z'
 - name: Donna Gustafson
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: dgustafson@forestgrove-or.gov
   phone_number: "(503) 992-3200"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
   start_date: '2025'
   end_date: '2029'
-  image:
-  source_image:
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  updated_at: '2025-05-06'
-- name: Karen R. Martinez
-  positions:
+  - https://www.forestgrove-or.gov
+  - https://www.forestgrove-or.gov/491
+  updated_at: '2025-07-09T17:20:45Z'
+- name: Karen Martinez
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: Kmartinez@forestgrove-or.gov
   phone_number: "(503) 992-3200"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
   start_date: '2022'
   end_date: '2026'
-  image:
-  source_image:
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  updated_at: '2025-05-06'
-- name: Mariana Valenzuela
-  positions:
+  - https://www.forestgrove-or.gov/491
+  updated_at: '2025-07-09T17:20:45Z'
+- name: Karen R. Martinez
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
+  email: Kmartinez@forestgrove-or.gov
+  phone_number: "(503) 992-3200"
+  website: https://www.forestgrove-or.gov/611/Meet-the-Council
+  start_date: '2022'
+  end_date: '2026'
+  sources:
+  - https://www.forestgrove-or.gov/365/City-Council
+  - https://www.forestgrove-or.gov/611/Meet-the-Council
+  - https://www.forestgrove-or.gov/491
+  updated_at: '2025-07-09T17:20:45Z'
+- name: Mariana Valenzuela
+  roles:
+  - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: mvalenzuela@forestgrove-or.gov
   phone_number: "(503) 992-3200"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
   start_date: '2022'
   end_date: '2026'
-  image:
-  source_image:
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  updated_at: '2025-05-06'
+  - https://www.forestgrove-or.gov/491
+  updated_at: '2025-07-09T17:20:45Z'
 - name: Michael Marshall
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: mmarshall@forestgrove-or.gov
   phone_number: "(503) 992-3200"
   website: https://www.forestgrove-or.gov/611/Meet-the-Council
   start_date: '2022'
   end_date: '2026'
-  image:
-  source_image:
   sources:
   - https://www.forestgrove-or.gov/365/City-Council
   - https://www.forestgrove-or.gov/611/Meet-the-Council
-  updated_at: '2025-05-06'
+  - https://www.forestgrove-or.gov/491
+  - https://www.forestgrove-or.gov/367
+  updated_at: '2025-07-09T17:20:45Z'
