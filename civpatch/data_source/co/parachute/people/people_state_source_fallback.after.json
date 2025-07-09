@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Tom Rugaard",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-09T02:29:21Z",
+    "divisions": []
+  },
+  {
+    "name": "Claudia Flores-Cruz",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "updated_at": "2025-07-09T02:29:21Z",
+    "divisions": []
+  },
+  {
+    "name": "David Blair",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:29:21Z",
+    "divisions": []
+  },
+  {
+    "name": "Artemio Baltazar",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:29:21Z",
+    "divisions": []
+  },
+  {
+    "name": "Juanita Williams",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:29:21Z",
+    "divisions": []
+  },
+  {
+    "name": "Chris Jackson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:29:21Z",
+    "divisions": []
+  },
+  {
+    "name": "Alisa Mueller",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:29:21Z",
+    "divisions": []
+  }
+]
