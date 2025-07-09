@@ -1,4 +1,4 @@
-[Skip to Main Content](https://www.beavertonoregon.gov/839/Councilor-Position-3/)
+[Skip to Main Content](https://www.beavertonoregon.gov/849/Councilor-Position-5?contentId=73254dfb-f2c3-4661-8be7-60320ed3df19%2F)
 
 ![Beaverton, OR - Official Website](https://www.beavertonoregon.gov/DesignCenter/Assets/Get/6ed33f13-7746-4480-aa3c-aabf94e46cd5)
 
@@ -26,38 +26,72 @@ Search
 
 Opens in a new window
 
-![a file](https://content.civicplus.com/api/assets/6531d9b7-3b3a-47c1-9ca7-ffb0dd55f64f?cache=1800&width=1880&mode=min)
+![a file](https://content.civicplus.com/api/assets/d8d8e589-89ad-4466-b5b0-b5a7e12f5f8a?cache=1800&width=1880&mode=min)
 
 1. [Home](https://www.beavertonoregon.gov)
 2. [Government](https://www.beavertonoregon.gov/27/Government)
 3. [City Council](https://www.beavertonoregon.gov/789/City-Council)
-4. Councilor: Position 3
+4. Councilor: Position 5
 
-# Councilor: Position 3
+# Councilor: Position 5
 
-## Edward Kimmi
+## John Dugger
 
-Dr. Kimmi joined the Beaverton City Council on June 21, 2022, filling a vacant seat to complete the remaining three years of the term. In 2024, he was reelected to serve a full four-year term. A dedicated community leader, Dr. Kimmi owns a local health clinic and previously contributed to the city as a member of the Diversity Advisory Board.
+Councilor John Dugger was sworn into office in September of 2022 after winning nomination in the May primary election. He then won his first full term in November of 2022 in the general election.
 
-### Edward Kimmi’s Message
+He holds a bachelor’s degree in Environmental Studies from Portland State University and has lived in Beaverton for most of the 20 years he has lived in Oregon. Outside of City Council, Councilor Dugger leads the Procurement function at a non-profit health company.
 
-I am committed to leveraging my lived experiences as an immigrant, refugee, and small business owner to serve our community. My focus will be on addressing critical issues such as public safety, affordable housing, and climate change. My goal is to create a more vibrant and thriving city where everyone feels welcome and has the opportunity to call it home.
+John is a co-founder of Pride Beaverton, has served Beaverton on many different boards and commissions, and can be regularly seen walking downtown with his husband Quinn and dog Odin or riding his bike.
 
-#### ![Edward Kimmi](https://content.civicplus.com/api/assets/b5820b9e-3ff5-4314-a603-7596c6c517db?cache=1800 "Edward Kimmi") Edward Kimmi
+### John's Message
+
+I feel inspired to serve by a simple belief: That government has a big role to play in creating communities that allow ALL people to thrive. That together WE can achieve big things. If we unlock the potential of our staff, I’m confident Beaverton can lead the world in so many different areas.
+
+#### ![John Dugger](https://content.civicplus.com/api/assets/fc87a5ae-0845-41bc-a521-276a0408fc95?cache=1800 "John Dugger") John Dugger
 
 Title
 
-Council Position 3
+City Council Position 5
 
 Email
 
-[Email City Council](mailto:citymail@beavertonoregon.gov)
+[Email City Council](mailto:citymail@BeavertonOregon.gov)
 
-[Email Edward Kimmi](mailto:ekimmi@beavertonoregon.gov)
+[Email John Dugger](mailto:jdugger@BeavertonOregon.gov)
 
 Phone
 
-503-713-7053
+503-312-0118
+
+Department:
+
+City Council
+
+## Address
+
+12725 SW Millikan Way  
+P.O. Box 4755  
+Beaverton, OR 97076
+
+## Four-Year-Term Term Began: Term Expires:
+
+### Contact Us
+
+#### [![John Dugger](https://content.civicplus.com/api/assets/fc87a5ae-0845-41bc-a521-276a0408fc95?cache=1800 "John Dugger") \ John \ Dugger](https://www.beavertonoregon.gov/849/Councilor-Position-5?contentId=73254dfb-f2c3-4661-8be7-60320ed3df19)
+
+Title
+
+City Council Position 5
+
+Email
+
+[Email City Council](mailto:citymail@BeavertonOregon.gov)
+
+[Email John Dugger](mailto:jdugger@BeavertonOregon.gov)
+
+Phone
+
+503-312-0118
 
 01. [About Council Meetings](https://www.beavertonoregon.gov/792/About-Council-Meetings)
 02. [Agendas &amp; Minutes](https://www.beavertonoregon.gov/797/Agendas-Minutes)

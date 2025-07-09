@@ -1,4 +1,4 @@
-[Skip to Main Content](https://www.beavertonoregon.gov/839/Councilor-Position-3/)
+[Skip to Main Content](https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e%2F)
 
 ![Beaverton, OR - Official Website](https://www.beavertonoregon.gov/DesignCenter/Assets/Get/6ed33f13-7746-4480-aa3c-aabf94e46cd5)
 
@@ -31,33 +31,74 @@ Opens in a new window
 1. [Home](https://www.beavertonoregon.gov)
 2. [Government](https://www.beavertonoregon.gov/27/Government)
 3. [City Council](https://www.beavertonoregon.gov/789/City-Council)
-4. Councilor: Position 3
+4. Councilor: Position 4
 
-# Councilor: Position 3
+# Councilor: Position 4
 
-## Edward Kimmi
+## Allison Tivnon
 
-Dr. Kimmi joined the Beaverton City Council on June 21, 2022, filling a vacant seat to complete the remaining three years of the term. In 2024, he was reelected to serve a full four-year term. A dedicated community leader, Dr. Kimmi owns a local health clinic and previously contributed to the city as a member of the Diversity Advisory Board.
+Allison is newly elected and previously served as a Beaverton Arts Commission commissioner and a member of the Oregon Complete Counts committee for the State of Oregon's 2020 Census. She has 15 years of experience in marketing and business development and civic and philanthropic development.
 
-### Edward Kimmi’s Message
+### Allison Tivnon's Message
 
-I am committed to leveraging my lived experiences as an immigrant, refugee, and small business owner to serve our community. My focus will be on addressing critical issues such as public safety, affordable housing, and climate change. My goal is to create a more vibrant and thriving city where everyone feels welcome and has the opportunity to call it home.
+I look forward to working alongside my fellow councilors and Mayor Beaty, our city staff and the upcoming interim city manager, as well as our many community partners. Our residents and businesses are looking to us to look out for them. We have all endured the kaleidoscope that 2020 turned out to be and have our work cut out for us in charting a course to recovery. Hanging tight to our Community Vision Plan, our DEI and Climate Action Plans and continuing to make progress toward our affordable housing goals will all be front of mind in our decision-making. I am thrilled to join the council and am eager to get started!
 
-#### ![Edward Kimmi](https://content.civicplus.com/api/assets/b5820b9e-3ff5-4314-a603-7596c6c517db?cache=1800 "Edward Kimmi") Edward Kimmi
+#### ![Allison Tivnon](https://content.civicplus.com/api/assets/4e1adaec-e20f-4190-9364-9e7e14f7568e?cache=1800 "Allison Tivnon") Allison Tivnon
 
 Title
 
-Council Position 3
+Council Position 4
 
 Email
 
-[Email City Council](mailto:citymail@beavertonoregon.gov)
+[Email City Council](mailto:citymail@BeavertonOregon.gov)
 
-[Email Edward Kimmi](mailto:ekimmi@beavertonoregon.gov)
+[Email Allison Tivnon](mailto:ativnon@beavertonoregon.gov)
 
 Phone
 
-503-713-7053
+503-250-3032
+
+Department:
+
+City Council
+
+## Allison Tivnon
+
+Allison is newly elected and previously served as a Beaverton Arts Commission commissioner and a member of the Oregon Complete Counts committee for the State of Oregon's 2020 Census. She has 15 years of experience in marketing and business development and civic and philanthropic development.
+
+### Allison Tivnon's Message
+
+I look forward to working alongside my fellow councilors and Mayor Beaty, our city staff and the upcoming interim city manager, as well as our many community partners. Our residents and businesses are looking to us to look out for them. We have all endured the kaleidoscope that 2020 turned out to be and have our work cut out for us in charting a course to recovery. Hanging tight to our Community Vision Plan, our DEI and Climate Action Plans and continuing to make progress toward our affordable housing goals will all be front of mind in our decision-making. I am thrilled to join the council and am eager to get started!
+
+## Address
+
+12725 SW Millikan Way  
+P.O. Box 4755  
+Beaverton, OR 97076
+
+## Four-Year-Term
+
+Term Began: January 2021  
+Term Expires: December 31, 2024
+
+### Contact Us
+
+#### [![Allison Tivnon](https://content.civicplus.com/api/assets/4e1adaec-e20f-4190-9364-9e7e14f7568e?cache=1800 "Allison Tivnon") \ Allison \ Tivnon](https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e)
+
+Title
+
+Council Position 4
+
+Email
+
+[Email City Council](mailto:citymail@BeavertonOregon.gov)
+
+[Email Allison Tivnon](mailto:ativnon@beavertonoregon.gov)
+
+Phone
+
+503-250-3032
 
 01. [About Council Meetings](https://www.beavertonoregon.gov/792/About-Council-Meetings)
 02. [Agendas &amp; Minutes](https://www.beavertonoregon.gov/797/Agendas-Minutes)

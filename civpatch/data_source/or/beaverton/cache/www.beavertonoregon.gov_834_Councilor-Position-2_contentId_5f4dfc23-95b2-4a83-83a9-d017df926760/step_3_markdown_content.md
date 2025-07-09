@@ -1,4 +1,4 @@
-[Skip to Main Content](https://www.beavertonoregon.gov/839/Councilor-Position-3/)
+[Skip to Main Content](https://www.beavertonoregon.gov/834/Councilor-Position-2?contentId=5f4dfc23-95b2-4a83-83a9-d017df926760%2F)
 
 ![Beaverton, OR - Official Website](https://www.beavertonoregon.gov/DesignCenter/Assets/Get/6ed33f13-7746-4480-aa3c-aabf94e46cd5)
 
@@ -26,38 +26,79 @@ Search
 
 Opens in a new window
 
-![a file](https://content.civicplus.com/api/assets/6531d9b7-3b3a-47c1-9ca7-ffb0dd55f64f?cache=1800&width=1880&mode=min)
+![a file](https://content.civicplus.com/api/assets/8f3b9429-373c-42f4-a76f-19dbe2f1cb7a?cache=1800&width=1880&mode=min)
 
 1. [Home](https://www.beavertonoregon.gov)
 2. [Government](https://www.beavertonoregon.gov/27/Government)
 3. [City Council](https://www.beavertonoregon.gov/789/City-Council)
-4. Councilor: Position 3
+4. Councilor: Position 2
 
-# Councilor: Position 3
+# Councilor: Position 2
 
-## Edward Kimmi
+## Kevin Teater
 
-Dr. Kimmi joined the Beaverton City Council on June 21, 2022, filling a vacant seat to complete the remaining three years of the term. In 2024, he was reelected to serve a full four-year term. A dedicated community leader, Dr. Kimmi owns a local health clinic and previously contributed to the city as a member of the Diversity Advisory Board.
+Councilor Kevin Teater joined the City Council as its newest member in January—filling City Council Position 2. He brings prior experience as the executive director of the Beaverton Downtown Association and a Beaverton planning commissioner to City Council.
 
-### Edward Kimmi’s Message
+### Kevin Teater's Message
 
-I am committed to leveraging my lived experiences as an immigrant, refugee, and small business owner to serve our community. My focus will be on addressing critical issues such as public safety, affordable housing, and climate change. My goal is to create a more vibrant and thriving city where everyone feels welcome and has the opportunity to call it home.
+I strive to lead and serve in a way that is grounded in my values, the values of our community, and a consistent commitment to curiosity and vision. Beaverton is growing and evolving, and I am excited to help us address some of our biggest opportunities such as local climate action, housing affordability, and racial and cultural equity. I want my leadership to be grounded in community, so reach out anytime!
 
-#### ![Edward Kimmi](https://content.civicplus.com/api/assets/b5820b9e-3ff5-4314-a603-7596c6c517db?cache=1800 "Edward Kimmi") Edward Kimmi
+#### ![Kevin Teater](https://content.civicplus.com/api/assets/75fda9f9-856c-48da-ba75-8b60535bf69b?cache=1800 "Kevin Teater") Kevin Teater
 
 Title
 
-Council Position 3
+City Council Position 2
 
 Email
 
-[Email City Council](mailto:citymail@beavertonoregon.gov)
+[Email City Council](mailto:citymail@BeavertonOregon.gov)
 
-[Email Edward Kimmi](mailto:ekimmi@beavertonoregon.gov)
+[Email Kevin Teater](mailto:kteater@BeavertonOregon.gov)
 
 Phone
 
-503-713-7053
+503-941-6793
+
+Department:
+
+City Council
+
+## Kevin Teater
+
+Biography
+
+### Kevin Teater's Message
+
+Kevin's message
+
+## Address
+
+12725 SW Millikan Way  
+P.O. Box 4755  
+Beaverton, OR 97076
+
+## Four-Year-Term
+
+Term Began: January 2023  
+Term Expires: December 31, 2027
+
+### Contact Us
+
+#### [![Kevin Teater](https://content.civicplus.com/api/assets/75fda9f9-856c-48da-ba75-8b60535bf69b?cache=1800 "Kevin Teater") \ Kevin \ Teater](https://www.beavertonoregon.gov/834/Councilor-Position-2?contentId=5f4dfc23-95b2-4a83-83a9-d017df926760)
+
+Title
+
+City Council Position 2
+
+Email
+
+[Email City Council](mailto:citymail@BeavertonOregon.gov)
+
+[Email Kevin Teater](mailto:kteater@BeavertonOregon.gov)
+
+Phone
+
+503-941-6793
 
 01. [About Council Meetings](https://www.beavertonoregon.gov/792/About-Council-Meetings)
 02. [Agendas &amp; Minutes](https://www.beavertonoregon.gov/797/Agendas-Minutes)
