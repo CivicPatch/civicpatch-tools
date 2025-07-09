@@ -1,406 +1,616 @@
 [
   {
     "name": "Derek Carmon",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.newbergoregon.gov/government/city_council/city_council_members.php",
       "https://www.newbergoregon.gov/business_detail_T2_R8.php"
     ],
-    "positions": [
-      "Council Member",
-      "District 6",
-      "council member",
-      "district 6"
+    "images": [
+      {
+        "data": "https://www.newbergoregon.gov/_assets_/images/shape-1.png",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "The only image near the name is a graphic overlay image; no clear portrait is present, so confidence is moderate.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R8.php"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Councilor Derek Carmon' with position 'District 6' on the City Council page, indicating active council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Councilor Derek Carmon' and describes his role representing District 6 for the City of Newberg, which matches the target role 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: District 6'."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he represents 'District 6' for the City of Newberg."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "derek.carmon@newbergoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       },
       {
         "data": "Derek.Carmon@newbergoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address explicitly stated twice near name and role.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided near the name and role.",
         "source": "https://www.newbergoregon.gov/business_detail_T2_R8.php"
       }
     ],
     "websites": [
       {
         "data": "https://www.newbergoregon.gov/business_detail_T2_R8.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from link labeled 'Read More' near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
+      },
+      {
+        "data": "https://www.newbergoregon.gov/government/city_council/city_council_members.php",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "The City Council Members page is linked in the navigation and is the most relevant official page for council members.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R8.php"
       }
     ],
     "start_dates": [
       {
         "data": "2023",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2023-2026', start year is 2023.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2026, start year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2023-2026', end year is 2026.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2026, end year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:22Z"
   },
   {
     "name": "Elise Yarnell Hollamon",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
+      "https://www.newbergoregon.gov/government/city_council/city_council_members.php",
+      "https://www.newbergoregon.gov/business_detail_T2_R3.php"
     ],
-    "positions": [
-      "Council Member",
-      "District 1"
+    "images": [
+      {
+        "data": "https://www.newbergoregon.gov/_assets_/images/shape-1.png",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "This is the only image near the name 'Councilor Elise Yarnell Hollamon' but it appears to be a decorative overlay rather than a portrait; no other portrait image is present.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R3.php"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Councilor Elise Yarnell Hollamon' with position 'District 1' on the City Council page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Councilor Elise Yarnell-Hollamon' and describes her appointment to the Newberg City Council for District 1, which matches the target role 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: District 1'."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states she was appointed to the vacant position for District 1."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "elise.yarnell@newbergoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
+      },
+      {
+        "data": "elise.yarnell@newbergoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email is explicitly provided twice in the text associated with Elise Yarnell Hollamon.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R3.php"
       }
     ],
     "websites": [
       {
         "data": "https://www.newbergoregon.gov/business_detail_T2_R3.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from link labeled 'Read More' near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
+      },
+      {
+        "data": "https://www.facebook.com/voteeliseyarnellhollamon",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text provides this as her official social media profile link.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R3.php"
       }
     ],
     "start_dates": [
       {
         "data": "2025",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2025-2028', start year is 2025.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2025-2028, start year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
+      },
+      {
+        "data": "2018-10-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states she was sworn into office on October 1, 2018.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R3.php"
       }
     ],
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2025-2028', end year is 2028.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2025-2028, end year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:22Z"
   },
   {
     "name": "Jeri Turgesen",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.newbergoregon.gov/government/city_council/city_council_members.php",
       "https://www.newbergoregon.gov/business_detail_T2_R6.php"
     ],
-    "positions": [
-      "Council Member",
-      "District 3",
-      "council member",
-      "district 3"
+    "images": [
+      {
+        "data": "https://www.newbergoregon.gov/_assets_/images/shape-1.png",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "The only image near the name is a decorative overlay image; no clear official portrait is present, so confidence is moderate.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R6.php"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Councilor Jeri Turgesen' with position 'District 3' on the City Council page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Councilor Jeri Turgesen' and describes her role representing District 3 on the City Council, which matches the target role 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: District 3'."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states she represents 'District 3' for the City of Newberg."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "jeri.turgesen@newbergoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       },
       {
         "data": "jeri.turgesen@newbergoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided in text and mailto link.",
         "source": "https://www.newbergoregon.gov/business_detail_T2_R6.php"
       }
     ],
     "websites": [
       {
         "data": "https://www.newbergoregon.gov/business_detail_T2_R6.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from link labeled 'Read More' near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
     "start_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2026-2028', start year is 2026.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2026-2028, start year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2026-2028', end year is 2028.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2026-2028, end year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:22Z"
   },
   {
     "name": "Mike McBride",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.newbergoregon.gov/government/city_council/city_council_members.php",
       "https://www.newbergoregon.gov/business_detail_T2_R9.php"
     ],
-    "positions": [
-      "Council Member",
-      "District 5",
-      "council member",
-      "district 5"
+    "images": [
+      {
+        "data": "https://www.newbergoregon.gov/_assets_/images/shape-1.png",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "This image is near the profile of Mike McBride but appears to be a decorative overlay rather than a clear portrait. No other image URL is provided.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R9.php"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Councilor Mike McBride' with position 'District 5' on the City Council page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states Mike McBride is a representative on the Newberg City Council, referred to as 'Councilor Mike McBride' and 'representative for District 5 on the Newberg City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: District 5'."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states he represents District 5 on the Newberg City Council."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "mike.mcbride@newbergoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       },
       {
         "data": "mike.mcbride@newbergoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided twice in the text near the profile.",
         "source": "https://www.newbergoregon.gov/business_detail_T2_R9.php"
       }
     ],
     "websites": [
       {
         "data": "https://www.newbergoregon.gov/business_detail_T2_R9.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from link labeled 'Read More' near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
     "start_dates": [
       {
         "data": "2025",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2025-2028', start year is 2025.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2025-2028, start year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       },
       {
         "data": "2021",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'His term is from 2021-2024' indicating term start year.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states he was elected in fall 2020 and his term is from 2021 to 2024.",
         "source": "https://www.newbergoregon.gov/business_detail_T2_R9.php"
       }
     ],
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2025-2028', end year is 2028.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2025-2028, end year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       },
       {
         "data": "2024",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'His term is from 2021-2024' indicating term end year.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states his term ends in 2024.",
         "source": "https://www.newbergoregon.gov/business_detail_T2_R9.php"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:22Z"
   },
   {
     "name": "Peggy Kilburg",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.newbergoregon.gov/government/city_council/city_council_members.php",
       "https://www.newbergoregon.gov/business_detail_T2_R5.php"
     ],
-    "positions": [
-      "Council Member",
-      "District 2",
-      "council member",
-      "district 2"
+    "images": [
+      {
+        "data": "https://www.newbergoregon.gov/_assets_/images/shape-1.png",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "This image is shown near the name and section about Peggy Kilburg, likely a portrait or related image.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R5.php"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Councilor Peggy Kilburg' with position 'District 2' on the City Council page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The page explicitly refers to Peggy Kilburg as 'Councilor Peggy Kilburg' and describes her role as a city councilor, which matches the target role 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: District 2'."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilor District 2' for Peggy Kilburg."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "peggy.kilburg@newbergoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       },
       {
         "data": "Peggy.Kilburg@newbergoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email is explicitly provided in the text near the councilor's name.",
         "source": "https://www.newbergoregon.gov/business_detail_T2_R5.php"
       }
     ],
     "websites": [
       {
         "data": "https://www.newbergoregon.gov/business_detail_T2_R5.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from link labeled 'Read More' near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
     "start_dates": [
       {
         "data": "2023",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2023-2026', start year is 2023.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2026, start year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2023-2026', end year is 2026.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2026, end year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:22Z"
   },
   {
     "name": "Robyn Wheatley",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.newbergoregon.gov/government/city_council/city_council_members.php",
       "https://www.newbergoregon.gov/business_detail_T2_R7.php"
     ],
-    "positions": [
-      "Council Member",
-      "District 4",
-      "council member",
-      "district 4"
+    "images": [
+      {
+        "data": "https://www.newbergoregon.gov/_assets_/images/shape-1.png",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "This image is near the councilor's name and section, but it appears to be a decorative overlay rather than a clear portrait. No other image is present.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R7.php"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Councilor Robyn Wheatley' with position 'District 4' on the City Council page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Councilor Robyn Wheatley' and mentions she represents District 4 on the City Council, indicating she is a council member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: District 4'."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states she represents District 4."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "robyn.wheatley@newbergoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       },
       {
-        "data": "robyn.wheatley@newbergoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from mailto links near name, consistent email format.",
+        "data": "Robyn.Wheatley@newbergoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided in the text near the councilor's name.",
         "source": "https://www.newbergoregon.gov/business_detail_T2_R7.php"
       }
     ],
     "websites": [
       {
         "data": "https://www.newbergoregon.gov/business_detail_T2_R7.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from link labeled 'Read More' near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided next to the councilor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
+      },
+      {
+        "data": "https://www.newbergoregon.gov/government/city_council/city_council_members.php",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The City Council Members page is the most relevant official website for the council member.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R7.php"
       }
     ],
     "start_dates": [
       {
         "data": "2023",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2023-2026', start year is 2023.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2026, start year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2023-2026', end year is 2026.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2026, end year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:22Z"
   },
   {
     "name": "Bill Rosacker",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.newbergoregon.gov/government/city_council/city_council_members.php",
-      "https://www.newbergoregon.gov/business_detail_T2_R2.php"
+      "https://www.newbergoregon.gov/business_detail_T2_R2.php",
+      "https://www.facebook.com/profile.php?id=61571678181352"
     ],
-    "positions": [
-      "Mayor",
-      "mayor"
+    "images": [
+      {
+        "data": "https://www.newbergoregon.gov/_assets_/images/shape-1.png",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Image near the mayor's section likely represents him, but no explicit portrait or alt text confirming it.",
+        "source": "https://www.newbergoregon.gov/business_detail_T2_R2.php"
+      },
+      {
+        "data": "https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/471340499_122112386804645544_207100739990196007_n.jpg?stp=dst-jpg_fb50_s320x320_tt6&_nc_cat=110&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=t2zi0a4T95YQ7kNvwGb_X09&_nc_oc=Adna6bT4GK1ONx-xl4go7_O0cmdRblyYGAMdNqMohkT1-RvRirhjxQUfxq9vRcC8q_Y&_nc_zt=23&_nc_ht=scontent-sjc3-1.xx&_nc_gid=RjYj7zKpQ5TR254sZA7wAQ&oh=00_AfT5rQNcWH38jCuUCnl2KOiuWV8kgz1WxlA9M2dfEZzhgQ&oe=687489E1",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image is a clear portrait near the name and page title indicating it is the mayor's official photo.",
+        "source": "https://www.facebook.com/profile.php?id=61571678181352"
+      }
     ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed explicitly as 'Mayor Bill Rosacker' with position 'Mayor' on the City Council page."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Mayor Bill Rosacker' and describes his mayoral term."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page is the official Facebook page titled 'Newberg Mayor Bill Rosacker' and explicitly states 'Official Page for the Mayor of the city of Newberg, OR'."
+      }
+    ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "bill.rosacker@newbergoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to the mayor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       },
       {
         "data": "bill.rosacker@newbergoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly provided in the content near the mayor's information.",
         "source": "https://www.newbergoregon.gov/business_detail_T2_R2.php"
+      },
+      {
+        "data": "bill.rosacker@newbergoregon.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly listed in the About section with a clear label and valid format.",
+        "source": "https://www.facebook.com/profile.php?id=61571678181352"
       }
     ],
     "websites": [
       {
         "data": "https://www.newbergoregon.gov/business_detail_T2_R2.php",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from link labeled 'Read More' near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided next to the mayor's name.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       },
       {
         "data": "https://www.facebook.com/profile.php?id=61571678181352",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Official social media page URL linked near name.",
+        "llm_confidence_reason": "Official social media page link for Mayor Bill Rosacker is provided.",
         "source": "https://www.newbergoregon.gov/business_detail_T2_R2.php"
       }
     ],
     "start_dates": [
       {
         "data": "2023",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2023-2026', start year is 2023.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2026, start year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       },
       {
-        "data": "2023",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Elected in November 2022 to serve 2023-2026 term; start date taken as 2023.",
+        "data": "2023-01",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected November 2022 to serve 2023-2026 term; term start assumed January 2023.",
         "source": "https://www.newbergoregon.gov/business_detail_T2_R2.php"
       }
     ],
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: 2023-2026', end year is 2026.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2026, end year extracted.",
         "source": "https://www.newbergoregon.gov/government/city_council/city_council_members.php"
       },
       {
-        "data": "2026",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Term ends in 2026 as stated in 2023-2026 term.",
+        "data": "2026-12",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term stated as 2023-2026; assumed end December 2026.",
         "source": "https://www.newbergoregon.gov/business_detail_T2_R2.php"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:22Z"
   }
 ]
