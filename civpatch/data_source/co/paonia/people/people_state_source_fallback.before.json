@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Paige Smith",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-09T02:29:13Z"
+  },
+  {
+    "name": "Kathy Swartz",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:29:13Z"
+  },
+  {
+    "name": "John Valentine",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:29:13Z"
+  },
+  {
+    "name": "Rick Stelter",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:29:13Z"
+  },
+  {
+    "name": "Walter Czech",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:29:13Z"
+  },
+  {
+    "name": "Lucy Hunter",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:29:13Z"
+  },
+  {
+    "name": "Mike Heck",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:29:13Z"
+  }
+]
