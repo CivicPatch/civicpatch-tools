@@ -1,5 +1,4 @@
 ---
-people: {}
 sources:
 - https://www.bendoregon.gov/government/city-council
 - https://www.bendoregon.gov/government/city-council/melanie-kebler
@@ -10,4 +9,6 @@ sources:
 - https://www.bendoregon.gov/government/city-council/megan-norris
 - https://www.bendoregon.gov/government/city-council/mike-riley
 - https://www.bendoregon.gov/government/city-council/steve-platt
+people: {}
 exclude_sources: []
+government_type: mayor_council

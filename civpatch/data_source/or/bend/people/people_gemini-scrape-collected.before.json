@@ -1,765 +1,643 @@
 [
   {
     "name": "Melanie Kebler",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.bendoregon.gov/government/city-council",
-      "https://www.bendoregon.gov/government/city-council/melanie-kebler",
-      "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
+      "https://www.bendoregon.gov/government/city-council/melanie-kebler"
     ],
-    "positions": [
-      "Mayor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly extracted from the text"
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' is explicitly stated as her council position and her elected role."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "541-749-0917",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text associated with the person's name and role section",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "541-749-0917",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "541-749-0917",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed under 'Contact' section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 100,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text under her contact information section",
         "source": "https://www.bendoregon.gov/government/city-council/melanie-kebler"
-      },
-      {
-        "data": "541-749-0917",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
       }
     ],
     "emails": [
       {
         "data": "mkebler@bendoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address extracted from markdown link text under 'Contact' section.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 100,
-        "source": "https://www.bendoregon.gov/government/city-council/melanie-kebler"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text associated with the person's name and role section",
+        "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "mkebler@bendoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text under her contact information section",
+        "source": "https://www.bendoregon.gov/government/city-council/melanie-kebler"
       }
     ],
     "websites": [
       {
         "data": "https://www.bendoregon.gov/government/city-council/melanie-kebler",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly extracted from the hyperlink associated with the person's name",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "https://www.bendoregon.gov/government/city-council/melanie-kebler",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/383/36?backlist=/government/city-council/melanie-kebler",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with name under 'Contact' section, appears to be a profile page.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 100,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is her dedicated profile page.",
         "source": "https://www.bendoregon.gov/government/city-council/melanie-kebler"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/383/",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with the name, but appears to be an internal staff directory component rather than a public profile page.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 10,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
       }
     ],
-    "start_dates": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date '2022' is explicitly stated as when she was elected Mayor",
+        "source": "https://www.bendoregon.gov/government/city-council/melanie-kebler"
+      }
+    ],
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly labeled 'Term Ends'.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 50,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date '2026' is explicitly stated next to 'Term Ends:'",
         "source": "https://www.bendoregon.gov/government/city-council/melanie-kebler"
       }
-    ]
+    ],
+    "updated_at": "2025-07-09T16:34:09Z"
   },
   {
     "name": "Megan Perkins",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.bendoregon.gov/government/city-council",
-      "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video",
       "https://www.bendoregon.gov/government/city-council/megan-perkins"
     ],
-    "positions": [
-      "Mayor Pro Tem"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly extracted from the text"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'elected to the Bend City Council'."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Pro Tem' under her contact information."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3rd",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position: 3rd'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-749-7619",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text associated with the person's name and role section",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "541-749-7619",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "541-749-7619",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "541-749-7619",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact' section associated with the person.",
-        "proximity_to_name": 100,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided under the contact section for Megan Perkins.",
         "source": "https://www.bendoregon.gov/government/city-council/megan-perkins"
       }
     ],
     "emails": [
       {
         "data": "mperkins@bendoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text associated with the person's name and role section",
+        "source": "https://www.bendoregon.gov/government/city-council"
+      },
+      {
+        "data": "mperkins@bendoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided under the contact section for Megan Perkins.",
+        "source": "https://www.bendoregon.gov/government/city-council/megan-perkins"
       }
     ],
     "websites": [
       {
         "data": "https://www.bendoregon.gov/government/city-council/megan-perkins",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly extracted from the hyperlink associated with the person's name",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "https://www.bendoregon.gov/government/city-council/megan-perkins",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/378/",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with the name, but appears to be an internal staff directory component rather than a public profile page.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 10,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/378/36?backlist=/government/city-council/megan-perkins",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with the person's name under the 'Contact' section, appears to be a profile page.",
-        "proximity_to_name": 80,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Megan Perkins.",
         "source": "https://www.bendoregon.gov/government/city-council/megan-perkins"
       }
     ],
-    "start_dates": [],
-    "end_dates": []
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states 'reelected in 2024', and per guidelines, the most recent election date is used as the start date.",
+        "source": "https://www.bendoregon.gov/government/city-council/megan-perkins"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Term Ends: 2028'.",
+        "source": "https://www.bendoregon.gov/government/city-council/megan-perkins"
+      }
+    ],
+    "updated_at": "2025-07-09T16:34:09Z"
   },
   {
     "name": "Megan Norris",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.bendoregon.gov/government/city-council",
-      "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video",
       "https://www.bendoregon.gov/government/city-council/megan-norris"
     ],
-    "positions": [
-      "Council Member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly extracted from the text"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Normalized 'Councilor' to 'Council Member' as per guidelines"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor', which is a direct match to the target role 'council member'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor', which is a direct match to the target role 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "1st",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position: 1st'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-647-8413",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text associated with the person's name and role section",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "541-647-8413",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "541-647-8413",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "541-647-8413",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly under 'Contact' section associated with the name.",
-        "proximity_to_name": 50,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided.",
         "source": "https://www.bendoregon.gov/government/city-council/megan-norris"
       }
     ],
     "emails": [
       {
         "data": "mnorris@bendoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text associated with the person's name and role section",
+        "source": "https://www.bendoregon.gov/government/city-council"
+      },
+      {
+        "data": "mnorris@bendoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided.",
+        "source": "https://www.bendoregon.gov/government/city-council/megan-norris"
       }
     ],
     "websites": [
       {
         "data": "https://www.bendoregon.gov/government/city-council/megan-norris",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly extracted from the hyperlink associated with the person's name",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "https://www.bendoregon.gov/government/city-council/megan-norris",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/509/",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with the name, but appears to be an internal staff directory component rather than a public profile page.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 10,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/509/36?backlist=/government/city-council/megan-norris",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with the name under the 'Contact' section, appears to be a staff profile page.",
-        "proximity_to_name": 40,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current URL is a direct profile page for Megan Norris.",
         "source": "https://www.bendoregon.gov/government/city-council/megan-norris"
       }
     ],
-    "start_dates": [],
-    "end_dates": []
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected in 2024', which is the most recent election date.",
+        "source": "https://www.bendoregon.gov/government/city-council/megan-norris"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term Ends: 2028'.",
+        "source": "https://www.bendoregon.gov/government/city-council/megan-norris"
+      }
+    ],
+    "updated_at": "2025-07-09T16:34:09Z"
   },
   {
     "name": "Gina Franzosa",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.bendoregon.gov/government/city-council",
-      "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video",
       "https://www.bendoregon.gov/government/city-council/gina-franzosa"
     ],
-    "positions": [
-      "Council Member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly extracted from the text"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Normalized 'Councilor' to 'Council Member' as per guidelines"
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor' and is a specific role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Normalized base role from 'City Councilor' which is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "2nd",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position: 2nd'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-749-7319",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text associated with the person's name and role section",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "541-749-7319",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "541-749-7319",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "541-749-7319",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Directly listed under 'Contact' section associated with the name.",
-        "proximity_to_name": 50,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed under the contact section for Gina Franzosa.",
         "source": "https://www.bendoregon.gov/government/city-council/gina-franzosa"
       }
     ],
     "emails": [
       {
         "data": "gfranzosa@bendoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text associated with the person's name and role section",
+        "source": "https://www.bendoregon.gov/government/city-council"
+      },
+      {
+        "data": "gfranzosa@bendoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly listed under the contact section for Gina Franzosa.",
+        "source": "https://www.bendoregon.gov/government/city-council/gina-franzosa"
       }
     ],
     "websites": [
       {
         "data": "https://www.bendoregon.gov/government/city-council/gina-franzosa",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly extracted from the hyperlink associated with the person's name",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "https://www.bendoregon.gov/government/city-council/gina-franzosa",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/611/",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with the name, but appears to be an internal staff directory component rather than a public profile page.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 10,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/611/36?backlist=/government/city-council/gina-franzosa",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with the name under the 'Contact' section, appears to be a profile page.",
-        "proximity_to_name": 30,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a direct profile page for Gina Franzosa.",
         "source": "https://www.bendoregon.gov/government/city-council/gina-franzosa"
       }
     ],
-    "start_dates": [],
-    "end_dates": []
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Gina was elected to the Bend City Council in 2024'.",
+        "source": "https://www.bendoregon.gov/government/city-council/gina-franzosa"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term Ends: 2028'.",
+        "source": "https://www.bendoregon.gov/government/city-council/gina-franzosa"
+      }
+    ],
+    "updated_at": "2025-07-09T16:34:09Z"
   },
   {
     "name": "Steve Platt",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.bendoregon.gov/government/city-council",
-      "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video",
       "https://www.bendoregon.gov/government/city-council/steve-platt"
     ],
-    "positions": [
-      "Council Member",
-      "Council Member, Position 4"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly extracted from the text"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Normalized 'Councilor' to 'Council Member' as per guidelines"
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor', which is a target role."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor', which is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "4th",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position: 4th'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-749-0336",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text associated with the person's name and role section",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
-        "data": "541-749-0336",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "541-749-0336",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "541-749-0336",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number explicitly listed under 'Contact' section near the name.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 200,
+        "data": "541-749-7322",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
         "source": "https://www.bendoregon.gov/government/city-council/steve-platt"
       }
     ],
     "emails": [
       {
         "data": "splatt@bendoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text associated with the person's name and role section",
+        "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "splatt@bendoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed under 'Contact' section near the name.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 200,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
         "source": "https://www.bendoregon.gov/government/city-council/steve-platt"
       }
     ],
     "websites": [
       {
         "data": "https://www.bendoregon.gov/government/city-council/steve-platt",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly extracted from the hyperlink associated with the person's name",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "https://www.bendoregon.gov/government/city-council/steve-platt",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/609/",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with the name, but appears to be an internal staff directory component rather than a public profile page.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 10,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/609/36?backlist=/government/city-council/steve-platt",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link associated with name under 'Contact' section, appears to be a staff profile page.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 200,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page is a dedicated profile page for Steve Platt.",
         "source": "https://www.bendoregon.gov/government/city-council/steve-platt"
       }
     ],
     "start_dates": [
       {
         "data": "2024",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected... in 2024'.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 50,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to the Bend City Council in 2024'.",
         "source": "https://www.bendoregon.gov/government/city-council/steve-platt"
       }
     ],
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Ends: 2028'.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 100,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term Ends: 2028'.",
         "source": "https://www.bendoregon.gov/government/city-council/steve-platt"
       }
-    ]
+    ],
+    "updated_at": "2025-07-09T16:34:09Z"
   },
   {
     "name": "Ariel Méndez",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.bendoregon.gov/government/city-council",
-      "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video",
       "https://www.bendoregon.gov/government/city-council/ariel-mendez"
     ],
-    "positions": [
-      "Council Member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly extracted from the text"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Normalized 'Councilor' to 'Council Member' as per guidelines"
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor' and 'elected to the Bend City Council'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position: 5th'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-408-1518",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text associated with the person's name and role section",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "541-408-1518",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "541-408-1518",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "541-408-1518",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Directly listed under 'Contact' section for the person.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
         "source": "https://www.bendoregon.gov/government/city-council/ariel-mendez"
       }
     ],
     "emails": [
       {
         "data": "amendez@bendoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text associated with the person's name and role section",
+        "source": "https://www.bendoregon.gov/government/city-council"
+      },
+      {
+        "data": "amendez@bendoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://www.bendoregon.gov/government/city-council/ariel-mendez"
       }
     ],
     "websites": [
       {
         "data": "https://www.bendoregon.gov/government/city-council/ariel-mendez",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly extracted from the hyperlink associated with the person's name",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "https://www.bendoregon.gov/government/city-council/ariel-mendez",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/501/",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with the name, but appears to be an internal staff directory component rather than a public profile page.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 10,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/501/36?backlist=/government/city-council/ariel-mendez",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with the person's name under the 'Contact' section.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 45,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a direct profile page for Ariel Méndez.",
         "source": "https://www.bendoregon.gov/government/city-council/ariel-mendez"
       }
     ],
-    "start_dates": [],
-    "end_dates": []
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Ariel was elected to the Bend City Council in 2022'.",
+        "source": "https://www.bendoregon.gov/government/city-council/ariel-mendez"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term Ends: 2026'.",
+        "source": "https://www.bendoregon.gov/government/city-council/ariel-mendez"
+      }
+    ],
+    "updated_at": "2025-07-09T16:34:09Z"
   },
   {
     "name": "Mike Riley",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.bendoregon.gov/government/city-council",
-      "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video",
       "https://www.bendoregon.gov/government/city-council/mike-riley"
     ],
-    "positions": [
-      "Council Member",
-      "City Councilor",
-      "Position 6"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role directly extracted from the text"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Normalized 'Councilor' to 'Council Member' as per guidelines"
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Councilor' and matches target role 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "6th",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Position: 6th'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-749-0638",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text associated with the person's name and role section",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "541-749-0638",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number listed directly below name and title.",
-        "proximity_to_name": 20,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "541-749-0638",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "541-749-0638",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number explicitly listed under Contact section.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with Mike Riley under 'Contact'.",
         "source": "https://www.bendoregon.gov/government/city-council/mike-riley"
       }
     ],
     "emails": [
       {
         "data": "mriley@bendoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address directly listed under the person's name and title.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text associated with the person's name and role section",
+        "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "mriley@bendoregon.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed under Contact section.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with Mike Riley under 'Contact'.",
         "source": "https://www.bendoregon.gov/government/city-council/mike-riley"
       }
     ],
     "websites": [
       {
         "data": "https://www.bendoregon.gov/government/city-council/mike-riley",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL directly extracted from the hyperlink associated with the person's name",
         "source": "https://www.bendoregon.gov/government/city-council"
       },
       {
         "data": "https://www.bendoregon.gov/government/city-council/mike-riley",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "URL listed directly below name and contact info.",
-        "proximity_to_name": 40,
-        "source": "https://www.bendoregon.gov/government/city-council"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/503/",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with the name, but appears to be an internal staff directory component rather than a public profile page.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 10,
-        "source": "https://www.bendoregon.gov/government/city-council/city-council-meeting-agendas-video"
-      },
-      {
-        "data": "https://www.bendoregon.gov/Home/Components/StaffDirectory/StaffDirectory/503/36?backlist=/government/city-council/mike-riley",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Link associated with the name under the Contact section.",
-        "markdown_formatting": {
-          "in_list": true
-        },
-        "proximity_to_name": 50,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Mike Riley.",
         "source": "https://www.bendoregon.gov/government/city-council/mike-riley"
       }
     ],
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Year of election mentioned in the introductory text.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 20,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mike was elected to the Bend City Council in 2022'.",
         "source": "https://www.bendoregon.gov/government/city-council/mike-riley"
       }
     ],
     "end_dates": [
       {
         "data": "2026",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term end date explicitly listed.",
-        "markdown_formatting": {
-          "in_list": false
-        },
-        "proximity_to_name": 30,
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term Ends: 2026'.",
         "source": "https://www.bendoregon.gov/government/city-council/mike-riley"
       }
-    ]
+    ],
+    "updated_at": "2025-07-09T16:34:09Z"
   }
 ]
