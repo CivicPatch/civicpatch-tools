@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.klamathfalls.city/directory.aspx?EID=117%2F)
+[Skip to Main Content](https://www.klamathfalls.city/Directory.aspx?DID=20%2F)
 
 ![Klamath Falls OR Homepage](https://www.klamathfalls.city/ImageRepository/Document?documentID=2457)
 
@@ -15,20 +15,30 @@ Search
 
 <!--THE END-->
 
-![](https://www.klamathfalls.city/ImageRepository/Document?documentID=2499)
+![](https://www.klamathfalls.city/ImageRepository/Document?documentID=2454)
 
 1. [Home](https://www.klamathfalls.city)
 2. Staff Directory
 
-![IMG_0583](https://www.klamathfalls.city/ImageRepository/Document?documentID=3153 "IMG_0583")
-
-# Michael Angeli
+# Mayor &amp; Council
 
  
 
-[Mayor &amp; Council](https://www.klamathfalls.city/Directory.aspx?DID=20)  
-Title: Ward 2 Council Member  
-[Email Michael Angeli](mailto:mangeli@klamathfalls.city)
+500 Klamath Avenue Klamath Falls OR 97601
+
+[Directions](https://www.google.com/maps/place/500+Klamath+Avenue+Klamath+Falls+OR+97601)
+
+Physical Address:View Map
+
+500 Klamath Avenue  
+Klamath Falls, OR 97601
+
+[Email](https://www.klamathfalls.city/formcenter/Contact-Us-4/Contact-Us-46)  
+Link: [Mayor and Council Page](https://www.klamathfalls.city/210/Mayor-Council)
+
+Staff
+
+Name Title Email Phone Additional Phone [Russo, Terra](https://www.klamathfalls.city/directory.aspx?EID=43) Ward 3 Council Member [Email Terra Russo](mailto:trusso@klamathfalls.city)     [Studenberg, Phil](https://www.klamathfalls.city/directory.aspx?EID=39) Ward 1 Council Member [Email Phil Studenberg](mailto:pstudenberg@klamathfalls.city)     [Westfall, Carol](https://www.klamathfalls.city/directory.aspx?EID=38) Mayor [Email Carol Westfall](mailto:cwestfall@klamathfalls.city)     [McClung, Abbie](https://www.klamathfalls.city/directory.aspx?EID=97) Ward 4 Councilmember [Email Abbie McClung](mailto:amcclung@klamathfalls.city)     [Mueller Wendt, Kelsey](https://www.klamathfalls.city/directory.aspx?EID=98) Ward 5 Councilmember [Email Kelsey Mueller Wendt](mailto:kwendt@klamathfalls.city)     [Angeli, Michael](https://www.klamathfalls.city/directory.aspx?EID=117) Ward 2 Council Member [Email Michael Angeli](mailto:mangeli@klamathfalls.city)    
 
 [Return to Staff Directory](https://www.klamathfalls.city/Directory.aspx)
 
