@@ -1,9 +1,9 @@
-[Skip to main content](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
+[Skip to main content](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-eddy-morales/)
 
 ![City of Gresham Oregon](https://www.greshamoregon.gov/img/gresham-logo.png)
 
-- [Search](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
-- [Menu](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
+- [Search](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-eddy-morales/)
+- [Menu](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-eddy-morales/)
 
 Search Search
 
@@ -169,9 +169,9 @@ Search Search
 - [Government](https://www.greshamoregon.gov/government/city-departments)
 - [Mayor and Council](https://www.greshamoregon.gov/government/mayor-and-council)
 - [Meet the Council](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council)
-- Councilor Janine Gladfelter
+- Councilor Eddy Morales
 
-[Skip sidebar navigation](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
+[Skip sidebar navigation](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-eddy-morales/)
 
 Government
 
@@ -238,35 +238,37 @@ Government
 
 ## Contact
 
-Councilor Janine Gladfelter
+Councilor Eddy Morales
 
 **Phone:** 503-618-2871
 
-[Janine.Gladfelter@GreshamOregon.gov](mailto:Janine.Gladfelter@greshamoregon.gov)
+[Eddy.Morales@GreshamOregon.gov](mailto:Eddy.Morales@greshamoregon.gov)
 
 Gresham City Hall, 3rd Floor
 
 1333 NW Eastman Parkway Gresham, OR 97030
 
-# Councilor Janine Gladfelter
+# Councilor Eddy Morales
 
 #### Term of Office: January 2023 to December 2026
 
-![Gresham City Councilor Janine Gladfelter](https://www.greshamoregon.gov/globalassets/government/mayor-and-council/meet-the-council/councilor-gladfelter-portrait.jpg)Councilor Janine Gladfelter was elected to a second term in November 2022 and sworn into office in Position 6 on Jan. 3, 2023.
+![Councilor Eddy Morales](https://www.greshamoregon.gov/globalassets/government/mayor-and-council/meet-the-council/councilor-morales-portrait.jpg)Councilor Eddy Morales was elected to a second term in November 2022 and sworn into office in Position 2 on Jan. 3, 2023.
 
-Councilor Gladfelter has been a leader in Gresham for 18 years through her career at U.S. Bank and her time on the Council. Councilor Gladfelter has been out in the community, volunteering, building relationships, and being a trusted advisor and a point of resource for businesses, nonprofits, and community members.
+Councilor Morales was first elected to a four-year term for Council Position 2 in November 2018 and was sworn into office on Jan. 8, 2019. He was voted Council President by his colleagues in 2021 and 2022.
 
-She was appointed in 2017, elected in 2018 and sworn into office in 2019.
+A small business owner and community organizer, Councilor Morales spent the last 18 years working for multiple national organizations dedicated to community change including Morales Public Relations. His work has proven successful and allowed him to collaborate with policymakers from around the country enabling him to give back to the community that has given him so much.
 
-Councilor Gladfelter served as Council President in 2020 and served on both the City’s Finance and Community Development Block Grant committees for four years before continuing as Council Liaison. She also served as Council Liaison for the Historic Resources Committee and A Home for Everyone for two years.
+As recipients of public benefits and the support of countless individuals, he and his family witnessed firsthand growing up how a little assistance can change the entire direction of one’s life and break the cycle of poverty. From grassroots activism to board service, he has kept the needs of local communities close at heart, advocating for vulnerable communities to gain access to healthcare, immigration reform, housing equity, education and ending gun violence. Since 2003 he has raised over $60 million in support of these efforts.
 
-Her experience serving on the City Council has given her an even deeper understanding and opportunity for the need to create and promote policies and programs to encourage safe neighborhoods, clean streets, and economic prosperity for all.
+Public benefits also afforded Councilor Morales the opportunity to attend the University of Oregon where he studied Spanish and Planning, Public Policy and Management. He represented his fellow students in leadership and during these formative years decided to dedicate himself to advancing the quality of life for all individuals through civic engagement and public policy.
 
-Councilor Gladfelter’s priorities are public safety, long-term financial stability, livability, and ensuring we have housing available at all levels.
+“My vision for Gresham includes prosperity and opportunity for everyone who lives here. I want to bring my experience, skills, determination and compassion to the Gresham City Council to help tackle issues like housing, transportation, economic growth and education.”
 
-In her free time, you will see her out with her husband walking her dogs. She also enjoys cooking and gardening – and sharing with friends and family.
+Recognizing that Gresham is one of Oregon’s fastest growing cities, Councilor Morales understands that Council must work proactively together to preserve what we all value about our community. Though Gresham is working well at serving a number of citizens, he noted we have a poverty rate of 20%, which is well above Oregon’s average, sadly leaving many of our neighbors out of economic opportunities.
 
-You can reach Councilor Gladfelter at [Janine.Gladfelter@GreshamOregon.gov](mailto:Janine.Gladfelter@GreshamOregon.gov "Janine.Gladfelter@GreshamOregon.gov").
+Councilor Morales currently shares a multi-generational home with his partner, Hugh, mother in-law, Rochelle, and rescue dog, Besitos. In his spare time, he enjoys cooking, baking, gardening and sailing and dedicates himself to volunteerism and public service. He is the founder and co-chair of the University of Oregon Latino Alumni Association, Treasurer of the Democratic Party of Oregon, founder of East County Rising, and serves on the boards of the Community Catalyst Action Fund, Midwest Academy, Oregon Coalition for Common Sense, Battleground Texas, Code for Progress and Justice Matters Press.
+
+You can reach Councilor Morales at [Eddy.Morales@GreshamOregon.gov](mailto:Eddy.Morales@GreshamOregon.gov "Eddy.Morales@GreshamOregon.gov").
 
 #### Connect
 

@@ -1,9 +1,9 @@
-[Skip to main content](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
+[Skip to main content](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/mayor-travis-stovall/)
 
 ![City of Gresham Oregon](https://www.greshamoregon.gov/img/gresham-logo.png)
 
-- [Search](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
-- [Menu](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
+- [Search](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/mayor-travis-stovall/)
+- [Menu](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/mayor-travis-stovall/)
 
 Search Search
 
@@ -169,9 +169,9 @@ Search Search
 - [Government](https://www.greshamoregon.gov/government/city-departments)
 - [Mayor and Council](https://www.greshamoregon.gov/government/mayor-and-council)
 - [Meet the Council](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council)
-- Councilor Janine Gladfelter
+- Mayor Travis Stovall
 
-[Skip sidebar navigation](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
+[Skip sidebar navigation](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/mayor-travis-stovall/)
 
 Government
 
@@ -238,35 +238,39 @@ Government
 
 ## Contact
 
-Councilor Janine Gladfelter
+Mayor Travis Stovall
 
-**Phone:** 503-618-2871
+**Phone:** 503-618-2584
 
-[Janine.Gladfelter@GreshamOregon.gov](mailto:Janine.Gladfelter@greshamoregon.gov)
+[Mayor@GreshamOregon.gov](mailto:Mayor@greshamoregon.gov)
 
 Gresham City Hall, 3rd Floor
 
 1333 NW Eastman Parkway Gresham, OR 97030
 
-# Councilor Janine Gladfelter
+# Mayor Travis Stovall
 
 #### Term of Office: January 2023 to December 2026
 
-![Gresham City Councilor Janine Gladfelter](https://www.greshamoregon.gov/globalassets/government/mayor-and-council/meet-the-council/councilor-gladfelter-portrait.jpg)Councilor Janine Gladfelter was elected to a second term in November 2022 and sworn into office in Position 6 on Jan. 3, 2023.
+![Mayor Travis Stovall](https://www.greshamoregon.gov/globalassets/government/mayor-and-council/meet-the-council/mayor-stovall-portrait.jpg)Mayor Travis Stovall, sworn into office on Jan. 3, 2023, was elected to his second term in November 2022.
 
-Councilor Gladfelter has been a leader in Gresham for 18 years through her career at U.S. Bank and her time on the Council. Councilor Gladfelter has been out in the community, volunteering, building relationships, and being a trusted advisor and a point of resource for businesses, nonprofits, and community members.
+Mayor Stovall was first sworn in as Gresham's 28th Mayor on Jan. 5, 2021. He served the rest of former Mayor Shane Bemis' term through December 2022.
 
-She was appointed in 2017, elected in 2018 and sworn into office in 2019.
+Mayor Stovall makes history as Gresham's first Black mayor and of any major city in the Portland metro area and across the state. His life experiences and leadership guide the City and community forward at a time when unity has never been more important.
 
-Councilor Gladfelter served as Council President in 2020 and served on both the City’s Finance and Community Development Block Grant committees for four years before continuing as Council Liaison. She also served as Council Liaison for the Historic Resources Committee and A Home for Everyone for two years.
+A longtime Gresham resident, he is the small business owner and CEO of eRep, Inc.
 
-Her experience serving on the City Council has given her an even deeper understanding and opportunity for the need to create and promote policies and programs to encourage safe neighborhoods, clean streets, and economic prosperity for all.
+He is a former vice president of the TriMet Board of Directors and featured in The Oregonian for his dynamic leadership when serving as President of the Board of Directors of the Gresham Area Chamber of Commerce and Visitors Center.
 
-Councilor Gladfelter’s priorities are public safety, long-term financial stability, livability, and ensuring we have housing available at all levels.
+Mayor Stovall’s lengthy history of volunteer local government service includes serving on the City's Community Development and Housing Subcommittee; chair of the Charter Review Committee; and the past Gresham Task Force on Housing to help create affordable housing units.
 
-In her free time, you will see her out with her husband walking her dogs. She also enjoys cooking and gardening – and sharing with friends and family.
+As Mayor, his priorities include the City's budget; community safety; making sure families, individuals and businesses have the support needed to recover from COVID-19; and building housing that is affordable for Gresham at every income level.
 
-You can reach Councilor Gladfelter at [Janine.Gladfelter@GreshamOregon.gov](mailto:Janine.Gladfelter@GreshamOregon.gov "Janine.Gladfelter@GreshamOregon.gov").
+Mayor Stovall holds a Bachelor of Science from Union College in business administration, with an emphasis in finance, where he graduated summa cum laude. He graduated with a Master’s in business administration from the University of Nebraska-Lincoln.
+
+In his free time, Mayor Stovall is a private pilot, plays tennis, cycles and enjoys spending time traveling.
+
+You can reach Mayor Stovall at [Mayor@GreshamOregon.gov](mailto:Mayor@GreshamOregon.gov "Mayor@GreshamOregon.gov").
 
 #### Connect
 
