@@ -2025,7 +2025,14 @@
       ],
       "population": 1675,
       "website": "http://www.townofelizabeth.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T00:13:55Z",
+      "meta_hash": "2db61d773753f64d5759f0f3f8ae24d5",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hudson",
