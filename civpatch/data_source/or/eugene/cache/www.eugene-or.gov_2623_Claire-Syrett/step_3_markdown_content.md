@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.eugene-or.gov/2621/)
+[Skip to Main Content](https://www.eugene-or.gov/2623/Claire-Syrett/)
 
 ![Home Page](https://www.eugene-or.gov/ImageRepository/Document?documentID=55269)
 
@@ -25,62 +25,64 @@ Loading
 5. [City Manager's Office](https://www.eugene-or.gov/101/City-Managers-Office)
 6. [Mayor and City Council](https://www.eugene-or.gov/537/Mayor-and-City-Council)
 7. [Council](https://www.eugene-or.gov/2608/Council)
-8. Mike Clark
+8. Lyndsie Leech
 
-# Mike Clark
+# Lyndsie Leech
 
-![City Councilor Mike Clark](https://www.eugene-or.gov/ImageRepository/Document?documentID=29514 "City Councilor Mike Clark")
+![Councilor Leech](https://www.eugene-or.gov/ImageRepository/Document?documentId=68468)
 
-## Eugene City Councilor, Ward 5
+## Eugene City Councilor, Ward 7
 
-**Term: January 2023 - January 2027**
+**Term: January 2025 - January 2029**
 
-500 East 4th Avenue, Suite 302, Eugene, OR 97401
-
-Phone: 541-682-8345
-
+500 East 4th Avenue, Suite 302, Eugene, OR 97401  
+Phone: 541-682-8347  
 Fax: 541-682-5414
 
-[**Email Councilor Clark**](mailto:mclark@eugene-or.gov)
+[**Email Councilor Leech**](mailto:LLeech@eugene-or.gov)
 
 Email sent to an elected official becomes a public record that may be subject to inspection and copying by the public. For further information please refer to the [website privacy policy](https://www.eugene-or.gov/1353). When submitting comments, please include your [ward number](https://www.eugene-or.gov/532) or address in your communication to the City Council. Providing this information will identify concerns and questions for the [City Councilor representing your ward](https://www.eugene-or.gov/537).
 
 ### Community Service / Involvement
 
-- Former Citizen Member, City of Eugene Budget Committee
-- Former Member, City of Eugene Human Rights Commission
-- Former Member, City of Eugene Capital Improvement Program Subcommittee
-- Former Board Member, Convention and Visitors Association of Lane County (CVALCO)
-- Former Board Member, Lane Metro Partnership
-- Former Board Member, Kids’ First (Lane County Child Advocacy Center)
-- Former Member, Pearl Buck Center Resource Development and Marketing Committee
-- Past President, Eugene Active 20-30 Club
-- Past President, Emerald Executive Association
+- Territorial Parent Association (2016-present)
+- Fern Ridge Community Action Network Board Member (2019-2022)
+- Food For Lane County Grassroots Garden volunteer (2010-13)
+- Oregon Farm Academy Volunteer Director/Owner (2013-2018)
 
 ### Current Council Assignments
 
 - Budget Committee
+- Human Rights Commission
+- Human Services Commission
+- Lane Workforce Council
+- Lane Workforce Partnership Board
+- Lane Workforce Partnership Executive Board
 
 ### Professional Background
 
-- Mortgage Specialist
-- President, Marketing Consultants Inc. (Advertising, Marketing, Public Relations)
-- Political Campaign Consultant and Communications Director
-- Television, Radio and Newspaper Advertising Sales
-- Seasonal (Summer) Alaskan Salmon Cannery Worker
+- Executive Director, WellMama, Inc (2021-current)
+- Business Development Director, The Child Center (2019-2022)
+- Contract Grant Writer &amp; Admin Director, Veneta Downtown Farmer’s Market (2019-2022)
+- Development Director, HIV Alliance (2017-2019)
+- Fund Developer, The Child Center (2014-2017)
+- Development Coordinator, Looking Glass Community Services (2012-2014)
 
 ### Educational Background
 
-- University of Oregon
-- Aloha High School, Beaverton
+- Graduate Certificate of Public Health – Oregon State University
+- Master of Public Administration -Middlebury Institute of International Studies, Monterey, CA
+- Graduate Certificate at Development Project Management Institute
+- Bachelor of Anthropology – University of Hawaii, HI
 
 ### Special Interests and Concerns
 
-- Strengthen public safety
-- Proactively maintain transportation systems and infrastructure
-- Encourage responsible economic development
-- Develop and maintain parks and open spaces
-- Enhance livability
+- Mental health – prevention and services
+- Public Health &amp; Safety
+- Health &amp; Human services
+- Housing affordability &amp; supply; houselessness
+- Economic development &amp; supporting the middle class
+- Protecting and building public gathering spaces &amp; green spaces
 
 <!--THE END-->
 
