@@ -2309,7 +2309,14 @@
       ],
       "population": 1183,
       "website": "http://town.ridgway.co.us/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T02:46:20Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Cripple Creek",

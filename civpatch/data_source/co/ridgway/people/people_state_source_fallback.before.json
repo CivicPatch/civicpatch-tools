@@ -1,0 +1,52 @@
+[
+  {
+    "name": "John Clark",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-09T02:44:25Z"
+  },
+  {
+    "name": "Russell (Russ) Meyer",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tem"
+    ],
+    "updated_at": "2025-07-09T02:44:25Z"
+  },
+  {
+    "name": "Beth Lakin",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:44:25Z"
+  },
+  {
+    "name": "Terry Schuyler",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:44:25Z"
+  },
+  {
+    "name": "Kevin Grambley",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:44:25Z"
+  },
+  {
+    "name": "Polly Kroger",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:44:25Z"
+  },
+  {
+    "name": "Josey Scoville",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T02:44:25Z"
+  }
+]
