@@ -2228,7 +2228,14 @@
       ],
       "population": 1400,
       "website": "http://www.frasercolorado.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T02:30:37Z",
+      "meta_hash": "bbfef8d4d17d5551276c883641601ae7",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Parachute",
