@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Tom Ellis",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-09T17:19:39Z",
+    "divisions": []
+  },
+  {
+    "name": "Joshua Callahan",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T17:19:39Z",
+    "divisions": []
+  },
+  {
+    "name": "Brett Sherman",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T17:19:39Z",
+    "divisions": []
+  },
+  {
+    "name": "David Golobay",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T17:19:39Z",
+    "divisions": []
+  },
+  {
+    "name": "Glenn Wachter",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T17:19:39Z",
+    "divisions": []
+  }
+]

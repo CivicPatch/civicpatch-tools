@@ -1,193 +1,261 @@
 [
   {
     "name": "Tom Ellis",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.happyvalleyor.gov/city-hall/city-council/"
+      "https://www.happyvalleyor.gov/city-hall/city-council"
     ],
-    "positions": [
-      "Mayor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' is explicitly stated directly under the person's name, matching a target role, ensuring high accuracy and direct relevance to their current position. "
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "tome@happyvalleyor.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly under the person's name.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and clearly associated with the person's name and role in the text, formatted as a mailto link, ensuring high accuracy of extraction and direct relevance to the individual's contact information for their public role. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
     "websites": [],
     "start_dates": [
       {
         "data": "2023-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit 're-elected to serve beginning January 2023' date found in bio.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as 're-elected to serve beginning January 2023', which is the most recent election date for their current term, ensuring high accuracy and direct relevance to their term of service. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit 'Term expires' date listed under the person's name and in bio.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as 'Term expires 12/31/2026' directly under the person's name and role, ensuring high accuracy and direct relevance to their term of service. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:18Z"
   },
   {
     "name": "Brett Sherman",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.happyvalleyor.gov/city-hall/city-council/"
+      "https://www.happyvalleyor.gov/city-hall/city-council"
     ],
-    "positions": [
-      "Council Position 3"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Council Position 3', which indicates a council member role, matching a target role, ensuring high accuracy and direct relevance to their current position. "
+      },
+      {
+        "data": "Council Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council Position 3' is explicitly stated directly under the person's name, matching a target role, ensuring high accuracy and direct relevance to their current position. "
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Position 3' is explicitly stated directly under the person's name and role, ensuring high accuracy and direct relevance to their specific council seat. "
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "bretts@happyvalleyor.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly under the person's name.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and clearly associated with the person's name and role in the text, formatted as a mailto link, ensuring high accuracy of extraction and direct relevance to the individual's contact information for their public role. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
     "websites": [],
     "start_dates": [
       {
         "data": "2023-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit 're-elected beginning January 2023' date found in bio.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as 're-elected beginning January 2023', which is the most recent election date for their current term, ensuring high accuracy and direct relevance to their term of service. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit 'Term expires' date listed under the person's name and in bio.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as 'Term expires 12/31/2026' directly under the person's name and role, ensuring high accuracy and direct relevance to their term of service. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:18Z"
   },
   {
     "name": "Joshua Callahan",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.happyvalleyor.gov/city-hall/city-council/"
+      "https://www.happyvalleyor.gov/city-hall/city-council"
     ],
-    "positions": [
-      "Council President",
-      "Position 1"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council President' is explicitly stated directly under the person's name, matching a target role, ensuring high accuracy and direct relevance to their current position. "
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Position 1' and being on the City Council, which indicates a council member role, matching a target role, ensuring high accuracy and direct relevance to their current position. "
+      },
+      {
+        "data": "Council Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Position 1' is explicitly stated directly under the person's name, matching a target role, ensuring high accuracy and direct relevance to their current position. "
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Position 1' is explicitly stated directly under the person's name and role, ensuring high accuracy and direct relevance to their specific council seat. "
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "joshc@happyvalleyor.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly under the person's name.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and clearly associated with the person's name and role in the text, formatted as a mailto link, ensuring high accuracy of extraction and direct relevance to the individual's contact information for their public role. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
     "websites": [],
     "start_dates": [
       {
         "data": "2023-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit 'elected to City Council beginning January 2023' date found in bio.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as 'elected to City Council beginning January 2023', ensuring high accuracy and direct relevance to their term of service. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit 'Term expires' date listed under the person's name and in bio.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as 'Term expires 12/31/2026' directly under the person's name and role, ensuring high accuracy and direct relevance to their term of service. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:18Z"
   },
   {
     "name": "David Golobay",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.happyvalleyor.gov/city-hall/city-council/"
+      "https://www.happyvalleyor.gov/city-hall/city-council"
     ],
-    "positions": [
-      "Council Position 2"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Council Position 2', which indicates a council member role, matching a target role, ensuring high accuracy and direct relevance to their current position. "
+      },
+      {
+        "data": "Council Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council Position 2' is explicitly stated directly under the person's name, matching a target role, ensuring high accuracy and direct relevance to their current position. "
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Position 2' is explicitly stated directly under the person's name and role, ensuring high accuracy and direct relevance to their specific council seat. "
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "davidg@happyvalleyor.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly under the person's name.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and clearly associated with the person's name and role in the text, formatted as a mailto link, ensuring high accuracy of extraction and direct relevance to the individual's contact information for their public role. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
     "websites": [],
     "start_dates": [
       {
         "data": "2025-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit 're-elected to terms beginning January 2025' date found in bio.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as 're-elected to terms beginning January 2025', which is the most recent election date for their current term, ensuring high accuracy and direct relevance to their term of service. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit 'Term expires' date listed under the person's name and in bio.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as 'Term expires 12/31/2028' directly under the person's name and role, ensuring high accuracy and direct relevance to their term of service. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:18Z"
   },
   {
     "name": "Glenn Wachter",
-    "image": null,
-    "source_image": null,
     "sources": [
-      "https://www.happyvalleyor.gov/city-hall/city-council/"
+      "https://www.happyvalleyor.gov/city-hall/city-council"
     ],
-    "positions": [
-      "Council Position 4"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Council Position 4', which indicates a council member role, matching a target role, ensuring high accuracy and direct relevance to their current position. "
+      },
+      {
+        "data": "Council Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council Position 4' is explicitly stated directly under the person's name, matching a target role, ensuring high accuracy and direct relevance to their current position. "
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Position 4' is explicitly stated directly under the person's name and role, ensuring high accuracy and direct relevance to their specific council seat. "
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "glennw@happyvalleyor.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address listed directly under the person's name.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and clearly associated with the person's name and role in the text, formatted as a mailto link, ensuring high accuracy of extraction and direct relevance to the individual's contact information for their public role. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
     "websites": [],
     "start_dates": [
       {
         "data": "2025-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit 'elected to City Council beginning January 2025' date found in bio.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as 'elected to City Council beginning January 2025', ensuring high accuracy and direct relevance to their term of service. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit 'Term expires' date listed under the person's name.",
-        "source": "https://www.happyvalleyor.gov/city-hall/city-council/"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as 'Term expires 12/31/2028' directly under the person's name and role, ensuring high accuracy and direct relevance to their term of service. ",
+        "source": "https://www.happyvalleyor.gov/city-hall/city-council"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:20:18Z"
   }
 ]
