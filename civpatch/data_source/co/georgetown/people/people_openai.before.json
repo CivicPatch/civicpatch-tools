@@ -1,0 +1,135 @@
+[
+  {
+    "name": "Georgia Kofoed",
+    "roles": [
+      "Police Judge"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "policejudge@townofgeorgetown.us",
+    "website": null,
+    "start_date": "2025-04",
+    "end_date": null,
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Amanda Cooper",
+    "roles": [
+      "Selectman"
+    ],
+    "divisions": [
+      "Ward I"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "selectmenward1.1@townofgeorgetown.us",
+    "website": null,
+    "start_date": "2025-04",
+    "end_date": null,
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Rob Connell",
+    "roles": [
+      "Selectman"
+    ],
+    "divisions": [
+      "Ward I"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "selectmenward1.2@townofgeorgetown.us",
+    "website": null,
+    "start_date": "2023-04",
+    "end_date": null,
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Alex Sassoon",
+    "roles": [
+      "Selectman"
+    ],
+    "divisions": [
+      "Ward II"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "selectmenward2.1@townofgeorgetown.us",
+    "website": null,
+    "start_date": "2025-04",
+    "end_date": null,
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Dwayne Goscinski",
+    "roles": [
+      "Selectman"
+    ],
+    "divisions": [
+      "Ward II"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "selectmenward2.2@townofgeorgetown.us",
+    "website": null,
+    "start_date": "2023-04",
+    "end_date": null,
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Mary Smith",
+    "roles": [
+      "Selectman",
+      "Police Judge Pro-Tem"
+    ],
+    "divisions": [
+      "Ward III"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "selectmenward3.2@townofgeorgetown.us",
+    "website": null,
+    "start_date": "2023-04",
+    "end_date": null,
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Richard Barrows",
+    "roles": [
+      "Selectman",
+      "Police Judge Pro-Tem"
+    ],
+    "divisions": [
+      "Ward III"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "selectmenward3.1@townofgeorgetown.us",
+    "website": null,
+    "start_date": "2025-04",
+    "end_date": null,
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "updated_at": "2025-07-09T02:46:19Z"
+  }
+]

@@ -1,0 +1,293 @@
+[
+  {
+    "name": "Georgia Kofoed",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Police Judge",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Police Judge elected in April 2025, an active role on the Board of Selectmen."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "policejudge@townofgeorgetown.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected in April 2025 as stated.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Amanda Cooper",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward I Selectman elected in April 2025."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward I",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward I."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward1.1@townofgeorgetown.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected in April 2025 as stated.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Rob Connell",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward I Selectman elected in April 2023."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward I",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward I."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward1.2@townofgeorgetown.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected in April 2023 as stated.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Alex Sassoon",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward II Selectman elected in April 2025."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward II",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward II."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward2.1@townofgeorgetown.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected in April 2025 as stated.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Dwayne Goscinski",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward II Selectman elected in April 2023."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward II",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward II."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward2.2@townofgeorgetown.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected in April 2023 as stated.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Mary Smith",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward III Selectman elected in April 2023."
+      },
+      {
+        "data": "Police Judge Pro-Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Police Judge Pro-Tem."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward III",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward III."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward3.2@townofgeorgetown.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected in April 2023 as stated.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:19Z"
+  },
+  {
+    "name": "Richard Barrows",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward III Selectman elected in April 2025."
+      },
+      {
+        "data": "Police Judge Pro-Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Police Judge Pro-Tem."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward III",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward III."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward3.1@townofgeorgetown.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-04",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected in April 2025 as stated.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:19Z"
+  }
+]

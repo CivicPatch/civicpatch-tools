@@ -1,0 +1,388 @@
+[
+  {
+    "name": "Dennis Durham",
+    "sources": [
+      "https://www.townofgeorgetown.us/town_permit_forms/town_administrator.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Town Administrator",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated and matches a target role (council manager equivalent)."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "303-569-2555 ext. 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the person's name.",
+        "source": "https://www.townofgeorgetown.us/town_permit_forms/town_administrator.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "townadmin@townofgeorgetown.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated next to the person's name.",
+        "source": "https://www.townofgeorgetown.us/town_permit_forms/town_administrator.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:52Z"
+  },
+  {
+    "name": "Kazia Hart",
+    "sources": [
+      "https://www.townofgeorgetown.us/town_permit_forms/town_administrator.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Assistant Town Administrator",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated and is a specific administrative role."
+      },
+      {
+        "data": "Assistant Mayor",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Normalized role based on 'Assistant Town Administrator' being a deputy chief operating officer, similar to an 'Assistant Mayor' or 'Deputy Mayor' in function."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "303-569-2555 ext. 101",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the person's name.",
+        "source": "https://www.townofgeorgetown.us/town_permit_forms/town_administrator.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "asstadmin@townofgeorgetown.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated next to the person's name, extracted from markdown link text.",
+        "source": "https://www.townofgeorgetown.us/town_permit_forms/town_administrator.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:52Z"
+  },
+  {
+    "name": "Georgia Kofoed",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Police Judge",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and directly matches a target role type for a governing body member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "policejudge@townofgeorgetown.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, indicating a direct association and high accuracy for extraction.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as 'elected in April 2025' and is directly associated with the person.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:52Z"
+  },
+  {
+    "name": "Amanda Cooper",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Selectmen' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member)."
+      },
+      {
+        "data": "Ward I Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Ward I Selectman' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member) with a specific division."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Ward I' is explicitly stated and directly associated with the person's role."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward1.1@townofgeorgetown.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, indicating a direct association and high accuracy for extraction.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as 'elected in April 2025' and is directly associated with the person.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:52Z"
+  },
+  {
+    "name": "Rob Connell",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Selectmen' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member)."
+      },
+      {
+        "data": "Ward I Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Ward I Selectman' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member) with a specific division."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Ward I' is explicitly stated and directly associated with the person's role."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward1.2@townofgeorgetown.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, indicating a direct association and high accuracy for extraction.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as 'elected in April 2023' and is directly associated with the person.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:52Z"
+  },
+  {
+    "name": "Alex Sassoon",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Selectmen' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member)."
+      },
+      {
+        "data": "Ward II Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Ward II Selectman' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member) with a specific division."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward II",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Ward II' is explicitly stated and directly associated with the person's role."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward2.1@townofgeorgetown.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, indicating a direct association and high accuracy for extraction.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as 'elected in April 2025' and is directly associated with the person.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:52Z"
+  },
+  {
+    "name": "Dwayne Goscinski",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Selectmen' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member)."
+      },
+      {
+        "data": "Ward II Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Ward II Selectman' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member) with a specific division."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward II",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Ward II' is explicitly stated and directly associated with the person's role."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward2.2@townofgeorgetown.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, indicating a direct association and high accuracy for extraction.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as 'elected in April 2023' and is directly associated with the person.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:52Z"
+  },
+  {
+    "name": "Mary Smith",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Selectmen' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member)."
+      },
+      {
+        "data": "Ward III Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Ward III Selectman' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member) with a specific division."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Ward III' is explicitly stated and directly associated with the person's role."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward3.2@townofgeorgetown.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, indicating a direct association and high accuracy for extraction.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as 'elected in April 2023' and is directly associated with the person.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:52Z"
+  },
+  {
+    "name": "Richard Barrows",
+    "sources": [
+      "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Selectmen' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member)."
+      },
+      {
+        "data": "Ward III Selectman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Ward III Selectman' is explicitly stated and is a direct match for a governing body member role (similar to council member/board member) with a specific division."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Ward III' is explicitly stated and directly associated with the person's role."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "selectmenward3.1@townofgeorgetown.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, indicating a direct association and high accuracy for extraction.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as 'elected in April 2025' and is directly associated with the person.",
+        "source": "https://www.townofgeorgetown.us/government/boards_and_commissions/board_of_selectmen/directory.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-09T02:46:52Z"
+  }
+]
