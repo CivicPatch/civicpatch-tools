@@ -2,30 +2,14 @@
   {
     "name": "Stuart Richter",
     "sources": [
-      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
-      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
+      "https://www.cityofnewrockford.com/nrabc"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Commission President",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated in text"
-      },
-      {
-        "data": "Commissioner",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Inferred from 'Commission President' role, which is a type of Commissioner role."
-      },
-      {
-        "data": "Commissioner",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated as 'Commission President', which implies 'Commissioner'."
-      },
-      {
-        "data": "Commission President",
+        "data": "board member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly listed as a member of the 'Board of Directors'."
       }
     ],
     "divisions": [],
@@ -34,25 +18,19 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-07T18:31:16Z"
+    "updated_at": "2025-07-04T05:00:25Z"
   },
   {
-    "name": "Dillon Hewitt",
+    "name": "Mike Yri",
     "sources": [
-      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
-      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
+      "https://www.cityofnewrockford.com/nrabc"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated in text"
-      },
-      {
-        "data": "Commissioner",
+        "data": "board member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly listed as a member of the 'Board of Directors'."
       }
     ],
     "divisions": [],
@@ -61,25 +39,19 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-07T18:31:16Z"
+    "updated_at": "2025-07-04T05:00:25Z"
   },
   {
-    "name": "Kelly McKnight",
+    "name": "Kerri Allmaras",
     "sources": [
-      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
-      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
+      "https://www.cityofnewrockford.com/nrabc"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated in text"
-      },
-      {
-        "data": "Commissioner",
+        "data": "board member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly listed as a member of the 'Board of Directors'."
       }
     ],
     "divisions": [],
@@ -88,25 +60,19 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-07T18:31:16Z"
+    "updated_at": "2025-07-04T05:00:25Z"
   },
   {
-    "name": "Justin Ystaas",
+    "name": "Chelsey Zeltinger",
     "sources": [
-      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
-      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8"
+      "https://www.cityofnewrockford.com/nrabc"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated in text"
-      },
-      {
-        "data": "Commissioner",
+        "data": "board member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly listed as a member of the 'Board of Directors'."
       }
     ],
     "divisions": [],
@@ -115,31 +81,19 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-07T18:31:16Z"
+    "updated_at": "2025-07-04T05:00:25Z"
   },
   {
-    "name": "Jim Belquist",
+    "name": "Melinda Martin",
     "sources": [
-      "https://www.cityofnewrockford.com/index.asp?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8&Type=B_BASIC",
-      "https://www.cityofnewrockford.com/?SEC=1D6E5FCA-5BD2-4703-9B97-48E82D1904B8",
-      "https://www.cityofnewrockford.com/index.asp?SEC=3B97B557-E4D6-4857-93A1-9178A98DF262&DE=0B9D8D58-77DA-4CED-89AF-0E69203C4928"
+      "https://www.cityofnewrockford.com/nrabc"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated in text"
-      },
-      {
-        "data": "Commissioner",
+        "data": "board member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor Jim Belquist'"
+        "llm_confidence_reason": "Explicitly listed as a member of the 'Board of Directors'."
       }
     ],
     "divisions": [],
@@ -148,6 +102,69 @@
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-07T18:31:16Z"
+    "updated_at": "2025-07-04T05:00:25Z"
+  },
+  {
+    "name": "Kenny Thompson",
+    "sources": [
+      "https://www.cityofnewrockford.com/nrabc"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "board member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as a member of the 'Board of Directors'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:00:25Z"
+  },
+  {
+    "name": "Amy Ellingson",
+    "sources": [
+      "https://www.cityofnewrockford.com/nrabc"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "board member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as a member of the 'Board of Directors'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:00:25Z"
+  },
+  {
+    "name": "Jackie Engels",
+    "sources": [
+      "https://www.cityofnewrockford.com/nrabc"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "board member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as a member of the 'Board of Directors'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-04T05:00:25Z"
   }
 ]

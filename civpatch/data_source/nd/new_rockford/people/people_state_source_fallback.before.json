@@ -1,37 +1,30 @@
 [
   {
-    "name": "Stuart Richter",
+    "name": "Erdmann",
     "roles": [
       "Mayor"
     ],
-    "updated_at": "2025-07-07T18:28:24Z"
+    "updated_at": "2025-07-04T04:57:56Z"
   },
   {
-    "name": "Zachary Fleming",
+    "name": "Richter",
     "roles": [
-      "Commissioner"
+      "Council Member"
     ],
-    "updated_at": "2025-07-07T18:28:24Z"
+    "updated_at": "2025-07-04T04:57:56Z"
   },
   {
-    "name": "Jacob Dauenhauer",
+    "name": "Fleming",
     "roles": [
-      "Commissioner"
+      "Council Member"
     ],
-    "updated_at": "2025-07-07T18:28:24Z"
+    "updated_at": "2025-07-04T04:57:56Z"
   },
   {
-    "name": null,
+    "name": "Dauenhauer",
     "roles": [
-      "Commissioner"
+      "Council Member"
     ],
-    "updated_at": "2025-07-07T18:28:24Z"
-  },
-  {
-    "name": null,
-    "roles": [
-      "Commissioner"
-    ],
-    "updated_at": "2025-07-07T18:28:24Z"
+    "updated_at": "2025-07-04T04:57:56Z"
   }
 ]
