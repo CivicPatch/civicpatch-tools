@@ -1,8 +1,10 @@
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
+
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=361%2F)
 
 Loading
 
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=361%2F)
 
 ![Grants Pass Oregon Homepage](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=34955)
 
@@ -18,24 +20,24 @@ Search
 
 <!--THE END-->
 
-![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35572)
+![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35588)
 
 1. [Home](https://www.grantspassoregon.gov)
 2. Staff Directory
 
-![Joel King](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=14535 "Joel King")
+![photo of Indra Nicholas](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=36794 "photo of Indra Nicholas")
 
-# Joel King
+# Indra Nicholas
 
  
 
 [City Council](https://www.grantspassoregon.gov/Directory.aspx?DID=14)  
-Title: Ward 4 Representative  
-Phone: 541-761-7538  
-[Email Joel King](mailto:jking@grantspassoregon.gov)
+Title: Ward 1 Representation  
+Phone: 541-450-6000  
+[Email Indra Nicholas](mailto:inicholas@grantspassoregon.gov)
 
-Sworn In: January 2, 2019  
-Term Ends: December 31, 2026
+Sworn In: January 6, 2025  
+Term Ends: December 31, 2028
 
  
 
@@ -122,3 +124,5 @@ Excel Download
 PowerPoint Download
 
 Document Download
+
+Explore your accessibility options

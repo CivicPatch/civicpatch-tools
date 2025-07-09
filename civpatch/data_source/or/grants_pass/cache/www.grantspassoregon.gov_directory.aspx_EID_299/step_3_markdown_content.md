@@ -1,8 +1,8 @@
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=299%2F)
 
 Loading
 
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=299%2F)
 
 ![Grants Pass Oregon Homepage](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=34955)
 
@@ -18,23 +18,23 @@ Search
 
 <!--THE END-->
 
-![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35572)
+![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35606)
 
 1. [Home](https://www.grantspassoregon.gov)
 2. Staff Directory
 
-![Joel King](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=14535 "Joel King")
+![Rob Pell](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=21579 "Rob Pell")
 
-# Joel King
+# Rob Pell
 
  
 
 [City Council](https://www.grantspassoregon.gov/Directory.aspx?DID=14)  
-Title: Ward 4 Representative  
-Phone: 541-761-7538  
-[Email Joel King](mailto:jking@grantspassoregon.gov)
+Title: Ward 1 Representation  
+Phone: 541-476-7578  
+[Email Rob Pell](mailto:rpell@grantspassoregon.gov)
 
-Sworn In: January 2, 2019  
+Sworn In: January 4, 2021  
 Term Ends: December 31, 2026
 
  

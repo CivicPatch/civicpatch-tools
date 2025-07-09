@@ -1,8 +1,10 @@
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
+
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=101%2F)
 
 Loading
 
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=101%2F)
 
 ![Grants Pass Oregon Homepage](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=34955)
 
@@ -18,23 +20,23 @@ Search
 
 <!--THE END-->
 
-![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35572)
+![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35573)
 
 1. [Home](https://www.grantspassoregon.gov)
 2. Staff Directory
 
-![Joel King](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=14535 "Joel King")
+![Rick Riker](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=11515 "Rick Riker")
 
-# Joel King
+# Rick Riker
 
  
 
 [City Council](https://www.grantspassoregon.gov/Directory.aspx?DID=14)  
-Title: Ward 4 Representative  
-Phone: 541-761-7538  
-[Email Joel King](mailto:jking@grantspassoregon.gov)
+Title: Ward 2 Representative &amp; Council Vice-President for 2024  
+Phone: 541-479-7333  
+[Email Rick Riker](mailto:rriker@grantspassoregon.gov)
 
-Sworn In: January 2, 2019  
+Sworn In: April 7, 2010  
 Term Ends: December 31, 2026
 
  
@@ -122,3 +124,5 @@ Excel Download
 PowerPoint Download
 
 Document Download
+
+Explore your accessibility options
