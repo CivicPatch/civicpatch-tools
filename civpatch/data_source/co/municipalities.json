@@ -2254,7 +2254,14 @@
       ],
       "population": 1307,
       "website": "http://www.townofjulesburg.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T02:39:51Z",
+      "meta_hash": "2a1c001cf85e0cfc8d90be59554d76ce",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Mountain Village",
