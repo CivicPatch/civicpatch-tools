@@ -2045,7 +2045,14 @@
       ],
       "population": 1639,
       "website": "https://www.crestedbutte-co.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T00:16:29Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Pagosa Springs",
