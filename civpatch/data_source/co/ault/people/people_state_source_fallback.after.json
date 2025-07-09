@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Butch White",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-09T00:09:10Z",
+    "divisions": []
+  },
+  {
+    "name": "Tyrell Anderson",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "updated_at": "2025-07-09T00:09:10Z",
+    "divisions": []
+  },
+  {
+    "name": "Adam Farrell",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T00:09:10Z",
+    "divisions": []
+  },
+  {
+    "name": "Judy Ruff",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T00:09:10Z",
+    "divisions": []
+  },
+  {
+    "name": "Martin Bassett",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T00:09:10Z",
+    "divisions": []
+  },
+  {
+    "name": "Michael Biwer",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T00:09:10Z",
+    "divisions": []
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T00:09:10Z",
+    "divisions": []
+  }
+]
