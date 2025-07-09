@@ -2134,7 +2134,14 @@
       ],
       "population": 1502,
       "website": "http://www.columbinevalley.org/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T00:20:41Z",
+      "meta_hash": "2d45f9b6ec91a76dcc98f12ee609fd75",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Kersey",
