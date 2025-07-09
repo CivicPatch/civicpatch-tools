@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Cathy Clark",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-09T16:40:40Z"
+  },
+  {
+    "name": "Marlene Parsons",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T16:40:40Z"
+  },
+  {
+    "name": "Shaney Starr",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T16:40:40Z"
+  },
+  {
+    "name": "Kyle Juran",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T16:40:40Z"
+  }
+]

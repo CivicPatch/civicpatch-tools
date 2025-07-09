@@ -8,7 +8,7 @@ Pride, Spirit and Volunteerism](https://www.keizer.org)
 
 Search
 
-![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.keizer.org/council-position-2)
+![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.keizer.org/council-position-1)
 
 - [Home](https://www.keizer.org)
 - [Address / Phone / Hours](https://www.keizer.org/contact-us)
@@ -61,7 +61,7 @@ Search
     - [Homeless Alliance](https://mailchi.mp/aaff1a0beea9/april-2022?e=e57f313a53)
     - [Housing Programs](https://www.keizer.org/housing-programs)
     - [Keizer Cultural Center](https://keizerheritagefoundation.org)
-    - [Keizer Flag](https://www.keizer.org/council-position-2/www.keizer.org/KeizerFlag)
+    - [Keizer Flag](https://www.keizer.org/council-position-1/www.keizer.org/KeizerFlag)
     - [Keizer Little League Fields (History)](https://www.keizer.org/?action=media.media.read&id=190743)
     - [Keizer Little League Fields History Video](https://www.keizertv.com/oral-history-08-06-12)
     - [Leash Law](https://www.keizer.org/media/Community/Leash%20Law%20Ordinances.pdf)
@@ -128,7 +128,7 @@ Search
       - [Gallery Schedule](https://www.keizer.org/gallery-schedule)
       - [Gallery Video](https://www.keizertv.com/keizer-art-at-the-community-center)
       - [Art Walk &amp; Community Center Art](https://evogov.s3.amazonaws.com/media/60/media/160776.pdf)
-      - [Member Information &amp; Training](https://www.keizer.org/council-position-2/KPAC-MemberInformation)
+      - [Member Information &amp; Training](https://www.keizer.org/council-position-1/KPAC-MemberInformation)
       - [Minutes](https://www.keizer.org/art-commission-minutes)
       - [Public Art Ordinance &amp; Resolution](https://www.keizer.org/ArtOrdinancesResolutions)
       - [Public Art Policies](https://www.keizer.org/media/Council%20&%20Boards/Arts%20Commission/ArtPolicies.pdf)
@@ -140,12 +140,12 @@ Search
       - [Minutes](https://www.keizer.org/traffic-bikeways-pedestrian-safety-minutes)
       - [Neighborhood Traffic Management Program](https://www.keizer.org/NeighborhoodTrafficManagementProgram)
       - [Presentation by Principal Engineer Scott Mansur with DKS Associates ~ 04/18/2024](https://www.keizer.org/media/Council%20&%20Boards/Traffic-Bikeways/Keizer%20Traffic%20Safety-Bikeways-Pedestrian%20Committee_Presentation%20by%20Scott%20Mansur%20with%20DKS%20-%2004-18-24.pdf)
-      - [Transportation System Plan](https://www.keizer.org/council-position-2/transportation-system-plan)
+      - [Transportation System Plan](https://www.keizer.org/council-position-1/transportation-system-plan)
       - [Willamette Valley Scenic Bikeway - Map &amp; Cue Sheet](https://traveloregon.com/things-to-do/outdoor-recreation/bicycling/road-biking/willamette-valley-scenic-bikeway)
     - [Volunteer Coordinating](https://www.keizer.org/volunteer-coordinating-committee)
       
       - [Member Information &amp; Training](https://www.keizer.org/VCCMemberInformation)
-      - [Volunteer of the Quarter Nomination](https://www.keizer.org/council-position-2/volunteer-of-the-quarter-nomination)
+      - [Volunteer of the Quarter Nomination](https://www.keizer.org/council-position-1/volunteer-of-the-quarter-nomination)
       - [Minutes](https://www.keizer.org/volunteer-coordinating-committee-minutes)
       - [Volunteer Recognition](https://www.keizer.org/volunteer-recognition)
   - [Volunteer ~ Interested in Volunteering on a Committee, as a Cadet, or to Help in the Parks?](https://www.keizer.org/volunteer-information)
@@ -262,8 +262,8 @@ Search
       - [Who Can Do the Work - Residential](https://www.co.marion.or.us/PW/BuildingInspection/Documents/Residential%20License%20Matrix%20-%20May%202018.pdf)
     - [Code Enforcement Division](https://www.keizer.org/code-compliance)
       
-      - [RV Parking Permit](https://www.keizer.org/council-position-2/RV-PARKING-PERMIT)
-      - [Code Enforcement Complaint Form](https://www.keizer.org/council-position-2/code-enforcement-complaint-form)
+      - [RV Parking Permit](https://www.keizer.org/council-position-1/RV-PARKING-PERMIT)
+      - [Code Enforcement Complaint Form](https://www.keizer.org/council-position-1/code-enforcement-complaint-form)
       - [Code Enforcement FAQ](https://www.keizer.org/code-enforcement-faq)
       - [Common Ordinances Pertaining to Code Enforcement](https://www.keizer.org/ordinances-51782)
   - [Police Department](https://www.keizer.org/police)
@@ -331,24 +331,23 @@ Search
       - [Water Services](https://www.keizer.org/water-services)
 - [Meeting Materials](https://www.keizer.org/MeetingMaterials)
 
-[Council Position 2](https://www.keizer.org/council-position-2)
+[Council Position 1](https://www.keizer.org/council-position-1)
 
-Council Position 2
+Council Position 1
 
-**Shaney Starr**  
- 
+*Marlene Parsons*
 
-[**Email**](mailto:StarrS@KeizerOR.gov)
+*[Email](mailto:ParsonsM@KeizerOR.gov)*  
 
-Voicemail: 503-856-3449
+*Voicemail: 503-856-3431*
 
-Shaney Starr has worked in the nonprofit sector for over twenty years in various roles. Her passion is in serving her community and she specializes in working with struggling nonprofits and organizations that develop and grow in both impact and populations served. She hails from Pendleton, Oregon, home of the world famous Pendleton Round-Up!  Shaney graduated from Northwest Christian University with an undergraduate degree in Business Administration and a minor in Speech Communications.  After gaining real life working experience, she attended graduate school where she obtained an MS in Management and Organizational Leadership from Warner Pacific University.  Shaney currently serves as the Director of Suburban Growth &amp; Development with the National CASA/GAL Association.  Prior to moving to the national level, she served as Executive Director of CASA of Marion County for 6 ½ years. While at the local level, Shaney served as Chair of NCASA/GAL’s Suburban Leadership Council, a member of the National Leadership Council and as a National CASA Trainer for new CASA Program Directors.  Shaney is a Board Facilitation trainer through BoardSource, a nationally recognized leader in Board Management consulting, and received her certification as a Youth Transition Life Coach earlier this year. 
+Marlene Parsons is a dedicated public servant, educator, volunteer, and proud military veteran with deep roots in the Keizer community. Having lived in Keizer for over 30 years, Marlene has devoted 27 of those years to volunteering for the city in various capacities, including serving on the Parks Board, Keizer Urban Renewal Board, Volunteer Coordinating Committee, and the Budget Committee.
 
-Shaney was appointed to the Keizer City Council in December 2021 and elected Council President in January 2023.  She is currently a member of the Marion County Public Safety Coordinating Council, a board member for Community Resource Trust and a member of Keizer Rotary. 
+Marlene recently completed eight years on the Keizer City Council, where she demonstrated her commitment to representing all members of the community. Known for her “open door policy,” Marlene prioritizes listening to residents’ concerns, supporting local businesses, and ensuring that everyone in Keizer feels heard and valued.
 
-Previously, she has served as Chair of the Oregon CASA Network, former Co-Chair of the Marion County Child Abuse Prevention Collaborative, former Chair of the Marion County Children and Families Commission and as a member of Oregon’s Juvenile Court Improvement Project, Child Welfare Advisory Council and Oregon Family Treatment Court Advisory Council, as well as a member of the Public Defender of Marion County. 
+Outside she is also a mother, grandmother, sister, and friend who values family and community connections.
 
-Shaney has been married to her best friend Greg for 14 years, is a bonus mom to 3 adult daughters and Nini to one bonus granddaughter!  In her spare time, she enjoys reading, tending her roses, spending time with family and friends and being dog mom to two rescue Boxers, including Lilly Mae, Oregon’s first canine CASA! 
+Marlene believes that strong communities are built on collaboration, compassion, and a shared vision for the future. She is honored to continue serving Keizer and looks forward to contributing to the city’s growth and success
 
 ![Keizer, Oregon logo](https://www.keizer.org/media/Design%20Files/Logos/logo.png)
 

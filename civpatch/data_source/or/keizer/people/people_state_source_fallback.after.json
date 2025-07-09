@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Cathy Clark",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-09T16:40:41Z",
+    "divisions": []
+  },
+  {
+    "name": "Marlene Parsons",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T16:40:41Z",
+    "divisions": []
+  },
+  {
+    "name": "Shaney Starr",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T16:40:41Z",
+    "divisions": []
+  },
+  {
+    "name": "Kyle Juran",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-09T16:40:41Z",
+    "divisions": []
+  }
+]
