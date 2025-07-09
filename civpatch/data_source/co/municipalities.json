@@ -1929,7 +1929,14 @@
       ],
       "population": 2209,
       "website": "http://www.townoflyons.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T00:09:57Z",
+      "meta_hash": "82386a08618cc1b61e75aeb00512dd17",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Granby",
