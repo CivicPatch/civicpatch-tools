@@ -187,9 +187,13 @@
       "phone_number": "(541) 766-6900",
       "website": "https://www.corvallisoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-05-01",
-      "meta_hash": "4cdedadeb067b7ad1d4e2d460470d4d1",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-09T16:50:30Z",
+      "meta_hash": "7b71604650d3591e1f8682074ad9028c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4115800"
     },
     {
