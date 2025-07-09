@@ -1,31 +1,39 @@
 [
   {
     "name": "Heidi Lueb",
-    "positions": [
-      "Mayor",
-      "mayor"
+    "roles": [
+      "mayor",
+      "Mayor"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": "503-639-4171",
+    "phone_number": null,
     "email": "heidil@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
-    "start_date": "null",
+    "start_date": null,
     "end_date": "2026-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:12:48Z"
   },
   {
     "name": "Maureen Wolf",
-    "positions": [
+    "roles": [
+      "council president",
+      "council member",
+      "Councilor",
       "Council President",
-      "Council Member"
+      "Council Member",
+      "Council member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": "maureen.wolf@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
@@ -33,18 +41,25 @@
     "end_date": "2028-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:12:48Z"
   },
   {
     "name": "Faraz Ghoddusi",
-    "positions": [
-      "Council Member",
-      "council member"
+    "roles": [
+      "councilor",
+      "council member",
+      "Councilor",
+      "Council member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": "faraz.ghoddusi@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
@@ -52,18 +67,24 @@
     "end_date": "2026-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:12:48Z"
   },
   {
     "name": "Yi-Kang Hu",
-    "positions": [
-      "Council Member",
-      "council member"
+    "roles": [
+      "councilor",
+      "council member",
+      "Councilor",
+      "Council member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": "yikang.hu@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
@@ -71,18 +92,24 @@
     "end_date": "2026-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:12:48Z"
   },
   {
     "name": "Heather Robbins",
-    "positions": [
-      "Council Member",
-      "council member"
+    "roles": [
+      "councilor",
+      "council member",
+      "Councilor",
+      "Council member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": "heather.robbins@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
@@ -90,36 +117,49 @@
     "end_date": "2026-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:12:48Z"
   },
   {
     "name": "Jake Schlack",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "councilor",
+      "council member",
+      "Councilor",
+      "Council member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": "jake.schlack@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
-    "start_date": "2024-07-01",
+    "start_date": "2025-01-01",
     "end_date": "2028-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:12:48Z"
   },
   {
     "name": "Jeanette Shaw",
-    "positions": [
-      "Council Member",
-      "council member"
+    "roles": [
+      "councilor",
+      "council member",
+      "Councilor",
+      "Council member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
     "phone_number": null,
     "email": "jeanettes@tigard-or.gov",
     "website": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
@@ -127,8 +167,34 @@
     "end_date": "2028-12-31",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
       "https://www.tigard-or.gov/your-government/council/councilor-shaw"
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:12:48Z"
+  },
+  {
+    "name": "Asher Hellhake",
+    "roles": [
+      "youth councilor",
+      "council member",
+      "Council Member",
+      "Youth Councilor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "youthcouncil@tigard-or.gov",
+    "website": "https://www.tigard-or.gov/your-government/council/meet-the-council/youth-councilor-hellhake",
+    "start_date": "2025-07-02",
+    "end_date": "2026-06-30",
+    "sources": [
+      "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/youth-councilor-hellhake"
+    ],
+    "updated_at": "2025-07-09T17:12:48Z"
   }
 ]

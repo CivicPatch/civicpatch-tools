@@ -240,9 +240,13 @@
       "phone_number": "(503) 639-4171",
       "website": "https://www.tigard-or.gov",
       "email": null,
-      "meta_updated_at": "2025-05-04",
-      "meta_hash": "cf246989e102ecd75b2385435d83d7b0",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-09T17:13:01Z",
+      "meta_hash": "7b0fb2131371106c2699204b8a1edf8a",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4173650"
     },
     {

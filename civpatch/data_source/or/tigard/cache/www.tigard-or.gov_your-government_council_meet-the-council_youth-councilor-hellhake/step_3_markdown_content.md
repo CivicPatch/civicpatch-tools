@@ -1,14 +1,14 @@
-[Skip to Main Content](https://www.tigard-or.gov/your-government/council/councilor-shaw/)
+[Skip to Main Content](https://www.tigard-or.gov/your-government/council/meet-the-council/youth-councilor-hellhake/)
 
 # City of Tigard
 
 [Home](https://www.tigard-or.gov/home) [Menu](https:void%280%29;)
 
-[Codes](https://ecode360.com/TI5024) [Contact](https://www.tigard-or.gov/your-government/contact-us) [Jobs](https://www.tigard-or.gov/your-government/departments/human-resources/jobs) [Maps](https://www.tigard-or.gov/explore-tigard/maps) [Translate](https://translate.google.com/translate?js=y&prev=_t&hl=en&ie=UTF-8&layout=1&eotf=1&sl=en&tl=es&u=https%3A%2F%2Fwww.tigard-or.gov%2Fyour-government%2Fcouncil%2Fcouncilor-shaw)
+[Codes](https://ecode360.com/TI5024) [Contact](https://www.tigard-or.gov/your-government/contact-us) [Jobs](https://www.tigard-or.gov/your-government/departments/human-resources/jobs) [Maps](https://www.tigard-or.gov/explore-tigard/maps) [Translate](https://translate.google.com/translate?js=y&prev=_t&hl=en&ie=UTF-8&layout=1&eotf=1&sl=en&tl=es&u=https%3A%2F%2Fwww.tigard-or.gov%2Fyour-government%2Fcouncil%2Fmeet-the-council%2Fyouth-councilor-hellhake)
 
 [Search](https:void%280%29;)
 
-[close Search](https://www.tigard-or.gov/your-government/council/councilor-shaw)
+[close Search](https://www.tigard-or.gov/your-government/council/meet-the-council/youth-councilor-hellhake)
 
 [Go](https:void%280%29;)
 
@@ -229,7 +229,7 @@ SERVICES A - Z: [A](https://www.tigard-or.gov/explore-tigard/advanced-components
 
 [Your Government](https://www.tigard-or.gov/your-government) » [Council](https://www.tigard-or.gov/your-government/council) » [Meet the Council](https://www.tigard-or.gov/your-government/council/meet-the-council)
 
-# Councilor Shaw
+# Youth Councilor Hellhake
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
@@ -243,28 +243,21 @@ SERVICES A - Z: [A](https://www.tigard-or.gov/explore-tigard/advanced-components
 
 [Feedback](https:void%280%29; "Click to submit an email to feedback") [Print](https:window.print%28%29; "Click to print this page")
 
-![Jeanette-Shaw](https://www.tigard-or.gov/home/showpublishedimage/5265/638723807797270000)
+![Youth Councilor Hellhake 2025](https://www.tigard-or.gov/home/showpublishedimage/8947)
 
-#### Councilor Jeanette Shaw
+#### Youth Councilor Asher Hellhake
 
-**Term Expires:** 12/31/28  
-[**Email Councilor Shaw**](mailto:jeanettes@tigard-or.gov?subject=Meet%20the%20Council)
+**[Email Youth Councilor](mailto:youthcouncil@tigard-or.gov?subject=Meet%20the%20Council)**  
+**Term Expires:** 6/30/26  
+**Assignments:** Tigard Youth Advisory Council (TYAC)
 
-**Regional Assignments:**  Community Development Block Grant Policy Advisory Board (CDBG), Willamette Intake Facility (WIF)
+A lifelong resident of Tigard, Asher says he is thrilled to be serving in this position to represent young people in his favorite city. He is active in his school community and spends a lot of time in the auditorium, either acting in productions or preparing for upcoming shows. He also volunteers in the guitar program at his high school, by playing music and helping organize work in class.
 
-**City Assignments:**  Transportation Advisory Committee (TTAC), Budget Subcommittee Events and Social Services
+Asher is Tigard’s 6th Youth City Councilor and the first transgender Youth Councilor to serve the city. He wants to use his term to bring up the queer community and to advocate for other minorities in Tigard. He has performed at the Tigard Pride Parade and wants to attend a variety of future events to support as many people as possible.
 
-* * *
+> “I am absolutely ecstatic about working with all of the talented and intelligent people on the Council this year and hope to use this position to not only make Tigard a better place, but to make the world a better place.”
 
-Councilor Jeanette Shaw was first elected to the Tigard City Council in 2020 and again in 2024. Jeanette is a proud Tigard resident and works with her fellow council members and the community to make Tigard a great place to live and work. She is married to Jason Shaw, a fifth generation Tigard resident.
-
-When not working on Council related activities, Jeanette works to advance electric, smart, and equitable transportation at the federal, state, and local level. She has over three decades of extensive international, national, state, and local public policy and regulatory expertise in semiconductors, technology, and association management focusing on issues such as manufacturing investment credits, economic development zones, workforce training, organizational development, and transportation options such as shared mobility, first and last mile transportation, and light and heavy-duty rail.
-
-Councilor Shaw serves on the National League of Cities and the National Governor's Association Joint Electric Vehicle Workforce Collaborative. She also served on the Oregon Solutions Transportation and Electric Vehicle Collaborative; the State of Oregon Career Technical Education Advisory Commission and was a founding Board member of the STEM/STEAM East Multnomah Partnership.
-
-Councilor Shaw holds an Executive MBA from Stanford University and a Bachelor of Science from the University of California, Santa Barbara.
-
-![logo-footer](https://www.tigard-or.gov/home/showpublishedimage/1604/638651115092570000)
+ 
 
 [13125 SW Hall Blvd. Tigard, OR 97223](https://www.google.com/maps/place/Tigard+City+Hall/@45.4249821,-122.7694867,17z/data=!3m1!4b1!4m5!3m4!1s0x54950d27d7e0e1a5:0xd81de99f97413fd0!8m2!3d45.4249794!4d-122.7671284) 503-639-4171
 

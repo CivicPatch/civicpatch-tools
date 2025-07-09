@@ -1,391 +1,623 @@
 [
   {
     "name": "Heidi Lueb",
-    "image": "images/5e0999ddebca4a98c44dd9bf228ef1d16e968d89a01306fb53cdc8a04d5cc560.png",
-    "source_image": "https://www.tigard-or.gov/home/showpublishedimage/2396/638723807447000000",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
     ],
-    "positions": [
-      "Mayor",
-      "mayor"
+    "images": [
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/4058/638723809985630000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name and role on the official council page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/2396/638723807447000000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name and role on the official city page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
+      }
     ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor Lueb and role is Mayor on the official city council page."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page is titled 'Mayor Lueb' and explicitly states 'Mayor Heidi Lueb' with term expiration date."
+      }
+    ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "503-639-4171",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number found near contact info on the page, likely city hall main line associated with mayor.",
+        "llm_confidence_reason": "General city hall phone number listed on the page; no personal phone found.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is listed near the contact info for the Mayor on the official page.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
       }
     ],
     "emails": [
       {
         "data": "heidil@tigard-or.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text labeled 'Email Mayor Lueb' on the page.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email link labeled 'Email Mayor Lueb' with mailto:heidil@tigard-or.gov.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
       }
     ],
     "websites": [
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the official profile page for Mayor Lueb on the Tigard city website.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Mayor Lueb on the city website.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Primary profile page URL for Mayor Heidi Lueb.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the official city webpage for Mayor Heidi Lueb.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members including mayor.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Terms for council members and mayor start January 1, 2025 as stated in the text.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/26' on the page.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/26.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
       }
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:10:43Z"
   },
   {
     "name": "Maureen Wolf",
-    "image": "images/f8b023ae4d806a0adcd2beab468c10b9586500d84054df07205d17eecfe39311.png",
-    "source_image": "https://www.tigard-or.gov/home/showpublishedimage/5315/638723806643930000",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
     ],
-    "positions": [
-      "Council President",
-      "council president"
+    "images": [
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/5193/638723809678470000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name and role on the official council page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/5315/638723806643930000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image is a portrait near the name and role, consistent with a council member's official photo.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
+      }
     ],
-    "phone_numbers": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council President Wolf on the official city council page."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page explicitly states 'Council President Maureen Wolf' indicating her role on the primary governing body, the City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General city hall phone number listed on the page; no personal phone found.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed near the councilor's contact info and city hall address, likely the office number.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
+      }
+    ],
     "emails": [
       {
         "data": "maureen.wolf@tigard-or.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text labeled 'Email Councilor Wolf'.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly provided as 'Email Councilor Wolf' with a mailto link.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
       }
     ],
     "websites": [
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the official profile page for Councilor Wolf on the Tigard city website.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Councilor Wolf on the city website.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Councilor Wolf.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL is the official councilor profile page on the city website.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Terms start January 1, 2025 as stated in the text.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/28' indicating term end date.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 12/31/28.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
       }
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:10:43Z"
   },
   {
     "name": "Faraz Ghoddusi",
-    "image": "images/d5bd584a78c7d019292ad8d77f2717f64cc9f41e0dc4a4da7805b7d507d02639.png",
-    "source_image": "https://www.tigard-or.gov/home/showpublishedimage/8191/638723811539900000",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
     ],
-    "positions": [
-      "Councilor",
-      "council member"
+    "images": [
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/8189/638723811050630000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name and role on the official council page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/8191/638723811539900000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image is a portrait near the name and title on the official councilor page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
+      }
     ],
-    "phone_numbers": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Councilor Ghoddusi; councilor is equivalent to council member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page is from the City of Tigard's official site under 'Meet the Council' and the person is titled 'Councilor Faraz Ghoddusi' with a term expiration date, indicating an active city council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General city hall phone number listed on the page; no personal phone found.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed near the contact information for the councilor on the official page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
+      }
+    ],
     "emails": [
       {
         "data": "faraz.ghoddusi@tigard-or.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided as 'Email Councilor Ghoddusi' on the official councilor page.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
       }
     ],
     "websites": [
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the official profile page for Councilor Ghoddusi on the Tigard city website.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Councilor Ghoddusi on the city website.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Councilor Ghoddusi.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the official councilor profile page URL.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Terms start January 1, 2025 as stated in the text.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       }
     ],
     "end_dates": [
       {
-        "data": "2027-12-31",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Elected to two-year term starting 2025-01-01 implies term ends end of 2026, but text states two-year terms; assuming 2 years from 2025-01-01 to 2026-12-31. However, text says two-year terms for Ghoddusi and Robbins, so end date is 2026-12-31. Adjusted to 2026-12-31 for accuracy.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      },
-      {
         "data": "2026-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/26' near name.",
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 12/31/26.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
       }
     ],
-    "updated_at": "2025-05-04"
-  },
-  {
-    "name": "Heather Robbins",
-    "image": "images/dba5a0f3e4ff24950f2df87ffd7439f5f2142ecbcb96001f67136eceae30d12f.png",
-    "source_image": "https://www.tigard-or.gov/home/showpublishedimage/8193/638723811550570000",
-    "sources": [
-      "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
-    ],
-    "positions": [
-      "Councilor",
-      "council member"
-    ],
-    "phone_numbers": [],
-    "emails": [
-      {
-        "data": "heather.robbins@tigard-or.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the official profile page for Councilor Robbins on the Tigard city website.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      },
-      {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for Councilor Robbins.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2025-01-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2026-12-31",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Elected to two-year term starting 2025-01-01 implies term ends end of 2026.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      },
-      {
-        "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/26' and converted to ISO format.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
-      }
-    ],
-    "updated_at": "2025-05-04"
-  },
-  {
-    "name": "Jake Schlack",
-    "image": "images/573df1b3cb7f90368119992c0e055599f4ce12c97339a59544b8b98564d5b5bf.png",
-    "source_image": "https://www.tigard-or.gov/home/showpublishedimage/7392/638723806338300000",
-    "sources": [
-      "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
-    ],
-    "positions": [
-      "Councilor",
-      "councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [
-      {
-        "data": "jake.schlack@tigard-or.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the official profile page for Councilor Schlack on the Tigard city website.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      },
-      {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for Councilor Schlack.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2025-01-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      },
-      {
-        "data": "2024-07-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Councilor Schlack was appointed to the Tigard City Council effective July 1, 2024.'",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2028-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/28' and converted to ISO format.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
-      }
-    ],
-    "updated_at": "2025-05-04"
-  },
-  {
-    "name": "Jeanette Shaw",
-    "image": "images/e439c172c0eae49a7286766d82949187b7f0760fc2fe8cedea9b0120bcca45ab.png",
-    "source_image": "https://www.tigard-or.gov/home/showpublishedimage/5265/638723807797270000",
-    "sources": [
-      "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/councilor-shaw"
-    ],
-    "positions": [
-      "Councilor",
-      "councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [
-      {
-        "data": "jeanettes@tigard-or.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text labeled 'Email Councilor Shaw' near name.",
-        "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the official profile page for Councilor Shaw on the Tigard city website.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      },
-      {
-        "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for Councilor Shaw.",
-        "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2025-01-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term start date inferred from 'All begin their terms on January 1, 2025' for elected council members.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2028-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/28' near name.",
-        "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
-      }
-    ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:10:43Z"
   },
   {
     "name": "Yi-Kang Hu",
-    "image": "images/2d4e56197e53ac40a02839d1540679008f1bf4a29f3fd87ff538c9d5b3a3aacd.png",
-    "source_image": "https://www.tigard-or.gov/home/showpublishedimage/5311/638723834275100000",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
     ],
-    "positions": [
-      "Councilor",
-      "council member"
+    "images": [
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/5195/638723809340000000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name and role on the official council page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/5311/638723834275100000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a portrait near the name and role on the councilor's page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+      }
     ],
-    "phone_numbers": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Councilor Hu; councilor is equivalent to council member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page is titled 'Councilor Hu' and describes Yi-Kang Hu as a member of the City Council with active term."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General city hall phone number listed on the page; no personal phone found.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed near the contact info on the councilor's page, likely city hall main line.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+      }
+    ],
     "emails": [
       {
         "data": "yikang.hu@tigard-or.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text labeled 'Email Councilor Hu' near name.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided as 'Email Councilor Hu' mailto link.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
       }
     ],
     "websites": [
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the official profile page for Councilor Hu on the Tigard city website.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Councilor Hu on the city website.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Primary page URL for Councilor Hu profile.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the official councilor profile page URL.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
       }
     ],
-    "start_dates": [],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Terms start January 1, 2025 as stated in the text.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      }
+    ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term Expires: 12/31/26' indicating term end date.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/26.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
       }
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:10:43Z"
+  },
+  {
+    "name": "Heather Robbins",
+    "sources": [
+      "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+    ],
+    "images": [
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/8195/638723818728070000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name and role on the official council page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/8193/638723811550570000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The image is a portrait near the name and role, consistent with a council member's headshot.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Councilor Robbins; councilor is equivalent to council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page title and content identify Heather Robbins as 'Councilor Robbins' and mention her term expiration, indicating an active council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General city hall phone number listed on the page; no personal phone found.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed near the councilor's contact info and city hall address, likely the office contact.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      }
+    ],
+    "emails": [
+      {
+        "data": "heather.robbins@tigard-or.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided as 'Email Councilor Robbins' with a mailto link.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Councilor Robbins on the city website.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the page containing the councilor's profile.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Terms start January 1, 2025 as stated in the text.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration date is explicitly stated as 12/31/26.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      }
+    ],
+    "updated_at": "2025-07-09T17:10:43Z"
+  },
+  {
+    "name": "Jake Schlack",
+    "sources": [
+      "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+    ],
+    "images": [
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/7394/638723808584170000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name and role on the official council page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/7392/638723806338300000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image is a portrait near the name and title of Councilor Jake Schlack on the official city council page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Councilor Schlack; councilor is equivalent to council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page is from the Tigard City Council site and refers to Jake Schlack as 'Councilor Jake Schlack' and mentions his appointment to the Tigard City Council effective July 1, 2024."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General city hall phone number listed on the page; no personal phone found.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed near the contact section for the city councilor on the page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jake.schlack@tigard-or.gov",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email is explicitly provided as 'Email Councilor Schlack' with a mailto link.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Councilor Schlack on the city website.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "This is the official profile page URL for Councilor Schlack on the Tigard city website.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Terms start January 1, 2025 as stated in the text.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "2024-07-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text states he was appointed to the Tigard City Council effective July 1, 2024.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The term expiration date is explicitly stated as 12/31/28.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+      }
+    ],
+    "updated_at": "2025-07-09T17:10:43Z"
+  },
+  {
+    "name": "Jeanette Shaw",
+    "sources": [
+      "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/councilor-shaw"
+    ],
+    "images": [
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/5263/638723808970170000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name and role on the official council page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/home/showpublishedimage/5265/638723807797270000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image is a portrait near the name and role description, likely a headshot of Councilor Shaw.",
+        "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Councilor Shaw; councilor is equivalent to council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page is titled 'Councilor Shaw' and describes her as elected to Tigard City Council, indicating she is a Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "General city hall phone number listed on the page; no personal phone found.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "503-639-4171",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Phone number is listed on the page as a general contact number for Tigard City Hall, no personal phone found.",
+        "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jeanettes@tigard-or.gov",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is explicitly provided as 'Email Councilor Shaw' mailto link.",
+        "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Councilor Shaw on the city website.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "This is the official councilor profile page URL.",
+        "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Terms start January 1, 2025 as stated in the text.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "2020",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states first elected in 2020 and again in 2024, so start date is 2020.",
+        "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expires 12/31/28 as explicitly stated on the page.",
+        "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
+      }
+    ],
+    "updated_at": "2025-07-09T17:10:43Z"
   }
 ]

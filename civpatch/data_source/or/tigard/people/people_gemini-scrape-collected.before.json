@@ -1,312 +1,697 @@
 [
   {
     "name": "Heidi Lueb",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
     ],
-    "positions": [
-      "Mayor",
-      "mayor"
-    ],
-    "phone_numbers": [
+    "images": [],
+    "roles": [
       {
-        "data": "503-639-4171",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Phone number found on the page about the mayor, likely a general city contact but the only number provided.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Lueb'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Mayor Lueb'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Mayor Lueb' and 'Mayor' is a target role"
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Lueb' and 'Mayor' is a target role."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Mayor Lueb' in the navigation, which is a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Mayor Lueb' in the navigation, which is a specific role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly identified as 'Mayor Lueb' in the navigation."
       }
     ],
+    "divisions": [],
+    "phone_numbers": [],
     "emails": [
       {
         "data": "heidil@tigard-or.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found directly in a mailto link associated with the mayor.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Mayor Lueb.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
       }
     ],
     "websites": [
       {
         "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the person's name and photo.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the specific profile page for the person.",
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page is dedicated to Mayor Lueb, serving as her profile page.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "null",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated as 'Term Expires: 12/31/26'.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
-      }
-    ],
-    "updated_at": "2025-05-04"
-  },
-  {
-    "name": "Maureen Wolf",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
-    ],
-    "positions": [
-      "Council President",
-      "Council Member"
-    ],
-    "phone_numbers": [],
-    "emails": [
-      {
-        "data": "maureen.wolf@tigard-or.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found directly in a mailto link associated with the person's name.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the person's name and photo.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the page is a dedicated profile page for the person.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2025-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated that elected councilors begin terms on this date.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2028-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated as 'Term Expires: 12/31/28'.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
-      }
-    ],
-    "updated_at": "2025-05-04"
-  },
-  {
-    "name": "Faraz Ghoddusi",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
-    ],
-    "positions": [
-      "Council Member",
-      "council member"
-    ],
-    "phone_numbers": [],
-    "emails": [
-      {
-        "data": "faraz.ghoddusi@tigard-or.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found in mailto link explicitly associated with the councilor.",
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to Mayor Lueb's profile page is provided in the navigation",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the person's name and photo.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the current page is the profile page for the councilor.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2025-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated that elected councilors begin terms on this date.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term expiration date explicitly stated as 'Term Expires: 12/31/26'.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
-      }
-    ],
-    "updated_at": "2025-05-04"
-  },
-  {
-    "name": "Yi-Kang Hu",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
-    ],
-    "positions": [
-      "Council Member",
-      "council member"
-    ],
-    "phone_numbers": [],
-    "emails": [
-      {
-        "data": "yikang.hu@tigard-or.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address found directly in a mailto link associated with the person.",
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the mayor's profile page.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the person's name and photo.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the current page is a profile page for the person.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL extracted from the navigation link to the person's profile.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A dedicated profile page link is provided for Mayor Lueb.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
       }
     ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated as 'Term Expires: 12/31/26'.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Expires: 12/31/26'.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb"
       }
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:12:48Z"
   },
   {
-    "name": "Heather Robbins",
-    "image": null,
-    "source_image": null,
+    "name": "Maureen Wolf",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
-      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
     ],
-    "positions": [
-      "Council Member",
-      "council member"
+    "images": [],
+    "roles": [
+      {
+        "data": "council president",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President Wolf'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred as a base role from 'Council President'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor Wolf' in the navigation."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council President' is explicitly stated as a heading directly above her name, indicating her primary and current position within the council. "
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The page title 'Councilor Wolf' and the context of the 'Meet the Council' section strongly imply she is a 'Council Member', which is a base role for 'Council President'. "
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Wolf' and 'Councilor' is a target role"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Wolf' and 'council member' is a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Wolf' in the navigation, which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Wolf' in the navigation, which is a specific role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Wolf' in the navigation."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
-        "data": "heather.robbins@tigard-or.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address found in a mailto link explicitly associated with the councilor.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+        "data": "maureen.wolf@tigard-or.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to her name and role, formatted as a mailto link for her specific contact information on her profile page, indicating high relevance and accuracy for direct contact with her in her official capacity as a council member. ",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
       }
     ],
     "websites": [
       {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the person's name and photo.",
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the current page is a profile page for the councilor.",
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Councilor Wolf, clearly indicating it is her official website within the city's government portal. ",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to Councilor Wolf's profile page is provided in the navigation",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilor's profile page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL extracted from the navigation link to the person's profile.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A dedicated profile page link is provided for Councilor Wolf.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated that elected councilors begin terms on this date.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'All begin their terms on January 1, 2025'.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated to have a 4-year term beginning January 1, 2025, allowing for precise calculation of the end date.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: 12/31/28' directly under her name and title, leaving no room for ambiguity or inference regarding its accuracy and direct association with her current term as Council President. ",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-wolf"
+      }
+    ],
+    "updated_at": "2025-07-09T17:12:48Z"
+  },
+  {
+    "name": "Faraz Ghoddusi",
+    "sources": [
+      "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Ghoddusi'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred as a base role from 'Councilor'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor Ghoddusi' in the navigation."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Faraz Ghoddusi' and 'Councilor' is a target role"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Ghoddusi' and 'council member' is a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Ghoddusi' in the navigation, which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Ghoddusi' in the navigation, which is a specific role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Ghoddusi' in the navigation."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "faraz.ghoddusi@tigard-or.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Councilor Ghoddusi",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the profile page for Councilor Ghoddusi",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilor's profile page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL extracted from the navigation link to the person's profile.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A dedicated profile page link is provided for Councilor Ghoddusi.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'All begin their terms on January 1, 2025'.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as 'Term Expires: 12/31/26'.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated to have a two-year term beginning January 1, 2025, allowing for precise calculation of the end date.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Expires: 12/31/26'",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
       }
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:12:48Z"
   },
   {
-    "name": "Jake Schlack",
-    "image": null,
-    "source_image": null,
+    "name": "Yi-Kang Hu",
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
       "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
     ],
-    "positions": [
-      "Council Member"
+    "images": [],
+    "roles": [
+      {
+        "data": "councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Hu'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred as a base role from 'Councilor'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor Hu' in the navigation."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Hu' and 'Councilor' is a target role"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Yi-Kang Hu' and 'council member' is a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Hu' in the navigation, which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Hu' in the navigation, which is a specific role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Hu' in the navigation."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
-        "data": "jake.schlack@tigard-or.gov",
+        "data": "yikang.hu@tigard-or.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided as a mailto link associated with the person.",
-        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
       }
     ],
     "websites": [
       {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the person's name and photo.",
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
-        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Current page URL is a dedicated profile page for the person.",
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to Councilor Hu's profile page is provided in the navigation",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilor's profile page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL extracted from the navigation link to the person's profile.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A dedicated profile page link is provided for Councilor Hu.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date '12/31/26' explicitly stated.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+      }
+    ],
+    "updated_at": "2025-07-09T17:12:48Z"
+  },
+  {
+    "name": "Heather Robbins",
+    "sources": [
+      "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Robbins'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred as a base role from 'Councilor'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor Robbins' in the navigation."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Robbins' and 'Councilor' is a target role"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Robbins' and 'council member' is a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Heather Robbins', which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Heather Robbins', which is a specific role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Robbins' in the navigation."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "heather.robbins@tigard-or.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and linked.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to Councilor Robbins' profile page is provided in the navigation",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilor's profile page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Current page URL is the person's profile page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A dedicated profile page link is provided for Councilor Robbins.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated that elected councilors begin terms on this date.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'All begin their terms on January 1, 2025'.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated to have a two-year term beginning January 1, 2025, allowing for precise calculation of the end date.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as 'Term Expires: 12/31/26'.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      }
+    ],
+    "updated_at": "2025-07-09T17:12:48Z"
+  },
+  {
+    "name": "Jake Schlack",
+    "sources": [
+      "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Schlack'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred as a base role from 'Councilor'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor Schlack' in the navigation."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Schlack' and 'Councilor' is a target role"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Schlack' and 'council member' is a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Schlack' in the navigation, which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Schlack' in the navigation, which is a specific role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Jake Schlack'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jake.schlack@tigard-or.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Councilor Schlack.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to Councilor Schlack's profile page is provided in the navigation",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilor's profile page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL extracted from the navigation link to the person's profile.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The current page is the dedicated profile page for Councilor Schlack.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'All begin their terms on January 1, 2025'.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
         "data": "2024-07-01",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Appointment date explicitly stated.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Start date is explicitly stated as 'appointed to the Tigard City Council effective July 1, 2024'.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
       }
     ],
@@ -314,29 +699,83 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term expiration date explicitly listed.",
+        "llm_confidence_reason": "Explicitly stated to have a 4-year term beginning January 1, 2025, allowing for precise calculation of the end date.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Expires: 12/31/28'.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
       }
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:12:48Z"
   },
   {
     "name": "Jeanette Shaw",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/mayor-lueb",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack",
       "https://www.tigard-or.gov/your-government/council/councilor-shaw"
     ],
-    "positions": [
-      "Council Member",
-      "council member"
+    "images": [],
+    "roles": [
+      {
+        "data": "councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Shaw'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred as a base role from 'Councilor'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor Shaw' in the navigation."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Shaw' and 'Councilor' is a target role"
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Shaw' and 'council member' is a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Shaw' in the navigation, which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Shaw' in the navigation, which is a specific role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor Shaw' in the navigation."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly identified as 'Councilor' which is a target role."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "jeanettes@tigard-or.gov",
-        "llm_confidence": 0.98,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Email address explicitly provided and linked to the person.",
         "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
       }
@@ -344,39 +783,140 @@
     "websites": [
       {
         "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the person's name and photo.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
-        "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw/",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "This is the specific profile page for the person.",
+        "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to Councilor Shaw's profile page is provided in the navigation",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-ghoddusi"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the councilor's profile page.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-hu"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL extracted from the navigation link to the person's profile.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-robbins"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A dedicated profile page link is provided for Councilor Shaw.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/councilor-schlack"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/councilor-shaw",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Councilor Shaw.",
         "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated that elected councilors begin terms on this date.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'All begin their terms on January 1, 2025'.",
         "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
       },
       {
-        "data": "2020",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Text states 'first elected... in 2020'.",
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'first elected...in 2020 and again in 2024', using the most recent election date.",
         "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires: 12/31/28'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated to have a 4-year term beginning January 1, 2025, allowing for precise calculation of the end date.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated as '12/31/28'.",
         "source": "https://www.tigard-or.gov/your-government/council/councilor-shaw"
       }
     ],
-    "updated_at": "2025-05-04"
+    "updated_at": "2025-07-09T17:12:48Z"
+  },
+  {
+    "name": "Asher Hellhake",
+    "sources": [
+      "https://www.tigard-or.gov/your-government/council/meet-the-council",
+      "https://www.tigard-or.gov/your-government/council/meet-the-council/youth-councilor-hellhake"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "youth councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Youth Councilor Hellhake'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred as a base role from 'Youth Councilor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Youth Councilor' implies a 'Council Member' role, following the normalization guideline for roles with descriptors."
+      },
+      {
+        "data": "Youth Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Youth Councilor' is explicitly stated."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "youthcouncil@tigard-or.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked to the person.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/youth-councilor-hellhake"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/youth-councilor-hellhake",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      },
+      {
+        "data": "https://www.tigard-or.gov/your-government/council/meet-the-council/youth-councilor-hellhake",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a direct profile page for Asher Hellhake.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/youth-councilor-hellhake"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-07-02",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'July 02, 2025' in the news section regarding the selection of the new Youth City Councilor.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-06-30",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The term expiration date is explicitly stated as '6/30/26'.",
+        "source": "https://www.tigard-or.gov/your-government/council/meet-the-council/youth-councilor-hellhake"
+      }
+    ],
+    "updated_at": "2025-07-09T17:12:48Z"
   }
 ]
