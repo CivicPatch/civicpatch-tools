@@ -2002,7 +2002,14 @@
       ],
       "population": 1929,
       "website": "https://townofcenter.colorado.gov",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T00:09:57Z",
+      "meta_hash": "b7bcbf62b8c57e5b5a5b01d5bfe5e06c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Ault",
