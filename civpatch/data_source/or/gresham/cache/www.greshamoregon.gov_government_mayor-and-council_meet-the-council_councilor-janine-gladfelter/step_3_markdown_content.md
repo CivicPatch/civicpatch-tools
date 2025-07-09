@@ -1,9 +1,9 @@
-[Skip to main content](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
+[Skip to main content](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-janine-gladfelter/)
 
 ![City of Gresham Oregon](https://www.greshamoregon.gov/img/gresham-logo.png)
 
-- [Search](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
-- [Menu](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
+- [Search](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-janine-gladfelter/)
+- [Menu](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-janine-gladfelter/)
 
 Search Search
 
@@ -171,7 +171,7 @@ Search Search
 - [Meet the Council](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council)
 - Councilor Janine Gladfelter
 
-[Skip sidebar navigation](https://www.greshamoregon.gov/link/da925bac48694c54874f3022f98dcd4e.aspx/)
+[Skip sidebar navigation](https://www.greshamoregon.gov/government/mayor-and-council/meet-the-council/councilor-janine-gladfelter/)
 
 Government
 
