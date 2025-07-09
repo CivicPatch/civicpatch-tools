@@ -1,135 +1,391 @@
 [
   {
     "name": "Rory Bialostosky",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://westlinnoregon.gov/citycouncil",
-      "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+      "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
+      "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
+      "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck",
+      "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
     ],
-    "positions": [
-      "Mayor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor' in the heading and 'Mayor Term'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Mayor' and matches a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor Rory Bialostosky', which directly matches the target role 'mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' is explicitly stated in the text and is a target role."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "503-568-3571",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly labeled as 'Cell' phone number directly under the person's name.",
+        "llm_confidence_reason": "Phone number explicitly stated as 'Cell' and directly associated with the person.",
         "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "rbialostosky@westlinnoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated and directly associated with the person.",
+        "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+      }
+    ],
     "websites": [
       {
         "data": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is directly associated with the person's name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
         "source": "https://westlinnoregon.gov/citycouncil"
       },
       {
-        "data": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the current page, which is a dedicated profile page for the person.",
+        "data": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is the direct profile page for the person.",
+        "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided in the navigation.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-06-20",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as part of 'Mayor Term'.",
         "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as part of 'Mayor Term'.",
+        "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+      }
+    ],
+    "updated_at": "2025-07-09T17:17:05Z"
   },
   {
     "name": "Mary Baumgardner",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://westlinnoregon.gov/citycouncil",
-      "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
+      "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
+      "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner",
+      "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
+      "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck",
+      "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
     ],
-    "positions": [
-      "Council President"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred base role from 'Council President'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the navigation link text."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Council President is a type of council member."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council President' in the heading and text."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'serving on West Linn City Council' and 'Council Term'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Council President' and matches a target role."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Council President Mary Baumgardner', which directly matches the target role 'council president'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council President' is explicitly stated in the text and is a target role."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "503-568-3566",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly labeled as 'Cell' phone number directly associated with the person.",
+        "llm_confidence_reason": "Phone number explicitly stated and clearly associated with the person.",
         "source": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "mbaumgardner@westlinnoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated and clearly associated with the person.",
+        "source": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
+      }
+    ],
     "websites": [
       {
         "data": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is directly associated with the person's name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
         "source": "https://westlinnoregon.gov/citycouncil"
       },
       {
-        "data": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the page itself, which is a profile page for the person.",
+        "data": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is the direct profile page link for the person.",
+        "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the person's dedicated profile page.",
+        "source": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided in the navigation.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated in 'Council Term' field.",
         "source": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated in 'Council Term' field.",
+        "source": "https://westlinnoregon.gov/citycouncil/council-president-mary-baumgardner"
+      }
+    ],
+    "updated_at": "2025-07-09T17:17:05Z"
   },
   {
     "name": "Leo Groner",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://westlinnoregon.gov/citycouncil",
-      "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
+      "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
+      "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
+      "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck",
+      "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
     ],
-    "positions": [
-      "Council member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred base role from 'Councilor'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the navigation link text."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Councilor is a type of council member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor' and matches a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "'Councilor' is a specific form of 'Council Member', which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilor Leo Groner', which directly matches the target role 'council member'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilor' is explicitly stated in the text and is a target role."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "503-568-2804",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly labeled as 'Cell' phone number.",
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "lgroner@westlinnoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
+      }
+    ],
     "websites": [
       {
         "data": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is directly associated with the person's name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
         "source": "https://westlinnoregon.gov/citycouncil"
       },
       {
-        "data": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the page dedicated to this person.",
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is the direct profile page link for the person.",
+        "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for the person.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided in the navigation.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-03-14",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as part of the 'Council Term'.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as part of the 'Council Term'.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-leo-groner"
+      }
+    ],
+    "updated_at": "2025-07-09T17:17:05Z"
   },
   {
     "name": "Carol Bryck",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://westlinnoregon.gov/citycouncil",
-      "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
+      "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
+      "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
+      "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck",
+      "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
     ],
-    "positions": [
-      "Council member",
-      "council member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred base role from 'Councilor'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the navigation link text."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Councilor is a type of council member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor' and matches a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "'Councilor' is a specific form of 'Council Member', which is a target role."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'appointed as interim City Councilor' and 'Councilor Carol Bryck', which directly matches the target role 'council member'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilor Carol Bryck', which directly matches the target role 'council member'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilor' is explicitly stated in the text and is a target role."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "503-568-3419",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Cell phone number explicitly listed next to name.",
+        "llm_confidence_reason": "Phone number is explicitly stated and directly associated with the person's name and profile section.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
       }
     ],
@@ -137,21 +393,27 @@
       {
         "data": "cbryck@westlinnoregon.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "llm_confidence_reason": "Email address is explicitly stated and directly associated with the person's name and profile section.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
       }
     ],
     "websites": [
       {
         "data": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is directly associated with the person's name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
         "source": "https://westlinnoregon.gov/citycouncil"
       },
       {
-        "data": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck/",
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL of the profile page for the person.",
+        "llm_confidence_reason": "URL is the direct profile page link for the person.",
+        "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the dedicated profile page for Carol Bryck.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
       }
     ],
@@ -159,7 +421,7 @@
       {
         "data": "2023-12-18",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicit start date 'December 18, 2023' listed for Council Term (non-interim).",
+        "llm_confidence_reason": "Start date is explicitly stated as part of the 'Council Term' information for Carol Bryck, including day, month, and year, allowing for precise extraction and formatting. The most recent start date is chosen.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
       }
     ],
@@ -167,48 +429,123 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicit end date 'December 31, 2028' listed for Council Term.",
+        "llm_confidence_reason": "End date is explicitly stated as part of the 'Council Term' information for Carol Bryck, including day, month, and year, allowing for precise extraction and formatting.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-09T17:17:05Z"
   },
   {
     "name": "Kevin Bonnington",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://westlinnoregon.gov/citycouncil",
+      "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky",
+      "https://westlinnoregon.gov/citycouncil/councilor-leo-groner",
+      "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck",
       "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
     ],
-    "positions": [
-      "Council member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred base role from 'Councilor'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the navigation link text."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Councilor is a type of council member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor' and matches a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "'Councilor' is a specific form of 'Council Member', which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilor Kevin Bonnington', which directly matches the target role 'council member'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilor' is explicitly stated in the heading 'Councilor Kevin Bonnington' and is a target role."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "503-568-2781",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly labeled as 'Cell' phone number.",
+        "llm_confidence_reason": "Phone number is explicitly stated as 'Cell' and directly associated with the person's contact information section on their profile page, matching the expected format.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
       }
     ],
-    "emails": [],
+    "emails": [
+      {
+        "data": "kbonnington@westlinnoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and directly associated with the person's contact information section on their profile page.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
+      }
+    ],
     "websites": [
       {
         "data": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is directly associated with the person's name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
         "source": "https://westlinnoregon.gov/citycouncil"
       },
       {
-        "data": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington/",
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL is the page title and directly links to the person's profile.",
+        "llm_confidence_reason": "URL is the direct profile page link for the person.",
+        "source": "https://westlinnoregon.gov/citycouncil/mayor-rory-bialostosky"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided in the navigation.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-carol-bryck"
+      },
+      {
+        "data": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the dedicated profile page for Kevin Bonnington, serving as his primary website.",
         "source": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "start_dates": [
+      {
+        "data": "2024-03-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as part of the 'Council Term' for the individual, in the format 'Month Day, YYYY - Month Day, YYYY'.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as part of the 'Council Term' for the individual, in the format 'Month Day, YYYY - Month Day, YYYY'.",
+        "source": "https://westlinnoregon.gov/citycouncil/councilor-kevin-bonnington"
+      }
+    ],
+    "updated_at": "2025-07-09T17:17:05Z"
   }
 ]
