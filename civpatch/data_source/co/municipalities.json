@@ -2181,7 +2181,14 @@
       ],
       "population": 1458,
       "website": "http://www.delnortecolorado.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T00:23:49Z",
+      "meta_hash": "cf1a03b5f26d28f50c0cff58f8a3a3f9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Paonia",
