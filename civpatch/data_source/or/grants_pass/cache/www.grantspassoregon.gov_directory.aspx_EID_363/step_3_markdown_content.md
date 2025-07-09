@@ -1,8 +1,8 @@
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=363%2F)
 
 Loading
 
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=363%2F)
 
 ![Grants Pass Oregon Homepage](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=34955)
 
@@ -18,24 +18,24 @@ Search
 
 <!--THE END-->
 
-![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35572)
+![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35570)
 
 1. [Home](https://www.grantspassoregon.gov)
 2. Staff Directory
 
-![Joel King](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=14535 "Joel King")
+![portrait of Victoria Marshall](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=36721 "portrait of Victoria Marshall")
 
-# Joel King
+# Victoria Marshall
 
  
 
 [City Council](https://www.grantspassoregon.gov/Directory.aspx?DID=14)  
-Title: Ward 4 Representative  
-Phone: 541-761-7538  
-[Email Joel King](mailto:jking@grantspassoregon.gov)
+Title: Ward 2 Representative  
+Phone: 541-450-6000  
+[Email Victoria Marshall](mailto:vmarshall@grantspassoregon.gov)
 
-Sworn In: January 2, 2019  
-Term Ends: December 31, 2026
+Sworn In: January 6, 2025  
+Term Ends: December 31, 2028
 
  
 

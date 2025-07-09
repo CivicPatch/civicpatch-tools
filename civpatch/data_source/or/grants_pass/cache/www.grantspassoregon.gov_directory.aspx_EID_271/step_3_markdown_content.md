@@ -1,8 +1,10 @@
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
+
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=271%2F)
 
 Loading
 
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=271%2F)
 
 ![Grants Pass Oregon Homepage](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=34955)
 
@@ -18,7 +20,7 @@ Search
 
 <!--THE END-->
 
-![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35572)
+![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=36017)
 
 1. [Home](https://www.grantspassoregon.gov)
 2. Staff Directory
@@ -122,3 +124,5 @@ Excel Download
 PowerPoint Download
 
 Document Download
+
+Explore your accessibility options

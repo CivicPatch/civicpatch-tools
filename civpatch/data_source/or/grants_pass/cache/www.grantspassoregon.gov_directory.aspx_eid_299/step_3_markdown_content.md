@@ -1,102 +1,128 @@
- 
-
 This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
 
-  [Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=299/)  
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=299%2F)
 
 Loading
 
-  [Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=299/)   [![Grants Pass Oregon Homepage](images/4d997f8c09722b4eacf6318f4363e17ed2e0f4edf7f8b8347179496f0390dc35.png)](https://www.grantspassoregon.gov/)   [](https://www.grantspassoregon.gov/Search/Results) Search 
-Accessible Menu
- 1.  [City Hall](https://www.grantspassoregon.gov/27/City-Hall) 
- 1.  [Departments](https://www.grantspassoregon.gov/129/Departments) 
- 1.  [Services](https://www.grantspassoregon.gov/101/Services) 
- 1.  [Resident resources](https://www.grantspassoregon.gov/31/Resident-resources) 
- 1.  [Business resources](https://www.grantspassoregon.gov/35/Business-resources) 
- 1.  [How Do I...](https://www.grantspassoregon.gov/9/How-Do-I) 
-  ![](images/ae2c26ccc18a2f6f24e07e581a53b164b4e9f31a028a81ec41aac76871807c01.jpg)  
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=299%2F)
 
- 1.  [Home](https://www.grantspassoregon.gov/) 
- 1. Staff Directory
-  ![Rob Pell](images/566e088d3aa26135ff72ff4fc06eb75a1b890c77a79e21513960b05eb74746a4.jpg)  
+![Grants Pass Oregon Homepage](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=34955)
+
+Search
+
+1. Accessible Menu
+2. [City Hall](https://www.grantspassoregon.gov/27/City-Hall)
+3. [Departments](https://www.grantspassoregon.gov/129/Departments)
+4. [Services](https://www.grantspassoregon.gov/101/Services)
+5. [Resident resources](https://www.grantspassoregon.gov/31/Resident-resources)
+6. [Business resources](https://www.grantspassoregon.gov/35/Business-resources)
+7. [How Do I...](https://www.grantspassoregon.gov/9/How-Do-I)
+
+<!--THE END-->
+
+![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35573)
+
+1. [Home](https://www.grantspassoregon.gov)
+2. Staff Directory
+
+![Rob Pell](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=21579 "Rob Pell")
 
 # Rob Pell
 
-   [City Council](https://www.grantspassoregon.gov/Directory.aspx?DID=14) 
+ 
 
-Title: Ward 1 Representation
+[City Council](https://www.grantspassoregon.gov/Directory.aspx?DID=14)  
+Title: Ward 1 Representation  
+Phone: 541-476-7578  
+[Email Rob Pell](mailto:rpell@grantspassoregon.gov)
 
-Phone: [541-476-7578]() 
-
- [Email Rob Pell](mailto:rpell@grantspassoregon.gov)  
-
-Sworn In: January 4, 2021
-
+Sworn In: January 4, 2021  
 Term Ends: December 31, 2026
 
-  
+ 
 
- [Return to Staff Directory](https://www.grantspassoregon.gov/Directory.aspx) 
+[Return to Staff Directory](https://www.grantspassoregon.gov/Directory.aspx)
 
- 1.   [Current Newsletter](https://www.grantspassoregon.gov/CivicAlerts.aspx?CID=15)  
- 1.   [Newsletter ARCHIVE](https://www.grantspassoregon.gov/604/City-Newsletter-ARCHIVE)  
- 1.   [Photo Galleries](https://www.grantspassoregon.gov/1776/Photo-Galleries)  [](https://www.grantspassoregon.gov/directory.aspx?eid=299/)  
-    1.   [Tree Lighting Ceremony 2022](https://www.grantspassoregon.gov/1778/Tree-Lighting-Ceremony-2022)  
-    1.   [Tree Lighting Ceremony 2023](https://www.grantspassoregon.gov/1977/Tree-Lighting-Ceremony-2023)  
-    1.   [Art Along the Rogue 2022](https://www.grantspassoregon.gov/1827/Art-Along-the-Rogue-2022)  
-    1.   [Art Along the Rogue 2023](https://www.grantspassoregon.gov/1973/Art-Along-the-Rogue-2023)  
-    1.   [Art Along the Rogue 2024](https://www.grantspassoregon.gov/2035/Art-Along-the-Rogue-2024)  
-    1.   [Fire Rescue Hazmat training March 2024](https://www.grantspassoregon.gov/1996/Fire-Rescue-Hazmat-training-March-2024)  
-    1.   [Mass Casualty Drill October 2023](https://www.grantspassoregon.gov/2036/Mass-Casualty-Drill-October-2023)  
-    1.   [Arbor Day 2023](https://www.grantspassoregon.gov/1777/Arbor-Day-2023)  
-    1.   [Playground Dedication at Reinhert Volunteer Park May 2024](https://www.grantspassoregon.gov/2010/Playground-Dedication-at-Reinhert-Volunt)  
- 1.   [Monthly highlights since January 2024](https://www.grantspassoregon.gov/2011/Monthly-highlights-since-January-2024)  
-  [Form Center](https://www.grantspassoregon.gov/formcenter)   [Tourism](https://visitgrantspass.com/)   [Open Burning](https://www.grantspassoregon.gov/1501)   [Parks](https://www.grantspassoregon.gov/286)   [GIS Mapping](https://grantspassoregon.maps.arcgis.com/home/index.html)   [Contact City Staff](https://www.grantspassoregon.gov/Directory.aspx)  
+1. [Current Newsletter](https://www.grantspassoregon.gov/CivicAlerts.aspx?CID=15)
+2. [Newsletter ARCHIVE](https://www.grantspassoregon.gov/604/City-Newsletter-ARCHIVE)
+3. [Photo Galleries](https://www.grantspassoregon.gov/1776/Photo-Galleries)
+   
+   1. [Tree Lighting Ceremony 2022](https://www.grantspassoregon.gov/1778/Tree-Lighting-Ceremony-2022)
+   2. [Tree Lighting Ceremony 2023](https://www.grantspassoregon.gov/1977/Tree-Lighting-Ceremony-2023)
+   3. [Art Along the Rogue 2022](https://www.grantspassoregon.gov/1827/Art-Along-the-Rogue-2022)
+   4. [Art Along the Rogue 2023](https://www.grantspassoregon.gov/1973/Art-Along-the-Rogue-2023)
+   5. [Art Along the Rogue 2024](https://www.grantspassoregon.gov/2035/Art-Along-the-Rogue-2024)
+   6. [Fire Rescue Hazmat training March 2024](https://www.grantspassoregon.gov/1996/Fire-Rescue-Hazmat-training-March-2024)
+   7. [Mass Casualty Drill October 2023](https://www.grantspassoregon.gov/2036/Mass-Casualty-Drill-October-2023)
+   8. [Arbor Day 2023](https://www.grantspassoregon.gov/1777/Arbor-Day-2023)
+   9. [Playground Dedication at Reinhert Volunteer Park May 2024](https://www.grantspassoregon.gov/2010/Playground-Dedication-at-Reinhert-Volunt)
+4. [Monthly highlights since January 2024](https://www.grantspassoregon.gov/2011/Monthly-highlights-since-January-2024)
 
- 1.    
+[Form Center](https://www.grantspassoregon.gov/formcenter)
 
- [](https://www.grantspassoregon.gov/)    
+[Tourism](https://visitgrantspass.com)
+
+[Fire Danger Level](https://www.grantspassoregon.gov/1500)
+
+[Parks](https://www.grantspassoregon.gov/286)
+
+[GIS Mapping](https://grantspassoregon.maps.arcgis.com/home/index.html)
+
+[Contact City Staff](https://www.grantspassoregon.gov/Directory.aspx)
 
 ### City of Grants Pass
 
- 1.    
+1. 101 NW A Street  
+   Grants Pass, OR 97526
+2. Phone: 541-450-6000  
+   Fax: 541-479-0812
 
-101 NW A Street   
+### [Quick Links](https://www.grantspassoregon.gov/QuickLinks.aspx?CID=141)
 
-Grants Pass, OR 97526   
+1. [Contact City Staff](https://www.grantspassoregon.gov/directory)
+2. [Contact Mayor &amp; City Council](https://www.grantspassoregon.gov/173/City-Council)
+3. [Interactive Maps](https://grantspassoregon.maps.arcgis.com/home/gallery.html?view=grid&sortOrder=desc&sortField=numviews)
+4. [Job Opportunities](https://www.governmentjobs.com/careers/grantspassor)
+5. [Notify Me](https://www.grantspassoregon.gov/list.aspx)
+6. [Recycling](https://www.grantspassoregon.gov/215/Recycling-in-the-Grants-Pass-Area)
+7. [Street Sweeping Schedule](https://www.grantspassoregon.gov/1113/Street-Sweeping-Schedule)
+8. [Water &amp; Wastewater Information](https://www.grantspassoregon.gov/983/Water-and-Wastewater-Information)
 
- 1.    
+/QuickLinks.aspx
 
-Phone: [541-450-6000]()    
+### [Site Links](https://www.grantspassoregon.gov/QuickLinks.aspx?CID=142)
 
-Fax: 541-479-0812   
+1. [Accessibility](https://www.grantspassoregon.gov/accessibility)
+2. [Contact Us](https://www.grantspassoregon.gov/directory)
+3. [Copyright Notices](https://www.grantspassoregon.gov/site/copyright)
+4. [Home](https://www.grantspassoregon.gov)
+5. [My Account](https://www.grantspassoregon.gov/myaccount)
+6. [Privacy](https://www.grantspassoregon.gov/privacy)
+7. [Site Map](https://www.grantspassoregon.gov/sitemap)
+8. [Webmaster](https://www.grantspassoregon.gov/Directory.aspx?DID=26)
 
-  [](https://www.facebook.com/grantspassoregon)   [](https://www.youtube.com/channel/UCFjrr14u5HzbcEWGLjRrSSw)   [](https://www.instagram.com/grantspassoregon/)   [](https://www.nextdoor.com/city/feed/19739806)   [](https://www.linkedin.com/company/city-of-grants-pass)  
+/QuickLinks.aspx
 
-###  [Quick Links](https://www.grantspassoregon.gov/QuickLinks.aspx?CID=141) 
+Government Websites by [CivicPlus®](https://connect.civicplus.com/referral)
 
- 1.  [Contact City Staff](https://www.grantspassoregon.gov/directory)  
- 1.  [Contact Mayor & City Council](https://www.grantspassoregon.gov/173/City-Council)  
- 1.  [Interactive Maps](https://grantspassoregon.maps.arcgis.com/home/gallery.html?view=grid&sortOrder=desc&sortField=numviews)  
- 1.  [Job Opportunities](https://www.governmentjobs.com/careers/grantspassor)  
- 1.  [Notify Me](https://www.grantspassoregon.gov/list.aspx)  
- 1.  [Recycling](https://www.grantspassoregon.gov/215/Recycling-in-the-Grants-Pass-Area)  
- 1.  [Street Sweeping Schedule](https://www.grantspassoregon.gov/1113/Street-Sweeping-Schedule)  
- 1.  [Water & Wastewater Information](https://www.grantspassoregon.gov/983/Water-and-Wastewater-Information)  
- /QuickLinks.aspx 
+Loading
 
-###  [Site Links](https://www.grantspassoregon.gov/QuickLinks.aspx?CID=142) 
+Loading
 
- 1.  [Accessibility](https://www.grantspassoregon.gov/accessibility)  
- 1.  [Contact Us](https://www.grantspassoregon.gov/directory)  
- 1.  [Copyright Notices](https://www.grantspassoregon.gov/site/copyright)  
- 1.  [Home](https://www.grantspassoregon.gov/)  
- 1.  [My Account](https://www.grantspassoregon.gov/myaccount)  
- 1.  [Privacy](https://www.grantspassoregon.gov/privacy)  
- 1.  [Site Map](https://www.grantspassoregon.gov/sitemap)  
- 1.  [Webmaster](https://www.grantspassoregon.gov/Directory.aspx?DID=26)  
- /QuickLinks.aspx Government Websites by [CivicPlus®](https://connect.civicplus.com/referral)  Loading Loading Do Not Show Again Close 
+Do Not Show Again Close
 
 ### Live Edit
 
- [](https://www.grantspassoregon.gov/)   []()  []()  Opens in new window PDF Download Word Download Excel Download PowerPoint Download Document Download Explore your accessibility options 
+Opens in new window
+
+PDF Download
+
+Word Download
+
+Excel Download
+
+PowerPoint Download
+
+Document Download
+
+Explore your accessibility options

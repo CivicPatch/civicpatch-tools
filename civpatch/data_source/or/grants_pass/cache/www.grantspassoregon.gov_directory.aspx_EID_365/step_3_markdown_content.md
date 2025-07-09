@@ -1,8 +1,8 @@
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=365%2F)
 
 Loading
 
-[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?eid=271%2F)
+[Skip to Main Content](https://www.grantspassoregon.gov/directory.aspx?EID=365%2F)
 
 ![Grants Pass Oregon Homepage](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=34955)
 
@@ -18,23 +18,23 @@ Search
 
 <!--THE END-->
 
-![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35572)
+![](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=35599)
 
 1. [Home](https://www.grantspassoregon.gov)
 2. Staff Directory
 
-![Joel King](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=14535 "Joel King")
+![Photo of a man with glasses](https://www.grantspassoregon.gov/ImageRepository/Document?documentID=36818 "Photo of a man with glasses")
 
-# Joel King
+# Seth Benham
 
  
 
 [City Council](https://www.grantspassoregon.gov/Directory.aspx?DID=14)  
-Title: Ward 4 Representative  
-Phone: 541-761-7538  
-[Email Joel King](mailto:jking@grantspassoregon.gov)
+Title: Ward 3 Representative  
+Phone: 5414506000  
+[Email Seth Benham](mailto:sbenham@grantspassoregon.gov)
 
-Sworn In: January 2, 2019  
+Sworn In: March 3, 2025  
 Term Ends: December 31, 2026
 
  
