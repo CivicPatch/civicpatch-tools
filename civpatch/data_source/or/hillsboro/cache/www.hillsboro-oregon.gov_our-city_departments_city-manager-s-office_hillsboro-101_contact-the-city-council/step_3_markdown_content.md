@@ -1,4 +1,4 @@
-[Skip to Main Content](https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300/)
+[Skip to Main Content](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/contact-the-city-council/)
 
 # City of Hillsboro, OR
 
@@ -14,11 +14,11 @@ Select a Category Apply For Attend Contact Engage With Find Learn About Pay Repo
 
 ### Select a Category ...
 
-[Learn More](https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300)
+[Learn More](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/contact-the-city-council)
 
 [Go](https:void%280%29;)
 
-[CLOSE](https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300)
+[CLOSE](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/contact-the-city-council)
 
 ## Most Requested
 
@@ -31,7 +31,7 @@ Select a Category Apply For Attend Contact Engage With Find Learn About Pay Repo
 - [Aquatics](https://www.hillsboro-oregon.gov/our-city/departments/parks-recreation/facilities-rentals/shute-park-aquatic-recreation-center/aquatics)
 - [Parks &amp; Recreation](https://www.hillsboro-oregon.gov/our-city/departments/parks-recreation)
 
-[Jobs](https://www.hillsboro-oregon.gov/our-city/departments/human-resources/join-our-team) [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us) [Sign Up For Email Updates](https://public.govdelivery.com/accounts/ORHILLSBORO/subscriber/new?topic_id=ORHILLSBORO_16) [Translate](https://translate.google.com/translate?js=y&prev=_t&hl=en&ie=UTF-8&layout=1&eotf=1&sl=en&tl=es&u=https%3A%2F%2Fwww.hillsboro-oregon.gov%2FHome%2FComponents%2FNews%2FNews%2F16258%2F4300)
+[Jobs](https://www.hillsboro-oregon.gov/our-city/departments/human-resources/join-our-team) [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us) [Sign Up For Email Updates](https://public.govdelivery.com/accounts/ORHILLSBORO/subscriber/new?topic_id=ORHILLSBORO_16) [Translate](https://translate.google.com/translate?js=y&prev=_t&hl=en&ie=UTF-8&layout=1&eotf=1&sl=en&tl=es&u=https%3A%2F%2Fwww.hillsboro-oregon.gov%2Four-city%2Fdepartments%2Fcity-manager-s-office%2Fhillsboro-101%2Fcontact-the-city-council)
 
 [How Do I …](https:void%280%29;)
 
@@ -284,139 +284,135 @@ Select a Category Apply For Attend Contact Engage With Find Learn About Pay Repo
   - [Volunteer Opportunities](https://www.hillsboro-oregon.gov/services/volunteer-opportunities "Click to open Volunteer Opportunities")
   - [Weather Resources](https://www.hillsboro-oregon.gov/services/weather-resources "Weather Safety")
 
-[Our City](https://www.hillsboro-oregon.gov/our-city)
+## MENU...
 
-# News &amp; Announcements
+- [City Manager's Office](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office)[-](https:void%280%29 "Expand/Collapse subpages under Sidenav Item with Children")
+  
+  - [About Us](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/about-us)
+  - [City Council](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/city-council)
+  - [Hillsboro 101](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101)[-](https:void%280%29 "Expand/Collapse subpages under Sidenav Item with Children")
+    
+    - [Commissions, Committees &amp; Boards](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/commissions-committees-boards)
+    - [Council Meetings](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-meetings)
+    - [Council Priorities](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-priorities)[+](https:void%280%29 "Expand/Collapse subpages under Sidenav Item with Children")
+      
+      - [Racial Equity](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-priorities/racial-equity)
+      - [Strategic Plan](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-priorities/strategic-plan)
+      - [Public Safety](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-priorities/public-safety)
+      - [Housing &amp; Homelessness](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-priorities/housing-homelessness)
+      - [Community Engagement &amp; Outreach](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-priorities/community-engagement-outreach)
+      - [Economic Development](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-priorities/economic-development)
+      - [Environmental Sustainability](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-priorities/environmental-sustainability)
+    - [Council Wards Redistricting](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-wards-redistricting)
+    - [Contact the City Council](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/contact-the-city-council)
+    - [State of the City](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/state-of-the-city)
+    - [Community Conversations](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/community-conversations)
+  - [City Records/City Recorder](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/city-records-city-recorder)[+](https:void%280%29 "Expand/Collapse subpages under Sidenav Item with Children")
+    
+    - [Pioneer Cemetery](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/city-records-city-recorder/pioneer-cemetery)
+    - [City History](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/city-records-city-recorder/city-history)
+    - [Cultural Resource Inventory](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/city-records-city-recorder/cultural-resource-inventory)
+  - [City Code &amp; Charter](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/city-code-charter)
+  - [Social Services Grant Programs](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/social-services-grant-programs)[+](https:void%280%29 "Expand/Collapse subpages under Sidenav Item with Children")
+    
+    - [Community Services Grants](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/social-services-grant-programs/community-services-grants)
+    - [Community Impact Grant](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/social-services-grant-programs/community-impact-grant)
+  - [Sustainability](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/sustainability)[+](https:void%280%29 "Expand/Collapse subpages under Sidenav Item with Children")
+    
+    - [Climate Change](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/sustainability/climate-change)
+    - [Burning and Air Quality](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/sustainability/burning-and-air-quality)
+    - [Garbage and Recycling](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/sustainability/garbage-and-recycling)
+    - [Home Energy Score Program](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/sustainability/home-energy-score-program)
+    - [Energy Efficiency Grant](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/sustainability/energy-efficiency-grant)
+    - [Sustainability Goals &amp; Initiatives](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/sustainability/sustainability-goals-initiatives)
+  - [News](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/news)[+](https:void%280%29 "Expand/Collapse subpages under Sidenav Item with Children")
+    
+    - [Happening in Hillsboro](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/news/happening-in-hillsboro)
+    - [City Views Newsletter](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/news/city-views-newsletter)
+    - [Notices](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/news/notices)
+  - [Contact Us](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/contact-us)
+
+[Our City](https://www.hillsboro-oregon.gov/our-city) » [Departments](https://www.hillsboro-oregon.gov/our-city/departments) » [City Manager's Office](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office) » [Hillsboro 101](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101)
+
+# Contact the Mayor and City Council
 
 [Print](https:window.print%28%29; "Click to print this page") [Feedback](https:void%280%29; "Click to submit an email to feedback")
 
 [Font Size:](https:void%280%29; "default font size") [+](https:void%280%29; "larger font size") [-](https:void%280%29; "smaller font size")
 
-## City Council Spotlight: Councilor Rob Harris
+* * *
 
-Post Date:01/10/2025
+## Privacy Policy
 
-### Council Experience
-
-[Hillsboro voters elected Councilor Rob Harris in November 2024](https://www.hillsboro-oregon.gov/Home/Components/News/News/16143/4300) to a four-year term representing [Council Ward](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/hillsboro-101/council-wards-redistricting) 3, Position B. Councilor Harris’s term began on January 7, 2025 and will expire in January 2029. He is eligible to run for re-election in November 2028.
-
- ![Rob Harris 2024](https://www.hillsboro-oregon.gov/home/showpublishedimage/38156/638703103429800000)
-
-### Community Experience
-
-Councilor Harris and his wife Gail moved to Hillsboro in 1987 when he took a position at the Washington County District Attorney’s Office. He has served on the Hillsboro Library Board, the Hillsboro Library Foundation Board, the Public Plaza Design Committee, and the Hillsboro School Bond advisory committee.
-
-He was very active in the Washington County justice system and established a nonprofit public defense consortia where he served as the executive director until he retired from the practice of law in 2023. He was chair of a task force on the future of public defense and in 2023 was appointed by the Oregon Supreme Court Chief Justice to serve on the Oregon State Public Defense Commission.
-
- ![Rob Harris and Beach Pace at Hillsboro Pride Party](https://www.hillsboro-oregon.gov/home/showpublishedimage/38508/638721221512670000) 
-
-### Education &amp; Work Experience
-
-Councilor Harris attended Camas Public Schools, Clark Community College, the University of Washington, where he earned a Bachelor’s degree in Urban Planning, and Lewis and Clark Law School, where he received his Juris Doctor (JD) degree in law, with honors.
-
-He worked briefly in a medium-sized law firm, then as a Deputy District Attorney in Washington County before establishing his own law firm in 1990. He served as the Hillsboro Municipal Court Judge, a Washington County Circuit Court Judge Pro Tem, and as a Hearings Officer in Multnomah, Clackamas, and Washington counties. He also started and operated a small construction company. When he retired, his law firm had grown to include a dozen lawyers and over 20 employees.
-
-![Rob Harris and family at Hops game](https://www.hillsboro-oregon.gov/home/showpublishedimage/38510/638721221520300000)
-
- 
-
-#### Why do you serve on the Hillsboro City Council?
-
-**“**I have always felt it was a blessing to be able to serve my community. I am well aware of the challenges and opportunities Hillsboro is facing over the next few years, so when a Council seat opened up I thought my many years of experience, deep knowledge of this community, and my skill set could be useful to the Council in navigating some challenging issues.”
-
-#### What are your hopes and goals for serving on the Council?
-
-“Both my hope and my goal is that when I have completed my service on Council, every person in Hillsboro is more prosperous, happier, and more content, and every family has found a community where they are welcome and belong.” 
-
-#### What should Hillsboro residents know about how you serve the community as a Council member?
-
-“I will be as transparent as possible in my decision-making and be willing to explain my votes. You may or may not agree with some of my votes, but you will understand why I voted as I did. Hillsboro has grown from 35,000 to 110,000 people since I moved here. That’s a large city. So, I intend to take the time to engage every corner of Hillsboro to help me understand the struggles, concerns, and issues that people all over Hillsboro face.”
-
-![Rob Harris in front of the Civic Center](https://www.hillsboro-oregon.gov/home/showpublishedimage/38512/638721221526470000) 
-
-### Fun Facts about Rob
-
-- **Favorite food &amp; beverage:** Pizza and a cold beer
-- **Favorite dessert:** Anything sweet and baked
-- **Favorite type of book:** Spy novels and Biographies
-- **Favorite activities &amp; hobbies:** Music: Playing and going to see live acts
-- **Favorite musicians:** Steely Dan, The Lumineers, Bonnie Rait, Hozier
-- **Favorite TV show: Lost**
-- *Favorite movie: *The* Godfather II*
-- *Favorite vacation spot:* Cannon Beach
-- **Favorite quote:** “Foolish consistency is the hobgoblin of small minds” (Ralph Waldo Emerson). The quote reminds me to ask questions and consider alternatives to “the common wisdom.”
-- **Favorite community spaces in Hillsboro:** The Public Library
-
- ![Rob Harris outside](https://www.hillsboro-oregon.gov/home/showpublishedimage/38514/638721221533400000)
-
-#### See More City Council Spotlights
-
-- [Mayor Beach Pace](https://www.hillsboro-oregon.gov/Home/Components/News/News/9497/4300 "Mayor Beach Pace")
-- [Councilor Olivia Alcaire](https://www.hillsboro-oregon.gov/Home/Components/News/News/2859/1718 "Councilor Olivia Alcaire")
-- [Councilor Saba Anvery](https://www.hillsboro-oregon.gov/Home/Components/News/News/16254/4300 "Councilor Saba Anvery")
-- [Councilor Elizabeth Case](https://www.hillsboro-oregon.gov/Home/Components/News/News/16256/4300 "Councilor Elizabeth Case")
-- [Councilor Rob Harris](https://www.hillsboro-oregon.gov/Home/Components/News/News/16258/4300 "Councilor Rob Harris")
-- [Councilor Cristian Salgado](https://www.hillsboro-oregon.gov/Home/Components/News/News/16319/4300)
-- [Councilor Kipperlyn Sinclair](https://www.hillsboro-oregon.gov/Home/Components/News/News/14269/1718 "Councilor Kipperlyn Sinclair")
+**For questions about whether the information you submit is private,**  
+please [read the City of Hillsboro Privacy Policy](https://www.hillsboro-oregon.gov/our-city/website-privacy-policy "Read the City of Hillsboro Privacy Policy.  ").
 
 * * *
 
-*Get news and event information directly to your inbox with Happening in Hillsboro email updates.*
+**Please fill out the following form to send a message to the Mayor, the full City Council, or select individual Council Members. You will have the option to select your recipients below.**
 
-Get Happening in Hillsboro (2 emails per month)
+\* Full Name
 
-[Return to full list &gt;&gt;](https://www.hillsboro-oregon.gov/our-city/news-announcements)
+First NameLast Name
 
-## Quicklinks
+The Full Name field is a required field and cannot be left blank.
 
-- [![Hillsboro H in Circle Icon](https://www.hillsboro-oregon.gov/home/showpublishedimage/22764/638393708105500000) City Views](https://www.hillsboro-oregon.gov/our-city/news-announcements/city-views-newsletter "Click here to open City Views")
-- [![Email Envelope Icon](https://www.hillsboro-oregon.gov/home/showpublishedimage/21604/637209229202930000) Sign Up for Email Updates](https://www.hillsboro-oregon.gov/our-city/news-announcements/happening-in-hillsboro-e-updates "Click here to open Sign Up for Email Updates")
-- [![News Icon_White](https://www.hillsboro-oregon.gov/home/showpublishedimage/21584/637203889395500000) Newsletters](https://www.hillsboro-oregon.gov/our-city/news-announcements/newsletters "Click here to open Newsletters")
-- [![newspaper icon white](https://www.hillsboro-oregon.gov/home/showpublishedimage/21212/637163263275330000) Public Notices](https://www.hillsboro-oregon.gov/our-city/news-announcements/public-notices "Click here to open Public Notices")
-- [![Speech Bubbles Icon](https://www.hillsboro-oregon.gov/home/showpublishedimage/23187/637286136785700000) Social Media](https://www.hillsboro-oregon.gov/our-city/news-announcements/social-media-feeds-videos "Click here to open Social Media")
+Full Address (Optional)
 
-Free viewers are required for some of the attached documents.  
-They can be downloaded by clicking on the icons below.
+Street Number and NameUnit NumberCityPostal/ZIP Code
 
-[Acrobat Reader ![Download Acrobat Reader](https://www.hillsboro-oregon.gov/DefaultContent/Default/_gfx/downloadmessage/acrobat.jpg)](https://get.adobe.com/reader "Download Acrobat Reader") [Windows Media Player ![Download Windows Media Player](https://www.hillsboro-oregon.gov/DefaultContent/Default/_gfx/downloadmessage/wmp.jpg)](https://windows.microsoft.com/en-us/windows/windows-media-player "Download Windows Media Player") [Word Viewer ![Download Word Viewer](https://www.hillsboro-oregon.gov/DefaultContent/Default/_gfx/downloadmessage/word.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online "Download Word Viewer") [Excel Viewer ![Download Excel Viewer](https://www.hillsboro-oregon.gov/DefaultContent/Default/_gfx/downloadmessage/excel.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online "Download Excel Viewer") [PowerPoint Viewer ![Download PowerPoint Viewer](https://www.hillsboro-oregon.gov/DefaultContent/Default/_gfx/downloadmessage/powerpoint.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online "Download PowerPoint Viewer")
+\* Email
 
-[search](https:void%280%29;)[settings](https:void%280%29; "search settings")
+The Email field is a required field and cannot be left blank.
 
-1. Search separators:
-2. Search field name:(All)News Title
+Confirm email address
 
-## Featured Stories
+\* Phone
 
-## Contact Us
+Phone
 
-**Monday through Friday**  
-8 am to 5 pm
+The Phone field is a required field and cannot be left blank.
 
-**Phone:**  
-503-681-6100
+Preferred Contact Method
 
-**Email:**  
-[Email the City Manager's Office](https://www.hillsboro-oregon.gov/our-city/departments/city-manager-s-office/contact-us/cmo-contact-form)
+Please reply by email address
 
-[Media Inquiries](https://www.hillsboro-oregon.gov/services/contact-us/media-inquiries "Send a media inquiry message through an online form")
+Please reply by phone
 
-**Address:**  
-City of Hillsboro Civic Center  
-[150 E. Main Street](https://goo.gl/maps/nSuQTw5YKrRErs8N9 "Locate the Hillsboro Civic Center on Google Maps")  
-Hillsboro, Oregon 97123
+I do not wish to be contacted
 
-## Subscribe to the City of Hillsboro's email updates!
+## Learn More
 
-[Choose the topics you want:](https://public.govdelivery.com/accounts/ORHILLSBORO/subscriber/new)
+[Visit our Hillsboro 101 webpage](https://www.hillsboro-oregon.gov/?navid=3773 "Visit our Hillsboro 101 webpage") to review the roles and responsibilities of the Mayor and City Council, and learn more about our Council-Manager form of government.
 
-- Happening in Hillsboro (community events &amp; news)
-- Homelessness Initiatives
-- Police info
-- Parks &amp; Recreation news
-- Fire &amp; Rescue updates
-- Library info
-- Hillsboro 2035 updates
-- Creciendo Juntos — Noticias en español
+To find out what ward you reside in, type your address into our [Hillsboro Maps tool](https://www.hillsboro-oregon.gov/?navid=426 "Visit our Hillsboro Maps tool").
+
+Who would you like to contact?
+
+Hillsboro Mayor Beach Pace
+
+Entire Hillsboro City Council (includes Mayor Pace)
+
+Selected City Councilor(s)
+
+If you would like to send an attachment, please email the document to **Council@Hillsboro-Oregon.gov**.
+
+\* Your Question or Comment:
+
+2000 characters
+
+The Your Question or Comment: field is a required field and cannot be left blank.
+
+## Sign Up for Email Updates
+
+[Sign up to receive *Happening in Hillsboro* email updates](https://hillsboro-oregon.us13.list-manage.com/subscribe/post?u=a0ce265af51a44de0d6ac0dc0&id=8529bf389f "Sign up for Happening in Hillsboro email updates") from the City of Hillsboro.
+
+1. To receive a copy of your submission, please fill out your email address below and submit.
+2. Email Address
+
+Please resolve the captcha.
+
+[Review](https:void%280%29; "Review all form answers.")[Submit](https:void%280%29; "Complete and submit form response.")
 
 503-681-6100 [150 E. Main Street, Hillsboro, Oregon 97123](https://goo.gl/maps/dERZYRKYjkc78pudA) [Contact Us](https://www.hillsboro-oregon.gov/services/contact-us)
 
