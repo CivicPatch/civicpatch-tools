@@ -16,9 +16,13 @@
       "phone_number": "(503) 823-4000",
       "website": "https://www.portland.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "cb41fdf1fcbeb04ef388932dca9dcaec",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-09T16:35:56Z",
+      "meta_hash": "aff946aa741a01cdc70973df45bfd706",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4159000"
     },
     {
