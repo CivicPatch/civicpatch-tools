@@ -2210,7 +2210,14 @@
       ],
       "population": 1401,
       "website": "https://townofwiggins.colorado.gov/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T02:30:13Z",
+      "meta_hash": "db2b0945f620d1189ca8bf872d1fefad",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fraser",
