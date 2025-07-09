@@ -2265,7 +2265,14 @@
       ],
       "population": 1264,
       "website": "https://townofmountainvillage.com/",
-      "government_type": "mayor_council"
+      "government_type": "mayor_council",
+      "meta_updated_at": "2025-07-09T02:41:25Z",
+      "meta_hash": "bba3c779a0cb59fd0448ccd739e39d13",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fowler",

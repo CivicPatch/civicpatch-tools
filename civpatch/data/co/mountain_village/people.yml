@@ -1,0 +1,95 @@
+---
+- name: Marti Prohaska
+  roles:
+  - Mayor
+  divisions:
+  image: https://townofmountainvillage.com/site/assets/files/27769/img_5750.400x400.jpeg
+  cdn_image: https://cdn.civicpatch.org/open-data/co/mountain_village/images/8d718ca26bc65ab67f481ec999dcf310b7d6c619429d11d5b510c1e88a6e9c42.jpg
+  email: mprohaska@mtnvillage.org
+  phone_number: "(970) 728-8000"
+  website: https://townofmountainvillage.com/person/marti-prohaska
+  start_date:
+  end_date: 2027-06
+  sources:
+  - https://townofmountainvillage.com/government/town-council/town-council
+  - https://townofmountainvillage.com/person/marti-prohaska
+  - https://townofmountainvillage.com
+  updated_at: '2025-07-09T02:41:25Z'
+- name: Scott Pearson
+  roles:
+  - Mayor Pro Tempore
+  divisions:
+  image: https://townofmountainvillage.com/site/assets/files/41842/img_9017_2.400x400.jpeg
+  cdn_image: https://cdn.civicpatch.org/open-data/co/mountain_village/images/a57692b88929031f0269f4ad527a46b1cecc162d711acbf133c714618fdef60a.jpg
+  email: spearson@mtnvillage.org
+  phone_number: "(202) 495-8722"
+  website: https://townofmountainvillage.com/person/scott-pearson
+  start_date:
+  end_date: 2027-06
+  sources:
+  - https://townofmountainvillage.com/government/town-council/town-council
+  - https://townofmountainvillage.com/person/scott-pearson
+  updated_at: '2025-07-09T02:41:25Z'
+- name: Harvey Mogenson
+  roles:
+  - Council Member
+  divisions:
+  image: https://townofmountainvillage.com/site/assets/files/34989/harvey_mogenson.400x400.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/co/mountain_village/images/cae320ec40ba6a582a19c8329ee940d366cbb721eb9ec227f3cc379f6bba5449.jpg
+  email: hmogenson@mtnvillage.org
+  phone_number: "(970) 728-8000"
+  website: https://townofmountainvillage.com/person/harvey-mogenson-2025
+  start_date: '2025-06-24'
+  end_date: 2025-06
+  sources:
+  - https://townofmountainvillage.com
+  - https://townofmountainvillage.com/government/town-council/election
+  - https://townofmountainvillage.com/person/harvey-mogenson-2025
+  - https://townofmountainvillage.com/government/town-council/town-council
+  - https://townofmountainvillage.com/person/harvey-mogenson
+  updated_at: '2025-07-09T02:41:25Z'
+- name: Huascar E. Gomez (Rick)
+  roles:
+  - Council Member
+  divisions:
+  image: https://townofmountainvillage.com/site/assets/files/40998/screen_shot_2023-12-01_at_8_56_57_pm.400x400.png
+  cdn_image: https://cdn.civicpatch.org/open-data/co/mountain_village/images/98f1adc63dd56664d5d1e64b821b6e3429043a1b922e4b452371c42f6dd23558.png
+  email: hgomez@mtnvillage.org
+  phone_number:
+  website: https://townofmountainvillage.com/person/huascar-e-gomez-rick-2025
+  start_date:
+  end_date: 2025-06
+  sources:
+  - https://townofmountainvillage.com/government/town-council/election
+  - https://townofmountainvillage.com/government/town-council/town-council
+  updated_at: '2025-07-09T02:41:25Z'
+- name: Peter Duprey
+  roles:
+  - Council Member
+  divisions:
+  image: https://townofmountainvillage.com/site/assets/files/27771/peter-duprey-1024x683.400x400.jpeg
+  cdn_image: https://cdn.civicpatch.org/open-data/co/mountain_village/images/62ace1701102eb80c41e02c558abe3bc8078b724e18d0b0419a79705bf259f56.jpg
+  email: pduprey@mtnvillage.org
+  phone_number: "(312) 972-4800"
+  website: https://townofmountainvillage.com/person/peter-duprey
+  start_date:
+  end_date: 2027-06
+  sources:
+  - https://townofmountainvillage.com/government/town-council/town-council
+  - https://townofmountainvillage.com/person/peter-duprey
+  updated_at: '2025-07-09T02:41:25Z'
+- name: Tucker Magid
+  roles:
+  - Council Member
+  divisions:
+  image: https://townofmountainvillage.com/site/assets/files/41843/139357818_tucker_magid_-_headshot.400x400.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/co/mountain_village/images/9019507a1f818eaced38785a41344d27d10aaf3d03f4ab1c250f6fdb042e860a.jpg
+  email: tmagid@mtnvillage.org
+  phone_number: "(970) 508-3582"
+  website: https://townofmountainvillage.com/person/tucker-magid
+  start_date:
+  end_date: 2027-06
+  sources:
+  - https://townofmountainvillage.com/government/town-council/town-council
+  - https://townofmountainvillage.com/person/tucker-magid
+  updated_at: '2025-07-09T02:41:25Z'

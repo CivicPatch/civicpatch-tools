@@ -1,0 +1,573 @@
+[
+  {
+    "name": "Marti Prohaska",
+    "sources": [
+      "https://townofmountainvillage.com/government/town-council/town-council",
+      "https://townofmountainvillage.com/person/marti-prohaska"
+    ],
+    "images": [
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/27769/img_5750.400x400.jpeg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with Marti Prohaska on the Town Council page.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/27769/img_5750.400x400.jpeg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is directly associated with Marti Prohaska's profile and is a portrait style photo.",
+        "source": "https://townofmountainvillage.com/person/marti-prohaska"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor of Mountain Village Town Council."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Position: Mayor' for Marti Prohaska on the Mountain Village official site."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(970) 728-8000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed on the page near the profile and is the main contact number for the Town of Mountain Village; no personal direct number is provided.",
+        "source": "https://townofmountainvillage.com/person/marti-prohaska"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mprohaska@mtnvillage.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Marti Prohaska's name.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "mprohaska@mtnvillage.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email is explicitly provided as the best way to communicate with Marti Prohaska.",
+        "source": "https://townofmountainvillage.com/person/marti-prohaska"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://townofmountainvillage.com/person/marti-prohaska",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page linked directly from Marti Prohaska's section.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "https://townofmountainvillage.com/person/marti-prohaska",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the official profile page for Marti Prohaska on the Town of Mountain Village website.",
+        "source": "https://townofmountainvillage.com/person/marti-prohaska"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration explicitly stated as June 2027.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "2027-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The term expiry is explicitly stated as 'Term Expires - June 2027'. No start date is provided.",
+        "source": "https://townofmountainvillage.com/person/marti-prohaska"
+      }
+    ],
+    "updated_at": "2025-07-09T02:39:17Z"
+  },
+  {
+    "name": "Scott Pearson",
+    "sources": [
+      "https://townofmountainvillage.com/government/town-council/town-council",
+      "https://townofmountainvillage.com/person/scott-pearson"
+    ],
+    "images": [
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/41842/img_9017_2.400x400.jpeg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with Scott Pearson on the Town Council page.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/41842/img_9017_2.400x400.jpeg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is directly adjacent to the name Scott Pearson and is a portrait style photo.",
+        "source": "https://townofmountainvillage.com/person/scott-pearson"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor Pro Tem of Mountain Village Town Council."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Position: Mayor Pro Tem' for Scott Pearson, which matches a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(202) 495-8722",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed next to Scott Pearson's name.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "(202) 495-8722",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is explicitly given as the best contact method for Scott Pearson.",
+        "source": "https://townofmountainvillage.com/person/scott-pearson"
+      }
+    ],
+    "emails": [
+      {
+        "data": "spearson@mtnvillage.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Scott Pearson's name.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "spearson@mtnvillage.org",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is explicitly listed under Scott Pearson's contact information.",
+        "source": "https://townofmountainvillage.com/person/scott-pearson"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://townofmountainvillage.com/person/scott-pearson",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page linked directly from Scott Pearson's section.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "https://townofmountainvillage.com/person/scott-pearson-1",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Candidate bio link is a profile page for Scott Pearson on the official town website.",
+        "source": "https://townofmountainvillage.com/person/scott-pearson"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration explicitly stated as June 2027.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "2027-06",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Term expiry is explicitly stated as June 2027.",
+        "source": "https://townofmountainvillage.com/person/scott-pearson"
+      }
+    ],
+    "updated_at": "2025-07-09T02:39:17Z"
+  },
+  {
+    "name": "Jack Gilbride",
+    "sources": [
+      "https://townofmountainvillage.com/government/town-council/town-council",
+      "https://townofmountainvillage.com/person/jack-gilbride"
+    ],
+    "images": [
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/27772/jack-gilbride-website.400x400.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with Jack Gilbride on the Town Council page.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/27772/jack-gilbride-website.400x400.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a portrait near the name Jack Gilbride on the page.",
+        "source": "https://townofmountainvillage.com/person/jack-gilbride"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Town Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text states he has served six years on Town Council and the term expiry is June 2025, indicating an active council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(970) 728-8000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed on the page near the contact info for the town and likely the best available contact.",
+        "source": "https://townofmountainvillage.com/person/jack-gilbride"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jgilbride@mtnvillage.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Jack Gilbride's name.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "jgilbride@mtnvillage.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly provided as the best way to contact Jack Gilbride.",
+        "source": "https://townofmountainvillage.com/person/jack-gilbride"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://townofmountainvillage.com/person/jack-gilbride",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page linked directly from Jack Gilbride's section.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "https://townofmountainvillage.com/person/jack-gilbride",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL of the page is the official profile page for Jack Gilbride.",
+        "source": "https://townofmountainvillage.com/person/jack-gilbride"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration explicitly stated as June 2025.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "2025-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiry is explicitly stated as June 2025.",
+        "source": "https://townofmountainvillage.com/person/jack-gilbride"
+      }
+    ],
+    "updated_at": "2025-07-09T02:39:17Z"
+  },
+  {
+    "name": "Peter Duprey",
+    "sources": [
+      "https://townofmountainvillage.com/government/town-council/town-council",
+      "https://townofmountainvillage.com/person/peter-duprey"
+    ],
+    "images": [
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/27771/peter-duprey-1024x683.400x400.jpeg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with Peter Duprey on the Town Council page.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/27771/peter-duprey-1024x683.400x400.jpeg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly associated with Peter Duprey's profile on the page.",
+        "source": "https://townofmountainvillage.com/person/peter-duprey"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Town Council Member."
+      },
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states 'Position: Town Council Member' for Peter Duprey."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(312) 972-4800",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed next to Peter Duprey's name.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "(312) 972-4800",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is listed under 'Phone:' near Peter Duprey's contact info.",
+        "source": "https://townofmountainvillage.com/person/peter-duprey"
+      }
+    ],
+    "emails": [
+      {
+        "data": "pduprey@mtnvillage.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Peter Duprey's name.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "pduprey@mtnvillage.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly provided as 'pduprey@mtnvillage.org' near Peter Duprey's contact info.",
+        "source": "https://townofmountainvillage.com/person/peter-duprey"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://townofmountainvillage.com/person/peter-duprey",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page linked directly from Peter Duprey's section.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration explicitly stated as June 2027.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "2027-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiry is explicitly stated as 'Term Expires - June 2027'.",
+        "source": "https://townofmountainvillage.com/person/peter-duprey"
+      }
+    ],
+    "updated_at": "2025-07-09T02:39:17Z"
+  },
+  {
+    "name": "Harvey Mogenson",
+    "sources": [
+      "https://townofmountainvillage.com/government/town-council/town-council",
+      "https://townofmountainvillage.com/person/harvey-mogenson"
+    ],
+    "images": [
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/34989/harvey_mogenson.400x400.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with Harvey Mogenson on the Town Council page.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/34989/harvey_mogenson.400x400.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly associated with the person's name and profile.",
+        "source": "https://townofmountainvillage.com/person/harvey-mogenson"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Town Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text states he wants to serve on the Town Council and mentions a term expiry, indicating he is currently a council member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(970) 728-8000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed on the page near the profile and is the main contact number for the town offices.",
+        "source": "https://townofmountainvillage.com/person/harvey-mogenson"
+      }
+    ],
+    "emails": [
+      {
+        "data": "hmogenson@mtnvillage.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Harvey Mogenson's name.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "hmogenson@mtnvillage.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly provided in the profile section.",
+        "source": "https://townofmountainvillage.com/person/harvey-mogenson"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://townofmountainvillage.com/person/harvey-mogenson",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page linked directly from Harvey Mogenson's section.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "https://townofmountainvillage.com/person/harvey-mogenson",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the profile page for Harvey Mogenson.",
+        "source": "https://townofmountainvillage.com/person/harvey-mogenson"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration explicitly stated as June 2025.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "2025-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiry is explicitly stated as June 2025.",
+        "source": "https://townofmountainvillage.com/person/harvey-mogenson"
+      }
+    ],
+    "updated_at": "2025-07-09T02:39:17Z"
+  },
+  {
+    "name": "Tucker Magid",
+    "sources": [
+      "https://townofmountainvillage.com/government/town-council/town-council",
+      "https://townofmountainvillage.com/person/tucker-magid"
+    ],
+    "images": [
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/41843/139357818_tucker_magid_-_headshot.400x400.jpg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with Tucker Magid on the Town Council page.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/41843/139357818_tucker_magid_-_headshot.400x400.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is a headshot near the name Tucker Magid on the page.",
+        "source": "https://townofmountainvillage.com/person/tucker-magid"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Town Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page explicitly states 'Position: Town Council Member' for Tucker Magid."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(970) 508-3582",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed next to Tucker Magid's name.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "(970) 508-3582",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is listed under 'Phone:' near Tucker Magid's contact info.",
+        "source": "https://townofmountainvillage.com/person/tucker-magid"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tmagid@mtnvillage.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Tucker Magid's name.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "tmagid@mtnvillage.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is provided as a mailto link near Tucker Magid's contact info.",
+        "source": "https://townofmountainvillage.com/person/tucker-magid"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://townofmountainvillage.com/person/tucker-magid",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page linked directly from Tucker Magid's section.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2027-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration explicitly stated as June 2027.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      },
+      {
+        "data": "2027-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiry is explicitly stated as 'Term Expires - June 2027'.",
+        "source": "https://townofmountainvillage.com/person/tucker-magid"
+      }
+    ],
+    "updated_at": "2025-07-09T02:39:17Z"
+  },
+  {
+    "name": "Huascar E. Gomez (Rick)",
+    "sources": [
+      "https://townofmountainvillage.com/government/town-council/town-council"
+    ],
+    "images": [
+      {
+        "data": "https://townofmountainvillage.com/site/assets/files/40998/screen_shot_2023-12-01_at_8_56_57_pm.400x400.png",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with Huascar E. Gomez on the Town Council page.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Town Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed among Town Council members with term expiration; role not explicitly stated but inferred from context."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "hgomez@mtnvillage.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Huascar E. Gomez's name.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://townofmountainvillage.com/person/huascar-e-gomez-rick",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Profile page linked directly from Huascar E. Gomez's section.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2025-06",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration explicitly stated as June 2025.",
+        "source": "https://townofmountainvillage.com/government/town-council/town-council"
+      }
+    ],
+    "updated_at": "2025-07-09T02:39:17Z"
+  }
+]
