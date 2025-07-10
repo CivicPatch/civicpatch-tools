@@ -26,7 +26,7 @@ module Core
       city_cache_path = Core::PathHelper.get_city_cache_path(state, geoid)
       keyword_groups = Core::CityManager.get_search_keywords_as_array(municipality_context[:government_type])
 
-      puts "#{llm_service_string}: Looking for #{municipality_context[:config]["scrape_exit_config"]}"
+      puts "#{llm_service_string}: Looking for #{people_hint.count} elected officials"
 
       context = {
         seeded_urls: seeded_urls,
@@ -39,7 +39,7 @@ module Core
 
       # Initialize combined data hash
       data = { accumulated_people: [], processed_urls: [],
-               people_config: municipality_context[:config]["people"] }
+               people_config: municipality_context[:people] }
       exit_early = false
 
       avoid_keywords = %w[alerts news event calendar archive meeting alert documentcenter]
@@ -154,7 +154,7 @@ module Core
 
     def self.scrape_profiles(context, accumulated_people, processed_urls)
       profile_processed_urls = processed_urls.dup
-      people_config = context[:municipality_context][:config]["people"]
+      people_config = context[:municipality_context][:people]
 
       accumulated_people.map do |person|
         next person if Services::Shared::People.all_contact_data_points_present?(person) && person["image"].present?

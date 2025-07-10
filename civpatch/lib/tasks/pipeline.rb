@@ -46,7 +46,8 @@ namespace :pipeline do
 
       _, people_config = fetch_with_state_source(context)
       aggregate_sources(context, sources: %w[state_source])
-      context = Core::ContextManager.update_context_config(context, people: people_config)
+
+      context[:people] = people_config
       finalize(context)
     end
   end
@@ -66,7 +67,7 @@ namespace :pipeline do
     geoid = municipality_context[:geoid]
     municipality_name = municipality_context[:municipality_entry]["name"]
     puts "#{state} - #{municipality_name} - Fetching with state source"
-    people_config = municipality_context[:config]["people"]
+    people_config = municipality_context[:people]
     government_type = municipality_context[:government_type]
 
     source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
@@ -91,12 +92,12 @@ namespace :pipeline do
     # This is also the only call that gathers images
     seeded_urls, people_config = process_with_llm(
       municipality_context, "openai",
-      seeded_urls: municipality_context[:config]["sources"] || [],
+      seeded_urls: municipality_context[:sources] || [],
       request_cache: request_cache,
       people_hint: people_hint
     )
 
-    municipality_context[:config]["people"] = people_config
+    municipality_context[:people] = people_config
 
     # Gemini - LLM call
     _, people_config = process_with_llm(municipality_context, "gemini",
@@ -150,15 +151,11 @@ namespace :pipeline do
     prepare_directories(state, municipality_entry)
 
     people_hint, people_config, government_type = fetch_with_state_source(context)
-    context = Core::ContextManager
-              .update_context_config(context,
-                                     government_type: government_type,
-                                     people: people_config)
+    context[:government_type] = government_type
+    context[:people] = people_config
 
     people_config = fetch_with_scrape(context, people_hint)
-    context = Core::ContextManager
-              .update_context_config(context,
-                                     people: people_config)
+    context[:people] = people_config
 
     aggregate_sources(context,
                       sources: %w[state_source gemini openai])
@@ -196,7 +193,7 @@ namespace :pipeline do
     end.uniq
 
     Core::CacheManager.clean(state, geoid, source_urls)
-    Core::ConfigManager.finalize_config(state, geoid, municipality_context[:config])
+    Core::ConfigManager.finalize_config(state, geoid, municipality_context)
   end
 
   def process_images(municipality_context, people)

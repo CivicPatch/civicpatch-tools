@@ -9,15 +9,12 @@ module Core
         state: state,
         geoid: geoid,
         municipality_entry: municipality_entry,
+        people: config["people"] || {},
         government_type: config["government_type"] || municipality_entry["government_type"],
-        config: config
+        sources: config["sources"] || [],
+        exclude_sources: config["exclude_sources"] || []
+        # config: config
       }
-    end
-
-    def self.update_context_config(municipality_context, **updates)
-      updated_context = municipality_context.dup
-      updated_context[:config] = updated_context[:config].merge(updates.stringify_keys)
-      updated_context
     end
   end
 end
