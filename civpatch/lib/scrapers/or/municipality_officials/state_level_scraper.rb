@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "utils/name_helper"
+require "nokolexbor"
+
 module Scrapers
   module Or
     module MunicipalityOfficials
@@ -25,34 +27,35 @@ module Scrapers
           # Fetch HTML, interacting to select "All" entries
           response = Core::Browser.fetch_page_content(source_url) do |page|
             # Create a Select object and choose the "All" option by its value ("-1")
-            page.locator("select#dtCityContacts_length").select_option(value: "-1")
+            page.locator("#dtCityContacts_length select").select_option(value: "-1")
 
             # Wait briefly for the table to potentially update after changing pagination
             # A more robust wait might look for staleness or specific element changes
             # Example: wait for the first row of the table body to be present again
             sleep(2)
-            browser.locator("#dtCityContacts tbody tr")
+            people_count = page.locator("#dtCityContacts tbody tr").count
+            puts "People count: #{people_count}" if people_count.positive?
           end
           # Ensure response is not nil before parsing
-          parse_html(response[:page_html])
+          parse_html(response)
         rescue StandardError => e
           puts "Could not fetch directory list: #{e}"
           []
         end
 
         def self.parse_html(html)
-          doc = Nokogiri::HTML(html)
+          doc = Nokolexbor::HTML(html) # Use Nokolexbor to parse the HTML
           officials = []
 
           # Find the table containing contacts
-          table = doc.at_xpath("//table[@id='dtCityContacts']")
+          table = doc.at_css("table#dtCityContacts") # Use `at_css` instead of `at_xpath`
 
           # Check if the table exists
           return officials unless table
 
           # Iterate over the rows in the table body
-          table.xpath(".//tbody/tr").each do |row|
-            cells = row.xpath(".//td")
+          table.css("tbody tr").each do |row| # Use `css` instead of `xpath`
+            cells = row.css("td") # Use `css` to select cells
             # Ensure there are enough cells before extracting
             next unless cells.length >= 4
 
