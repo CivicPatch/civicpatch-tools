@@ -1,5 +1,4 @@
 ---
-people: {}
 sources:
 - https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us
 - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma
@@ -9,4 +8,6 @@ sources:
 - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
 - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
 - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
+people: {}
 exclude_sources: []
+government_type: mayor_council
