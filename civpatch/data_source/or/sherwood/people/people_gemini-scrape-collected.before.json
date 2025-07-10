@@ -1,219 +1,257 @@
 [
   {
     "name": "Tim Rosener",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
-    "positions": [
-      "Mayor"
-    ],
-    "phone_numbers": [],
-    "emails": [
+    "images": [],
+    "roles": [
       {
-        "data": "rosenert@sherwoodoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor Tim Rosener'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-625-4246",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed under 'For more information, please contact the City Recorder' and is associated with the city's general contact information, which could be relevant to the mayor.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
+    "emails": [],
     "websites": [],
-    "start_dates": [],
-    "end_dates": [
+    "start_dates": [
       {
         "data": "2027-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expiration date 'expires January 2027' explicitly stated.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states 'Term: 2 years, expires January 2027', implying a start date that would lead to this expiration.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
-    "updated_at": "2025-05-06"
+    "end_dates": [],
+    "updated_at": "2025-07-10T00:51:55Z"
   },
   {
     "name": "Kim Young",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
-    "positions": [
-      "Council President"
-    ],
-    "phone_numbers": [],
-    "emails": [
+    "images": [],
+    "roles": [
       {
-        "data": "youngk@sherwoodoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Council President Kim Young'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-625-4246",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed under 'For more information, please contact the City Recorder' and is associated with the city's general contact information, which could be relevant to the council president.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
+    "emails": [],
     "websites": [],
-    "start_dates": [],
-    "end_dates": [
+    "start_dates": [
       {
-        "data": "2029-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expiration date 'expires January 2029' explicitly stated.",
+        "data": "2025-01",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states 'Term: 4 years, expires January 2029', implying a start date that would lead to this expiration.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
-    "updated_at": "2025-05-06"
+    "end_dates": [],
+    "updated_at": "2025-07-10T00:51:55Z"
   },
   {
     "name": "Renee Brouse",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
-    "positions": [
-      "Councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [
+    "images": [],
+    "roles": [
       {
-        "data": "brouser@sherwoodoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilor Renee Brouse'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-625-4246",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed under 'For more information, please contact the City Recorder' and is associated with the city's general contact information, which could be relevant to the councilor.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
+    "emails": [],
     "websites": [],
-    "start_dates": [],
-    "end_dates": [
+    "start_dates": [
       {
-        "data": "2029-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expiration date 'expires January 2029' explicitly stated.",
+        "data": "2025-01",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states 'Term: 4 years, expires January 2029', implying a start date that would lead to this expiration.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
-    "updated_at": "2025-05-06"
+    "end_dates": [],
+    "updated_at": "2025-07-10T00:51:55Z"
   },
   {
     "name": "Taylor Giles",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
-    "positions": [
-      "Councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [
+    "images": [],
+    "roles": [
       {
-        "data": "gilest@sherwoodoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilor Taylor Giles'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-625-4246",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed under 'For more information, please contact the City Recorder' and is associated with the city's general contact information, which could be relevant to the councilor.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
+    "emails": [],
     "websites": [],
-    "start_dates": [],
-    "end_dates": [
+    "start_dates": [
       {
-        "data": "2027-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expiration date 'expires January 2027' explicitly stated.",
+        "data": "2025-01",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states 'Term: 4 years, expires January 2027', implying a start date that would lead to this expiration.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
-    "updated_at": "2025-05-06"
+    "end_dates": [],
+    "updated_at": "2025-07-10T00:51:55Z"
   },
   {
     "name": "Keith Mays",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
-    "positions": [
-      "Councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [
+    "images": [],
+    "roles": [
       {
-        "data": "maysk@sherwoodoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilor Keith Mays'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilor Mays most recently served as Mayor of Sherwood from 2018-2022'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'He also served as Council President from 2001-2004'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-625-4246",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed under 'For more information, please contact the City Recorder' and is associated with the city's general contact information, which could be relevant to the councilor.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
+    "emails": [],
     "websites": [],
-    "start_dates": [],
-    "end_dates": [
+    "start_dates": [
       {
-        "data": "2027-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expiration date 'expires January 2027' explicitly stated.",
+        "data": "2025-01",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states 'Term: 4 years, expires January 2027', implying a start date that would lead to this expiration.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
-    "updated_at": "2025-05-06"
+    "end_dates": [],
+    "updated_at": "2025-07-10T00:51:55Z"
   },
   {
     "name": "Doug Scott",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
-    "positions": [
-      "Councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [
+    "images": [],
+    "roles": [
       {
-        "data": "scottd@sherwoodoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilor Doug Scott'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-625-4246",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed under 'For more information, please contact the City Recorder' and is associated with the city's general contact information, which could be relevant to the councilor.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
+    "emails": [],
     "websites": [],
-    "start_dates": [],
-    "end_dates": [
+    "start_dates": [
       {
-        "data": "2027-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expiration date 'expires January 2027' explicitly stated.",
+        "data": "2025-01",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states 'Term: 4 years, expires January 2027', implying a start date that would lead to this expiration.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
-    "updated_at": "2025-05-06"
+    "end_dates": [],
+    "updated_at": "2025-07-10T00:51:55Z"
   },
   {
     "name": "Dan Standke",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
-    "positions": [
-      "Councilor"
-    ],
-    "phone_numbers": [],
-    "emails": [
+    "images": [],
+    "roles": [
       {
-        "data": "standked@sherwoodoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Email address directly listed under the person's name and photo.",
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Councilor Dan Standke'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-625-4246",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed under 'For more information, please contact the City Recorder' and is associated with the city's general contact information, which could be relevant to the councilor.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
+    "emails": [],
     "websites": [],
-    "start_dates": [],
-    "end_dates": [
+    "start_dates": [
       {
-        "data": "2029-01",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Term expiration date 'expires January 2029' explicitly stated.",
+        "data": "2025-01",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states 'Term: 4 years, expires January 2029', implying a start date that would lead to this expiration.",
         "source": "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
       }
     ],
-    "updated_at": "2025-05-06"
+    "end_dates": [],
+    "updated_at": "2025-07-10T00:51:55Z"
   }
 ]

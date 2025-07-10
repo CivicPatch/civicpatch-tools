@@ -1,121 +1,123 @@
 [
   {
     "name": "Tim Rosener",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": "rosenert@sherwoodoregon.gov",
+    "phone_number": "(503) 625-4246",
+    "email": null,
     "website": null,
-    "start_date": null,
-    "end_date": "2027-01",
+    "start_date": "2027-01",
+    "end_date": null,
     "sources": [
       "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:51:55Z"
   },
   {
     "name": "Kim Young",
-    "positions": [
+    "roles": [
       "Council President"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": "youngk@sherwoodoregon.gov",
+    "phone_number": "(503) 625-4246",
+    "email": null,
     "website": null,
-    "start_date": null,
-    "end_date": "2029-01",
+    "start_date": "2025-01",
+    "end_date": null,
     "sources": [
       "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:51:55Z"
   },
   {
-    "name": "Dan Standke",
-    "positions": [
+    "name": "Renee Brouse",
+    "roles": [
       "Council Member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": "standked@sherwoodoregon.gov",
+    "phone_number": "(503) 625-4246",
+    "email": null,
     "website": null,
-    "start_date": null,
-    "end_date": "2029-01",
+    "start_date": "2025-01",
+    "end_date": null,
     "sources": [
       "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
-    "updated_at": "2025-05-06"
-  },
-  {
-    "name": "Doug Scott",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": "scottd@sherwoodoregon.gov",
-    "website": null,
-    "start_date": null,
-    "end_date": "2027-01",
-    "sources": [
-      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
-    ],
-    "updated_at": "2025-05-06"
-  },
-  {
-    "name": "Keith Mays",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": "maysk@sherwoodoregon.gov",
-    "website": null,
-    "start_date": null,
-    "end_date": "2027-01",
-    "sources": [
-      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
-    ],
-    "updated_at": "2025-05-06"
-  },
-  {
-    "name": "Renee Elaine Brouse",
-    "positions": [
-      "Council Member"
-    ],
-    "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": "brouser@sherwoodoregon.gov",
-    "website": null,
-    "start_date": null,
-    "end_date": "2029-01",
-    "sources": [
-      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
-    ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:51:55Z"
   },
   {
     "name": "Taylor Giles",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
-    "phone_number": null,
-    "email": "gilest@sherwoodoregon.gov",
+    "phone_number": "(503) 625-4246",
+    "email": null,
     "website": null,
-    "start_date": null,
-    "end_date": "2027-01",
+    "start_date": "2025-01",
+    "end_date": null,
     "sources": [
       "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:51:55Z"
+  },
+  {
+    "name": "Keith Mays",
+    "roles": [
+      "Council Member",
+      "Council President",
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(503) 625-4246",
+    "email": null,
+    "website": null,
+    "start_date": "2025-01",
+    "end_date": null,
+    "sources": [
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+    ],
+    "updated_at": "2025-07-10T00:51:55Z"
+  },
+  {
+    "name": "Doug Scott",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(503) 625-4246",
+    "email": null,
+    "website": null,
+    "start_date": "2025-01",
+    "end_date": null,
+    "sources": [
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+    ],
+    "updated_at": "2025-07-10T00:51:55Z"
+  },
+  {
+    "name": "Dan Standke",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(503) 625-4246",
+    "email": null,
+    "website": null,
+    "start_date": "2025-01",
+    "end_date": null,
+    "sources": [
+      "https://www.sherwoodoregon.gov/citycouncil/page/council-members-0"
+    ],
+    "updated_at": "2025-07-10T00:51:55Z"
   }
 ]
