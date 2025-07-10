@@ -39,11 +39,10 @@ module Services
            }
            ```
 
-        IMPORTANT: I need ONLY the JSON object as your response,
-        with NO additional text, explanation, or markdown formatting.
-        Do not include any text before or after the JSON object.
-        Your entire response should be a valid JSON object that can be directly parsed.
-        Verify all brackets, braces, quotes, and commas are correct.
+        IMPORTANT: If the response contains anything other than a valid JSON object,
+        it will be considered incorrect. Ensure the response is strictly JSON.
+        Verify that the response is valid JSON before returning it.
+        If it is not valid JSON, retry the generation.
       )
       end
 

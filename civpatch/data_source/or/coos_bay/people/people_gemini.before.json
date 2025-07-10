@@ -2,10 +2,7 @@
   {
     "name": "Joe Benetti",
     "roles": [
-      "Mayor",
-      "board member",
-      "director on the Oregon Pacific Bank Board",
-      "Southwestern Oregon Workforce Investment Board"
+      "Mayor"
     ],
     "divisions": [],
     "image": null,
@@ -17,19 +14,14 @@
     "sources": [
       "https://www.coosbayor.gov/government/city-council/-item-2/-folder-216",
       "https://www.coosbayor.gov/government/city-council",
-      "https://www.coosbayor.gov/government/city-council/-folder-216",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78?folder=216"
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78"
     ],
-    "updated_at": "2025-07-10T01:11:58Z"
+    "updated_at": "2025-07-10T03:56:58Z"
   },
   {
     "name": "Lucinda DiNovo",
     "roles": [
-      "Council President",
-      "Council Member",
-      "Board Member",
-      "Trustee"
+      "Council President"
     ],
     "divisions": [],
     "image": null,
@@ -40,18 +32,14 @@
     "end_date": "2028-11",
     "sources": [
       "https://www.coosbayor.gov/government/city-council",
-      "https://www.coosbayor.gov/government/city-council/-folder-216",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78?folder=216"
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78"
     ],
-    "updated_at": "2025-07-10T01:11:58Z"
+    "updated_at": "2025-07-10T03:56:58Z"
   },
   {
     "name": "Troy Cribbins",
     "roles": [
-      "Councilor",
-      "Council Member",
-      "Board Member"
+      "Councilor"
     ],
     "divisions": [],
     "image": null,
@@ -62,19 +50,15 @@
     "end_date": "2028-11",
     "sources": [
       "https://www.coosbayor.gov/government/city-council",
-      "https://www.coosbayor.gov/government/city-council/-folder-216",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78?folder=216"
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78"
     ],
-    "updated_at": "2025-07-10T01:11:58Z"
+    "updated_at": "2025-07-10T03:56:58Z"
   },
   {
     "name": "Stephanie Kilmer",
     "roles": [
       "Councilor",
-      "Council Member",
-      "Chair",
-      "board member"
+      "council member"
     ],
     "divisions": [],
     "image": null,
@@ -85,22 +69,19 @@
     "end_date": "2028-11",
     "sources": [
       "https://www.coosbayor.gov/government/city-council",
-      "https://www.coosbayor.gov/government/city-council/-folder-216",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78?folder=216"
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78"
     ],
-    "updated_at": "2025-07-10T01:11:58Z"
+    "updated_at": "2025-07-10T03:56:58Z"
   },
   {
     "name": "Carmen Matthews",
     "roles": [
       "Councilor",
-      "Council Member",
-      "council member",
-      "Commissioner",
-      "Parks Commissioner"
+      "Council Member"
     ],
-    "divisions": [],
+    "divisions": [
+      "City Council"
+    ],
     "image": null,
     "phone_number": "(541) 297-5636",
     "email": null,
@@ -109,19 +90,14 @@
     "end_date": "2026-11",
     "sources": [
       "https://www.coosbayor.gov/government/city-council",
-      "https://www.coosbayor.gov/government/city-council/-folder-216",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78?folder=216"
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78"
     ],
-    "updated_at": "2025-07-10T01:11:58Z"
+    "updated_at": "2025-07-10T03:56:58Z"
   },
   {
     "name": "Jacob Niebergall",
     "roles": [
-      "Councilor",
-      "Council Member",
-      "Board of Trustees",
-      "Board Member"
+      "Councilor"
     ],
     "divisions": [],
     "image": null,
@@ -132,20 +108,15 @@
     "end_date": "2026-11",
     "sources": [
       "https://www.coosbayor.gov/government/city-council",
-      "https://www.coosbayor.gov/government/city-council/-folder-216",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78?folder=216"
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78"
     ],
-    "updated_at": "2025-07-10T01:11:58Z"
+    "updated_at": "2025-07-10T03:56:58Z"
   },
   {
     "name": "Sara Stephens",
     "roles": [
       "Councilor",
-      "Council Member",
-      "board chair",
-      "Board of Trustees member",
-      "Trustee"
+      "council member"
     ],
     "divisions": [],
     "image": null,
@@ -156,10 +127,8 @@
     "end_date": "2026-11",
     "sources": [
       "https://www.coosbayor.gov/government/city-council",
-      "https://www.coosbayor.gov/government/city-council/-folder-216",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78",
-      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78?folder=216"
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78"
     ],
-    "updated_at": "2025-07-10T01:11:58Z"
+    "updated_at": "2025-07-10T03:56:58Z"
   }
 ]

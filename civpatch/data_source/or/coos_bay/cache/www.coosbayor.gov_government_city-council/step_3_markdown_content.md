@@ -292,7 +292,7 @@ They can be downloaded by clicking on the icons below.
 
 [Archived News](https://www.coosbayor.gov/government/city-council/-arch-1)
 
-- ![Sparklers Thumb](https://www.coosbayor.gov/home/showpublishedimage/4931)
+- ![Sparklers Thumb](https://www.coosbayor.gov/home/showpublishedimage/4931/638871542827870000)
   
   ## [Freedom, Community, Coos Bay](https://www.coosbayor.gov/Home/Components/News/News/1846/78)
   
@@ -302,7 +302,7 @@ They can be downloaded by clicking on the icons below.
   ## [July Walk with the Mayors](https://www.coosbayor.gov/Home/Components/News/News/1842/78)
   
   07/03/2025 4:21 PM
-- ![Boardwalk Thumb](https://www.coosbayor.gov/home/showpublishedimage/4903)
+- ![Boardwalk Thumb](https://www.coosbayor.gov/home/showpublishedimage/4903/638866090266030000)
   
   ## [Interpretive Sign Project Launches](https://www.coosbayor.gov/Home/Components/News/News/1836/78)
   

@@ -72,7 +72,7 @@ namespace :pipeline do
     source_directory_list = Scrapers::MunicipalityOfficials.fetch_with_state_level(municipality_context)
 
     people = source_directory_list["people"]
-    government_type = government_type || source_directory_list["government_type"]
+    government_type ||= source_directory_list["government_type"]
     Core::ConfigManager.update_config(state: state,
                                       geoid: geoid,
                                       updates: { government_type: government_type })
@@ -145,8 +145,11 @@ namespace :pipeline do
     people_hint, people_config, government_type = fetch_with_state_source(context)
     context = Core::ContextManager
               .update_context_config(context,
-                                    government_type: government_type,
-                                    people: people_config)
+                                     government_type: government_type,
+                                     people: people_config)
+
+    pp "After state source, people config is: #{context[:config]["people"].inspect}"
+    pp context[:config]["people"]
 
     people_config = fetch_with_scrape(context, people_hint)
     context = Core::ContextManager
