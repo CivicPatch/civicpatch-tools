@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.centralpointoregon.gov/directory.aspx?eid=38%2F)
+[Skip to Main Content](https://www.centralpointoregon.gov/Directory.aspx?DID=21%2F)
 
 [Create a Website Account](https://www.centralpointoregon.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
@@ -20,52 +20,29 @@ Search
 1. [Home](https://www.centralpointoregon.gov)
 2. Staff Directory
 
-![Taneea-Browning_04-2025_9045](https://www.centralpointoregon.gov/ImageRepository/Document?documentID=1077 "Taneea-Browning_04-2025_9045")
-
-# Taneea Browning
+# City Council
 
  
 
-[City Council](https://www.centralpointoregon.gov/Directory.aspx?DID=21)  
-Title: Mayor  
-Phone: 541-890-8377  
-Additional Phone: Fax: 541-664-6384  
-[Email Taneea Browning](mailto:Taneea.browning@centralpointoregon.gov)
+140 S 3rd Street Central Point OR 97502
 
-## Term
+[Directions](https://www.google.com/maps/place/140+S+3rd+Street+Central+Point+OR+97502)
 
-Elected 2024, Current term ends December 31, 2028
+Physical Address:View Map
 
-## Biography
+140 S 3rd Street  
+Central Point, OR 97502
 
-Mayor Browning is a lifetime Oregonian, born and raised in Southern Oregon, is the co-founder of CraterWorks MakerSpace, volunteer for Direct Involvement Recreation Teaching (DIRT), and has served as an elected official for nearly a decade. 
+Phone:
 
-She has served her community by participating in the Central Point Budget Committee, the Rogue Valley Council of Governments Board of Directors, Southern Oregon Regional Economic Development Board of Directors, and as a liaison to Jackson County Fire District 3 and Rogue Valley Transportation District in addition to serving on the Governor’s Regional Solutions team.   Outside of regional engagement, she has served on the Board of Directors for the League of Oregon Cities since 2018 (president 2022), CIS (Citycounty Insurance Service) Board of Trustees currently and received Governor’s appointment to the States Sustainability board in 2024 to ensure that southern Oregon’s voice is heard when sustainability conversations are being had around agency plans. Nationally she assists with the education and training for 12 western states municipal league’s leadership through her work as the chair of the Western Municipal Association in 2023 and 2024.
+541-664-3321 Ext. 203
 
-With an emphasis on community social capital investment, Mayor Browning leverages creativity, engagement, and resources for the betterment of communities. She has a talent for finding commonalities in outcomes and an ability to weave an entrepreneurial mindset with effective problem-solving for both policymaking and implementation.  Her approach and experience are complementary to addressing sustainability opportunities throughout the state, with participation from Southern Oregon.
+[Email the City Council](mailto:info@centralpointoregon.gov)  
+Link: [City Council Page](https://www.centralpointoregon.gov/249/City-Council)
 
-Occupation:
+Staff
 
-- Executive Director of a public non-profit
-- Partner of CraterWorks
-
-Prior Governmental Experience:
-
-- League of Oregon Cities Board of Directors 2017 - present (President 2022)
-- Western Municipal League Chair 2023 &amp; 2024
-- City Council Member: Appointed March 2015, Elected 2016; 2020.
-- Oregon Sustainability Board 2023 - present (Governor appointment)
-
-Current Committee Activities:
-
-- Central Point Urban Renewal Agency
-- Central Point Budget Committee
-- Central Point Rotary
-- So. Oregon Regional Economic Development Inc.
-- Medford Water Commission Board
-- RVTD Board
-
- 
+Name Title Email Phone Additional Phone [Browning, Taneea](https://www.centralpointoregon.gov/directory.aspx?EID=38) Mayor [Email Taneea Browning](mailto:Taneea.browning@centralpointoregon.gov) 541-890-8377 Fax: 541-664-6384 [Hernandez, Rob](https://www.centralpointoregon.gov/directory.aspx?EID=40) Council Member At Large 2 [Email Rob Hernandez](mailto:Rob.hernandez@centralpointoregon.gov) 541-840-1841 Fax: 541-664-6384 [Johnson, Kelley](https://www.centralpointoregon.gov/directory.aspx?EID=36) Council Member Ward II [Email Kelley Johnson](mailto:kelley.johnson@centralpointoregon.gov) 541-499-8977 Fax: 541-664-6384 [Olsen, Dr. Neil](https://www.centralpointoregon.gov/directory.aspx?EID=35) Council Member Ward I [Email Neil Olsen](mailto:neil.olsen@centralpointoregon.gov) 541-664-7935 Fax: 541-664-6384 [Parsons, Michael](https://www.centralpointoregon.gov/directory.aspx?EID=39) Council Member at Large 1 [Email Mike Parsons](mailto:michael.parsons@centralpointoregon.gov) 541-554-3892 Fax: 541-664-6384 [Zimmerman, Grey](https://www.centralpointoregon.gov/directory.aspx?EID=37) Council Member Ward III [Email Grey Zimmerman](mailto:grey.zimmerman@centralpointoregon.gov)     [Whitaker, Brian](https://www.centralpointoregon.gov/directory.aspx?EID=43) Council Member Ward IV [Email Brian Whitaker](mailto:Brian.whitaker@centralpointoregon.gov) 541-778-7299  
 
 [Return to Staff Directory](https://www.centralpointoregon.gov/Directory.aspx)
 

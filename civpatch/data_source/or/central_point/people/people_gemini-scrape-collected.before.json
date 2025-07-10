@@ -1,183 +1,570 @@
 [
   {
     "name": "Taneea Browning",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.centralpointoregon.gov/256/Mayor-Council",
-      "https://www.centralpointoregon.gov/directory.aspx?eid=38"
+      "https://www.centralpointoregon.gov/directory.aspx?eid=38",
+      "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
+      "https://www.centralpointoregon.gov/directory.aspx?EID=38"
     ],
-    "positions": [
-      "Mayor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated 'City Council Member' in prior governmental experience, which is a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the 'Title' column of the staff directory table for Taneea Browning"
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Title: Mayor'."
+      },
+      {
+        "data": "Board of Directors",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'League of Oregon Cities Board of Directors' and 'Board of Directors' is a target role."
+      },
+      {
+        "data": "President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'President 2022' for League of Oregon Cities, and 'President' is a target role. Although 2022, it's part of a 'present' term."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Western Municipal League Chair 2023 & 2024', and 'Chair' is a target role."
+      },
+      {
+        "data": "City Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member' and 'Council Member' is a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'City Council Member' and 'Council Member' is a target role."
+      },
+      {
+        "data": "Board",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Oregon Sustainability Board', 'Medford Water Commission Board', and 'RVTD Board', and 'Board' is a target role."
+      },
+      {
+        "data": "Board of Trustees",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'CIS (Citycounty Insurance Service) Board of Trustees currently', and 'Board of Trustees' is a target role."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'CIS (Citycounty Insurance Service) Board of Trustees currently', and 'Trustee' is a target role."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "541-890-8377",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed under 'Phone'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated and clearly associated with the person.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
+      },
+      {
+        "data": "541-890-8377",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated in the 'Phone' column of the staff directory table for Taneea Browning",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "541-890-8377",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=38"
       }
     ],
     "emails": [
       {
         "data": "Taneea.browning@centralpointoregon.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence_reason": "Email explicitly provided as a mailto link.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
         "data": "Taneea.browning@centralpointoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted directly from mailto link text.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated and clearly associated with the person.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
+      },
+      {
+        "data": "Taneea.browning@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly stated in the 'Email' column of the staff directory table for Taneea Browning",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "Taneea.browning@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=38"
       }
     ],
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=38",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Link labeled 'More Information' directly associated with the name.",
+        "llm_confidence_reason": "Website explicitly provided as 'More Information' link.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
-        "data": "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link associated with name, but points to the general City Council directory, not a specific personal profile page.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
+        "data": "https://www.centralpointoregon.gov/directory.aspx?EID=38",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked to Taneea Browning's name in the staff directory table",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
       }
     ],
     "start_dates": [
       {
         "data": "2024",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as 'Elected 2024'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as 'Elected 2024' for the current term, following the guideline to use the most recent election.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
+      },
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date for the current term is explicitly stated as 'Elected 2024'.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=38"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as 'Current term ends December 31, 2028'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date explicitly stated as 'December 31, 2028' for the current term.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=38"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'Current term ends December 31, 2028'.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=38"
       }
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-07-10T01:05:26Z"
   },
   {
-    "name": "Neil Olsen",
-    "image": null,
-    "source_image": null,
+    "name": "Dr. Neil Olsen",
     "sources": [
       "https://www.centralpointoregon.gov/256/Mayor-Council",
-      "https://www.centralpointoregon.gov/directory.aspx?eid=35"
+      "https://www.centralpointoregon.gov/directory.aspx?eid=35",
+      "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
+      "https://www.centralpointoregon.gov/directory.aspx?EID=35"
     ],
-    "positions": [
-      "Council Member",
-      "Ward I"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member Ward I'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward I', 'Council Member' is a target role and 'Ward I' is a division. Both are extracted as per guidelines for roles and divisions respectively. "
+      },
+      {
+        "data": "Council Member Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward I', 'Council Member' is a target role and 'Ward I' is a division. Both are extracted as per guidelines for roles and divisions respectively. "
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council Member' explicitly stated in the 'Title' column of the staff directory table for Dr. Neil Olsen"
+      },
+      {
+        "data": "Council Member Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Specific role 'Council Member Ward I' explicitly stated in the 'Title' column of the staff directory table for Dr. Neil Olsen"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward I', which includes the target role 'Council Member'."
+      },
+      {
+        "data": "Council Member Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward I', which includes the target role 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Council Member Ward I'."
+      },
+      {
+        "data": "Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward I' in the text."
+      },
+      {
+        "data": "Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in the 'Title' column of the staff directory table for Dr. Neil Olsen"
+      },
+      {
+        "data": "Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward I' in the text."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-664-7935",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Directly listed as Phone.",
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person's name under 'Phone:'.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=35"
+      },
+      {
+        "data": "541-664-7935",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated in the 'Phone' column of the staff directory table for Dr. Neil Olsen",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "541-664-7935",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=35"
       }
     ],
     "emails": [
       {
         "data": "neil.olsen@centralpointoregon.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence_reason": "Email explicitly provided as a mailto link.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
         "data": "neil.olsen@centralpointoregon.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted directly from mailto link text.",
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person's name via a mailto link and text label 'Email Neil Olsen'.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=35"
+      },
+      {
+        "data": "neil.olsen@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly stated in the 'Email' column of the staff directory table for Dr. Neil Olsen",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "neil.olsen@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=35"
       }
     ],
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=35",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Link labeled 'More Information' directly associated with the name.",
+        "llm_confidence_reason": "Website explicitly provided as 'More Information' link.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
-        "data": "https://www.centralpointoregon.gov/directory.aspx?eid=35/",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "This is the page URL where the information was found, likely serving as a profile page.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=35"
+        "data": "https://www.centralpointoregon.gov/directory.aspx?EID=35",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked to Dr. Neil Olsen's name in the staff directory table",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
       }
     ],
     "start_dates": [
       {
         "data": "2022",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as the most recent election year for the current term.",
+        "llm_confidence_reason": "Explicitly stated as 'Elected 2018 & 2022', and the guideline states to use the most recent election date for start_date.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=35"
+      },
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Elected 2018 & 2022', with 2022 being the most recent election.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=35"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as the current term end date.",
+        "llm_confidence_reason": "Explicitly stated as 'Current term ends December 31, 2026'.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=35"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Current term ends December 31, 2026'.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=35"
       }
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-07-10T01:05:26Z"
   },
   {
     "name": "Kelley Johnson",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.centralpointoregon.gov/256/Mayor-Council",
-      "https://www.centralpointoregon.gov/directory.aspx?eid=36"
+      "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
+      "https://www.centralpointoregon.gov/directory.aspx?eid=36",
+      "https://www.centralpointoregon.gov/directory.aspx?EID=36"
     ],
-    "positions": [
-      "Council Member",
-      "Ward II"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member Ward II'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council Member' explicitly stated in the 'Title' column of the staff directory table for Kelley Johnson"
+      },
+      {
+        "data": "Council Member Ward II",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Specific role 'Council Member Ward II' explicitly stated in the 'Title' column of the staff directory table for Kelley Johnson"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member' which is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward II",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Council Member Ward II'."
+      },
+      {
+        "data": "Ward II",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in the 'Title' column of the staff directory table for Kelley Johnson"
+      },
+      {
+        "data": "Ward II",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward II' in the title."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-499-8977",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed.",
+        "llm_confidence_reason": "Phone number explicitly stated in the 'Phone' column of the staff directory table for Kelley Johnson",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "541-499-8977",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is directly associated with Kelley Johnson's name and title.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=36"
+      },
+      {
+        "data": "541-499-8977",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed next to 'Phone:'",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=36"
       }
     ],
     "emails": [
       {
         "data": "kelley.johnson@centralpointoregon.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence_reason": "Email explicitly provided as a mailto link.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
         "data": "kelley.johnson@centralpointoregon.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=36"
+        "llm_confidence_reason": "Email explicitly stated in the 'Email' column of the staff directory table for Kelley Johnson",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "kelley.johnson@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link text and URL.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=36"
       }
     ],
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=36",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Link labeled 'More Information' directly associated with the name.",
+        "llm_confidence_reason": "Website explicitly provided as 'More Information' link.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
+      },
+      {
+        "data": "https://www.centralpointoregon.gov/directory.aspx?EID=36",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked to Kelley Johnson's name in the staff directory table",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
       }
     ],
     "start_dates": [
       {
         "data": "2022",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Most recent election year explicitly stated as 2022.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=36"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Elected 2018 and 2022', with 2022 being the most recent election.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=36"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current term ends December 31, 2026'.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=36"
+      }
+    ],
+    "updated_at": "2025-07-10T01:05:26Z"
+  },
+  {
+    "name": "Grey Zimmerman",
+    "sources": [
+      "https://www.centralpointoregon.gov/256/Mayor-Council",
+      "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
+      "https://www.centralpointoregon.gov/directory.aspx?eid=37",
+      "https://www.centralpointoregon.gov/directory.aspx?EID=37"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member Ward III'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council Member' explicitly stated in the 'Title' column of the staff directory table for Grey Zimmerman"
+      },
+      {
+        "data": "Council Member Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Specific role 'Council Member Ward III' explicitly stated in the 'Title' column of the staff directory table for Grey Zimmerman"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward III'."
+      },
+      {
+        "data": "Council Member Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward III'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward III', which includes the target role 'Council Member'."
+      },
+      {
+        "data": "Council Member Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward III' in the text."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Council Member Ward III'."
+      },
+      {
+        "data": "Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in the 'Title' column of the staff directory table for Grey Zimmerman"
+      },
+      {
+        "data": "Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward III'."
+      },
+      {
+        "data": "Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward III' in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "grey.zimmerman@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided as a mailto link.",
+        "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
+      },
+      {
+        "data": "grey.zimmerman@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly stated in the 'Email' column of the staff directory table for Grey Zimmerman",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "grey.zimmerman@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Grey Zimmerman",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=37"
+      },
+      {
+        "data": "grey.zimmerman@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Grey Zimmerman",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=37"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.centralpointoregon.gov/directory.aspx?eid=37",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website explicitly provided as 'More Information' link.",
+        "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
+      },
+      {
+        "data": "https://www.centralpointoregon.gov/directory.aspx?EID=37",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked to Grey Zimmerman's name in the staff directory table",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Appointed November 2024'.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=37"
+      },
+      {
+        "data": "2024-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Appointed November 2024'.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=37"
       }
     ],
     "end_dates": [
@@ -185,234 +572,435 @@
         "data": "2026-12-31",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated 'Current term ends December 31, 2026'.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=36"
-      }
-    ],
-    "updated_at": "2025-05-08"
-  },
-  {
-    "name": "Grey Zimmerman",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.centralpointoregon.gov/256/Mayor-Council",
-      "https://www.centralpointoregon.gov/directory.aspx?eid=37"
-    ],
-    "positions": [
-      "Council Member",
-      "Ward III"
-    ],
-    "phone_numbers": [],
-    "emails": [
-      {
-        "data": "grey.zimmerman@centralpointoregon.gov",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly associated with the name.",
-        "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
+        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=37"
       },
       {
-        "data": "grey.zimmerman@centralpointoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted directly from markdown link text.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=37"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.centralpointoregon.gov/directory.aspx?eid=37",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Link labeled 'More Information' directly associated with the name.",
-        "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2024-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as the appointment date.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=37"
-      }
-    ],
-    "end_dates": [
-      {
         "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as the end date of the current term.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=37"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Current term ends December 31, 2026'.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=37"
       }
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-07-10T01:05:26Z"
   },
   {
     "name": "Brian Whitaker",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.centralpointoregon.gov/256/Mayor-Council",
-      "https://www.centralpointoregon.gov/directory.aspx?eid=43"
+      "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
+      "https://www.centralpointoregon.gov/directory.aspx?eid=43",
+      "https://www.centralpointoregon.gov/directory.aspx?EID=43"
     ],
-    "positions": [
-      "Council Member",
-      "Ward IV"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member Ward IV'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council Member' explicitly stated in the 'Title' column of the staff directory table for Brian Whitaker"
+      },
+      {
+        "data": "Council Member Ward IV",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Specific role 'Council Member Ward IV' explicitly stated in the 'Title' column of the staff directory table for Brian Whitaker"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward IV', 'Council Member' is a target role."
+      },
+      {
+        "data": "Council Member Ward IV",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward IV', which is a specific role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward IV",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Council Member Ward IV'."
+      },
+      {
+        "data": "Ward IV",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in the 'Title' column of the staff directory table for Brian Whitaker"
+      },
+      {
+        "data": "Ward IV",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Ward IV'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-778-7299",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly listed under 'Phone'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated in the 'Phone' column of the staff directory table for Brian Whitaker",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "541-778-7299",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is directly associated with Brian Whitaker's contact information.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=43"
+      },
+      {
+        "data": "541-778-7299",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=43"
       }
     ],
     "emails": [
       {
         "data": "Brian.whitaker@centralpointoregon.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence_reason": "Email explicitly provided as a mailto link.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
         "data": "Brian.whitaker@centralpointoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted directly from mailto link text.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=43"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly stated in the 'Email' column of the staff directory table for Brian Whitaker",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "Brian.whitaker@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=43"
       }
     ],
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=43",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Link labeled 'More Information' directly associated with the name.",
+        "llm_confidence_reason": "Website explicitly provided as 'More Information' link.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
-        "data": "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "Link under name goes to the general City Council directory, not a specific personal profile page.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=43"
+        "data": "https://www.centralpointoregon.gov/directory.aspx?EID=43",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked to Brian Whitaker's name in the staff directory table",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "https://www.centralpointoregon.gov/directory.aspx?EID=43",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page URL is a direct profile page for Brian Whitaker, making it the most relevant website.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=43"
       }
     ],
     "start_dates": [
       {
         "data": "2024-11",
-        "llm_confidence": 0.95,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 'Elected November, 2024'.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=43"
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=43"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as 'Current term ends December 31, 2028'.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=43"
-      }
-    ],
-    "updated_at": "2025-05-08"
-  },
-  {
-    "name": "Rob Hernandez",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.centralpointoregon.gov/256/Mayor-Council",
-      "https://www.centralpointoregon.gov/directory.aspx?eid=40"
-    ],
-    "positions": [
-      "Council Member",
-      "At Large 2"
-    ],
-    "phone_numbers": [
-      {
-        "data": "541-664-5154",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed as 'Phone'.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
-      }
-    ],
-    "emails": [
-      {
-        "data": "Rob.hernandez@centralpointoregon.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly associated with the name.",
-        "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
-      },
-      {
-        "data": "Rob.hernandez@centralpointoregon.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted directly from mailto link text.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.centralpointoregon.gov/directory.aspx?eid=40",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Link labeled 'More Information' directly associated with the name.",
-        "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2024-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Most recent election date listed ('Elected November, 2024'). Converted 'November, 2024' to '2024-11'.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2028-12-31",
-        "llm_confidence": 0.95,
         "llm_confidence_reason": "Explicitly stated as 'Current term ends December 31, 2028'.",
-        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=43"
       }
     ],
-    "updated_at": "2025-05-08"
+    "updated_at": "2025-07-10T01:05:26Z"
   },
   {
     "name": "Michael Parsons",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.centralpointoregon.gov/256/Mayor-Council",
-      "https://www.centralpointoregon.gov/directory.aspx?eid=39"
+      "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
+      "https://www.centralpointoregon.gov/directory.aspx?eid=39",
+      "https://www.centralpointoregon.gov/directory.aspx?EID=39"
     ],
-    "positions": [
-      "Council Member",
-      "At Large 1"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member at Large 1'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council Member' explicitly stated in the 'Title' column of the staff directory table for Michael Parsons"
+      },
+      {
+        "data": "Council Member at Large 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Specific role 'Council Member at Large 1' explicitly stated in the 'Title' column of the staff directory table for Michael Parsons"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member at Large 1', which includes the base role 'Council Member'."
+      },
+      {
+        "data": "Council Member at Large 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member at Large 1'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at Large 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Council Member at Large 1'."
+      },
+      {
+        "data": "at Large 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in the 'Title' column of the staff directory table for Michael Parsons"
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'at Large 1'."
+      },
+      {
+        "data": "position 1",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'at Large 1' indicating a specific position within the at-large division."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-554-3892",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Directly listed as 'Phone' under the person's name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated in the 'Phone' column of the staff directory table for Michael Parsons",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "541-554-3892",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly labeled 'Phone:'.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=39"
+      },
+      {
+        "data": "541-554-3892",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is clearly listed next to the name and title.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=39"
       }
     ],
     "emails": [
       {
         "data": "michael.parsons@centralpointoregon.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address directly associated with the name.",
+        "llm_confidence_reason": "Email explicitly provided as a mailto link.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
+      },
+      {
+        "data": "michael.parsons@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly stated in the 'Email' column of the staff directory table for Michael Parsons",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "michael.parsons@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly linked to the person's name via a mailto link and text label 'Email Mike Parsons'.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=39"
       }
     ],
     "websites": [
       {
         "data": "https://www.centralpointoregon.gov/directory.aspx?eid=39",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Link labeled 'More Information' directly associated with the name.",
+        "llm_confidence_reason": "Website explicitly provided as 'More Information' link.",
         "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
       },
       {
-        "data": "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link to the City Council directory page is provided near the name, but not a dedicated personal profile.",
+        "data": "https://www.centralpointoregon.gov/directory.aspx?EID=39",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked to Michael Parsons's name in the staff directory table",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Elected in 2020 and 2024', with 2024 being the most recent election date.",
         "source": "https://www.centralpointoregon.gov/directory.aspx?eid=39"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-08"
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current term ends December 31, 2028'.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=39"
+      }
+    ],
+    "updated_at": "2025-07-10T01:05:26Z"
+  },
+  {
+    "name": "Rob Hernandez",
+    "sources": [
+      "https://www.centralpointoregon.gov/256/Mayor-Council",
+      "https://www.centralpointoregon.gov/Directory.aspx?DID=21",
+      "https://www.centralpointoregon.gov/directory.aspx?eid=40",
+      "https://www.centralpointoregon.gov/directory.aspx?EID=40"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member At Large 2'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council Member' explicitly stated in the 'Title' column of the staff directory table for Rob Hernandez"
+      },
+      {
+        "data": "Council Member At Large 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Specific role 'Council Member At Large 2' explicitly stated in the 'Title' column of the staff directory table for Rob Hernandez"
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Council Member At Large 2', which includes 'Council Member'."
+      },
+      {
+        "data": "Council Member At Large 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Council Member At Large 2'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Council Member' in the title 'Council Member At Large 2'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Council Member At Large 2'."
+      },
+      {
+        "data": "At Large 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated in the 'Title' column of the staff directory table for Rob Hernandez"
+      },
+      {
+        "data": "At Large 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Council Member At Large 2'."
+      },
+      {
+        "data": "At Large 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as part of the title 'Council Member At Large 2'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "541-840-1841",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated in the 'Phone' column of the staff directory table for Rob Hernandez",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "541-840-1841",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
+      },
+      {
+        "data": "541-840-1841",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed under 'Phone:' for Rob Hernandez",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=40"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Rob.hernandez@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided as a mailto link.",
+        "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
+      },
+      {
+        "data": "Rob.hernandez@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly stated in the 'Email' column of the staff directory table for Rob Hernandez",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "Rob.hernandez@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
+      },
+      {
+        "data": "Rob.hernandez@centralpointoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Rob Hernandez",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=40"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.centralpointoregon.gov/directory.aspx?eid=40",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website explicitly provided as 'More Information' link.",
+        "source": "https://www.centralpointoregon.gov/256/Mayor-Council"
+      },
+      {
+        "data": "https://www.centralpointoregon.gov/directory.aspx?EID=40",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly linked to Rob Hernandez's name in the staff directory table",
+        "source": "https://www.centralpointoregon.gov/Directory.aspx?DID=21"
+      },
+      {
+        "data": "https://www.centralpointoregon.gov/directory.aspx?eid=40",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the profile page for Rob Hernandez.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Elected November, 2016; 2020; and 2024', with 2024 being the most recent election.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
+      },
+      {
+        "data": "2024-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Elected November, 2016; 2020; and 2024.', with the most recent election being November 2024.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=40"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Current term ends December 31, 2028'.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?eid=40"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Current term ends December 31, 2028'.",
+        "source": "https://www.centralpointoregon.gov/directory.aspx?EID=40"
+      }
+    ],
+    "updated_at": "2025-07-10T01:05:26Z"
   }
 ]
