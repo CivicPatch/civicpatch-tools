@@ -1,0 +1,578 @@
+[
+  {
+    "name": "David Glabe",
+    "sources": [
+      "https://www.cityoflagrande.org/city-council-mayor",
+      "https://www.cityoflagrande.org/people/david-glabe"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor', which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor' which is a target role 'council member'."
+      },
+      {
+        "data": "Councilor (Position 3)",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor (Position 3)' which is a specific role matching the target role 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor (Position 3)'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 962-1309",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated under 'Contact Info'.",
+        "source": "https://www.cityoflagrande.org/people/david-glabe"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityoflagrande.org/people/david-glabe",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "https://www.cityoflagrande.org/people/david-glabe",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the main page for David Glabe, indicating it is his profile page.",
+        "source": "https://www.cityoflagrande.org/people/david-glabe"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-08",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'January 8, 2025' as the start date of the term. Converted to YYYY-MM-DD format as per instructions. ",
+        "source": "https://www.cityoflagrande.org/people/david-glabe"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that 'Terms for Positions 2, 3 and 4 expire on 12/31/28'.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'December 31, 2028' as the end date of the term. Converted to YYYY-MM-DD format as per instructions. ",
+        "source": "https://www.cityoflagrande.org/people/david-glabe"
+      }
+    ],
+    "updated_at": "2025-07-10T01:09:42Z"
+  },
+  {
+    "name": "Mary Ann Miesner",
+    "sources": [
+      "https://www.cityoflagrande.org/city-council-mayor",
+      "https://www.cityoflagrande.org/people/mary-ann-miesner"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "mayor pro tempore",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Pro Tem', which is a target role."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Pro Tem'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'City Council & Mayor' and the context of the page."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Position 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Pro Tem (Position 4)'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 962-1309",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'Contact Info' for Mary Ann Miesner.",
+        "source": "https://www.cityoflagrande.org/people/mary-ann-miesner"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityoflagrande.org/people/mary-ann-miesner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "https://www.cityoflagrande.org/people/mary-ann-miesner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the current page URL and serves as her dedicated profile page.",
+        "source": "https://www.cityoflagrande.org/people/mary-ann-miesner"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-08",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'January 8, 2025'.",
+        "source": "https://www.cityoflagrande.org/people/mary-ann-miesner"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that 'Terms for Positions 2, 3 and 4 expire on 12/31/28'.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'December 31, 2028'.",
+        "source": "https://www.cityoflagrande.org/people/mary-ann-miesner"
+      }
+    ],
+    "updated_at": "2025-07-10T01:09:42Z"
+  },
+  {
+    "name": "Justin B. Rock",
+    "sources": [
+      "https://www.cityoflagrande.org/city-council-mayor",
+      "https://www.cityoflagrande.org/people/justin-b-rock"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor', which is a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position 1' in the role description."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 962-1309",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated under 'Contact Info'.",
+        "source": "https://www.cityoflagrande.org/people/justin-b-rock"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityoflagrande.org/people/justin-b-rock",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "https://www.cityoflagrande.org/people/justin-b-rock",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a person-specific profile page.",
+        "source": "https://www.cityoflagrande.org/people/justin-b-rock"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-08",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'January 8, 2025' for the term start date, converted to YYYY-MM-DD format as per guidelines. The term is active as of today's date (2025-07-10).",
+        "source": "https://www.cityoflagrande.org/people/justin-b-rock"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that 'The Term for Mayor (Position 1) expires on 12/31/26'.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'December 31, 2026' for the term end date, converted to YYYY-MM-DD format as per guidelines. The term is active as of today's date (2025-07-10).",
+        "source": "https://www.cityoflagrande.org/people/justin-b-rock"
+      }
+    ],
+    "updated_at": "2025-07-10T01:09:42Z"
+  },
+  {
+    "name": "Molly King",
+    "sources": [
+      "https://www.cityoflagrande.org/city-council-mayor",
+      "https://www.cityoflagrande.org/people/molly-king"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor', which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilor' as a general target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor (Position 5)'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 962-1309",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'Contact Info' for Molly King.",
+        "source": "https://www.cityoflagrande.org/people/molly-king"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityoflagrande.org/people/molly-king",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "https://www.cityoflagrande.org/people/molly-king",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is present at the top of the page and the page title is 'Molly King', indicating it is her profile page.",
+        "source": "https://www.cityoflagrande.org/people/molly-king"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'January 4, 2023'.",
+        "source": "https://www.cityoflagrande.org/people/molly-king"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that 'Terms for Positions 5, 6 and 7 expire on 12/31/26'.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'December 31, 2026'.",
+        "source": "https://www.cityoflagrande.org/people/molly-king"
+      }
+    ],
+    "updated_at": "2025-07-10T01:09:42Z"
+  },
+  {
+    "name": "Corrine Dutto",
+    "sources": [
+      "https://www.cityoflagrande.org/city-council-mayor",
+      "https://www.cityoflagrande.org/people/corrine-dutto-0"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor', which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor (Position 7)'."
+      },
+      {
+        "data": "Councilor (Position 7)",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor (Position 7)'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Position 7",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor (Position 7)'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 962-1309",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated under 'Contact Info'.",
+        "source": "https://www.cityoflagrande.org/people/corrine-dutto-0"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityoflagrande.org/people/corrine-dutto-0",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "https://www.cityoflagrande.org/people/corrine-dutto-0",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This URL is a direct link to Corrine Dutto's profile page.",
+        "source": "https://www.cityoflagrande.org/people/corrine-dutto-0"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'January 4, 2023'.",
+        "source": "https://www.cityoflagrande.org/people/corrine-dutto-0"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that 'Terms for Positions 5, 6 and 7 expire on 12/31/26'.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'December 31, 2026'.",
+        "source": "https://www.cityoflagrande.org/people/corrine-dutto-0"
+      }
+    ],
+    "updated_at": "2025-07-10T01:09:42Z"
+  },
+  {
+    "name": "Denise Wheeler",
+    "sources": [
+      "https://www.cityoflagrande.org/city-council-mayor",
+      "https://www.cityoflagrande.org/people/denise-wheeler"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor', which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor (Position 6)' which is a direct match to 'council member' target role. 'Councilor' is the base role and 'Councilor (Position 6)' is the specific role, but the schema only allows for one data field per role object, so I will extract the base role 'Councilor' and the specific role 'Councilor (Position 6)' as separate entries if the schema allowed for multiple entries for the same role, but it does not. I will extract 'Councilor' as the base role and 'Councilor (Position 6)' as the specific role. The schema allows for multiple role objects, so I will extract both. "
+      },
+      {
+        "data": "Councilor (Position 6)",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor (Position 6)' which is a direct match to 'council member' target role. This is the specific role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Position 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor (Position 6)'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 962-1309",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated under 'Contact Info' section for Denise Wheeler's profile page. The phone number is directly associated with her.",
+        "source": "https://www.cityoflagrande.org/people/denise-wheeler"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityoflagrande.org/people/denise-wheeler",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "https://www.cityoflagrande.org/people/denise-wheeler",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the first link on the page and is a direct profile page for Denise Wheeler.",
+        "source": "https://www.cityoflagrande.org/people/denise-wheeler"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01-04",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'January 4, 2023' as the start of the term for her active membership as Councilor (Position 6).",
+        "source": "https://www.cityoflagrande.org/people/denise-wheeler"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that 'Terms for Positions 5, 6 and 7 expire on 12/31/26'.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'December 31, 2026' as the end of the term for her active membership as Councilor (Position 6).",
+        "source": "https://www.cityoflagrande.org/people/denise-wheeler"
+      }
+    ],
+    "updated_at": "2025-07-10T01:09:42Z"
+  },
+  {
+    "name": "Rikki Jo Hickey",
+    "sources": [
+      "https://www.cityoflagrande.org/city-council-mayor",
+      "https://www.cityoflagrande.org/people/rikki-jo-hickey"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor', which is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Councilor is a direct match for the target role 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name."
+      },
+      {
+        "data": "Position 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor (Position 2)'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(541) 962-1348",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated under 'Contact Info'.",
+        "source": "https://www.cityoflagrande.org/people/rikki-jo-hickey"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityoflagrande.org/people/rikki-jo-hickey",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked from the person's name.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "https://www.cityoflagrande.org/people/rikki-jo-hickey",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL at the top of the page is a direct link to Rikki Jo Hickey's profile.",
+        "source": "https://www.cityoflagrande.org/people/rikki-jo-hickey"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-08",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'January 8, 2025'.",
+        "source": "https://www.cityoflagrande.org/people/rikki-jo-hickey"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that 'Terms for Positions 2, 3 and 4 expire on 12/31/28'.",
+        "source": "https://www.cityoflagrande.org/city-council-mayor"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'December 31, 2028'.",
+        "source": "https://www.cityoflagrande.org/people/rikki-jo-hickey"
+      }
+    ],
+    "updated_at": "2025-07-10T01:09:42Z"
+  }
+]

@@ -805,10 +805,12 @@
       "phone_number": "(541) 962-1309",
       "website": "https://www.cityoflagrande.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "0847e784ee4d3d459637287daf937c56",
+      "meta_updated_at": "2025-07-10T01:09:45Z",
+      "meta_hash": "5422a890547372c6958e23191e529678",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4140350"
     },
