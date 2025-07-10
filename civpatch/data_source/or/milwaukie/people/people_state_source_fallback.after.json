@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Lisa Batey",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-10T00:47:58Z",
+    "divisions": []
+  },
+  {
+    "name": "Will Anderson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T00:47:58Z",
+    "divisions": []
+  },
+  {
+    "name": "Robert Massey",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T00:47:58Z",
+    "divisions": []
+  },
+  {
+    "name": "Adam Khosroabadi",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T00:47:58Z",
+    "divisions": []
+  },
+  {
+    "name": "Rebecca Stavenjord",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T00:47:58Z",
+    "divisions": []
+  }
+]
