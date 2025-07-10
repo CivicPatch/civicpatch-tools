@@ -1,80 +1,133 @@
 [
   {
     "name": "Denyse McGriff",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission",
-      "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
+      "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
+      "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
     ],
-    "positions": [
-      "Mayor",
-      "Commissioner"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' is explicitly stated in the heading 'Mayor Denyse McGriff' and in the breadcrumbs 'Mayor & City Commission'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Mayor' is strongly implied by the link text 'Mayor Denyse McGriff' within the 'Mayor & City Commission' section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'elected from the City at large'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "503-656-3912",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number labeled 'Home' is listed directly below the email.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to 'Home:'.",
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       }
     ],
     "emails": [
       {
         "data": "dmcgriff@orcity.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address is listed directly below the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked.",
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       }
     ],
     "websites": [
       {
         "data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
-        "data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL is the specific page for Mayor Denyse McGriff.",
+        "data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page URL serves as the person's profile page.",
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
+      },
+      {
+        "data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly linked in the text.",
+        "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
     "start_dates": [
       {
         "data": "2023-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term start date is explicitly stated.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as 'January 1, 2023' in the 'Term' information.",
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term end date is explicitly stated.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2026' is explicitly stated next to the person's name and role in the 'Members' section. Converted to YYYY-MM-DD format as per instructions for explicit dates with day and month specified. ",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'December 31, 2026' in the 'Term' information.",
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       }
     ],
-    "updated_at": "2025-05-02"
+    "updated_at": "2025-07-10T00:50:40Z"
   },
   {
     "name": "Adam Marl",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission",
+      "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
       "https://www.orcity.org/1775/Commissioner-Adam-Marl"
     ],
-    "positions": [
-      "Commissioner"
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Commissioner' is strongly implied by the link text 'Commissioner Adam Marl' within the 'Mayor & City Commission' section."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Commissioner' is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'elected from the City at large'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "503-406-8165",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly listed as 'Cell' next to the name.",
+        "llm_confidence_reason": "Phone number is explicitly stated as 'Cell: 503-406-8165'.",
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
@@ -82,21 +135,27 @@
       {
         "data": "amarl@orcity.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly listed next to the name.",
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
     "websites": [
       {
         "data": "https://www.orcity.org/1775/Commissioner-Adam-Marl",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
-        "data": "https://www.orcity.org/1775/Commissioner-Adam-Marl/",
+        "data": "https://www.orcity.org/1775/Commissioner-Adam-Marl",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is the specific profile page for the person.",
+        "llm_confidence_reason": "Website URL is explicitly linked in the text.",
+        "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
+      },
+      {
+        "data": "https://www.orcity.org/1775/Commissioner-Adam-Marl",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly provided as a direct link to the person's profile.",
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
@@ -104,7 +163,7 @@
       {
         "data": "2023-01-01",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start date is explicitly stated as part of the term information.",
+        "llm_confidence_reason": "Start date is explicitly stated as 'January 1, 2023'.",
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
@@ -112,180 +171,300 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly stated as part of the term information.",
-        "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
-      }
-    ],
-    "updated_at": "2025-05-02"
-  },
-  {
-    "name": "Michael Mitchell",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.orcity.org/933/Mayor-City-Commission",
-      "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
-    ],
-    "positions": [
-      "Commissioner"
-    ],
-    "phone_numbers": [
-      {
-        "data": "503-765-5993",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number is listed directly under the person's name.",
-        "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mmitchell@orcity.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address is listed directly under the person's name.",
-        "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the name and title.",
+        "llm_confidence_reason": "The end date 'December 31, 2026' is explicitly stated next to the person's name and role in the 'Members' section. Converted to YYYY-MM-DD format as per instructions for explicit dates with day and month specified. ",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
-        "data": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL of the page dedicated to the person.",
-        "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'December 31, 2026'.",
+        "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
-    "start_dates": [
+    "updated_at": "2025-07-10T00:50:40Z"
+  },
+  {
+    "name": "Michael Mitchell",
+    "sources": [
+      "https://www.orcity.org/933/Mayor-City-Commission"
+    ],
+    "images": [],
+    "roles": [
       {
-        "data": "2019-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated as the start date of the term.",
-        "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated next to the person's name."
       }
     ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'elected from the City at large'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
+      }
+    ],
+    "start_dates": [],
     "end_dates": [
       {
-        "data": "2024-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated as the end date of the term.",
-        "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2028' is explicitly stated next to the person's name and role in the 'Members' section. Converted to YYYY-MM-DD format as per instructions for explicit dates with day and month specified. ",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
       }
     ],
-    "updated_at": "2025-05-02"
+    "updated_at": "2025-07-10T00:50:40Z"
   },
   {
     "name": "Scott Wilson",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission",
+      "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
       "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
     ],
-    "positions": [
-      "Commissioner"
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Commissioner' is strongly implied by the link text 'Commissioner Scott Wilson' within the 'Mayor & City Commission' section."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated as part of the person's title and is a target role. "
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'elected from the City at large'."
+      }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "swilson@orcity.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address is listed directly under the person's name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and directly associated with the person's name in the text, formatted as a mailto link text, which is a high-confidence extraction method per guidelines. ",
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
     ],
     "websites": [
       {
         "data": "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
-        "data": "https://www.orcity.org/1774/Commissioner-Scott-Wilson/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL is the specific profile page for the person.",
+        "data": "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly linked in the text.",
+        "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
+      },
+      {
+        "data": "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a direct link to Commissioner Scott Wilson's profile page, matching the criteria for a person-specific website. ",
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term start date is explicitly stated as 'January 1, 2025'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date 'January 1, 2025' is explicitly stated as part of the 'Term' information directly associated with Scott Wilson, matching the YYYY-MM-DD format requirement. ",
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Term end date is explicitly stated as 'December 31, 2028'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2028' is explicitly stated next to the person's name and role in the 'Members' section. Converted to YYYY-MM-DD format as per instructions for explicit dates with day and month specified. ",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2028' is explicitly stated as part of the 'Term' information directly associated with Scott Wilson, matching the YYYY-MM-DD format requirement. ",
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
     ],
-    "updated_at": "2025-05-02"
+    "updated_at": "2025-07-10T00:50:40Z"
   },
   {
     "name": "Rocky Smith, Jr.",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission",
       "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
     ],
-    "positions": [
-      "Commissioner"
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Commissioner' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Commissioner' is explicitly stated in the heading and text."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'elected from the City at large'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "503-655-1963",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number is explicitly listed next to the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated in the text.",
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
     "emails": [
       {
         "data": "rsmith@orcity.org",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address is explicitly listed next to the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated in the text.",
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
     "websites": [
       {
         "data": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link associated with the name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the person's profile page is provided next to their name.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
-        "data": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the page is a specific profile page for the person.",
+        "data": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the person's profile page.",
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
     "start_dates": [
       {
         "data": "2023-01-01",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Start date is explicitly listed as part of the term information.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as 'January 1, 2023'.",
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "End date is explicitly listed as part of the term information.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'December 31, 2026' is explicitly stated next to the person's name and role in the 'Members' section. Converted to YYYY-MM-DD format as per instructions for explicit dates with day and month specified. ",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'December 31, 2026'.",
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
-    "updated_at": "2025-05-02"
+    "updated_at": "2025-07-10T00:50:40Z"
+  },
+  {
+    "name": "Mike Mitchell",
+    "sources": [
+      "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
+      "https://www.orcity.org/1776/Commissioner-Mike-Mitchell"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role 'Commissioner' is strongly implied by the link text 'Commissioner Mike Mitchell' within the 'Mayor & City Commission' section."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner Mike Mitchell' and is a target role."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Board Member, Downtown Oregon City Association' and 'Board Member' is a target role."
+      },
+      {
+        "data": "Board Member, Downtown Oregon City Association",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Board Member, Downtown Oregon City Association' and 'Board Member' is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-765-5993",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated.",
+        "source": "https://www.orcity.org/1776/Commissioner-Mike-Mitchell"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mmitchell@orcity.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated.",
+        "source": "https://www.orcity.org/1776/Commissioner-Mike-Mitchell"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.orcity.org/1776/Commissioner-Mike-Mitchell",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is explicitly linked in the text.",
+        "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
+      },
+      {
+        "data": "https://www.orcity.org/1776/Commissioner-Mike-Mitchell",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is directly associated with the person's name and title, indicating a profile page.",
+        "source": "https://www.orcity.org/1776/Commissioner-Mike-Mitchell"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as part of the term.",
+        "source": "https://www.orcity.org/1776/Commissioner-Mike-Mitchell"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as part of the term.",
+        "source": "https://www.orcity.org/1776/Commissioner-Mike-Mitchell"
+      }
+    ],
+    "updated_at": "2025-07-10T00:50:40Z"
   }
 ]

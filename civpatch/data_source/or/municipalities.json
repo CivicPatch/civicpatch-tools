@@ -326,9 +326,13 @@
       "phone_number": "(503) 657-0891",
       "website": "https://www.orcity.org",
       "email": null,
-      "meta_updated_at": "2025-05-02",
-      "meta_hash": "e48d99ba21bc5995decf7ad6a776353b",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-10T00:50:41Z",
+      "meta_hash": "122c4640d16aaa46172c5cf1155ba5e3",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4155200"
     },
     {
