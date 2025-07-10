@@ -3,10 +3,8 @@ module Services
     class OpenaiPrompts
       def self.municipality_officials(context, content_file, page_url, people_hint = [], person_name = "")
         content = File.read(content_file)
-        puts "What is the context: #{context.inspect}"
         state = context[:state]
         government_type = context[:government_type]
-        puts "what is the government type: #{government_type}"
         government_types_config = Core::CityManager.get_config(government_type)
 
         roles = government_types_config["roles"].map { |role| role["role"] }

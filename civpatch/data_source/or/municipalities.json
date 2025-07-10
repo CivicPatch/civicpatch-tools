@@ -61,9 +61,13 @@
       "phone_number": "(503) 588-6255",
       "website": "https://www.cityofsalem.net",
       "email": null,
-      "meta_updated_at": "2025-04-28",
-      "meta_hash": "67a331f98530c12e6f5121f42afe8e01",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-10T23:54:41Z",
+      "meta_hash": "58efbc7a1e27da09396c0f1c9211edf2",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4164900"
     },
     {

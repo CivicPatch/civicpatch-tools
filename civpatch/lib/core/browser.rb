@@ -81,6 +81,10 @@ module Core
 
         process_page(page, url, options, api_content)
       end
+
+    rescue StandardError => e
+      puts "Error fetching page content: #{e.message}"
+      nil
     end
 
     private_class_method def self.with_network_retry(url)

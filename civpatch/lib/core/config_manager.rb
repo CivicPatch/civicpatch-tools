@@ -35,7 +35,7 @@ module Core
     end
 
     def self.finalize_config(state, geoid, config)
-      people_config = config["people"]
+      people_config = config[:people]
 
       people_config.each do |name, person_config|
         # remove entries that doen't have any other_names set
@@ -43,12 +43,13 @@ module Core
           people_config.delete(name)
         end
       end
-      config["people"] = people_config
 
-      config["government_type"] = config["government_type"] || nil
-
-      Core::ConfigManager.update_config(state: state, geoid: geoid, updates: { people: config["people"],
-                                                     government_type: config["government_type"] })
+      Core::ConfigManager.update_config(state: state,
+                                        geoid: geoid,
+                                        updates: {
+                                          people: people_config,
+                                          government_type: config[:government_type]
+                                        })
     end
   end
 end
