@@ -9,7 +9,7 @@ module Core
         state: state,
         geoid: geoid,
         municipality_entry: municipality_entry,
-        government_type: config["government_type"] || municipality_entry["government_type"] || "mayor_council",
+        government_type: config["government_type"] || municipality_entry["government_type"],
         config: config
       }
     end

@@ -63,6 +63,7 @@ namespace :pipeline do
 
   def fetch_with_state_source(municipality_context)
     state = municipality_context[:state]
+    geoid = municipality_context[:geoid]
     municipality_name = municipality_context[:municipality_entry]["name"]
     puts "#{state} - #{municipality_name} - Fetching with state source"
     people_config = municipality_context[:config]["people"]
@@ -72,6 +73,9 @@ namespace :pipeline do
 
     people = source_directory_list["people"]
     government_type = government_type || source_directory_list["government_type"]
+    Core::ConfigManager.update_config(state: state,
+                                      geoid: geoid,
+                                      updates: { government_type: government_type })
     Core::PeopleManager.update_people(municipality_context, people, "#{source_directory_list["type"]}.before")
     people_with_canoncial_names, people_config = Services::Shared::People.collect_people(people_config, [], people)
     formatted_people = Core::PeopleManager.format_people(government_type, people_config, people_with_canoncial_names)
