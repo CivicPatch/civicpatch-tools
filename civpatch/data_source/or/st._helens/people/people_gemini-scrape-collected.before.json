@@ -1,0 +1,212 @@
+[
+  {
+    "name": "Jennifer Massey",
+    "sources": [
+      "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text and matches target role"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "971-899-1992",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jmassey@sthelensoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "updated_at": "2025-07-10T01:05:51Z"
+  },
+  {
+    "name": "Jessica Chilton",
+    "sources": [
+      "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text and matches target role"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "971-899-1699",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jchilton@sthelensoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "updated_at": "2025-07-10T01:05:51Z"
+  },
+  {
+    "name": "Mark Gundersen",
+    "sources": [
+      "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text and matches target role 'council member'"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "971-899-1908",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mgundersen@sthelensoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "updated_at": "2025-07-10T01:05:51Z"
+  },
+  {
+    "name": "Russell Hubbard",
+    "sources": [
+      "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text and matches target role 'council member'"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "971-899-1907",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rhubbard@sthelensoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "updated_at": "2025-07-10T01:05:51Z"
+  },
+  {
+    "name": "Brandon Sundeen",
+    "sources": [
+      "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text and matches target role 'council member'"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "971-899-1179",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bsundeen@sthelensoregon.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from text",
+        "source": "https://www.sthelensoregon.gov/citycouncil/page/elected-officials"
+      }
+    ],
+    "updated_at": "2025-07-10T01:05:51Z"
+  }
+]

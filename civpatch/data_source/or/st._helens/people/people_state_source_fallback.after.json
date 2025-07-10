@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Jennifer Massey",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-10T01:05:12Z",
+    "divisions": []
+  },
+  {
+    "name": "Jessica Chilton",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:05:12Z",
+    "divisions": []
+  },
+  {
+    "name": "Mark Gundersen",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:05:12Z",
+    "divisions": []
+  },
+  {
+    "name": "Russell Hubbard",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:05:12Z",
+    "divisions": []
+  },
+  {
+    "name": "Brandon Sundeen",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:05:12Z",
+    "divisions": []
+  }
+]
