@@ -1,0 +1,51 @@
+[
+  {
+    "name": "David Ripma",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-10T01:02:05Z"
+  },
+  {
+    "name": "Carol Allen",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:02:05Z"
+  },
+  {
+    "name": "Jesse Davidson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:02:05Z"
+  },
+  {
+    "name": "John Leamy",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:02:05Z"
+  },
+  {
+    "name": "Glenn White",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:02:05Z"
+  },
+  {
+    "name": "Geoffrey Wunn",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:02:05Z"
+  },
+  {
+    "name": "Zach Andrews",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:02:05Z"
+  }
+]
