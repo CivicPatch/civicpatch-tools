@@ -1,400 +1,598 @@
 [
   {
     "name": "Kenneth Jackola",
-    "image": "images/b59f8848b0632daf32aa60a7cf93d854b144b32d30cd142fdbd1985bcf9ed7bd.jpg",
-    "source_image": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=560",
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=45"
     ],
-    "positions": [
-      "Mayor"
+    "images": [
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=560",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly associated with Kenneth Jackola's name and title.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=560",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a portrait near the name Kenneth Jackola with alt text 'Mayor Kenneth Jackola'.",
+        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
+      }
     ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor in the content under the Mayor & City Council section."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Title: Mayor' under City Council section."
+      }
+    ],
+    "divisions": [],
     "phone_numbers": [
       {
         "data": "541-258-4980",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under Kenneth Jackola's contact info.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
       }
     ],
     "emails": [
       {
         "data": "ken.jackola@lebanonoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed as 'Email Kenneth Jackola' with mailto link.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
       }
     ],
     "websites": [
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=45",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'More Information' link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official profile link provided under Kenneth Jackola's section.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
-      },
-      {
-        "data": "https://www.lebanonoregon.gov/directory.aspx?eid=45",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for the person.",
-        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-08",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: January 8, 2025 to December 31, 2026' and converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as 'Term: January 8, 2025 to December 31, 2026'.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Extracted from 'Term: January 8, 2025 to December 31, 2026' and converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as 'Term: January 8, 2025 to December 31, 2026'.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=45"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:55:18Z"
   },
   {
     "name": "Dominic Conti",
-    "image": "images/445d0972a68b566b40629972d100c1bedc767059b9b1d8bed20f63842cab10ce.jpg",
-    "source_image": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=2005",
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=56"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 1"
+    "images": [
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=2005",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL directly associated with Dominic Conti's name and title.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=2005",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly associated with Dominic Conti's profile.",
+        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Title given as 'Ward 1 Councilor' which is equivalent to Council Member representing Ward 1."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title given as 'Ward 1 Councilor' which is a council member role representing Ward 1."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Ward 1 Councilor."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 1 Councilor'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-258-4989",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under Dominic Conti's contact info.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
       }
     ],
     "emails": [
       {
         "data": "dominic.conti@lebanonoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed under Dominic Conti's contact info.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
       }
     ],
     "websites": [
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=56",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'More Information' link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official profile link provided under Dominic Conti's section.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
-      },
-      {
-        "data": "https://www.lebanonoregon.gov/directory.aspx?eid=56",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Primary page URL for the person's profile.",
-        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-08",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 8, 2025 to December 31, 2028' and converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as January 8, 2025.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 8, 2025 to December 31, 2028' and converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2028.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=56"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:55:18Z"
   },
   {
     "name": "Carl Mann",
-    "image": "images/85fc2af1debb08389080960714b58a37f147e2b4748933d0b34540ce590fb2cd.jpg",
-    "source_image": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=563",
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=47"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 1"
+    "images": [
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=563",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL directly associated with Carl Mann's name and title.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=563",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name Carl Mann with alt text 'Councilor Carl Mann'.",
+        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=47"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Title given as 'Ward 1 Councilor' which is equivalent to Council Member representing Ward 1."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title 'Ward 1 Councilor' clearly indicates a council member role for the city council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Ward 1 Councilor."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 1 Councilor'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-258-4986",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under Carl Mann's contact info.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=47"
       }
     ],
     "emails": [
       {
         "data": "carl.mann@lebanonoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed as 'Email Carl Mann' mailto link.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=47"
       }
     ],
     "websites": [
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=47",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'More Information' link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official profile link provided under Carl Mann's section.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2023-01-11",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' and converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as January 11, 2023.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=47"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' and converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2026.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=47"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:55:18Z"
   },
   {
     "name": "David McClain",
-    "image": "images/4961944e09679934772bec40eaa171056d6a6712aa128b99d91989ec66c882c6.jpg",
-    "source_image": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=2008",
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=55"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 2"
+    "images": [
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=2008",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL directly associated with David McClain's name and title.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=2008",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image near the name and title, clearly a portrait of David McClain.",
+        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=55"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Title given as 'Ward 2 Councilor' which is equivalent to Council Member representing Ward 2."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title given as 'Ward 2 Councilor' which is a council member role representing Ward 2."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Ward 2 Councilor."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 2 Councilor'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-258-4988",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under the councilor's contact info.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=55"
       }
     ],
     "emails": [
       {
         "data": "david.mcclain@lebanonoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed as 'Email Dave McClain'.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=55"
       }
     ],
     "websites": [
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=55",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'More Information' link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official profile link provided under David McClain's section.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-08",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 8, 2025 to December 31, 2028' and converted to ISO format.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as January 8, 2025.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=55"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 8, 2025 to December 31, 2028' and converted to ISO format.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2028.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=55"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:55:18Z"
   },
   {
     "name": "Dave Workman",
-    "image": "images/3749118b5091c2265f58cbdbdc79414bbbcbe0da9fc53f8dab072d88df3db995.jpg",
-    "source_image": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=564",
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=49"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 2",
-      "ward 2"
+    "images": [
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=564",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL directly associated with Dave Workman's name and title.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=564",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image is a portrait near the name and title indicating it is the councilor's photo.",
+        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=49"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Title given as 'Ward 2 Councilor' which is equivalent to Council Member representing Ward 2."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title explicitly states 'Ward 2 Councilor' which is a council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Ward 2 Councilor."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division explicitly stated as 'Ward 2'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-258-4982",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly labeled 'Phone' near the councilor's name.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=49"
       }
     ],
     "emails": [
       {
         "data": "dave.workman@lebanonoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly linked with text 'Email Dave Workman' near the councilor's name.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=49"
       }
     ],
     "websites": [
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=49",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'More Information' link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official profile link provided under Dave Workman's section.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2023-01-11",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' and converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as January 11, 2023.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=49"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' and converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2026.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=49"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:55:18Z"
   },
   {
     "name": "Jeremy Salvage",
-    "image": "images/561d48d4da2fcc617806cf14a475a2d09420804f007a09bf2969a33281fc8174.jpg",
-    "source_image": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=565",
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=50"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 3",
-      "ward 3"
+    "images": [
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=565",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL directly associated with Jeremy Salvage's name and title.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=565",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image near the name with alt text 'Councilor Jeremy Salvage' clearly a portrait.",
+        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=50"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Title given as 'Ward 3 Councilor' which is equivalent to Council Member representing Ward 3."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title given as 'Ward 3 Councilor' under City Council, normalized to 'Council Member' with ward division."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Ward 3 Councilor."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 3 Councilor'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-258-4981",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly near name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under the councilor's contact info.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=50"
       }
     ],
     "emails": [
       {
         "data": "jeremy.salvage@lebanonoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed as 'Email Jeremy Salvage'.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=50"
       }
     ],
     "websites": [
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=50",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'More Information' link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official profile link provided under Jeremy Salvage's section.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
       }
     ],
     "start_dates": [
       {
         "data": "2022-06-08",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term: June 8, 2022 to December 31, 2024' and converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as June 8, 2022.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=50"
       }
     ],
     "end_dates": [
       {
         "data": "2024-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term: June 8, 2022 to December 31, 2024' and converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2024.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=50"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:55:18Z"
   },
   {
     "name": "Michelle Steinhebel",
-    "image": "images/6edba423a05998e9e4071516dcc4a851861f0eca052d0e2298379e34bd9347fc.jpg",
-    "source_image": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=561",
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=51"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 3",
-      "Council President"
+    "images": [
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=561",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL directly associated with Michelle Steinhebel's name and title.",
+        "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
+      },
+      {
+        "data": "https://www.lebanonoregon.gov/ImageRepository/Document?documentID=561",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Image is a portrait near the name and title, labeled 'Council President Michelle Steinhebel'.",
+        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Council President and Ward 3 Councilor."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'City Council' and 'Ward 3 - Council President', indicating she is a council member and council president, which is a leadership role within the council."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated as 'Council President' in the title."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Ward 3 Councilor."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 3' in the title."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-258-4983",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Phone number labeled 'Phone:' directly under name and title.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed under her contact info.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
     ],
     "emails": [
       {
         "data": "michelle.steinhebel@lebanonoregon.gov",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from mailto link text near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly listed as a mailto link.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
     ],
     "websites": [
       {
         "data": "https://www.lebanonoregon.gov/directory.aspx?eid=51",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Extracted from 'More Information' link near name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Official profile link provided under Michelle Steinhebel's section.",
         "source": "https://www.lebanonoregon.gov/366/Mayor-City-Council"
-      },
-      {
-        "data": "https://www.lebanonoregon.gov/Directory.aspx?DID=36",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "URL labeled 'City Council' near name, likely profile page.",
-        "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
     ],
     "start_dates": [
       {
         "data": "2023-01-11",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start date explicitly stated as January 11, 2023.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.99,
-        "llm_confidence_reason": "Extracted from 'Term January 11, 2023 to December 31, 2026' converted to YYYY-MM-DD.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2026.",
         "source": "https://www.lebanonoregon.gov/directory.aspx?eid=51"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:55:18Z"
   }
 ]

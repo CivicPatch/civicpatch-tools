@@ -1,30 +1,33 @@
 [
   {
     "name": "Kenneth Jackola",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
+    "divisions": [],
     "image": null,
-    "source_image": null,
     "phone_number": "541-258-4980",
-    "email": "ken.jackola@lebanonoregon.gov",
+    "email": null,
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=45",
     "start_date": "2025-01-08",
-    "end_date": "2026-12-31",
+    "end_date": null,
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=45"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:59:11Z"
   },
   {
     "name": "Dominic Conti",
-    "positions": [
+    "roles": [
       "Councilor",
+      "Ward 1 Councilor",
+      "Council Member"
+    ],
+    "divisions": [
       "Ward 1"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "541-258-4989",
     "email": "dominic.conti@lebanonoregon.gov",
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=56",
@@ -34,16 +37,19 @@
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=56"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:59:11Z"
   },
   {
     "name": "Carl Mann",
-    "positions": [
+    "roles": [
       "Councilor",
+      "Ward 1 Councilor",
+      "Council Member"
+    ],
+    "divisions": [
       "Ward 1"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "541-258-4986",
     "email": "carl.mann@lebanonoregon.gov",
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=47",
@@ -51,19 +57,22 @@
     "end_date": "2026-12-31",
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
-      "https://www.lebanonoregon.gov/directory.aspx?eid=47"
+      "https://www.lebanonoregon.gov/directory.aspx?eid=47",
+      "https://www.lebanonoregon.gov/Directory.aspx?DID=36"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:59:11Z"
   },
   {
     "name": "David McClain",
-    "positions": [
+    "roles": [
       "Councilor",
-      "Ward 2",
-      "Council Member"
+      "Council Member",
+      "Ward 2 Councilor"
+    ],
+    "divisions": [
+      "Ward 2"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "541-258-4988",
     "email": "david.mcclain@lebanonoregon.gov",
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=55",
@@ -73,55 +82,60 @@
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=55"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:59:11Z"
   },
   {
     "name": "Dave Workman",
-    "positions": [
+    "roles": [
       "Councilor",
+      "Council Member",
+      "Ward 2 Councilor"
+    ],
+    "divisions": [
       "Ward 2"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "541-258-4982",
-    "email": "city.recorder@lebanonoregon.gov",
+    "email": "dave.workman@lebanonoregon.gov",
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=49",
-    "start_date": null,
-    "end_date": null,
+    "start_date": "2023-01-11",
+    "end_date": "2026-12-31",
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=49"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:59:11Z"
   },
   {
     "name": "Jeremy Salvage",
-    "positions": [
-      "Councilor",
+    "roles": [
+      "Councilor"
+    ],
+    "divisions": [
       "Ward 3"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": null,
-    "email": "city.recorder@lebanonoregon.gov",
+    "email": null,
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=50",
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://www.lebanonoregon.gov/366/Mayor-City-Council"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:59:11Z"
   },
   {
     "name": "Michelle Steinhebel",
-    "positions": [
-      "Councilor",
-      "Ward 3",
+    "roles": [
       "Council President",
-      "City Council"
+      "Ward 3 - Council President",
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward 3"
     ],
     "image": null,
-    "source_image": null,
     "phone_number": "541-258-4983",
     "email": "michelle.steinhebel@lebanonoregon.gov",
     "website": "https://www.lebanonoregon.gov/directory.aspx?eid=51",
@@ -131,6 +145,6 @@
       "https://www.lebanonoregon.gov/366/Mayor-City-Council",
       "https://www.lebanonoregon.gov/directory.aspx?eid=51"
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:59:11Z"
   }
 ]
