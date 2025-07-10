@@ -14,12 +14,12 @@
   - https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn
-  updated_at: '2025-07-10T01:07:00Z'
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
+  updated_at: '2025-07-10T04:16:15Z'
 - name: Carol Allen
   roles:
   - Council Member
@@ -35,12 +35,12 @@
   - https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn
-  updated_at: '2025-07-10T01:07:00Z'
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
+  updated_at: '2025-07-10T04:16:15Z'
 - name: Geoffrey Wunn
   roles:
   - Council Member
@@ -56,33 +56,12 @@
   - https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn
-  updated_at: '2025-07-10T01:07:00Z'
-- name: Glenn T. White
-  roles:
-  - Council Member
-  divisions:
-  image: https://www.troutdaleoregon.gov/sites/g/files/vyhlif13696/files/styles/directory_listings_body_4_column/public/media/mayorcitycouncil/image/30276/glenn_white_color.jpg?itok=___5-8NP
-  cdn_image: https://cdn.civicpatch.org/open-data/or/troutdale/images/c29a4713e2e7b7762749f14161f9c7a37533ad135ea291843352e7d64c3acb1f.jpg
-  email: glenn.white@troutdaleoregon.gov
-  phone_number: "(503) 888-1369"
-  website: https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
-  start_date:
-  end_date:
-  sources:
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn
-  updated_at: '2025-07-10T01:07:00Z'
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
+  updated_at: '2025-07-10T04:16:15Z'
 - name: Glenn White
   roles:
   - Council Member
@@ -90,7 +69,7 @@
   image: https://www.troutdaleoregon.gov/sites/g/files/vyhlif13696/files/styles/directory_listings_body_4_column/public/media/mayorcitycouncil/image/30276/glenn_white_color.jpg?itok=___5-8NP
   cdn_image: https://cdn.civicpatch.org/open-data/or/troutdale/images/c29a4713e2e7b7762749f14161f9c7a37533ad135ea291843352e7d64c3acb1f.jpg
   email: glenn.white@troutdaleoregon.gov
-  phone_number: "(503) 888-1369"
+  phone_number: "(503) 665-5175"
   website: https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
   start_date:
   end_date:
@@ -98,12 +77,12 @@
   - https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn
-  updated_at: '2025-07-10T01:07:00Z'
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
+  updated_at: '2025-07-10T04:16:15Z'
 - name: Jesse Davidson
   roles:
   - Council Member
@@ -119,12 +98,12 @@
   - https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn
-  updated_at: '2025-07-10T01:07:00Z'
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
+  updated_at: '2025-07-10T04:16:15Z'
 - name: John Leamy
   roles:
   - Council Member
@@ -140,12 +119,12 @@
   - https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn
-  updated_at: '2025-07-10T01:07:00Z'
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
+  updated_at: '2025-07-10T04:16:15Z'
 - name: Zach Andrews
   roles:
   - Council Member
@@ -161,9 +140,9 @@
   - https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
-  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
   - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn
-  updated_at: '2025-07-10T01:07:00Z'
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy
+  - https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews
+  updated_at: '2025-07-10T04:16:15Z'

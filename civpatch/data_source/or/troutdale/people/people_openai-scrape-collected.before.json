@@ -5,8 +5,10 @@
       "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
-      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews"
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
     ],
     "images": [
       {
@@ -17,8 +19,8 @@
       },
       {
         "data": "https://www.troutdaleoregon.gov/sites/g/files/vyhlif13696/files/styles/directory_listings_body_with_photo/public/media/mayorcitycouncil/image/821/david_ripma_new_2023_color.jpg?itok=rGz1cq33",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The image is directly associated with David Ripma's profile and is a headshot.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a headshot near the name and position on the official city page.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma"
       }
     ],
@@ -30,31 +32,41 @@
       },
       {
         "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page explicitly states 'Position Mayor' for David Ripma, indicating he is the Mayor of Troutdale."
-      },
-      {
-        "data": "Mayor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed explicitly as Mayor in the contact position list under Mayor and City Council."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as Mayor in the Mayor and City Council contact section."
+        "llm_confidence_reason": "The page explicitly states the position as 'Mayor' for David Ripma."
       },
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position Mayor' in the Mayor and City Council contact list on the page."
+        "llm_confidence_reason": "Listed explicitly as 'Position Mayor' in the contact section for Mayor and City Council members."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as Mayor in the contact section for Mayor and City Council."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed explicitly as Mayor in the contact section of the page under 'Mayor and City Council'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as Mayor in the contact section."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as Mayor in the Mayor and City Council contact list on the page."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "503-665-5175",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The phone number is listed under 'Contact Information' on the same page as David Ripma's profile, likely the main contact for the Mayor.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed under 'Contact Information' on the same page and logically associated with the Mayor's office.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma"
       }
     ],
@@ -62,7 +74,7 @@
       {
         "data": "david.ripma@troutdaleoregon.gov",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email link labeled 'Email David Ripma' is present; exact email address inferred from typical city email format though not explicitly shown.",
+        "llm_confidence_reason": "Email link labeled 'Email David Ripma' is present; exact email inferred from typical city email format though not explicitly shown.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       }
     ],
@@ -70,19 +82,31 @@
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL is directly linked from the name.",
+        "llm_confidence_reason": "Profile page URL directly linked from the name.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "This is the official profile page URL for David Ripma as Mayor.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link provided in the contact section for David Ripma as Mayor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "URL provided in the contact list for David Ripma as Mayor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-10T01:04:47Z"
+    "updated_at": "2025-07-10T04:13:58Z"
   },
   {
     "name": "Carol Allen",
@@ -90,8 +114,10 @@
       "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
-      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews"
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
     ],
     "images": [
       {
@@ -102,8 +128,8 @@
       },
       {
         "data": "https://www.troutdaleoregon.gov/sites/g/files/vyhlif13696/files/styles/directory_listings_body_with_photo/public/media/mayorcitycouncil/image/30261/carol_allen_color.jpg?itok=qzY06-Wi",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is a portrait near the name Carol Allen on the official city council directory page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is a headshot near the name Carol Allen on the official city council directory page.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen"
       }
     ],
@@ -115,23 +141,33 @@
       },
       {
         "data": "City Councilor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the Mayor and City Council contact list."
-      },
-      {
-        "data": "City Councilor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Role explicitly stated as 'City Councilor' on the page under the Mayor and City Council section."
-      },
-      {
-        "data": "City Councilor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as City Councilor in the Mayor and City Council contact section."
+        "llm_confidence_reason": "Listed explicitly as 'City Councilor' in the Mayor and City Council contact list."
       },
       {
         "data": "City Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the Mayor and City Council contact list on the page."
+        "llm_confidence_reason": "The page explicitly states 'Position: City Councilor' for Carol Allen under the Mayor and City Council section."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section for Mayor and City Council."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section of the page."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the Mayor and City Council contact list on the page."
       }
     ],
     "divisions": [],
@@ -139,7 +175,7 @@
       {
         "data": "503-665-5175",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed under Contact Information section on the same page, likely main city council contact number.",
+        "llm_confidence_reason": "The phone number 503-665-5175 is listed under Contact Information on the same page, likely the main contact for council members.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen"
       }
     ],
@@ -147,7 +183,7 @@
       {
         "data": "carol.allen@troutdaleoregon.gov",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email link labeled 'Email Carol Allen' is present; exact email address inferred from typical city email format though not explicitly shown.",
+        "llm_confidence_reason": "Email link labeled 'Email Carol Allen' is present; exact email inferred from typical city email format though not explicitly shown.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       }
     ],
@@ -155,25 +191,37 @@
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL is directly linked from the name.",
+        "llm_confidence_reason": "Profile page URL directly linked from the name.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Profile link provided in the contact list.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Carol Allen as City Councilor.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "This is the official profile page URL for Carol Allen on the Troutdale city website.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link provided in the contact section for Carol Allen as City Councilor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "URL provided in the contact list for Carol Allen as City Councilor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-10T01:04:47Z"
+    "updated_at": "2025-07-10T04:13:58Z"
   },
   {
     "name": "Jesse Davidson",
@@ -181,8 +229,10 @@
       "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
-      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews"
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
     ],
     "images": [
       {
@@ -194,7 +244,7 @@
       {
         "data": "https://www.troutdaleoregon.gov/sites/g/files/vyhlif13696/files/styles/directory_listings_body_with_photo/public/media/mayorcitycouncil/image/30266/jesse_davidson_color.jpg?itok=HGS5WOmK",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image is a headshot directly associated with Jesse Davidson on the official city council directory page.",
+        "llm_confidence_reason": "Image is directly next to Jesse Davidson's name and profile.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson"
       }
     ],
@@ -206,23 +256,33 @@
       },
       {
         "data": "City Councilor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the Mayor and City Council contact list."
-      },
-      {
-        "data": "City Councilor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact position list under Mayor and City Council."
-      },
-      {
-        "data": "City Councilor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Position: City Councilor' on the official Troutdale city council directory page."
+        "llm_confidence_reason": "Listed explicitly as 'City Councilor' in the Mayor and City Council contact list."
       },
       {
         "data": "City Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the Mayor and City Council contact list on the page."
+        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the contact section for Mayor and City Council members."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section for Mayor and City Council."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section of the page."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page explicitly states 'Position: City Councilor' for Jesse Davidson."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the Mayor and City Council contact list on the page."
       }
     ],
     "divisions": [],
@@ -230,7 +290,7 @@
       {
         "data": "503-665-5175",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number listed under Contact Information on the same page; likely city council contact number.",
+        "llm_confidence_reason": "Phone number is listed under Contact Information on the same page for the City Councilor role.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson"
       }
     ],
@@ -238,7 +298,7 @@
       {
         "data": "jesse.davidson@troutdaleoregon.gov",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email link labeled 'Email Jesse Davidson' is present; exact email address inferred from typical city email format though not explicitly shown.",
+        "llm_confidence_reason": "Email link labeled 'Email Jesse Davidson' is present; exact email inferred from typical city email format though not explicitly shown.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       }
     ],
@@ -246,25 +306,37 @@
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL is directly linked from the name.",
+        "llm_confidence_reason": "Profile page URL directly linked from the name.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Profile link provided in the contact list.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Jesse Davidson as City Councilor.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link provided in the contact section for Jesse Davidson as City Councilor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
         "llm_confidence": 1,
-        "llm_confidence_reason": "This is the official profile page URL for Jesse Davidson on the Troutdale city website.",
+        "llm_confidence_reason": "This is the official profile page URL for Jesse Davidson.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "URL provided in the contact list for Jesse Davidson as City Councilor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-10T01:04:47Z"
+    "updated_at": "2025-07-10T04:13:58Z"
   },
   {
     "name": "John Leamy",
@@ -272,9 +344,10 @@
       "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
-      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy",
-      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews"
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
     ],
     "images": [
       {
@@ -285,8 +358,8 @@
       },
       {
         "data": "https://www.troutdaleoregon.gov/sites/g/files/vyhlif13696/files/styles/directory_listings_body_with_photo/public/media/mayorcitycouncil/image/30271/john_leamy_color.jpg?itok=hrksL5ZB",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is a headshot near the name and role of John Leamy.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a headshot near the name John Leamy on the official city council directory page.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
       }
     ],
@@ -298,28 +371,33 @@
       },
       {
         "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as 'City Councilor' in the Mayor and City Council contact list."
+      },
+      {
+        "data": "City Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the Mayor and City Council contact list."
+        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the contact section for Mayor and City Council members."
       },
       {
         "data": "City Councilor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact position list under Mayor and City Council."
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section for Mayor and City Council."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section of the page."
       },
       {
         "data": "City Councilor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as City Councilor in the Mayor and City Council contact section."
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section."
       },
       {
         "data": "City Councilor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page explicitly states 'Position: City Councilor' for John Leamy."
-      },
-      {
-        "data": "City Councilor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the Mayor and City Council contact list on the page."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role explicitly stated as 'City Councilor' on the page under the Mayor & City Council section."
       }
     ],
     "divisions": [],
@@ -327,7 +405,7 @@
       {
         "data": "503-665-5175",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under 'Contact Information' on the same page for the City Councilor section.",
+        "llm_confidence_reason": "Phone number listed under Contact Information section on the same page, likely city council contact.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
       }
     ],
@@ -335,7 +413,7 @@
       {
         "data": "john.leamy@troutdaleoregon.gov",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email link labeled 'Email John Leamy' is present; exact email address inferred from typical city email format though not explicitly shown.",
+        "llm_confidence_reason": "Email link labeled 'Email John Leamy' is present; exact email inferred from typical city email format though not explicitly shown.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       }
     ],
@@ -343,25 +421,31 @@
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL is directly linked from the name.",
+        "llm_confidence_reason": "Profile page URL directly linked from the name.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Profile link provided in the contact list.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for John Leamy as City Councilor.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "This is the profile page URL for John Leamy.",
+        "llm_confidence_reason": "Profile link provided in the contact section for John Leamy as City Councilor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the official profile page URL for John Leamy on the Troutdale city website.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-10T01:04:47Z"
+    "updated_at": "2025-07-10T04:13:58Z"
   },
   {
     "name": "Glenn White",
@@ -369,9 +453,10 @@
       "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
-      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews"
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
     ],
     "images": [
       {
@@ -382,8 +467,8 @@
       },
       {
         "data": "https://www.troutdaleoregon.gov/sites/g/files/vyhlif13696/files/styles/directory_listings_body_with_photo/public/media/mayorcitycouncil/image/30276/glenn_white_color.jpg?itok=3F5ePUHj",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "The image is a headshot near Glenn White's name and role on the official city council page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is a headshot near the name Glenn White on the official city council directory page.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white"
       }
     ],
@@ -395,28 +480,33 @@
       },
       {
         "data": "City Councilor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the Mayor and City Council contact list."
-      },
-      {
-        "data": "City Councilor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact position list under Mayor and City Council."
-      },
-      {
-        "data": "City Councilor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "The page explicitly states Glenn White's position as 'City Councilor' under the Mayor & City Council section."
-      },
-      {
-        "data": "City Councilor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as City Councilor in the Mayor and City Council contact section."
+        "llm_confidence_reason": "Listed explicitly as 'City Councilor' in the Mayor and City Council contact list."
       },
       {
         "data": "City Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the Mayor and City Council contact list on the page."
+        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the contact section for Mayor and City Council members."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section for Mayor and City Council."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page explicitly states 'Position City Councilor' for Glenn White, indicating an active role on the primary governing body, the City Council."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the Mayor and City Council contact list on the page."
       }
     ],
     "divisions": [],
@@ -424,7 +514,7 @@
       {
         "data": "503-665-5175",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The phone number is listed under 'Contact Information' on the same page, likely the main contact for council members.",
+        "llm_confidence_reason": "The phone number is listed under 'Contact Information' on the same page for Glenn White, likely the councilor's contact number.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white"
       }
     ],
@@ -432,7 +522,7 @@
       {
         "data": "glenn.white@troutdaleoregon.gov",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email link labeled 'Email Glenn White' is present; exact email address inferred from typical city email format though not explicitly shown.",
+        "llm_confidence_reason": "Email link labeled 'Email Glenn White' is present; exact email inferred from typical city email format though not explicitly shown.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       }
     ],
@@ -440,25 +530,31 @@
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL is directly linked from the name.",
+        "llm_confidence_reason": "Profile page URL directly linked from the name.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Profile link provided in the contact list.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Glenn White as City Councilor.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "This is the official profile page URL for Glenn White on the Troutdale city website.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "URL provided in the contact list for Glenn White as City Councilor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-10T01:04:47Z"
+    "updated_at": "2025-07-10T04:13:58Z"
   },
   {
     "name": "Geoffrey Wunn",
@@ -467,8 +563,9 @@
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
-      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews"
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
     ],
     "images": [
       {
@@ -480,7 +577,7 @@
       {
         "data": "https://www.troutdaleoregon.gov/sites/g/files/vyhlif13696/files/styles/directory_listings_body_with_photo/public/media/mayorcitycouncil/image/811/geoffrey_2023_color.jpg?itok=t5qQz7XA",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The image is a headshot near the name and role of Geoffrey Wunn on the official city council directory page.",
+        "llm_confidence_reason": "The image is a headshot near the name Geoffrey Wunn on the official city council directory page.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn"
       }
     ],
@@ -492,13 +589,13 @@
       },
       {
         "data": "City Councilor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the Mayor and City Council contact list."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as 'City Councilor' in the Mayor and City Council contact list."
       },
       {
         "data": "City Councilor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact position list under Mayor and City Council."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the contact section for Mayor and City Council members."
       },
       {
         "data": "City Councilor",
@@ -507,13 +604,18 @@
       },
       {
         "data": "City Councilor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as City Councilor in the Mayor and City Council contact section."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section of the page."
       },
       {
         "data": "City Councilor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the Mayor and City Council contact list on the page."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the Mayor and City Council contact list on the page."
       }
     ],
     "divisions": [],
@@ -521,7 +623,7 @@
       {
         "data": "503-665-5175",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The phone number is listed under 'Contact Information' on the same page, likely the main contact number for council members.",
+        "llm_confidence_reason": "The phone number is listed under 'Contact Information' on the same page, likely the main contact for council members.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn"
       }
     ],
@@ -529,7 +631,7 @@
       {
         "data": "geoffrey.wunn@troutdaleoregon.gov",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email link labeled 'Email Geoffrey Wunn' is present; exact email address inferred from typical city email format though not explicitly shown.",
+        "llm_confidence_reason": "Email link labeled 'Email Geoffrey Wunn' is present; exact email inferred from typical city email format though not explicitly shown.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       }
     ],
@@ -537,13 +639,13 @@
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL is directly linked from the name.",
+        "llm_confidence_reason": "Profile page URL directly linked from the name.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Profile link provided in the contact list.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Geoffrey Wunn as City Councilor.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma"
       },
       {
@@ -551,11 +653,23 @@
         "llm_confidence": 1,
         "llm_confidence_reason": "This is the official profile page URL for Geoffrey Wunn on the Troutdale city website.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link provided in the contact section for Geoffrey Wunn as City Councilor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "URL provided in the contact list for Geoffrey Wunn as City Councilor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-10T01:04:47Z"
+    "updated_at": "2025-07-10T04:13:58Z"
   },
   {
     "name": "Zach Andrews",
@@ -563,7 +677,10 @@
       "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/carol-allen",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/geoffrey-wunn",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/jesse-davidson",
+      "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy",
       "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews"
     ],
     "images": [
@@ -576,7 +693,7 @@
       {
         "data": "https://www.troutdaleoregon.gov/sites/g/files/vyhlif13696/files/styles/directory_listings_body_with_photo/public/media/mayorcitycouncil/image/30281/zach_andrews_color.jpg?itok=2PPBuGxs",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The image is a headshot near the name and role of Zach Andrews on the official city council directory page.",
+        "llm_confidence_reason": "Image URL is directly next to Zach Andrews' name and profile.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews"
       }
     ],
@@ -588,23 +705,38 @@
       },
       {
         "data": "City Councilor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the Mayor and City Council contact list."
-      },
-      {
-        "data": "City Councilor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact position list under Mayor and City Council."
-      },
-      {
-        "data": "City Councilor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as City Councilor in the Mayor and City Council contact section."
+        "llm_confidence_reason": "Listed explicitly as 'City Councilor' in the Mayor and City Council contact list."
       },
       {
         "data": "City Councilor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page explicitly states 'Position: City Councilor' for Zach Andrews, which matches the target role 'council member'."
+        "llm_confidence_reason": "Listed explicitly as 'Position City Councilor' in the contact section for Mayor and City Council members."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section for Mayor and City Council."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section of the page."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the contact section."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed explicitly as City Councilor in the Mayor and City Council contact list on the page."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page explicitly states 'Position: City Councilor' under Zach Andrews' profile and lists him among other city council members."
       }
     ],
     "divisions": [],
@@ -612,7 +744,7 @@
       {
         "data": "503-665-5175",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The phone number is listed under 'Contact Information' on the same page as Zach Andrews' profile, likely the main city council contact number.",
+        "llm_confidence_reason": "Phone number is listed under 'Contact Information' on the same page; likely the main city council contact number.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews"
       }
     ],
@@ -620,7 +752,7 @@
       {
         "data": "zach.andrews@troutdaleoregon.gov",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email link labeled 'Email Zach Andrews' is present; exact email address inferred from typical city email format though not explicitly shown.",
+        "llm_confidence_reason": "Email link labeled 'Email Zach Andrews' is present; exact email inferred from typical city email format though not explicitly shown.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       }
     ],
@@ -628,24 +760,36 @@
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile page URL is directly linked from the name.",
+        "llm_confidence_reason": "Profile page URL directly linked from the name.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/page/meet-us"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Profile link provided in the contact list.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official profile page URL for Zach Andrews as City Councilor.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/david-ripma"
       },
       {
         "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "This is the official profile page URL for Zach Andrews on the Troutdale city website.",
+        "llm_confidence_reason": "Profile link provided in the contact section for Zach Andrews as City Councilor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/glenn-white"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "URL provided in the contact list for Zach Andrews as City Councilor.",
+        "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/john-leamy"
+      },
+      {
+        "data": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the official profile page URL for Zach Andrews on the city website.",
         "source": "https://www.troutdaleoregon.gov/mayorcitycouncil/directory-listing/zach-andrews"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-10T01:04:47Z"
+    "updated_at": "2025-07-10T04:13:58Z"
   }
 ]

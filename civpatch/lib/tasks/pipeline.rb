@@ -129,10 +129,17 @@ namespace :pipeline do
 
   def prepare_directories(state, municipality_entry)
     cache_destination_dir = Core::PathHelper.get_city_cache_path(state, municipality_entry["geoid"])
+    people_data_source_dir = File.join(
+      Core::PathHelper.get_data_source_city_path(state, municipality_entry["geoid"]), "people"
+    )
 
     # Remove cache folder if it exists
     FileUtils.rm_rf(cache_destination_dir) if Dir.exist?(cache_destination_dir)
     FileUtils.mkdir_p(cache_destination_dir)
+
+    # Remove people data source folder if it exists
+    FileUtils.rm_rf(people_data_source_dir) if Dir.exist?(people_data_source_dir)
+    FileUtils.mkdir_p(people_data_source_dir)
   end
 
   private
