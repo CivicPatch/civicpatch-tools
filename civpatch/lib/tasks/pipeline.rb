@@ -155,9 +155,6 @@ namespace :pipeline do
                                      government_type: government_type,
                                      people: people_config)
 
-    pp "After state source, people config is: #{context[:config]["people"].inspect}"
-    pp context[:config]["people"]
-
     people_config = fetch_with_scrape(context, people_hint)
     context = Core::ContextManager
               .update_context_config(context,
