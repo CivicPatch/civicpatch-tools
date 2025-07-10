@@ -673,9 +673,13 @@
       "phone_number": "(503) 266-4021",
       "website": "https://www.canbyoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-05-06",
-      "meta_hash": "029cdc397c73659c26cfcac14e434e31",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-10T00:59:19Z",
+      "meta_hash": "36572f05424fef9affa5f6b36e12bfc5",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4110750"
     },
     {
