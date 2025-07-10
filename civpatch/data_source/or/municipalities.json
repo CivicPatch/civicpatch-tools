@@ -709,9 +709,13 @@
       "phone_number": "(503) 623-2338",
       "website": "https://www.dallasor.gov",
       "email": null,
-      "meta_updated_at": "2025-05-07",
-      "meta_hash": "7f47498a5fcddc56fab67e76623e7b15",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-10T01:02:42Z",
+      "meta_hash": "329ed3fc167c652602436f0d016b8847",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4117700"
     },
     {

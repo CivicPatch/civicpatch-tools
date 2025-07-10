@@ -1,227 +1,377 @@
 [
   {
     "name": "Rich Slack",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.dallasor.gov/citycouncil/page/mayor"
     ],
-    "positions": [
-      "Mayor",
-      "at-large",
-      "Council Member"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text clearly identifies him as 'Mayor Slack' and describes his current mayoral duties."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states the mayor is elected 'at-large'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "503-831-3502",
-        "llm_confidence": 0.85,
-        "llm_confidence_reason": "Phone number listed in the 'Contact Information' section which also contains the Mayor's email address, suggesting it is a contact number for the Mayor's office or the Mayor.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided under 'Contact Information' and is the only one associated with the mayor's section.",
         "source": "https://www.dallasor.gov/citycouncil/page/mayor"
       }
     ],
     "emails": [
       {
         "data": "rich.slack@dallasor.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly listed email address under 'Contact Information' associated with the Mayor.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided and clearly associated with Rich Slack.",
         "source": "https://www.dallasor.gov/citycouncil/page/mayor"
       }
     ],
-    "websites": [],
+    "websites": [
+      {
+        "data": "https://www.dallasor.gov/citycouncil/page/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a direct profile page for the Mayor.",
+        "source": "https://www.dallasor.gov/citycouncil/page/mayor"
+      }
+    ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-07-10T01:02:37Z"
   },
   {
     "name": "Larry Briggs",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.dallasor.gov/citycouncil",
       "https://www.dallasor.gov/citycouncil/page/council-president-larry-briggs"
     ],
-    "positions": [
-      "Council President"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Council President'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Council President' which is a type of council member."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Council President' directly under his name."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "larry.briggs@dallasor.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://www.dallasor.gov/citycouncil/page/council-president-larry-briggs"
       }
     ],
     "websites": [
       {
         "data": "https://www.dallasor.gov/citycouncil/page/council-president-larry-briggs",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with name and title under photo.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.dallasor.gov/citycouncil/page/council-president-larry-briggs",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the current page and is specific to Larry Briggs as Council President.",
+        "source": "https://www.dallasor.gov/citycouncil/page/council-president-larry-briggs"
       }
     ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Term Expires' date provided.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: 12/31/2026'.",
+        "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Expires 12/31/2026'.",
         "source": "https://www.dallasor.gov/citycouncil/page/council-president-larry-briggs"
       }
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-07-10T01:02:37Z"
   },
   {
     "name": "Carlos Barrientos",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.dallasor.gov/citycouncil",
       "https://www.dallasor.gov/citycouncil/page/councilor-carlos-barrientos"
     ],
-    "positions": [
-      "Councilor",
-      "City Councilor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a type of council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'City Councilor' directly extracted and normalized to 'Council Member'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'City Councilor' directly extracted from the text."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "Carlos.barrientos@dallasor.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-carlos-barrientos"
       }
     ],
     "websites": [
       {
         "data": "https://www.dallasor.gov/citycouncil/page/councilor-carlos-barrientos",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with name and title under photo.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.dallasor.gov/citycouncil/page/councilor-carlos-barrientos",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is the direct profile page for the person.",
+        "source": "https://www.dallasor.gov/citycouncil/page/councilor-carlos-barrientos"
       }
     ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Term Expires' date provided.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: 12/31/2028'.",
+        "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'Term Expires: 12/31/2028' directly extracted from the text.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-carlos-barrientos"
       }
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-07-10T01:02:37Z"
   },
   {
     "name": "Anthony Blosser",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.dallasor.gov/citycouncil",
       "https://www.dallasor.gov/citycouncil/page/councilor-tony-blosser"
     ],
-    "positions": [
-      "Councilor",
-      "City Councilor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a type of council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'City Councilor' is a specific instance of the target role 'council member'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'City Councilor' is explicitly stated."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "anthony.blosser@dallasor.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-tony-blosser"
       }
     ],
     "websites": [
       {
         "data": "https://www.dallasor.gov/citycouncil/page/councilor-tony-blosser",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with name and title under photo.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.dallasor.gov/citycouncil/page/councilor-tony-blosser",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for the councilor.",
+        "source": "https://www.dallasor.gov/citycouncil/page/councilor-tony-blosser"
       }
     ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Term Expires' date provided.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: 12/31/2028'.",
+        "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Expires 12/31/2028'.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-tony-blosser"
       }
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-07-10T01:02:37Z"
   },
   {
     "name": "Kim Fitzgerald",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.dallasor.gov/citycouncil",
       "https://www.dallasor.gov/citycouncil/page/councilor-kim-fitzgerald"
     ],
-    "positions": [
-      "Councilor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a type of council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Normalized from 'City Councilor' which is a target role."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'City Councilor' is explicitly stated and matches a target role pattern."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "kim.fitzgerald@dallasor.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-kim-fitzgerald"
       }
     ],
     "websites": [
       {
         "data": "https://www.dallasor.gov/citycouncil/page/councilor-kim-fitzgerald",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with name and title under photo.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.dallasor.gov/citycouncil/page/councilor-kim-fitzgerald",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the person's profile page.",
+        "source": "https://www.dallasor.gov/citycouncil/page/councilor-kim-fitzgerald"
       }
     ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Term Expires' date provided.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: 12/31/2028'.",
+        "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date is explicitly stated as 'Term Expires 12/31/2028'.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-kim-fitzgerald"
       }
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-07-10T01:02:37Z"
   },
   {
     "name": "Micah Jantz",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.dallasor.gov/citycouncil",
       "https://www.dallasor.gov/citycouncil/page/councilor-micah-jantz"
     ],
-    "positions": [
-      "Councilor",
-      "City Councilor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a type of council member."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'City Councilor' is explicitly stated and matches a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Normalized role 'council member' is inferred from 'City Councilor'."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "micah.jantz@dallasor.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-micah-jantz"
       }
     ],
     "websites": [
       {
         "data": "https://www.dallasor.gov/citycouncil/page/councilor-micah-jantz",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with name and title under photo.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.dallasor.gov/citycouncil"
       },
       {
-        "data": "https://www.dallasor.gov/citycouncil/councilor-micah-jantz",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The current page URL is a dedicated profile page for the person.",
+        "data": "https://www.dallasor.gov/citycouncil/page/councilor-micah-jantz",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is a direct profile page for Micah Jantz and is explicitly linked at the top of the section.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-micah-jantz"
       }
     ],
@@ -229,85 +379,134 @@
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires 12/31/2026'.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: 12/31/2026'.",
+        "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'Term Expires 12/31/2026' is explicitly stated and in a valid format.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-micah-jantz"
       }
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-07-10T01:02:37Z"
   },
   {
     "name": "Michael Schilling",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.dallasor.gov/citycouncil",
       "https://www.dallasor.gov/citycouncil/page/councilor-michael-schilling"
     ],
-    "positions": [
-      "Councilor",
-      "City Councilor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a type of council member."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'City Councilor' and matches a target role"
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "michael.schilling@dallasor.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and directly associated with the person's name and role in the text",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-michael-schilling"
       }
     ],
     "websites": [
       {
         "data": "https://www.dallasor.gov/citycouncil/page/councilor-michael-schilling",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with name and title under photo.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.dallasor.gov/citycouncil/page/councilor-michael-schilling",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A direct link to the councilor's profile page is provided at the top of the content.",
+        "source": "https://www.dallasor.gov/citycouncil/page/councilor-michael-schilling"
       }
     ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit 'Term Expires' date provided.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: 12/31/2026'.",
+        "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Expires 12/31/2026'",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-michael-schilling"
       }
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-07-10T01:02:37Z"
   },
   {
     "name": "David Shein",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.dallasor.gov/citycouncil",
       "https://www.dallasor.gov/citycouncil/page/councilor-david-shein"
     ],
-    "positions": [
-      "Councilor",
-      "City Councilor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a type of council member."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'City Councilor'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Normalized role 'council member' is inferred from 'City Councilor'."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "david.shein@dallasor.gov",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-david-shein"
       }
     ],
     "websites": [
       {
         "data": "https://www.dallasor.gov/citycouncil/page/councilor-david-shein",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with name and title under photo.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.dallasor.gov/citycouncil"
       },
       {
-        "data": "https://www.dallasor.gov/citycouncil/directory-listing/david-shein",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL of the current page which is a profile page for the person.",
+        "data": "https://www.dallasor.gov/citycouncil/page/councilor-david-shein",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a direct profile page for David Shein.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-david-shein"
       }
     ],
@@ -315,51 +514,157 @@
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires 12/31/2026'.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: 12/31/2026'.",
+        "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Expires 12/31/2026'.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-david-shein"
       }
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-07-10T01:02:37Z"
   },
   {
     "name": "Robert Spivey",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.dallasor.gov/citycouncil",
       "https://www.dallasor.gov/citycouncil/page/councilor-robert-spivey"
     ],
-    "positions": [
-      "Councilor",
-      "City Councilor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a type of council member."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'City Councilor' directly maps to 'council member'."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'City Councilor' is explicitly stated."
+      }
     ],
+    "divisions": [],
     "phone_numbers": [],
     "emails": [
       {
         "data": "robert.spivey@dallasor.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-robert-spivey"
       }
     ],
     "websites": [
       {
         "data": "https://www.dallasor.gov/citycouncil/page/councilor-robert-spivey",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with name and title under photo.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.dallasor.gov/citycouncil/page/councilor-robert-spivey",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for the person, indicated by the page title and breadcrumb.",
+        "source": "https://www.dallasor.gov/citycouncil/page/councilor-robert-spivey"
       }
     ],
     "start_dates": [],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated 'Term Expires 12/31/2028'.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: 12/31/2028'.",
+        "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as 'Term Expires 12/31/2028'.",
         "source": "https://www.dallasor.gov/citycouncil/page/councilor-robert-spivey"
       }
     ],
-    "updated_at": "2025-05-07"
+    "updated_at": "2025-07-10T01:02:37Z"
+  },
+  {
+    "name": "Michael Holsapple",
+    "sources": [
+      "https://www.dallasor.gov/citycouncil",
+      "https://www.dallasor.gov/citycouncil/page/councilor-michael-holsapple"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a type of council member."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'City Councilor' which is a specific type of council member."
+      },
+      {
+        "data": "City Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'City Councilor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "michael.holsapple@dallasor.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
+        "source": "https://www.dallasor.gov/citycouncil/page/councilor-michael-holsapple"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.dallasor.gov/citycouncil/page/councilor-michael-holsapple",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.dallasor.gov/citycouncil/page/councilor-michael-holsapple",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Councilor Michael Holsapple.",
+        "source": "https://www.dallasor.gov/citycouncil/page/councilor-michael-holsapple"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The end date is explicitly stated as 'Term Expires: 12/31/2028'.",
+        "source": "https://www.dallasor.gov/citycouncil"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date is explicitly stated as 'Term Expires 12/31/2028'.",
+        "source": "https://www.dallasor.gov/citycouncil/page/councilor-michael-holsapple"
+      }
+    ],
+    "updated_at": "2025-07-10T01:02:37Z"
   }
 ]

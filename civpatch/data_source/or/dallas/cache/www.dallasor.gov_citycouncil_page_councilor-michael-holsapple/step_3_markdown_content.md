@@ -1,4 +1,4 @@
-[Skip to main content](https://www.dallasor.gov/citycouncil/page/councilor-tony-blosser/)
+[Skip to main content](https://www.dallasor.gov/citycouncil/page/councilor-michael-holsapple/)
 
 Toggle Navigation
 
@@ -125,17 +125,17 @@ Event Date
 
 Toggle Menu
 
-# Councilor Tony Blosser
+# Councilor Michael Holsapple
 
-![counilor_photo.jpg](https://www.dallasor.gov/sites/g/files/vyhlif12941/files/styles/full_node_primary/public/media/citycouncil/image/17776/counilor_photo.jpg?itok=v4PyEbYd)
+![Councilor Holsapple](https://www.dallasor.gov/sites/g/files/vyhlif12941/files/styles/full_node_primary/public/media/citycouncil/image/19996/2_2.png?itok=hxeehxoJ)
 
-### Anthony "Tony" Blosser
+**Michael Holsapple**
 
 City Councilor  
 Term Expires 12/31/2028  
-Email: [anthony](mailto:anthony.blosser@dallasor.gov)[.blosser@dallasor.gov](mailto:.blosser@dallasor.gov)
+Email: [michael.holsapple@dallasor.gov](mailto:michael.holsapple@dallasor.gov)
 
-[Print](https://www.dallasor.gov/print/pdf/node/3414)
+[Print](https://www.dallasor.gov/print/pdf/node/3411)
 
 ## [City Council](https://www.dallasor.gov/citycouncil)
 
