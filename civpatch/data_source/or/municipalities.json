@@ -765,10 +765,12 @@
       "phone_number": "(541) 269-1181",
       "website": "https://www.coosbayor.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "b001305d87d8bfc4947cac9ae0e6fe56",
+      "meta_updated_at": "2025-07-10T01:12:01Z",
+      "meta_hash": "fa25a3a396e04c3bc48b010e5c4308b8",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4115250"
     },

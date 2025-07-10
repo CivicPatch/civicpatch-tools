@@ -1,0 +1,890 @@
+[
+  {
+    "name": "Joe Benetti",
+    "sources": [
+      "https://www.coosbayor.gov/government/city-council/-item-2/-folder-216",
+      "https://www.coosbayor.gov/government/city-council",
+      "https://www.coosbayor.gov/government/city-council/-folder-216",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78?folder=216"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as 'Title:Mayor' and confirmed by text 'elected as Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated as his current title."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Title:Mayor' and 'elected as Mayor' for his current term."
+      },
+      {
+        "data": "board member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Identified as a 'director on the Oregon Pacific Bank Board', which is a type of board member role."
+      },
+      {
+        "data": "director on the Oregon Pacific Bank Board",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Currently, Joe is a director on the Oregon Pacific Bank Board'."
+      },
+      {
+        "data": "board member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Identified as a 'member of Southwestern Oregon Workforce Investment Board', which is a type of board member role."
+      },
+      {
+        "data": "Southwestern Oregon Workforce Investment Board",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'He is a member of... Southwestern Oregon Workforce Investment Board'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly listed.",
+        "source": "https://www.coosbayor.gov/government/city-council/-item-2/-folder-216"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name. ",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is clearly listed next to the name.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed under 'Phone:' for Joe Benetti.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78?folder=216"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.coosbayor.gov/government/city-council/-folder-216",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This URL is the specific page where Joe Benetti's profile is displayed, indicated by the 'Return to full list' link pointing to this folder.",
+        "source": "https://www.coosbayor.gov/government/city-council/-item-2/-folder-216"
+      },
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided for the staff member.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78?folder=216",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2016-11",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated 'elected as Mayor in November 2016' and 'successfully ran for the mayor’s spot again in November 2016'.",
+        "source": "https://www.coosbayor.gov/government/city-council/-item-2/-folder-216"
+      },
+      {
+        "data": "2016-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states he was 'elected as Mayor in November 2016' and 'successfully ran for the mayor’s spot again in November 2016', indicating his current term started then.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78"
+      },
+      {
+        "data": "2016-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected as Mayor in November 2016' for his current term.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78?folder=216"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-11",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 11/2026'.",
+        "source": "https://www.coosbayor.gov/government/city-council/-item-2/-folder-216"
+      },
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'Term Expires 11/2026' is explicitly stated.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78"
+      },
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires 11/2026'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/2/78?folder=216"
+      }
+    ],
+    "updated_at": "2025-07-10T01:11:58Z"
+  },
+  {
+    "name": "Lucinda DiNovo",
+    "sources": [
+      "https://www.coosbayor.gov/government/city-council",
+      "https://www.coosbayor.gov/government/city-council/-folder-216",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78?folder=216"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Council President'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Title:Council President'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'elected to the City Council' and 'Council President' role."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council President' is explicitly stated."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states she was 'elected to the City Council' and is listed under 'City Council' department, implying a council member role."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states she 'served on numerous boards including the Oregon Restaurant and Lodging Association, Board of Trustees for the Coos History Museum, City of Coos Bay Budget Committee and the Advisory Committee for the International Port of Coos Bay', implying a board member role."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states she served on the 'Board of Trustees for the Coos History Museum', implying a trustee role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name. ",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is directly listed under 'Phone:'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78?folder=216"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided for the staff member.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78?folder=216",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      },
+      {
+        "data": "https://www.coosbayor.gov/government/city-council",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page is the City Council page, which serves as her profile page.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2016",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected to the City Council in 2016'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78"
+      },
+      {
+        "data": "2016",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Lucinda DiNovo was elected to the City Council in 2016'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78?folder=216"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Term Expires 11/2028'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78"
+      },
+      {
+        "data": "2028-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Term Expires 11/2028'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/6/78?folder=216"
+      }
+    ],
+    "updated_at": "2025-07-10T01:11:58Z"
+  },
+  {
+    "name": "Troy Cribbins",
+    "sources": [
+      "https://www.coosbayor.gov/government/city-council",
+      "https://www.coosbayor.gov/government/city-council/-folder-216",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78?folder=216"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Councilor is a specific type of Council Member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor', which maps to 'council member'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Title:Councilor' and 'Departments:City Council'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Councilor is a specific type of Council Member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Title:Councilor' which is a target role (council member)."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'elected member of the Bay Area Hospital Board of Directors', which aligns with 'board member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name. ",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly listed next to 'Phone:'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78?folder=216"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided for the staff member.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78?folder=216",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'appointed to Council in June 2023'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78"
+      },
+      {
+        "data": "2023-06",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Troy Cribbins was appointed to Council in June 2023'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78?folder=216"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 11/2028'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78"
+      },
+      {
+        "data": "2028-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Term Expires 11/2028'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/104/78?folder=216"
+      }
+    ],
+    "updated_at": "2025-07-10T01:11:58Z"
+  },
+  {
+    "name": "Stephanie Kilmer",
+    "sources": [
+      "https://www.coosbayor.gov/government/city-council",
+      "https://www.coosbayor.gov/government/city-council/-folder-216",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78?folder=216"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Councilor is a specific type of Council Member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor', which maps to 'council member'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Title:Councilor' and 'elected to the Council'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Title: Councilor' under her name."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Chairs the Charleston Fire District Civil Service Commission and CBDA Foundation Board'. 'Chair' is a target role."
+      },
+      {
+        "data": "board member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'a board member of the Southwestern Alumni Association'. 'board member' is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 294-2276",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "(541) 294-2276",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name. ",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      },
+      {
+        "data": "(541) 294-2276",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78"
+      },
+      {
+        "data": "(541) 294-2276",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly listed directly under her name.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78?folder=216"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided for the staff member.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78?folder=216",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2016-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to the Council in November 2016'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78"
+      },
+      {
+        "data": "2016-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date 'elected to the Council in November 2016' is explicitly stated and in a valid format.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78?folder=216"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 11/2028'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78"
+      },
+      {
+        "data": "2028-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'Term Expires 11/2028' is explicitly stated and in a valid format.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/10/78?folder=216"
+      }
+    ],
+    "updated_at": "2025-07-10T01:11:58Z"
+  },
+  {
+    "name": "Carmen Matthews",
+    "sources": [
+      "https://www.coosbayor.gov/government/city-council",
+      "https://www.coosbayor.gov/government/city-council/-folder-216",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78?folder=216"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Councilor is a specific type of Council Member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor', which maps to 'council member'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Title:Councilor' and matches target role 'council member'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a specific type of council member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Title:Councilor' and 'Councilor' is a target role (council member)."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'served on the Parks Commission for many years', implying the role of a Commissioner."
+      },
+      {
+        "data": "Parks Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'served on the Parks Commission for many years', implying the specific role of a Parks Commissioner."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 297-5636",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "(541) 297-5636",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name. ",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      },
+      {
+        "data": "(541) 297-5636",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated next to 'Phone:'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78"
+      },
+      {
+        "data": "(541) 297-5636",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly listed next to 'Phone:' for Carmen Matthews.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78?folder=216"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided for the staff member.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78?folder=216",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2018-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date 'elected to Council in November 2018' is explicitly stated.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78"
+      },
+      {
+        "data": "2018-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'elected to Council in November 2018'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78?folder=216"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date 'Term Expires 11/2026' is explicitly stated.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78"
+      },
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Term Expires 11/2026'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/12/78?folder=216"
+      }
+    ],
+    "updated_at": "2025-07-10T01:11:58Z"
+  },
+  {
+    "name": "Jacob Niebergall",
+    "sources": [
+      "https://www.coosbayor.gov/government/city-council",
+      "https://www.coosbayor.gov/government/city-council/-folder-216",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78?folder=216"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Councilor is a specific type of Council Member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor', which maps to 'council member'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Title:Councilor' and matches target role 'council member'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Title: Councilor' which is a target role (council member)."
+      },
+      {
+        "data": "Board of Trustees",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'serves on the boards of... the Coos Bay Public Library Board of Trustees', which is a target role."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'serves on the boards of... the Oregon Computer Science Teachers Association', which is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name. ",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78"
+      },
+      {
+        "data": "(541) 269-8912",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly listed next to 'Phone:'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78?folder=216"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided for the staff member.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78?folder=216",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to the Coos Bay City Council in November 2024'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78"
+      },
+      {
+        "data": "2024-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected to the Coos Bay City Council in November 2024'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78?folder=216"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 11/2026'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78"
+      },
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 11/2026'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/122/78?folder=216"
+      }
+    ],
+    "updated_at": "2025-07-10T01:11:58Z"
+  },
+  {
+    "name": "Sara Stephens",
+    "sources": [
+      "https://www.coosbayor.gov/government/city-council",
+      "https://www.coosbayor.gov/government/city-council/-folder-216",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78",
+      "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78?folder=216"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Councilor is a specific type of Council Member."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilor', which maps to 'council member'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Title:Councilor'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Title:Councilor', which is a target role (council member)."
+      },
+      {
+        "data": "board chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'current board chair', which is a target role (board member)."
+      },
+      {
+        "data": "Board of Trustees member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'member of the Board of Trustees', which is a target role (board member)."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'member of the Board of Trustees', which is a target role (trustee)."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 290-9557",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "(541) 290-9557",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name. ",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      },
+      {
+        "data": "(541) 290-9557",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78"
+      },
+      {
+        "data": "(541) 290-9557",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly listed next to 'Phone:'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78?folder=216"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided for the staff member.",
+        "source": "https://www.coosbayor.gov/government/city-council"
+      },
+      {
+        "data": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78?folder=216",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.coosbayor.gov/government/city-council/-folder-216"
+      },
+      {
+        "data": "https://www.coosbayor.gov/government/city-council",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the specific page for City Council members, and the 'Return to full list' link points here, indicating it's the primary directory.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-08-17",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'appointed to the Coos Bay City Council August 17, 2021'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78"
+      },
+      {
+        "data": "2021-08-17",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date 'August 17, 2021' is explicitly stated as when she was 'appointed'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78?folder=216"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Term Expires 11/2026'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78"
+      },
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date '11/2026' is explicitly stated as 'Term Expires'.",
+        "source": "https://www.coosbayor.gov/Home/Components/StaffDirectory/StaffDirectory/14/78?folder=216"
+      }
+    ],
+    "updated_at": "2025-07-10T01:11:58Z"
+  }
+]

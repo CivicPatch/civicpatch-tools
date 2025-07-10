@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Joe Benetti",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-10T01:05:17Z",
+    "divisions": []
+  },
+  {
+    "name": "Lucinda DiNovo",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:05:17Z",
+    "divisions": []
+  },
+  {
+    "name": "Troy Cribbins",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:05:17Z",
+    "divisions": []
+  },
+  {
+    "name": "Stephanie Kilmer",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:05:17Z",
+    "divisions": []
+  },
+  {
+    "name": "Carmen Matthews",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:05:17Z",
+    "divisions": []
+  },
+  {
+    "name": "Jacob Niebergall",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:05:17Z",
+    "divisions": []
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:05:17Z",
+    "divisions": []
+  }
+]
