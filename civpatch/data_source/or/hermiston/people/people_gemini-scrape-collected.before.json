@@ -1,95 +1,344 @@
 [
   {
     "name": "Doug Primmer",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.hermiston.gov/citycouncil",
       "https://www.hermiston.gov/citycouncil/page/elections",
-      "https://www.hermiston.gov/directory-listing/doug-primmer"
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+      "https://www.hermiston.gov/directory-listing/roy-n-barron",
+      "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+      "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+      "https://www.hermiston.gov/directory-listing/jeff-kelso",
+      "https://www.hermiston.gov/directory-listing/maria-e-duron",
+      "https://www.hermiston.gov/directory-listing/josh-roberts",
+      "https://www.hermiston.gov/directory-listing/allen-hayward"
     ],
-    "positions": [
-      "Mayor"
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated next to the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and matches a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' next to his name in the council list."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' next to the name and is a target role."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the City Council Contact list."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the 'City Council Contact Position' table."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' under 'City Council Contact Position'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text that Mayor is an At-Large position."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "General number provided for mayor and councilors.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as the contact for the mayor and councilors, making it directly applicable to this person. The confidence is high because it's a direct and unambiguous extraction from the text and clearly associated with the group this person belongs to. ",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
     "emails": [
       {
         "data": "dprimmer@hermiston.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed next to name and position.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, formatted as a mailto link text, which is a direct extraction as per guidelines. The confidence is high because it's a direct and unambiguous extraction from the text.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "dprimmer@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL provided as a link associated with the name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a link associated with the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and is a valid URL.",
         "source": "https://www.hermiston.gov/citycouncil"
       },
       {
         "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/doug_primmer_sel_mayor.pdf",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Linked PDF document associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to profile PDF provided.",
         "source": "https://www.hermiston.gov/citycouncil/page/elections"
       },
       {
-        "data": "https://www.hermiston.gov/directory-listing/doug-primmer/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the page title and likely the person's profile page.",
+        "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked from the person's name.",
         "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is directly linked to his name in the council list.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is provided as a link associated with the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL provided in the City Council Contact list.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided in the 'City Council Contact Position' table.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided link next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as the effective date for the term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as effective date for those elected in November 2024.",
         "source": "https://www.hermiston.gov/citycouncil/page/elections"
       },
       {
         "data": "2012",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'Doug was elected in 2012'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated as 'elected in 2012'.",
         "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicitly stated 'expires: 12/31/2028' under the person's section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated as '12/31/2028'.",
         "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:56:11Z"
   },
   {
     "name": "Jackie M. Linton",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.hermiston.gov/citycouncil",
       "https://www.hermiston.gov/citycouncil/page/elections",
-      "https://www.hermiston.gov/directory-listing/jackie-m-linton"
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+      "https://www.hermiston.gov/directory-listing/roy-n-barron",
+      "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+      "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+      "https://www.hermiston.gov/directory-listing/jeff-kelso",
+      "https://www.hermiston.gov/directory-listing/maria-e-duron",
+      "https://www.hermiston.gov/directory-listing/josh-roberts",
+      "https://www.hermiston.gov/directory-listing/allen-hayward"
     ],
-    "positions": [
-      "Council Member",
-      "Ward I",
-      "Ward 1"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Council member' is strongly implied by the person being listed under 'Mayor and City Council' and having a 'Ward' designation, which is a common structure for council members. The confidence is high due to strong contextual implication and matching a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred as 'Council Member' because the person is listed under 'City Council Contact Position' with a ward designation, which is a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' and having a 'Ward' division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council Contact Position' and identified as a likely council member in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a ward."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a ward designation, which implies a council member role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' with a ward."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from context as a member of the 'City Council Contact Position' table."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a 'Ward 1' division, which is a common council division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a ward."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Ward 1' is explicitly stated next to the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and matches a target division type."
+      },
+      {
+        "data": "Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Precinct 126",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated next to the name."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: Ward 1'."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 1'."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 1' next to her name in the council list."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 1' next to the name."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 1' in the City Council Contact list."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 1' in the 'City Council Contact Position' table."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 1' under 'City Council Contact Position'."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated division."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "General number provided for mayor and councilors.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as the contact for the mayor and councilors, making it directly applicable to this person. The confidence is high because it's a direct and unambiguous extraction from the text and clearly associated with the group this person belongs to. ",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -97,39 +346,86 @@
       {
         "data": "jlinton@hermiston.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, formatted as a mailto link text, which is a direct extraction as per guidelines. The confidence is high because it's a direct and unambiguous extraction from the text.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "jlinton@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
         "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL provided as a link associated with the name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a link associated with the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and is a valid URL.",
         "source": "https://www.hermiston.gov/citycouncil"
       },
       {
-        "data": "https://hermiston.or.us/government/city-council",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General council page linked, not a specific profile.",
-        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+        "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked from the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
       },
       {
         "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL associated with the name in the table listing council members.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
         "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
-      }
-    ],
-    "start_dates": [
+      },
       {
-        "data": "2023-01-01",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Inferred from the 4-year term ending 12/31/2026, but not explicitly stated.",
-        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+        "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is directly linked to her name in the council list.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is provided as a link associated with the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL provided in the City Council Contact list.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided in the 'City Council Contact Position' table.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided link next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
+    "start_dates": [],
     "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
@@ -137,97 +433,384 @@
         "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:56:11Z"
   },
   {
     "name": "Roy N. Barron",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.hermiston.gov/citycouncil",
       "https://www.hermiston.gov/citycouncil/page/elections",
-      "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+      "https://www.hermiston.gov/directory-listing/roy-n-barron",
+      "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+      "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+      "https://www.hermiston.gov/directory-listing/jeff-kelso",
+      "https://www.hermiston.gov/directory-listing/maria-e-duron",
+      "https://www.hermiston.gov/directory-listing/josh-roberts",
+      "https://www.hermiston.gov/directory-listing/allen-hayward"
     ],
-    "positions": [
-      "Council Member",
-      "Ward II",
-      "council member",
-      "Ward 2"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Council member' is strongly implied by the person being listed under 'Mayor and City Council' and having a 'Ward' designation, which is a common structure for council members. The confidence is high due to strong contextual implication and matching a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred as 'Council Member' because the person is listed under 'City Council Contact Position' with a ward designation, which is a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' and having a 'Ward' division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council Contact Position' and identified as a likely council member in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a ward."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a ward designation, which implies a council member role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' with a ward."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from context as a member of the 'City Council Contact Position' table."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a 'Ward 2' division, which is a common council division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a ward."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Ward 2' is explicitly stated next to the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and matches a target division type."
+      },
+      {
+        "data": "Ward II",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Precinct 127 & 128",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated next to the name."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 2'."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: Ward 2'."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 2' next to his name in the council list."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 2' next to the name."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 2' in the City Council Contact list."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 2' in the 'City Council Contact Position' table."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 2' under 'City Council Contact Position'."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated division."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "General number provided for mayor and councilors.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as the contact for the mayor and councilors, making it directly applicable to this person. The confidence is high because it's a direct and unambiguous extraction from the text and clearly associated with the group this person belongs to. ",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
     "emails": [
       {
         "data": "rbarron@hermiston.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, formatted as a mailto link text, which is a direct extraction as per guidelines. The confidence is high because it's a direct and unambiguous extraction from the text.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "rbarron@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
         "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL provided as a link associated with the name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a link associated with the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and is a valid URL.",
         "source": "https://www.hermiston.gov/citycouncil"
       },
       {
-        "data": "https://hermiston.or.us/government/city-council",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General council page linked, not a specific profile.",
-        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked from the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
       },
       {
-        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL is the page dedicated to this person's listing.",
-        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
-      }
-    ],
-    "start_dates": [
+        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
+      },
       {
-        "data": "2023-01-01",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Inferred from the 4-year term ending 12/31/2026, but not explicitly stated.",
-        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is directly linked to his name in the council list.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is provided as a link associated with the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL provided in the City Council Contact list.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided in the 'City Council Contact Position' table.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided link next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
+    "start_dates": [],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit end date '12/31/2026' listed for the term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'expires: 12/31/2026'.",
         "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:56:11Z"
   },
   {
     "name": "Jackie C. Myers",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.hermiston.gov/citycouncil",
       "https://www.hermiston.gov/citycouncil/page/elections",
-      "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+      "https://www.hermiston.gov/directory-listing/roy-n-barron",
+      "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+      "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+      "https://www.hermiston.gov/directory-listing/jeff-kelso",
+      "https://www.hermiston.gov/directory-listing/maria-e-duron",
+      "https://www.hermiston.gov/directory-listing/josh-roberts",
+      "https://www.hermiston.gov/directory-listing/allen-hayward"
     ],
-    "positions": [
-      "Council Member",
-      "Ward III",
-      "council member",
-      "ward 3"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Council member' is strongly implied by the person being listed under 'Mayor and City Council' and having a 'Ward' designation, which is a common structure for council members. The confidence is high due to strong contextual implication and matching a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred as 'Council Member' because the person is listed under 'City Council Contact Position' with a ward designation, which is a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' and having a 'Ward' division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council Contact Position' and identified as a likely council member in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Inferred from 'Council Appointment' section and being listed under 'City Council Contact Position' with a ward."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a ward designation, which implies a council member role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' with a ward."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from context as a member of the 'City Council Contact Position' table."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a 'Ward 3' division, which is a common council division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a ward."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Ward 3' is explicitly stated next to the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and matches a target division type."
+      },
+      {
+        "data": "Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Precinct 129",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated next to the name."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 3'."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 3'."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: Ward 3' and 'Ward 3' next to her name in the council list."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 3' next to the name."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 3' in the City Council Contact list."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 3' in the 'City Council Contact Position' table."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 3' under 'City Council Contact Position'."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated division."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "General number provided for mayor and councilors.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as the contact for the mayor and councilors, making it directly applicable to this person. The confidence is high because it's a direct and unambiguous extraction from the text and clearly associated with the group this person belongs to. ",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -235,41 +818,83 @@
       {
         "data": "jmyers@hermiston.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, formatted as a mailto link text, which is a direct extraction as per guidelines. The confidence is high because it's a direct and unambiguous extraction from the text.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "jmyers@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to her name.",
         "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL provided as a link associated with the name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a link associated with the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and is a valid URL.",
         "source": "https://www.hermiston.gov/citycouncil"
       },
       {
-        "data": "https://hermiston.or.us/government/city-council",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General council page linked, not a specific profile.",
-        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked from the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
       },
       {
-        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers/",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The URL of the profile page itself.",
+        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is directly linked to her name at the top of the page and in the council list.",
         "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is provided as a link associated with the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL provided in the City Council Contact list.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided in the 'City Council Contact Position' table.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided link next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
     "start_dates": [
       {
-        "data": "2023-01-01",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Inferred from the 4-year term ending 12/31/2026, but not explicitly stated.",
-        "source": "https://www.hermiston.gov/citycouncil/page/elections"
-      },
-      {
         "data": "1994",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected in 1994'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Jackie was elected in 1994'.",
         "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
       }
     ],
@@ -277,32 +902,198 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'expires: 12/31/2026'.",
+        "llm_confidence_reason": "Explicitly stated in the table.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Four-year term, expires: 12/31/2026'.",
         "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:56:11Z"
   },
   {
     "name": "David P. McCarthy",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.hermiston.gov/citycouncil",
       "https://www.hermiston.gov/citycouncil/page/elections",
-      "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+      "https://www.hermiston.gov/directory-listing/roy-n-barron",
+      "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+      "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+      "https://www.hermiston.gov/directory-listing/jeff-kelso",
+      "https://www.hermiston.gov/directory-listing/maria-e-duron",
+      "https://www.hermiston.gov/directory-listing/josh-roberts",
+      "https://www.hermiston.gov/directory-listing/allen-hayward"
     ],
-    "positions": [
-      "Council Member",
-      "Ward IV",
-      "Council President",
-      "Ward 4"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council President' is explicitly stated next to the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and matches a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred as 'Council Member' because the person is listed under 'City Council Contact Position' with a ward designation, which is a target role."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated next to the name."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' and having a 'Ward' division, and also holding 'Council President' role."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council Contact Position' and identified as a likely council member in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a ward."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President' next to his name in the council list."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President' next to the name and is a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' with a ward."
+      },
+      {
+        "data": "council president",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President' in the City Council Contact list."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from context as a member of the 'City Council Contact Position' table and 'Council President' role implies council membership"
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President' in the 'City Council Contact Position' table."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a 'Ward 4' division, which is a common council division."
+      },
+      {
+        "data": "council president",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President' under 'City Council Contact Position'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with a ward."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Ward 4' is explicitly stated next to the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and matches a target division type."
+      },
+      {
+        "data": "Ward IV",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Precinct 130",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated next to the name."
+      },
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 4'."
+      },
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 4'."
+      },
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 4' next to his name in the council list."
+      },
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 4' next to the name."
+      },
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 4' in the City Council Contact list."
+      },
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 4' in the 'City Council Contact Position' table."
+      },
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 4' under 'City Council Contact Position'."
+      },
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated division."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "General number provided for mayor and councilors.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as the contact for the mayor and councilors, making it directly applicable to this person. The confidence is high because it's a direct and unambiguous extraction from the text and clearly associated with the group this person belongs to. ",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -310,39 +1101,86 @@
       {
         "data": "dmccarthy@hermiston.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to the name.",
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, formatted as a mailto link text, which is a direct extraction as per guidelines. The confidence is high because it's a direct and unambiguous extraction from the text.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "dmccarthy@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name under 'Email:'",
         "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL provided as a link associated with the name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a link associated with the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and is a valid URL.",
         "source": "https://www.hermiston.gov/citycouncil"
       },
       {
-        "data": "https://hermiston.or.us/government/city-council",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General council page linked, not a specific profile.",
-        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked from the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
       },
       {
-        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy/",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The URL of the current page is a profile page for the person.",
-        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
-      }
-    ],
-    "start_dates": [
+        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
+      },
       {
-        "data": "2023-01-01",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Inferred from the 4-year term ending 12/31/2026, but not explicitly stated.",
-        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is directly linked to his name in the council list.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is provided as a link associated with the person's name and is the primary page for their listing.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL provided in the City Council Contact list.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided in the 'City Council Contact Position' table.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided link next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
+    "start_dates": [],
     "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
@@ -350,25 +1188,143 @@
         "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:56:11Z"
   },
   {
     "name": "Jeff Kelso",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.hermiston.gov/citycouncil",
-      "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      "https://www.hermiston.gov/citycouncil/page/elections",
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+      "https://www.hermiston.gov/directory-listing/roy-n-barron",
+      "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+      "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+      "https://www.hermiston.gov/directory-listing/jeff-kelso",
+      "https://www.hermiston.gov/directory-listing/maria-e-duron",
+      "https://www.hermiston.gov/directory-listing/josh-roberts",
+      "https://www.hermiston.gov/directory-listing/allen-hayward"
     ],
-    "positions": [
-      "council member",
-      "at-large"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Council member' is strongly implied by the person being listed under 'Mayor and City Council' and having an 'At Large' designation, which is a common structure for council members. The confidence is high due to strong contextual implication and matching a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred as 'Council Member' because the person is listed under 'City Council Contact Position' with an 'At Large' designation, which is a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' and having an 'At Large' division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council Contact Position' and identified as a likely council member in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an 'At Large' division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an at-large designation, which implies a council member role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'Council Appointment' and being listed under 'City Council Contact Position'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from context as a member of the 'City Council Contact Position' table."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an 'At Large' position, which is a common council division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an at-large division."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'At Large' is explicitly stated next to the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and matches a target division type."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated next to the name."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' next to his name in the council list."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' next to the name."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: At Large' and listed as 'At Large' in the council contact list."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' in the 'City Council Contact Position' table."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' under 'City Council Contact Position'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated division."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "General number provided for mayor and councilors.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as the contact for the mayor and councilors, making it directly applicable to this person. The confidence is high because it's a direct and unambiguous extraction from the text and clearly associated with the group this person belongs to. ",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -376,28 +1332,94 @@
       {
         "data": "jkelso@hermiston.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, formatted as a mailto link text, which is a direct extraction as per guidelines. The confidence is high because it's a direct and unambiguous extraction from the text.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "jkelso@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided.",
         "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL provided as a link associated with the name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a link associated with the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and is a valid URL.",
         "source": "https://www.hermiston.gov/citycouncil"
       },
       {
-        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso/",
+        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/jeff_kelso-_sel_at-large_councilor_.pdf",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL of the profile page for the person.",
+        "llm_confidence_reason": "Direct link to profile PDF provided.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked from the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is directly linked to his name in the council list.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is provided as a link associated with the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL provided for Jeff Kelso.",
         "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided in the 'City Council Contact Position' table.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided link next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
     "start_dates": [
       {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as effective date for those elected in November 2024.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
         "data": "2024-11",
-        "llm_confidence": 0.95,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated 'elected in November 2024'.",
         "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
       }
@@ -406,32 +1428,153 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'expires: 12/31/2028'.",
+        "llm_confidence_reason": "Explicitly stated in the table.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Four-year term, expires: 12/31/2028'.",
         "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:56:11Z"
   },
   {
     "name": "Maria E. Duron",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.hermiston.gov/citycouncil",
       "https://www.hermiston.gov/citycouncil/page/elections",
-      "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+      "https://www.hermiston.gov/directory-listing/roy-n-barron",
+      "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+      "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+      "https://www.hermiston.gov/directory-listing/jeff-kelso",
+      "https://www.hermiston.gov/directory-listing/maria-e-duron",
+      "https://www.hermiston.gov/directory-listing/josh-roberts",
+      "https://www.hermiston.gov/directory-listing/allen-hayward"
     ],
-    "positions": [
-      "Council Member",
-      "At-Large",
-      "council member",
-      "At Large"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Council member' is strongly implied by the person being listed under 'Mayor and City Council' and having an 'At Large' designation, which is a common structure for council members. The confidence is high due to strong contextual implication and matching a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred as 'Council Member' because the person is listed under 'City Council Contact Position' with an 'At Large' designation, which is a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' and having an 'At Large' division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council Contact Position' and identified as a likely council member in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an 'At Large' division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an at-large designation, which implies a council member role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' as At Large."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from 'Council Appointment' and 'work with her fellow councilors'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an 'At Large' position, which is a common council division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an at-large division."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'At Large' is explicitly stated next to the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and matches a target division type."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated next to the name."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' next to her name in the council list."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' next to the name."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' in the City Council Contact list."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' under 'City Council Contact Position'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated division."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "General number provided for mayor and councilors.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as the contact for the mayor and councilors, making it directly applicable to this person. The confidence is high because it's a direct and unambiguous extraction from the text and clearly associated with the group this person belongs to. ",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -439,41 +1582,95 @@
       {
         "data": "mduron@hermiston.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, formatted as a mailto link text, which is a direct extraction as per guidelines. The confidence is high because it's a direct and unambiguous extraction from the text.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "mduron@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided in the text for Maria E. Duron",
         "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL provided as a link associated with the name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a link associated with the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and is a valid URL.",
         "source": "https://www.hermiston.gov/citycouncil"
       },
       {
         "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/maria_e_duron-_sel_at-large_councilor.pdf",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Linked PDF document associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to profile PDF provided.",
         "source": "https://www.hermiston.gov/citycouncil/page/elections"
       },
       {
-        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron/",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL of the current page, which is a profile page for the person.",
+        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked from the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is directly linked to her name in the council list.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is provided as a link associated with the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL provided in the City Council Contact list.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is the current page and linked from the council list.",
         "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided link next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as the effective date for the term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as effective date for those elected in November 2024.",
         "source": "https://www.hermiston.gov/citycouncil/page/elections"
       },
       {
         "data": "2020-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated 'elected in November 2020' in the 'Council Appointment' section.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected in November 2020'.",
         "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
       }
     ],
@@ -481,32 +1678,153 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'expires: 12/31/2028'.",
+        "llm_confidence_reason": "Explicitly stated in the table.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'expires: 12/31/2028'.",
         "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:56:11Z"
   },
   {
     "name": "Josh Roberts",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.hermiston.gov/citycouncil",
       "https://www.hermiston.gov/citycouncil/page/elections",
-      "https://www.hermiston.gov/directory-listing/josh-roberts"
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+      "https://www.hermiston.gov/directory-listing/roy-n-barron",
+      "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+      "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+      "https://www.hermiston.gov/directory-listing/jeff-kelso",
+      "https://www.hermiston.gov/directory-listing/maria-e-duron",
+      "https://www.hermiston.gov/directory-listing/josh-roberts",
+      "https://www.hermiston.gov/directory-listing/allen-hayward"
     ],
-    "positions": [
-      "Council Member",
-      "At-Large",
-      "council member",
-      "at-large"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Council member' is strongly implied by the person being listed under 'Mayor and City Council' and having an 'At Large' designation, which is a common structure for council members. The confidence is high due to strong contextual implication and matching a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred as 'Council Member' because the person is listed under 'City Council Contact Position' with an 'At Large' designation, which is a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' and having an 'At Large' division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council Contact Position' and identified as a likely council member in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an 'At Large' division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an at-large designation, which implies a council member role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' as At Large."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from context as a member of the 'City Council Contact Position' table."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Council Appointment' and being listed under 'City Council Contact Position' with an 'At Large' position, which is a common council division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an at-large division."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'At Large' is explicitly stated next to the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and matches a target division type."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated next to the name."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' next to his name in the council list."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' next to the name."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' in the City Council Contact list."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' in the 'City Council Contact Position' table."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated division."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "General number provided for mayor and councilors.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as the contact for the mayor and councilors, making it directly applicable to this person. The confidence is high because it's a direct and unambiguous extraction from the text and clearly associated with the group this person belongs to. ",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -514,40 +1832,94 @@
       {
         "data": "jroberts@hermiston.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly listed next to name.",
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, formatted as a mailto link text, which is a direct extraction as per guidelines. The confidence is high because it's a direct and unambiguous extraction from the text.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "jroberts@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to 'Email:'",
         "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL provided as a link associated with the name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a link associated with the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and is a valid URL.",
         "source": "https://www.hermiston.gov/citycouncil"
       },
       {
         "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/josh_roberts-_sel_at-large_councilor.pdf",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Linked PDF document associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to profile PDF provided.",
         "source": "https://www.hermiston.gov/citycouncil/page/elections"
       },
       {
-        "data": "https://www.hermiston.gov/directory-listing/josh-roberts/",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL associated with the name in the table listing.",
+        "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked from the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is directly linked to his name in the council list.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is provided as a link associated with the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL provided in the City Council Contact list.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided in the 'City Council Contact Position' table.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Josh Roberts.",
         "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as the effective date for the term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as effective date for those elected in November 2024.",
         "source": "https://www.hermiston.gov/citycouncil/page/elections"
       },
       {
         "data": "2024-11",
-        "llm_confidence": 0.95,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated 'elected in November 2024'.",
         "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
       }
@@ -556,116 +1928,266 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated 'expires: 12/31/2028'.",
         "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
       }
     ],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:56:11Z"
   },
   {
     "name": "Allen Hayward",
-    "image": null,
-    "source_image": null,
     "sources": [
       "https://www.hermiston.gov/citycouncil",
       "https://www.hermiston.gov/citycouncil/page/elections",
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+      "https://www.hermiston.gov/directory-listing/roy-n-barron",
+      "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+      "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+      "https://www.hermiston.gov/directory-listing/jeff-kelso",
+      "https://www.hermiston.gov/directory-listing/maria-e-duron",
+      "https://www.hermiston.gov/directory-listing/josh-roberts",
       "https://www.hermiston.gov/directory-listing/allen-hayward"
     ],
-    "positions": [
-      "Council Member",
-      "At-Large",
-      "At Large"
+    "images": [],
+    "roles": [
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role 'Council member' is strongly implied by the person being listed under 'Mayor and City Council' and having an 'At Large' designation, which is a common structure for council members. The confidence is high due to strong contextual implication and matching a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred as 'Council Member' because the person is listed under 'City Council Contact Position' with an 'At Large' designation, which is a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' and having an 'At Large' division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council Contact Position' and identified as a likely council member in the prompt."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an 'At Large' division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an at-large designation, which implies a council member role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'City Council Contact Position' as At Large."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from context as a member of the 'City Council Contact Position' table."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed under 'City Council Contact Position' with an 'At Large' position, which is a common council division."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Council Appointment' and being listed under 'City Council Contact Position'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'At Large' is explicitly stated next to the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and matches a target division type."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division is explicitly stated next to the name."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' next to his name in the council list."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' next to the name."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' in the City Council Contact list."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' in the 'City Council Contact Position' table."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'At Large' under 'City Council Contact Position'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Position: At Large' and in the council list."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "General number provided for mayor and councilors.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly stated as the contact for the mayor and councilors, making it directly applicable to this person. The confidence is high because it's a direct and unambiguous extraction from the text and clearly associated with the group this person belongs to. ",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
     "emails": [
       {
         "data": "ahayward@hermiston.gov",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Email address explicitly listed and labeled.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name and role, formatted as a mailto link text, which is a direct extraction as per guidelines. The confidence is high because it's a direct and unambiguous extraction from the text.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "ahayward@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided.",
         "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "URL provided as a link associated with the name in the table.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website URL is explicitly provided as a link associated with the person's name. The confidence is high because it's a direct and unambiguous extraction from the text and is a valid URL.",
         "source": "https://www.hermiston.gov/citycouncil"
       },
       {
         "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/allen_hayward-_sel_at-large.pdf",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Linked PDF document associated with the name.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to profile PDF provided.",
         "source": "https://www.hermiston.gov/citycouncil/page/elections"
       },
       {
         "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Direct link to the person's directory listing page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked from the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is directly linked to his name in the council list.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL is provided as a link associated with the person's name.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL provided in the City Council Contact list.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link explicitly provided in the 'City Council Contact Position' table.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided link next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL provided next to the name.",
         "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as the effective date for the term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as effective date for those elected in November 2024.",
         "source": "https://www.hermiston.gov/citycouncil/page/elections"
       },
       {
         "data": "2024-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicit election date provided, indicating start of term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected in November 2024'.",
         "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 0.98,
-        "llm_confidence_reason": "Explicit end date provided for the term.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the table.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'expires: 12/31/2028'.",
         "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
-    "updated_at": "2025-05-06"
-  },
-  {
-    "name": "Jeff Keslo",
-    "image": null,
-    "source_image": null,
-    "sources": [
-      "https://www.hermiston.gov/citycouncil/page/elections"
-    ],
-    "positions": [
-      "Council Member",
-      "At-Large"
-    ],
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [
-      {
-        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/jeff_kelso-_sel_at-large_councilor_.pdf",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Linked PDF document associated with the name.",
-        "source": "https://www.hermiston.gov/citycouncil/page/elections"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2025-01-01",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Explicitly stated as the effective date for the term.",
-        "source": "https://www.hermiston.gov/citycouncil/page/elections"
-      }
-    ],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "updated_at": "2025-07-10T00:56:11Z"
   }
 ]

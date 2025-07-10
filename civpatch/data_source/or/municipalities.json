@@ -619,9 +619,13 @@
       "phone_number": "(541) 567-5521",
       "website": "https://www.hermiston.gov",
       "email": null,
-      "meta_updated_at": "2025-05-06",
-      "meta_hash": "2e6478fbb0e7609924e1bdf3b91b4a07",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-10T00:56:17Z",
+      "meta_hash": "6717a8735256812c844d820f87ecd655",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4133700"
     },
     {

@@ -1,19 +1,60 @@
 [
   {
     "name": "Doug Primmer",
-    "image": "images/6f1b9dde27ad833bd33c623afccbe68958beea2441c27d156ab54f05a5de0e01.jpg",
-    "source_image": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/2231/doug_primmer_web.jpg?itok=iMXuoeLM",
     "sources": [
-      "https://www.hermiston.gov/citycouncil"
+      "https://www.hermiston.gov/citycouncil",
+      "https://www.hermiston.gov/citycouncil/page/elections",
+      "https://www.hermiston.gov/directory-listing/doug-primmer"
     ],
-    "positions": [
-      "Mayor"
+    "images": [
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/2231/doug_primmer_web.jpg?itok=iMXuoeLM",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/doug_primmer_sel_mayor.pdf",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "PDF link likely contains official photo; no direct image URL found.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2231/doug_primmer_web.jpg?itok=jaiW0tS0",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is directly next to the name and position of Doug Primmer.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor in the content."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor elected for term 2025-2028."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page explicitly states 'Position: Mayor' for Doug Primmer."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Mayor is an At-Large position as per text."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General contact number for mayor and councilors given as 541-567-5521.",
+        "llm_confidence_reason": "General contact number for Mayor and City Council provided; no personal number given.",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -21,38 +62,137 @@
       {
         "data": "dprimmer@hermiston.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "dprimmer@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided next to Doug Primmer's name.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile URL linked from name.",
+        "llm_confidence_reason": "Profile link directly associated with the person.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/doug_primmer_sel_mayor.pdf",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Official profile PDF link provided on election results page.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/doug-primmer",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the profile page for Doug Primmer.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term effective January 1, 2025.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2012",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states Doug was elected in 2012; no exact month/day given.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term ends December 31, 2028.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration explicitly stated as December 31, 2028.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      }
+    ],
+    "updated_at": "2025-07-10T00:52:29Z"
   },
   {
     "name": "Jackie M. Linton",
-    "image": "images/398d1db5dedc3b5da334ca35e1d8933f3379acc3330eca3524443b9bd4828547.jpg",
-    "source_image": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/16621/linton.jpg?itok=JOQzbhAh",
     "sources": [
-      "https://www.hermiston.gov/citycouncil"
+      "https://www.hermiston.gov/citycouncil",
+      "https://www.hermiston.gov/citycouncil/page/elections",
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jackie-m-linton"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 1"
+    "images": [
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/16621/linton.jpg?itok=JOQzbhAh",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly next to the name.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/16621/linton.jpg?itok=BYRdZ7Lm",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is a headshot near the name and role of Jackie M. Linton.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Ward 1 councilor; role normalized to Council Member."
+      },
+      {
+        "data": "Council Member, Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as Councilor Ward I with term expiring 12/31/2026."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under 'City Council Contact Position' with no specific role other than ward; assumed council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states Jackie M. Linton holds a position on the City Council representing Ward 1, which corresponds to a Council Member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward 1."
+      },
+      {
+        "data": "Ward I",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Ward I Councilor."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Ward 1'."
+      },
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page explicitly states the position is 'Ward 1'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General contact number for mayor and councilors given as 541-567-5521.",
+        "llm_confidence_reason": "General contact number for Mayor and City Council provided; no personal number given.",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -60,38 +200,130 @@
       {
         "data": "jlinton@hermiston.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "jlinton@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided on the page.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile URL linked from name.",
+        "llm_confidence_reason": "Profile link directly associated with the person.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.or.us/government/city-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General City Council page link provided for more info on incumbents.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile page URL provided.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-m-linton",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the official profile page for Jackie M. Linton on the Hermiston city website.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
       }
     ],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states a four-year term expires 12/31/2026, so the end date is extracted accordingly.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-m-linton"
+      }
+    ],
+    "updated_at": "2025-07-10T00:52:29Z"
   },
   {
     "name": "Roy N. Barron",
-    "image": "images/1eaf70e4734dd29647d1fd919d1a3055af758747ca4e7d5dcff8596b61b2c961.jpg",
-    "source_image": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/2271/roy_barron_web.jpg?itok=ZVjKctnT",
     "sources": [
-      "https://www.hermiston.gov/citycouncil"
+      "https://www.hermiston.gov/citycouncil",
+      "https://www.hermiston.gov/citycouncil/page/elections",
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/roy-n-barron"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 2"
+    "images": [
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/2271/roy_barron_web.jpg?itok=ZVjKctnT",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly next to the name.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2271/roy_barron_web.jpg?itok=v6GrCWga",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and role information.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Ward 2 councilor; role normalized to Council Member."
+      },
+      {
+        "data": "Council Member, Ward II",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as Councilor Ward II with term expiring 12/31/2026."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under 'City Council Contact Position' with ward designation; assumed council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'City Council Contact Position' and lists Roy N. Barron with 'Ward 2', indicating he is a council member representing Ward 2."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward 2."
+      },
+      {
+        "data": "Ward II",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Ward II Councilor."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Ward 2'."
+      },
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Ward 2' on the page."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General contact number for mayor and councilors given as 541-567-5521.",
+        "llm_confidence_reason": "General contact number for Mayor and City Council provided; no personal number given.",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -99,38 +331,130 @@
       {
         "data": "rbarron@hermiston.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "rbarron@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile URL linked from name.",
+        "llm_confidence_reason": "Profile link directly associated with the person.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.or.us/government/city-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General City Council page link provided for more info on incumbents.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile page URL provided.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/roy-n-barron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the profile page is a valid website for the person.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
       }
     ],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 'Four-year term, expires: 12/31/2026'.",
+        "source": "https://www.hermiston.gov/directory-listing/roy-n-barron"
+      }
+    ],
+    "updated_at": "2025-07-10T00:52:29Z"
   },
   {
     "name": "Jackie C. Myers",
-    "image": "images/2f2aa1612d8bfc9cae33adb57d3ce860055c3c3922b8128872db85887bd44c27.jpg",
-    "source_image": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/2261/jackie_meyers_web.jpg?itok=yj3s5kro",
     "sources": [
-      "https://www.hermiston.gov/citycouncil"
+      "https://www.hermiston.gov/citycouncil",
+      "https://www.hermiston.gov/citycouncil/page/elections",
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jackie-c-myers"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 3"
+    "images": [
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/2261/jackie_meyers_web.jpg?itok=yj3s5kro",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly next to the name.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2261/jackie_meyers_web.jpg?itok=OJ2gClBj",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and role, clearly representing Jackie C. Myers.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Ward 3 councilor; role normalized to Council Member."
+      },
+      {
+        "data": "Council Member, Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as Councilor Ward III with term expiring 12/31/2026."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under 'City Council Contact Position' with ward designation; assumed council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'Position: Ward 3' and references city council context, indicating she is a Council Member representing Ward 3."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward 3."
+      },
+      {
+        "data": "Ward III",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Ward III Councilor."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Ward 3'."
+      },
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: Ward 3' on the page."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General contact number for mayor and councilors given as 541-567-5521.",
+        "llm_confidence_reason": "General contact number for Mayor and City Council provided; no personal number given.",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -138,39 +462,152 @@
       {
         "data": "jmyers@hermiston.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "jmyers@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided on the page next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile URL linked from name.",
+        "llm_confidence_reason": "Profile link directly associated with the person.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.or.us/government/city-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General City Council page link provided for more info on incumbents.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile page URL provided.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jackie-c-myers",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the profile page is a valid website for the person.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "start_dates": [
+      {
+        "data": "1994",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The page states 'Jackie was elected in 1994' indicating the start of her council service.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page states 'Four-year term, expires: 12/31/2026' indicating current term end date.",
+        "source": "https://www.hermiston.gov/directory-listing/jackie-c-myers"
+      }
+    ],
+    "updated_at": "2025-07-10T00:52:29Z"
   },
   {
     "name": "David P. McCarthy",
-    "image": "images/279b0d0cc079125d20d0d582aa82c14bf8fa0ad0ed5038a62f2ddbf67a5f5c21.jpg",
-    "source_image": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/16620/david_mccarthy_web.jpg?itok=UlkeX6Wx",
     "sources": [
-      "https://www.hermiston.gov/citycouncil"
+      "https://www.hermiston.gov/citycouncil",
+      "https://www.hermiston.gov/citycouncil/page/elections",
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
     ],
-    "positions": [
-      "Council Member",
-      "Ward 4",
-      "Council President"
+    "images": [
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/16620/david_mccarthy_web.jpg?itok=UlkeX6Wx",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly next to the name.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/16620/david_mccarthy_web.jpg?itok=4e6dcOkR",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as Ward 4 councilor and Council President; role normalized to Council Member and Council President."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council President."
+      },
+      {
+        "data": "Council Member, Ward IV",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as Councilor Ward IV with term expiring 12/31/2026."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as Ward 4 and Council President, so role normalized to Council Member with additional role Council President."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Council President."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states he is on the City Council and holds the position of Council President, which is a leadership role within the council, so 'Council Member' is appropriate with the leadership role noted."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President' on the page."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Ward 4."
+      },
+      {
+        "data": "Ward IV",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Ward IV Councilor."
+      },
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Ward 4'."
+      },
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as representing Ward 4."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General contact number for mayor and councilors given as 541-567-5521.",
+        "llm_confidence_reason": "General contact number for Mayor and City Council provided; no personal number given.",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -178,38 +615,136 @@
       {
         "data": "dmccarthy@hermiston.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "dmccarthy@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile URL linked from name.",
+        "llm_confidence_reason": "Profile link directly associated with the person.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.or.us/government/city-council",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General City Council page link provided for more info on incumbents.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile page URL provided.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/david-p-mccarthy",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
       }
     ],
     "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expiration date explicitly stated as December 31, 2026.",
+        "source": "https://www.hermiston.gov/directory-listing/david-p-mccarthy"
+      }
+    ],
+    "updated_at": "2025-07-10T00:52:29Z"
   },
   {
     "name": "Jeff Kelso",
-    "image": "images/c147a6e8160989e679e41fa995b556fc2fe7aaac930621e5ebba657dc5a989fb.jpg",
-    "source_image": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/2311/jeff_kelso_web.jpg?itok=G2y9dy0B",
     "sources": [
-      "https://www.hermiston.gov/citycouncil"
+      "https://www.hermiston.gov/citycouncil",
+      "https://www.hermiston.gov/citycouncil/page/elections",
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/jeff-kelso"
     ],
-    "positions": [
-      "Council Member",
-      "At Large"
+    "images": [
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/2311/jeff_kelso_web.jpg?itok=G2y9dy0B",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly next to the name.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/jeff_kelso-_sel_at-large_councilor_.pdf",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "PDF link likely contains official photo; no direct image URL found.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2311/jeff_kelso_web.jpg?itok=RddfDNdf",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is a portrait near the name and role of Jeff Kelso.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as At Large councilor; role normalized to Council Member At-Large."
+      },
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as At-Large Councilor elected for 2025-2028 term."
+      },
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as At Large council member."
+      },
+      {
+        "data": "Council Member At Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'Position: At Large' and lists Jeff Kelso under City Council members with 'At Large' designation, indicating he is a council member representing an at-large position."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as At Large."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as At-Large Councilor."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: At Large' on the page."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General contact number for mayor and councilors given as 541-567-5521.",
+        "llm_confidence_reason": "General contact number for Mayor and City Council provided; no personal number given.",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -217,38 +752,149 @@
       {
         "data": "jkelso@hermiston.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "jkelso@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile URL linked from name.",
+        "llm_confidence_reason": "Profile link directly associated with the person.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/jeff_kelso-_sel_at-large_councilor_.pdf",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Official profile PDF link provided on election results page.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile page URL provided.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/jeff-kelso",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the profile page is a valid website for the council member.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term effective January 1, 2025.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2024-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Jeff Kelso was elected in November 2024 as stated on the page.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term ends December 31, 2028.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expires 12/31/2028 as explicitly stated.",
+        "source": "https://www.hermiston.gov/directory-listing/jeff-kelso"
+      }
+    ],
+    "updated_at": "2025-07-10T00:52:29Z"
   },
   {
     "name": "Maria E. Duron",
-    "image": "images/07a3d5bdb9790d5cbfa059646f533e1513eb4983d0cc7133d1942b7499c19c2e.jpg",
-    "source_image": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/11931/maria_duron.jpg?itok=NLk52iK5",
     "sources": [
-      "https://www.hermiston.gov/citycouncil"
+      "https://www.hermiston.gov/citycouncil",
+      "https://www.hermiston.gov/citycouncil/page/elections",
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/maria-e-duron"
     ],
-    "positions": [
-      "Council Member",
-      "At Large"
+    "images": [
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/11931/maria_duron.jpg?itok=NLk52iK5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly next to the name.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/maria_e_duron-_sel_at-large_councilor.pdf",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "PDF link likely contains official photo; no direct image URL found.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/11931/maria_duron.jpg?itok=avkQldfK",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and role.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as At Large councilor; role normalized to Council Member At-Large."
+      },
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as At-Large Councilor elected for 2025-2028 term."
+      },
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as At Large council member."
+      },
+      {
+        "data": "Council Member At Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'Position: At Large' and mentions election to council, so role normalized to 'Council Member At Large'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as At Large."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as At-Large Councilor."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: At Large'."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General contact number for mayor and councilors given as 541-567-5521.",
+        "llm_confidence_reason": "General contact number for Mayor and City Council provided; no personal number given.",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -256,38 +902,149 @@
       {
         "data": "mduron@hermiston.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "mduron@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile URL linked from name.",
+        "llm_confidence_reason": "Profile link directly associated with the person.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/maria_e_duron-_sel_at-large_councilor.pdf",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Official profile PDF link provided on election results page.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile page URL provided.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/maria-e-duron",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term effective January 1, 2025.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2020-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected in November 2020 as stated.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term ends December 31, 2028.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expires 12/31/2028 explicitly stated.",
+        "source": "https://www.hermiston.gov/directory-listing/maria-e-duron"
+      }
+    ],
+    "updated_at": "2025-07-10T00:52:29Z"
   },
   {
     "name": "Josh Roberts",
-    "image": "images/a2e6ee6af46142bb293ae2b5acc087ca85eab9621d2c6108dd2ea003335c8ced.jpg",
-    "source_image": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/2301/josh_roberts_web.jpg?itok=5RV29j-U",
     "sources": [
-      "https://www.hermiston.gov/citycouncil"
+      "https://www.hermiston.gov/citycouncil",
+      "https://www.hermiston.gov/citycouncil/page/elections",
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/josh-roberts"
     ],
-    "positions": [
-      "Council Member",
-      "At Large"
+    "images": [
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/2301/josh_roberts_web.jpg?itok=5RV29j-U",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly next to the name.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/josh_roberts-_sel_at-large_councilor.pdf",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "PDF link likely contains official photo; no direct image URL found.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/2301/josh_roberts_web.jpg?itok=xwfDKS79",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a headshot near the name and role.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as At Large councilor; role normalized to Council Member At-Large."
+      },
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as At-Large Councilor elected for 2025-2028 term."
+      },
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as At Large council member."
+      },
+      {
+        "data": "Council Member At Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'Position: At Large' and he is listed among City Council members; normalized role to 'Council Member At Large'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as At Large."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as At-Large Councilor."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: At Large' on the page."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General contact number for mayor and councilors given as 541-567-5521.",
+        "llm_confidence_reason": "General contact number for Mayor and City Council provided; no personal number given.",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -295,38 +1052,149 @@
       {
         "data": "jroberts@hermiston.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "jroberts@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile URL linked from name.",
+        "llm_confidence_reason": "Profile link directly associated with the person.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/josh_roberts-_sel_at-large_councilor.pdf",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Official profile PDF link provided on election results page.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile page URL provided.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/josh-roberts",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the profile page.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term effective January 1, 2025.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2024-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Elected in November 2024 as stated in the Council Appointment section.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term ends December 31, 2028.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expires December 31, 2028 as explicitly stated.",
+        "source": "https://www.hermiston.gov/directory-listing/josh-roberts"
+      }
+    ],
+    "updated_at": "2025-07-10T00:52:29Z"
   },
   {
     "name": "Allen Hayward",
-    "image": "images/8ff54085d4b2f918b04e32eade1cef82a5943f3eec477421f0fdef9cada1eb2a.jpg",
-    "source_image": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/9501/allen_hayward_web.jpg?itok=m5358vxC",
     "sources": [
-      "https://www.hermiston.gov/citycouncil"
+      "https://www.hermiston.gov/citycouncil",
+      "https://www.hermiston.gov/citycouncil/page/elections",
+      "https://www.hermiston.gov/directory-listing/doug-primmer",
+      "https://www.hermiston.gov/directory-listing/allen-hayward"
     ],
-    "positions": [
-      "Council Member",
-      "At Large"
+    "images": [
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/9501/allen_hayward_web.jpg?itok=m5358vxC",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly next to the name.",
+        "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/allen_hayward-_sel_at-large.pdf",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "PDF link likely contains official photo; no direct image URL found.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/9501/allen_hayward_web.jpg?itok=FRM0v7Lt",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is a portrait near the name and role of Allen Hayward.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as At Large councilor; role normalized to Council Member At-Large."
+      },
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as At-Large Councilor elected for 2025-2028 term."
+      },
+      {
+        "data": "Council Member At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as At Large council member."
+      },
+      {
+        "data": "Council Member At Large",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page states 'Position: At Large' and lists Allen Hayward among other 'At Large' council members, indicating he is a council member representing an at-large position."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as At Large."
+      },
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as At-Large Councilor."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'At Large'."
+      },
+      {
+        "data": "At Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position: At Large' on the page."
+      }
     ],
     "phone_numbers": [
       {
         "data": "541-567-5521",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General contact number for mayor and councilors given as 541-567-5521.",
+        "llm_confidence_reason": "General contact number for Mayor and City Council provided; no personal number given.",
         "source": "https://www.hermiston.gov/citycouncil"
       }
     ],
@@ -334,20 +1202,70 @@
       {
         "data": "ahayward@hermiston.gov",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed next to name.",
+        "llm_confidence_reason": "Email explicitly listed next to the name.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "ahayward@hermiston.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided next to the name.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
     "websites": [
       {
         "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Profile URL linked from name.",
+        "llm_confidence_reason": "Profile link directly associated with the person.",
         "source": "https://www.hermiston.gov/citycouncil"
+      },
+      {
+        "data": "https://www.hermiston.gov/sites/default/files/fileattachments/mayor_amp_city_council/page/16395/allen_hayward-_sel_at-large.pdf",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Official profile PDF link provided on election results page.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile page URL provided.",
+        "source": "https://www.hermiston.gov/directory-listing/doug-primmer"
+      },
+      {
+        "data": "https://www.hermiston.gov/directory-listing/allen-hayward",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL provided is the profile page for Allen Hayward.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
       }
     ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-05-06"
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term effective January 1, 2025.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2024-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Elected in November 2024 as stated in the 'Council Appointment' section.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term ends December 31, 2028.",
+        "source": "https://www.hermiston.gov/citycouncil/page/elections"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expires 12/31/2028 as explicitly stated.",
+        "source": "https://www.hermiston.gov/directory-listing/allen-hayward"
+      }
+    ],
+    "updated_at": "2025-07-10T00:52:29Z"
   }
 ]
