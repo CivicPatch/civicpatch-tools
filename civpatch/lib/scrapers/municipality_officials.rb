@@ -12,8 +12,16 @@ module Scrapers
       case municipality_context[:state]
       when "wa"
         people = Scrapers::Wa::MunicipalityOfficials::StateLevelScraper.fetch(municipality_context)
+        result = {
+          "people" => people,
+          "government_type" => "mayor_council"
+        }
       when "or"
         people = Scrapers::Or::MunicipalityOfficials::StateLevelScraper.fetch(municipality_context)
+        result = {
+          "people" => people,
+          "government_type" => "mayor_council"
+        }
       else
         raise "No state-level scraper found for #{state}"
       end
@@ -22,7 +30,8 @@ module Scrapers
 
       {
         "type" => "state_source",
-        "people" => people
+        "people" => result["people"],
+        "government_type" => result["government_type"]
       }
     rescue StandardError => e
       puts "No state-level scraper for #{city_name}, #{state}: #{e.message}, falling back to search"
@@ -54,6 +63,7 @@ module Scrapers
         "government_type" => response["government_type"]
       }
 
+      puts "People hint from Gemini search:"
       pp people_hint
 
       people_hint
