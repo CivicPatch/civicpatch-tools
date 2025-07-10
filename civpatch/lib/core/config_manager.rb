@@ -23,10 +23,14 @@ module Core
       DEFAULT_CONFIG.dup
     end
 
-    def self.update_config(state, geoid, config, **updates)
+    def self.update_config(state:, geoid:, updates:)
+      config = get_config(state, geoid)
       updated_config = config.dup
+      puts "What are the updates? #{updates}"
       updated_config = updated_config.merge(updates.stringify_keys)
       config_file_path = config_path(state, geoid)
+
+      puts "Updating config at #{config_file_path} with #{updated_config}"
       File.write(config_file_path, updated_config.to_yaml)
 
       config
@@ -43,7 +47,10 @@ module Core
       end
       config["people"] = people_config
 
-      Core::ConfigManager.update_config(state, geoid, config)
+      config["government_type"] = config["government_type"] || nil
+
+      Core::ConfigManager.update_config(state: state, geoid: geoid, updates: { people: config["people"],
+                                                     government_type: config["government_type"] })
     end
   end
 end

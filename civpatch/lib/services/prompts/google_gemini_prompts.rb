@@ -8,46 +8,36 @@ module Services
         government_types = Core::CityManager.government_types
 
         %(
-        Provide the current elected Mayor and City Council Members for the specified city,
-        formatting the response as a JSON object.
+        Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
 
         Municipality: #{municipality_name}, #{state}
         Municipality Website (Optional, for context): #{municipality_entry["website"]}
 
         Instructions:
 
-        1. Figure out the government type of the city. Available government types: #{government_types.join(", ")}
+        1. Determine the government type of the city. Available government types:
+           - **mayor_council**: A government with a Mayor and a City Council.
+           - **mayor_commission**: A government with Commissioners (and optionally a Mayor).
 
-        2. Determine the total number of elected officials on the City Council for #{municipality_name}.
-        This total number includes the Mayor (only if available).
+           Use the presence of roles like "Council Member" or "Commissioner" to determine the government type. Refer to the following government types for guidance:
+           #{government_types}
 
-        3. Create a JSON object with a single top-level key "people". The value of "people" must be an array.
+        2. Identify the total number of elected officials in the local government, including the Mayor (if applicable).
 
-        4. This array must contain exactly the total number of elected officials determined in step 1.
-
-        5. Within the array, include one entry for the Mayor (or equivalent, only if available)
-        and the remaining entries for "Council Member (or equivalent)" roles.
-
-        6 .For each entry in the array, provide the current elected official's name
-        only if you are highly certain based on your training data or search results.
-
-        If you are not highly certain of the current name for any specific position,
-        or if the information might be outdated or incomplete, set the 'name' field
-        to null for that entry.
-
-        Return ONLY the following JSON structure. Ensure the JSON is perfectly valid and
-        can be parsed directly.
-        Pay close attention to matching brackets `[]` for arrays and braces `{}` for objects.
-        {
-          "government_type": The government type of the city (string),
-          "people": [{
-            "name": The official's name (string) or null,
-            "roles": The position held (array of strings),
-                         which should be either "Mayor" (only if the municipality has a mayor)
-                         or "Council Member" (or equivalent e.g. Selectmen, Alderman).
-          }],
-          "notes": "Notes about the search and the results"
-        }
+        3. Create a JSON object with the following structure:
+           ```json
+           {
+             "government_type": "mayor_council" or "mayor_commission",
+             "people": [
+               {
+                 "name": "Full name of the official or null if uncertain",
+                 "roles": ["Mayor", "Council Member", "Commissioner", etc.],
+                 "divisions": ["Division name or null if not applicable"]
+               }
+             ],
+             "notes": "Brief notes about the search and results"
+           }
+           ```
 
         IMPORTANT: I need ONLY the JSON object as your response,
         with NO additional text, explanation, or markdown formatting.
