@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Richard Mays",
+    "roles": [
+      "Mayor"
+    ],
+    "updated_at": "2025-07-10T01:01:41Z"
+  },
+  {
+    "name": "Timothy McGlothlin",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:01:41Z"
+  },
+  {
+    "name": "Darcy Long-Curtiss",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:01:41Z"
+  },
+  {
+    "name": "Scott Randall",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:01:41Z"
+  },
+  {
+    "name": "Dan Richardson",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:01:41Z"
+  },
+  {
+    "name": "Rod Runyon",
+    "roles": [
+      "Council Member"
+    ],
+    "updated_at": "2025-07-10T01:01:41Z"
+  }
+]

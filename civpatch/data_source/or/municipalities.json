@@ -745,10 +745,12 @@
       "phone_number": "(541) 296-5481",
       "website": "https://www.thedalles.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "49f81b39687c7edd58671b84f67cddc0",
+      "meta_updated_at": "2025-07-10T01:02:48Z",
+      "meta_hash": "0d60b6796d4ea91e31241fa616bef56b",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4172950"
     },
