@@ -122,8 +122,6 @@ module Resolvers
     end
 
     def self.merge_people_across_sources(context) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
-      # puts "People config is now: #{context[:config]["people"].inspect}"
-      pp context[:config]["people"]
       sources = resolve_sources(context)
       people_config = context[:config]["people"]
 
