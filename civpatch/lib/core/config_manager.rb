@@ -26,11 +26,9 @@ module Core
     def self.update_config(state:, geoid:, updates:)
       config = get_config(state, geoid)
       updated_config = config.dup
-      puts "What are the updates? #{updates}"
       updated_config = updated_config.merge(updates.stringify_keys)
       config_file_path = config_path(state, geoid)
 
-      puts "Updating config at #{config_file_path} with #{updated_config}"
       File.write(config_file_path, updated_config.to_yaml)
 
       config
