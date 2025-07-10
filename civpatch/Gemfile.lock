@@ -225,7 +225,7 @@ DEPENDENCIES
   namae (~> 1.2)
   nokogiri
   nokolexbor (~> 0.6.0)
-  playwright-ruby-client (~> 1.51)
+  playwright-ruby-client (~> 1.52)
   pp (~> 0.6.2)
   rake (~> 13.0)
   rubocop (~> 1.75)
