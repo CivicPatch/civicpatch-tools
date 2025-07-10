@@ -1,4 +1,4 @@
-[Skip to main content](https://www.pendletonor.gov/council/directory-listing/linda-k-neuman/)
+[Skip to main content](https://www.pendletonor.gov/council/directory-listing/position-vacant/)
 
 Toggle Navigation
 
@@ -216,7 +216,7 @@ Close Navigation
 - Connect
   
   - [**Job Opportunities**](https://www.pendletonor.gov/jobs)
-  - [**Alerts and Notifications**](https://www.pendletonor.gov/council/directory-listing/linda-k-neuman/node/11531)
+  - [**Alerts and Notifications**](https://www.pendletonor.gov/council/directory-listing/position-vacant/node/11531)
   - [**Email Subscriptions**](https://www.pendletonor.gov/portal)
   - [**Meetings Calendar**](https://www.pendletonor.gov/meetings)
   - [**Events Calendar**](https://www.pendletonor.gov/calendar)
@@ -261,82 +261,23 @@ Event Date
 
 Toggle Menu
 
-# Linda K. Neuman
+# POSITION VACANT
 
-![](https://www.pendletonor.gov/sites/g/files/vyhlif13566/files/styles/directory_listings_body_with_photo/public/media/council/image/18091/neuman_linda.jpg?itok=47zMx_Zf)
+![](https://www.pendletonor.gov/sites/g/files/vyhlif13566/files/styles/directory_listings_body_with_photo/public/media/council/image/18206/position-vacant-1024x1024.jpg?itok=aAIxPgTu)
 
 Position
 
-Ward 3
+Ward 2
 
 Phone Number
-
-(541) 969-1188
-
-Email
-
-[Email](https://www.pendletonor.gov/email-contact/node/5021/field_email "Email Linda K. Neuman (opens in a new window)")
 
 Profile
 
 ## Term Ending
 
-- December 31, 2026
+### December 31, 2028
 
-## Address
-
-- 2216 SW Perkins Avenue
-
-## Educational Information
-
-- Willamette University/University of Massachusetts (Undergraduate)
-- University of Oregon - BA English, 1974
-- State University of New York (Buffalo) - National Endowment for the Humanities, 1997
-- Lewis and Clark College - MAT (Language Arts/Teaching/Ed. Admin.) 2002
-
-## Current Occupation
-
-- Retired Educator
-
-## Employment History
-
-- Oregon City Public Schools
-- Beaverton School District
-- Corbett School District
-- Umatilla-Morrow Education Service District
-- Athena-Weston School District
-
-## Community Service
-
-- Parent-Teachers Association (Portland)
-- Volunteer Pre-school Administrator (St. Paul - Lutheran Church - Portland)
-- Oregon Symphony Association, Eastmoreland Chapter (Past President)
-- Kiwanis Club of Pendleton, Past-President/Current member
-- Pacific-Northwest Kiwanis District, Lt. Governor (2016-2018 - two terms)
-- PEO - Pendleton, OR
-- Oregon Retired Educators’ Association (Secretary of local chapter)
-- Round-Up Volunteer (10 + years)
-- Peace Lutheran Church
-
-## Awards/Recognition
-
-- Leadership Pendleton, 2003
-- Kiwanian of the Year, 2013-14
-
-## Hobbies
-
-- Community Service work
-- Traveling/exploring
-- Gardening
-- Time in the Blue Mountains
-
-## Immediate Family
-
-- Two great, adult sons:  Matthew and Erick
-- A daughter-in-law:  Adrianne
-- Grandchildren:  Carl, Ethan, and Josephine
-
-[Print](https://www.pendletonor.gov/print/pdf/node/5021)
+[Print](https://www.pendletonor.gov/print/pdf/node/5001)
 
 ## [Mayor &amp; City Council](https://www.pendletonor.gov/council)
 
@@ -373,7 +314,7 @@ Pendleton, OR 97801
 
 500 SW Dorion Avenue, Pendleton, OR 97801 (541) 966‑0201
 
-![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.pendletonor.gov/council/directory-listing/linda-k-neuman)
+![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.pendletonor.gov/council/directory-listing/position-vacant)
 
 [Government Websites by CivicPlus®](https://www.civicplus.com "(opens in a new window)")
 

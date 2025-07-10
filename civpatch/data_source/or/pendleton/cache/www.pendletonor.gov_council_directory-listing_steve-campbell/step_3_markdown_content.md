@@ -1,4 +1,4 @@
-[Skip to main content](https://www.pendletonor.gov/council/directory-listing/linda-k-neuman/)
+[Skip to main content](https://www.pendletonor.gov/council/directory-listing/steve-campbell/)
 
 Toggle Navigation
 
@@ -216,7 +216,7 @@ Close Navigation
 - Connect
   
   - [**Job Opportunities**](https://www.pendletonor.gov/jobs)
-  - [**Alerts and Notifications**](https://www.pendletonor.gov/council/directory-listing/linda-k-neuman/node/11531)
+  - [**Alerts and Notifications**](https://www.pendletonor.gov/council/directory-listing/steve-campbell/node/11531)
   - [**Email Subscriptions**](https://www.pendletonor.gov/portal)
   - [**Meetings Calendar**](https://www.pendletonor.gov/meetings)
   - [**Events Calendar**](https://www.pendletonor.gov/calendar)
@@ -261,82 +261,57 @@ Event Date
 
 Toggle Menu
 
-# Linda K. Neuman
+# Steve Campbell
 
-![](https://www.pendletonor.gov/sites/g/files/vyhlif13566/files/styles/directory_listings_body_with_photo/public/media/council/image/18091/neuman_linda.jpg?itok=47zMx_Zf)
+![](https://www.pendletonor.gov/sites/g/files/vyhlif13566/files/styles/directory_listings_body_with_photo/public/media/council/image/18111/campbell_steve.jpg?itok=MtBEpNDk)
 
 Position
 
-Ward 3
+At Large
 
 Phone Number
 
-(541) 969-1188
+(541) 379-0130
 
 Email
 
-[Email](https://www.pendletonor.gov/email-contact/node/5021/field_email "Email Linda K. Neuman (opens in a new window)")
+[Email](https://www.pendletonor.gov/email-contact/node/5061/field_email "Email Steve Campbell (opens in a new window)")
 
 Profile
 
-## Term Ending
+## At Large
 
-- December 31, 2026
+### Term Ending: December 31, 2028
 
-## Address
+## Educational Information:
 
-- 2216 SW Perkins Avenue
+Oregon State University BS, 1982 in Agriculture and Resources Economics
 
-## Educational Information
+## Current Occupation:
 
-- Willamette University/University of Massachusetts (Undergraduate)
-- University of Oregon - BA English, 1974
-- State University of New York (Buffalo) - National Endowment for the Humanities, 1997
-- Lewis and Clark College - MAT (Language Arts/Teaching/Ed. Admin.) 2002
+Vice President and Senior Relationship Manager, Banner Bank
 
-## Current Occupation
+Employment History:
 
-- Retired Educator
+38 years in commercial banking. 
 
-## Employment History
+## Community Service:
 
-- Oregon City Public Schools
-- Beaverton School District
-- Corbett School District
-- Umatilla-Morrow Education Service District
-- Athena-Weston School District
+Pendleton Development Commission Advisory Committee  
+Pendleton Round-Up &amp; Hall of Fame, Treasure  
+Pendleton Round-Up Volunteer
 
-## Community Service
+## Hobbies:
 
-- Parent-Teachers Association (Portland)
-- Volunteer Pre-school Administrator (St. Paul - Lutheran Church - Portland)
-- Oregon Symphony Association, Eastmoreland Chapter (Past President)
-- Kiwanis Club of Pendleton, Past-President/Current member
-- Pacific-Northwest Kiwanis District, Lt. Governor (2016-2018 - two terms)
-- PEO - Pendleton, OR
-- Oregon Retired Educators’ Association (Secretary of local chapter)
-- Round-Up Volunteer (10 + years)
-- Peace Lutheran Church
+Outdoor activities with family  
+Ranch work
 
-## Awards/Recognition
+## Family:
 
-- Leadership Pendleton, 2003
-- Kiwanian of the Year, 2013-14
+Wife, Martha of 35 years  
+One son and daughter-in-law, one granddaughter,  and two daughters.
 
-## Hobbies
-
-- Community Service work
-- Traveling/exploring
-- Gardening
-- Time in the Blue Mountains
-
-## Immediate Family
-
-- Two great, adult sons:  Matthew and Erick
-- A daughter-in-law:  Adrianne
-- Grandchildren:  Carl, Ethan, and Josephine
-
-[Print](https://www.pendletonor.gov/print/pdf/node/5021)
+[Print](https://www.pendletonor.gov/print/pdf/node/5061)
 
 ## [Mayor &amp; City Council](https://www.pendletonor.gov/council)
 
@@ -373,7 +348,7 @@ Pendleton, OR 97801
 
 500 SW Dorion Avenue, Pendleton, OR 97801 (541) 966‑0201
 
-![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.pendletonor.gov/council/directory-listing/linda-k-neuman)
+![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.pendletonor.gov/council/directory-listing/steve-campbell)
 
 [Government Websites by CivicPlus®](https://www.civicplus.com "(opens in a new window)")
 
