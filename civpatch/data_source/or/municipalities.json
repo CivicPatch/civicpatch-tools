@@ -2244,10 +2244,12 @@
       "phone_number": "+54192845234582336300",
       "website": "https://www.millersburgoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "10a1b2c36d7de9214d28bf9eb2decc90",
+      "meta_updated_at": "2025-07-11T19:07:34Z",
+      "meta_hash": "ca46748e9cbdcc38d5ece498ff1c3cb6",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4148300"
     },
