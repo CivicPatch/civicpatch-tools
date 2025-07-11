@@ -1,5 +1,7 @@
 ---
-sources: []
+sources:
+- https://www.ci.king-city.or.us/mayors_message/index.php
+- https://www.ci.king-city.or.us/councilors_-_bios.php
 people: {}
 exclude_sources: []
 government_type: mayor_council
