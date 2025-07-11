@@ -927,10 +927,12 @@
       "phone_number": "(503) 668-5533",
       "website": "https://www.ci.sandy.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "72be566635f3b5acc6ce4fa03154ee5f",
+      "meta_updated_at": "2025-07-11T04:41:20Z",
+      "meta_hash": "08990f9222a8608e77cfb86b11f54f0c",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4165250"
     },
