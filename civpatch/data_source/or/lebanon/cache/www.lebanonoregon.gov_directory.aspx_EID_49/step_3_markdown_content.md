@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.lebanonoregon.gov/directory.aspx?eid=50%2F)
+[Skip to Main Content](https://www.lebanonoregon.gov/directory.aspx?EID=49%2F)
 
 [Airport Road Updates](https://www.lebanonoregon.gov/AlertCenter.aspx) [Airport Road/Stoltz Hill Road Intersection Improvements Project Read On...](https://www.lebanonoregon.gov/625/Airport-RoadStoltz-Hill-Road-Intersectio)
 
@@ -17,51 +17,47 @@ Loading
 
 Search
 
-![](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=656)
+![](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=653)
 
 1. [Home](https://www.lebanonoregon.gov)
 2. Staff Directory
 
-![Councilor Jeremy Salvage](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=565 "Councilor Jeremy Salvage")
+![Councilor Dave Workman](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=564 "Councilor Dave Workman")
 
-# Jeremy Salvage
+# Dave Workman
 
  
 
 [City Council](https://www.lebanonoregon.gov/Directory.aspx?DID=36)  
-Title: Ward 3 Councilor  
-Phone: 541-258-4981  
-[Email Jeremy Salvage](mailto:jeremy.salvage@lebanonoregon.gov)
+Title: Ward 2 Councilor  
+Phone: 541-258-4982  
+[Email Dave Workman](mailto:dave.workman@lebanonoregon.gov)
 
 ## Biography
 
 ### Professional
 
-- Associates of Applied Science - Chemeketa Community College - Paramedic (2002)
-- Fabricator - South Fork Industrial (1999-2003)
-- Firefighter/Paramedic - Salem Fire Department (2003-2019)
-- Fire Captain - Salem Fire Department (2019-2022)
+Currently the Chief Recovery Officer at LinnCo Federal Credit Union and am a Certified Financial Counselor and Certified Lending Expert.
 
 ### Personal
 
-- Married to Amanda with 3 school-age kids
-- Lifetime Lebanon resident
-- We spend as much time as we can exploring the trails, mountains and rivers nearby
+Married to my wife, Renee, for 35 years. We have two beautiful grown daughters who live here in Lebanon with our 1-year old grandson.
 
 ### Community Involvement
 
-- Volunteer Firefighter - Lebanon Fire District (1999 to 2002)
-- Middle School Basketball Coach - East Linn Christian Academy (2005 to 2008)
-- Lebanon Planning Commission (2009 to 2022)
-- Lebanon Planning Commission Chair (2018 to 2022)
+My family on both sides has been here in Lebanon since the 1940's. I live in a house my grandparents built in 1965, next to the one they built in the 40's. Almost every good memory I have is here in this town. My hope is to keep this a town where citizens can be safe, secure and prosperous while maintaining the small-town values that many hold so dear.
+
+I was on the City Planning Commission and have volunteered for many things, including coaching for the Boys and Girls Club, working at Brewfest, the Pumpkin Run and Kidz Shop.
+
+I look forward to serving Lebanon as a City Councilor here in Ward 2.
 
 ## Address
 
-184 Shannon Place
+620 W Grant Street
 
 ## Term
 
-June 8, 2022 to December 31, 2024
+January 11, 2023 to December 31, 2026
 
  
 

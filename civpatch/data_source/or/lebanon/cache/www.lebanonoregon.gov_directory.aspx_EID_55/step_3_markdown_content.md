@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.lebanonoregon.gov/directory.aspx?eid=50%2F)
+[Skip to Main Content](https://www.lebanonoregon.gov/directory.aspx?EID=55%2F)
 
 [Airport Road Updates](https://www.lebanonoregon.gov/AlertCenter.aspx) [Airport Road/Stoltz Hill Road Intersection Improvements Project Read On...](https://www.lebanonoregon.gov/625/Airport-RoadStoltz-Hill-Road-Intersectio)
 
@@ -17,51 +17,49 @@ Loading
 
 Search
 
-![](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=656)
+![](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=653)
 
 1. [Home](https://www.lebanonoregon.gov)
 2. Staff Directory
 
-![Councilor Jeremy Salvage](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=565 "Councilor Jeremy Salvage")
+![Councilor David McClain](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=2008 "Councilor David McClain")
 
-# Jeremy Salvage
+# David McClain
 
  
 
 [City Council](https://www.lebanonoregon.gov/Directory.aspx?DID=36)  
-Title: Ward 3 Councilor  
-Phone: 541-258-4981  
-[Email Jeremy Salvage](mailto:jeremy.salvage@lebanonoregon.gov)
+Title: Ward 2 Councilor  
+Phone: 541-258-4988  
+[Email Dave McClain](mailto:david.mcclain@lebanonoregon.gov)
 
 ## Biography
 
 ### Professional
 
-- Associates of Applied Science - Chemeketa Community College - Paramedic (2002)
-- Fabricator - South Fork Industrial (1999-2003)
-- Firefighter/Paramedic - Salem Fire Department (2003-2019)
-- Fire Captain - Salem Fire Department (2019-2022)
+I have owned a large farm, at the same time a construction company, have driven truck as well as being a multi-unit landlord. I worked my way up to and owned a multi-unit franchise in Domino’s Pizza in which I was a trainer, planner, designer, operations and start up expert in my earlier years. I founded and currently operate McClain Family Corp. which does some investments, maintenance work and property management. My office is just out of town. 
 
 ### Personal
 
-- Married to Amanda with 3 school-age kids
-- Lifetime Lebanon resident
-- We spend as much time as we can exploring the trails, mountains and rivers nearby
+About me: Born Silverton Ore. 1957. 1 of 9 kids, did sports in school and worked part time jobs. Got married at an early age, I have worked and learned to continuously better myself. I am a Willamette Valley native and worked the fields as a youngster in and around this area, picking beans, berries, bucking hay, and helping the family.
 
-### Community Involvement
+Family: I am a family man. My wife Trisha and I have between us 7 kids, 23 grandkids and 6 greats. Most live close by. Our children and most of our grandchildren are grown and are involved in all areas of our community private and public. They are everywhere.
 
-- Volunteer Firefighter - Lebanon Fire District (1999 to 2002)
-- Middle School Basketball Coach - East Linn Christian Academy (2005 to 2008)
-- Lebanon Planning Commission (2009 to 2022)
-- Lebanon Planning Commission Chair (2018 to 2022)
+### Education
+
+Graduated Dayton High School 1976. Taken college courses at LBCC, Chemeketa, SRJC, and many training courses in executive positions at D.P.I. specifically for training others, finance, computer tech, construction, startups, marketing, and speech, all relating to business. I also took flight training and learned to fly at Albany Or. and have taken many CCB classes.
+
+### Political
+
+I have been a Lebanon planning commissioner for nearly ten years. I worked as an investigator for the Oregon Dept. of Agriculture for one year. I am currently a registered Independent. My goal is to be a man of the people, and represent all the citizens of Lebanon as a counselor, and promote a happy safe and prosperous environment for our families, promote a quality education for children, and plan out our future for prosperity. 
 
 ## Address
 
-184 Shannon Place
+430 Hiatt Street
 
 ## Term
 
-June 8, 2022 to December 31, 2024
+January 8, 2025 to December 31, 2028
 
  
 
