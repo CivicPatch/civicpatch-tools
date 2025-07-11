@@ -1933,10 +1933,12 @@
       "phone_number": "(541) 336-2247",
       "website": "https://www.cityoftoledo.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "f79e7b7d6bf2223ea52cdc3b89e23f74",
+      "meta_updated_at": "2025-07-11T18:36:20Z",
+      "meta_hash": "65d43d86dc9406c5fe97ef7b47faa581",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4174000"
     },
