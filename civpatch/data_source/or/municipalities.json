@@ -1339,10 +1339,12 @@
       "phone_number": "(541) 386-1488",
       "website": "https://cityofhoodriver.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "5cfc6d4ff93db2bd3051394b1a52e6bc",
+      "meta_updated_at": "2025-07-11T17:08:51Z",
+      "meta_hash": "7b3b6eaeecd867507117bed7a91ec73b",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4134900"
     },
