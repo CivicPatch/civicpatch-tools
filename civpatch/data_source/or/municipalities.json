@@ -1551,10 +1551,12 @@
       "phone_number": "(541) 535-1566",
       "website": "https://www.cityoftalent.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "aaa4bdc74e3b0c7d9e03599fe4b65753",
+      "meta_updated_at": "2025-07-11T18:07:00Z",
+      "meta_hash": "42a6b532d76cd0e9fc60f2912977e8fd",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4172500"
     },
