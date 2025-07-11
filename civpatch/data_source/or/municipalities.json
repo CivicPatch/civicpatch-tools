@@ -987,10 +987,12 @@
       "phone_number": "(503) 838-0722",
       "website": "https://www.ci.monmouth.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "c9fb5359d5a43b48f605dbfc3405dc49",
+      "meta_updated_at": "2025-07-11T04:41:40Z",
+      "meta_hash": "b8948af867e89966424e79b23cecead1",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4149550"
     },
