@@ -1407,10 +1407,12 @@
       "phone_number": "(503) 543-7146",
       "website": "https://www.scappoose.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "ce37503631fa87379effea8088f6a456",
+      "meta_updated_at": "2025-07-11T18:00:35Z",
+      "meta_hash": "02aa64216d04ef0a711a6e1c65d57dff",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4165500"
     },
