@@ -1179,10 +1179,12 @@
       "phone_number": "(503) 325-5821",
       "website": "https://www.astoria.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "6bcbde559f97368efb88c03305bbca42",
+      "meta_updated_at": "2025-07-11T17:07:54Z",
+      "meta_hash": "0e69c2c81f92d6443804c9b0e26b19b3",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4103150"
     },
