@@ -1405,10 +1405,12 @@
       "phone_number": "(541) 475-2344",
       "website": "https://www.madras.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "566702ee656e5dcfd6e0c9aa1c60cfa1",
+      "meta_updated_at": "2025-07-11T17:11:01Z",
+      "meta_hash": "997a45179cd99dda671892c387c7ee37",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4145250"
     },
