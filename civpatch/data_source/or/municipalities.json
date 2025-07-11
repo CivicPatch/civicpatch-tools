@@ -971,10 +971,12 @@
       "phone_number": "(541) 881-3201",
       "website": "https://www.ontariooregon.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "cd7f4fbc52fedc2e851731b4571e955b",
+      "meta_updated_at": "2025-07-11T04:40:33Z",
+      "meta_hash": "7173f0d7df06c5de50aa1f4ac421c7ce",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4154900"
     },
