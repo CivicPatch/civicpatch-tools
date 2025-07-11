@@ -2388,10 +2388,12 @@
       "phone_number": "(541) 947-2020",
       "website": "https://townoflakeview.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "15b667bd8a843339400e72060417b245",
+      "meta_updated_at": "2025-07-11T19:18:31Z",
+      "meta_hash": "3ebcce061f17ad79494cf2dc867fd2ec",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4140700"
     },

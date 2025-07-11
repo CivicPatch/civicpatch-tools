@@ -1,47 +1,42 @@
 [
   {
-    "name": "Kevin Sims",
-    "positions": [
-      "Mayor"
-    ],
-    "email": "ksims@townoflakeviewor.gov",
-    "phone_number": "(541) 947-2029",
-    "updated_at": "2025-05-11"
-  },
-  {
     "name": "Andrea Wishart",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "plumbergirls@msn.com",
     "phone_number": "(541) 947-2029",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:15:05Z",
+    "divisions": []
   },
   {
     "name": "Charley Tracy",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "ctracy@townoflakeviewor.gov",
     "phone_number": "(541) 947-2029",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:15:05Z",
+    "divisions": []
   },
   {
-    "name": "Gerald \"J\" Farmen",
-    "positions": [
-      "Council Member"
+    "name": "Kevin Sims",
+    "roles": [
+      "Mayor"
     ],
-    "email": "gerald.farmen@gmail.com",
+    "email": "ksims@townoflakeviewor.gov",
     "phone_number": "(541) 947-2029",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:15:05Z",
+    "divisions": []
   },
   {
     "name": "Martin Marie Collins",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "Paverdude1@gmail.com",
     "phone_number": "(541) 947-2029",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:15:05Z",
+    "divisions": []
   }
 ]

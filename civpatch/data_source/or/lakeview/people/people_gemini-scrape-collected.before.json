@@ -1,0 +1,446 @@
+[
+  {
+    "name": "Kevin Sims",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor",
+      "https://townoflakeview.org/budget-2025-2026"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated and is a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Kevin Sims'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states that the Mayor and Councilors are 'nominated and elected from the town at large', which applies to this individual."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Appointed' date is explicitly stated as '2025'.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2029-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'December 31, 2029'.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Andrea Wishart",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor",
+      "https://townoflakeview.org/budget-2025-2026"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council President' is explicitly stated and is a target role."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President Andrea Wishart'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states that the Mayor and Councilors are 'nominated and elected from the town at large', which applies to this individual."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Appointed' date is explicitly stated as '2023'.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'December 31, 2027'.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Marty Collins",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor",
+      "https://townoflakeview.org/budget-2025-2026"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated and is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Marty Collins'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a synonym for 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states that the Mayor and Councilors are 'nominated and elected from the town at large', which applies to this individual."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Appointed' date is explicitly stated as '2025'.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2029-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'December 31, 2029'.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Jessica Calvin",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor",
+      "https://townoflakeview.org/budget-2025-2026"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated and is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Jessica Calvin'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a synonym for 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states that the Mayor and Councilors are 'nominated and elected from the town at large', which applies to this individual."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Appointed' date is explicitly stated as '2025'.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2029-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'December 31, 2029'.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Charley Tracy",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor",
+      "https://townoflakeview.org/budget-2025-2026",
+      "https://townoflakeview.org/budget-2023-2024",
+      "https://townoflakeview.org/budget-2022-2023",
+      "https://townoflakeview.org/budget-2024-2025"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Council Member' is explicitly stated and is a target role."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Charley Tracy'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Inferred from 'Councilor' which is a synonym for 'Council Member'."
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilor', which is a 'council member' target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Charley Tracy', which is normalized to 'Council Member'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor' which is a variation of 'council member'"
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in text"
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states that the Mayor and Councilors are 'nominated and elected from the town at large', which applies to this individual."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Appointed' date is explicitly stated as '2021'.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The 'Term Expires' date is explicitly stated as 'December 31, 2027'.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Ray Turner",
+    "sources": [
+      "https://townoflakeview.org/budget-2023-2024",
+      "https://townoflakeview.org/budget-2022-2023",
+      "https://townoflakeview.org/budget-2024-2025"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Ray Turner'."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in text"
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in text"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Jay Farmen",
+    "sources": [
+      "https://townoflakeview.org/budget-2023-2024",
+      "https://townoflakeview.org/budget-2022-2023",
+      "https://townoflakeview.org/budget-2024-2025"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council President'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Jay Farmen', which is normalized to 'Council Member'."
+      },
+      {
+        "data": "council president",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in text"
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in text"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Charlie Pike",
+    "sources": [
+      "https://townoflakeview.org/budget-2023-2024",
+      "https://townoflakeview.org/budget-2024-2025"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilor', which is a 'council member' target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor' which is a variation of 'council member'"
+      },
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in text"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Kyle Deiter",
+    "sources": [
+      "https://townoflakeview.org/budget-2023-2024"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilor', which is a 'council member' target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Sandy Wenzel",
+    "sources": [
+      "https://townoflakeview.org/budget-2022-2023"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President Sandy Wenzel'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Shannon Theall",
+    "sources": [
+      "https://townoflakeview.org/budget-2022-2023"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Shannon Theall', which is normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T19:18:31Z"
+  }
+]

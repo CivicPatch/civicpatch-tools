@@ -1,0 +1,247 @@
+[
+  {
+    "name": "Kevin Sims",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor in the content."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 947-2020",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number provided near the content; no direct personal phone found.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://townoflakeview.org/town-council-mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council and mayor page.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Appointed in 2025 as explicitly stated.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2029-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 31, 2029 as explicitly stated.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:15:41Z"
+  },
+  {
+    "name": "Andrea Wishart",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council President."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 947-2020",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number provided; no direct personal phone found.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://townoflakeview.org/town-council-mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council and mayor page.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Appointed in 2023 as explicitly stated.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 31, 2027 as explicitly stated.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:15:41Z"
+  },
+  {
+    "name": "Marty Collins",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 947-2020",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number provided; no direct personal phone found.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://townoflakeview.org/town-council-mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council and mayor page.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Appointed in 2025 as explicitly stated.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2029-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 31, 2029 as explicitly stated.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:15:41Z"
+  },
+  {
+    "name": "Jessica Calvin",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 947-2020",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number provided; no direct personal phone found.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://townoflakeview.org/town-council-mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council and mayor page.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Appointed in 2025 as explicitly stated.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2029-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 31, 2029 as explicitly stated.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:15:41Z"
+  },
+  {
+    "name": "Charley Tracy",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(541) 947-2020",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General town phone number provided; no direct personal phone found.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://townoflakeview.org/town-council-mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official town council and mayor page.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Appointed in 2021 as explicitly stated.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2027-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 31, 2027 as explicitly stated.",
+        "source": "https://townoflakeview.org/town-council-mayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:15:41Z"
+  }
+]

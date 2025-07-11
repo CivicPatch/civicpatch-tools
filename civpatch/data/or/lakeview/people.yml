@@ -1,26 +1,79 @@
 ---
 - name: Kevin Sims
-  positions:
+  roles:
   - Mayor
+  divisions: []
+  image:
+  cdn_image:
   email: ksims@townoflakeviewor.gov
   phone_number: "(541) 947-2029"
+  website: https://townoflakeview.org/town-council-mayor
+  start_date: '2025'
+  end_date: '2029-12-31'
+  sources:
+  - https://townoflakeview.org/town-council-mayor
+  - https://townoflakeview.org/budget-2025-2026
+  updated_at: '2025-07-11T19:18:31Z'
 - name: Andrea Wishart
-  positions:
-  - Council Member
+  roles:
+  - Council President
+  divisions: []
+  image:
+  cdn_image:
   email: plumbergirls@msn.com
   phone_number: "(541) 947-2029"
+  website: https://townoflakeview.org/town-council-mayor
+  start_date: '2023'
+  end_date: '2027-12-31'
+  sources:
+  - https://townoflakeview.org/town-council-mayor
+  - https://townoflakeview.org/budget-2025-2026
+  updated_at: '2025-07-11T19:18:31Z'
 - name: Charley Tracy
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: ctracy@townoflakeviewor.gov
   phone_number: "(541) 947-2029"
-- name: Gerald "J" Farmen
-  positions:
+  website: https://townoflakeview.org/town-council-mayor
+  start_date: '2021'
+  end_date: '2027-12-31'
+  sources:
+  - https://townoflakeview.org/town-council-mayor
+  - https://townoflakeview.org/budget-2025-2026
+  - https://townoflakeview.org/budget-2023-2024
+  - https://townoflakeview.org/budget-2022-2023
+  - https://townoflakeview.org/budget-2024-2025
+  updated_at: '2025-07-11T19:18:31Z'
+- name: Jessica Calvin
+  roles:
   - Council Member
-  email: gerald.farmen@gmail.com
-  phone_number: "(541) 947-2029"
-- name: Martin Marie Collins
-  positions:
+  divisions: []
+  image:
+  cdn_image:
+  email:
+  phone_number: "(541) 947-2020"
+  website: https://townoflakeview.org/town-council-mayor
+  start_date: '2025'
+  end_date: '2029-12-31'
+  sources:
+  - https://townoflakeview.org/town-council-mayor
+  - https://townoflakeview.org/budget-2025-2026
+  updated_at: '2025-07-11T19:18:31Z'
+- name: Marty Collins
+  roles:
   - Council Member
-  email: Paverdude1@gmail.com
-  phone_number: "(541) 947-2029"
+  divisions: []
+  image:
+  cdn_image:
+  email:
+  phone_number: "(541) 947-2020"
+  website: https://townoflakeview.org/town-council-mayor
+  start_date: '2025'
+  end_date: '2029-12-31'
+  sources:
+  - https://townoflakeview.org/town-council-mayor
+  - https://townoflakeview.org/budget-2025-2026
+  updated_at: '2025-07-11T19:18:31Z'

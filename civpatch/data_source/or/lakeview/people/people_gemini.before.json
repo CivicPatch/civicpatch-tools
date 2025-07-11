@@ -1,0 +1,220 @@
+[
+  {
+    "name": "Kevin Sims",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      "at-large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2025",
+    "end_date": "2029-12-31",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor",
+      "https://townoflakeview.org/budget-2025-2026"
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Andrea Wishart",
+    "roles": [
+      "Council President"
+    ],
+    "divisions": [
+      "at-large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2023",
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor",
+      "https://townoflakeview.org/budget-2025-2026"
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Marty Collins",
+    "roles": [
+      "Council Member",
+      "Councilor"
+    ],
+    "divisions": [
+      "at-large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2025",
+    "end_date": "2029-12-31",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor",
+      "https://townoflakeview.org/budget-2025-2026"
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Jessica Calvin",
+    "roles": [
+      "Council Member",
+      "Councilor"
+    ],
+    "divisions": [
+      "at-large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2025",
+    "end_date": "2029-12-31",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor",
+      "https://townoflakeview.org/budget-2025-2026"
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Charley Tracy",
+    "roles": [
+      "Council Member",
+      "Councilor",
+      "council member"
+    ],
+    "divisions": [
+      "at-large"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": "2021",
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor",
+      "https://townoflakeview.org/budget-2025-2026",
+      "https://townoflakeview.org/budget-2023-2024",
+      "https://townoflakeview.org/budget-2022-2023",
+      "https://townoflakeview.org/budget-2024-2025"
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Ray Turner",
+    "roles": [
+      "Mayor",
+      "mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://townoflakeview.org/budget-2023-2024",
+      "https://townoflakeview.org/budget-2022-2023",
+      "https://townoflakeview.org/budget-2024-2025"
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Jay Farmen",
+    "roles": [
+      "Council President",
+      "Council Member",
+      "council president"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://townoflakeview.org/budget-2023-2024",
+      "https://townoflakeview.org/budget-2022-2023",
+      "https://townoflakeview.org/budget-2024-2025"
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Charlie Pike",
+    "roles": [
+      "Councilor",
+      "council member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://townoflakeview.org/budget-2023-2024",
+      "https://townoflakeview.org/budget-2024-2025"
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Kyle Deiter",
+    "roles": [
+      "Councilor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://townoflakeview.org/budget-2023-2024"
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Sandy Wenzel",
+    "roles": [
+      "Council President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://townoflakeview.org/budget-2022-2023"
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  },
+  {
+    "name": "Shannon Theall",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://townoflakeview.org/budget-2022-2023"
+    ],
+    "updated_at": "2025-07-11T19:18:31Z"
+  }
+]

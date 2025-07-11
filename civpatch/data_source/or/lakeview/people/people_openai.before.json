@@ -1,0 +1,87 @@
+[
+  {
+    "name": "Kevin Sims",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(541) 947-2020",
+    "email": null,
+    "website": "https://townoflakeview.org/town-council-mayor",
+    "start_date": "2025",
+    "end_date": "2029-12-31",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor"
+    ],
+    "updated_at": "2025-07-11T19:15:41Z"
+  },
+  {
+    "name": "Andrea Wishart",
+    "roles": [
+      "Council President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(541) 947-2020",
+    "email": null,
+    "website": "https://townoflakeview.org/town-council-mayor",
+    "start_date": "2023",
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor"
+    ],
+    "updated_at": "2025-07-11T19:15:41Z"
+  },
+  {
+    "name": "Marty Collins",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(541) 947-2020",
+    "email": null,
+    "website": "https://townoflakeview.org/town-council-mayor",
+    "start_date": "2025",
+    "end_date": "2029-12-31",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor"
+    ],
+    "updated_at": "2025-07-11T19:15:41Z"
+  },
+  {
+    "name": "Jessica Calvin",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(541) 947-2020",
+    "email": null,
+    "website": "https://townoflakeview.org/town-council-mayor",
+    "start_date": "2025",
+    "end_date": "2029-12-31",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor"
+    ],
+    "updated_at": "2025-07-11T19:15:41Z"
+  },
+  {
+    "name": "Charley Tracy",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(541) 947-2020",
+    "email": null,
+    "website": "https://townoflakeview.org/town-council-mayor",
+    "start_date": "2021",
+    "end_date": "2027-12-31",
+    "sources": [
+      "https://townoflakeview.org/town-council-mayor"
+    ],
+    "updated_at": "2025-07-11T19:15:41Z"
+  }
+]
