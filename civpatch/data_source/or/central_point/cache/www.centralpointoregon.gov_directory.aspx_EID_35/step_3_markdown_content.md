@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.centralpointoregon.gov/directory.aspx?eid=38%2F)
+[Skip to Main Content](https://www.centralpointoregon.gov/directory.aspx?EID=35%2F)
 
 [Create a Website Account](https://www.centralpointoregon.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
@@ -20,50 +20,44 @@ Search
 1. [Home](https://www.centralpointoregon.gov)
 2. Staff Directory
 
-![Taneea-Browning_04-2025_9045](https://www.centralpointoregon.gov/ImageRepository/Document?documentID=1077 "Taneea-Browning_04-2025_9045")
+![Neil-Olsen_04-2025_9089](https://www.centralpointoregon.gov/ImageRepository/Document?documentID=1075 "Neil-Olsen_04-2025_9089")
 
-# Taneea Browning
+# Dr. Neil Olsen
 
  
 
 [City Council](https://www.centralpointoregon.gov/Directory.aspx?DID=21)  
-Title: Mayor  
-Phone: 541-890-8377  
+Title: Council Member Ward I  
+Phone: 541-664-7935  
 Additional Phone: Fax: 541-664-6384  
-[Email Taneea Browning](mailto:Taneea.browning@centralpointoregon.gov)
+[Email Neil Olsen](mailto:neil.olsen@centralpointoregon.gov)
 
 ## Term
 
-Elected 2024, Current term ends December 31, 2028
+Elected 2018 &amp; 2022. Current term ends December 31, 2026.
 
 ## Biography
 
-Mayor Browning is a lifetime Oregonian, born and raised in Southern Oregon, is the co-founder of CraterWorks MakerSpace, volunteer for Direct Involvement Recreation Teaching (DIRT), and has served as an elected official for nearly a decade. 
+Neil Olsen has practiced family medicine at Providence in Central Point since 2003.
 
-She has served her community by participating in the Central Point Budget Committee, the Rogue Valley Council of Governments Board of Directors, Southern Oregon Regional Economic Development Board of Directors, and as a liaison to Jackson County Fire District 3 and Rogue Valley Transportation District in addition to serving on the Governor’s Regional Solutions team.   Outside of regional engagement, she has served on the Board of Directors for the League of Oregon Cities since 2018 (president 2022), CIS (Citycounty Insurance Service) Board of Trustees currently and received Governor’s appointment to the States Sustainability board in 2024 to ensure that southern Oregon’s voice is heard when sustainability conversations are being had around agency plans. Nationally she assists with the education and training for 12 western states municipal league’s leadership through her work as the chair of the Western Municipal Association in 2023 and 2024.
+He and his wife chose this area to raise and educate their 5 kids once Neil got out of the Air Force. His MD was from Washington University in St Louis, MO. His parents are still in Corvallis, where he did much of his schooling. His undergraduate degree from Washington State was in Chemical Engineering.
 
-With an emphasis on community social capital investment, Mayor Browning leverages creativity, engagement, and resources for the betterment of communities. She has a talent for finding commonalities in outcomes and an ability to weave an entrepreneurial mindset with effective problem-solving for both policymaking and implementation.  Her approach and experience are complementary to addressing sustainability opportunities throughout the state, with participation from Southern Oregon.
+Dr. Olsen enjoys competitive long distance running. He thinks we should all be walking and biking more.
+
+He has been an active member of Central Point's CERT team since shortly after the City of Central Point formed it. Other than student government, his only government service has been the parks and recreation commission.
 
 Occupation:
 
-- Executive Director of a public non-profit
-- Partner of CraterWorks
+- Family Medical Doctor
 
-Prior Governmental Experience:
+Educational Background:
 
-- League of Oregon Cities Board of Directors 2017 - present (President 2022)
-- Western Municipal League Chair 2023 &amp; 2024
-- City Council Member: Appointed March 2015, Elected 2016; 2020.
-- Oregon Sustainability Board 2023 - present (Governor appointment)
+- Washington State
+- United States Air Force
 
-Current Committee Activities:
+Committee Attendance:
 
-- Central Point Urban Renewal Agency
-- Central Point Budget Committee
-- Central Point Rotary
-- So. Oregon Regional Economic Development Inc.
-- Medford Water Commission Board
-- RVTD Board
+- Central Point Planning Commission
 
  
 

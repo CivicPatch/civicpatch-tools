@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.centralpointoregon.gov/directory.aspx?eid=38%2F)
+[Skip to Main Content](https://www.centralpointoregon.gov/directory.aspx?EID=37%2F)
 
 [Create a Website Account](https://www.centralpointoregon.gov/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
@@ -20,50 +20,33 @@ Search
 1. [Home](https://www.centralpointoregon.gov)
 2. Staff Directory
 
-![Taneea-Browning_04-2025_9045](https://www.centralpointoregon.gov/ImageRepository/Document?documentID=1077 "Taneea-Browning_04-2025_9045")
+![Grey-Zimmerman_04-2025_8877](https://www.centralpointoregon.gov/ImageRepository/Document?documentID=1078 "Grey-Zimmerman_04-2025_8877")
 
-# Taneea Browning
+# Grey Zimmerman
 
  
 
 [City Council](https://www.centralpointoregon.gov/Directory.aspx?DID=21)  
-Title: Mayor  
-Phone: 541-890-8377  
-Additional Phone: Fax: 541-664-6384  
-[Email Taneea Browning](mailto:Taneea.browning@centralpointoregon.gov)
+Title: Council Member Ward III  
+[Email Grey Zimmerman](mailto:grey.zimmerman@centralpointoregon.gov)
 
 ## Term
 
-Elected 2024, Current term ends December 31, 2028
+Appointed November 2024. Current term ends December 31, 2026.
 
 ## Biography
 
-Mayor Browning is a lifetime Oregonian, born and raised in Southern Oregon, is the co-founder of CraterWorks MakerSpace, volunteer for Direct Involvement Recreation Teaching (DIRT), and has served as an elected official for nearly a decade. 
+Born in Utah, Grey Zimmerman moved to Central Point two years ago for its family-friendly, small-town values. With a background in finance at Goldman Sachs and Tesla, he now works with a local nonprofit, applying his expertise to strengthen the community. 
 
-She has served her community by participating in the Central Point Budget Committee, the Rogue Valley Council of Governments Board of Directors, Southern Oregon Regional Economic Development Board of Directors, and as a liaison to Jackson County Fire District 3 and Rogue Valley Transportation District in addition to serving on the Governor’s Regional Solutions team.   Outside of regional engagement, she has served on the Board of Directors for the League of Oregon Cities since 2018 (president 2022), CIS (Citycounty Insurance Service) Board of Trustees currently and received Governor’s appointment to the States Sustainability board in 2024 to ensure that southern Oregon’s voice is heard when sustainability conversations are being had around agency plans. Nationally she assists with the education and training for 12 western states municipal league’s leadership through her work as the chair of the Western Municipal Association in 2023 and 2024.
+Grey spent two years as a volunteer in Japan, shaping his commitment to individual-focused service. He is dedicated to fiscal responsibility, sustainable growth, and family-focused policies to keep Central Point thriving. 
 
-With an emphasis on community social capital investment, Mayor Browning leverages creativity, engagement, and resources for the betterment of communities. She has a talent for finding commonalities in outcomes and an ability to weave an entrepreneurial mindset with effective problem-solving for both policymaking and implementation.  Her approach and experience are complementary to addressing sustainability opportunities throughout the state, with participation from Southern Oregon.
+Grey lives with his wife, two young kids, and dog, enjoying the outdoors and local community life. 
 
-Occupation:
+## Committees:
 
-- Executive Director of a public non-profit
-- Partner of CraterWorks
-
-Prior Governmental Experience:
-
-- League of Oregon Cities Board of Directors 2017 - present (President 2022)
-- Western Municipal League Chair 2023 &amp; 2024
-- City Council Member: Appointed March 2015, Elected 2016; 2020.
-- Oregon Sustainability Board 2023 - present (Governor appointment)
-
-Current Committee Activities:
-
-- Central Point Urban Renewal Agency
-- Central Point Budget Committee
-- Central Point Rotary
-- So. Oregon Regional Economic Development Inc.
-- Medford Water Commission Board
+- School District No. 6 Board
 - RVTD Board
+- Central Point Citizens Advisory Committee
 
  
 
