@@ -1047,10 +1047,12 @@
       "phone_number": "(503) 873-5321",
       "website": "https://www.silverton.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "af71ffca4497e776ec81db84718efae3",
+      "meta_updated_at": "2025-07-11T04:47:10Z",
+      "meta_hash": "04630ceaef53d5b35c18bc465ce0ae1a",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4167650"
     },
