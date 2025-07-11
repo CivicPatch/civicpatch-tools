@@ -2174,10 +2174,12 @@
       "phone_number": "(541) 549-6022",
       "website": "https://www.ci.sisters.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "3bd8b89e9e354e68deb35fcaab70e845",
+      "meta_updated_at": "2025-07-11T19:02:05Z",
+      "meta_hash": "3bcca95b164cfbcfe46c34a14d95cf19",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4167950"
     },
