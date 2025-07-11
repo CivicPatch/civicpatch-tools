@@ -1261,10 +1261,12 @@
       "phone_number": "(541) 996-2152",
       "website": "https://www.lincolncity.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "2f157189d40af8e1232b0ea8ed368445",
+      "meta_updated_at": "2025-07-11T17:06:23Z",
+      "meta_hash": "b02cf6a6c45fd5f24924dc74d41f6f69",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4142600"
     },
