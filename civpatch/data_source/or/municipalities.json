@@ -2094,10 +2094,12 @@
       "phone_number": "(503) 538-3922",
       "website": "https://www.dundeecity.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "0e8981fd035865543e8420b2cbb85ea8",
+      "meta_updated_at": "2025-07-11T19:04:23Z",
+      "meta_hash": "0f8bff5599eb9f9b6381d33944ee16de",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4121050"
     },
