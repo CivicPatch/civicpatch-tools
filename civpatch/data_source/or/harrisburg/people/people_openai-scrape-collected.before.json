@@ -9,13 +9,13 @@
       {
         "data": "https://www.ci.harrisburg.or.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycouncil/page/8025/bobby_duncan.jpg?itok=P6ElBZl0",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly associated with Mayor Bobby Duncan.",
+        "llm_confidence_reason": "Image is directly associated with Mayor Bobby Duncan.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "https://www.ci.harrisburg.or.us/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/7719/bobby_duncan.jpg?itok=QWYqHrk8",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image is a portrait near the name and title 'Mayor Bobby Duncan'.",
+        "llm_confidence_reason": "Image is a portrait near the name and title of Bobby Duncan as Mayor.",
         "source": "https://www.ci.harrisburg.or.us/node/4551"
       }
     ],
@@ -23,7 +23,7 @@
       {
         "data": "Mayor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Mayor in the content."
+        "llm_confidence_reason": "Explicitly stated as Mayor in the heading and description."
       },
       {
         "data": "Mayor",
@@ -36,7 +36,7 @@
       {
         "data": "541-995-6655",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under city contact info near the Mayor's section; likely main city hall number.",
+        "llm_confidence_reason": "Phone number is listed under city contact info on the same page; likely main city hall number associated with Mayor's office.",
         "source": "https://www.ci.harrisburg.or.us/node/4551"
       }
     ],
@@ -44,7 +44,7 @@
       {
         "data": "rduncan@ci.harrisburg.or.us",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly listed next to Mayor Bobby Duncan.",
+        "llm_confidence_reason": "Email is listed directly under Mayor Bobby Duncan's name.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       }
     ],
@@ -52,13 +52,13 @@
       {
         "data": "https://www.ci.harrisburg.or.us/node/4551",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Biography link is a valid URL associated with Mayor Bobby Duncan.",
+        "llm_confidence_reason": "Biography link is a valid city website URL associated with Mayor Bobby Duncan.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "https://www.ci.harrisburg.or.us/citycouncil/page/mayors-page",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "Mayor's page URL is linked in the city council section; no direct personal website found.",
+        "llm_confidence_reason": "The Mayor's page URL is linked in the city council section and is the most relevant official website for the Mayor.",
         "source": "https://www.ci.harrisburg.or.us/node/4551"
       }
     ],
@@ -66,13 +66,13 @@
       {
         "data": "2025-01-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term start date explicitly stated as 1/1/2025.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2025 - 12/31/2026.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "2023-01-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Current term explicitly stated as Jan 1, 2023 to Dec 31, 2024.",
+        "llm_confidence_reason": "Current term explicitly stated as starting Jan 1, 2023.",
         "source": "https://www.ci.harrisburg.or.us/node/4551"
       }
     ],
@@ -80,17 +80,17 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2026.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2025 - 12/31/2026.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "2024-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Current term explicitly stated as Jan 1, 2023 to Dec 31, 2024.",
+        "llm_confidence_reason": "Current term explicitly stated as ending Dec 31, 2024.",
         "source": "https://www.ci.harrisburg.or.us/node/4551"
       }
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Mike Caughey",
@@ -102,13 +102,13 @@
       {
         "data": "https://www.ci.harrisburg.or.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycouncil/page/7717/mike_caughey.jpg?itok=ZNwkz06f",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly associated with Council President Mike Caughey.",
+        "llm_confidence_reason": "Image is directly associated with Council President Mike Caughey.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "https://www.ci.harrisburg.or.us/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/6891/mike_caughey.jpg?itok=ccbs2UdV",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The image is directly associated with the heading 'Council President Mike Caughey' and is a portrait style image.",
+        "llm_confidence_reason": "Image is a portrait near the name and title of Mike Caughey.",
         "source": "https://www.ci.harrisburg.or.us/node/4561"
       }
     ],
@@ -116,7 +116,7 @@
       {
         "data": "Council President",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Council President in the content."
+        "llm_confidence_reason": "Explicitly stated as Council President."
       },
       {
         "data": "Council President",
@@ -126,12 +126,12 @@
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "He is described as a City Councilor currently serving his third term and serving on the City Council."
+        "llm_confidence_reason": "He is described as serving his third term as City Councilor and currently serving on the City Council."
       },
       {
         "data": "Board Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "He is serving as the primary Board Member of the Oregon Cascades West Council of Governments (OCWCOG), which is a board membership role."
+        "llm_confidence_reason": "He is serving as the primary Board Member of the Oregon Cascades West Council of Governments (OCWCOG)."
       }
     ],
     "divisions": [],
@@ -139,7 +139,7 @@
       {
         "data": "541-995-6655",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The phone number is listed under the city contact information on the same page and is the only phone number present, likely the main contact for city council members.",
+        "llm_confidence_reason": "Phone number is listed under city contact info on the same page and logically associated with city council contacts.",
         "source": "https://www.ci.harrisburg.or.us/node/4561"
       }
     ],
@@ -147,7 +147,7 @@
       {
         "data": "mcaughey@ci.harrisburg.or.us",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly listed next to Council President Mike Caughey.",
+        "llm_confidence_reason": "Email is listed directly under Council President Mike Caughey's name.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       }
     ],
@@ -155,13 +155,13 @@
       {
         "data": "https://www.ci.harrisburg.or.us/node/4561",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Biography link is a valid URL associated with Mike Caughey.",
+        "llm_confidence_reason": "Biography link is a valid city website URL associated with Mike Caughey.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "https://www.ci.harrisburg.or.us/citycouncil",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The City Council page URL is the main profile page for council members including Mike Caughey.",
+        "llm_confidence_reason": "The City Council main page is the most relevant website for Mike Caughey as a Council President.",
         "source": "https://www.ci.harrisburg.or.us/node/4561"
       }
     ],
@@ -169,13 +169,13 @@
       {
         "data": "2025-01-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term start date explicitly stated as 1/1/2025.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2025 - 12/31/2028.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "2021-01-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The current term is explicitly stated as 'Jan 1, 2021 to Dec 31, 2024'.",
+        "llm_confidence_reason": "Current term explicitly stated as Jan 1, 2021 to Dec 31, 2024.",
         "source": "https://www.ci.harrisburg.or.us/node/4561"
       }
     ],
@@ -183,17 +183,17 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2028.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2025 - 12/31/2028.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "2024-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The current term is explicitly stated as 'Jan 1, 2021 to Dec 31, 2024'.",
+        "llm_confidence_reason": "Current term explicitly stated as Jan 1, 2021 to Dec 31, 2024.",
         "source": "https://www.ci.harrisburg.or.us/node/4561"
       }
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Kim Downey",
@@ -205,7 +205,7 @@
       {
         "data": "https://www.ci.harrisburg.or.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycouncil/page/98/kim_downey.jpg?itok=ObbtlFl2",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly associated with Councilor Kim Downey.",
+        "llm_confidence_reason": "Image is directly associated with Councilor Kim Downey.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
@@ -219,7 +219,7 @@
       {
         "data": "Councilor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Councilor in the content."
+        "llm_confidence_reason": "Explicitly stated as Councilor."
       },
       {
         "data": "Council Member",
@@ -227,14 +227,14 @@
         "llm_confidence_reason": "The text explicitly states 'City Councilor' and describes multiple elected council terms, indicating an active council member role."
       },
       {
-        "data": "Personnel Committee Chair",
+        "data": "Chairperson, Personnel Committee",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Kim Downey is described as the Chairperson of the Personnel Committee since 2005 and remains so to this day."
+        "llm_confidence_reason": "Kim Downey is described as the Chairperson of the Personnel Committee since 2005 and remains in that role currently."
       },
       {
-        "data": "Budget Committee Member",
+        "data": "Board Member, Budget Committee",
         "llm_confidence": 0.85,
-        "llm_confidence_reason": "She is mentioned as a member of the Harrisburg Budget Committee currently."
+        "llm_confidence_reason": "She is described as a member of the Harrisburg Budget Committee, which is a board or committee membership."
       }
     ],
     "divisions": [],
@@ -242,7 +242,7 @@
       {
         "data": "541-995-6655",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under city contact info on the same page and logically associated with city council contacts.",
+        "llm_confidence_reason": "Phone number is listed under city contact information near council member details.",
         "source": "https://www.ci.harrisburg.or.us/node/4591"
       }
     ],
@@ -250,7 +250,7 @@
       {
         "data": "kdowney@ci.harrisburg.or.us",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly listed next to Councilor Kim Downey.",
+        "llm_confidence_reason": "Email is listed directly under Councilor Kim Downey's name.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       }
     ],
@@ -258,13 +258,13 @@
       {
         "data": "https://www.ci.harrisburg.or.us/node/4591",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Biography link is a valid URL associated with Kim Downey.",
+        "llm_confidence_reason": "Biography link is a valid city website URL associated with Kim Downey.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "https://www.ci.harrisburg.or.us/citycouncil",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "The city council main page is the most relevant website for council member info; no personal profile URL found.",
+        "llm_confidence_reason": "The city council main page is the closest relevant website for council member information.",
         "source": "https://www.ci.harrisburg.or.us/node/4591"
       }
     ],
@@ -272,13 +272,13 @@
       {
         "data": "2023-01-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term start date explicitly stated as 1/1/2023.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2023 - 12/31/2026.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "2019-01-01",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Current term explicitly stated as Jan 1, 2019 to Dec 31, 2022.",
+        "llm_confidence_reason": "Current term explicitly stated as starting Jan 1, 2019.",
         "source": "https://www.ci.harrisburg.or.us/node/4591"
       }
     ],
@@ -286,17 +286,17 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2026.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2023 - 12/31/2026.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "2022-12-31",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Current term explicitly stated as Jan 1, 2019 to Dec 31, 2022.",
+        "llm_confidence_reason": "Current term explicitly stated as ending Dec 31, 2022.",
         "source": "https://www.ci.harrisburg.or.us/node/4591"
       }
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Charlotte Thomas",
@@ -308,13 +308,13 @@
       {
         "data": "https://www.ci.harrisburg.or.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycouncil/page/98/charlotte_thomas.jpg?itok=ncMB7hbs",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly associated with Councilor Charlotte Thomas.",
+        "llm_confidence_reason": "Image is directly associated with Councilor Charlotte Thomas.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "https://www.ci.harrisburg.or.us/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/4601/charlotte_thomas.jpg?itok=6vNhevhv",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The image is directly associated with the section about Charlotte Thomas and is labeled as 'Councilor Charlotte Thomas'.",
+        "llm_confidence_reason": "Image is directly associated with the section titled 'Council Member Charlotte Thomas' and includes alt text 'Councilor Charlotte Thomas'.",
         "source": "https://www.ci.harrisburg.or.us/node/4601"
       }
     ],
@@ -322,7 +322,7 @@
       {
         "data": "Councilor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Councilor in the content."
+        "llm_confidence_reason": "Explicitly stated as Councilor."
       },
       {
         "data": "Council Member",
@@ -335,7 +335,7 @@
       {
         "data": "541-995-6655",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The phone number is listed under the city contact information on the same page; no direct personal number is given, so this is the best available contact.",
+        "llm_confidence_reason": "Phone number is listed under general City Hall contact info on the same page; no direct personal number given, but this is the best available contact.",
         "source": "https://www.ci.harrisburg.or.us/node/4601"
       }
     ],
@@ -343,7 +343,7 @@
       {
         "data": "cthomas@ci.harrisburg.or.us",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly listed next to Councilor Charlotte Thomas.",
+        "llm_confidence_reason": "Email is listed directly under Councilor Charlotte Thomas's name.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       }
     ],
@@ -351,13 +351,13 @@
       {
         "data": "https://www.ci.harrisburg.or.us/node/4601",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Biography link is a valid URL associated with Charlotte Thomas.",
+        "llm_confidence_reason": "Biography link is a valid city website URL associated with Charlotte Thomas.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "https://www.ci.harrisburg.or.us/citycouncil",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "The city council page is the most relevant official website related to her role; no personal or direct profile URL was provided.",
+        "llm_confidence_reason": "The City Council main page is the closest relevant website link for a council member; no personal profile URL provided.",
         "source": "https://www.ci.harrisburg.or.us/node/4601"
       }
     ],
@@ -365,7 +365,7 @@
       {
         "data": "2023-01-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term start date explicitly stated as 1/1/2023.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2023 - 12/31/2026.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
@@ -379,7 +379,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2026.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2023 - 12/31/2026.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
@@ -389,7 +389,7 @@
         "source": "https://www.ci.harrisburg.or.us/node/4601"
       }
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Randy Klemm",
@@ -401,7 +401,7 @@
       {
         "data": "https://www.ci.harrisburg.or.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycouncil/page/7717/randy_klemm.jpg?itok=Mbto98WD",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly associated with Councilor Randy Klemm.",
+        "llm_confidence_reason": "Image is directly associated with Councilor Randy Klemm.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
@@ -415,12 +415,12 @@
       {
         "data": "Councilor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Councilor in the content."
+        "llm_confidence_reason": "Explicitly stated as Councilor."
       },
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The text explicitly states 'Title: Council Member' and describes current service on the City Council."
+        "llm_confidence_reason": "The text explicitly states 'Title: Council Member' and describes current service on City Council."
       }
     ],
     "divisions": [],
@@ -428,7 +428,7 @@
       {
         "data": "541-995-6655",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under general city contact info on the same page; no direct personal phone found, but this is the best relevant contact.",
+        "llm_confidence_reason": "Phone number is listed under city contact info on the same page; likely main contact for council members.",
         "source": "https://www.ci.harrisburg.or.us/node/4611"
       }
     ],
@@ -436,7 +436,7 @@
       {
         "data": "rklemm@ci.harrisburg.or.us",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly listed next to Councilor Randy Klemm.",
+        "llm_confidence_reason": "Email is listed directly under Councilor Randy Klemm's name.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       }
     ],
@@ -444,13 +444,13 @@
       {
         "data": "https://www.ci.harrisburg.or.us/node/4611",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Biography link is a valid URL associated with Randy Klemm.",
+        "llm_confidence_reason": "Biography link is a valid city website URL associated with Randy Klemm.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "https://www.ci.harrisburg.or.us/citycouncil",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "The city council page is the closest relevant official website for the council member.",
+        "llm_confidence_reason": "The city council main page is the closest relevant website for the council member.",
         "source": "https://www.ci.harrisburg.or.us/node/4611"
       }
     ],
@@ -458,7 +458,7 @@
       {
         "data": "2024-01-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term start date explicitly stated as 1/1/2024.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2024 - 12/31/2028.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
@@ -472,7 +472,7 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2028.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2024 - 12/31/2028.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
@@ -482,7 +482,7 @@
         "source": "https://www.ci.harrisburg.or.us/node/4611"
       }
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Cindy Knox",
@@ -494,7 +494,7 @@
       {
         "data": "https://www.ci.harrisburg.or.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycouncil/page/98/cindy_knox_photo_7.30.24.jpg?itok=Tr-YXDHl",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly associated with Councilor Cindy Knox.",
+        "llm_confidence_reason": "Image is directly associated with Councilor Cindy Knox.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       }
     ],
@@ -502,7 +502,7 @@
       {
         "data": "Councilor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Councilor in the content."
+        "llm_confidence_reason": "Explicitly stated as Councilor."
       },
       {
         "data": "Council Member",
@@ -515,7 +515,7 @@
       {
         "data": "541-995-6655",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The phone number is listed on the city council page contact info near the council member section, likely the main contact number for council members.",
+        "llm_confidence_reason": "The phone number is listed on the city contact information section near the council member information, likely the main city hall number associated with council members.",
         "source": "https://www.ci.harrisburg.or.us/node/4581"
       }
     ],
@@ -523,7 +523,7 @@
       {
         "data": "cknox@ci.harisburg.or.us",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Email is explicitly listed next to Councilor Cindy Knox but domain has a minor typo (harisburg instead of harrisburg).",
+        "llm_confidence_reason": "Email is listed under Councilor Cindy Knox but domain has a minor typo (harisburg instead of harrisburg). Likely a typo in source.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       }
     ],
@@ -531,13 +531,13 @@
       {
         "data": "https://www.ci.harrisburg.or.us/node/4581",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Biography link is a valid URL associated with Cindy Knox.",
+        "llm_confidence_reason": "Biography link is a valid city website URL associated with Cindy Knox.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "https://www.ci.harrisburg.or.us/citycouncil",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "The city council main page URL is provided and is the most relevant website for Cindy Knox as a council member.",
+        "llm_confidence_reason": "The city council main page URL is provided and is the most relevant website for a council member.",
         "source": "https://www.ci.harrisburg.or.us/node/4581"
       }
     ],
@@ -545,7 +545,7 @@
       {
         "data": "2023-01-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term start date explicitly stated as 1/1/2023.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2023 - 12/31/2026.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
@@ -559,7 +559,7 @@
       {
         "data": "2026-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2026.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2023 - 12/31/2026.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
@@ -569,7 +569,7 @@
         "source": "https://www.ci.harrisburg.or.us/node/4581"
       }
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Dana Henry",
@@ -581,7 +581,7 @@
       {
         "data": "https://www.ci.harrisburg.or.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycouncil/page/98/dana_henry_1.6.25.jpg?itok=WNceWyY1",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is directly associated with Councilor Dana Henry.",
+        "llm_confidence_reason": "Image is directly associated with Councilor Dana Henry.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       }
     ],
@@ -589,12 +589,12 @@
       {
         "data": "Councilor",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Councilor in the content."
+        "llm_confidence_reason": "Explicitly stated as Councilor."
       },
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The text explicitly states Dana Henry is a City Councilor and refers to her as a Council Member."
+        "llm_confidence_reason": "The text explicitly states Dana Henry's title as 'City Councilor' and refers to her as a 'Council Member' with a current term."
       }
     ],
     "divisions": [],
@@ -602,7 +602,7 @@
       {
         "data": "541-995-6655",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The phone number is listed under city contact information near the council member section; no direct personal phone found.",
+        "llm_confidence_reason": "Phone number is listed on the page as the main contact number for City Hall, no direct personal number for Dana Henry is given, but this is the best available contact.",
         "source": "https://www.ci.harrisburg.or.us/node/4571"
       }
     ],
@@ -610,7 +610,7 @@
       {
         "data": "dhenry@ci.harrisburg.or.us",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly listed next to Councilor Dana Henry.",
+        "llm_confidence_reason": "Email is listed directly under Councilor Dana Henry's name.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       }
     ],
@@ -618,13 +618,13 @@
       {
         "data": "https://www.ci.harrisburg.or.us/node/4571",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Biography link is a valid URL associated with Dana Henry.",
+        "llm_confidence_reason": "Biography link is a valid city website URL associated with Dana Henry.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "https://www.ci.harrisburg.or.us/citycouncil",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "The city council main page is the closest relevant website for Dana Henry as a council member.",
+        "llm_confidence_reason": "The City Council page is the closest relevant official website for Dana Henry as a council member.",
         "source": "https://www.ci.harrisburg.or.us/node/4571"
       }
     ],
@@ -632,13 +632,13 @@
       {
         "data": "2025-01-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term start date explicitly stated as 1/1/2025.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2025 - 12/31/2028.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "2025-01-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The current term is explicitly stated as Jan 1, 2025 to Dec 31, 2028.",
+        "llm_confidence_reason": "The current term is explicitly stated as starting Jan 1, 2025.",
         "source": "https://www.ci.harrisburg.or.us/node/4571"
       }
     ],
@@ -646,16 +646,16 @@
       {
         "data": "2028-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2028.",
+        "llm_confidence_reason": "Term explicitly stated as 1/1/2025 - 12/31/2028.",
         "source": "https://www.ci.harrisburg.or.us/citycouncil"
       },
       {
         "data": "2028-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The current term is explicitly stated as Jan 1, 2025 to Dec 31, 2028.",
+        "llm_confidence_reason": "The current term is explicitly stated as ending Dec 31, 2028.",
         "source": "https://www.ci.harrisburg.or.us/node/4571"
       }
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   }
 ]

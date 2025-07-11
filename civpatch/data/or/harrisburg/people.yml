@@ -1,5 +1,5 @@
 ---
-- name: Bobby Duncan
+- name: Robert Duncan
   roles:
   - Mayor
   divisions:
@@ -7,27 +7,14 @@
   cdn_image: https://cdn.civicpatch.org/open-data/or/harrisburg/images/aa8aa25e22c9c163b5a3d0fd0e59287013f4acabfb99459c10f6c992c09a9e79.jpg
   email: rduncan@ci.harrisburg.or.us
   phone_number: "(541) 995-6655"
-  website: https://www.ci.harrisburg.or.us/node/4551
-  start_date: '2025-01-01'
-  end_date: '2026-12-31'
-  sources:
-  - https://www.ci.harrisburg.or.us/citycouncil
-  - https://www.ci.harrisburg.or.us/node/4551
-  updated_at: '2025-07-11T18:38:10Z'
-- name: Robert Duncan
-  roles:
-  - Mayor
-  divisions:
-  image:
-  cdn_image:
-  email: rduncan@ci.harrisburg.or.us
-  phone_number: "(541) 995-6655"
   website: https://www.ci.harrisburg.or.us/citycouncil/page/mayors-page
   start_date: '2023-01-01'
   end_date: '2024-12-31'
   sources:
   - https://www.ci.harrisburg.or.us/node/4551
-  updated_at: '2025-07-11T18:38:10Z'
+  - https://www.ci.harrisburg.or.us/citycouncil/page/mayors-page
+  - https://www.ci.harrisburg.or.us/citycouncil
+  updated_at: '2025-07-11T18:58:18Z'
 - name: Mike Caughey
   roles:
   - Council President
@@ -44,7 +31,7 @@
   sources:
   - https://www.ci.harrisburg.or.us/citycouncil
   - https://www.ci.harrisburg.or.us/node/4561
-  updated_at: '2025-07-11T18:38:10Z'
+  updated_at: '2025-07-11T18:58:18Z'
 - name: Charlotte Thomas
   roles:
   - Council Member
@@ -59,7 +46,7 @@
   sources:
   - https://www.ci.harrisburg.or.us/citycouncil
   - https://www.ci.harrisburg.or.us/node/4601
-  updated_at: '2025-07-11T18:38:10Z'
+  updated_at: '2025-07-11T18:58:18Z'
 - name: Cindy Knox
   roles:
   - Council Member
@@ -74,7 +61,7 @@
   sources:
   - https://www.ci.harrisburg.or.us/citycouncil
   - https://www.ci.harrisburg.or.us/node/4581
-  updated_at: '2025-07-11T18:38:10Z'
+  updated_at: '2025-07-11T18:58:18Z'
 - name: Dana Henry
   roles:
   - Council Member
@@ -89,7 +76,7 @@
   sources:
   - https://www.ci.harrisburg.or.us/citycouncil
   - https://www.ci.harrisburg.or.us/node/4571
-  updated_at: '2025-07-11T18:38:10Z'
+  updated_at: '2025-07-11T18:58:18Z'
 - name: Kim Downey
   roles:
   - Council Member
@@ -104,7 +91,7 @@
   sources:
   - https://www.ci.harrisburg.or.us/citycouncil
   - https://www.ci.harrisburg.or.us/node/4591
-  updated_at: '2025-07-11T18:38:10Z'
+  updated_at: '2025-07-11T18:58:18Z'
 - name: Randy Klemm
   roles:
   - Council Member
@@ -119,4 +106,4 @@
   sources:
   - https://www.ci.harrisburg.or.us/citycouncil
   - https://www.ci.harrisburg.or.us/node/4611
-  updated_at: '2025-07-11T18:38:10Z'
+  updated_at: '2025-07-11T18:58:18Z'

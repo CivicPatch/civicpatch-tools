@@ -1,6 +1,6 @@
 [
   {
-    "name": "Bobby Duncan",
+    "name": "Robert Duncan",
     "roles": [
       "Mayor"
     ],
@@ -15,7 +15,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4551"
     ],
-    "updated_at": "2025-07-11T18:37:11Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Mike Caughey",
@@ -35,11 +35,12 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4561"
     ],
-    "updated_at": "2025-07-11T18:37:11Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Kim Downey",
     "roles": [
+      "Board Member",
       "Council Member"
     ],
     "divisions": [],
@@ -53,7 +54,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4591"
     ],
-    "updated_at": "2025-07-11T18:37:11Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Charlotte Thomas",
@@ -71,7 +72,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4601"
     ],
-    "updated_at": "2025-07-11T18:37:11Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Randy Klemm",
@@ -89,7 +90,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4611"
     ],
-    "updated_at": "2025-07-11T18:37:11Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Cindy Knox",
@@ -107,7 +108,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4581"
     ],
-    "updated_at": "2025-07-11T18:37:11Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Dana Henry",
@@ -125,6 +126,6 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4571"
     ],
-    "updated_at": "2025-07-11T18:37:11Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   }
 ]
