@@ -1,4 +1,4 @@
-[Skip to main content](https://www.pendletonor.gov/council/directory-listing/john-thomas/)
+[Skip to main content](https://www.pendletonor.gov/citymgr/directory-listing/mckennon-mcdonald/)
 
 Toggle Navigation
 
@@ -216,7 +216,7 @@ Close Navigation
 - Connect
   
   - [**Job Opportunities**](https://www.pendletonor.gov/jobs)
-  - [**Alerts and Notifications**](https://www.pendletonor.gov/council/directory-listing/john-thomas/node/11531)
+  - [**Alerts and Notifications**](https://www.pendletonor.gov/citymgr/directory-listing/mckennon-mcdonald/node/11531)
   - [**Email Subscriptions**](https://www.pendletonor.gov/portal)
   - [**Meetings Calendar**](https://www.pendletonor.gov/meetings)
   - [**Events Calendar**](https://www.pendletonor.gov/calendar)
@@ -257,95 +257,57 @@ Event Date
 ## Breadcrumb
 
 1. [Home](https://www.pendletonor.gov)
-2. [Mayor &amp; City Council](https://www.pendletonor.gov/council)
+2. [City Manager](https://www.pendletonor.gov/citymgr)
 
 Toggle Menu
 
-# John Thomas
+# McKennon McDonald
 
-![](https://www.pendletonor.gov/sites/g/files/vyhlif13566/files/styles/directory_listings_body_with_photo/public/media/council/image/18076/thomas_john.jpg?itok=wNgCFVnN)
+![](https://www.pendletonor.gov/sites/g/files/vyhlif13566/files/styles/directory_listings_body_with_photo/public/media/council/image/17266/mckennon.jpg?itok=rATogyvC)
 
 Position
 
-Ward 1
-
-Phone Number
-
-541-969-4436
-
-Email
-
-[Email](https://www.pendletonor.gov/email-contact/node/4991/field_email "Email John Thomas (opens in a new window)")
+Mayor
 
 Profile
 
 ## Term Ending
 
-- December 31, 2028
+December 31, 2029
 
-## Educational Information
+[Print](https://www.pendletonor.gov/print/pdf/node/3481)
 
-- BA - Church Ministry Northwest University (1995) Kirkland, WA
-- MSW - Social Work Walla Walla University (2011) College Place, WA
+## [City Manager](https://www.pendletonor.gov/citymgr)
 
-## Current Occupation
+- [About our City Manager](https://www.pendletonor.gov/citymgr/page/about-our-city-manager)
+- [City Newsletters](https://www.pendletonor.gov/citymgr/page/city-newsletters)
+- [Departmental Flow Chart](https://www.pendletonor.gov/citymgr/page/departmental-flow-chart)
 
-- OYA Offense Specific Treatment Coordinator
-
-## Employment History
-
-- KUMA (2002-06) Radio Production, Coffee Hour Host
-- Lifeways (2006-09) Group Home Manager
-- ODHS Child Welfare (2009-15)
-- Permanency Case Worker (Hermiston),
-- Child Protective Services Supervisor (Pendleton)
-- OHA Pendleton Cottage (2015-22) Psychiatric Social Worker
-- Private Practice Therapist (2022-24)
-- Oregon Youth Authority (2024-Present)
-- Statewide Offense-Specific Treatment Coordinator
-
-## Community Service
-
-- Pendleton City Commissions (Appointed 2004-06): Airport, Youth, Library
-- Umatilla-Morrow Alternatives (2009-15)
-- Umatilla Co Special Library District (Elected 2017-Present)
-- Pendleton City Commissions (Appointed 2015-18): Historical Preservation, Arts Pendleton City Council (Elected 2025-Present)
-
-## Hobbies
-
-Fitness, Adopting rescue cats/dogs, Reading, Gardening
-
-## Family
-
-Married to Aaron since 2017. Four adult children and one grandchild. 
-
-[Print](https://www.pendletonor.gov/print/pdf/node/4991)
-
-## [Mayor &amp; City Council](https://www.pendletonor.gov/council)
-
-- [Agendas &amp; Minutes](https://cityofpendletonor.civicweb.net/Portal/MeetingTypeList.aspx?field_microsite_tid_1=27 " (opens in a new window)")
-- Council Meetings [Council Meetings](https://www.pendletonor.gov/council/page/council-meetings)
-  
-  - [Council Recap](https://www.pendletonor.gov/council/page/city-council-recap)
-- [Council Members](https://www.pendletonor.gov/council/page/council-members)
-- [Mayor](https://www.pendletonor.gov/council/page/mayor-mckennon-mcdonald)
-
-Contact Position **Contact** [John Thomas](https://www.pendletonor.gov/council/directory-listing/john-thomas) **Position** Ward 1 **Contact** [Carole L. Innes](https://www.pendletonor.gov/council/directory-listing/carole-l-innes) **Position** Ward 1 **Contact** [POSITION VACANT](https://www.pendletonor.gov/council/directory-listing/position-vacant) **Position** Ward 2 **Contact** [Ellie McBride](https://www.pendletonor.gov/council/directory-listing/ellie-mcbride) **Position** Ward 2 **Contact** [Linda K. Neuman](https://www.pendletonor.gov/council/directory-listing/linda-k-neuman) **Position** Ward 3 **Contact** [Brett Mulvihill](https://www.pendletonor.gov/council/directory-listing/brett-mulvihill) **Position** Ward 3 **Contact** [Addison Schulberg](https://www.pendletonor.gov/council/directory-listing/addison-schulberg) **Position** At Large **Contact** [Steve Campbell](https://www.pendletonor.gov/council/directory-listing/steve-campbell) **Position** At Large
+Contact Position **Contact** [Administration Main Line](https://www.pendletonor.gov/citymgr/directory-listing/administration-main-line) **Position** **Contact** [McKennon McDonald](https://www.pendletonor.gov/citymgr/directory-listing/mckennon-mcdonald) **Position** Mayor **Contact** [Robb Corbett](https://www.pendletonor.gov/citymgr/directory-listing/robb-corbett) **Position** City Manager **Contact** [Sheri Allen](https://www.pendletonor.gov/citymgr/directory-listing/sheri-allen) **Position** Human Resources Director **Contact** [Donna Biggerstaff](https://www.pendletonor.gov/citymgr/directory-listing/donna-biggerstaff) **Position** City Recorder/Executive Assistant
 
 [View full staff directory](https://www.pendletonor.gov/directory)
 
+[Robb Corbett](https://www.pendletonor.gov/citymgr/directory-listing/robb-corbett) City Manager
+
+[Donna Biggerstaff](https://www.pendletonor.gov/citymgr/directory-listing/donna-biggerstaff) City Recorder/Executive Assistant (541) 966-0220
+
+[View All Listings](https://www.pendletonor.gov/directory)
+
 ## Contact Information
+
+Phone Number
+
+(541) 966-0220 - City Manager's Office
 
 Address
 
-City Hall  
 500 SW Dorion Ave.  
 Pendleton, OR 97801
 
 ## Utility Links Menu
 
 - [Home](https://www.pendletonor.gov)
-- [Staff Login](https://www.pendletonor.gov/login?destination=%2Fcouncil%2Fdirectory-listing%2Fjohn-thomas)
+- [Staff Login](https://www.pendletonor.gov/login?destination=%2Fcitymgr%2Fdirectory-listing%2Fmckennon-mcdonald)
 - [Accessibility](https://www.pendletonor.gov/hr/page/website-accessibility)
 
 (541)-966-0201
@@ -356,7 +318,7 @@ Pendleton, OR 97801
 
 500 SW Dorion Avenue, Pendleton, OR 97801 (541) 966‑0201
 
-![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.pendletonor.gov/council/directory-listing/john-thomas)
+![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.pendletonor.gov/citymgr/directory-listing/mckennon-mcdonald)
 
 [Government Websites by CivicPlus®](https://www.civicplus.com "(opens in a new window)")
 
