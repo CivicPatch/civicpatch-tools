@@ -833,10 +833,12 @@
       "phone_number": "(541) 296-5481",
       "website": "https://www.thedalles.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "49f81b39687c7edd58671b84f67cddc0",
+      "meta_updated_at": "2025-07-11T04:34:22Z",
+      "meta_hash": "075a82839653e4c82a7da9adfd9164d3",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4172950"
     },
