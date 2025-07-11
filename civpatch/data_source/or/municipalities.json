@@ -2050,10 +2050,12 @@
       "phone_number": "(541) 347-2437",
       "website": "https://www.bandon-or.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "6577262c3e812e33fd917376cd8236b5",
+      "meta_updated_at": "2025-07-11T18:42:58Z",
+      "meta_hash": "afce13778ccfa42e7b344b8c4a3cd0eb",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4103800"
     },
