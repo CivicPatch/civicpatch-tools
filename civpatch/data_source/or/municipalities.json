@@ -1199,10 +1199,12 @@
       "phone_number": "(541) 523-6541",
       "website": "https://www.bakercity.com",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "9d5d2990639709c9053aa14ad4bf5937",
+      "meta_updated_at": "2025-07-11T17:00:17Z",
+      "meta_hash": "c7182b2f5d2f3b3d7834a0c4c8d1fa5a",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4103650"
     },
