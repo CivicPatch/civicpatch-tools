@@ -14,9 +14,10 @@
   - https://www.orcity.org/1772/Mayor-Denyse-McGriff
   - https://www.orcity.org/933/Mayor-City-Commission
   - https://www.orcity.org/1775/Commissioner-Adam-Marl
+  - https://www.orcity.org/1776/Commissioner-Michael-Mitchell
   - https://www.orcity.org/1774/Commissioner-Scott-Wilson
   - https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr
-  updated_at: '2025-07-11T04:36:48Z'
+  updated_at: '2025-07-11T17:00:58Z'
 - name: Adam Marl
   roles:
   - Commissioner
@@ -31,40 +32,29 @@
   sources:
   - https://www.orcity.org/933/Mayor-City-Commission
   - https://www.orcity.org/1775/Commissioner-Adam-Marl
+  - https://www.orcity.org/1776/Commissioner-Michael-Mitchell
   - https://www.orcity.org/1774/Commissioner-Scott-Wilson
   - https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr
-  updated_at: '2025-07-11T04:36:48Z'
-- name: Michael Mitchell
-  roles:
-  - Commissioner
-  divisions: []
-  image: https://www.orcity.org/ImageRepository/Document?documentID=13936
-  cdn_image: https://cdn.civicpatch.org/open-data/or/oregon_city/images/1777090083a7a56882e83f5b2d751c30d6c5115a4d70de6ba65b1c61232c90d1.jpg
-  email:
-  phone_number:
-  website: https://www.orcity.org/1776/Commissioner-Michael-Mitchell
-  start_date:
-  end_date: '2028-12-31'
-  sources:
-  - https://www.orcity.org/933/Mayor-City-Commission
-  updated_at: '2025-07-11T04:36:48Z'
+  updated_at: '2025-07-11T17:00:58Z'
 - name: Mike Mitchell
   roles:
   - Commissioner
   divisions:
-  image:
-  cdn_image:
+  image: https://www.orcity.org/ImageRepository/Document?documentId=15099
+  cdn_image: https://cdn.civicpatch.org/open-data/or/oregon_city/images/cc54672ae73da49fb481557b3686dd44102545163999bca248b3868da83afcee.jpg
   email: mmitchell@orcity.org
-  phone_number: "(503) 657-0891"
+  phone_number: "(503) 765-5993"
   website: https://www.orcity.org/1776/Commissioner-Mike-Mitchell
   start_date: '2025-01-01'
   end_date: '2028-12-31'
   sources:
   - https://www.orcity.org/1775/Commissioner-Adam-Marl
+  - https://www.orcity.org/1776/Commissioner-Michael-Mitchell
   - https://www.orcity.org/1774/Commissioner-Scott-Wilson
   - https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr
   - https://www.orcity.org/1776/Commissioner-Mike-Mitchell
-  updated_at: '2025-07-11T04:36:48Z'
+  - https://www.orcity.org/933/Mayor-City-Commission
+  updated_at: '2025-07-11T17:00:58Z'
 - name: Rocky Smith
   roles:
   - Commissioner
@@ -79,9 +69,10 @@
   sources:
   - https://www.orcity.org/933/Mayor-City-Commission
   - https://www.orcity.org/1775/Commissioner-Adam-Marl
+  - https://www.orcity.org/1776/Commissioner-Michael-Mitchell
   - https://www.orcity.org/1774/Commissioner-Scott-Wilson
   - https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr
-  updated_at: '2025-07-11T04:36:48Z'
+  updated_at: '2025-07-11T17:00:58Z'
 - name: Scott Wilson
   roles:
   - Commissioner
@@ -96,5 +87,6 @@
   sources:
   - https://www.orcity.org/933/Mayor-City-Commission
   - https://www.orcity.org/1775/Commissioner-Adam-Marl
+  - https://www.orcity.org/1776/Commissioner-Michael-Mitchell
   - https://www.orcity.org/1774/Commissioner-Scott-Wilson
-  updated_at: '2025-07-11T04:36:48Z'
+  updated_at: '2025-07-11T17:00:58Z'
