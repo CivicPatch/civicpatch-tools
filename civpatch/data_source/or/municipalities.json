@@ -496,9 +496,13 @@
       "phone_number": "(503) 538-9421",
       "website": "https://www.newbergoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-05-05",
-      "meta_hash": "51c2ae2e19704c0e1da1bd411a25e43a",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-11T00:10:58Z",
+      "meta_hash": "60f87019ede6804d182c2b8e13e21eeb",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4152100"
     },
     {
