@@ -1735,10 +1735,12 @@
       "phone_number": "(541) 535-1955",
       "website": "https://www.phoenixoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "799c07c3ec1cfb9e220579fe03db9912",
+      "meta_updated_at": "2025-07-11T18:15:37Z",
+      "meta_hash": "4b8da2406dc9637c9ec8e47be695a56f",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4157500"
     },
