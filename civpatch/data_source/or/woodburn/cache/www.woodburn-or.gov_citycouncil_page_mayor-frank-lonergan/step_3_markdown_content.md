@@ -1,6 +1,6 @@
 This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
 
-[Skip to main content](https://www.woodburn-or.gov/citycouncil/)
+[Skip to main content](https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan/)
 
 Navigation
 
@@ -8,11 +8,11 @@ Navigation
 \
 Starter Site State](https://www.woodburn-or.gov)
 
-![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.woodburn-or.gov/citycouncil)
+![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan)
 
-[Seleccione idioma](https://www.woodburn-or.gov/citycouncil/)
+[Seleccione idioma](https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan/)
 
-[выбрать язык](https://www.woodburn-or.gov/citycouncil/)
+[выбрать язык](https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan/)
 
 - Government
   
@@ -155,7 +155,7 @@ Starter Site State](https://www.woodburn-or.gov)
   - [Historical Photo Database](https://woodburnor.pastperfectonline.com)
   - [Maps](https://www.woodburn-or.gov/dev-planning/page/woodburn-zoning-other-maps)
   - [Media Requests](https://www.woodburn-or.gov/administration/page/media-requests)
-  - [Motor Vehicle Accident Docview](https://www.woodburn-or.gov/citycouncil)
+  - [Motor Vehicle Accident Docview](https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan)
   - [Police Public Records Request](https://www.woodburn-or.gov/police/page/forms-permits)
   - [Public Records Request](https://www.woodburn-or.gov/administration/page/public-records-request-form)
   - [Street Maintenance](https://www.woodburn-or.gov/street)
@@ -241,81 +241,29 @@ Search form
 
 Search Website
 
-# Mayor and City Council
+# Mayor Frank Lonergan
 
-![City Logo](https://www.woodburn-or.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/98/city_of_woodburn_logo_png.png?itok=R5DQItFF)
+![Lonergan Photo](https://www.woodburn-or.gov/sites/default/files/styles/full_node_primary/public/imageattachments/citycouncil/page/5051/lonergan_frank_-_bb.jpg?itok=GBpZ5_Qa)
 
-The City of Woodburn is a Council-Manager form of government operating pursuant to a [**City Charter**](https://www.woodburn-or.gov/citycouncil/page/city-charter).
+Mayor Frank Lonergan, officially sworn in as Woodburn’s 43rd Mayor on Monday, December 12, 2022, has spent the better part of 40 years serving the Woodburn community as a member of the Park Board, Planning Commission, Urban Renewal Board, Budget Committee, and former City Council President.
 
-This type of government consists of:
+As Council President, he was part of notable accomplishments including:
 
-- An elected Mayor
-- An elected City Council
-- A City Administrator, who is appointed by the Council
+- Increasing Woodburn’s Urban Growth boundaries
+- Expanding the I-5 Interchange and Highway 214
+- Establishment of the Public Art Program
+- Implementing sustainable practices to help ensure the City’s financial stability
 
-The City Council sets policy for the City of Woodburn and the City Administrator and staff are responsible for carrying out that policy. Refer to the [**City Organizational Chart**](https://www.woodburn-or.gov/citycouncil/page/city-organizational-chart) for more information on City structure.
+His community service accolades include:
 
-View the Council Ward Map by [**clicking here**](https://gis.ci.woodburn.or.us/portal/apps/instant/basic/index.html?appid=eb7fa7bb9ddc4b08be82924e915b7124).
+- Past President for the Woodburn Downtown Association, Woodburn Youth Basketball Association, and Clackamas County Refuse and Recycling Association.
+- Scoutmaster for Boy Scout Troop #691
+- Woodburn Junior First Citizen (1987) and Woodburn Senior First Citizen (2018)
 
- 
+"I would like to thank the citizens of Woodburn for their support of myself and our councilors. I’m looking forward to working with our experienced and passionate council, and our dedicated staff as we move Woodburn forward."
 
-**Name** **Ward** **Email** **Term Expires**
-
-![](https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/mayor_lonergan-200x300.png)
-
-Frank Lonergan
-
-Mayor [**frank.lonergan@ci.woodburn.or.us**](mailto:frank.lonergan@ci.woodburn.or.us) December 2026
-
-![](https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_1_-_bravo-200x300.png)
-
-Orlando Bravo
-
-Ward I [**orlando.bravo@ci.woodburn.or.us**](mailto:orlando.bravo@ci.woodburn.or.us) December 2028
-
-![](https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_2_-_wilk-200x300.png)
-
-Mark Wilk
-
-Ward II [**mark.wilk@ci.woodburn.or.us**](mailto:mark.wilk@ci.woodburn.or.us) December 2028
-
- ![](https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_3_-_cantu-200x300.png)
-
-Jen Cantu
-
-Ward III
-
-**j[ennifer](mailto:mark.wilk@ci.woodburn.or.us)[.cantu@ci.woodburn.or.us](mailto:.cantu@ci.woodburn.or.us)**
-
-December 2026
-
-![](https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_4_-_schaub-200x300.png)
-
-Sharon Schaub
-
-Ward IV
-
-[**sharon.schaub@ci.woodburn.or.us**](mailto:sharon.schaub@ci.woodburn.or.us) December 2026
-
-![](https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_5_-_cornwell-200x300.png)
-
-Mary Beth Cornwell
-
-Ward V [**marybeth.cornwell@ci.woodburn.or.us**](mailto:marybeth.cornwell@ci.woodburn.or.us) December 2026
-
-![](https://www.woodburn-or.gov/sites/default/files/resize/imageattachments/wysiwyg/councilor_ward_6_-_grijalva-200x300.png)
-
-Alma Grijalva
-
-Ward VI [**alma.grijalva@ci.woodburn.or.us**](mailto:alma.grijalva@ci.woodburn.or.us) December 2028
-
- 
-
- 
-
- 
-
- 
+Frank J. Lonergan  
+Woodburn City Mayor
 
 - ![Printer-friendly version](https://www.woodburn-or.gov/sites/all/modules/print/icons/print_icon.png)
 
@@ -352,14 +300,14 @@ Woodburn, Oregon 97071
 
 - [Sitemap](https://www.woodburn-or.gov/sitemap)
 - [Accessibility](https://www.woodburn-or.gov/hr/page/accessibility-forms)
-- [Staff Login](https://www.woodburn-or.gov/user/login?current=node%2F98)
+- [Staff Login](https://www.woodburn-or.gov/user/login?current=node%2F5051)
 - [E-Blast Sign Up](https://visitor.r20.constantcontact.com/manage/optin?v=001K8KKO2nAhWmO3iGlx68slHrlkct21OYhULZOiFNqPY2Dp7-a3ocbkQ_Z6fTOzYMBEyepW5vgj4a7i1fEjvv6pbzHOIgMvtAKQuuWtPfO2pU%3D)
 
 270 Montgomery Street Woodburn, OR 97071
 
 [a municode design](https://www.municodeweb.com)
 
-[Back to Top](https://www.woodburn-or.gov/citycouncil/)
+[Back to Top](https://www.woodburn-or.gov/citycouncil/page/mayor-frank-lonergan/)
 
 Original text
 
