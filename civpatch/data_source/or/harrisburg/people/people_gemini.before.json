@@ -1,20 +1,22 @@
 [
   {
-    "name": "Bobby Duncan",
+    "name": "Robert Duncan",
     "roles": [
-      "Mayor"
+      "Mayor",
+      "Budget Committee Member"
     ],
     "divisions": [],
     "image": null,
     "phone_number": null,
-    "email": "rduncan@ci.harrisburg.or.us",
-    "website": "https://www.ci.harrisburg.or.us/node/4551",
-    "start_date": "2025-01-01",
-    "end_date": "2026-12-31",
+    "email": null,
+    "website": "https://www.ci.harrisburg.or.us/citycouncil/page/mayors-page",
+    "start_date": "2023-01-01",
+    "end_date": "2024-12-31",
     "sources": [
-      "https://www.ci.harrisburg.or.us/citycouncil"
+      "https://www.ci.harrisburg.or.us/node/4551",
+      "https://www.ci.harrisburg.or.us/citycouncil/page/mayors-page"
     ],
-    "updated_at": "2025-07-11T18:38:07Z"
+    "updated_at": "2025-07-11T18:58:15Z"
   },
   {
     "name": "Mike Caughey",
@@ -35,7 +37,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4561"
     ],
-    "updated_at": "2025-07-11T18:38:07Z"
+    "updated_at": "2025-07-11T18:58:15Z"
   },
   {
     "name": "Kim Downey",
@@ -53,7 +55,7 @@
     "sources": [
       "https://www.ci.harrisburg.or.us/citycouncil"
     ],
-    "updated_at": "2025-07-11T18:38:07Z"
+    "updated_at": "2025-07-11T18:58:15Z"
   },
   {
     "name": "Charlotte Thomas",
@@ -71,7 +73,7 @@
     "sources": [
       "https://www.ci.harrisburg.or.us/citycouncil"
     ],
-    "updated_at": "2025-07-11T18:38:07Z"
+    "updated_at": "2025-07-11T18:58:15Z"
   },
   {
     "name": "Randy Klemm",
@@ -90,7 +92,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4611"
     ],
-    "updated_at": "2025-07-11T18:38:07Z"
+    "updated_at": "2025-07-11T18:58:15Z"
   },
   {
     "name": "Cindy Knox",
@@ -110,7 +112,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4581"
     ],
-    "updated_at": "2025-07-11T18:38:07Z"
+    "updated_at": "2025-07-11T18:58:15Z"
   },
   {
     "name": "Dana Henry",
@@ -131,24 +133,6 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4571"
     ],
-    "updated_at": "2025-07-11T18:38:07Z"
-  },
-  {
-    "name": "Robert Duncan",
-    "roles": [
-      "Mayor",
-      "Budget Committee Member"
-    ],
-    "divisions": [],
-    "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.ci.harrisburg.or.us/citycouncil/page/mayors-page",
-    "start_date": "2023-01-01",
-    "end_date": "2024-12-31",
-    "sources": [
-      "https://www.ci.harrisburg.or.us/node/4551"
-    ],
-    "updated_at": "2025-07-11T18:38:07Z"
+    "updated_at": "2025-07-11T18:58:15Z"
   }
 ]

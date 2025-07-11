@@ -15,7 +15,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4551"
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Mike Caughey",
@@ -35,15 +35,15 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4561"
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Kim Downey",
     "roles": [
       "Councilor",
       "Council Member",
-      "Personnel Committee Chair",
-      "Budget Committee Member"
+      "Chairperson, Personnel Committee",
+      "Board Member, Budget Committee"
     ],
     "divisions": [],
     "image": "https://www.ci.harrisburg.or.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycouncil/page/98/kim_downey.jpg?itok=ObbtlFl2",
@@ -56,7 +56,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4591"
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Charlotte Thomas",
@@ -75,7 +75,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4601"
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Randy Klemm",
@@ -94,7 +94,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4611"
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Cindy Knox",
@@ -113,7 +113,7 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4581"
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   },
   {
     "name": "Dana Henry",
@@ -132,6 +132,6 @@
       "https://www.ci.harrisburg.or.us/citycouncil",
       "https://www.ci.harrisburg.or.us/node/4571"
     ],
-    "updated_at": "2025-07-11T18:37:10Z"
+    "updated_at": "2025-07-11T18:57:18Z"
   }
 ]
