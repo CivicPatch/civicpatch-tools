@@ -2134,10 +2134,12 @@
       "phone_number": "(541) 372-2264",
       "website": "https://nyssacity.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "e3998eb03a9019128f78ebef3a9471ef",
+      "meta_updated_at": "2025-07-11T19:03:39Z",
+      "meta_hash": "56c2d3d37798f8224ab3be2963bbb563",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4153750"
     },
