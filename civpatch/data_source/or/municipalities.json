@@ -877,10 +877,12 @@
       "phone_number": "(503) 397-6272",
       "website": "https://www.sthelensoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "8b051a0385f564e54e1a05c8d9efe82d",
+      "meta_updated_at": "2025-07-11T04:33:38Z",
+      "meta_hash": "00c4b87f0203d1a19798ba2e2509f44b",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4164600"
     },
