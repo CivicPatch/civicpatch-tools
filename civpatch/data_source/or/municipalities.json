@@ -1471,10 +1471,12 @@
       "phone_number": "(541) 938-5531",
       "website": "https://www.mfcity.com",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "8f6035c1e36a6ecaf80c3933cb99375c",
+      "meta_updated_at": "2025-07-11T18:00:42Z",
+      "meta_hash": "8ce457b272b0253966020d32f687e122",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4148600"
     },
