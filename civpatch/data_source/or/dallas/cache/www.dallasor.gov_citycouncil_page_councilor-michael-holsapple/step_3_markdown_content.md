@@ -1,4 +1,4 @@
-[Skip to main content](https://www.dallasor.gov/citycouncil/page/councilor-carlos-barrientos/)
+[Skip to main content](https://www.dallasor.gov/citycouncil/page/councilor-michael-holsapple/)
 
 Toggle Navigation
 
@@ -125,19 +125,17 @@ Event Date
 
 Toggle Menu
 
-# Councilor Carlos Barrientos
+# Councilor Michael Holsapple
 
-![Carlos Barrientos](https://www.dallasor.gov/sites/g/files/vyhlif12941/files/styles/full_node_primary/public/media/citycouncil/image/7471/carlos_brighter.png?itok=ZYdERl3w "carlos_brighter.png")
+![Councilor Holsapple](https://www.dallasor.gov/sites/g/files/vyhlif12941/files/styles/full_node_primary/public/media/citycouncil/image/19996/2_2.png?itok=hxeehxoJ)
 
-### Carlos Barrientos
+**Michael Holsapple**
 
-City Councilor
+City Councilor  
+Term Expires 12/31/2028  
+Email: [michael.holsapple@dallasor.gov](mailto:michael.holsapple@dallasor.gov)
 
-Term Expires: 12/31/2028
-
-Email: [Carlos.barrientos@dallasor.gov](mailto:Carlos.barrientos@dallasor.gov)
-
-[Print](https://www.dallasor.gov/print/pdf/node/6669)
+[Print](https://www.dallasor.gov/print/pdf/node/3411)
 
 ## [City Council](https://www.dallasor.gov/citycouncil)
 
@@ -177,7 +175,7 @@ Come thrive with us—we invest in people and business.
 ## Utility Links Menu
 
 - [Home](https://www.dallasor.gov)
-- [Staff Login](https://www.dallasor.gov/login?destination=%2Fcitycouncil%2Fpage%2Fcouncilor-carlos-barrientos)
+- [Staff Login](https://www.dallasor.gov/login?destination=%2Fcitycouncil%2Fpage%2Fcouncilor-michael-holsapple)
 - [Accessibility](https://www.dallasor.gov/citymanager/page/website-accessibility)
 
 187 SE Court Street | Dallas, OR 97338 | (503) 623‑2338
