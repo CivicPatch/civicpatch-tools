@@ -1,4 +1,4 @@
-[Skip to main content](https://www.pendletonor.gov/council/directory-listing/john-thomas/)
+[Skip to main content](https://www.pendletonor.gov/council/directory-listing/steve-campbell/)
 
 Toggle Navigation
 
@@ -216,7 +216,7 @@ Close Navigation
 - Connect
   
   - [**Job Opportunities**](https://www.pendletonor.gov/jobs)
-  - [**Alerts and Notifications**](https://www.pendletonor.gov/council/directory-listing/john-thomas/node/11531)
+  - [**Alerts and Notifications**](https://www.pendletonor.gov/council/directory-listing/steve-campbell/node/11531)
   - [**Email Subscriptions**](https://www.pendletonor.gov/portal)
   - [**Meetings Calendar**](https://www.pendletonor.gov/meetings)
   - [**Events Calendar**](https://www.pendletonor.gov/calendar)
@@ -261,65 +261,57 @@ Event Date
 
 Toggle Menu
 
-# John Thomas
+# Steve Campbell
 
-![](https://www.pendletonor.gov/sites/g/files/vyhlif13566/files/styles/directory_listings_body_with_photo/public/media/council/image/18076/thomas_john.jpg?itok=wNgCFVnN)
+![](https://www.pendletonor.gov/sites/g/files/vyhlif13566/files/styles/directory_listings_body_with_photo/public/media/council/image/18111/campbell_steve.jpg?itok=MtBEpNDk)
 
 Position
 
-Ward 1
+At Large
 
 Phone Number
 
-541-969-4436
+(541) 379-0130
 
 Email
 
-[Email](https://www.pendletonor.gov/email-contact/node/4991/field_email "Email John Thomas (opens in a new window)")
+[Email](https://www.pendletonor.gov/email-contact/node/5061/field_email "Email Steve Campbell (opens in a new window)")
 
 Profile
 
-## Term Ending
+## At Large
 
-- December 31, 2028
+### Term Ending: December 31, 2028
 
-## Educational Information
+## Educational Information:
 
-- BA - Church Ministry Northwest University (1995) Kirkland, WA
-- MSW - Social Work Walla Walla University (2011) College Place, WA
+Oregon State University BS, 1982 in Agriculture and Resources Economics
 
-## Current Occupation
+## Current Occupation:
 
-- OYA Offense Specific Treatment Coordinator
+Vice President and Senior Relationship Manager, Banner Bank
 
-## Employment History
+Employment History:
 
-- KUMA (2002-06) Radio Production, Coffee Hour Host
-- Lifeways (2006-09) Group Home Manager
-- ODHS Child Welfare (2009-15)
-- Permanency Case Worker (Hermiston),
-- Child Protective Services Supervisor (Pendleton)
-- OHA Pendleton Cottage (2015-22) Psychiatric Social Worker
-- Private Practice Therapist (2022-24)
-- Oregon Youth Authority (2024-Present)
-- Statewide Offense-Specific Treatment Coordinator
+38 years in commercial banking. 
 
-## Community Service
+## Community Service:
 
-- Pendleton City Commissions (Appointed 2004-06): Airport, Youth, Library
-- Umatilla-Morrow Alternatives (2009-15)
-- Umatilla Co Special Library District (Elected 2017-Present)
-- Pendleton City Commissions (Appointed 2015-18): Historical Preservation, Arts Pendleton City Council (Elected 2025-Present)
+Pendleton Development Commission Advisory Committee  
+Pendleton Round-Up &amp; Hall of Fame, Treasure  
+Pendleton Round-Up Volunteer
 
-## Hobbies
+## Hobbies:
 
-Fitness, Adopting rescue cats/dogs, Reading, Gardening
+Outdoor activities with family  
+Ranch work
 
-## Family
+## Family:
 
-Married to Aaron since 2017. Four adult children and one grandchild. 
+Wife, Martha of 35 years  
+One son and daughter-in-law, one granddaughter,  and two daughters.
 
-[Print](https://www.pendletonor.gov/print/pdf/node/4991)
+[Print](https://www.pendletonor.gov/print/pdf/node/5061)
 
 ## [Mayor &amp; City Council](https://www.pendletonor.gov/council)
 
@@ -345,7 +337,7 @@ Pendleton, OR 97801
 ## Utility Links Menu
 
 - [Home](https://www.pendletonor.gov)
-- [Staff Login](https://www.pendletonor.gov/login?destination=%2Fcouncil%2Fdirectory-listing%2Fjohn-thomas)
+- [Staff Login](https://www.pendletonor.gov/login?destination=%2Fcouncil%2Fdirectory-listing%2Fsteve-campbell)
 - [Accessibility](https://www.pendletonor.gov/hr/page/website-accessibility)
 
 (541)-966-0201
@@ -356,7 +348,7 @@ Pendleton, OR 97801
 
 500 SW Dorion Avenue, Pendleton, OR 97801 (541) 966‑0201
 
-![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.pendletonor.gov/council/directory-listing/john-thomas)
+![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.pendletonor.gov/council/directory-listing/steve-campbell)
 
 [Government Websites by CivicPlus®](https://www.civicplus.com "(opens in a new window)")
 
