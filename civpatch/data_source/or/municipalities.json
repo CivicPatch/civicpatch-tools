@@ -599,9 +599,13 @@
       "phone_number": "(503) 786-7555",
       "website": "https://www.milwaukieoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-05-06",
-      "meta_hash": "f210a3e7c507ef6ffcc3a1ea2037a5d6",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-11T00:13:52Z",
+      "meta_hash": "c7f8b69f3c391d8862fa46587efe6789",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4148650"
     },
     {
