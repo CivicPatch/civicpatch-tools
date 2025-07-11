@@ -1511,10 +1511,12 @@
       "phone_number": "(541) 998-2153",
       "website": "https://www.junctioncityoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "aac59da97e23d918aa920e3f49501023",
+      "meta_updated_at": "2025-07-11T18:03:02Z",
+      "meta_hash": "e0d022113311fe325c328b9b627a74d0",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4138000"
     },
