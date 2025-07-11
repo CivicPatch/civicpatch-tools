@@ -1831,10 +1831,12 @@
       "phone_number": null,
       "website": "https://www.cityofreedsport.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "b629c989211a3a5325cb83d98fda0211",
+      "meta_updated_at": "2025-07-11T18:33:29Z",
+      "meta_hash": "bf05663596cb16e0716b65f1b2c3bc6d",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4161300"
     },
