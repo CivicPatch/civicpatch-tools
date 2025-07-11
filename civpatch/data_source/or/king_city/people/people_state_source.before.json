@@ -1,85 +1,182 @@
 [
   {
-    "name": "Marc Manelis",
-    "positions": [
-      "Mayor"
+    "name": "Bill Evonuk",
+    "roles": [
+      "City Engineer"
     ],
-    "email": "mmanelis@ci.king-city.or.us",
-    "phone_number": "(503) 639-4082",
-    "updated_at": "2025-05-11"
+    "email": "bill.evonuk@msa-ep.com",
+    "phone_number": "(503) 225-9010",
+    "updated_at": "2025-07-11T18:09:18Z"
   },
   {
-    "name": "Jan Tysoe",
-    "positions": [
-      "Council Member"
+    "name": "Carol Bellows",
+    "roles": [
+      "Planning Commissioner"
     ],
-    "email": "jtysoe@ci.king-city.or.us",
+    "email": "cbellows@ci.king-city.or.us",
     "phone_number": "(503) 639-4082",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:09:18Z"
   },
   {
-    "name": "Jessica Braverman",
-    "positions": [
-      "Council Member"
+    "name": "Dave Runyon",
+    "roles": [
+      "Public Works Director"
     ],
-    "email": "jbraverman@ci.king-city.or.us",
+    "email": "drunyon@ci.king-city.or.us",
     "phone_number": "(503) 639-4082",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:09:18Z"
   },
   {
-    "name": "John Hartman",
-    "positions": [
-      "Council Member"
+    "name": "David Nicoli",
+    "roles": [
+      "Planning Commissioner"
     ],
-    "email": "jhartman@ci.king-city.or.us",
+    "email": "dnicoli@ci.king-city.or.us",
     "phone_number": "(503) 639-4082",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Rachel Kazmierski",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "rkazmierski@ci.king-city.or.us",
-    "phone_number": "(503) 639-4082",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Shawna Thompson",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "sthompson@ci.king-city.or.us",
-    "phone_number": "(541) 469-2163",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Vince Arditi",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "varditi@ci.king-city.or.us",
-    "phone_number": "(503) 639-4082",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:09:18Z"
   },
   {
     "name": "Dennis Gelfand",
-    "positions": [
-      "Council Member",
-      "Position 2"
+    "roles": [
+      "Councilor Position #2"
     ],
     "email": "dgelfand@ci.king-city.or.us",
     "phone_number": "(503) 639-4082",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Diana Velazquez Mayor",
+    "roles": [
+      "Administrative Office Specialist"
+    ],
+    "email": "dmayor@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Dr. Ann Marie Paulsen",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "apaulsen@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Elisabeth Gauthier",
+    "roles": [
+      "Planning Commisioner"
+    ],
+    "email": "egauthier@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
   },
   {
     "name": "Gary Wallesen",
-    "positions": [
-      "Council Member",
-      "Position 6"
+    "roles": [
+      "Councilor Position #6"
     ],
     "email": "gwallesen@ci.king-city.or.us",
     "phone_number": "(503) 639-4082",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Jan Tysoe",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "jtysoe@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Jessica Braverman",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "jbraverman@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "John Hartman",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "jhartman@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Kevin Luby",
+    "roles": [
+      "Municipal Judge"
+    ],
+    "email": "kevin@luda-law.com",
+    "phone_number": "(503) 620-3342",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Max Carter",
+    "roles": [
+      "City Planner"
+    ],
+    "email": "mcarter@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Michael Weston",
+    "roles": [
+      "City Manager"
+    ],
+    "email": "mweston@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Rachel Kazmierski",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "rkazmierski@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Ronnie Smith",
+    "roles": [
+      "City Recorder"
+    ],
+    "email": "rsmith@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Sam Wiley",
+    "roles": [
+      "Administrative Assistant"
+    ],
+    "email": "swiley@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Shawna Thompson",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "sthompson@ci.king-city.or.us",
+    "phone_number": "(541) 469-2163",
+    "updated_at": "2025-07-11T18:09:18Z"
+  },
+  {
+    "name": "Vince Arditi",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "varditi@ci.king-city.or.us",
+    "phone_number": "(503) 639-4082",
+    "updated_at": "2025-07-11T18:09:18Z"
   }
 ]

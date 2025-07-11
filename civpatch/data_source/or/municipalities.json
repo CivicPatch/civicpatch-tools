@@ -1691,10 +1691,12 @@
       "phone_number": "(503) 639-4082",
       "website": "https://www.ci.king-city.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "479c0d359f926c26a3eb92ca91b84316",
+      "meta_updated_at": "2025-07-11T18:13:13Z",
+      "meta_hash": "a67c8524a43de730eb44aef7896937a4",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4139150"
     },

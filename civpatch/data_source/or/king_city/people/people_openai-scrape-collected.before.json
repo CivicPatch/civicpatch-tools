@@ -1,0 +1,159 @@
+[
+  {
+    "name": "Rachel Kazmierski",
+    "sources": [
+      "https://www.ci.king-city.or.us/mayors_message/index.php",
+      "https://www.ci.king-city.or.us/marc_manelis/index.php",
+      "https://www.ci.king-city.or.us/mayor-bio___message.php"
+    ],
+    "images": [
+      {
+        "data": "https://www.ci.king-city.or.us/index.php/_all_New_images/Councilor_Pictures/Councilors/Rachel%20Kazmierski/Portland-Oregon-4%20-%20Copy.JPG",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is directly adjacent to the mayor's name and title.",
+        "source": "https://www.ci.king-city.or.us/mayors_message/index.php"
+      },
+      {
+        "data": "https://www.ci.king-city.or.us/index.php/_all_New_images/Councilor_Pictures/Councilors/Rachel%20Kazmierski/Portland-Oregon-4%20-%20Copy.JPG",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is directly adjacent to Rachel Kazmierski's name and title.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      },
+      {
+        "data": "https://www.ci.king-city.or.us/mayor-bio___message.php/_all_New_images/Councilor_Pictures/Councilors/Rachel%20Kazmierski/Portland-Oregon-4%20-%20Copy.JPG",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is directly above the name and role, clearly a portrait of Rachel Kazmierski.",
+        "source": "https://www.ci.king-city.or.us/mayor-bio___message.php"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page explicitly states 'King City Mayor Rachel Kazmierski, Mayor' and 'Current Mayor: Rachel Kazmierski'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Explicitly stated as 'Rachel Kazmierski, Mayor' with term expiration date."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page explicitly states 'King City Mayor' above the name Rachel Kazmierski."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(503)639-4082",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is listed directly under the mayor's contact information.",
+        "source": "https://www.ci.king-city.or.us/mayors_message/index.php"
+      },
+      {
+        "data": "503-369-4082",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Phone number is listed directly under Rachel Kazmierski's contact info.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      },
+      {
+        "data": "503-639-4082",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is listed directly under the mayor's name and role.",
+        "source": "https://www.ci.king-city.or.us/mayor-bio___message.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rkazmierski@ci.king-city.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided next to the mayor's name.",
+        "source": "https://www.ci.king-city.or.us/mayors_message/index.php"
+      },
+      {
+        "data": "rkazmierski@ci.king-city.or.us",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Email is explicitly linked to Rachel Kazmierski.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      },
+      {
+        "data": "rkazmierski@ci.king-city.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided next to the mayor's name.",
+        "source": "https://www.ci.king-city.or.us/mayor-bio___message.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.ci.king-city.or.us/index.php/mayor-bio___message.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The 'Mayor-Bio & Message' page is linked under City Council section and likely the official mayor's page.",
+        "source": "https://www.ci.king-city.or.us/mayors_message/index.php"
+      },
+      {
+        "data": "https://www.ci.king-city.or.us/mayor-bio___message.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the official city page for the mayor's bio and message.",
+        "source": "https://www.ci.king-city.or.us/mayor-bio___message.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/2028.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      }
+    ],
+    "updated_at": "2025-07-11T18:12:05Z"
+  },
+  {
+    "name": "Marc Manelis",
+    "sources": [
+      "https://www.ci.king-city.or.us/marc_manelis/index.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.98,
+        "llm_confidence_reason": "Explicitly stated 'Marc Manelis, Mayor' and described as selected by councilors in January 2025."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Joined King City Council in January 2022 and re-elected in November 2022."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "503-639-4082",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "Phone number listed on the page likely associated with city offices; no direct personal phone found.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.ci.king-city.or.us/index.php/marc_manelis/index.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Page URL is a profile page for Marc Manelis.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Joined council in January 2022.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:12:05Z"
+  }
+]

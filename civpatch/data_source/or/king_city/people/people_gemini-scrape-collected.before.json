@@ -1,0 +1,313 @@
+[
+  {
+    "name": "Rachel Kazmierski",
+    "sources": [
+      "https://www.ci.king-city.or.us/mayors_message/index.php",
+      "https://www.ci.king-city.or.us/marc_manelis/index.php",
+      "https://www.ci.king-city.or.us/mayor-bio___message.php",
+      "https://www.ci.king-city.or.us/councilors_-_bios.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' explicitly stated and is a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' explicitly stated in the text and is a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'Councilors - Bios' section and is on the provided list of likely council members."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(503)639-4082",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated and clearly associated with the person.",
+        "source": "https://www.ci.king-city.or.us/mayors_message/index.php"
+      },
+      {
+        "data": "503-369-4082",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated and directly associated with the person.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      },
+      {
+        "data": "503-639-4082",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from the text.",
+        "source": "https://www.ci.king-city.or.us/mayor-bio___message.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rkazmierski@ci.king-city.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated and clearly associated with the person.",
+        "source": "https://www.ci.king-city.or.us/mayors_message/index.php"
+      },
+      {
+        "data": "rkazmierski@ci.king-city.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated and directly associated with the person.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      },
+      {
+        "data": "rkazmierski@ci.king-city.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text.",
+        "source": "https://www.ci.king-city.or.us/mayor-bio___message.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.ci.king-city.or.us/index.php/mayor-bio___message.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page is titled 'Mayor-Bio & Message' and discusses the Mayor, making it the most relevant personal profile link available.",
+        "source": "https://www.ci.king-city.or.us/mayors_message/index.php"
+      },
+      {
+        "data": "https://www.ci.king-city.or.us/mayor-bio___message.php/rachel_kazmierski_/index.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Mayor's bio page found in the text.",
+        "source": "https://www.ci.king-city.or.us/mayor-bio___message.php"
+      },
+      {
+        "data": "https://www.ci.king-city.or.us/councilors_-_bios.php/rachel_kazmierski_/index.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The provided link is a specific bio page for Rachel Kazmierski.",
+        "source": "https://www.ci.king-city.or.us/councilors_-_bios.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'Term Expires: 12/31/2028' explicitly stated.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      }
+    ],
+    "updated_at": "2025-07-11T18:13:13Z"
+  },
+  {
+    "name": "Marc Manelis",
+    "sources": [
+      "https://www.ci.king-city.or.us/marc_manelis/index.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' explicitly stated and is a target role."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'King City Council' explicitly stated and 'Council member' is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.ci.king-city.or.us/marc_manelis/index.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "A specific profile URL was provided in the share section.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The most recent election/re-election date for his council role was 'November 2022'.",
+        "source": "https://www.ci.king-city.or.us/marc_manelis/index.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:13:13Z"
+  },
+  {
+    "name": "Stephen Gearhart",
+    "sources": [
+      "https://www.ci.king-city.or.us/councilors_-_bios.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'Councilors - Bios' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.ci.king-city.or.us/councilors_-_bios.php",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The provided link is a general page, not a specific bio page for Stephen Gearhart, but it's the only link associated with the name.",
+        "source": "https://www.ci.king-city.or.us/councilors_-_bios.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:13:13Z"
+  },
+  {
+    "name": "John Hartman",
+    "sources": [
+      "https://www.ci.king-city.or.us/councilors_-_bios.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'Councilors - Bios' section and is on the provided list of likely council members."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.ci.king-city.or.us/councilors_-_bios.php/john_hartman/index.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The provided link is a specific bio page for John Hartman.",
+        "source": "https://www.ci.king-city.or.us/councilors_-_bios.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:13:13Z"
+  },
+  {
+    "name": "Jessica Braverman",
+    "sources": [
+      "https://www.ci.king-city.or.us/councilors_-_bios.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'Councilors - Bios' section and is on the provided list of likely council members."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.ci.king-city.or.us/councilors_-_bios.php/jessica_braverman/index.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The provided link is a specific bio page for Jessica Braverman.",
+        "source": "https://www.ci.king-city.or.us/councilors_-_bios.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:13:13Z"
+  },
+  {
+    "name": "Jan Tysoe",
+    "sources": [
+      "https://www.ci.king-city.or.us/councilors_-_bios.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'Councilors - Bios' section and is on the provided list of likely council members."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.ci.king-city.or.us/councilors_-_bios.php/jan_tysoe_/index.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The provided link is a specific bio page for Jan Tysoe.",
+        "source": "https://www.ci.king-city.or.us/councilors_-_bios.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:13:13Z"
+  },
+  {
+    "name": "Dennis Gelfand",
+    "sources": [
+      "https://www.ci.king-city.or.us/councilors_-_bios.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'Councilors - Bios' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.ci.king-city.or.us/councilors_-_bios.php/dennis_gelfand/index.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The provided link is a specific bio page for Dennis Gelfand.",
+        "source": "https://www.ci.king-city.or.us/councilors_-_bios.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:13:13Z"
+  },
+  {
+    "name": "Vince Arditi",
+    "sources": [
+      "https://www.ci.king-city.or.us/councilors_-_bios.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is listed under 'Councilors - Bios' section and is on the provided list of likely council members."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.ci.king-city.or.us/councilors_-_bios.php/vince_arditi_/index.php",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The provided link is a specific bio page for Vince Arditi.",
+        "source": "https://www.ci.king-city.or.us/councilors_-_bios.php"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:13:13Z"
+  }
+]
