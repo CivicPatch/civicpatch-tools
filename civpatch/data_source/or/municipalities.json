@@ -2288,10 +2288,12 @@
       "phone_number": "(503) 864-2221",
       "website": "https://www.daytonoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "692e97fa4d7235d8d9146a202873e453",
+      "meta_updated_at": "2025-07-11T19:12:58Z",
+      "meta_hash": "2f9020e5153c7ad103692688f8d7f958",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4118250"
     },
