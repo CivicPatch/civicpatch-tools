@@ -2,10 +2,9 @@
 - name: Steve Wright
   roles:
   - Mayor
-  - Board Member
   - Council Member
   divisions:
-  - Ward All wards
+  - At-large
   image: https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/img_0016.jpeg?itok=Anp_qUua
   cdn_image: https://cdn.civicpatch.org/open-data/or/seaside/images/7aae5b08ac238aa3cca635bdbe986fb3575a49bd2897e106a8fcd4b253d46ccf.jpg
   email: swright@cityofseaside.us
@@ -22,7 +21,8 @@
   roles:
   - Council President
   divisions:
-  - At-large Wards 3 & 4
+  - Ward 3
+  - Ward 4
   image: https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/sm_img_7231-crop.jpg?itok=cU9vRhYL
   cdn_image: https://cdn.civicpatch.org/open-data/or/seaside/images/8f8ab49463011c5283bb644c7352675f4d064c433644a17f599b8f692c50c6ed.jpg
   email: smorrisey@cityofseaside.us
@@ -37,7 +37,8 @@
   roles:
   - Council Member
   divisions:
-  - At-large Wards 1 & 2
+  - Ward 1
+  - Ward 2
   image: https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/hoffman.heidi_01.27.2025.jpeg?itok=swo-zMi_
   cdn_image: https://cdn.civicpatch.org/open-data/or/seaside/images/2808c432c0ffc3d5e41a5875cc0fe277e6a79c0d1349b528660db1df5dd7c3da.jpg
   email: hhoffman@cityofseaside.us
