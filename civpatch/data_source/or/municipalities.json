@@ -2254,10 +2254,12 @@
       "phone_number": "(541) 573-5255",
       "website": "https://www.cityofburnsor.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "d15f1f721333e5db3b6e5ae65ea4b6a3",
+      "meta_updated_at": "2025-07-11T19:12:30Z",
+      "meta_hash": "804553b6825c2f414967325c2832c6fb",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4109800"
     },
