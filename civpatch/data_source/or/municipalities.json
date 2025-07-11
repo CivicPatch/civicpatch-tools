@@ -1241,10 +1241,12 @@
       "phone_number": "(503) 838-1212",
       "website": "https://www.ci.independence.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "68ab1ef6080b1b95e10638e3de15bf70",
+      "meta_updated_at": "2025-07-11T17:04:33Z",
+      "meta_hash": "c98bc5163bac23193dcd77f646fa34e0",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4136150"
     },
