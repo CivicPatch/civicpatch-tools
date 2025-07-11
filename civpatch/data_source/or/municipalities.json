@@ -2194,10 +2194,12 @@
       "phone_number": "(541) 899-1231",
       "website": "https://www.jacksonvilleor.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "b8094e6e327276df42889198cbfb3851",
+      "meta_updated_at": "2025-07-11T19:08:03Z",
+      "meta_hash": "ae912a6ba600961f2b992b4e6b7570de",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4137000"
     },
