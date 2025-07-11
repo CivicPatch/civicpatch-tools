@@ -1,19 +1,4 @@
 ---
-- name: Marc Manelis
-  roles:
-  - Mayor
-  - Council Member
-  divisions:
-  image:
-  cdn_image:
-  email:
-  phone_number: "(503) 639-4082"
-  website: https://www.ci.king-city.or.us/marc_manelis/index.php
-  start_date: 2022-11
-  end_date:
-  sources:
-  - https://www.ci.king-city.or.us/marc_manelis/index.php
-  updated_at: '2025-07-11T18:13:13Z'
 - name: Rachel Kazmierski
   roles:
   - Mayor
@@ -24,66 +9,8 @@
   phone_number: "(503) 639-4082"
   website: https://www.ci.king-city.or.us/mayor-bio___message.php/rachel_kazmierski_/index.php
   start_date:
-  end_date: '2028-12-31'
+  end_date:
   sources:
   - https://www.ci.king-city.or.us/mayors_message/index.php
-  - https://www.ci.king-city.or.us/marc_manelis/index.php
   - https://www.ci.king-city.or.us/mayor-bio___message.php
-  - https://www.ci.king-city.or.us/councilors_-_bios.php
-  updated_at: '2025-07-11T18:13:13Z'
-- name: Jan Tysoe
-  roles:
-  - Council Member
-  divisions:
-  image:
-  cdn_image:
-  email: jtysoe@ci.king-city.or.us
-  phone_number: "(503) 639-4082"
-  website: https://www.ci.king-city.or.us/councilors_-_bios.php/jan_tysoe_/index.php
-  start_date:
-  end_date:
-  sources:
-  - https://www.ci.king-city.or.us/councilors_-_bios.php
-  updated_at: '2025-07-11T18:13:13Z'
-- name: Jessica Braverman
-  roles:
-  - Council Member
-  divisions:
-  image:
-  cdn_image:
-  email: jbraverman@ci.king-city.or.us
-  phone_number: "(503) 639-4082"
-  website: https://www.ci.king-city.or.us/councilors_-_bios.php/jessica_braverman/index.php
-  start_date:
-  end_date:
-  sources:
-  - https://www.ci.king-city.or.us/councilors_-_bios.php
-  updated_at: '2025-07-11T18:13:13Z'
-- name: John Hartman
-  roles:
-  - Council Member
-  divisions:
-  image:
-  cdn_image:
-  email: jhartman@ci.king-city.or.us
-  phone_number: "(503) 639-4082"
-  website: https://www.ci.king-city.or.us/councilors_-_bios.php/john_hartman/index.php
-  start_date:
-  end_date:
-  sources:
-  - https://www.ci.king-city.or.us/councilors_-_bios.php
-  updated_at: '2025-07-11T18:13:13Z'
-- name: Vince Arditi
-  roles:
-  - Council Member
-  divisions:
-  image:
-  cdn_image:
-  email: varditi@ci.king-city.or.us
-  phone_number: "(503) 639-4082"
-  website: https://www.ci.king-city.or.us/councilors_-_bios.php/vince_arditi_/index.php
-  start_date:
-  end_date:
-  sources:
-  - https://www.ci.king-city.or.us/councilors_-_bios.php
-  updated_at: '2025-07-11T18:13:13Z'
+  updated_at: '2025-07-11T19:04:56Z'
