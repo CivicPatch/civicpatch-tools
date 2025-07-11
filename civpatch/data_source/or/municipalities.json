@@ -1319,10 +1319,12 @@
       "phone_number": "(541) 459-2857",
       "website": "https://www.ci.sutherlin.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "8d17f069cdb9f7823897ce89166bf76c",
+      "meta_updated_at": "2025-07-11T17:07:39Z",
+      "meta_hash": "2d0a1940970681517f4a752dfc0ac6ec",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4171650"
     },
