@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.forestgrove-or.gov/365/City-Council/)
+[Skip to Main Content](https://www.forestgrove-or.gov/491/)
 
 ![Forest Grove, OR](https://www.forestgrove-or.gov/ImageRepository/Document?documentID=27)
 
@@ -20,56 +20,63 @@ Search
 
 <!--THE END-->
 
-![](https://www.forestgrove-or.gov/ImageRepository/Document?documentID=75)
+![](https://www.forestgrove-or.gov/ImageRepository/Document?documentID=74)
 
 1. [Home](https://www.forestgrove-or.gov)
 2. [Government](https://www.forestgrove-or.gov/27/Government)
-3. City Council
+3. [City Council](https://www.forestgrove-or.gov/365/City-Council)
+4. Contact City Council
 
-# City Council
+# Contact City Council
 
-![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.forestgrove-or.gov/365/City-Council)
+![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.forestgrove-or.gov/491)
 
-## Council Meetings
+The City Council consists of a Mayor and six Councilors nominated and elected from the City at large. The Mayor and Councilors serve four-year terms of office. We value your opinions, concerns, and suggestions and appreciate your efforts to make Forest Grove a wonderful community.
 
-Take place at 7 pm on the 2nd and 4th Monday of each month, unless Monday is a holiday. Meetings are held at the Community Auditorium, 1915 Main Street, Forest Grove, OR 97116. Meeting agendas are generally published by 5 pm on the Wednesday before each meeting.
+Please fill out the following form to send a message to the Mayor, the full City Council, or select individual Council Members. You will have the option to select recipients below. Any messages sent to the full Council will be published as Public Comment in the next City Council meeting. Messages received after 3pm on the day of a Council meeting will be included in the following meeting. 
 
-## City Council Members
+All information submitted in this form is subject to public disclosure unless exempt under Oregon Public Records Law.
 
-- Mayor Malynda Wenzl  |  Current Term: 2022-2026
-- Councilor Angel Falconer  |  Current Term: 2025-2029
-- Councilor Donna Gustafson  |  Current Term: 2025-2029
-- Councilor Michael Marshall  |  Current Term: 2022-2026
-- Councilor Karen Martinez  |  Current Term: 2022-2026
-- Councilor Brian Schimmel  |  Current Term: 2025-2029
-- Councilor Mariana Valenzuela  |  Current Term: 2022-2026
+### Contact City Council
 
-## Meeting Recordings
+This form has been modified since it was saved. Please review all fields before submitting.
 
-Watch the full version of City Council meetings, thanks to our partners at [Tualatin Valley Community Television (TVCTV)](https://tvctv.org).
+01. First Name*
+02. Last Name*
+03. City*
+04. State*
+05. Zip*
+06. Email*
+07. Whom would you like to contact?*
+    
+    1. Forest Grove Mayor Malynda Wenzl
+    2. Entire Forest Grove City Council (Includes Mayor Wenzl)
+    3. Selected City Councilor(s)
+08. Please select the City Councilor(s) you would like to contact below:*
+    
+    1. City of Forest Grove Mayor Malynda Wenzl
+    2. Councilor Angel Falconer
+    3. Councilor Donna Gustafson
+    4. Councilor Michael Marshall
+    5. Councilor Karen Martinez
+    6. Councilor Brian Schimmel
+    7. Councilor Mariana E. Valenzuela
+09. Would you like a response?*
+    
+    1. Yes
+    2. No
+10. Question / Comment*
+    
+    Leave This Blank:
+11. 1. Receive an email copy of this form.
+12. Email address
+    
+    This field is not part of the form submission.
+13. [Submit](https://www.forestgrove-or.gov/491)
 
-[AGENDAS AND  
-MINUTES](https://forestgroveor.portal.civicclerk.com/?category_id=26)
+\* indicates a required field
 
-[CITY COUNCIL  
-GOALS &amp; VALUES](https://www.forestgrove-or.gov/490/City-Council-Goals-and-Values)
-
-[CITY COUNCIL  
-RULES](https://www.forestgrove-or.gov/492/City-Council-Rules)
-
-[CONTACT  
-CITY COUNCIL](https://or-forestgrove.civicplus.com/491/Contact-City-Council)
-
-[MEET THE  
-COUNCIL](https://www.forestgrove-or.gov/611/Meet-the-Council)
-
-## Accommodations
-
-The City is committed to providing equal access to public meetings. Requests for accommodation can be sent to the City Recorder’s Office at least 48 hours before the meeting at: [mwoods@forestgrove-or.gov](mailto:mwoods@forestgrove-or.gov) or 503-992-3235.
-
-## Public Meeting Law (PML) Grievances
-
-Forest Grove’s meeting bodies, including the City Council and all boards and committees, are subject to [Oregon’s Public Meetings Law (PML)](https://www.oregon.gov/ogec/public-meetings-law/pages/default.aspx). Violations of the PML should be reported through the grievance process outlined by state law and the Oregon Government Ethics Commission (OGEC). To report a violation of the PML by a Forest Grove meeting body, submit a written grievance statement to the Office of the City Recorder by email to [mwoods@forestgrove-or.gov](mailto:mwoods@forestgrove-or.gov) or in-person at City Hall (1924 Council St, Forest Grove). Once received the city will initiate the process as outlined by the OGEC at the link above.
+[OK](https://www.forestgrove-or.gov/491/)
 
 ### Follow Us!
 
@@ -78,22 +85,6 @@ Forest Grove’s meeting bodies, including the City Council and all boards and c
 Stay connected to your city! What's Growing On is our monthly e-newsletter filled with news events and community stories.
 
 [Subscribe Today!](https://mailchi.mp/forestgrove-or/whats-growing-on)
-
-### [Calendar](https://www.forestgrove-or.gov/calendar.aspx?CID=24)
-
-1. #### Mon, Jul. 14
-   
-   [**Community Enhancement Program Committee Meeting**](https://www.forestgrove-or.gov/Calendar.aspx?EID=2175)
-2. #### Mon, Jul. 14
-   
-   [**City Council Meeting**](https://www.forestgrove-or.gov/Calendar.aspx?EID=1769)
-3. #### Mon, Jul. 14
-   
-   [**Urban Renewal Agency Meeting**](https://www.forestgrove-or.gov/Calendar.aspx?EID=2176)
-
-[View All Events](https://www.forestgrove-or.gov/calendar.aspx?CID=24)
-
-/Calendar.aspx
 
 ### [Contact Us](https://www.forestgrove-or.gov/FormCenter/Contact-Us-Form-27/Contact-Us-92)
 
