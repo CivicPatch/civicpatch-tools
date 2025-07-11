@@ -1139,10 +1139,12 @@
       "phone_number": "(541) 574-0603",
       "website": "https://www.newportoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "47e9cf68b162d58f3f76270d3bc9a999",
+      "meta_updated_at": "2025-07-11T17:00:44Z",
+      "meta_hash": "fd0e5155aa0a33673f7d4ac4bd0e6a30",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4152450"
     },
