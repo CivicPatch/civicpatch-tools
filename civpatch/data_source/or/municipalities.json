@@ -911,10 +911,12 @@
       "phone_number": "(503) 357-9112",
       "website": "https://www.corneliusor.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "25bb6917d5da7907a40ce8d5fe9d4086",
+      "meta_updated_at": "2025-07-11T04:38:14Z",
+      "meta_hash": "ae8e943ccffb0efd463c0b8300cd5fe4",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4115550"
     },
