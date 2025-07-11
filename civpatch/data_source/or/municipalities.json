@@ -1027,10 +1027,12 @@
       "phone_number": "(541) 942-5501",
       "website": "https://www.cottagegroveor.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "7f421a24a75063c7407aaf6202a9ed77",
+      "meta_updated_at": "2025-07-11T04:47:10Z",
+      "meta_hash": "7c9108d0ce7ca6b6afbd729343d804d2",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4115950"
     },
