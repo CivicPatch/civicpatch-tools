@@ -949,10 +949,12 @@
       "phone_number": "(503) 656-5225",
       "website": "https://www.ci.gladstone.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "526203690ee310967591563b3f5baa06",
+      "meta_updated_at": "2025-07-11T04:40:46Z",
+      "meta_hash": "ba1012766123148b0add6a83782d71f9",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4129000"
     },
