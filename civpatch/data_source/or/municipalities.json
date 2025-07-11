@@ -1851,10 +1851,12 @@
       "phone_number": "(503) 749-2030",
       "website": "https://www.aumsville.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "cb482f79d2fda7cca4d0f2a347bd6e3b",
+      "meta_updated_at": "2025-07-11T18:33:20Z",
+      "meta_hash": "90cf32f3aaffe7bb4e02c5cab2dceab5",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4103250"
     },
