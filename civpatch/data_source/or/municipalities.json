@@ -401,9 +401,13 @@
       "phone_number": "(503) 692-2000",
       "website": "https://www.tualatinoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-05-03",
-      "meta_hash": "8cf1491f6912dc15091eb8a101b89609",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-11T00:01:05Z",
+      "meta_hash": "993cc7766625f26f27a5dbaa31ba896e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4174950"
     },
     {
