@@ -1671,10 +1671,12 @@
       "phone_number": "(503) 842-2472",
       "website": "https://www.tillamookor.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "1e1c266cb21272cb182a4d2101b6f9e4",
+      "meta_updated_at": "2025-07-11T18:10:15Z",
+      "meta_hash": "ae4aa66997b1667798699e132825d79a",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4173700"
     },
