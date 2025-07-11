@@ -1993,10 +1993,12 @@
       "phone_number": "(503) 981-9633",
       "website": "https://www.cityofhubbard.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "6f20d3153cee0d29ee7e2cb69942931e",
+      "meta_updated_at": "2025-07-11T18:39:18Z",
+      "meta_hash": "f578766e6a445a9fd0e0532a3ed4cc0e",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4135450"
     },
