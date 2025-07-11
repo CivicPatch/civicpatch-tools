@@ -1447,10 +1447,12 @@
       "phone_number": "(541) 922-3226",
       "website": "https://www.umatilla.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "23f6d872e14f61984746ae304b5e40e6",
+      "meta_updated_at": "2025-07-11T17:15:51Z",
+      "meta_hash": "c141578eb589dcc185740927ed3f98e0",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4175650"
     },
