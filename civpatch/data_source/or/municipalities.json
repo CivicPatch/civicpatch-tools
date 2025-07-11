@@ -1879,10 +1879,12 @@
       "phone_number": "(541) 396-2115",
       "website": "https://www.cityofcoquille.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "71f3c56fb618113c4554e1ba177f8385",
+      "meta_updated_at": "2025-07-11T18:32:16Z",
+      "meta_hash": "c2e5c6028135db49b6449c1c25457960",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4115350"
     },
