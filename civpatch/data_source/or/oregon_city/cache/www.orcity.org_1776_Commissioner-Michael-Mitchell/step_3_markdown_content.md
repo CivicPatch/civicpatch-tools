@@ -1,8 +1,10 @@
-[Skip To Main Content](https://www.orcity.org/1774/Commissioner-Scott-Wilson/)
+This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
+
+[Skip To Main Content](https://www.orcity.org/1776/Commissioner-Michael-Mitchell/)
 
 Loading
 
-[Skip to Main Content](https://www.orcity.org/1774/Commissioner-Scott-Wilson/)
+[Skip to Main Content](https://www.orcity.org/1776/Commissioner-Michael-Mitchell/)
 
 [Create a Website Account](https://www.orcity.org/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
@@ -25,32 +27,37 @@ Search
 1. [Home](https://www.orcity.org)
 2. [Your Government](https://www.orcity.org/27/Your-Government)
 3. [Mayor &amp; City Commission](https://www.orcity.org/933/Mayor-City-Commission)
-4. Commissioner Scott Wilson
+4. Commissioner Mike Mitchell
 
-# Commissioner Scott Wilson
+# Commissioner Mike Mitchell
 
-**Commissioner Scott Wilson**  
-Term: January 1, 2025 to December 31, 2028
+![City Commissioner Mike Mitchell](https://www.orcity.org/ImageRepository/Document?documentId=15099)Term: January 1, 2025 - December 31, 2028(appointed by City Commission October 25, 2022)  
+[mmitchell@orcity.org](mailto:mmitchell@orcity.org)  
+Home: 503-765-5993
 
-[swilson@orcity.org](mailto:swilson@orcity.org)
+Current City Activities  
+Urban Renewal Commission  
+Urban Renewal Budget Committee  
+City Budget Committee  
+Enhancement Grant Program Committee  
+C4 Metro Subcommittee  
+South Fork Water Board
 
-Current City Activities
+Community Leadership Activities  
+Planning Commission (4 years)  
+Board Member, Downtown Oregon City Association  
+Transportation Advisory Committee  
+2040 Project Advisory Team  
+213/Beavercreek Road Citizen Advisory Committee  
+Citizen Involvement Committee
 
-- Urban Renewal Commission
-- Urban Renewal Budget Committee
-- Budget Committee
-- Enhancement Grant Committee
+Education  
+BA Degree, Linfield College in Economics and Business Administration  
+Certificate in Human Resource Management, Portland State University
 
-Education
-
-- Indiana University – M.A. Social Work
-- Western Governors University – M.A. Business Administration
-
-Work History
-
-- Program Manager/Youth &amp; Family Therapist at Parrott Creek Child &amp; Family Services
-
-![Oregon City Commissioner Scott Wilson](https://www.orcity.org/ImageRepository/Document?documentID=15004)
+Work History  
+40 years experience in general management of retail and wholesale companies  
+Currently retired
 
 1. [Mayor Denyse McGriff](https://www.orcity.org/1772/Mayor-Denyse-McGriff)
    
@@ -145,3 +152,5 @@ Excel Download
 PowerPoint Download
 
 Document Download
+
+Explore your accessibility options

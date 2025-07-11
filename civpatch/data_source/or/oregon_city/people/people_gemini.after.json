@@ -17,10 +17,11 @@
       "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
       "https://www.orcity.org/933/Mayor-City-Commission",
       "https://www.orcity.org/1775/Commissioner-Adam-Marl",
+      "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
       "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
       "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
     ],
-    "updated_at": "2025-07-11T04:36:46Z"
+    "updated_at": "2025-07-11T17:00:56Z"
   },
   {
     "name": "Adam Marl",
@@ -39,29 +40,32 @@
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission",
       "https://www.orcity.org/1775/Commissioner-Adam-Marl",
+      "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
       "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
       "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
     ],
-    "updated_at": "2025-07-11T04:36:46Z"
+    "updated_at": "2025-07-11T17:00:56Z"
   },
   {
-    "name": "Michael Mitchell",
+    "name": "Mike Mitchell",
     "roles": [
       "Commissioner"
     ],
-    "divisions": [
-      "At-large"
-    ],
+    "divisions": [],
     "image": null,
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
-    "start_date": null,
+    "phone_number": "(503) 765-5993",
+    "email": "mmitchell@orcity.org",
+    "website": "https://www.orcity.org/1776/Commissioner-Mike-Mitchell",
+    "start_date": "2025-01-01",
     "end_date": "2028-12-31",
     "sources": [
-      "https://www.orcity.org/933/Mayor-City-Commission"
+      "https://www.orcity.org/1775/Commissioner-Adam-Marl",
+      "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
+      "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
+      "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
+      "https://www.orcity.org/1776/Commissioner-Mike-Mitchell"
     ],
-    "updated_at": "2025-07-11T04:36:46Z"
+    "updated_at": "2025-07-11T17:00:56Z"
   },
   {
     "name": "Scott Wilson",
@@ -80,9 +84,10 @@
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission",
       "https://www.orcity.org/1775/Commissioner-Adam-Marl",
+      "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
       "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
     ],
-    "updated_at": "2025-07-11T04:36:46Z"
+    "updated_at": "2025-07-11T17:00:56Z"
   },
   {
     "name": "Rocky Smith",
@@ -101,29 +106,10 @@
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission",
       "https://www.orcity.org/1775/Commissioner-Adam-Marl",
+      "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
       "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
       "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
     ],
-    "updated_at": "2025-07-11T04:36:46Z"
-  },
-  {
-    "name": "Mike Mitchell",
-    "roles": [
-      "Commissioner"
-    ],
-    "divisions": [],
-    "image": null,
-    "phone_number": "(503) 765-5993",
-    "email": "mmitchell@orcity.org",
-    "website": "https://www.orcity.org/1776/Commissioner-Mike-Mitchell",
-    "start_date": "2025-01-01",
-    "end_date": "2028-12-31",
-    "sources": [
-      "https://www.orcity.org/1775/Commissioner-Adam-Marl",
-      "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
-      "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
-      "https://www.orcity.org/1776/Commissioner-Mike-Mitchell"
-    ],
-    "updated_at": "2025-07-11T04:36:46Z"
+    "updated_at": "2025-07-11T17:00:56Z"
   }
 ]
