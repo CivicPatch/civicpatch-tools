@@ -12,15 +12,15 @@
     "start_date": "2023-01-01",
     "end_date": "2026-12-31",
     "sources": [
-      "https://www.orcity.org/933/Mayor-City-Commission",
-      "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
+      "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
+      "https://www.orcity.org/933/Mayor-City-Commission"
     ],
-    "updated_at": "2025-07-11T00:02:11Z"
+    "updated_at": "2025-07-11T04:32:50Z"
   },
   {
     "name": "Adam Marl",
     "roles": [
-      "Board Member"
+      "Commissioner"
     ],
     "divisions": [],
     "image": "https://www.orcity.org/ImageRepository/Document?documentID=11641",
@@ -33,12 +33,29 @@
       "https://www.orcity.org/933/Mayor-City-Commission",
       "https://www.orcity.org/1775/Commissioner-Adam-Marl"
     ],
-    "updated_at": "2025-07-11T00:02:11Z"
+    "updated_at": "2025-07-11T04:32:50Z"
+  },
+  {
+    "name": "Michael Mitchell",
+    "roles": [
+      "Commissioner"
+    ],
+    "divisions": [],
+    "image": "https://www.orcity.org/ImageRepository/Document?documentID=13936",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.orcity.org/933/Mayor-City-Commission"
+    ],
+    "updated_at": "2025-07-11T04:32:50Z"
   },
   {
     "name": "Scott Wilson",
     "roles": [
-      "Board Member"
+      "Commissioner"
     ],
     "divisions": [],
     "image": "https://www.orcity.org/ImageRepository/Document?documentID=15004",
@@ -51,12 +68,12 @@
       "https://www.orcity.org/933/Mayor-City-Commission",
       "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
     ],
-    "updated_at": "2025-07-11T00:02:11Z"
+    "updated_at": "2025-07-11T04:32:50Z"
   },
   {
     "name": "Rocky Smith",
     "roles": [
-      "Board Member"
+      "Commissioner"
     ],
     "divisions": [],
     "image": "https://www.orcity.org/ImageRepository/Document?documentID=11639",
@@ -69,6 +86,6 @@
       "https://www.orcity.org/933/Mayor-City-Commission",
       "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
     ],
-    "updated_at": "2025-07-11T00:02:11Z"
+    "updated_at": "2025-07-11T04:32:50Z"
   }
 ]

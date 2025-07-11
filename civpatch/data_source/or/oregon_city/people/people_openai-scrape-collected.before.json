@@ -2,41 +2,41 @@
   {
     "name": "Denyse McGriff",
     "sources": [
-      "https://www.orcity.org/933/Mayor-City-Commission",
-      "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
+      "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
+      "https://www.orcity.org/933/Mayor-City-Commission"
     ],
     "images": [
       {
-        "data": "https://www.orcity.org/ImageRepository/Document?documentID=13936",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image near the Mayor & City Commission heading and includes Mayor Denyse McGriff in the caption.",
-        "source": "https://www.orcity.org/933/Mayor-City-Commission"
-      },
-      {
         "data": "https://www.orcity.org/ImageRepository/Document?documentID=11642",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The image near the name and title is a portrait of Denyse McGriff, likely her official photo.",
+        "llm_confidence_reason": "The image near the mayor's name is a portrait labeled 'Mayor Denyse McGriff recolor resized'.",
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
+      },
+      {
+        "data": "https://www.orcity.org/ImageRepository/Document?documentID=13936",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image caption includes Mayor Denyse McGriff and the image is near the Mayor & City Commission heading.",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
       }
     ],
     "roles": [
       {
         "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Mayor in the Members section."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page title and content explicitly state 'Mayor Denyse McGriff'."
       },
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page title and content explicitly state 'Mayor Denyse McGriff' indicating the role is Mayor."
+        "llm_confidence_reason": "Explicitly stated as Mayor in the Members section."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "503-656-3912",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number labeled 'Home' directly under the email on the page associated with Denyse McGriff.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number labeled 'Home' directly under the mayor's contact info.",
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       }
     ],
@@ -44,22 +44,22 @@
       {
         "data": "dmcgriff@orcity.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly listed under the Mayor's name and role.",
+        "llm_confidence_reason": "Email address is clearly listed under the mayor's contact information.",
         "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       }
     ],
     "websites": [
       {
         "data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official profile page linked in Members and Quick Links.",
-        "source": "https://www.orcity.org/933/Mayor-City-Commission"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the page is the official mayor's profile page.",
+        "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       },
       {
         "data": "https://www.orcity.org/1772/Mayor-Denyse-McGriff",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL of the page is the official profile page for Mayor Denyse McGriff.",
-        "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
+        "llm_confidence_reason": "Link explicitly associated with Denyse McGriff as Mayor.",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
       }
     ],
     "start_dates": [
@@ -73,18 +73,18 @@
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Term expires December 31, 2026 as stated in Members section.",
-        "source": "https://www.orcity.org/933/Mayor-City-Commission"
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2026.",
+        "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
       },
       {
         "data": "2026-12-31",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2026.",
-        "source": "https://www.orcity.org/1772/Mayor-Denyse-McGriff"
+        "llm_confidence_reason": "Term expires December 31, 2026 as stated in Members section.",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
       }
     ],
-    "updated_at": "2025-07-11T00:02:11Z"
+    "updated_at": "2025-07-11T04:32:50Z"
   },
   {
     "name": "Adam Marl",
@@ -94,22 +94,28 @@
     ],
     "images": [
       {
+        "data": "https://www.orcity.org/ImageRepository/Document?documentID=13936",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Image caption includes Adam Marl among Commissioners; no individual image found.",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
+      },
+      {
         "data": "https://www.orcity.org/ImageRepository/Document?documentID=11641",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is a portrait near the name 'Commissioner Adam Marl' on the official city page.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image is directly below the section titled 'Commissioner Adam Marl' and is labeled as 'Commissioner Adam Marl recolor resized', indicating it is his portrait.",
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
     "roles": [
       {
         "data": "Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as Commissioner in Members section; Commissioners are part of the City Commission governing body."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as Commissioner in Members section."
       },
       {
-        "data": "Board Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Title 'Commissioner' in Oregon City context corresponds to a member of the primary governing body, the City Commission, which functions as the city council or governing board."
+        "data": "Commissioner",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page title and content explicitly state 'Commissioner Adam Marl' and list his term as a city commissioner."
       }
     ],
     "divisions": [],
@@ -117,7 +123,7 @@
       {
         "data": "503-406-8165",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Cell phone number explicitly listed near the person's name and role.",
+        "llm_confidence_reason": "The phone number is listed as 'Cell: 503-406-8165' directly under Adam Marl's contact information.",
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
@@ -125,59 +131,60 @@
       {
         "data": "amarl@orcity.org",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email address explicitly listed near the person's name and role.",
+        "llm_confidence_reason": "The email 'amarl@orcity.org' is listed directly under Adam Marl's name and contact info.",
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
     "websites": [
       {
         "data": "https://www.orcity.org/1775/Commissioner-Adam-Marl",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official profile page linked in Members and Quick Links.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Link explicitly associated with Adam Marl as Commissioner.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
-      },
-      {
-        "data": "https://www.orcity.org/1775/Commissioner-Adam-Marl",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official city webpage dedicated to Commissioner Adam Marl.",
-        "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
     "start_dates": [
       {
         "data": "2023-01-01",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term start date explicitly stated as January 1, 2023.",
+        "llm_confidence_reason": "The term is explicitly stated as 'January 1, 2023 to December 31, 2026'.",
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Term expires December 31, 2026 as stated in Members section.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
         "data": "2026-12-31",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2026.",
+        "llm_confidence_reason": "The term is explicitly stated as 'January 1, 2023 to December 31, 2026'.",
         "source": "https://www.orcity.org/1775/Commissioner-Adam-Marl"
       }
     ],
-    "updated_at": "2025-07-11T00:02:11Z"
+    "updated_at": "2025-07-11T04:32:50Z"
   },
   {
     "name": "Michael Mitchell",
     "sources": [
       "https://www.orcity.org/933/Mayor-City-Commission"
     ],
-    "images": [],
+    "images": [
+      {
+        "data": "https://www.orcity.org/ImageRepository/Document?documentID=13936",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Image caption includes Mike Mitchel (Michael Mitchell) among Commissioners; no individual image found.",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
+      }
+    ],
     "roles": [
       {
         "data": "Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as Commissioner in Members section; Commissioners are part of the City Commission governing body."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as Commissioner in Members section."
       }
     ],
     "divisions": [],
@@ -186,8 +193,8 @@
     "websites": [
       {
         "data": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official profile page linked in Members and Quick Links.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Link explicitly associated with Michael Mitchell as Commissioner.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       }
     ],
@@ -195,12 +202,12 @@
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Term expires December 31, 2028 as stated in Members section.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       }
     ],
-    "updated_at": "2025-07-11T00:02:11Z"
+    "updated_at": "2025-07-11T04:32:50Z"
   },
   {
     "name": "Scott Wilson",
@@ -210,22 +217,28 @@
     ],
     "images": [
       {
+        "data": "https://www.orcity.org/ImageRepository/Document?documentID=13936",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Image caption includes Scott Wilson among Commissioners; no individual image found.",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
+      },
+      {
         "data": "https://www.orcity.org/ImageRepository/Document?documentID=15004",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is a portrait near the person's name and role on the official city page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is labeled 'Oregon City Commissioner Scott Wilson' and is near the name.",
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
     ],
     "roles": [
       {
         "data": "Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as Commissioner in Members section; Commissioners are part of the City Commission governing body."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as Commissioner in Members section."
       },
       {
-        "data": "Board Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Title 'Commissioner' in Oregon City context corresponds to a member of the primary governing body, the City Commission, which functions as the governing board."
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page title and content explicitly state 'Commissioner Scott Wilson' and list a term for this role."
       }
     ],
     "divisions": [],
@@ -233,29 +246,29 @@
     "emails": [
       {
         "data": "swilson@orcity.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly listed next to the person's name and role.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided near the name and role.",
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
     ],
     "websites": [
       {
         "data": "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official profile page linked in Members and Quick Links.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Link explicitly associated with Scott Wilson as Commissioner.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
         "data": "https://www.orcity.org/1774/Commissioner-Scott-Wilson",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "The URL is the official profile page for Commissioner Scott Wilson.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the page is a profile page for Commissioner Scott Wilson.",
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
     ],
     "start_dates": [
       {
         "data": "2025-01-01",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Term start date explicitly stated as January 1, 2025.",
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
@@ -263,18 +276,18 @@
     "end_dates": [
       {
         "data": "2028-12-31",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Term expires December 31, 2028 as stated in Members section.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
         "data": "2028-12-31",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Term end date explicitly stated as December 31, 2028.",
         "source": "https://www.orcity.org/1774/Commissioner-Scott-Wilson"
       }
     ],
-    "updated_at": "2025-07-11T00:02:11Z"
+    "updated_at": "2025-07-11T04:32:50Z"
   },
   {
     "name": "Rocky Smith, Jr.",
@@ -284,59 +297,65 @@
     ],
     "images": [
       {
+        "data": "https://www.orcity.org/ImageRepository/Document?documentID=13936",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Image caption includes Rocky Smith among Commissioners; no individual image found.",
+        "source": "https://www.orcity.org/933/Mayor-City-Commission"
+      },
+      {
         "data": "https://www.orcity.org/ImageRepository/Document?documentID=11639",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image is a portrait near the name and role of Rocky Smith Jr.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image near the name and role is a portrait labeled 'Commissioner Rocky Smith recolor resized' with a direct URL.",
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
     "roles": [
       {
         "data": "Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Listed as Commissioner in Members section; Commissioners are part of the City Commission governing body."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as Commissioner in Members section."
       },
       {
-        "data": "Board Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Title 'Commissioner' in Oregon City context corresponds to a City Commission member, which is the primary governing body; normalized role as 'Board Member' since 'Commissioner' is equivalent to a city commission board member."
+        "data": "Commissioner",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page title and content explicitly state 'Commissioner Rocky Smith Jr' and list his term as a city commissioner."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
         "data": "503-655-1963",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number explicitly listed near the person's name and role.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed under the contact info for Rocky Smith Jr.",
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
     "emails": [
       {
         "data": "rsmith@orcity.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed near the person's name and role.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly listed as rsmith@orcity.org in the contact section for Rocky Smith Jr.",
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
     "websites": [
       {
         "data": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Official profile page linked in Members and Quick Links.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Link explicitly associated with Rocky Smith Jr. as Commissioner.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
         "data": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Page URL is the official profile page for Commissioner Rocky Smith Jr.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL provided is the official city page for Commissioner Rocky Smith Jr.",
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
     "start_dates": [
       {
         "data": "2023-01-01",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Term start date explicitly stated as January 1, 2023.",
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
@@ -344,80 +363,17 @@
     "end_dates": [
       {
         "data": "2026-12-31",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Term expires December 31, 2026 as stated in Members section.",
         "source": "https://www.orcity.org/933/Mayor-City-Commission"
       },
       {
         "data": "2026-12-31",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Term end date explicitly stated as December 31, 2026.",
         "source": "https://www.orcity.org/1773/Commissioner-Rocky-Smith-Jr"
       }
     ],
-    "updated_at": "2025-07-11T00:02:11Z"
-  },
-  {
-    "name": "Mike Mitchell",
-    "sources": [
-      "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
-    ],
-    "images": [
-      {
-        "data": "https://www.orcity.org/ImageRepository/Document?documentId=15099",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "The image is labeled 'City Commissioner Mike Mitchell' and is prominently displayed on the page.",
-        "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
-      }
-    ],
-    "roles": [
-      {
-        "data": "Commissioner",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "The page title and content explicitly state 'Commissioner Mike Mitchell' and mention appointment by City Commission, indicating an active role as City Commissioner."
-      }
-    ],
-    "divisions": [],
-    "phone_numbers": [
-      {
-        "data": "503-765-5993",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number labeled 'Home' is listed directly under the contact info for Mike Mitchell.",
-        "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mmitchell@orcity.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email address is explicitly provided under Mike Mitchell's contact information.",
-        "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "The URL is the official city page for Commissioner Mike Mitchell.",
-        "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2025-01-01",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Term start date explicitly stated as January 1, 2025.",
-        "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
-      }
-    ],
-    "end_dates": [
-      {
-        "data": "2028-12-31",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Term end date explicitly stated as December 31, 2028.",
-        "source": "https://www.orcity.org/1776/Commissioner-Michael-Mitchell"
-      }
-    ],
-    "updated_at": "2025-07-11T00:02:11Z"
+    "updated_at": "2025-07-11T04:32:50Z"
   }
 ]
