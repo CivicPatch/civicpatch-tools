@@ -653,9 +653,13 @@
       "phone_number": "+5416643321231",
       "website": "https://www.centralpointoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-05-08",
-      "meta_hash": "f41d2a189e5eae139bca5deab33d5574",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-11T00:17:03Z",
+      "meta_hash": "3ea9648aa7c0b8cbddbcdc3fd46b8418",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4112400"
     },
     {
