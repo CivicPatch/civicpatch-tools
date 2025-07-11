@@ -1,11 +1,12 @@
 [
   {
     "name": "Denyse C. McGriff",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
     "email": "dmcgriff@orcity.org",
     "phone_number": "(503) 657-0891",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T00:00:13Z",
+    "divisions": []
   }
 ]
