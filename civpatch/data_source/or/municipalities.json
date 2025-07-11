@@ -1279,10 +1279,12 @@
       "phone_number": "(541) 826-4212",
       "website": "http://www.cityofeaglepoint.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "2e5ceb919e5536a72462cd1a29e4b72c",
+      "meta_updated_at": "2025-07-11T17:05:23Z",
+      "meta_hash": "48997d6e7cb62e3687ba61d0315072dc",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4121550"
     },
