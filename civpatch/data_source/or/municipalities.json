@@ -2298,10 +2298,12 @@
       "phone_number": "(503) 792-4900",
       "website": "http://www.gervaisoregon.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "c94c1981a71bc6850b15e6c3e0f47798",
+      "meta_updated_at": "2025-07-11T19:14:52Z",
+      "meta_hash": "2a1ce76400f0a0132ae97a851cc68ced",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4128650"
     },
