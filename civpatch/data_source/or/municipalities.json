@@ -1361,10 +1361,12 @@
       "phone_number": "(503) 769-3425",
       "website": "https://www.staytonoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "0448885f86fba39e455ca07ba583adce",
+      "meta_updated_at": "2025-07-11T17:10:30Z",
+      "meta_hash": "c4aacbe94190eecb3a9c3f6102ce691d",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4170200"
     },
