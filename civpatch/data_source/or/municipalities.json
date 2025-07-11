@@ -1159,10 +1159,12 @@
       "phone_number": "(503) 829-6855",
       "website": "https://www.cityofmolalla.com",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "d0a6cce8c4f86308230e8d4a6113449c",
+      "meta_updated_at": "2025-07-11T17:01:56Z",
+      "meta_hash": "2bf17ea9a2374a83d02e6d51fe7cd1e2",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4149450"
     },
