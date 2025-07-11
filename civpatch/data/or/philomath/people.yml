@@ -1,36 +1,17 @@
 ---
 - name: Christopher McMorran
-  positions:
+  roles:
   - Mayor
+  divisions:
+  image:
+  cdn_image:
   email: christopher.mcmorran@Philomathoregon.gov
   phone_number: "(541) 929-6148"
-- name: Brent Kaseman
-  positions:
-  - Council Member
-  email: brent.kaseman@philomathoregon.gov
-  phone_number: "(541) 929-6148"
-- name: Diane Crocker
-  positions:
-  - Council Member
-  email: diane.crocker@philomathoregon.gov
-  phone_number: "(541) 929-6148"
-- name: Jessica Andrade
-  positions:
-  - Council Member
-  email: Jessica.Andrade@philomathoregon.gov
-  phone_number: "(541) 929-6148"
-- name: Richard M. Saalsaa
-  positions:
-  - Council Member
-  email: rich.saalsaa@philomathoregon.gov
-  phone_number: "(541) 929-6148"
-- name: Spencer Irwin
-  positions:
-  - Council Member
-  email: spencer.irwin@philomathoregon.gov
-  phone_number: "(541) 929-6148"
-- name: Teresa Nielson
-  positions:
-  - Council Member
-  email: teresa.nielson@philomathoregon.gov
-  phone_number: "(541) 929-6148"
+  website: https://www.ci.philomath.or.us/city-council/page/welcome-mayor-mcmorran
+  start_date:
+  end_date:
+  sources:
+  - https://www.ci.philomath.or.us/?SEC=AEE5F087-E837-45CE-94AB-81BD26FCB237&DE=A58E6F20-AEB3-4DB9-A492-B0859A7552D9
+  - https://www.ci.philomath.or.us/?SEC=AEE5F087-E837-45CE-94AB-81BD26FCB237&DE=EC081DC2-E86D-4555-B077-AE80A726D6A0
+  - https://www.ci.philomath.or.us/city-council/page/welcome-mayor-mcmorran
+  updated_at: '2025-07-11T18:12:06Z'

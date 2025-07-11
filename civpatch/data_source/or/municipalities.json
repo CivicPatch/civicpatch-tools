@@ -1631,10 +1631,12 @@
       "phone_number": "(541) 929-6148",
       "website": "https://www.ci.philomath.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "147d6f611d0883c59ceebfbf918dea8d",
+      "meta_updated_at": "2025-07-11T18:12:06Z",
+      "meta_hash": "703f1b2eb18496f4eaf53e9ba49dc573",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4157450"
     },

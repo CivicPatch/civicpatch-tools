@@ -1,0 +1,48 @@
+[
+  {
+    "name": "Christopher McMorran",
+    "sources": [
+      "https://www.ci.philomath.or.us/?SEC=AEE5F087-E837-45CE-94AB-81BD26FCB237&DE=A58E6F20-AEB3-4DB9-A492-B0859A7552D9",
+      "https://www.ci.philomath.or.us/?SEC=AEE5F087-E837-45CE-94AB-81BD26FCB237&DE=EC081DC2-E86D-4555-B077-AE80A726D6A0",
+      "https://www.ci.philomath.or.us/city-council/page/welcome-mayor-mcmorran"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor McMorran' in the text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor McMorran'."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor McMorran', indicating his role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.ci.philomath.or.us/city-council/page/welcome-mayor-mcmorran",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly associated with the 'Welcome from Mayor McMorran' section, indicating it is his profile page.",
+        "source": "https://www.ci.philomath.or.us/?SEC=AEE5F087-E837-45CE-94AB-81BD26FCB237&DE=EC081DC2-E86D-4555-B077-AE80A726D6A0"
+      },
+      {
+        "data": "https://www.ci.philomath.or.us/city-council/page/welcome-mayor-mcmorran",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Mayor McMorran.",
+        "source": "https://www.ci.philomath.or.us/city-council/page/welcome-mayor-mcmorran"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:12:06Z"
+  }
+]

@@ -1,65 +1,72 @@
 [
   {
+    "name": "Brent Kaseman",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "bkaseman@philomathoregon.gov",
+    "phone_number": "(541) 929-6148",
+    "updated_at": "2025-07-11T18:06:28Z",
+    "divisions": []
+  },
+  {
     "name": "Christopher McMorran",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
     "email": "christopher.mcmorran@Philomathoregon.gov",
     "phone_number": "(541) 929-6148",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Brent Kaseman",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "brent.kaseman@philomathoregon.gov",
-    "phone_number": "(541) 929-6148",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:06:28Z",
+    "divisions": []
   },
   {
     "name": "Diane Crocker",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "diane.crocker@philomathoregon.gov",
     "phone_number": "(541) 929-6148",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:06:28Z",
+    "divisions": []
   },
   {
     "name": "Jessica Andrade",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "Jessica.Andrade@philomathoregon.gov",
     "phone_number": "(541) 929-6148",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:06:28Z",
+    "divisions": []
   },
   {
     "name": "Richard M. Saalsaa",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "rich.saalsaa@philomathoregon.gov",
     "phone_number": "(541) 929-6148",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:06:28Z",
+    "divisions": []
   },
   {
     "name": "Spencer Irwin",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "spencer.irwin@philomathoregon.gov",
     "phone_number": "(541) 929-6148",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:06:28Z",
+    "divisions": []
   },
   {
     "name": "Teresa Nielson",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "teresa.nielson@philomathoregon.gov",
     "phone_number": "(541) 929-6148",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:06:28Z",
+    "divisions": []
   }
 ]
