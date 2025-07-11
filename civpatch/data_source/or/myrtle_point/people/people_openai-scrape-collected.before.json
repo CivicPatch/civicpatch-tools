@@ -1,0 +1,296 @@
+[
+  {
+    "name": "Amy Ligons",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [
+      {
+        "data": "https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=mB9Bm9JahZEHf1UU92iXzEUfSlexmiz9yyO2eImkXutLk1ZGl%2Bbcml1QkuYwrgI7&s=large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with person in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under City Council section; no explicit role title given, so 'Board Member' used as generic council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "daligons04@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/26.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:32Z"
+  },
+  {
+    "name": "Berea Gibbons",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [
+      {
+        "data": "https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=OIF4LCZQK7K2Xh9%2FpYgJ0AKJ5XCZOdxeGOhA9H94sP8Gw%2FvOCUy4MTbKQkcMPmAA&s=large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with person in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under City Council section; no explicit role title given, so 'Board Member' used as generic council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "berealillie@rocketmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/2026.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:32Z"
+  },
+  {
+    "name": "Ivan Hawker",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [
+      {
+        "data": "https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=4%2FU8DTN9a3noJBJ6DutXcBHLZi%2BPeHaFsG1gs6%2BwjyWzeWJdZ8tx7IlI%2Bkj%2BVX%2Fc&s=large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with person in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under City Council section; no explicit role title given, so 'Board Member' used as generic council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Hawkerboys3@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/2026.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:32Z"
+  },
+  {
+    "name": "Matt Wells",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [
+      {
+        "data": "https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=tCQJdxTqp4oly1VPDnv65Udq%2FYWe3CyINmSz%2BdSYn80fZF%2Bp%2BT6%2BZBgTOlErAsfC&s=large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with person in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under City Council section; no explicit role title given, so 'Board Member' used as generic council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "wellsma55@hotmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/28.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:32Z"
+  },
+  {
+    "name": "Mike Wood",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [
+      {
+        "data": "https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=RTwy%2FSPykgdhfPtUYsNRKJXu0UiUHRKr5ch3AcqwcyNHQj2w6zCjUexbkTLYdgfC&s=large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with person in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under City Council section; no explicit role title given, so 'Board Member' used as generic council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mailtomikewood@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/28.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:32Z"
+  },
+  {
+    "name": "Ryland Parker",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [
+      {
+        "data": "https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=d1arCpviSJ6YGlniJqOsoasc4w4XNi1kbxRe2smEX8KngTX6%2FyhBmLQ1fU%2Bs8oUQ&s=large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with person in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Listed under City Council section; no explicit role title given, so 'Board Member' used as generic council member role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "rylandbsp@gmail.com",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12/31/28.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:32Z"
+  },
+  {
+    "name": "Samantha Clayburn",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [
+      {
+        "data": "https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=c9wLCoqmtFfSIuW6BuljsU9gfmbu7XUhCT2EVQp7VyBlntatHA%2BNw9UcBoXdRmF6&s=large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image URL directly associated with person in source data.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed under Mayor section with email mayor@ci.myrtlepoint.or.us, indicating role as Mayor."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mayor@ci.myrtlepoint.or.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided and matches mayor role.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expiration date explicitly stated as 12-31-26.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:32Z"
+  }
+]

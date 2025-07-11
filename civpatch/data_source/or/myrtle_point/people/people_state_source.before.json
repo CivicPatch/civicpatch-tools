@@ -1,82 +1,182 @@
 [
   {
+    "name": "Amy Bruno",
+    "roles": [
+      "Library Director"
+    ],
+    "email": "abruno@coastlinelibrarynetwork.org",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Amy Ligons",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "daligons04@gmail.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Berea Gibbons",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "berealillie@rocketmail.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Doug Ligons",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "daligons04@gmail.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Ginny Groce",
+    "roles": [
+      "Accountant"
+    ],
+    "email": "accountant@ci.myrtlepoint.or.us",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Ivan Hawker",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "hawkerboys3@gmail.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Jason Young",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "j.young73079@yahoo.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Karen Olsen",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "karenpub@gmail.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Matthew Muenchrath",
+    "roles": [
+      "Municipal Judge"
+    ],
+    "email": "muenchrathlaw@cs.com",
+    "phone_number": "(541) 396-4529",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Mike Wood",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "mailtomikewood@gmail.com",
+    "phone_number": "(541) 266-4431",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Ryland Parker",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "rylandbsp@gmail.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
     "name": "Samantha Clayburn",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
     "email": "mayor@ci.myrtlepoint.or.us",
     "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:11:51Z"
   },
   {
-    "name": "Amy Ligons",
-    "positions": [
-      "Council Member"
+    "name": "Scott Nay",
+    "roles": [
+      "City Manager"
     ],
-    "email": "daligons04@gmail.com",
+    "email": "manager@ci.myrtlepoint.or.us",
     "phone_number": "(541) 572-2626",
-    "image": null,
-    "source_image": null,
-    "phone_numbers": [],
-    "emails": [],
-    "websites": [],
-    "start_dates": [],
-    "end_dates": [],
-    "sources": [],
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:11:51Z"
   },
   {
-    "name": "Amy Ligons",
-    "positions": [
-      "Council Member"
+    "name": "Shayla Stidham",
+    "roles": [
+      "Planning Commissioner"
     ],
-    "email": "daligons04@gmail.com",
+    "email": "dsstidham@charter.net",
     "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Berea Gibbons",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "berealillie@rocketmail.com",
-    "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Ivan Hawker",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "hawkerboys3@gmail.com",
-    "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Mike Wood",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "mailtomikewood@gmail.com",
-    "phone_number": "(541) 266-4431",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Ryland Parker",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "rylandbsp@gmail.com",
-    "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:11:51Z"
   },
   {
     "name": "Shelley Clayburn",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor"
     ],
     "email": "shellclayburn@gmail.com",
     "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Tamara Allender",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "howtamallender@gmail.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Tiffany Kremers",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "tiffanykremers@gmail.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Tim Groce",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "tvgroce@gmail.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Wayne Ramsey",
+    "roles": [
+      "Public Works Director"
+    ],
+    "email": "wramsey@ci.myrtlepoint.or.us",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
+  },
+  {
+    "name": "Willy Burris",
+    "roles": [
+      "Fire Chief"
+    ],
+    "email": "wburris@ci.myrtlepoint.or.us",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:51Z"
   }
 ]

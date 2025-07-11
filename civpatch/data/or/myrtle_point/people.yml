@@ -1,36 +1,98 @@
 ---
 - name: Samantha Clayburn
-  positions:
+  roles:
   - Mayor
+  divisions:
+  image: https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=c9wLCoqmtFfSIuW6BuljsU9gfmbu7XUhCT2EVQp7VyBlntatHA%2BNw9UcBoXdRmF6&s=large
+  cdn_image:
   email: mayor@ci.myrtlepoint.or.us
   phone_number: "(541) 572-2626"
+  website:
+  start_date:
+  end_date: '2026-12-31'
+  sources:
+  - https://www.ci.myrtlepoint.or.us/citycouncilmayor
+  updated_at: '2025-07-11T19:12:50Z'
 - name: Amy Ligons
-  positions:
+  roles:
   - Council Member
+  divisions:
+  image: https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=mB9Bm9JahZEHf1UU92iXzEUfSlexmiz9yyO2eImkXutLk1ZGl%2Bbcml1QkuYwrgI7&s=large
+  cdn_image:
   email: daligons04@gmail.com
   phone_number: "(541) 572-2626"
+  website:
+  start_date:
+  end_date: '2026-12-31'
+  sources:
+  - https://www.ci.myrtlepoint.or.us/citycouncilmayor
+  updated_at: '2025-07-11T19:12:50Z'
 - name: Berea Gibbons
-  positions:
+  roles:
   - Council Member
+  divisions:
+  image: https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=OIF4LCZQK7K2Xh9%2FpYgJ0AKJ5XCZOdxeGOhA9H94sP8Gw%2FvOCUy4MTbKQkcMPmAA&s=large
+  cdn_image:
   email: berealillie@rocketmail.com
   phone_number: "(541) 572-2626"
+  website:
+  start_date:
+  end_date: '2026-12-31'
+  sources:
+  - https://www.ci.myrtlepoint.or.us/citycouncilmayor
+  updated_at: '2025-07-11T19:12:50Z'
 - name: Ivan Hawker
-  positions:
+  roles:
   - Council Member
+  divisions:
+  image: https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=4%2FU8DTN9a3noJBJ6DutXcBHLZi%2BPeHaFsG1gs6%2BwjyWzeWJdZ8tx7IlI%2Bkj%2BVX%2Fc&s=large
+  cdn_image:
   email: hawkerboys3@gmail.com
   phone_number: "(541) 572-2626"
+  website:
+  start_date:
+  end_date: '2026-12-31'
+  sources:
+  - https://www.ci.myrtlepoint.or.us/citycouncilmayor
+  updated_at: '2025-07-11T19:12:50Z'
 - name: Mike Wood
-  positions:
+  roles:
   - Council Member
+  divisions:
+  image: https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=RTwy%2FSPykgdhfPtUYsNRKJXu0UiUHRKr5ch3AcqwcyNHQj2w6zCjUexbkTLYdgfC&s=large
+  cdn_image:
   email: mailtomikewood@gmail.com
   phone_number: "(541) 266-4431"
+  website:
+  start_date:
+  end_date: '2028-12-31'
+  sources:
+  - https://www.ci.myrtlepoint.or.us/citycouncilmayor
+  updated_at: '2025-07-11T19:12:50Z'
 - name: Ryland Parker
-  positions:
+  roles:
   - Council Member
+  divisions:
+  image: https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=d1arCpviSJ6YGlniJqOsoasc4w4XNi1kbxRe2smEX8KngTX6%2FyhBmLQ1fU%2Bs8oUQ&s=large
+  cdn_image:
   email: rylandbsp@gmail.com
   phone_number: "(541) 572-2626"
-- name: Shelley Clayburn
-  positions:
-  - Council Member
-  email: shellclayburn@gmail.com
-  phone_number: "(541) 572-2626"
+  website:
+  start_date:
+  end_date: '2028-12-31'
+  sources:
+  - https://www.ci.myrtlepoint.or.us/citycouncilmayor
+  updated_at: '2025-07-11T19:12:50Z'
+- name: Matt Wells
+  roles: []
+  divisions:
+  image: https://www.ci.myrtlepoint.or.us/api/blob/viewBlob?rf=t&i=tCQJdxTqp4oly1VPDnv65Udq%2FYWe3CyINmSz%2BdSYn80fZF%2Bp%2BT6%2BZBgTOlErAsfC&s=large
+  cdn_image:
+  email: wellsma55@hotmail.com
+  phone_number:
+  website:
+  start_date:
+  end_date: '2028-12-31'
+  sources:
+  - https://www.ci.myrtlepoint.or.us/citycouncilmayor
+  updated_at: '2025-07-11T19:12:50Z'

@@ -1,82 +1,89 @@
 [
   {
-    "name": "Samantha Clayburn",
-    "positions": [
-      "Mayor"
-    ],
-    "email": "mayor@ci.myrtlepoint.or.us",
-    "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
-  },
-  {
     "name": "Amy Ligons",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "daligons04@gmail.com",
     "phone_number": "(541) 572-2626",
-    "image": null,
-    "source_image": null,
+    "updated_at": "2025-07-11T19:11:52Z",
+    "divisions": []
+  },
+  {
+    "name": "Berea Gibbons",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "berealillie@rocketmail.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:52Z",
+    "divisions": []
+  },
+  {
+    "name": "Amy Ligons",
+    "roles": [
+      "Council Member"
+    ],
+    "email": "daligons04@gmail.com",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:52Z",
+    "divisions": [],
+    "images": [],
     "phone_numbers": [],
     "emails": [],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "sources": [],
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Amy Ligons",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "daligons04@gmail.com",
-    "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Berea Gibbons",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "berealillie@rocketmail.com",
-    "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
+    "sources": []
   },
   {
     "name": "Ivan Hawker",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "hawkerboys3@gmail.com",
     "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:11:52Z",
+    "divisions": []
   },
   {
     "name": "Mike Wood",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "mailtomikewood@gmail.com",
     "phone_number": "(541) 266-4431",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:11:52Z",
+    "divisions": []
   },
   {
     "name": "Ryland Parker",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "rylandbsp@gmail.com",
     "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:11:52Z",
+    "divisions": []
+  },
+  {
+    "name": "Samantha Clayburn",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "mayor@ci.myrtlepoint.or.us",
+    "phone_number": "(541) 572-2626",
+    "updated_at": "2025-07-11T19:11:52Z",
+    "divisions": []
   },
   {
     "name": "Shelley Clayburn",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "shellclayburn@gmail.com",
     "phone_number": "(541) 572-2626",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:11:52Z",
+    "divisions": []
   }
 ]

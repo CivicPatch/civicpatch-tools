@@ -2342,10 +2342,12 @@
       "phone_number": "(541) 572-2626",
       "website": "https://www.ci.myrtlepoint.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "fc078e07109e3078523ab3272300257e",
+      "meta_updated_at": "2025-07-11T19:12:50Z",
+      "meta_hash": "1392fc5f772753caf11bb7cb937a3753",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4151050"
     },

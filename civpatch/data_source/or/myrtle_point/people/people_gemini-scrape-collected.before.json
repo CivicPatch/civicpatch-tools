@@ -1,0 +1,247 @@
+[
+  {
+    "name": "Amy Ligons",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the person's listing under the 'City Council' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "daligons04@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:49Z"
+  },
+  {
+    "name": "Berea Gibbons",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the person's listing under the 'City Council' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "berealillie@rocketmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:49Z"
+  },
+  {
+    "name": "Ivan Hawker",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the person's listing under the 'City Council' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Hawkerboys3@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:49Z"
+  },
+  {
+    "name": "Matt Wells",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the person's listing under the 'City Council' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "wellsma55@hotmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:49Z"
+  },
+  {
+    "name": "Mike Wood",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the person's listing under the 'City Council' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mailtomikewood@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:49Z"
+  },
+  {
+    "name": "Ryland Parker",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the person's listing under the 'City Council' section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "rylandbsp@gmail.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:49Z"
+  },
+  {
+    "name": "Samantha Clayburn",
+    "sources": [
+      "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Inferred from the person's email address 'mayor@ci.myrtlepoint.or.us' and implied section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mayor@ci.myrtlepoint.or.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly extracted from the source text.",
+        "source": "https://www.ci.myrtlepoint.or.us/citycouncilmayor"
+      }
+    ],
+    "updated_at": "2025-07-11T19:12:49Z"
+  }
+]
