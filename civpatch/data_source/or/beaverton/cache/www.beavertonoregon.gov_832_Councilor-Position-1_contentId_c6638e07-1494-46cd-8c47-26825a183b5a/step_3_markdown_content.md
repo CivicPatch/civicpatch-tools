@@ -1,4 +1,4 @@
-[Skip to Main Content](https://www.beavertonoregon.gov/855/Councilor-Position-6/)
+[Skip to Main Content](https://www.beavertonoregon.gov/832/Councilor-Position-1?contentId=c6638e07-1494-46cd-8c47-26825a183b5a%2F)
 
 ![Beaverton, OR - Official Website](https://www.beavertonoregon.gov/DesignCenter/Assets/Get/6ed33f13-7746-4480-aa3c-aabf94e46cd5)
 
@@ -31,35 +31,78 @@ Opens in a new window
 1. [Home](https://www.beavertonoregon.gov)
 2. [Government](https://www.beavertonoregon.gov/27/Government)
 3. [City Council](https://www.beavertonoregon.gov/789/City-Council)
-4. Councilor: Position 6
+4. Councilor: Position 1
 
-# Councilor: Position 6
+# Councilor: Position 1
 
-## Nadia Hasan
+## Ashley Hartmeier-Prigg
 
-As part of the new city charter, City Council will expand from five members to seven members: six part-time city councilors and one full-time mayor with voting privileges. Nadia Hasan is the first to hold City Council Position 6. She previously served on the Tualatin Hills Park and Recreation District Visioning Task Force, a dedicated multigenerational, multiethnic, and multilingual volunteer group to meet community where they are. Nadia brings a wealth of diverse experience having worked in Beaverton schools as an educator along with deep private sector experience in HR and marketing. As an Indian-Pakistani woman, Nadia leverages her lived experiences as the daughter of immigrant parents to champion a city that serves the needs of our collective communities.
+Ashley Hartmeier-Prigg (she/her) was sworn into the Beaverton City Council in late 2021, and re-elected in 2022. She holds a bachelor’s degree in political science from the University of Portland and a doctor of jurisprudence from Willamette University College of Law.
 
-### Nadia Hasan's Message
+A director of product management, Ashley has helped build innovative software to serve retailers ranging from start-ups to Fortune 100 companies. Born and raised in Beaverton, Ashley is passionate about ensuring Beaverton’s livability and affordability for generations to come.
 
-As we embrace the voters' desire for a council-manager form of government, I want to ensure we provide affordable housing, accessible transportation and economic empowerment for our residents. My hope is that our communities can do more than survive but thrive ensuring my children, your children and our children feel seen and heard in this beautiful city. I look forward to serving Beavertonians and encourage you reach out via email or phone call so we can connect.
+Ashley is a former member of the Tualatin Hills Park and Recreation District Board of Directors and is a 2024 Portland Business Journal 40 under 40 honoree. You’ll often find her out for a walk with her husband and rescue dogs, finding the best vegan food in Beaverton, or celebrating local business at a Beaverton Area Chamber of Commerce ribbon cutting.
 
-### Contact Us
+### Ashley Hartmeier-Prigg's Message
 
-#### ![Nadia Hasan](https://content.civicplus.com/api/assets/b82b019e-3d7c-4bf1-a201-3a6d54839530?cache=1800 "Nadia Hasan") Nadia Hasan
+I am honored to serve my hometown through this role on city council. Getting to serve our community as a member of the THPRD board, I developed an interest and passion for affordable housing. I look forward to creating policy that will help further our housing goals and ensure people in Beaverton have shelter. By the year 2030, our world may look very different than it does today, and it already looks quite different than it did in 2010. I hope to push us to take bold action as a city when it comes to climate change. I can't wait to hear from you and encourage you to contact me over email or phone.
+
+#### ![Ashley Hartmeier-Prigg](https://content.civicplus.com/api/assets/939a4491-92f0-4abc-9bd3-0170c7a3252d?cache=1800 "Ashley Hartmeier-Prigg") Ashley Hartmeier-Prigg
 
 Title
 
-Council Position 6
+City Council Position 1
 
 Email
 
 [Email City Council](mailto:citymail@BeavertonOregon.gov)
 
-[Email Nadia Hasan](mailto:nhasan@BeavertonOregon.gov)
+[Email Ashley Hartmeier-Prigg](mailto:ahartmeier-Prigg@beavertonoregon.gov)
 
 Phone
 
-503-679-7068
+503-523-8243
+
+Department:
+
+City Council
+
+## Ashley Hartmeier-Prigg
+
+Ashley joined the Beaverton City Council in fall 2021 as its newest member. Her election filled a vacant seat and helped round out the council after it was expanded to seven members under the city's new voter-approved charter. She previously served as a Tualatin Hills Park and Recreation District Board Member, leading the board as chair during the last year of her term, and helping to pass an affordable housing policy for the district. Ashley is a former lawyer and changed careers due to the great recession; she is now a technology professional and loves building awesome software.
+
+### Ashley Hartmeier-Prigg's Message
+
+I am honored to serve my hometown through this role on city council. Getting to serve our community as a member of the THPRD board, I developed an interest and passion for affordable housing. I look forward to creating policy that will help further our housing goals and ensure people in Beaverton have shelter. By the year 2030, our world may look very different than it does today, and it already looks quite different than it did in 2010. I hope to push us to take bold action as a city when it comes to climate change. I can't wait to hear from you and encourage you to contact me over email or phone.
+
+## Address
+
+12725 SW Millikan Way  
+P.O. Box 4755  
+Beaverton, OR 97076
+
+### Four-Year-Term
+
+Term Began: Oct. 5, 2021  
+Term Expires: Dec. 31, 2022
+
+### Contact Us
+
+#### [![Ashley Hartmeier-Prigg](https://content.civicplus.com/api/assets/939a4491-92f0-4abc-9bd3-0170c7a3252d?cache=1800 "Ashley Hartmeier-Prigg") \ Ashley \ Hartmeier-Prigg](https://www.beavertonoregon.gov/832/Councilor-Position-1?contentId=c6638e07-1494-46cd-8c47-26825a183b5a)
+
+Title
+
+City Council Position 1
+
+Email
+
+[Email City Council](mailto:citymail@BeavertonOregon.gov)
+
+[Email Ashley Hartmeier-Prigg](mailto:ahartmeier-Prigg@beavertonoregon.gov)
+
+Phone
+
+503-523-8243
 
 01. [About Council Meetings](https://www.beavertonoregon.gov/792/About-Council-Meetings)
 02. [Agendas &amp; Minutes](https://www.beavertonoregon.gov/797/Agendas-Minutes)

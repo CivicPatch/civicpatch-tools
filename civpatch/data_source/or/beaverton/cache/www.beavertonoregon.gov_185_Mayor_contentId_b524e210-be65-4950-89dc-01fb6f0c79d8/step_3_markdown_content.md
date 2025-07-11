@@ -1,4 +1,4 @@
-[Skip to Main Content](https://www.beavertonoregon.gov/185/Mayor/)
+[Skip to Main Content](https://www.beavertonoregon.gov/185/Mayor?contentId=b524e210-be65-4950-89dc-01fb6f0c79d8%2F)
 
 ![Beaverton, OR - Official Website](https://www.beavertonoregon.gov/DesignCenter/Assets/Get/6ed33f13-7746-4480-aa3c-aabf94e46cd5)
 
@@ -26,7 +26,7 @@ Search
 
 Opens in a new window
 
-![a file](https://content.civicplus.com/api/assets/6531d9b7-3b3a-47c1-9ca7-ffb0dd55f64f?cache=1800&width=1880&mode=min)
+![a file](https://content.civicplus.com/api/assets/8f3b9429-373c-42f4-a76f-19dbe2f1cb7a?cache=1800&width=1880&mode=min)
 
 1. [Home](https://www.beavertonoregon.gov)
 2. [Government](https://www.beavertonoregon.gov/27/Government)
@@ -60,6 +60,24 @@ Through her leadership, Mayor Beaty is building a Beaverton that is not just pre
 
 - [City Charter, Code, and Ordinances](https://www.beavertonoregon.gov/164/City-Charter-City-Code)
 - [Community Services and Engagement](https://www.beavertonoregon.gov/207/Community-Services-Engagement)
+
+#### ![a woman smiling for the camera](https://content.civicplus.com/api/assets/70088868-34d2-461f-adb2-fc968dd85947?cache=1800 "a woman smiling for the camera") Lacey Beaty
+
+Title
+
+Mayor
+
+Email
+
+[Email Lacey Beaty](mailto:lbeaty@beavertonoregon.gov)
+
+Phone
+
+503-526-2345
+
+Department:
+
+Mayor
 
 ### Contact Us
 

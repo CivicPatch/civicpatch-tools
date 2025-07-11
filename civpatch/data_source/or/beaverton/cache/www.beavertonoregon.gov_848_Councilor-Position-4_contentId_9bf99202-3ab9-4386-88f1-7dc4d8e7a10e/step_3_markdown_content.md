@@ -1,4 +1,4 @@
-[Skip to Main Content](https://www.beavertonoregon.gov/855/Councilor-Position-6/)
+[Skip to Main Content](https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e%2F)
 
 ![Beaverton, OR - Official Website](https://www.beavertonoregon.gov/DesignCenter/Assets/Get/6ed33f13-7746-4480-aa3c-aabf94e46cd5)
 
@@ -26,40 +26,79 @@ Search
 
 Opens in a new window
 
-![a file](https://content.civicplus.com/api/assets/6531d9b7-3b3a-47c1-9ca7-ffb0dd55f64f?cache=1800&width=1880&mode=min)
+![a file](https://content.civicplus.com/api/assets/d8d8e589-89ad-4466-b5b0-b5a7e12f5f8a?cache=1800&width=1880&mode=min)
 
 1. [Home](https://www.beavertonoregon.gov)
 2. [Government](https://www.beavertonoregon.gov/27/Government)
 3. [City Council](https://www.beavertonoregon.gov/789/City-Council)
-4. Councilor: Position 6
+4. Councilor: Position 4
 
-# Councilor: Position 6
+# Councilor: Position 4
 
-## Nadia Hasan
+## Allison Tivnon
 
-As part of the new city charter, City Council will expand from five members to seven members: six part-time city councilors and one full-time mayor with voting privileges. Nadia Hasan is the first to hold City Council Position 6. She previously served on the Tualatin Hills Park and Recreation District Visioning Task Force, a dedicated multigenerational, multiethnic, and multilingual volunteer group to meet community where they are. Nadia brings a wealth of diverse experience having worked in Beaverton schools as an educator along with deep private sector experience in HR and marketing. As an Indian-Pakistani woman, Nadia leverages her lived experiences as the daughter of immigrant parents to champion a city that serves the needs of our collective communities.
+Allison is newly elected and previously served as a Beaverton Arts Commission commissioner and a member of the Oregon Complete Counts committee for the State of Oregon's 2020 Census. She has 15 years of experience in marketing and business development and civic and philanthropic development.
 
-### Nadia Hasan's Message
+### Allison Tivnon's Message
 
-As we embrace the voters' desire for a council-manager form of government, I want to ensure we provide affordable housing, accessible transportation and economic empowerment for our residents. My hope is that our communities can do more than survive but thrive ensuring my children, your children and our children feel seen and heard in this beautiful city. I look forward to serving Beavertonians and encourage you reach out via email or phone call so we can connect.
+I look forward to working alongside my fellow councilors and Mayor Beaty, our city staff and the upcoming interim city manager, as well as our many community partners. Our residents and businesses are looking to us to look out for them. We have all endured the kaleidoscope that 2020 turned out to be and have our work cut out for us in charting a course to recovery. Hanging tight to our Community Vision Plan, our DEI and Climate Action Plans and continuing to make progress toward our affordable housing goals will all be front of mind in our decision-making. I am thrilled to join the council and am eager to get started!
 
-### Contact Us
-
-#### ![Nadia Hasan](https://content.civicplus.com/api/assets/b82b019e-3d7c-4bf1-a201-3a6d54839530?cache=1800 "Nadia Hasan") Nadia Hasan
+#### ![Allison Tivnon](https://content.civicplus.com/api/assets/4e1adaec-e20f-4190-9364-9e7e14f7568e?cache=1800 "Allison Tivnon") Allison Tivnon
 
 Title
 
-Council Position 6
+Council Position 4
 
 Email
 
 [Email City Council](mailto:citymail@BeavertonOregon.gov)
 
-[Email Nadia Hasan](mailto:nhasan@BeavertonOregon.gov)
+[Email Allison Tivnon](mailto:ativnon@beavertonoregon.gov)
 
 Phone
 
-503-679-7068
+503-250-3032
+
+Department:
+
+City Council
+
+## Allison Tivnon
+
+Allison is newly elected and previously served as a Beaverton Arts Commission commissioner and a member of the Oregon Complete Counts committee for the State of Oregon's 2020 Census. She has 15 years of experience in marketing and business development and civic and philanthropic development.
+
+### Allison Tivnon's Message
+
+I look forward to working alongside my fellow councilors and Mayor Beaty, our city staff and the upcoming interim city manager, as well as our many community partners. Our residents and businesses are looking to us to look out for them. We have all endured the kaleidoscope that 2020 turned out to be and have our work cut out for us in charting a course to recovery. Hanging tight to our Community Vision Plan, our DEI and Climate Action Plans and continuing to make progress toward our affordable housing goals will all be front of mind in our decision-making. I am thrilled to join the council and am eager to get started!
+
+## Address
+
+12725 SW Millikan Way  
+P.O. Box 4755  
+Beaverton, OR 97076
+
+## Four-Year-Term
+
+Term Began: January 2021  
+Term Expires: December 31, 2024
+
+### Contact Us
+
+#### [![Allison Tivnon](https://content.civicplus.com/api/assets/4e1adaec-e20f-4190-9364-9e7e14f7568e?cache=1800 "Allison Tivnon") \ Allison \ Tivnon](https://www.beavertonoregon.gov/848/Councilor-Position-4?contentId=9bf99202-3ab9-4386-88f1-7dc4d8e7a10e)
+
+Title
+
+Council Position 4
+
+Email
+
+[Email City Council](mailto:citymail@BeavertonOregon.gov)
+
+[Email Allison Tivnon](mailto:ativnon@beavertonoregon.gov)
+
+Phone
+
+503-250-3032
 
 01. [About Council Meetings](https://www.beavertonoregon.gov/792/About-Council-Meetings)
 02. [Agendas &amp; Minutes](https://www.beavertonoregon.gov/797/Agendas-Minutes)
