@@ -1811,10 +1811,12 @@
       "phone_number": "(503) 630-8270",
       "website": "https://www.cityofestacada.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "32cd546fab5b74c560f2c3c7e6d3fc02",
+      "meta_updated_at": "2025-07-11T18:34:09Z",
+      "meta_hash": "a73caedaa1f8e46dbd04e1cc72566ddf",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4123800"
     },
