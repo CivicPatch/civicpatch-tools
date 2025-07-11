@@ -1,0 +1,114 @@
+[
+  {
+    "name": "Matthew Hald",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "mhald@myrtlecreek.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  },
+  {
+    "name": "Luke Dillon",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Position 2"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "ldillon@myrtlecreek.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  },
+  {
+    "name": "Cathey Wragg",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Position 3"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "cwragg@myrtlecreek.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2024-12",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  },
+  {
+    "name": "Diana Larson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Position 4"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "dlarson@myrtlecreek.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  },
+  {
+    "name": "Rick Held",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Position 5"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "rheld@myrtlecreek.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2024-12",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  },
+  {
+    "name": "Robert Chaney, Sr.",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Position 1"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "bchaney@myrtlecreek.org",
+    "website": null,
+    "start_date": null,
+    "end_date": "2024-12",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  }
+]

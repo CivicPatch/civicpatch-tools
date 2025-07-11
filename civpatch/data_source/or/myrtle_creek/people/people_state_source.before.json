@@ -1,56 +1,137 @@
 [
   {
+    "name": "Angel Smith",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "asmith75.realestate@gmail.com",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
+    "name": "Bill Umphlett",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "billumphlett@msn.com",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
+    "name": "Cathey Wragg",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "cwragg@myrtlecreek.org",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
+    "name": "Diana Larson",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "dlarson@myrtlecreek.org",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
+    "name": "Joanna Bilbrey",
+    "roles": [
+      "City Recorder"
+    ],
+    "email": "jbilbrey@myrtlecreek.org",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
+    "name": "Krissy Chandler",
+    "roles": [
+      "Utility Billing Clerk"
+    ],
+    "email": "utility@myrtlecreek.org",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
+    "name": "Lesley Hiscocks",
+    "roles": [
+      "Finance Director"
+    ],
+    "email": "lhiscocks@myrtlecreek.org",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
+    "name": "Lonnie Rainville",
+    "roles": [
+      "City Administrator"
+    ],
+    "email": "lrainville@myrtlecreek.org",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
+    "name": "Luke Dillon",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "ldillon@myrtlecreek.org",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
+    "name": "Manie Pires",
+    "roles": [
+      "Fire Chief"
+    ],
+    "email": "manie@myrtlecreekfd.com",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
     "name": "Matthew Hald",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
     "email": "mhald@myrtlecreek.org",
     "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Cathey Wragg",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "cwragg@myrtlecreek.org",
-    "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Diana Larson",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "dlarson@myrtlecreek.org",
-    "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Luke Dillon",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "ldillon@myrtlecreek.org",
-    "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:36:00Z"
   },
   {
     "name": "Rick Held",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor"
     ],
     "email": "rheld@myrtlecreek.org",
     "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:36:00Z"
   },
   {
     "name": "Robert L. Chaney, Sr.",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor"
     ],
     "email": "bchaney@myrtlecreek.org",
     "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
+    "name": "Sharon Umphlett",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "umphlett@verizon.net",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
+  },
+  {
+    "name": "Tommy Earp",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "tommyearp055@gmail.com",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z"
   }
 ]

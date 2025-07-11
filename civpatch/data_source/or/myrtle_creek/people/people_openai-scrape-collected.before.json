@@ -1,0 +1,242 @@
+[
+  {
+    "name": "Matthew Hald",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' in the content."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mhald@myrtlecreek.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address directly associated with Matthew Hald.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as December 2026.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  },
+  {
+    "name": "Luke Dillon",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Title given as 'Councilor' which is synonymous with 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Position #2'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ldillon@myrtlecreek.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address directly associated with Luke Dillon.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as December 2026.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  },
+  {
+    "name": "Cathey Wragg",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Title given as 'Councilor' which is synonymous with 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Position #3'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "cwragg@myrtlecreek.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address directly associated with Cathey Wragg.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2024-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as December 2024.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  },
+  {
+    "name": "Diana Larson",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Title given as 'Councilor' which is synonymous with 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Position #4'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dlarson@myrtlecreek.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address directly associated with Diana Larson.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as December 2026.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  },
+  {
+    "name": "Rick Held",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Title given as 'Councilor' which is synonymous with 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Position #5'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "rheld@myrtlecreek.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address directly associated with Rick Held.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2024-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as December 2024.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  },
+  {
+    "name": "Robert Chaney, Sr.",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Title given as 'Councilor' which is synonymous with 'Council Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Position #1'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "bchaney@myrtlecreek.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address directly associated with Robert Chaney, Sr.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2024-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as December 2024.",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "updated_at": "2025-07-11T18:36:37Z"
+  }
+]

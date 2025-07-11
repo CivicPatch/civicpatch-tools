@@ -1951,10 +1951,12 @@
       "phone_number": "(541) 863-3171",
       "website": "https://www.cityofmyrtlecreek.com",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "e0e99b7590fa8ca910260910fd73a572",
+      "meta_updated_at": "2025-07-11T18:40:31Z",
+      "meta_hash": "97674f95641f29d810de4e1a3ab81d6c",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4150950"
     },

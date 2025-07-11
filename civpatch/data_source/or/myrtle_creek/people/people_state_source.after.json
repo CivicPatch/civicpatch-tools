@@ -1,56 +1,62 @@
 [
   {
-    "name": "Matthew Hald",
-    "positions": [
-      "Mayor"
-    ],
-    "email": "mhald@myrtlecreek.org",
-    "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
-  },
-  {
     "name": "Cathey Wragg",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "cwragg@myrtlecreek.org",
     "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:36:00Z",
+    "divisions": []
   },
   {
     "name": "Diana Larson",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "dlarson@myrtlecreek.org",
     "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:36:00Z",
+    "divisions": []
   },
   {
     "name": "Luke Dillon",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "ldillon@myrtlecreek.org",
     "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:36:00Z",
+    "divisions": []
+  },
+  {
+    "name": "Matthew Hald",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "mhald@myrtlecreek.org",
+    "phone_number": "(541) 863-3171",
+    "updated_at": "2025-07-11T18:36:00Z",
+    "divisions": []
   },
   {
     "name": "Rick Held",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "rheld@myrtlecreek.org",
     "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:36:00Z",
+    "divisions": []
   },
   {
     "name": "Robert L. Chaney, Sr.",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "bchaney@myrtlecreek.org",
     "phone_number": "(541) 863-3171",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:36:00Z",
+    "divisions": []
   }
 ]

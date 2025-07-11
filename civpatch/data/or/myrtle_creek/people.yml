@@ -1,31 +1,90 @@
 ---
 - name: Matthew Hald
-  positions:
+  roles:
   - Mayor
+  divisions:
+  image:
+  cdn_image:
   email: mhald@myrtlecreek.org
   phone_number: "(541) 863-3171"
+  website:
+  start_date:
+  end_date: 2026-12
+  sources:
+  - https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php
+  - https://www.cityofmyrtlecreek.com/how_do_i/start_water___sewer_service.php
+  updated_at: '2025-07-11T18:40:31Z'
 - name: Cathey Wragg
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: cwragg@myrtlecreek.org
   phone_number: "(541) 863-3171"
-- name: Diana Larson
-  positions:
-  - Council Member
-  email: dlarson@myrtlecreek.org
-  phone_number: "(541) 863-3171"
-- name: Luke Dillon
-  positions:
-  - Council Member
-  email: ldillon@myrtlecreek.org
-  phone_number: "(541) 863-3171"
+  website:
+  start_date:
+  end_date: 2024-12
+  sources:
+  - https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php
+  updated_at: '2025-07-11T18:40:31Z'
 - name: Rick Held
-  positions:
+  roles:
   - Council Member
+  divisions: []
+  image:
+  cdn_image:
   email: rheld@myrtlecreek.org
   phone_number: "(541) 863-3171"
+  website:
+  start_date:
+  end_date: 2024-12
+  sources:
+  - https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php
+  updated_at: '2025-07-11T18:40:31Z'
 - name: Robert L. Chaney, Sr.
-  positions:
+  roles:
   - Council Member
+  divisions:
+  - Position 1
+  image:
+  cdn_image:
   email: bchaney@myrtlecreek.org
   phone_number: "(541) 863-3171"
+  website:
+  start_date:
+  end_date: 2024-12
+  sources:
+  - https://www.cityofmyrtlecreek.com/government/elections.php
+  - https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php
+  updated_at: '2025-07-11T18:40:31Z'
+- name: Luke Dillon
+  roles:
+  - Council Member
+  divisions:
+  - Position 2
+  image:
+  cdn_image:
+  email: ldillon@myrtlecreek.org
+  phone_number: "(541) 863-3171"
+  website:
+  start_date:
+  end_date: 2026-12
+  sources:
+  - https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php
+  updated_at: '2025-07-11T18:40:31Z'
+- name: Diana Larson
+  roles:
+  - Council Member
+  divisions:
+  - Position 4
+  image:
+  cdn_image:
+  email: dlarson@myrtlecreek.org
+  phone_number: "(541) 863-3171"
+  website:
+  start_date:
+  end_date: 2026-12
+  sources:
+  - https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php
+  updated_at: '2025-07-11T18:40:31Z'

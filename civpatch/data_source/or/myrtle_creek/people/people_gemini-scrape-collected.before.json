@@ -1,0 +1,206 @@
+[
+  {
+    "name": "Matthew Hald",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php",
+      "https://www.cityofmyrtlecreek.com/how_do_i/start_water___sewer_service.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' explicitly stated next to the name, and the term ends after today's date (2025-07-11)."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'MAYOR' next to the name."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mhald@myrtlecreek.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly stated next to the name and role, and the term ends after today's date (2025-07-11).",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'December 2026' explicitly stated and converted to YYYY-MM format, and the term ends after today's date (2025-07-11).",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "updated_at": "2025-07-11T18:40:31Z"
+  },
+  {
+    "name": "Luke Dillon",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilor' explicitly stated next to the name, and the term ends after today's date (2025-07-11)."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Position #2' explicitly stated next to the name and role, and the term ends after today's date (2025-07-11)."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ldillon@myrtlecreek.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly stated next to the name and role, and the term ends after today's date (2025-07-11).",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'December 2026' explicitly stated and converted to YYYY-MM format, and the term ends after today's date (2025-07-11).",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "updated_at": "2025-07-11T18:40:31Z"
+  },
+  {
+    "name": "Diana Larson",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilor' explicitly stated next to the name, and the term ends after today's date (2025-07-11)."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Division 'Position #4' explicitly stated next to the name and role, and the term ends after today's date (2025-07-11)."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dlarson@myrtlecreek.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly stated next to the name and role, and the term ends after today's date (2025-07-11).",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date 'December 2026' explicitly stated and converted to YYYY-MM format, and the term ends after today's date (2025-07-11).",
+        "source": "https://www.cityofmyrtlecreek.com/government/city_council/mayor_and_council_members.php"
+      }
+    ],
+    "updated_at": "2025-07-11T18:40:31Z"
+  },
+  {
+    "name": "Robert Chaney Sr",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/elections.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is explicitly stated to hold a 'Position #' on the City Council, implying the role of Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position #1' is explicitly stated as held by this person."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:40:31Z"
+  },
+  {
+    "name": "Susan Harris",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/elections.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is explicitly stated to hold a 'Position #' on the City Council, implying the role of Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position #3' is explicitly stated as held by this person."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:40:31Z"
+  },
+  {
+    "name": "Bill Burnett",
+    "sources": [
+      "https://www.cityofmyrtlecreek.com/government/elections.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The person is explicitly stated to hold a 'Position #' on the City Council, implying the role of Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Position #5' is explicitly stated as held by this person."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:40:31Z"
+  }
+]
