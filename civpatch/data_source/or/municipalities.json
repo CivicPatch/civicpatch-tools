@@ -2114,10 +2114,12 @@
       "phone_number": "(541) 782-2258",
       "website": "https://www.ci.oakridge.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "6e754e6fe91416d729b0ce6449a4df89",
+      "meta_updated_at": "2025-07-11T19:05:25Z",
+      "meta_hash": "7dca5c66105701b9615f520cc579db3f",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4154100"
     },
