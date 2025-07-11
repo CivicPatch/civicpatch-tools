@@ -1219,10 +1219,12 @@
       "phone_number": "(541) 367-5128",
       "website": "https://www.sweethomeor.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "ad18aabfb8ddaeb090d253bef5519811",
+      "meta_updated_at": "2025-07-11T17:02:00Z",
+      "meta_hash": "4d92174d1b7b93ede26b8c37f01fa17b",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4171950"
     },

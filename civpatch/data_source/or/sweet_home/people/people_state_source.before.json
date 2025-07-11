@@ -1,65 +1,155 @@
 [
   {
+    "name": "Aaron Hegge",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "ahegge@sweethomeor.gov",
+    "phone_number": "(541) 367-5128",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Adam Leisinger",
+    "roles": [
+      "Special Projects Manager"
+    ],
+    "email": "aleisinger@sweethomeor.gov",
+    "phone_number": "(541) 367-5128",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Amber Steinborn",
+    "roles": [
+      "Planning & Building Technician"
+    ],
+    "email": "asteinborn@sweethomeor.gov",
+    "phone_number": "(541) 367-5128",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Angela Clegg",
+    "roles": [
+      "Planning & Building Manager"
+    ],
+    "email": "aclegg@sweethomeor.gov",
+    "phone_number": "(541) 367-5128",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Angelita Sanchez",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "asanchez@sweethomeor.gov",
+    "phone_number": "(541) 367-8969",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Carol Moffet",
+    "roles": [
+      "Court Administrator"
+    ],
+    "email": "cmoffet@sweethomeor.gov",
+    "phone_number": "(541) 367-4660",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Cecily Pretty",
+    "roles": [
+      "Interim Assistant City Manager"
+    ],
+    "email": "cpretty@sweethomeor.gov",
+    "phone_number": "(541) 367-8969",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Chelsea Augsburger",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "caugsburger@sweethomeor.gov",
+    "phone_number": "(541) 367-5128",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Cindi Robeck",
+    "roles": [
+      "Financial Operations Manager"
+    ],
+    "email": "crobeck@sweethomeor.gov",
+    "phone_number": "(541) 818-8040",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Dylan Richards",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "drichards@sweethomeor.gov",
+    "phone_number": "(541) 367-5128",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Greg Springman",
+    "roles": [
+      "Public Works Director"
+    ],
+    "email": "gspringman@sweethomeor.gov",
+    "phone_number": "(541) 367-6359",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Joshua Thorstad",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "jthorstad@sweethomeor.gov",
+    "phone_number": "(541) 367-5128",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Ken Bronson",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "kbronson@sweethomeor.gov",
+    "phone_number": "(541) 367-5128",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Megan Dazey",
+    "roles": [
+      "Library Director"
+    ],
+    "email": "mdazey@sweethomeor.gov",
+    "phone_number": "(541) 367-5128",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
+    "name": "Ryan Daniels",
+    "roles": [
+      "Administrative Services Manager"
+    ],
+    "email": "rdaniels@sweethomeor.gov",
+    "phone_number": "(541) 367-5128",
+    "updated_at": "2025-07-11T16:59:33Z"
+  },
+  {
     "name": "Susan Coleman",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
     "email": "scoleman@sweethomeor.gov",
     "phone_number": "(541) 367-8969",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T16:59:33Z"
   },
   {
-    "name": "Aaron Hegge",
-    "positions": [
-      "Council Member"
+    "name": "Whitney Blair Larsen",
+    "roles": [
+      "City Attorney, Community and Economic Development Director"
     ],
-    "email": "ahegge@sweethomeor.gov",
-    "phone_number": "(541) 367-5128",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Angelita Sanchez",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "asanchez@sweethomeor.gov",
-    "phone_number": "(541) 367-8969",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Chelsea Augsburger",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "caugsburger@sweethomeor.gov",
-    "phone_number": "(541) 367-5128",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Dylan Richards",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "drichards@sweethomeor.gov",
-    "phone_number": "(541) 367-5128",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Joshua Thorstad",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "jthorstad@sweethomeor.gov",
-    "phone_number": "(541) 367-5128",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Ken Bronson",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "kbronson@sweethomeor.gov",
-    "phone_number": "(541) 367-5128",
-    "updated_at": "2025-05-11"
+    "email": "blarsen@sweethomeor.gov",
+    "phone_number": "(541) 818-8036",
+    "updated_at": "2025-07-11T16:59:33Z"
   }
 ]

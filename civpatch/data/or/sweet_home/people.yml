@@ -1,36 +1,105 @@
 ---
 - name: Susan Coleman
-  positions:
+  roles:
   - Mayor
+  divisions:
+  image: https://www.sweethomeor.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/1131/sc.jpg?itok=VOxbnEt5
+  cdn_image: https://cdn.civicpatch.org/open-data/or/sweet_home/images/baac9aa6afe7ef82edd1d2725fd3db87a8e8fe9307bd05a75ecb20489796eb21.jpg
   email: scoleman@sweethomeor.gov
   phone_number: "(541) 367-8969"
+  website: https://www.sweethomeor.gov/directory-listing/susan-coleman
+  start_date:
+  end_date: '2026-12-31'
+  sources:
+  - https://www.sweethomeor.gov/directory-listing/susan-coleman
+  - https://www.sweethomeor.gov/citycouncil
+  updated_at: '2025-07-11T17:02:00Z'
 - name: Aaron Hegge
-  positions:
+  roles:
   - Council Member
+  divisions:
+  image: https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/1141/ah.jpg?itok=vqQqXpfK
+  cdn_image: https://cdn.civicpatch.org/open-data/or/sweet_home/images/54e2fdb3563572ef8a201e0a1f4c9fa36fc2e1338c035170a385f13e73e9a327.jpg
   email: ahegge@sweethomeor.gov
   phone_number: "(541) 367-5128"
+  website: https://www.sweethomeor.gov/directory-listing/aaron-hegge
+  start_date:
+  end_date: '2028-12-31'
+  sources:
+  - https://www.sweethomeor.gov/citycouncil
+  - https://www.sweethomeor.gov/directory-listing/aaron-hegge
+  updated_at: '2025-07-11T17:02:00Z'
 - name: Angelita Sanchez
-  positions:
+  roles:
   - Council Member
+  divisions:
+  image: https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/19174/as.png?itok=XNtPt4uo
+  cdn_image: https://cdn.civicpatch.org/open-data/or/sweet_home/images/418900a0725374332e57799e6b9ccc8e68c7e5c2a2a7980247375ea1c6ba0eb4.png
   email: asanchez@sweethomeor.gov
   phone_number: "(541) 367-8969"
+  website: https://www.sweethomeor.gov/directory-listing/angelita-sanchez-0
+  start_date:
+  end_date: '2028-12-31'
+  sources:
+  - https://www.sweethomeor.gov/citycouncil
+  - https://www.sweethomeor.gov/directory-listing/angelita-sanchez-0
+  updated_at: '2025-07-11T17:02:00Z'
 - name: Chelsea Augsburger
-  positions:
+  roles:
   - Council Member
+  divisions:
+  image: https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/1551/ca.jpg?itok=65EcM1d8
+  cdn_image: https://cdn.civicpatch.org/open-data/or/sweet_home/images/21f73256751f62e4d8efd45e7be356a202bd5cde89264ce59e48a69fe1bc1abe.jpg
   email: caugsburger@sweethomeor.gov
   phone_number: "(541) 367-5128"
+  website: https://www.sweethomeor.gov/directory-listing/chelsea-augsburger
+  start_date:
+  end_date: '2026-12-31'
+  sources:
+  - https://www.sweethomeor.gov/citycouncil
+  - https://www.sweethomeor.gov/directory-listing/chelsea-augsburger
+  updated_at: '2025-07-11T17:02:00Z'
 - name: Dylan Richards
-  positions:
+  roles:
   - Council Member
+  divisions:
+  image: https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/19165/dr.jpg?itok=kd2Wanpz
+  cdn_image: https://cdn.civicpatch.org/open-data/or/sweet_home/images/8b084bd8471f0129b09cfdd5533cd8593cfec4544e1cf7c516a1bb0d83ab44cd.jpg
   email: drichards@sweethomeor.gov
   phone_number: "(541) 367-5128"
-- name: Joshua Thorstad
-  positions:
-  - Council Member
-  email: jthorstad@sweethomeor.gov
-  phone_number: "(541) 367-5128"
+  website: https://www.sweethomeor.gov/directory-listing/dylan-richards
+  start_date:
+  end_date: '2026-12-31'
+  sources:
+  - https://www.sweethomeor.gov/citycouncil
+  - https://www.sweethomeor.gov/directory-listing/dylan-richards
+  updated_at: '2025-07-11T17:02:00Z'
 - name: Ken Bronson
-  positions:
+  roles:
   - Council Member
+  divisions:
+  image: https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/1161/kb.jpg?itok=i5GCFy0k
+  cdn_image: https://cdn.civicpatch.org/open-data/or/sweet_home/images/2909a5d2f2a3bc6333125047dc7ddfbb962e18ca340a3a396859e54f8b8ad10d.jpg
   email: kbronson@sweethomeor.gov
   phone_number: "(541) 367-5128"
+  website: https://www.sweethomeor.gov/directory-listing/ken-bronson
+  start_date:
+  end_date: '2028-12-31'
+  sources:
+  - https://www.sweethomeor.gov/citycouncil
+  - https://www.sweethomeor.gov/directory-listing/ken-bronson
+  updated_at: '2025-07-11T17:02:00Z'
+- name: Joshua Thorstad
+  roles: []
+  divisions:
+  image: https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/1111/jt.jpg?itok=An0LuAHx
+  cdn_image: https://cdn.civicpatch.org/open-data/or/sweet_home/images/b4e1309e07c68552f9759e900a6531f8a8805dea5bdb9b164b34de74b94d5aea.jpg
+  email: jthorstad@sweethomeor.gov
+  phone_number: "(541) 367-5128"
+  website: https://www.sweethomeor.gov/directory-listing/joshua-thorstad
+  start_date:
+  end_date: '2026-12-31'
+  sources:
+  - https://www.sweethomeor.gov/citycouncil
+  - https://www.sweethomeor.gov/directory-listing/joshua-thorstad
+  updated_at: '2025-07-11T17:02:00Z'

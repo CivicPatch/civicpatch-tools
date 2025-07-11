@@ -1,65 +1,72 @@
 [
   {
-    "name": "Susan Coleman",
-    "positions": [
-      "Mayor"
-    ],
-    "email": "scoleman@sweethomeor.gov",
-    "phone_number": "(541) 367-8969",
-    "updated_at": "2025-05-11"
-  },
-  {
     "name": "Aaron Hegge",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "ahegge@sweethomeor.gov",
     "phone_number": "(541) 367-5128",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T16:59:34Z",
+    "divisions": []
   },
   {
     "name": "Angelita Sanchez",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "asanchez@sweethomeor.gov",
     "phone_number": "(541) 367-8969",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T16:59:34Z",
+    "divisions": []
   },
   {
     "name": "Chelsea Augsburger",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "caugsburger@sweethomeor.gov",
     "phone_number": "(541) 367-5128",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T16:59:34Z",
+    "divisions": []
   },
   {
     "name": "Dylan Richards",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "drichards@sweethomeor.gov",
     "phone_number": "(541) 367-5128",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T16:59:34Z",
+    "divisions": []
   },
   {
     "name": "Joshua Thorstad",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "jthorstad@sweethomeor.gov",
     "phone_number": "(541) 367-5128",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T16:59:34Z",
+    "divisions": []
   },
   {
     "name": "Ken Bronson",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "kbronson@sweethomeor.gov",
     "phone_number": "(541) 367-5128",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T16:59:34Z",
+    "divisions": []
+  },
+  {
+    "name": "Susan Coleman",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "scoleman@sweethomeor.gov",
+    "phone_number": "(541) 367-8969",
+    "updated_at": "2025-07-11T16:59:34Z",
+    "divisions": []
   }
 ]

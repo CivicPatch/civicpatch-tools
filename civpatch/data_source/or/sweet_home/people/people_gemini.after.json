@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Susan Coleman",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "scoleman@sweethomeor.gov",
+    "website": "https://www.sweethomeor.gov/directory-listing/susan-coleman",
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.sweethomeor.gov/directory-listing/susan-coleman",
+      "https://www.sweethomeor.gov/citycouncil"
+    ],
+    "updated_at": "2025-07-11T17:01:57Z"
+  },
+  {
+    "name": "Chelsea Augsburger",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "caugsburger@sweethomeor.gov",
+    "website": "https://www.sweethomeor.gov/directory-listing/chelsea-augsburger",
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.sweethomeor.gov/citycouncil",
+      "https://www.sweethomeor.gov/directory-listing/chelsea-augsburger"
+    ],
+    "updated_at": "2025-07-11T17:01:57Z"
+  },
+  {
+    "name": "Ken Bronson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "kbronson@sweethomeor.gov",
+    "website": "https://www.sweethomeor.gov/directory-listing/ken-bronson",
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.sweethomeor.gov/citycouncil",
+      "https://www.sweethomeor.gov/directory-listing/ken-bronson"
+    ],
+    "updated_at": "2025-07-11T17:01:57Z"
+  },
+  {
+    "name": "Aaron Hegge",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "ahegge@sweethomeor.gov",
+    "website": "https://www.sweethomeor.gov/directory-listing/aaron-hegge",
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.sweethomeor.gov/citycouncil",
+      "https://www.sweethomeor.gov/directory-listing/aaron-hegge"
+    ],
+    "updated_at": "2025-07-11T17:01:57Z"
+  },
+  {
+    "name": "Dylan Richards",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "drichards@sweethomeor.gov",
+    "website": "https://www.sweethomeor.gov/directory-listing/dylan-richards",
+    "start_date": null,
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.sweethomeor.gov/citycouncil",
+      "https://www.sweethomeor.gov/directory-listing/dylan-richards"
+    ],
+    "updated_at": "2025-07-11T17:01:57Z"
+  },
+  {
+    "name": "Angelita Sanchez",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "asanchez@sweethomeor.gov",
+    "website": "https://www.sweethomeor.gov/directory-listing/angelita-sanchez-0",
+    "start_date": null,
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.sweethomeor.gov/citycouncil",
+      "https://www.sweethomeor.gov/directory-listing/angelita-sanchez-0"
+    ],
+    "updated_at": "2025-07-11T17:01:57Z"
+  }
+]

@@ -1,0 +1,555 @@
+[
+  {
+    "name": "Susan Coleman",
+    "sources": [
+      "https://www.sweethomeor.gov/directory-listing/susan-coleman",
+      "https://www.sweethomeor.gov/citycouncil"
+    ],
+    "images": [
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/1131/sc.jpg?itok=VOxbnEt5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is directly adjacent to Susan Coleman's name and profile on the official city page.",
+        "source": "https://www.sweethomeor.gov/directory-listing/susan-coleman"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/1131/sc.jpg?itok=0TIvpqFS",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name and role on the official city council page.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The content explicitly states 'Position: Mayor' for Susan Coleman on the Sweet Home official city website."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor on the city council page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "scoleman@sweethomeor.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided next to Susan Coleman's contact information.",
+        "source": "https://www.sweethomeor.gov/directory-listing/susan-coleman"
+      },
+      {
+        "data": "scoleman@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is listed directly next to the name and role.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/susan-coleman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL provided is the official profile page for Susan Coleman on the Sweet Home city website.",
+        "source": "https://www.sweethomeor.gov/directory-listing/susan-coleman"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/susan-coleman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city directory profile link provided.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end date is explicitly stated as 12/31/2026.",
+        "source": "https://www.sweethomeor.gov/directory-listing/susan-coleman"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2026.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-07-11T17:01:19Z"
+  },
+  {
+    "name": "Joshua Thorstad",
+    "sources": [
+      "https://www.sweethomeor.gov/citycouncil",
+      "https://www.sweethomeor.gov/directory-listing/joshua-thorstad"
+    ],
+    "images": [
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/1111/jt.jpg?itok=An0LuAHx",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name and role on the official city council page.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/1111/jt.jpg?itok=S45StL__",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a headshot near the name on the official city page.",
+        "source": "https://www.sweethomeor.gov/directory-listing/joshua-thorstad"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council President Pro Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as President Pro Tem on the city council page."
+      },
+      {
+        "data": "Council President Pro Tem",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page lists 'President Pro Tem' as the position; given the municipal context and target roles, this is best normalized to 'Council President Pro Tem'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jthorstad@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is listed directly next to the name and role.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "jthorstad@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly listed near the name and role.",
+        "source": "https://www.sweethomeor.gov/directory-listing/joshua-thorstad"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/joshua-thorstad",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city directory profile link provided.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/joshua-thorstad",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL of the profile page.",
+        "source": "https://www.sweethomeor.gov/directory-listing/joshua-thorstad"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2026.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2026.",
+        "source": "https://www.sweethomeor.gov/directory-listing/joshua-thorstad"
+      }
+    ],
+    "updated_at": "2025-07-11T17:01:19Z"
+  },
+  {
+    "name": "Chelsea Augsburger",
+    "sources": [
+      "https://www.sweethomeor.gov/citycouncil",
+      "https://www.sweethomeor.gov/directory-listing/chelsea-augsburger"
+    ],
+    "images": [
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/1551/ca.jpg?itok=65EcM1d8",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name and role on the official city council page.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/1551/ca.jpg?itok=DBGe4TVg",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a headshot near the name Chelsea Augsburger on the official city page.",
+        "source": "https://www.sweethomeor.gov/directory-listing/chelsea-augsburger"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role stated as Councilor, normalized to Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Position: Councilor' which is normalized to 'Council Member' as a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "caugsburger@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is listed directly next to the name and role.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "caugsburger@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly listed next to the name and role.",
+        "source": "https://www.sweethomeor.gov/directory-listing/chelsea-augsburger"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/chelsea-augsburger",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city directory profile link provided.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/chelsea-augsburger",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the official profile page for Chelsea Augsburger.",
+        "source": "https://www.sweethomeor.gov/directory-listing/chelsea-augsburger"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2026.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date is explicitly stated as 12/31/2026.",
+        "source": "https://www.sweethomeor.gov/directory-listing/chelsea-augsburger"
+      }
+    ],
+    "updated_at": "2025-07-11T17:01:19Z"
+  },
+  {
+    "name": "Ken Bronson",
+    "sources": [
+      "https://www.sweethomeor.gov/citycouncil",
+      "https://www.sweethomeor.gov/directory-listing/ken-bronson"
+    ],
+    "images": [
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/1161/kb.jpg?itok=i5GCFy0k",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name and role on the official city council page.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/1161/kb.jpg?itok=4k99hvRS",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a headshot near the name 'Ken Bronson' on the official city website.",
+        "source": "https://www.sweethomeor.gov/directory-listing/ken-bronson"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role stated as Councilor, normalized to Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Position: Councilor' which is normalized to 'Council Member' as a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "kbronson@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is listed directly next to the name and role.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "kbronson@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly listed next to the name and role.",
+        "source": "https://www.sweethomeor.gov/directory-listing/ken-bronson"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/ken-bronson",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city directory profile link provided.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/ken-bronson",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the official profile page for Ken Bronson.",
+        "source": "https://www.sweethomeor.gov/directory-listing/ken-bronson"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2028.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "End Term Date is explicitly stated as 12/31/2028.",
+        "source": "https://www.sweethomeor.gov/directory-listing/ken-bronson"
+      }
+    ],
+    "updated_at": "2025-07-11T17:01:19Z"
+  },
+  {
+    "name": "Aaron Hegge",
+    "sources": [
+      "https://www.sweethomeor.gov/citycouncil",
+      "https://www.sweethomeor.gov/directory-listing/aaron-hegge"
+    ],
+    "images": [
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/1141/ah.jpg?itok=vqQqXpfK",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name and role on the official city council page.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/1141/ah.jpg?itok=Lo3VMlzt",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to Aaron Hegge's name and clearly a portrait.",
+        "source": "https://www.sweethomeor.gov/directory-listing/aaron-hegge"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role stated as Councilor, normalized to Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page lists the position as 'Councilor', which is synonymous with 'Council Member' in municipal context."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ahegge@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is listed directly next to the name and role.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "ahegge@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly listed under Aaron Hegge's contact information.",
+        "source": "https://www.sweethomeor.gov/directory-listing/aaron-hegge"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/aaron-hegge",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city directory profile link provided.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/aaron-hegge",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the profile page for Aaron Hegge.",
+        "source": "https://www.sweethomeor.gov/directory-listing/aaron-hegge"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2028.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2028.",
+        "source": "https://www.sweethomeor.gov/directory-listing/aaron-hegge"
+      }
+    ],
+    "updated_at": "2025-07-11T17:01:19Z"
+  },
+  {
+    "name": "Dylan Richards",
+    "sources": [
+      "https://www.sweethomeor.gov/citycouncil",
+      "https://www.sweethomeor.gov/directory-listing/dylan-richards"
+    ],
+    "images": [
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/19165/dr.jpg?itok=kd2Wanpz",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name and role on the official city council page.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/19165/dr.jpg?itok=Kl_B7p_c",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image is directly adjacent to the name Dylan Richards and is a portrait style photo.",
+        "source": "https://www.sweethomeor.gov/directory-listing/dylan-richards"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role stated as Councilor, normalized to Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Position: Councilor' which is normalized to 'Council Member' as a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "drichards@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is listed directly next to the name and role.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "drichards@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly provided next to the name and role.",
+        "source": "https://www.sweethomeor.gov/directory-listing/dylan-richards"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/dylan-richards",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city directory profile link provided.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/dylan-richards",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the profile page for Dylan Richards.",
+        "source": "https://www.sweethomeor.gov/directory-listing/dylan-richards"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2026.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date is explicitly stated as 12/31/2026.",
+        "source": "https://www.sweethomeor.gov/directory-listing/dylan-richards"
+      }
+    ],
+    "updated_at": "2025-07-11T17:01:19Z"
+  },
+  {
+    "name": "Angelita Sanchez",
+    "sources": [
+      "https://www.sweethomeor.gov/citycouncil",
+      "https://www.sweethomeor.gov/directory-listing/angelita-sanchez-0"
+    ],
+    "images": [
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/directory_listings_-_body__with_photo/public/imageattachments/directory/19174/as.png?itok=XNtPt4uo",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly next to the name and role on the official city council page.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/sites/default/files/styles/full_node_primary/public/imageattachments/directory/19174/as.png?itok=TP2WMzcz",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is a portrait near the name Angelita Sanchez on the official city website.",
+        "source": "https://www.sweethomeor.gov/directory-listing/angelita-sanchez-0"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Role stated as Councilor, normalized to Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page explicitly states 'Position: Councilor' which is normalized to 'Council Member' as a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "asanchez@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is listed directly next to the name and role.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "asanchez@sweethomeor.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly listed next to the name and role.",
+        "source": "https://www.sweethomeor.gov/directory-listing/angelita-sanchez-0"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/angelita-sanchez-0",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official city directory profile link provided.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "https://www.sweethomeor.gov/directory-listing/angelita-sanchez-0",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the official profile page for Angelita Sanchez.",
+        "source": "https://www.sweethomeor.gov/directory-listing/angelita-sanchez-0"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2028.",
+        "source": "https://www.sweethomeor.gov/citycouncil"
+      },
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term end date explicitly stated as 12/31/2028.",
+        "source": "https://www.sweethomeor.gov/directory-listing/angelita-sanchez-0"
+      }
+    ],
+    "updated_at": "2025-07-11T17:01:19Z"
+  }
+]
