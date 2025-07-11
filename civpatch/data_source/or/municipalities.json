@@ -1531,10 +1531,12 @@
       "phone_number": "(541) 469-2163",
       "website": "https://www.brookings.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "b5fee0a46cd048c9fbede3d38e89b692",
+      "meta_updated_at": "2025-07-11T18:04:05Z",
+      "meta_hash": "fb12e05021c2a176808e7c58a23696a1",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4108650"
     },
