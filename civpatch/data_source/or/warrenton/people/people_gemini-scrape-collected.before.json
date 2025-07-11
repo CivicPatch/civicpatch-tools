@@ -1,0 +1,284 @@
+[
+  {
+    "name": "Gerald Poe",
+    "sources": [
+      "https://www.warrentonoregon.us/citycommission/page/commission-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the page title 'Commission Members' and the general context of the section listing city officials."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 1' directly above the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-338-8742",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided directly under the name and labeled (C) for cell/contact.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "emails": [
+      {
+        "data": "gpoe@warrentonoregon.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked directly to the person's entry.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated in 'Term - 01/01/25 - 12/31/28'.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated in 'Term - 01/01/25 - 12/31/28'.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "updated_at": "2025-07-11T18:04:18Z"
+  },
+  {
+    "name": "Jessica Sollaccio",
+    "sources": [
+      "https://www.warrentonoregon.us/citycommission/page/commission-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the page title 'Commission Members' and the general context of the section listing city officials."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 2' directly above the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "904-424-2926",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided directly under the name and labeled (C) for cell/contact.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jsollaccio@warrentonoregon.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided directly to the person's entry.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated in 'Term - 01/01/25 -12/31/28'.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated in 'Term - 01/01/25 -12/31/28'.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "updated_at": "2025-07-11T18:04:18Z"
+  },
+  {
+    "name": "Tom M. Dyer",
+    "sources": [
+      "https://www.warrentonoregon.us/citycommission/page/commission-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the page title 'Commission Members' and the general context of the section listing city officials."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 3' directly above the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-440-6300",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Multiple phone numbers provided; selected the (C) cell number as most likely for public contact.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tdyer@warrentonoregon.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked directly to the person's entry.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated in 'Term - 01/01/25 - 12/31/28'.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated in 'Term - 01/01/25 - 12/31/28'.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "updated_at": "2025-07-11T18:04:18Z"
+  },
+  {
+    "name": "Paul Mitchell",
+    "sources": [
+      "https://www.warrentonoregon.us/citycommission/page/commission-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the page title 'Commission Members' and the general context of the section listing city officials."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Position No. 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Position No. 4' directly above the name."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "503-791-1675",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided directly under the name and labeled (C) for cell/contact.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "emails": [
+      {
+        "data": "pmitchell@warrentonoregon.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided directly to the person's entry.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated in 'Term - 01/01/23 - 12/31/26'.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated in 'Term - 01/01/23 - 12/31/26'.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "updated_at": "2025-07-11T18:04:18Z"
+  },
+  {
+    "name": "Henry A. Balensifer III",
+    "sources": [
+      "https://www.warrentonoregon.us/citycommission/page/commission-members",
+      "https://www.facebook.com/HenryBalensifer"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' directly above the name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Henry Balensifer' and 'Warrenton Mayor Henry Balensifer'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "971-606-0293",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided directly under the name and labeled (C) for cell/contact.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "emails": [
+      {
+        "data": "hbalensifer@warrentonoregon.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked directly to the person's entry.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.facebook.com/HenryBalensifer",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A Facebook URL is provided directly under the name, serving as a public contact/profile link.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date is explicitly stated in 'Term - 01/01/23 - 12/31/26'.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-31",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "End date is explicitly stated in 'Term - 01/01/23 - 12/31/26'.",
+        "source": "https://www.warrentonoregon.us/citycommission/page/commission-members"
+      }
+    ],
+    "updated_at": "2025-07-11T18:04:18Z"
+  }
+]

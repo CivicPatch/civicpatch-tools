@@ -1571,10 +1571,12 @@
       "phone_number": "(503) 861-2233",
       "website": "https://www.warrentonoregon.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "2890d97cf68aae72b6872e7b629b350b",
+      "meta_updated_at": "2025-07-11T18:04:18Z",
+      "meta_hash": "779ace994951baa861bae211930336c9",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4178900"
     },

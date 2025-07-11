@@ -1,6 +1,16 @@
 ---
 - name: Henry Balensifer, III
-  positions:
+  roles:
   - Mayor
+  divisions:
+  image: https://www.warrentonoregon.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycommission/page/312/balensiferweb.jpg?itok=lsxbApKn
+  cdn_image: https://cdn.civicpatch.org/open-data/or/warrenton/images/025cbef979f1e4c7ef02d2d9f7df121475b5f96cdfda974b2eb791cfb20dabbb.jpg
   email: hbalensifer@warrentonoregon.us
-  phone_number: "(503) 861-2288"
+  phone_number: "(971) 606-0293"
+  website: https://www.facebook.com/HenryBalensifer
+  start_date: '2023-01-01'
+  end_date: '2026-12-31'
+  sources:
+  - https://www.warrentonoregon.us/citycommission/page/commission-members
+  - https://www.facebook.com/HenryBalensifer
+  updated_at: '2025-07-11T18:04:18Z'

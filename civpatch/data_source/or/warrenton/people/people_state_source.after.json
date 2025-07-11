@@ -1,11 +1,12 @@
 [
   {
     "name": "Henry Balensifer, III",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
     "email": "hbalensifer@warrentonoregon.us",
     "phone_number": "(503) 861-2288",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:03:03Z",
+    "divisions": []
   }
 ]

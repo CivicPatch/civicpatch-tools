@@ -1,0 +1,96 @@
+[
+  {
+    "name": "Gerald Poe",
+    "roles": [
+      "Board Member, Position No. 1"
+    ],
+    "divisions": [
+      "Position No. 1"
+    ],
+    "image": "https://www.warrentonoregon.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycommission/page/312/gerald_poe_2021_square.jpg?itok=hidnWjGO",
+    "phone_number": "503-338-8742",
+    "email": "gpoe@warrentonoregon.us",
+    "website": null,
+    "start_date": "2025-01-01",
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.warrentonoregon.us/citycommission/page/commission-members"
+    ],
+    "updated_at": "2025-07-11T18:04:02Z"
+  },
+  {
+    "name": "Jessica \"Jess\" Sollaccio",
+    "roles": [
+      "Board Member, Position No. 2"
+    ],
+    "divisions": [
+      "Position No. 2"
+    ],
+    "image": "https://www.warrentonoregon.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycommission/page/312/sollaccio_headshot_002.jpg?itok=aL5eB1Ye",
+    "phone_number": "904-424-2926",
+    "email": "jsollaccio@warrentonoregon.us",
+    "website": null,
+    "start_date": "2025-01-01",
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.warrentonoregon.us/citycommission/page/commission-members"
+    ],
+    "updated_at": "2025-07-11T18:04:02Z"
+  },
+  {
+    "name": "Tom M. Dyer",
+    "roles": [
+      "Board Member, Position No. 3"
+    ],
+    "divisions": [
+      "Position No. 3"
+    ],
+    "image": "https://www.warrentonoregon.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycommission/page/312/dyerweb.jpg?itok=j0dLk2wy",
+    "phone_number": "503-440-6300",
+    "email": "tdyer@warrentonoregon.us",
+    "website": null,
+    "start_date": "2025-01-01",
+    "end_date": "2028-12-31",
+    "sources": [
+      "https://www.warrentonoregon.us/citycommission/page/commission-members"
+    ],
+    "updated_at": "2025-07-11T18:04:02Z"
+  },
+  {
+    "name": "Paul Mitchell",
+    "roles": [
+      "Board Member, Position No. 4"
+    ],
+    "divisions": [
+      "Position No. 4"
+    ],
+    "image": "https://www.warrentonoregon.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycommission/page/312/paul_mitchell.png?itok=-E_fwbUM",
+    "phone_number": "503-791-1675",
+    "email": "pmitchell@warrentonoregon.us",
+    "website": null,
+    "start_date": "2023-01-01",
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.warrentonoregon.us/citycommission/page/commission-members"
+    ],
+    "updated_at": "2025-07-11T18:04:02Z"
+  },
+  {
+    "name": "Henry A. Balensifer III",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.warrentonoregon.us/sites/default/files/styles/full_node_additional_two_column/public/imageattachments/citycommission/page/312/balensiferweb.jpg?itok=lsxbApKn",
+    "phone_number": "971-606-0293",
+    "email": "hbalensifer@warrentonoregon.us",
+    "website": "https://www.facebook.com/HenryBalensifer",
+    "start_date": "2023-01-01",
+    "end_date": "2026-12-31",
+    "sources": [
+      "https://www.warrentonoregon.us/citycommission/page/commission-members",
+      "https://www.facebook.com/HenryBalensifer"
+    ],
+    "updated_at": "2025-07-11T18:04:02Z"
+  }
+]

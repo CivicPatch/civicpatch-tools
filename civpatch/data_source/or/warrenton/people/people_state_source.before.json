@@ -1,11 +1,218 @@
 [
   {
+    "name": "Blanca Smith",
+    "roles": [
+      "Cashier/Accounting CLerk"
+    ],
+    "email": "bsmith@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Brian Alsbury",
+    "roles": [
+      "Fire Chief"
+    ],
+    "email": "firechief@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Chris Hayward",
+    "roles": [
+      "Planning Commission Chair"
+    ],
+    "email": "chayward@haywardautogroup.com",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Dave Davis",
+    "roles": [
+      "Interim Water Treatment Plant Sup."
+    ],
+    "email": "warrentontp@gmail.com",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Dawne Shaw",
+    "roles": [
+      "City Recorder/Assistant To the City Manager"
+    ],
+    "email": "cityrecorder@warrentonoregon.us",
+    "phone_number": "(503) 861-0823",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Esther Moberg",
+    "roles": [
+      "City Manager"
+    ],
+    "email": "emoberg@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Garrett Freshour",
+    "roles": [
+      "Chief Building Official"
+    ],
+    "email": "gfreshour@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Gerald Poe",
+    "roles": [
+      "City Commissioner"
+    ],
+    "email": "gpoe@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Hallie Homolac",
+    "roles": [
+      "Permit Technician"
+    ],
+    "email": "hhomolac@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Hanna Bentley",
+    "roles": [
+      "Deputy City Recorder"
+    ],
+    "email": "hbentley@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
     "name": "Henry Balensifer, III",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
     "email": "hbalensifer@warrentonoregon.us",
     "phone_number": "(503) 861-2288",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Jessica Barrett",
+    "roles": [
+      "Finance Director"
+    ],
+    "email": "jbarrett@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Jessica McDonald",
+    "roles": [
+      "Harbor Master"
+    ],
+    "email": "jmcdonald@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Jessica Sollaccio",
+    "roles": [
+      "City Commissioner"
+    ],
+    "email": "jsollaccio@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Joshua Saranpaa",
+    "roles": [
+      "Library Director"
+    ],
+    "email": "warrentoncl@gmail.com",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Judith Stich",
+    "roles": [
+      "Planning Technician"
+    ],
+    "email": "jstich@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Karin Hopper",
+    "roles": [
+      "Planning Commission Member"
+    ],
+    "email": "karinlhopper@gmail.com",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Katherine Stephens",
+    "roles": [
+      "Police/Evidence Clerk"
+    ],
+    "email": "kstephens@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Kevin Gorman",
+    "roles": [
+      "Public Works Director"
+    ],
+    "email": "kgorman@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Mike Moha",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "moham@whsd.k12.or.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Nikolas Haines",
+    "roles": [
+      "Accountant"
+    ],
+    "email": "nhaines@warrentonoregon.us",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Paul Mitchell, Sr.",
+    "roles": [
+      "City Commissioner"
+    ],
+    "email": "pmitchell@warrentonoregon.us",
+    "phone_number": "(503) 791-1675",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Sylvia Stephens",
+    "roles": [
+      "CERT Leader"
+    ],
+    "email": "stephens356@hotmail.com",
+    "phone_number": "(503) 861-2233",
+    "updated_at": "2025-07-11T18:03:03Z"
+  },
+  {
+    "name": "Thomas Dyer",
+    "roles": [
+      "City Commissioner"
+    ],
+    "email": "tdyer@warrentonoregon.us",
+    "phone_number": "(503) 861-0823",
+    "updated_at": "2025-07-11T18:03:03Z"
   }
 ]
