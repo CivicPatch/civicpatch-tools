@@ -1591,10 +1591,12 @@
       "phone_number": "(541) 895-2531",
       "website": "https://www.ci.creswell.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "fd1da233d364739a79608495dfa6896e",
+      "meta_updated_at": "2025-07-11T18:06:19Z",
+      "meta_hash": "a48f1b19157be49e3c37dd2c47842032",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4116950"
     },
