@@ -1651,10 +1651,12 @@
       "phone_number": "(541) 935-2191",
       "website": "https://www.venetaoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "e7e90fb82af4095964a65ee37c35caea",
+      "meta_updated_at": "2025-07-11T18:09:38Z",
+      "meta_hash": "4a93840aaf53ef90da69e1f62727cf24",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4177050"
     },
