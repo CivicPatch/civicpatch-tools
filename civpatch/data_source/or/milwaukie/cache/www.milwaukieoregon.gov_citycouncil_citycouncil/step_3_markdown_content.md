@@ -1,4 +1,4 @@
-[Skip to main content](https://www.milwaukieoregon.gov/citycouncil/)
+[Skip to main content](https://www.milwaukieoregon.gov/citycouncil/citycouncil/)
 
 503.786.7555
 
@@ -52,115 +52,11 @@ Search
 
 ## You are here
 
-[Home](https://www.milwaukieoregon.gov) » [City Council](https://www.milwaukieoregon.gov/citycouncil)
+[Home](https://www.milwaukieoregon.gov) » [404 - Page Not Found](https://www.milwaukieoregon.gov/404-error)
 
-# City Council
+# 404 - Page Not Found
 
-![Mayor Lisa Batey](https://www.milwaukieoregon.gov/sites/default/files/styles/embedded_pages_-_buttons_image_with_title_hover/public/imageattachments/citycouncil/page/124341/favorite_002.jpg?itok=3iUtFLFu "Mayor Lisa Batey")
-
-[Mayor Lisa Batey](https://www.milwaukieoregon.gov/citycouncil/mayor-lisa-batey)
-
-![Councilor Robert Massey](https://www.milwaukieoregon.gov/sites/default/files/styles/embedded_pages_-_buttons_image_with_title_hover/public/imageattachments/citycouncil/page/124339/x011_rev.jpg?itok=gJal6etX)
-
-[Councilor Robert Massey](https://www.milwaukieoregon.gov/citycouncil/councilor-robert-massey)
-
-![Councilor Adam Khosroabadi](https://www.milwaukieoregon.gov/sites/default/files/styles/embedded_pages_-_buttons_image_with_title_hover/public/imageattachments/citycouncil/page/123754/favorite_004_edited_4.jpg?itok=kS0ku24u)
-
-[Councilor Adam Khosroabadi](https://www.milwaukieoregon.gov/citycouncil/councilor-adam-khosroabadi-position-no-1)
-
-![City Councilor Will Anderson](https://www.milwaukieoregon.gov/sites/default/files/styles/embedded_pages_-_buttons_image_with_title_hover/public/imageattachments/citycouncil/page/125705/2024-0530_city_councilor_candidate_will_anderson_headshot_cropped_for_web_2.jpg?itok=StBMagBY)
-
-[Council President Will Anderson](https://www.milwaukieoregon.gov/citycouncil/councilor-will-anderson)
-
-![Councilor Rebecca Stavenjord](https://www.milwaukieoregon.gov/sites/default/files/styles/embedded_pages_-_buttons_image_with_title_hover/public/imageattachments/citycouncil/page/124340/2022_-_councilor-elect_rebecca_stavenjord.jpg_cropped.jpg?itok=V-ToR0LO "Councilor Rebecca Stavenjord")
-
-[Councilor Rebecca Stavenjord](https://www.milwaukieoregon.gov/citycouncil/councilor-rebecca-stavenjord)
-
-![Council President Anderson and Erowyn Stovall](https://www.milwaukieoregon.gov/sites/default/files/styles/embedded_pages_-_buttons_image_with_title_hover/public/imageattachments/citycouncil/page/46391/1000014648.jpg?itok=ObQY6OTl)
-
-[Outstanding Student Achievement Award](https://www.milwaukieoregon.gov/citycouncil/outstanding-student-achievement-award)
-
-![Milwaukie Redevelopment Commission (MRC) Logo](https://www.milwaukieoregon.gov/sites/default/files/styles/embedded_pages_-_buttons_image_with_title_hover/public/imageattachments/bc-rc/page/73541/mrc_logo_short.png?itok=2ET4mQu8)
-
-[Redevelopment Commission](https://www.milwaukieoregon.gov/bc-rc)
-
-![City of Milwaukie, Oregon](https://www.milwaukieoregon.gov/sites/default/files/styles/embedded_pages_-_buttons_image_with_title_hover/public/imageattachments/citycouncil/page/41321/2018_dogwood_flower.png?itok=_e_6wMpW "City of Milwaukie, Oregon")
-
-[City Council Goals for 2025-2027](https://www.milwaukieoregon.gov/citycouncil/goals)
-
-![City of Milwaukie Community Vision](https://www.milwaukieoregon.gov/sites/default/files/styles/embedded_pages_-_buttons_image_with_title_hover/public/imageattachments/planning/page/46881/visioning_all_aboard_circle.png?itok=3Z9EGMIg "Milwaukie All Aboard")
-
-[Community Vision](https://www.milwaukieoregon.gov/planning/vision)
-
-- Share
-  
-  [Facebook](https://www.milwaukieoregon.gov/) [Twitter](https://www.milwaukieoregon.gov/) [LinkedIn](https://www.milwaukieoregon.gov/) [Pinterest](https://www.milwaukieoregon.gov/)
-
-[City Council](https://www.milwaukieoregon.gov/citycouncil)
-
-- [Overview](https://www.milwaukieoregon.gov/citycouncil/about-city-council "About the Milwaukie City Council")
-  
-  - [Councilor Adam Khosroabadi](https://www.milwaukieoregon.gov/citycouncil/councilor-adam-khosroabadi-position-no-1)
-  - [Councilor Robert Massey](https://www.milwaukieoregon.gov/citycouncil/councilor-robert-massey)
-  - [Councilor Rebecca Stavenjord](https://www.milwaukieoregon.gov/citycouncil/councilor-rebecca-stavenjord)
-  - [Mayor Lisa Batey](https://www.milwaukieoregon.gov/citycouncil/mayor-lisa-batey)
-- [Agendas/Minutes/Video](https://www.milwaukieoregon.gov/meetings)
-- [Council Elections](https://www.milwaukieoregon.gov/elections)
-- [Council Meetings](https://www.milwaukieoregon.gov/citycouncil/council-meetings "Public Meetings")
-  
-  - [Current Meetings](https://www.milwaukieoregon.gov/meetings)
-  - [Meeting Archives](https://www.milwaukieoregon.gov/cityrecorder/digital-archives)
-- [Council Programs](https://www.milwaukieoregon.gov/citycouncil/council-programs)
-  
-  - [Business Relief Fund](https://www.milwaukieoregon.gov/economicdevelopment/business-relief-fund)
-  - [Outstanding MHS Student](https://www.milwaukieoregon.gov/citycouncil/outstanding-student-achievement-award "Outstanding Student Achievement Award")
-  - [Volunteer of the Year](https://www.milwaukieoregon.gov/volunteer)
-- [Redevelopment Commission](https://www.milwaukieoregon.gov/bc-rc)
-  
-  - [Redevelopment Commission CAC](https://www.milwaukieoregon.gov/bc-rcac)
-
-## Contact
-
-**Adam Khosroabadi**  
-Councilor Position No. 1  
-[khosroabadia@milwaukieoregon.gov (link sends e-mail)](mailto:khosroabadia@milwaukieoregon.gov)  
-503.786.7511
-
-**Robert Massey**  
-Councilor Position No. 2  
-[masseyr@milwaukieoregon.gov (link sends e-mail)](mailto:masseyr@milwaukieoregon.gov)  
-503.786.7514
-
-**Will Anderson**  
-*Council President*  
-Councilor Position No. 3  
-[andersonw@milwaukieoregon.gov (link sends e-mail)](mailto:andersonw@milwaukieoregon.gov)  
-503.786.7510
-
-**Rebecca Stavenjord**   
-Councilor Position No. 4  
-[stavenjordr@milwaukieoregon.gov (link sends e-mail)](mailto:stavenjordr@milwaukieoregon.gov)  
-503.786.7513
-
-**Lisa Batey**, Mayor  
-[bateyl@milwaukieoregon.gov (link sends e-mail)](mailto:bateyl@milwaukieoregon.gov)  
-503.786.7512
-
-[Staff Directory](https://www.milwaukieoregon.gov/directory)
-
-## Upcoming Events
-
-- [City Council Executive Session](https://www.milwaukieoregon.gov/citycouncil/city-council-work-session-11)
-  
-  07/15/2025 - 4:00pm
-- [City Council Regular Session](https://www.milwaukieoregon.gov/citycouncil/city-council-regular-session-11)
-  
-  07/15/2025 - 6:30pm
-- [City Council Site Visit](https://www.milwaukieoregon.gov/citycouncil/city-council-site-visit-1)
-  
-  07/16/2025 - 1:00pm
-
-[View City Council Calendar](https://www.milwaukieoregon.gov/calendar?field_microsite_tid_1=191)
+The page you are attempting to view could not be found.
 
 ## Useful Links
 
@@ -214,12 +110,4 @@ Councilor Position No. 4
 Milwaukie, OR 97222  
 503.786.7555
 
-- [Staff Login](https://www.milwaukieoregon.gov/user/login?current=node%2F69331)
-
-✓
-
-Thanks for sharing!
-
-[AddToAny](https://www.addtoany.com "Share Buttons")
-
-[More…](https://www.milwaukieoregon.gov/citycouncil/ "Show all")
+- [Staff Login](https://www.milwaukieoregon.gov/user/login?current=404-error)
