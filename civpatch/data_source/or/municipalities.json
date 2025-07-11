@@ -1891,10 +1891,12 @@
       "phone_number": "(541) 481-9252",
       "website": "https://www.cityofboardman.com",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "8790cb81f1c547f30b63629f5aa012fc",
+      "meta_updated_at": "2025-07-11T18:39:23Z",
+      "meta_hash": "a1f8753fe9a83cd6155d8c8b83726799",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4107200"
     },
