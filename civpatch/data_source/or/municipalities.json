@@ -2008,10 +2008,12 @@
       ],
       "population": 3392,
       "website": "https://www.ci.mt-angel.or.us",
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-11T18:42:10Z",
+      "meta_hash": "b1a50bac28fd0e0b04768612432733f4",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4150150"
     },
