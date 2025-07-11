@@ -216,27 +216,32 @@ slide 1 of 1
 
 ![Search](https://www.newbergoregon.gov/_assets_/images/search-1.png)
 
+- Curated Search
+- Documents &amp; Forms
+- All of Newberg
+
+## Curated Search
+
+## Documents &amp; Forms
+
+## All of Newberg
+
 - [Home](https://www.newbergoregon.gov)
 - [Government](https://www.newbergoregon.gov/government/index.php)
 - [City Council](https://www.newbergoregon.gov/government/city_council/index.php)
-- Councilor Robyn Wheatley
+- Councilor Elise Yarnell Hollamon
 
-# Councilor Robyn Wheatley
+# Councilor Elise Yarnell Hollamon
 
 ![Overlay](https://www.newbergoregon.gov/_assets_/images/shape-1.png)
 
-Councilor Robyn Wheatley - District 4 Councilor Robyn Wheatley represents District 4 for the City of Newberg. 
+Councilor Elise Yarnell-Hollamon - District 1The Newberg City Council appointed Elise Yarnell-Hollamon to the vacant position for District 1 on September 17, 2018 and she was sworn into office on October 1st, 2018. Ms. Yarnell-Hollamon is a 2-year resident of Newberg who applied for the vacancy to provide a voice to the marginalized. Her main catalysts in becoming involved in policy and service are the current state of mental health, addiction, and housing in Yamhill County. Ms. Yarnell-Hollamon currently works as a clinic administrator for Providence Newberg Hospital. She feels she can be a bridge to the City with health organizations and community agencies to provide creative solutions to housing, food insecurity, mental health, addiction, and violence. She hopes to bring her experience with team building and innovation to the Council and staff. To contact her, please email [elise.yarnell@newbergoregon.gov](mailto:elise.yarnell@newbergoregon.gov)
 
-Robyn Wheatley grew up in the Newberg-Dundee area and has spent the majority of her adult life here. She attended Newberg High School and Portland Community College where she received a degree in Business Administration.  
-Shortly after graduating she married her husband Brian and had 4 children.
+District 1 is generally located in and near downtown Newberg.  The main rail line is the northern boundary.  Villa Road is the eastern boundary. First Street is the southern boundary east of River Street.  Fifth Street is the southern boundary west of River Street.  The western boundary is the city limits.
 
-Robyn comes from a family of entrepreneurs and small business owners. She started a business in  2013 that has grown to include US and international sales, wholesale, brick and mortar and online platforms.
+See Councilor Yarnell-Hollamon's official social media profile [HERE](https://www.facebook.com/voteeliseyarnellhollamon). 
 
-Robyn is an elected Precinct Committee Person, and has served on numerous campaigns. She has been involved with her local church and volunteers as a mentor with Love Inc. Robyn’s priorities while serving on the City Council will include Public Safety and livability.
-
-Robyn can be reached at [Robyn.Wheatley@newbergoregon.gov](mailto:Robyn.Wheatley@newbergoregon.gov)
-
-[robyn.wheatley@newbergoregon.gov](mailto:robyn.wheatley@newbergoregon.gov)
+[elise.yarnell@newbergoregon.gov](mailto:elise.yarnell@newbergoregon.gov)
 
 ![share](https://www.newbergoregon.gov/_assets_/images/share-ic.png)
 
@@ -247,21 +252,21 @@ Robyn can be reached at [Robyn.Wheatley@newbergoregon.gov](mailto:Robyn.Wheatley
 Copy and paste this code into your website.
 
 ```
-<a href="http://www.newbergoregon.gov/business_detail_T2_R7.php">Your Link Name</a>
+<a href="http://www.newbergoregon.gov/business_detail_T2_R3.php">Your Link Name</a>
 ```
 
 Share this page on your favorite Social network
 
-[Facebook](https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.newbergoregon.gov%2Fbusiness_detail_T2_R7.php)
+[Facebook](https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.newbergoregon.gov%2Fbusiness_detail_T2_R3.php)
 
 ![Twitter](https://www.newbergoregon.gov/_assets_/images/twitter-x.png)
 
-[Reddit](https://www.reddit.com/submit?url=http%3A%2F%2Fwww.newbergoregon.gov%2Fbusiness_detail_T2_R7.php)
+[Reddit](https://www.reddit.com/submit?url=http%3A%2F%2Fwww.newbergoregon.gov%2Fbusiness_detail_T2_R3.php)
 
 Close
 
 ![navigation logo](https://www.newbergoregon.gov/_assets_/images/logo.png) Powered by [revize.](https://www.revize.com),  
-The Government Website Experts [Login](https://cms3.revize.com/revize/security/index.jsp?webspace=newbergor&filename=%2Fbusiness_detail_T2_R7.php)
+The Government Website Experts [Login](https://cms3.revize.com/revize/security/index.jsp?webspace=newbergor&filename=%2Fbusiness_detail_T2_R3.php)
 
 [Staff Email](https://mail.newbergoregon.gov)
 
