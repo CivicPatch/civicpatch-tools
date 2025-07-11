@@ -2372,10 +2372,12 @@
       "phone_number": "(503) 743-2155",
       "website": "https://turneroregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "b175a73c6746fab6a15a544a09be4a53",
+      "meta_updated_at": "2025-07-11T19:17:51Z",
+      "meta_hash": "0072ac6441881f37dd7ee525d876bc21",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4175150"
     },
