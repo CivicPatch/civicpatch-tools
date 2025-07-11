@@ -1067,10 +1067,12 @@
       "phone_number": "(503) 665-7929",
       "website": "http://www.fairvieworegon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "92309ab1b333fae490ab0053798ab80d",
+      "meta_updated_at": "2025-07-11T04:46:56Z",
+      "meta_hash": "75066a2869c5bf6eb249ba5f0b9f8f15",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4124250"
     },
