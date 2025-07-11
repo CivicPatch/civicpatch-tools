@@ -2214,10 +2214,12 @@
       "phone_number": "(503) 769-5475",
       "website": "https://www.cityofsublimity.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "ba8c60a71aa2cd98a5773ee83a5ed0a5",
+      "meta_updated_at": "2025-07-11T19:08:54Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4170700"
     },

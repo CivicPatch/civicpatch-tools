@@ -1,47 +1,52 @@
 [
   {
-    "name": "Michael Taylor",
-    "positions": [
-      "Mayor"
-    ],
-    "email": "michael.taylor@cityofsublimity.org",
-    "phone_number": "(503) 769-5475",
-    "updated_at": "2025-05-11"
-  },
-  {
     "name": "Brian Schumacher",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "Brian.schumacher@cityofsublimity.org",
     "phone_number": "(503) 769-5475",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:05:59Z",
+    "divisions": []
   },
   {
     "name": "Kari Lowe",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "kari.lowe@cityofsublimity.org",
     "phone_number": "(503) 769-5475",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:05:59Z",
+    "divisions": []
   },
   {
     "name": "Kerst Bosma",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
     "email": "kerst.bosma@cityofsublimity.org",
     "phone_number": "(503) 769-5475",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:05:59Z",
+    "divisions": []
+  },
+  {
+    "name": "Michael Taylor",
+    "roles": [
+      "Mayor"
+    ],
+    "email": "michael.taylor@cityofsublimity.org",
+    "phone_number": "(503) 769-5475",
+    "updated_at": "2025-07-11T19:05:59Z",
+    "divisions": []
   },
   {
     "name": "Tass Ferrell Morrison",
-    "positions": [
+    "roles": [
       "Council Member"
     ],
-    "email": "Tass.Morrison@cityofsublimity.org",
+    "email": "TMorrison@sublimityoregon.gov",
     "phone_number": "(503) 769-5475",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:05:59Z",
+    "divisions": []
   }
 ]

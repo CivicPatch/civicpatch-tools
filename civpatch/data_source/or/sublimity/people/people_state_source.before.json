@@ -1,47 +1,110 @@
 [
   {
+    "name": "Alan Frost",
+    "roles": [
+      "Public Works Director"
+    ],
+    "email": "alan.frost@cityofsublimity.org",
+    "phone_number": "(503) 769-5475",
+    "updated_at": "2025-07-11T19:05:59Z"
+  },
+  {
+    "name": "Brian Schumacher",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "Brian.schumacher@cityofsublimity.org",
+    "phone_number": "(503) 769-5475",
+    "updated_at": "2025-07-11T19:05:59Z"
+  },
+  {
+    "name": "Joe Wolf",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": " joe.wolf@cityofsublimity.org",
+    "phone_number": "(503) 769-5475",
+    "updated_at": "2025-07-11T19:05:59Z"
+  },
+  {
+    "name": "Kari Lowe",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "kari.lowe@cityofsublimity.org",
+    "phone_number": "(503) 769-5475",
+    "updated_at": "2025-07-11T19:05:59Z"
+  },
+  {
+    "name": "Katie Scott",
+    "roles": [
+      "City Recorder/Office Assistant"
+    ],
+    "email": "katie.scott@cityofsublimity.org",
+    "phone_number": "(503) 769-5475",
+    "updated_at": "2025-07-11T19:05:59Z"
+  },
+  {
+    "name": "Kelly McKirdy",
+    "roles": [
+      "Planning Commissioner"
+    ],
+    "email": "kelly.mckirdy@cityofsublimity.org",
+    "phone_number": "(503) 769-5475",
+    "updated_at": "2025-07-11T19:05:59Z"
+  },
+  {
+    "name": "Kerst Bosma",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "kerst.bosma@cityofsublimity.org",
+    "phone_number": "(503) 769-5475",
+    "updated_at": "2025-07-11T19:05:59Z"
+  },
+  {
     "name": "Michael Taylor",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
     "email": "michael.taylor@cityofsublimity.org",
     "phone_number": "(503) 769-5475",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:05:59Z"
   },
   {
-    "name": "Brian Schumacher",
-    "positions": [
-      "Council Member"
+    "name": "Myrna Harding",
+    "roles": [
+      "Finance / Office Manager"
     ],
-    "email": "Brian.schumacher@cityofsublimity.org",
+    "email": "myrna.harding@cityofsublimity.org",
     "phone_number": "(503) 769-5475",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:05:59Z"
   },
   {
-    "name": "Kari Lowe",
-    "positions": [
-      "Council Member"
+    "name": "Shelby Walker",
+    "roles": [
+      "Planning Commissioner"
     ],
-    "email": "kari.lowe@cityofsublimity.org",
+    "email": " Shelby.walker@cityofsublimity.org",
     "phone_number": "(503) 769-5475",
-    "updated_at": "2025-05-11"
-  },
-  {
-    "name": "Kerst Bosma",
-    "positions": [
-      "Council Member"
-    ],
-    "email": "kerst.bosma@cityofsublimity.org",
-    "phone_number": "(503) 769-5475",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:05:59Z"
   },
   {
     "name": "Tass Ferrell Morrison",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor"
     ],
-    "email": "Tass.Morrison@cityofsublimity.org",
+    "email": "TMorrison@sublimityoregon.gov",
     "phone_number": "(503) 769-5475",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T19:05:59Z"
+  },
+  {
+    "name": "Tom Barber",
+    "roles": [
+      "Police Chief or Sheriff"
+    ],
+    "email": "",
+    "phone_number": "(503) 769-5475",
+    "updated_at": "2025-07-11T19:05:59Z"
   }
 ]
