@@ -1007,10 +1007,12 @@
       "phone_number": "(541) 447-5627",
       "website": "https://www.cityofprineville.com",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "2d0c3c98e914dbf43c0136e1e49a8607",
+      "meta_updated_at": "2025-07-11T04:44:52Z",
+      "meta_hash": "4a8eaee1f81e7e5a46f08f863d22c652",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4159850"
     },
