@@ -1,47 +1,146 @@
 [
   {
+    "name": "Allen R. Hobson",
+    "roles": [
+      "Councilor"
+    ],
+    "email": "ALLEN.HOBSON@CITYOFWINSTON.ORG",
+    "phone_number": "(541) 679-8266",
+    "updated_at": "2025-07-11T18:07:25Z"
+  },
+  {
+    "name": "Andy Howell",
+    "roles": [
+      "Public Works Superintendent"
+    ],
+    "email": "andy.howell@cityofwinston.org",
+    "phone_number": "(541) 679-6114",
+    "updated_at": "2025-07-11T18:07:25Z"
+  },
+  {
+    "name": "Ann Munson",
+    "roles": [
+      "Finance Director"
+    ],
+    "email": "ann.munson@cityofwinston.org",
+    "phone_number": "(541) 679-6739",
+    "updated_at": "2025-07-11T18:07:25Z"
+  },
+  {
+    "name": "BRANDON SARTI",
+    "roles": [
+      "POLICE CHIEF"
+    ],
+    "email": "BSARTI@WINSTONPD.COM",
+    "phone_number": "(541) 679-8706",
+    "updated_at": "2025-07-11T18:07:25Z"
+  },
+  {
     "name": "Christie Knutson",
-    "positions": [
+    "roles": [
       "Mayor"
     ],
     "email": "christie.knutson@cityofwinston.org",
     "phone_number": "(541) 679-6739",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:07:25Z"
   },
   {
-    "name": "Allen R. Hobson",
-    "positions": [
-      "Council Member"
+    "name": "Christopher Sherlock",
+    "roles": [
+      "WW Treatment Plant Superintendent"
     ],
-    "email": "ALLEN.HOBSON@CITYOFWINSTON.ORG",
-    "phone_number": "(541) 679-8266",
-    "updated_at": "2025-05-11"
+    "email": "chris.sherlock@cityofwinston.org",
+    "phone_number": "(541) 679-5152",
+    "updated_at": "2025-07-11T18:07:25Z"
+  },
+  {
+    "name": "Cindy Sarti",
+    "roles": [
+      "City Recorder"
+    ],
+    "email": "cindy.sarti@cityofwinston.org",
+    "phone_number": "(541) 679-6739",
+    "updated_at": "2025-07-11T18:07:25Z"
   },
   {
     "name": "David W. Cunningham",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor"
     ],
     "email": "dave.cunningham@cityofwinston.org",
     "phone_number": "(541) 430-2005",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:07:25Z"
   },
   {
     "name": "Dolores White",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor"
     ],
     "email": "dorie.white@cityofwinston.org",
     "phone_number": "(541) 784-3404",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:07:25Z"
+  },
+  {
+    "name": "Landon Stevens",
+    "roles": [
+      "City Planner"
+    ],
+    "email": "",
+    "phone_number": "(541) 679-6739",
+    "updated_at": "2025-07-11T18:07:25Z"
+  },
+  {
+    "name": "Michael DeRusha",
+    "roles": [
+      "PLANNING COMMISSIONER"
+    ],
+    "email": "DOGNOSE0@YAHOO.COM",
+    "phone_number": "(503) 313-8128",
+    "updated_at": "2025-07-11T18:07:25Z"
   },
   {
     "name": "Nicholas Wiggins",
-    "positions": [
-      "Council Member"
+    "roles": [
+      "Councilor"
     ],
     "email": "nicholas.wiggins@cityofwinston.org",
     "phone_number": "(541) 679-6739",
-    "updated_at": "2025-05-11"
+    "updated_at": "2025-07-11T18:07:25Z"
+  },
+  {
+    "name": "Renee Morgan",
+    "roles": [
+      "PLANNING COMMISSIONER/CHAIRWOMAN"
+    ],
+    "email": "RM50DONE@GMAIL.COM",
+    "phone_number": "(541) 430-7158",
+    "updated_at": "2025-07-11T18:07:25Z"
+  },
+  {
+    "name": "REX STEVENS",
+    "roles": [
+      "PLANNING COMMISSIONER"
+    ],
+    "email": "REXNGAIL4@OUTLOOK.COM",
+    "phone_number": "(541) 643-0195",
+    "updated_at": "2025-07-11T18:07:25Z"
+  },
+  {
+    "name": "Steven A. Johnson",
+    "roles": [
+      "PLANNING COMMISSIONER"
+    ],
+    "email": "SAJOHNSON2929@PROTON.ME",
+    "phone_number": "(360) 440-4203",
+    "updated_at": "2025-07-11T18:07:25Z"
+  },
+  {
+    "name": "Thomas McIntosh",
+    "roles": [
+      "City Manager"
+    ],
+    "email": "thomas.mcintosh@cityofwinston.org",
+    "phone_number": "(541) 679-6739",
+    "updated_at": "2025-07-11T18:07:25Z"
   }
 ]

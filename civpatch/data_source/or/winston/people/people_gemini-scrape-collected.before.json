@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Christie Knutson",
+    "sources": [
+      "https://winstoncity.org"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Winston’s Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:08:16Z"
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Christie Knutson",
+    "sources": [
+      "https://winstoncity.org"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly refers to 'Winston’s Mayor, Christie Knutson' multiple times."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "541-679-6739",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General City Hall phone number is provided near mayor references; no direct personal phone found.",
+        "source": "https://winstoncity.org"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-11T18:07:57Z"
+  }
+]

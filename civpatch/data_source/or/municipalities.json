@@ -1611,10 +1611,12 @@
       "phone_number": "(541) 679-6739",
       "website": "https://winstoncity.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "92fe4ac2adad6b085760319d1c620a4b",
+      "meta_updated_at": "2025-07-11T18:08:16Z",
+      "meta_hash": "5eaab0b9efb33a303f5c7f76b1080470",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4183400"
     },
