@@ -1793,10 +1793,12 @@
       "phone_number": "(503) 667-6211",
       "website": "https://www.woodvillageor.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "760fd630654489243dfa631ff680430d",
+      "meta_updated_at": "2025-07-11T18:29:14Z",
+      "meta_hash": "fd47243f31c744febe40f09ff3657a64",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4183950"
     },
