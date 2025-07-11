@@ -1911,10 +1911,12 @@
       "phone_number": "(541) 995-6655",
       "website": "https://www.ci.harrisburg.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "f5fbf725c23ae752a7d19fb469e71c3e",
+      "meta_updated_at": "2025-07-11T18:38:10Z",
+      "meta_hash": "0f2fd0cb9aa080ddefa11eaca251b95d",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4132550"
     },
