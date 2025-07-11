@@ -1973,10 +1973,12 @@
       "phone_number": "(503) 647-5555",
       "website": "https://northplains.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "45d3a9e4dda34a6764c52e26e0c180d3",
+      "meta_updated_at": "2025-07-11T18:38:25Z",
+      "meta_hash": "cb7a96381f4821665c71ca87a2976ffd",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4153150"
     },
