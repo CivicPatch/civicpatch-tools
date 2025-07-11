@@ -1301,10 +1301,12 @@
       "phone_number": "(541) 997-3436",
       "website": "https://www.ci.florence.or.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "f537435c02275459584706922e686e4d",
+      "meta_updated_at": "2025-07-11T17:06:31Z",
+      "meta_hash": "7b414fe2b032edc048f4942993d00451",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4126050"
     },
