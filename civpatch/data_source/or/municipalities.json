@@ -2028,10 +2028,12 @@
       "phone_number": "(541) 327-2768",
       "website": "https://jeffersonoregon.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "5ccc31d34069164ad029079df482dadc",
+      "meta_updated_at": "2025-07-11T18:43:19Z",
+      "meta_hash": "30d28ed0ffb5aecb94303b13749cf311",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4137250"
     },
