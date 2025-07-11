@@ -1,36 +1,110 @@
 ---
 - name: Steve Wright
-  positions:
+  roles:
   - Mayor
+  - Board Member
+  - Council Member
+  divisions:
+  - Ward All wards
+  image: https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/img_0016.jpeg?itok=Anp_qUua
+  cdn_image: https://cdn.civicpatch.org/open-data/or/seaside/images/7aae5b08ac238aa3cca635bdbe986fb3575a49bd2897e106a8fcd4b253d46ccf.jpg
   email: swright@cityofseaside.us
-  phone_number: "(503) 738-5511"
-- name: Christine Binnicker
-  positions:
-  - Council Member
-  email: ''
-  phone_number: "(503) 738-5511"
-- name: David Lee Posalski
-  positions:
-  - Council Member
-  email: Dposalski@cityofseaside.us
-  phone_number: "(503) 738-5511"
-- name: Heidi Hoffman
-  positions:
-  - Council Member
-  email: ''
-  phone_number: "(503) 738-5511"
-- name: Seamus McVey
-  positions:
-  - Council Member
-  email: smcvey@cityofseaside.us
-  phone_number: "(503) 738-5511"
+  phone_number: "(971) 601-1004"
+  website: https://www.cityofseaside.us/people/steve-wright-0
+  start_date: 2023-01
+  end_date: 2026-12
+  sources:
+  - https://www.cityofseaside.us/mayor
+  - https://www.cityofseaside.us/city-council
+  - https://www.cityofseaside.us/people/steve-wright-0
+  updated_at: '2025-07-11T18:01:55Z'
 - name: Seth Morrisey
-  positions:
-  - Council Member
+  roles:
+  - Council President
+  divisions:
+  - At-large Wards 3 & 4
+  image: https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/sm_img_7231-crop.jpg?itok=cU9vRhYL
+  cdn_image: https://cdn.civicpatch.org/open-data/or/seaside/images/8f8ab49463011c5283bb644c7352675f4d064c433644a17f599b8f692c50c6ed.jpg
   email: smorrisey@cityofseaside.us
-  phone_number: "(503) 738-5511"
-- name: Tita Montero
-  positions:
+  phone_number: "(971) 601-1188"
+  website:
+  start_date: '2025-01-13'
+  end_date: 2026-12
+  sources:
+  - https://www.cityofseaside.us/city-council
+  updated_at: '2025-07-11T18:01:55Z'
+- name: Heidi Hoffman
+  roles:
   - Council Member
+  divisions:
+  - At-large Wards 1 & 2
+  image: https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/hoffman.heidi_01.27.2025.jpeg?itok=swo-zMi_
+  cdn_image: https://cdn.civicpatch.org/open-data/or/seaside/images/2808c432c0ffc3d5e41a5875cc0fe277e6a79c0d1349b528660db1df5dd7c3da.jpg
+  email: hhoffman@cityofseaside.us
+  phone_number: "(971) 601-1190"
+  website:
+  start_date: '2025-01-13'
+  end_date: 2028-12
+  sources:
+  - https://www.cityofseaside.us/city-council
+  updated_at: '2025-07-11T18:01:55Z'
+- name: Chris Binnicker
+  roles:
+  - Council Member
+  divisions:
+  - Ward 1
+  image: https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/binnicker.chris_01.27.2025.jpeg?itok=wfQhilrB
+  cdn_image: https://cdn.civicpatch.org/open-data/or/seaside/images/55b49c18b57e88a622ec149d409ded53398b0c2ed534cce5c5385d1c1746f1c6.jpg
+  email: cbinnicker@cityofseaside.us
+  phone_number: "(971) 601-1192"
+  website:
+  start_date: '2025-01-13'
+  end_date: 2026-12
+  sources:
+  - https://www.cityofseaside.us/city-council
+  updated_at: '2025-07-11T18:01:55Z'
+- name: Tita Montero
+  roles:
+  - Council Member
+  divisions:
+  - Ward 2
+  image: https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/2025_tmcrop.jpeg?itok=nFn06kfy
+  cdn_image: https://cdn.civicpatch.org/open-data/or/seaside/images/42b696a4f333c1ec1a243ef71a8d99fa1c1300802391a67b3ee4c23d0ac8e80c.jpg
   email: tmontero@cityofseaside.us
-  phone_number: "(503) 738-5511"
+  phone_number: "(971) 601-1189"
+  website:
+  start_date: '2025-01-13'
+  end_date: 2026-12
+  sources:
+  - https://www.cityofseaside.us/city-council
+  updated_at: '2025-07-11T18:01:55Z'
+- name: Seamus McVey
+  roles:
+  - Council Member
+  divisions:
+  - Ward 3
+  image: https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/mcvey.seamus_01.27.2025.jpeg?itok=jKjb8sX5
+  cdn_image: https://cdn.civicpatch.org/open-data/or/seaside/images/19828caa3ea434491bbd24ec81c28537d069f2f872749f331c06c44e7ef5bd73.jpg
+  email: smcvey@cityofseaside.us
+  phone_number: "(971) 601-1191"
+  website:
+  start_date: '2025-01-13'
+  end_date: 2028-12
+  sources:
+  - https://www.cityofseaside.us/city-council
+  updated_at: '2025-07-11T18:01:55Z'
+- name: David Posalski
+  roles:
+  - Council Member
+  divisions:
+  - Ward 4
+  image: https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/posalski.david_01.27.2025.jpeg?itok=hv6E29fd
+  cdn_image: https://cdn.civicpatch.org/open-data/or/seaside/images/1da5f7b6e6c3292af5b6969e5ed1abd4d233b59f996fd576fad1361c369387d3.jpg
+  email: dposalski@cityofseaside.us
+  phone_number: "(971) 601-1193"
+  website:
+  start_date: '2025-01-13'
+  end_date: 2028-12
+  sources:
+  - https://www.cityofseaside.us/city-council
+  updated_at: '2025-07-11T18:01:55Z'

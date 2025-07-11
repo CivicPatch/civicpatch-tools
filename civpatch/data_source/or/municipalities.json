@@ -1491,10 +1491,12 @@
       "phone_number": "(503) 738-5511",
       "website": "https://www.cityofseaside.us",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "5327cb0a4d4d9d88762ea1a6d5d2d271",
+      "meta_updated_at": "2025-07-11T18:01:55Z",
+      "meta_hash": "e2f931969e543959a8e97ae6047aa717",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4165950"
     },

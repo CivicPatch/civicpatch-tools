@@ -1,0 +1,470 @@
+[
+  {
+    "name": "Steve Wright",
+    "sources": [
+      "https://www.cityofseaside.us/mayor",
+      "https://www.cityofseaside.us/city-council",
+      "https://www.cityofseaside.us/people/steve-wright-0"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/img_0016.jpeg?itok=Anp_qUua",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The image is a photo of Mayor Wright located near his name and role.",
+        "source": "https://www.cityofseaside.us/mayor"
+      },
+      {
+        "data": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/swrightcrop.jpeg?itok=NDup-0p1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image near the name and role of Mayor Steve Wright.",
+        "source": "https://www.cityofseaside.us/city-council"
+      },
+      {
+        "data": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/news_image/public/people/swrightcrop.jpeg?itok=mTKomsP9",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image near the name 'Steve Wright' with alt text 'Mayor Wright'.",
+        "source": "https://www.cityofseaside.us/people/steve-wright-0"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states Steve Wright is the Mayor of Seaside, took office in January 2023, and describes his mayoral duties."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor of Seaside City Council."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' and 'Seaside Mayor' with active membership on City Council and Mayor board."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as elected member of City Council with active membership; role normalized to 'Council Member'."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Member of Improvement Commission since January 1, 2023, active membership; role normalized to 'Board Member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "All Wards",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as representing All Wards."
+      },
+      {
+        "data": "All Wards",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated 'Represents: All Wards'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(971) 601-1004",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is listed under 'Contact Info' near the Mayor's section.",
+        "source": "https://www.cityofseaside.us/mayor"
+      },
+      {
+        "data": "(971) 601-1004",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed next to Mayor Steve Wright's contact info.",
+        "source": "https://www.cityofseaside.us/city-council"
+      },
+      {
+        "data": "(971) 601-1004",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed under 'Contact Info' near Steve Wright's section.",
+        "source": "https://www.cityofseaside.us/people/steve-wright-0"
+      }
+    ],
+    "emails": [
+      {
+        "data": "swright@cityofseaside.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed for Mayor Steve Wright.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofseaside.us/people/steve-wright-0",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The link labeled 'Steve Wright' near his name leads to a profile page.",
+        "source": "https://www.cityofseaside.us/mayor"
+      },
+      {
+        "data": "https://www.cityofseaside.us/mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Mayor page linked under Government Departments; likely official profile.",
+        "source": "https://www.cityofseaside.us/city-council"
+      },
+      {
+        "data": "https://www.cityofseaside.us/user/266/contact",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Contact page URL linked as 'Contact Steve Wright' near name.",
+        "source": "https://www.cityofseaside.us/people/steve-wright-0"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text states he took office in January 2023.",
+        "source": "https://www.cityofseaside.us/mayor"
+      },
+      {
+        "data": "2023-01-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Elected to City Council and Improvement Commission with start date January 1, 2023.",
+        "source": "https://www.cityofseaside.us/people/steve-wright-0"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 2026 as stated.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "Chris Binnicker",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/binnicker.chris_01.27.2025.jpeg?itok=wfQhilrB",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image near the name and role of Councilor Chris Binnicker.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Councilor Chris Binnicker, member of City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as representing Ward 1."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(971) 601-1192",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed next to Chris Binnicker's contact info.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cbinnicker@cityofseaside.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed for Chris Binnicker.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 2026 as stated.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "Tita Montero",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/2025_tmcrop.jpeg?itok=nFn06kfy",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image near the name and role of Councilor Tita Montero.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Councilor Tita Montero, member of City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as representing Ward 2."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(971) 601-1189",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed next to Tita Montero's contact info.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tmontero@cityofseaside.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed for Tita Montero.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 2026 as stated.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "Seamus McVey",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/mcvey.seamus_01.27.2025.jpeg?itok=jKjb8sX5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image near the name and role of Councilor Seamus McVey.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Councilor Seamus McVey, member of City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as representing Ward 3."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(971) 601-1191",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed next to Seamus McVey's contact info.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "smcvey@cityofseaside.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed for Seamus McVey.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 2028 as stated.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "David Posalski",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/posalski.david_01.27.2025.jpeg?itok=hv6E29fd",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image near the name and role of Councilor David Posalski.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Councilor David Posalski, member of City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Ward 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as representing Ward 4."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(971) 601-1193",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed next to David Posalski's contact info.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dposalski@cityofseaside.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed for David Posalski.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 2028 as stated.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "Heidi Hoffman",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/hoffman.heidi_01.27.2025.jpeg?itok=swo-zMi_",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image near the name and role of Councilor Heidi Hoffman.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Councilor Heidi Hoffman, member of City Council."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Wards 1 & 2 At Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as representing Wards 1 & 2 At Large."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(971) 601-1190",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed next to Heidi Hoffman's contact info.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "hhoffman@cityofseaside.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed for Heidi Hoffman.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 2028 as stated.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "Seth Morrisey",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/sm_img_7231-crop.jpg?itok=cU9vRhYL",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image near the name and role of Council President Seth Morrisey.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council President."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Wards 3 & 4 At Large",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as representing Wards 3 & 4 At Large."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(971) 601-1188",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed next to Seth Morrisey's contact info.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "smorrisey@cityofseaside.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed for Seth Morrisey.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires December 2026 as stated.",
+        "source": "https://www.cityofseaside.us/city-council"
+      }
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  }
+]

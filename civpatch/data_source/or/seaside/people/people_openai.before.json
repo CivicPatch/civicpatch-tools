@@ -1,0 +1,139 @@
+[
+  {
+    "name": "Steve Wright",
+    "roles": [
+      "Mayor",
+      "Council Member",
+      "Board Member"
+    ],
+    "divisions": [
+      "All Wards"
+    ],
+    "image": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/img_0016.jpeg?itok=Anp_qUua",
+    "phone_number": "(971) 601-1004",
+    "email": "swright@cityofseaside.us",
+    "website": "https://www.cityofseaside.us/people/steve-wright-0",
+    "start_date": "2023-01",
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofseaside.us/mayor",
+      "https://www.cityofseaside.us/city-council",
+      "https://www.cityofseaside.us/people/steve-wright-0"
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "Chris Binnicker",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward 1"
+    ],
+    "image": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/binnicker.chris_01.27.2025.jpeg?itok=wfQhilrB",
+    "phone_number": "(971) 601-1192",
+    "email": "cbinnicker@cityofseaside.us",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "Tita Montero",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward 2"
+    ],
+    "image": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/2025_tmcrop.jpeg?itok=nFn06kfy",
+    "phone_number": "(971) 601-1189",
+    "email": "tmontero@cityofseaside.us",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "Seamus McVey",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward 3"
+    ],
+    "image": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/mcvey.seamus_01.27.2025.jpeg?itok=jKjb8sX5",
+    "phone_number": "(971) 601-1191",
+    "email": "smcvey@cityofseaside.us",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "David Posalski",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward 4"
+    ],
+    "image": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/posalski.david_01.27.2025.jpeg?itok=hv6E29fd",
+    "phone_number": "(971) 601-1193",
+    "email": "dposalski@cityofseaside.us",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "Heidi Hoffman",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Wards 1 & 2 At Large"
+    ],
+    "image": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/hoffman.heidi_01.27.2025.jpeg?itok=swo-zMi_",
+    "phone_number": "(971) 601-1190",
+    "email": "hhoffman@cityofseaside.us",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  },
+  {
+    "name": "Seth Morrisey",
+    "roles": [
+      "Council President"
+    ],
+    "divisions": [
+      "Wards 3 & 4 At Large"
+    ],
+    "image": "https://www.cityofseaside.us/sites/g/files/vyhlif6311/f/styles/group_main_image/public/departments/sm_img_7231-crop.jpg?itok=cU9vRhYL",
+    "phone_number": "(971) 601-1188",
+    "email": "smorrisey@cityofseaside.us",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:11Z"
+  }
+]

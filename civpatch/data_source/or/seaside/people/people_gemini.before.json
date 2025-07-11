@@ -1,0 +1,144 @@
+[
+  {
+    "name": "Steve Wright",
+    "roles": [
+      "mayor",
+      "board member",
+      "council member",
+      "Mayor",
+      "Councilor",
+      "Member",
+      "Board Member"
+    ],
+    "divisions": [
+      "All Wards"
+    ],
+    "image": null,
+    "phone_number": "(971) 601-1004",
+    "email": "swright@cityofseaside.us",
+    "website": "https://www.cityofseaside.us/people/steve-wright-0",
+    "start_date": "2023-01",
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofseaside.us/mayor",
+      "https://www.cityofseaside.us/city-council",
+      "https://www.cityofseaside.us/people/steve-wright-0"
+    ],
+    "updated_at": "2025-07-11T18:01:52Z"
+  },
+  {
+    "name": "Chris Binnicker",
+    "roles": [
+      "Councilor"
+    ],
+    "divisions": [
+      "Ward 1"
+    ],
+    "image": null,
+    "phone_number": "(971) 601-1192",
+    "email": "cbinnicker@cityofseaside.us",
+    "website": null,
+    "start_date": "2025-01-13",
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:52Z"
+  },
+  {
+    "name": "Tita Montero",
+    "roles": [
+      "Councilor"
+    ],
+    "divisions": [
+      "Ward 2"
+    ],
+    "image": null,
+    "phone_number": "(971) 601-1189",
+    "email": "tmontero@cityofseaside.us",
+    "website": null,
+    "start_date": "2025-01-13",
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:52Z"
+  },
+  {
+    "name": "Seamus McVey",
+    "roles": [
+      "Councilor"
+    ],
+    "divisions": [
+      "Ward 3"
+    ],
+    "image": null,
+    "phone_number": "(971) 601-1191",
+    "email": "smcvey@cityofseaside.us",
+    "website": null,
+    "start_date": "2025-01-13",
+    "end_date": "2028-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:52Z"
+  },
+  {
+    "name": "David Posalski",
+    "roles": [
+      "Councilor"
+    ],
+    "divisions": [
+      "Ward 4"
+    ],
+    "image": null,
+    "phone_number": "(971) 601-1193",
+    "email": "dposalski@cityofseaside.us",
+    "website": null,
+    "start_date": "2025-01-13",
+    "end_date": "2028-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:52Z"
+  },
+  {
+    "name": "Heidi Hoffman",
+    "roles": [
+      "Councilor"
+    ],
+    "divisions": [
+      "Wards 1 & 2 At Large"
+    ],
+    "image": null,
+    "phone_number": "(971) 601-1190",
+    "email": "hhoffman@cityofseaside.us",
+    "website": null,
+    "start_date": "2025-01-13",
+    "end_date": "2028-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:52Z"
+  },
+  {
+    "name": "Seth Morrisey",
+    "roles": [
+      "Council President",
+      "Councilor"
+    ],
+    "divisions": [
+      "Wards 3 & 4 At Large"
+    ],
+    "image": null,
+    "phone_number": "(971) 601-1188",
+    "email": "smorrisey@cityofseaside.us",
+    "website": null,
+    "start_date": "2025-01-13",
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofseaside.us/city-council"
+    ],
+    "updated_at": "2025-07-11T18:01:52Z"
+  }
+]
