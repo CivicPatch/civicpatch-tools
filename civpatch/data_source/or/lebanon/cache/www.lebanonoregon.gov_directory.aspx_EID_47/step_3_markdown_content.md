@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.lebanonoregon.gov/directory.aspx?eid=50%2F)
+[Skip to Main Content](https://www.lebanonoregon.gov/directory.aspx?EID=47%2F)
 
 [Airport Road Updates](https://www.lebanonoregon.gov/AlertCenter.aspx) [Airport Road/Stoltz Hill Road Intersection Improvements Project Read On...](https://www.lebanonoregon.gov/625/Airport-RoadStoltz-Hill-Road-Intersectio)
 
@@ -17,51 +17,45 @@ Loading
 
 Search
 
-![](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=656)
+![](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=658)
 
 1. [Home](https://www.lebanonoregon.gov)
 2. Staff Directory
 
-![Councilor Jeremy Salvage](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=565 "Councilor Jeremy Salvage")
+![Councilor Carl Mann](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=563 "Councilor Carl Mann")
 
-# Jeremy Salvage
+# Carl Mann
 
  
 
 [City Council](https://www.lebanonoregon.gov/Directory.aspx?DID=36)  
-Title: Ward 3 Councilor  
-Phone: 541-258-4981  
-[Email Jeremy Salvage](mailto:jeremy.salvage@lebanonoregon.gov)
+Title: Ward 1 Councilor  
+Phone: 541-258-4986  
+[Email Carl Mann](mailto:carl.mann@lebanonoregon.gov)
 
 ## Biography
 
 ### Professional
 
-- Associates of Applied Science - Chemeketa Community College - Paramedic (2002)
-- Fabricator - South Fork Industrial (1999-2003)
-- Firefighter/Paramedic - Salem Fire Department (2003-2019)
-- Fire Captain - Salem Fire Department (2019-2022)
+Retired Army with 20+ years of service
 
 ### Personal
 
-- Married to Amanda with 3 school-age kids
-- Lifetime Lebanon resident
-- We spend as much time as we can exploring the trails, mountains and rivers nearby
+My wife and I moved to Lebanon in 2017 with our two boys.
 
 ### Community Involvement
 
-- Volunteer Firefighter - Lebanon Fire District (1999 to 2002)
-- Middle School Basketball Coach - East Linn Christian Academy (2005 to 2008)
-- Lebanon Planning Commission (2009 to 2022)
-- Lebanon Planning Commission Chair (2018 to 2022)
+- Joined Peoples Rights Lebanon in December 2021
+- Joined Free Linn County in July 2022
+- Member of the Local VFW in Sweet Home
 
 ## Address
 
-184 Shannon Place
+550 E Street
 
 ## Term
 
-June 8, 2022 to December 31, 2024
+January 11, 2023 to December 31, 2026
 
  
 

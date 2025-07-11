@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.lebanonoregon.gov/directory.aspx?eid=50%2F)
+[Skip to Main Content](https://www.lebanonoregon.gov/directory.aspx?EID=51%2F)
 
 [Airport Road Updates](https://www.lebanonoregon.gov/AlertCenter.aspx) [Airport Road/Stoltz Hill Road Intersection Improvements Project Read On...](https://www.lebanonoregon.gov/625/Airport-RoadStoltz-Hill-Road-Intersectio)
 
@@ -17,51 +17,54 @@ Loading
 
 Search
 
-![](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=656)
+![](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=653)
 
 1. [Home](https://www.lebanonoregon.gov)
 2. Staff Directory
 
-![Councilor Jeremy Salvage](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=565 "Councilor Jeremy Salvage")
+![Council President Michelle Steinhebel](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=561 "Council President Michelle Steinhebel")
 
-# Jeremy Salvage
+# Michelle Steinhebel
 
  
 
 [City Council](https://www.lebanonoregon.gov/Directory.aspx?DID=36)  
-Title: Ward 3 Councilor  
-Phone: 541-258-4981  
-[Email Jeremy Salvage](mailto:jeremy.salvage@lebanonoregon.gov)
+Title: Ward 3 - Council President  
+Phone: 541-258-4983  
+[Email Michelle Steinhebel](mailto:michelle.steinhebel@lebanonoregon.gov)
 
 ## Biography
 
 ### Professional
 
-- Associates of Applied Science - Chemeketa Community College - Paramedic (2002)
-- Fabricator - South Fork Industrial (1999-2003)
-- Firefighter/Paramedic - Salem Fire Department (2003-2019)
-- Fire Captain - Salem Fire Department (2019-2022)
+Michelle was elected to City Council in November 2018. She is the Communications Director for the Lebanon Community School District and previously held the same position for a neighboring school district. Prior to her work in school communications, Michelle worked in public relations and government affairs for Western University of Health Sciences from 2011 to 2021. Michelle has a background in journalism, serving as the editor of a local newspaper from 2009 to 2011 and a newspaper in Prineville from 2004 to 2006.
+
+### Education
+
+As a lifelong learner, Michelle holds a master's degree in public policy (2020) and a bachelor's degree in political science (2009), both from Oregon State University. She also holds an associate's degree from Linn-Benton Community College. She is a 2002 graduate of Lebanon High School.
 
 ### Personal
 
-- Married to Amanda with 3 school-age kids
-- Lifetime Lebanon resident
-- We spend as much time as we can exploring the trails, mountains and rivers nearby
+Michelle lived on Navy bases along the West Coast before she and her mother, Remy, moved to Lebanon in 1994. Michelle married Jon Steinhebel in 2005, and the couple has two young children. She enjoys traveling and going on camping trips in the Northwest with her family.
 
 ### Community Involvement
 
-- Volunteer Firefighter - Lebanon Fire District (1999 to 2002)
-- Middle School Basketball Coach - East Linn Christian Academy (2005 to 2008)
-- Lebanon Planning Commission (2009 to 2022)
-- Lebanon Planning Commission Chair (2018 to 2022)
+- Member, Lebanon Optimist Club, 2011 to present
+- President of Lebanon Optimist Club from 2020 to 2021
+- Board member from 2012 to 2021
+- Board member, Lebanon Schools Foundation, 2016 to present
+- Member, Pioneer School PTA, 2015 to present
+- Member, Lebanon Strawberrians, 2014 to present
 
-## Address
+In recognition of her community service, Michelle was awarded the Junior First Citizen award in 2015. Additionally, prior to serving on Council, Michelle was part of both the Task Force and Steering Committee for the City's 2040 Vision and Strategic Action Plan.
 
-184 Shannon Place
+### Address
 
-## Term
+832 Garvord Street
 
-June 8, 2022 to December 31, 2024
+### Term
+
+January 11, 2023 to December 31, 2026
 
  
 

@@ -1,6 +1,6 @@
 Loading
 
-[Skip to Main Content](https://www.lebanonoregon.gov/directory.aspx?eid=50%2F)
+[Skip to Main Content](https://www.lebanonoregon.gov/directory.aspx?EID=45%2F)
 
 [Airport Road Updates](https://www.lebanonoregon.gov/AlertCenter.aspx) [Airport Road/Stoltz Hill Road Intersection Improvements Project Read On...](https://www.lebanonoregon.gov/625/Airport-RoadStoltz-Hill-Road-Intersectio)
 
@@ -17,51 +17,65 @@ Loading
 
 Search
 
-![](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=656)
+![](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=654)
 
 1. [Home](https://www.lebanonoregon.gov)
 2. Staff Directory
 
-![Councilor Jeremy Salvage](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=565 "Councilor Jeremy Salvage")
+![Mayor Kenneth Jackola](https://www.lebanonoregon.gov/ImageRepository/Document?documentID=560 "Mayor Kenneth Jackola")
 
-# Jeremy Salvage
+# Kenneth Jackola
 
  
 
 [City Council](https://www.lebanonoregon.gov/Directory.aspx?DID=36)  
-Title: Ward 3 Councilor  
-Phone: 541-258-4981  
-[Email Jeremy Salvage](mailto:jeremy.salvage@lebanonoregon.gov)
+Title: Mayor  
+Phone: 541-258-4980  
+[Email Kenneth Jackola](mailto:ken.jackola@lebanonoregon.gov)
 
 ## Biography
 
-### Professional
+### Education
 
-- Associates of Applied Science - Chemeketa Community College - Paramedic (2002)
-- Fabricator - South Fork Industrial (1999-2003)
-- Firefighter/Paramedic - Salem Fire Department (2003-2019)
-- Fire Captain - Salem Fire Department (2019-2022)
+- Oregon State University: Bachelor of Science in Agricultural Sciences 2013
+- U.S. Army NCO Leadership Center of Excellence: Sergeant Major Academy 2009 (42 weeks)
+- Linn Benton Community College: Reserve Police Academy 1993
+- Lebanon Union High School: Graduate of Class 1986
+
+### Professional Background/Work Experience
+
+- U.S. Army and Oregon Army National Guard (Retired 2014 as Command Sergeant Major)
+- Small Business Owner: Transportation
+- Lebanon Commercial Building Owner
+- Law Enforcement
+- Political Experience/Affiliations
+- None/Unaffiliated Candidate
+
+### Other Community Involvement/Affiliations (outside of activities/experience already listed)
+
+- Board Member: Lebanon Downtown Association 2019-2020
+- Lebanon High School Hall of Fame: Inductee 2016
+- 82nd Airborne Division Association: Lifetime Member
 
 ### Personal
 
-- Married to Amanda with 3 school-age kids
-- Lifetime Lebanon resident
-- We spend as much time as we can exploring the trails, mountains and rivers nearby
+Married 2010 to Shellie Jackola. Five children:
 
-### Community Involvement
+- Ashton Turlock (Florida)
+- Johnathon Jackola (Oregon)
+- Conan Jackola (Oregon)
+- Mason Ward (Oregon)
+- Rachel Jackola (Florida)
 
-- Volunteer Firefighter - Lebanon Fire District (1999 to 2002)
-- Middle School Basketball Coach - East Linn Christian Academy (2005 to 2008)
-- Lebanon Planning Commission (2009 to 2022)
-- Lebanon Planning Commission Chair (2018 to 2022)
-
-## Address
-
-184 Shannon Place
+Resident of the Lebanon area for 51 years.
 
 ## Term
 
-June 8, 2022 to December 31, 2024
+Term: January 8, 2025 to December 31, 2026
+
+## Address
+
+718 S Main Street
 
  
 

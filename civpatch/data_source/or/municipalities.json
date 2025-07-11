@@ -671,9 +671,13 @@
       "phone_number": "(541) 258-4900",
       "website": "https://www.lebanonoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-05-06",
-      "meta_hash": "640e26bc7903bcf425f323a06eeeab5a",
-      "meta_sources": [],
+      "meta_updated_at": "2025-07-11T00:20:11Z",
+      "meta_hash": "d55dfa9e994f5e6416dd8d1a94f5a325",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ],
       "geoid": "4141650"
     },
     {
