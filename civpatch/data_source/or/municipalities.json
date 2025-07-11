@@ -1771,10 +1771,12 @@
       "phone_number": "(503) 864-2451",
       "website": "https://lafayetteoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "b8c9c15da1e3cd2addf6db6259d9704a",
+      "meta_updated_at": "2025-07-11T18:32:35Z",
+      "meta_hash": "e049a1076f412351e9eefa94b90f9cdb",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4140300"
     },
