@@ -887,10 +887,12 @@
       "phone_number": "(541) 962-1309",
       "website": "https://www.cityoflagrande.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "0847e784ee4d3d459637287daf937c56",
+      "meta_updated_at": "2025-07-11T04:37:05Z",
+      "meta_hash": "330334b68faf7b0b094677fa61a9bf72",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4140350"
     },
