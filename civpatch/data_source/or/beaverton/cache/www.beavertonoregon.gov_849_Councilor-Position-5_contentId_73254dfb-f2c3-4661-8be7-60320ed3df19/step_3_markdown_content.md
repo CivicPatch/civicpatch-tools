@@ -1,4 +1,4 @@
-[Skip to Main Content](https://www.beavertonoregon.gov/855/Councilor-Position-6/)
+[Skip to Main Content](https://www.beavertonoregon.gov/849/Councilor-Position-5?contentId=73254dfb-f2c3-4661-8be7-60320ed3df19%2F)
 
 ![Beaverton, OR - Official Website](https://www.beavertonoregon.gov/DesignCenter/Assets/Get/6ed33f13-7746-4480-aa3c-aabf94e46cd5)
 
@@ -31,35 +31,67 @@ Opens in a new window
 1. [Home](https://www.beavertonoregon.gov)
 2. [Government](https://www.beavertonoregon.gov/27/Government)
 3. [City Council](https://www.beavertonoregon.gov/789/City-Council)
-4. Councilor: Position 6
+4. Councilor: Position 5
 
-# Councilor: Position 6
+# Councilor: Position 5
 
-## Nadia Hasan
+## John Dugger
 
-As part of the new city charter, City Council will expand from five members to seven members: six part-time city councilors and one full-time mayor with voting privileges. Nadia Hasan is the first to hold City Council Position 6. She previously served on the Tualatin Hills Park and Recreation District Visioning Task Force, a dedicated multigenerational, multiethnic, and multilingual volunteer group to meet community where they are. Nadia brings a wealth of diverse experience having worked in Beaverton schools as an educator along with deep private sector experience in HR and marketing. As an Indian-Pakistani woman, Nadia leverages her lived experiences as the daughter of immigrant parents to champion a city that serves the needs of our collective communities.
+Councilor John Dugger was sworn into office in September of 2022 after winning nomination in the May primary election. He then won his first full term in November of 2022 in the general election.
 
-### Nadia Hasan's Message
+He holds a bachelor’s degree in Environmental Studies from Portland State University and has lived in Beaverton for most of the 20 years he has lived in Oregon. Outside of City Council, Councilor Dugger leads the Procurement function at a non-profit health company.
 
-As we embrace the voters' desire for a council-manager form of government, I want to ensure we provide affordable housing, accessible transportation and economic empowerment for our residents. My hope is that our communities can do more than survive but thrive ensuring my children, your children and our children feel seen and heard in this beautiful city. I look forward to serving Beavertonians and encourage you reach out via email or phone call so we can connect.
+John is a co-founder of Pride Beaverton, has served Beaverton on many different boards and commissions, and can be regularly seen walking downtown with his husband Quinn and dog Odin or riding his bike.
 
-### Contact Us
+### John's Message
 
-#### ![Nadia Hasan](https://content.civicplus.com/api/assets/b82b019e-3d7c-4bf1-a201-3a6d54839530?cache=1800 "Nadia Hasan") Nadia Hasan
+I feel inspired to serve by a simple belief: That government has a big role to play in creating communities that allow ALL people to thrive. That together WE can achieve big things. If we unlock the potential of our staff, I’m confident Beaverton can lead the world in so many different areas.
+
+#### ![John Dugger](https://content.civicplus.com/api/assets/fc87a5ae-0845-41bc-a521-276a0408fc95?cache=1800 "John Dugger") John Dugger
 
 Title
 
-Council Position 6
+City Council Position 5
 
 Email
 
 [Email City Council](mailto:citymail@BeavertonOregon.gov)
 
-[Email Nadia Hasan](mailto:nhasan@BeavertonOregon.gov)
+[Email John Dugger](mailto:jdugger@BeavertonOregon.gov)
 
 Phone
 
-503-679-7068
+503-312-0118
+
+Department:
+
+City Council
+
+## Address
+
+12725 SW Millikan Way  
+P.O. Box 4755  
+Beaverton, OR 97076
+
+## Four-Year-Term Term Began: Term Expires:
+
+### Contact Us
+
+#### [![John Dugger](https://content.civicplus.com/api/assets/fc87a5ae-0845-41bc-a521-276a0408fc95?cache=1800 "John Dugger") \ John \ Dugger](https://www.beavertonoregon.gov/849/Councilor-Position-5?contentId=73254dfb-f2c3-4661-8be7-60320ed3df19)
+
+Title
+
+City Council Position 5
+
+Email
+
+[Email City Council](mailto:citymail@BeavertonOregon.gov)
+
+[Email John Dugger](mailto:jdugger@BeavertonOregon.gov)
+
+Phone
+
+503-312-0118
 
 01. [About Council Meetings](https://www.beavertonoregon.gov/792/About-Council-Meetings)
 02. [Agendas &amp; Minutes](https://www.beavertonoregon.gov/797/Agendas-Minutes)
