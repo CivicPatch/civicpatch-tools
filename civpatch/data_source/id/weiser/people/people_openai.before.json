@@ -1,0 +1,123 @@
+[
+  {
+    "name": "Randy Hibberd",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://lirp.cdn-website.com/544735d7/dms3rep/multi/opt/rh-382-1920w.webp",
+    "phone_number": "208-414-1965",
+    "email": null,
+    "website": "https://www.cityofweiser.net/mayor-randy-hibberd",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofweiser.net/mayor-randy-hibberd",
+      "https://www.cityofweiser.net",
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Larry",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofweiser.net/larry-hogg",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Mike",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofweiser.net/mike-hopkins",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Sterling",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofweiser.net/sterling-blackwell",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Herb",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofweiser.net/herb-haun",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Marg",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofweiser.net/layna-hafer",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Katie",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofweiser.net/alicia-fowler",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "updated_at": "2025-07-12T23:43:55Z"
+  }
+]
