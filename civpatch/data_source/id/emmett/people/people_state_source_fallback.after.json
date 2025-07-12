@@ -4,8 +4,10 @@
     "roles": [
       "Mayor"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:53:34Z"
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-12T23:36:35Z"
   },
   {
     "name": "Tona Henderson",
@@ -13,47 +15,59 @@
       "Council Member",
       "Council President"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:53:34Z"
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-12T23:36:35Z"
   },
   {
     "name": "Steve Nebeker",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:53:34Z"
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-12T23:36:35Z"
   },
   {
     "name": "Denise Sorenson",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:53:34Z"
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-12T23:36:35Z"
   },
   {
     "name": "Jody Harris",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:53:34Z"
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-12T23:36:35Z"
   },
   {
     "name": "Thomas Butler",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:53:34Z"
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-12T23:36:35Z"
   },
   {
     "name": "Gary Resinkin",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:53:34Z"
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-12T23:36:35Z"
   }
 ]

@@ -2,35 +2,222 @@
   {
     "name": "Gordon Petrie",
     "sources": [
-      "https://www.cityofemmett.org",
-      "https://www.cityofemmett.org/police"
+      "https://www.cityofemmett.org/mayor-city-council"
     ],
     "images": [],
     "roles": [
       {
         "data": "mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor Petrie'."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor Petrie'."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor'."
       }
     ],
     "divisions": [],
     "phone_numbers": [],
     "emails": [],
-    "websites": [],
-    "start_dates": [
+    "websites": [
       {
-        "data": "2025-01",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The text states 'Since January 2025, the city has operated under a new traffic ordinance that, if followed, does away with all confusion about how to negotiate traffic circles, also known as mini-roundabouts, in Emmett.' and attributes this statement to Mayor Petrie, implying his active role since that date.",
-        "source": "https://www.cityofemmett.org"
+        "data": "https://www.cityofemmett.org/mayors-corner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A specific 'Mayor's Corner' link is provided directly under the mayor's name.",
+        "source": "https://www.cityofemmett.org/mayor-city-council"
       }
     ],
+    "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T20:55:30Z"
+    "updated_at": "2025-07-12T23:37:56Z"
+  },
+  {
+    "name": "Tona Henderson",
+    "sources": [
+      "https://www.cityofemmett.org/mayor-city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council president",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofemmett.org/council-contact-henderson",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A specific 'Contact' link is provided directly under the person's name.",
+        "source": "https://www.cityofemmett.org/mayor-city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:37:56Z"
+  },
+  {
+    "name": "Steve Nebeker",
+    "sources": [
+      "https://www.cityofemmett.org/mayor-city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilman', which is normalized to 'council member'."
+      },
+      {
+        "data": "councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofemmett.org/council-contact-nebeker",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A specific 'Contact' link is provided directly under the person's name.",
+        "source": "https://www.cityofemmett.org/mayor-city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:37:56Z"
+  },
+  {
+    "name": "Denise Sorenson",
+    "sources": [
+      "https://www.cityofemmett.org/mayor-city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilman', which is normalized to 'council member'."
+      },
+      {
+        "data": "councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofemmett.org/council-contact-sorenson",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A specific 'Contact' link is provided directly under the person's name.",
+        "source": "https://www.cityofemmett.org/mayor-city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:37:56Z"
+  },
+  {
+    "name": "Jody Harris",
+    "sources": [
+      "https://www.cityofemmett.org/mayor-city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilman', which is normalized to 'council member'."
+      },
+      {
+        "data": "councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofemmett.org/council-contact-harris",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A specific 'Contact' link is provided directly under the person's name.",
+        "source": "https://www.cityofemmett.org/mayor-city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:37:56Z"
+  },
+  {
+    "name": "Thomas Butler",
+    "sources": [
+      "https://www.cityofemmett.org/mayor-city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilman', which is normalized to 'council member'."
+      },
+      {
+        "data": "councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofemmett.org/council-contact-butler",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A specific 'Contact' link is provided directly under the person's name.",
+        "source": "https://www.cityofemmett.org/mayor-city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:37:56Z"
+  },
+  {
+    "name": "Gary Resinkin",
+    "sources": [
+      "https://www.cityofemmett.org/mayor-city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilman', which is normalized to 'council member'."
+      },
+      {
+        "data": "councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofemmett.org/council-contact-resinkin",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A specific 'Contact' link is provided directly under the person's name.",
+        "source": "https://www.cityofemmett.org/mayor-city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:37:56Z"
   }
 ]
