@@ -288,7 +288,14 @@
       ],
       "population": 12346,
       "website": "https://www.cityofblackfoot.org",
-      "fips": "1607840"
+      "fips": "1607840",
+      "meta_updated_at": "2025-07-12T20:45:53Z",
+      "meta_hash": "c3617f04e79f746a49bc863195236475",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Garden City",
