@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Jackie Hutchison",
+    "sources": [
+      "https://middleton.id.gov",
+      "https://middleton.id.gov/contact-us"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jackie Hutchison' and 'Meet the Mayor' section."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Mayors are typically considered part of the governing body/council."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated and matches target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(208) 585.3133",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city phone number, not specific to the mayor, but the only phone number available in the provided text.",
+        "source": "https://middleton.id.gov"
+      },
+      {
+        "data": "(208) 585-3133",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly stated next to the name.",
+        "source": "https://middleton.id.gov/contact-us"
+      }
+    ],
+    "emails": [
+      {
+        "data": "citmid@middletoncity.org",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "General city email, not specific to the mayor, but the only email available in the provided text.",
+        "source": "https://middleton.id.gov"
+      },
+      {
+        "data": "jhutjhutchison@middletoncity.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly stated next to the name.",
+        "source": "https://middleton.id.gov/contact-us"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://middleton.id.gov/city-government/elected-officials",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Link to 'view government officials' is the most relevant website for elected officials, though not a direct profile page.",
+        "source": "https://middleton.id.gov"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T20:50:25Z"
+  }
+]

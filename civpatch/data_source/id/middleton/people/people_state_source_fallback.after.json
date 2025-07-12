@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Jackie Hutchison",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:48:47Z"
+  },
+  {
+    "name": "Rob Kiser",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:48:47Z"
+  },
+  {
+    "name": "Dave Murray",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:48:47Z"
+  },
+  {
+    "name": "Tim O'Meara",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:48:47Z"
+  },
+  {
+    "name": "Mark Christiansen",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:48:47Z"
+  }
+]

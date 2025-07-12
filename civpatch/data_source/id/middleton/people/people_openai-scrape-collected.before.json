@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Jackie Hutchison",
+    "sources": [
+      "https://middleton.id.gov",
+      "https://middleton.id.gov/contact-us"
+    ],
+    "images": [
+      {
+        "data": "https://middleton.id.gov/Portals/0/Images/Home/mayor_jackie_hutchison.jpg",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is directly associated with the mayor section and name.",
+        "source": "https://middleton.id.gov"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The content explicitly states 'Meet the Mayor' and shows a photo captioned 'Mayor Jackie Hutchison'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly listed as Mayor in the content."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(208) 585-3133",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed near Mayor's contact info.",
+        "source": "https://middleton.id.gov/contact-us"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jhutjhutchison@middletoncity.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed next to Mayor's name.",
+        "source": "https://middleton.id.gov/contact-us"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://middleton.id.gov/city-government/elected-officials",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The page links to 'view government officials' which likely includes mayor info.",
+        "source": "https://middleton.id.gov"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T20:50:01Z"
+  }
+]
