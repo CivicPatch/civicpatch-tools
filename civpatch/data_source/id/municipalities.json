@@ -321,7 +321,14 @@
       ],
       "population": 11117,
       "website": "https://www.staridaho.org",
-      "fips": "1676870"
+      "fips": "1676870",
+      "meta_updated_at": "2025-07-12T20:49:53Z",
+      "meta_hash": "c04afb3d0586147342b924c9a7262371",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Middleton",
