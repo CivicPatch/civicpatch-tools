@@ -121,7 +121,14 @@
       ],
       "population": 51807,
       "website": "https://www.tfid.org",
-      "fips": "1682810"
+      "fips": "1682810",
+      "meta_updated_at": "2025-07-12T19:59:38Z",
+      "meta_hash": "95ada4d58fd1ff1796604d5283f60a1b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Rexburg",
