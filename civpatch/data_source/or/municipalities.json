@@ -2434,10 +2434,12 @@
       "phone_number": "(503) 429-5291",
       "website": "https://www.vernonia-or.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "d0073644aeb574c986670b24884e5fc9",
+      "meta_updated_at": "2025-07-12T15:54:18Z",
+      "meta_hash": "8cb31e15e606444da1e5e9a6b7e05e69",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4177250"
     },
