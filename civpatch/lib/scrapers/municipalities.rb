@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "services/census"
+require_relative "id/municipalities"
 require_relative "co/municipalities"
 require_relative "nd/municipalities"
 require_relative "nh/municipalities"
@@ -31,14 +32,16 @@ module Scrapers
 
     def self.get_scraper(state)
       case state
+      when "id"
+        Scrapers::Id::Municipalities
+      when "co"
+        Scrapers::Co::Municipalities
       when "nh"
         Scrapers::Nh::Municipalities
       when "or"
         Scrapers::Or::Municipalities
       when "wa"
         Scrapers::Wa::Municipalities
-      when "co"
-        Scrapers::Co::Municipalities
       when "nd"
         Scrapers::Nd::Municipalities
       else
@@ -58,17 +61,39 @@ module Scrapers
                                         .sort_by { |m| m["population"] * descending }
       additional_info_hash_by_municipality_name = scraper.fetch
 
+      puts "Adding additional info to municipalities for #{state}"
+      pp additional_info_hash_by_municipality_name
+
+
       municipalities_with_census_data.map do |m|
+        additional_hash_info = additional_info_hash_by_municipality_name[m["name"]]
         # if additional_info_hash_by_municipality_name.nil?
         #  puts "No additional info found for #{m["name"]}"
         #  next m
         # end
 
+        if additional_hash_info.nil?
+          puts "No info found, matching by fips for #{m["name"]}"
+
+          # Try to match by wikipedia fips (if available)
+          additional_info_hash_by_municipality_name.each do |name, info|
+            if info["fips"] == m["geoid"]
+              puts "Matched #{m["name"]} with #{name} by fips"
+              additional_hash_info = info
+              break
+            end
+          end
+
+          if additional_hash_info.nil?
+            puts "No match found for #{m["name"]}"
+          end
+        end
+
         # NOTE: Need to specify by county for states with duplicates.
         # See: Michigan
         {
           **m,
-          **additional_info_hash_by_municipality_name[m["name"]]
+          **additional_hash_info || {},
           # Properties available:
           # -> address
           # -> phone_number
