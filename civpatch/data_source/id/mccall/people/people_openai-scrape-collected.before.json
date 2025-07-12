@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Bob Giles",
+    "sources": [
+      "https://www.mccall.id.us/formcenter/city-manager--city-council-16/get-married-by-the-mayor-59",
+      "https://www.mccall.id.us/FormCenter/City-Manager-City-Council-16/Get-Married-by-the-Mayor-59"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Mayor of McCall Bob Giles', clearly indicating his role as Mayor."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor of McCall Bob Giles', clearly identifying his role as Mayor."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:58:46Z"
+  }
+]

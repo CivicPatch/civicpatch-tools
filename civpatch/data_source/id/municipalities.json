@@ -666,7 +666,14 @@
       ],
       "population": 3686,
       "website": "https://www.mccall.id.us",
-      "fips": "1648790"
+      "fips": "1648790",
+      "meta_updated_at": "2025-07-12T23:59:16Z",
+      "meta_hash": "bb2638b64ec6877871a01a37bfb74b26",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "St Anthony",
