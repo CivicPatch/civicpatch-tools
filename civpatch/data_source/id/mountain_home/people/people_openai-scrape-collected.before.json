@@ -1,47 +1,5 @@
 [
   {
-    "name": "Rich Sykes",
-    "sources": [
-      "https://mountain-home.us/city-government/mayor-s-office"
-    ],
-    "images": [],
-    "roles": [
-      {
-        "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'My name is Rich Sykes, Mayor of Mountain Home.'"
-      }
-    ],
-    "divisions": [],
-    "phone_numbers": [
-      {
-        "data": "208-587-2104",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Phone number is listed under Mayor's Office contact info, likely for the Mayor.",
-        "source": "https://mountain-home.us/city-government/mayor-s-office"
-      }
-    ],
-    "emails": [
-      {
-        "data": "mayor@mountain-home.us",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email is provided as 'Email Us' link with mailto:mayor@mountain-home.us on the Mayor's Office page.",
-        "source": "https://mountain-home.us/city-government/mayor-s-office"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://mountain-home.us/city-government/mayor-s-office",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page URL and links labeled 'Meet the Mayor' point to this official Mayor's Office page.",
-        "source": "https://mountain-home.us/city-government/mayor-s-office"
-      }
-    ],
-    "start_dates": [],
-    "end_dates": [],
-    "updated_at": "2025-07-12T20:44:15Z"
-  },
-  {
     "name": "Daniel Brennan",
     "sources": [
       "https://mountain-home.us/city-government/city-council"
@@ -51,7 +9,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title 'Councilmember' clearly indicates a council member role in the primary governing body."
+        "llm_confidence_reason": "Title 'Councilmember' clearly indicates a council member role in the City Council."
       }
     ],
     "divisions": [],
@@ -59,15 +17,15 @@
       {
         "data": "208-371-4919",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly after name and role.",
+        "llm_confidence_reason": "Phone number listed directly under Daniel Brennan's name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
     "emails": [
       {
         "data": "dbrennan@mountain-home.us",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly after name and role.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email link text 'Email me' under Daniel Brennan's name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -88,7 +46,7 @@
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
-    "updated_at": "2025-07-12T20:44:15Z"
+    "updated_at": "2025-07-12T23:46:29Z"
   },
   {
     "name": "Becky Garvey",
@@ -100,7 +58,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title 'Councilmember' clearly indicates a council member role in the primary governing body."
+        "llm_confidence_reason": "Title 'Councilmember' clearly indicates a council member role in the City Council."
       }
     ],
     "divisions": [],
@@ -108,15 +66,15 @@
       {
         "data": "208-761-4896",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly after name and role.",
+        "llm_confidence_reason": "Phone number listed directly under Becky Garvey's name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
     "emails": [
       {
         "data": "bgarvey@mountain-home.us",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly after name and role.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email link text 'Email me' under Becky Garvey's name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -137,7 +95,7 @@
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
-    "updated_at": "2025-07-12T20:44:15Z"
+    "updated_at": "2025-07-12T23:46:29Z"
   },
   {
     "name": "Scott Harjo",
@@ -149,7 +107,7 @@
       {
         "data": "Council President",
         "llm_confidence": 0.98,
-        "llm_confidence_reason": "Title 'President of the Council' normalized to 'Council President' as a primary governing body role."
+        "llm_confidence_reason": "Title 'President of the Council' clearly indicates Council President role."
       }
     ],
     "divisions": [],
@@ -157,15 +115,15 @@
       {
         "data": "208-985-8303",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly after name and role.",
+        "llm_confidence_reason": "Phone number listed directly under Scott Harjo's name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
     "emails": [
       {
         "data": "sharjo@mountain-home.us",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly after name and role.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email link text 'Email me' under Scott Harjo's name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -186,7 +144,7 @@
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
-    "updated_at": "2025-07-12T20:44:15Z"
+    "updated_at": "2025-07-12T23:46:29Z"
   },
   {
     "name": "Jenny Wirkkala",
@@ -198,7 +156,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title 'Councilmember' clearly indicates a council member role in the primary governing body."
+        "llm_confidence_reason": "Title 'Councilmember' clearly indicates a council member role in the City Council."
       }
     ],
     "divisions": [],
@@ -206,15 +164,15 @@
       {
         "data": "208-590-0804",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Phone number listed directly after name and role.",
+        "llm_confidence_reason": "Phone number listed directly under Jenny Wirkkala's name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
     "emails": [
       {
         "data": "jwirkkala@mountain-home.us",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Email listed directly after name and role.",
+        "llm_confidence": 0.99,
+        "llm_confidence_reason": "Email link text 'Email me' under Jenny Wirkkala's name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -235,6 +193,6 @@
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
-    "updated_at": "2025-07-12T20:44:15Z"
+    "updated_at": "2025-07-12T23:46:29Z"
   }
 ]
