@@ -479,7 +479,14 @@
       ],
       "population": 6072,
       "website": "https://fruitland.org",
-      "fips": "1628990"
+      "fips": "1628990",
+      "meta_updated_at": "2025-07-12T23:42:46Z",
+      "meta_hash": "1b9fb93618061ce5d96474cd45af4fe9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Weiser",
