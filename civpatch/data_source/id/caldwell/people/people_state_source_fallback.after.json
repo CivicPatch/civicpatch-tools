@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Jarom Wagoner",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T19:52:27Z"
+  },
+  {
+    "name": "Brad Doty",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Seat 1"
+    ],
+    "updated_at": "2025-07-12T19:52:27Z"
+  },
+  {
+    "name": "Chuck Stadick",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T19:52:27Z"
+  },
+  {
+    "name": "Diana Register",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T19:52:27Z"
+  },
+  {
+    "name": "Geoff Williams",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Seat 4"
+    ],
+    "updated_at": "2025-07-12T19:52:27Z"
+  },
+  {
+    "name": "Chris Allgood",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Seat 5"
+    ],
+    "updated_at": "2025-07-12T19:52:27Z"
+  },
+  {
+    "name": "Mike Dittenber",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Seat 6"
+    ],
+    "updated_at": "2025-07-12T19:52:27Z"
+  }
+]
