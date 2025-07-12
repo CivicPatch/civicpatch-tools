@@ -187,7 +187,14 @@
       ],
       "population": 24011,
       "website": "https://kunacity.id.gov",
-      "fips": "1644290"
+      "fips": "1644290",
+      "meta_updated_at": "2025-07-12T20:09:11Z",
+      "meta_hash": "925bf2572732c0185aae4cc6575969bb",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Ammon",
