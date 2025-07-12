@@ -2,20 +2,19 @@
   {
     "name": "Jackie Hutchison",
     "roles": [
-      "Mayor",
-      "council member"
+      "Mayor"
     ],
     "divisions": [],
     "image": null,
     "phone_number": "(208) 585-3133",
     "email": "jhutjhutchison@middletoncity.org",
-    "website": "https://middleton.id.gov/city-government/elected-officials",
+    "website": null,
     "start_date": null,
     "end_date": null,
     "sources": [
       "https://middleton.id.gov",
       "https://middleton.id.gov/contact-us"
     ],
-    "updated_at": "2025-07-12T20:50:25Z"
+    "updated_at": "2025-07-12T23:29:24Z"
   }
 ]
