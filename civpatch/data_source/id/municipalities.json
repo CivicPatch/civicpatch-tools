@@ -585,7 +585,14 @@
       ],
       "population": 3700,
       "website": "https://heyburn.id.gov",
-      "fips": "1637360"
+      "fips": "1637360",
+      "meta_updated_at": "2025-07-12T23:53:13Z",
+      "meta_hash": "abf396ceef7ec5f5e93bf0fa8b239803",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "McCall",
