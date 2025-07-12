@@ -1,5 +1,47 @@
 [
   {
+    "name": "Rich Sykes",
+    "sources": [
+      "https://mountain-home.us/city-government/mayor-s-office"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-587-2104",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided for the Mayor's Office.",
+        "source": "https://mountain-home.us/city-government/mayor-s-office"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayor@mountain-home.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for the Mayor's Office.",
+        "source": "https://mountain-home.us/city-government/mayor-s-office"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://mountain-home.us/city-government/mayor-s-office",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly provided as the 'Meet the Mayor' page.",
+        "source": "https://mountain-home.us/city-government/mayor-s-office"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:55:14Z"
+  },
+  {
     "name": "Daniel Brennan",
     "sources": [
       "https://mountain-home.us/city-government/city-council"
@@ -9,7 +51,7 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated next to the name and is a target role."
       }
     ],
     "divisions": [],
@@ -17,7 +59,7 @@
       {
         "data": "208-371-4919",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -25,7 +67,7 @@
       {
         "data": "dbrennan@mountain-home.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -34,7 +76,7 @@
       {
         "data": "2022",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start year is explicitly stated as part of the term '2022-2026'.",
+        "llm_confidence_reason": "Start date '2022' is explicitly stated as part of the term '2022-2026'.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -42,11 +84,11 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End year is explicitly stated as part of the term '2022-2026'.",
+        "llm_confidence_reason": "End date '2026' is explicitly stated as part of the term '2022-2026'.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
-    "updated_at": "2025-07-12T23:46:39Z"
+    "updated_at": "2025-07-12T23:55:14Z"
   },
   {
     "name": "Becky Garvey",
@@ -58,7 +100,7 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated next to the name and is a target role."
       }
     ],
     "divisions": [],
@@ -66,7 +108,7 @@
       {
         "data": "208-761-4896",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -74,7 +116,7 @@
       {
         "data": "bgarvey@mountain-home.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -83,7 +125,7 @@
       {
         "data": "2022",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start year is explicitly stated as part of the term '2022-2026'.",
+        "llm_confidence_reason": "Start date '2022' is explicitly stated as part of the term '2022-2026'.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -91,11 +133,11 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End year is explicitly stated as part of the term '2022-2026'.",
+        "llm_confidence_reason": "End date '2026' is explicitly stated as part of the term '2022-2026'.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
-    "updated_at": "2025-07-12T23:46:39Z"
+    "updated_at": "2025-07-12T23:55:14Z"
   },
   {
     "name": "Scott Harjo",
@@ -107,12 +149,12 @@
       {
         "data": "President of the Council",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated and matches the target role 'council president'."
+        "llm_confidence_reason": "Role 'President of the Council' is explicitly stated next to the name and is a target role."
       },
       {
-        "data": "Councilmember",
+        "data": "Council member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Inferred as a council member because 'President of the Council' is a role within the City Council."
+        "llm_confidence_reason": "Inferred 'Council member' role as 'President of the Council' implies being a council member."
       }
     ],
     "divisions": [],
@@ -120,7 +162,7 @@
       {
         "data": "208-985-8303",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -128,7 +170,7 @@
       {
         "data": "sharjo@mountain-home.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -137,7 +179,7 @@
       {
         "data": "2024",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start year is explicitly stated as part of the term '2024-2028'.",
+        "llm_confidence_reason": "Start date '2024' is explicitly stated as part of the term '2024-2028'.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -145,11 +187,11 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End year is explicitly stated as part of the term '2024-2028'.",
+        "llm_confidence_reason": "End date '2028' is explicitly stated as part of the term '2024-2028'.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
-    "updated_at": "2025-07-12T23:46:39Z"
+    "updated_at": "2025-07-12T23:55:14Z"
   },
   {
     "name": "Jenny Wirkkala",
@@ -161,7 +203,7 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated next to the name and is a target role."
       }
     ],
     "divisions": [],
@@ -169,7 +211,7 @@
       {
         "data": "208-590-0804",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "llm_confidence_reason": "Phone number is explicitly stated next to the name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -177,7 +219,7 @@
       {
         "data": "jwirkkala@mountain-home.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence_reason": "Email address is explicitly stated next to the name.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -186,7 +228,7 @@
       {
         "data": "2024",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start year is explicitly stated as part of the term '2024-2028'.",
+        "llm_confidence_reason": "Start date '2024' is explicitly stated as part of the term '2024-2028'.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
@@ -194,10 +236,10 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End year is explicitly stated as part of the term '2024-2028'.",
+        "llm_confidence_reason": "End date '2028' is explicitly stated as part of the term '2024-2028'.",
         "source": "https://mountain-home.us/city-government/city-council"
       }
     ],
-    "updated_at": "2025-07-12T23:46:39Z"
+    "updated_at": "2025-07-12T23:55:14Z"
   }
 ]
