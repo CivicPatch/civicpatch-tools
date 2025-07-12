@@ -398,7 +398,14 @@
       ],
       "population": 6082,
       "website": "https://www.rupert-idaho.com",
-      "fips": "1670660"
+      "fips": "1670660",
+      "meta_updated_at": "2025-07-12T20:56:16Z",
+      "meta_hash": "098a7d217725a5b23080ccf4eff7653e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fruitland",
