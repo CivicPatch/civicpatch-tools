@@ -20,7 +20,14 @@
       ],
       "population": 117635,
       "website": "https://meridiancity.org",
-      "fips": "1652120"
+      "fips": "1652120",
+      "meta_updated_at": "2025-07-12T19:56:33Z",
+      "meta_hash": "02de12cc419574ec996f0055eee02d1f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Nampa",
