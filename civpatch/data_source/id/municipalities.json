@@ -574,7 +574,14 @@
       ],
       "population": 3707,
       "website": "https://www.goodingidaho.org",
-      "fips": "1632140"
+      "fips": "1632140",
+      "meta_updated_at": "2025-07-12T23:52:58Z",
+      "meta_hash": "f43d10ed6f3125ec93496afe530c82af",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Heyburn",
