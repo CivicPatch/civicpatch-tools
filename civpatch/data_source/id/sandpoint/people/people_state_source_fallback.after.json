@@ -4,8 +4,10 @@
     "roles": [
       "Mayor"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:52:35Z"
+    "divisions": [
+      "Executive Branch"
+    ],
+    "updated_at": "2025-07-12T23:35:50Z"
   },
   {
     "name": "Deb Ruehle",
@@ -13,47 +15,59 @@
       "Council Member",
       "Council President"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:52:35Z"
+    "divisions": [
+      "City Council"
+    ],
+    "updated_at": "2025-07-12T23:35:50Z"
   },
   {
     "name": "Joel Aispuro",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:52:35Z"
+    "divisions": [
+      "City Council"
+    ],
+    "updated_at": "2025-07-12T23:35:50Z"
   },
   {
     "name": "Justin Dick",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:52:35Z"
+    "divisions": [
+      "City Council"
+    ],
+    "updated_at": "2025-07-12T23:35:50Z"
   },
   {
     "name": "Pam Duquette",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:52:35Z"
+    "divisions": [
+      "City Council"
+    ],
+    "updated_at": "2025-07-12T23:35:50Z"
   },
   {
     "name": "Kyle Schreiber",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:52:35Z"
+    "divisions": [
+      "City Council"
+    ],
+    "updated_at": "2025-07-12T23:35:50Z"
   },
   {
     "name": "Rick Howarth",
     "roles": [
       "Council Member"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:52:35Z"
+    "divisions": [
+      "City Council"
+    ],
+    "updated_at": "2025-07-12T23:35:50Z"
   }
 ]

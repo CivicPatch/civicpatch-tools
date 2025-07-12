@@ -366,8 +366,8 @@
       "population": 8639,
       "website": "https://www.sandpointidaho.gov",
       "fips": "1672100",
-      "meta_updated_at": "2025-07-12T20:56:44Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-12T23:39:34Z",
+      "meta_hash": "657cc6c752e5513215ac5d186366924d",
       "meta_sources": [
         "state_source",
         "gemini",
