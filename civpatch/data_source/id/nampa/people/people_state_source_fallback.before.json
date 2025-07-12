@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Debbie Kling",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-12T19:52:20Z"
+  },
+  {
+    "name": "Victor Rodriguez",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District"
+    ],
+    "updated_at": "2025-07-12T19:52:20Z"
+  },
+  {
+    "name": "Natalie Jangula",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District"
+    ],
+    "updated_at": "2025-07-12T19:52:20Z"
+  },
+  {
+    "name": "David Bills",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District"
+    ],
+    "updated_at": "2025-07-12T19:52:20Z"
+  },
+  {
+    "name": "Dale Reynolds",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District"
+    ],
+    "updated_at": "2025-07-12T19:52:20Z"
+  },
+  {
+    "name": "Randy Haverfield",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District"
+    ],
+    "updated_at": "2025-07-12T19:52:20Z"
+  },
+  {
+    "name": "Sebastian Griffin",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District"
+    ],
+    "updated_at": "2025-07-12T19:52:20Z"
+  }
+]
