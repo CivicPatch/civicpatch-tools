@@ -64,7 +64,14 @@
       ],
       "population": 56320,
       "website": "https://pocatello.gov",
-      "fips": "1664090"
+      "fips": "1664090",
+      "meta_updated_at": "2025-07-12T20:01:37Z",
+      "meta_hash": "44f71cde3238d09478dac134317bc069",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Coeur d'Alene",
