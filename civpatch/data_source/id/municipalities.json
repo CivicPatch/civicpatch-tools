@@ -563,7 +563,14 @@
       ],
       "population": 4558,
       "website": "https://www.cityofbuhl.us",
-      "fips": "1610810"
+      "fips": "1610810",
+      "meta_updated_at": "2025-07-12T23:51:22Z",
+      "meta_hash": "cb5a9593a0840d968398932cf405a87d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Gooding",
