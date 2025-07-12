@@ -42,7 +42,14 @@
       ],
       "population": 64818,
       "website": "https://www.idahofallsidaho.gov",
-      "fips": "1639700"
+      "fips": "1639700",
+      "meta_updated_at": "2025-07-12T19:55:57Z",
+      "meta_hash": "8184039719abbf1093efc9968d265934",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Caldwell",
