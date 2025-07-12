@@ -635,7 +635,14 @@
       ],
       "population": 3606,
       "website": "https://www.cityofstanthony.org",
-      "fips": "1671020"
+      "fips": "1671020",
+      "meta_updated_at": "2025-07-12T23:58:52Z",
+      "meta_hash": "3ecd66acdefc745d81f81449329229f8",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Ketchum",
