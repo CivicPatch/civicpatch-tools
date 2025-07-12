@@ -75,7 +75,14 @@
       ],
       "population": 54628,
       "website": "https://www.cdaid.org/",
-      "fips": "1616750"
+      "fips": "1616750",
+      "meta_updated_at": "2025-07-12T20:02:20Z",
+      "meta_hash": "3a6985500f9d91394697b69514e2fd6f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Twin Falls",
