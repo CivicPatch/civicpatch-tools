@@ -1,0 +1,17 @@
+---
+- name: Randy Hibberd
+  roles:
+  - Mayor
+  divisions:
+  image: https://lirp.cdn-website.com/544735d7/dms3rep/multi/opt/rh-382-1920w.webp
+  cdn_image: https://cdn.civicpatch.org/open-data/id/weiser/images/7f9a861dbc170e7982d8338a355bfd0b0055fe89dd77b9cddd06b9bd282bc0f4.webp
+  email:
+  phone_number: "(208) 414-1965"
+  website: https://www.cityofweiser.net/mayor-randy-hibberd
+  start_date:
+  end_date:
+  sources:
+  - https://www.cityofweiser.net/mayor-randy-hibberd
+  - https://www.cityofweiser.net
+  - https://www.cityofweiser.net/city-council-members
+  updated_at: '2025-07-12T23:45:02Z'

@@ -1,0 +1,266 @@
+[
+  {
+    "name": "Randy Hibberd",
+    "sources": [
+      "https://www.cityofweiser.net/mayor-randy-hibberd",
+      "https://www.cityofweiser.net",
+      "https://www.cityofweiser.net",
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "images": [
+      {
+        "data": "https://lirp.cdn-website.com/544735d7/dms3rep/multi/opt/rh-382-1920w.webp",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a portrait near the Mayor's section and name.",
+        "source": "https://www.cityofweiser.net/mayor-randy-hibberd"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page is titled 'Mayor Randy Hibberd' and the text states 'In addition to serving as Mayor...'"
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The content explicitly lists 'Mayor Randy Hibberd' under the Government section, indicating he is the Mayor of Weiser."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The content explicitly lists 'Mayor Randy Hibberd' under the Government section, indicating he is the mayor."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as 'Mayor Randy Hibberd' in the government section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-414-1965",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed under the Mayor's contact section.",
+        "source": "https://www.cityofweiser.net/mayor-randy-hibberd"
+      },
+      {
+        "data": "208-414-1965",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number 208-414-1965 is listed under Contact Us for City of Weiser and likely serves as the main contact for city officials including the Mayor.",
+        "source": "https://www.cityofweiser.net"
+      },
+      {
+        "data": "208-414-1965",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number 208-414-1965 is listed under Contact Us and likely corresponds to city hall or mayor's office; no other phone numbers are given.",
+        "source": "https://www.cityofweiser.net"
+      },
+      {
+        "data": "208-414-1965",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under contact info for City of Weiser, likely main city contact; no direct personal number found.",
+        "source": "https://www.cityofweiser.net/city-council-members"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofweiser.net/mayor-randy-hibberd",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the official page for Mayor Randy Hibberd.",
+        "source": "https://www.cityofweiser.net/mayor-randy-hibberd"
+      },
+      {
+        "data": "https://www.cityofweiser.net/mayor-randy-hibberd",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is explicitly labeled as 'Mayor Randy Hibberd' indicating it is the official page for the Mayor.",
+        "source": "https://www.cityofweiser.net"
+      },
+      {
+        "data": "https://www.cityofweiser.net/mayor-randy-hibberd",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The link titled 'Mayor Randy Hibberd' is a direct profile page for the mayor.",
+        "source": "https://www.cityofweiser.net"
+      },
+      {
+        "data": "https://www.cityofweiser.net/mayor-randy-hibberd",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL explicitly linked to Mayor Randy Hibberd's profile.",
+        "source": "https://www.cityofweiser.net/city-council-members"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Larry",
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'City Councilman' under City Council Members, normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofweiser.net/larry-hogg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL explicitly linked to Larry's profile.",
+        "source": "https://www.cityofweiser.net/city-council-members"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Mike",
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'City Councilman' under City Council Members, normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofweiser.net/mike-hopkins",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL explicitly linked to Mike's profile.",
+        "source": "https://www.cityofweiser.net/city-council-members"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Sterling",
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'City Councilman' under City Council Members, normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofweiser.net/sterling-blackwell",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL explicitly linked to Sterling's profile.",
+        "source": "https://www.cityofweiser.net/city-council-members"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Herb",
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'City Councilman' under City Council Members, normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofweiser.net/herb-haun",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL explicitly linked to Herb's profile.",
+        "source": "https://www.cityofweiser.net/city-council-members"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Marg",
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'City Councilman' under City Council Members, normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofweiser.net/layna-hafer",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Linked URL is for Layna Hafer, but name given is Marg; likely same person or alternate name; extracted as is.",
+        "source": "https://www.cityofweiser.net/city-council-members"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:43:55Z"
+  },
+  {
+    "name": "Katie",
+    "sources": [
+      "https://www.cityofweiser.net/city-council-members"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed as 'City Councilman' under City Council Members, normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofweiser.net/alicia-fowler",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Linked URL is for Alicia Fowler, but name given is Katie; likely same person or alternate name; extracted as is.",
+        "source": "https://www.cityofweiser.net/city-council-members"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-12T23:43:55Z"
+  }
+]
