@@ -141,7 +141,14 @@
       ],
       "population": 25435,
       "website": "https://www.ci.moscow.id.us",
-      "fips": "1654550"
+      "fips": "1654550",
+      "meta_updated_at": "2025-07-12T20:07:49Z",
+      "meta_hash": "bad3c6ac7a2d9630dc6faf9e5c2c63d4",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Kuna",
