@@ -343,14 +343,7 @@
       ],
       "population": 9211,
       "website": "https://www.rathdrum.org",
-      "fips": "1666340",
-      "meta_updated_at": "2025-07-12T20:54:31Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
-      "meta_sources": [
-        "state_source",
-        "gemini",
-        "openai"
-      ]
+      "fips": "1666340"
     },
     {
       "name": "Hailey",
