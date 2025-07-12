@@ -545,7 +545,14 @@
       ],
       "population": 4568,
       "website": "https://cityofamericanfalls.com",
-      "fips": "1601900"
+      "fips": "1601900",
+      "meta_updated_at": "2025-07-12T23:51:22Z",
+      "meta_hash": "23a6cd28521c2b04bb9c96b9799daeb0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Buhl",
