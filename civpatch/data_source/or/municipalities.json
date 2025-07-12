@@ -2456,10 +2456,12 @@
       "phone_number": "(541) 247-7029",
       "website": "https://www.goldbeachoregon.gov",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "f6889e031d9fcdcbfa9f309f7c7d2fb9",
+      "meta_updated_at": "2025-07-12T15:56:14Z",
+      "meta_hash": "aa99e9213c12349a81c15b767ab6d5d5",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4129900"
     },
