@@ -2414,10 +2414,12 @@
       "phone_number": "(541) 582-4401",
       "website": "https://www.cityofrogueriver.org",
       "email": null,
-      "meta_updated_at": "2025-04-24",
-      "meta_hash": "6a6d7bf8e4bf67fe10cf3eec3bf08f5b",
+      "meta_updated_at": "2025-07-12T15:55:55Z",
+      "meta_hash": "6b3f1519bc97a1a46187eba027c837cf",
       "meta_sources": [
-        "state_source"
+        "state_source",
+        "gemini",
+        "openai"
       ],
       "geoid": "4163450"
     },
