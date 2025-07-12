@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Mike Hill",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:48:54Z"
+  },
+  {
+    "name": "Larry Sanders",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:48:54Z"
+  },
+  {
+    "name": "John Hatcher",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:48:54Z"
+  },
+  {
+    "name": "John Hodgkins",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:48:54Z"
+  },
+  {
+    "name": "Ken Owens",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:48:54Z"
+  }
+]
