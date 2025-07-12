@@ -7,7 +7,7 @@
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-12T20:48:47Z"
+    "updated_at": "2025-07-12T23:27:49Z"
   },
   {
     "name": "Rob Kiser",
@@ -18,27 +18,17 @@
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-12T20:48:47Z"
+    "updated_at": "2025-07-12T23:27:49Z"
   },
   {
-    "name": "Dave Murray",
+    "name": "Timothy O'Meara",
     "roles": [
       "Council Member"
     ],
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-12T20:48:47Z"
-  },
-  {
-    "name": "Tim O'Meara",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-12T20:48:47Z"
+    "updated_at": "2025-07-12T23:27:49Z"
   },
   {
     "name": "Mark Christiansen",
@@ -48,6 +38,16 @@
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-12T20:48:47Z"
+    "updated_at": "2025-07-12T23:27:49Z"
+  },
+  {
+    "name": "Dave Murray",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-12T23:27:49Z"
   }
 ]

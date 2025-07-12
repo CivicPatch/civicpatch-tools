@@ -5,7 +5,7 @@
       "Mayor"
     ],
     "divisions": [],
-    "updated_at": "2025-07-12T20:48:47Z"
+    "updated_at": "2025-07-12T23:27:49Z"
   },
   {
     "name": "Rob Kiser",
@@ -14,23 +14,15 @@
       "Council President"
     ],
     "divisions": [],
-    "updated_at": "2025-07-12T20:48:47Z"
+    "updated_at": "2025-07-12T23:27:49Z"
   },
   {
-    "name": "Dave Murray",
+    "name": "Timothy O'Meara",
     "roles": [
       "Council Member"
     ],
     "divisions": [],
-    "updated_at": "2025-07-12T20:48:47Z"
-  },
-  {
-    "name": "Tim O'Meara",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [],
-    "updated_at": "2025-07-12T20:48:47Z"
+    "updated_at": "2025-07-12T23:27:49Z"
   },
   {
     "name": "Mark Christiansen",
@@ -38,6 +30,14 @@
       "Council Member"
     ],
     "divisions": [],
-    "updated_at": "2025-07-12T20:48:47Z"
+    "updated_at": "2025-07-12T23:27:49Z"
+  },
+  {
+    "name": "Dave Murray",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T23:27:49Z"
   }
 ]
