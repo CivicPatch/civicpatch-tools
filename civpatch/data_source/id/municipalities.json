@@ -354,7 +354,14 @@
       ],
       "population": 9161,
       "website": "https://www.haileycityhall.org",
-      "fips": "1634390"
+      "fips": "1634390",
+      "meta_updated_at": "2025-07-12T20:51:00Z",
+      "meta_hash": "902aeb83cc3b8d98a4de3c0b9020521d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Sandpoint",
