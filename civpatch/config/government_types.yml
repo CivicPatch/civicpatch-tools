@@ -119,6 +119,7 @@ government_types:
         - president
         - city council president
         - council member president
+        - president of the council
       - role: council president pro tem
         aliases:
         - council president pro-tem

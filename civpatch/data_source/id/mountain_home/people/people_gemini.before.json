@@ -1,22 +1,5 @@
 [
   {
-    "name": "Rich Sykes",
-    "roles": [
-      "mayor"
-    ],
-    "divisions": [],
-    "image": null,
-    "phone_number": "208-587-2104",
-    "email": "mayor@mountain-home.us",
-    "website": "https://mountain-home.us/city-government/mayor-s-office",
-    "start_date": null,
-    "end_date": null,
-    "sources": [
-      "https://mountain-home.us/city-government/mayor-s-office"
-    ],
-    "updated_at": "2025-07-12T20:44:30Z"
-  },
-  {
     "name": "Daniel Brennan",
     "roles": [
       "Councilmember"
@@ -31,7 +14,7 @@
     "sources": [
       "https://mountain-home.us/city-government/city-council"
     ],
-    "updated_at": "2025-07-12T20:44:30Z"
+    "updated_at": "2025-07-12T23:46:39Z"
   },
   {
     "name": "Becky Garvey",
@@ -48,13 +31,13 @@
     "sources": [
       "https://mountain-home.us/city-government/city-council"
     ],
-    "updated_at": "2025-07-12T20:44:30Z"
+    "updated_at": "2025-07-12T23:46:39Z"
   },
   {
     "name": "Scott Harjo",
     "roles": [
-      "Council member",
-      "President of the Council"
+      "President of the Council",
+      "Councilmember"
     ],
     "divisions": [],
     "image": null,
@@ -66,7 +49,7 @@
     "sources": [
       "https://mountain-home.us/city-government/city-council"
     ],
-    "updated_at": "2025-07-12T20:44:30Z"
+    "updated_at": "2025-07-12T23:46:39Z"
   },
   {
     "name": "Jenny Wirkkala",
@@ -83,6 +66,6 @@
     "sources": [
       "https://mountain-home.us/city-government/city-council"
     ],
-    "updated_at": "2025-07-12T20:44:30Z"
+    "updated_at": "2025-07-12T23:46:39Z"
   }
 ]
