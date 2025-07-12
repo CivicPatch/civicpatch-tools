@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Sean Coletti",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:08:09Z"
+  },
+  {
+    "name": "Russell Slack",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [
+      "Seat 2"
+    ],
+    "updated_at": "2025-07-12T20:08:09Z"
+  },
+  {
+    "name": "Scott Wessel",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Seat 1"
+    ],
+    "updated_at": "2025-07-12T20:08:09Z"
+  },
+  {
+    "name": "Sid Hamberlin",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:08:09Z"
+  },
+  {
+    "name": "Kris Oswald",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:08:09Z"
+  },
+  {
+    "name": "Heidi Boyle",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:08:09Z"
+  },
+  {
+    "name": "Jeff Fullmer",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Seat 3"
+    ],
+    "updated_at": "2025-07-12T20:08:09Z"
+  }
+]
