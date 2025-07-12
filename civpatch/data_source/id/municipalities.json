@@ -530,7 +530,14 @@
       ],
       "population": 4785,
       "website": "https://ci.shelley.id.us",
-      "fips": "1673450"
+      "fips": "1673450",
+      "meta_updated_at": "2025-07-12T23:49:07Z",
+      "meta_hash": "183ef78a28f734b30c0973d5bf6a017c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Kimberly",
