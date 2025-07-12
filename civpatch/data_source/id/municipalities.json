@@ -119,7 +119,14 @@
       ],
       "population": 34203,
       "website": "https://www.cityoflewiston.org",
-      "fips": "1646540"
+      "fips": "1646540",
+      "meta_updated_at": "2025-07-12T20:05:12Z",
+      "meta_hash": "83a726687d3ed29d0dceb850ebce80ca",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Eagle",
