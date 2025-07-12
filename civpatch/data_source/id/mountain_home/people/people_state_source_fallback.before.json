@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Rich Sykes",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-12T20:43:40Z"
+  },
+  {
+    "name": "Daniel Brennan",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-12T20:43:40Z"
+  },
+  {
+    "name": "Jenny Wirkkala",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-12T20:43:40Z"
+  },
+  {
+    "name": "Scott Harjo",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-12T20:43:40Z"
+  },
+  {
+    "name": "Garvey",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-12T20:43:40Z"
+  }
+]
