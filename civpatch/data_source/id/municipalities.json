@@ -97,7 +97,14 @@
       ],
       "population": 39409,
       "website": "https://www.rexburg.org",
-      "fips": "1667420"
+      "fips": "1667420",
+      "meta_updated_at": "2025-07-12T20:08:17Z",
+      "meta_hash": "91e1800a2a20b556ec5e6fac2f882432",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Post Falls",
