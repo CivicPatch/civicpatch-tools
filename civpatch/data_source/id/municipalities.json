@@ -108,7 +108,14 @@
       ],
       "population": 38485,
       "website": "https://www.postfalls.gov",
-      "fips": "1664810"
+      "fips": "1664810",
+      "meta_updated_at": "2025-07-12T20:04:48Z",
+      "meta_hash": "50a058cff7dadd93430df28f1d19f356",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Lewiston",
