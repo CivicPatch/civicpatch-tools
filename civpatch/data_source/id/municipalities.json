@@ -310,7 +310,14 @@
       ],
       "population": 11704,
       "website": "https://burleyidaho.org",
-      "fips": "1611260"
+      "fips": "1611260",
+      "meta_updated_at": "2025-07-12T20:50:08Z",
+      "meta_hash": "739f83ebb9a851f6d6467a29713a3f51",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Star",
