@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Dan Keller",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": null,
+    "updated_at": "2025-07-12T23:44:48Z"
+  },
+  {
+    "name": "Terry D. Larson",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": null,
+    "updated_at": "2025-07-12T23:44:48Z"
+  },
+  {
+    "name": "Todd D. Thomas",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": null,
+    "updated_at": "2025-07-12T23:44:48Z"
+  },
+  {
+    "name": "Brent Dodge",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": null,
+    "updated_at": "2025-07-12T23:44:48Z"
+  },
+  {
+    "name": "Chris Larsen",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": null,
+    "updated_at": "2025-07-12T23:44:48Z"
+  }
+]

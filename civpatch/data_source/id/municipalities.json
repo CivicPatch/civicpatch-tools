@@ -501,7 +501,14 @@
       ],
       "population": 5591,
       "website": "https://www.prestonidaho.net",
-      "fips": "1665260"
+      "fips": "1665260",
+      "meta_updated_at": "2025-07-12T23:48:02Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Rigby",
