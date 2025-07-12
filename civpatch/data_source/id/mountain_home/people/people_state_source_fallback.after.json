@@ -5,7 +5,15 @@
       "Mayor"
     ],
     "divisions": [],
-    "updated_at": "2025-07-12T23:45:23Z"
+    "updated_at": "2025-07-12T23:54:33Z"
+  },
+  {
+    "name": "Jenny Wirkkala",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T23:54:33Z"
   },
   {
     "name": "Scott Harjo",
@@ -13,6 +21,23 @@
       "Council Member"
     ],
     "divisions": [],
-    "updated_at": "2025-07-12T23:45:23Z"
+    "updated_at": "2025-07-12T23:54:33Z"
+  },
+  {
+    "name": "Daniel Brennan",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T23:54:33Z"
+  },
+  {
+    "name": "Garvey",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T23:54:33Z"
   }
 ]

@@ -1,4 +1,18 @@
 ---
+- name: Rich Sykes
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email: mayor@mountain-home.us
+  phone_number: "(208) 587-2104"
+  website: https://mountain-home.us/city-government/mayor-s-office
+  start_date:
+  end_date:
+  sources:
+  - https://mountain-home.us/city-government/mayor-s-office
+  updated_at: '2025-07-12T23:55:14Z'
 - name: Scott Harjo
   roles:
   - Council President
@@ -12,7 +26,7 @@
   end_date: '2028'
   sources:
   - https://mountain-home.us/city-government/city-council
-  updated_at: '2025-07-12T23:46:39Z'
+  updated_at: '2025-07-12T23:55:14Z'
 - name: Becky Garvey
   roles:
   - Council Member
@@ -26,7 +40,7 @@
   end_date: '2026'
   sources:
   - https://mountain-home.us/city-government/city-council
-  updated_at: '2025-07-12T23:46:39Z'
+  updated_at: '2025-07-12T23:55:14Z'
 - name: Daniel Brennan
   roles:
   - Council Member
@@ -40,7 +54,7 @@
   end_date: '2026'
   sources:
   - https://mountain-home.us/city-government/city-council
-  updated_at: '2025-07-12T23:46:39Z'
+  updated_at: '2025-07-12T23:55:14Z'
 - name: Jenny Wirkkala
   roles:
   - Council Member
@@ -54,4 +68,4 @@
   end_date: '2028'
   sources:
   - https://mountain-home.us/city-government/city-council
-  updated_at: '2025-07-12T23:46:39Z'
+  updated_at: '2025-07-12T23:55:14Z'
