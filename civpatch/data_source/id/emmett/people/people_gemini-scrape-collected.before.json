@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Gordon Petrie",
+    "sources": [
+      "https://www.cityofemmett.org",
+      "https://www.cityofemmett.org/police"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Petrie'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Petrie'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2025-01",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states 'Since January 2025, the city has operated under a new traffic ordinance that, if followed, does away with all confusion about how to negotiate traffic circles, also known as mini-roundabouts, in Emmett.' and attributes this statement to Mayor Petrie, implying his active role since that date.",
+        "source": "https://www.cityofemmett.org"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-12T20:55:30Z"
+  }
+]
