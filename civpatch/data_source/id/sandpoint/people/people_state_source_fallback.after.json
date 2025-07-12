@@ -1,0 +1,59 @@
+[
+  {
+    "name": "Jeremy Grimm",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:52:35Z"
+  },
+  {
+    "name": "Deb Ruehle",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:52:35Z"
+  },
+  {
+    "name": "Joel Aispuro",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:52:35Z"
+  },
+  {
+    "name": "Justin Dick",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:52:35Z"
+  },
+  {
+    "name": "Pam Duquette",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:52:35Z"
+  },
+  {
+    "name": "Kyle Schreiber",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:52:35Z"
+  },
+  {
+    "name": "Rick Howarth",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-12T20:52:35Z"
+  }
+]
