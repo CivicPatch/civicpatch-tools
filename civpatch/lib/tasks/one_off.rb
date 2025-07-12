@@ -10,15 +10,15 @@ require "scrapers/nd/municipalities"
 
 namespace :one_off do
   task "init_state" do
-    state = "nd"
-    municipalities = Scrapers::Municipalities.fetch(state)
+    state = "id"
+    #municipalities = Scrapers::Municipalities.fetch(state)
 
-    puts "found #{municipalities.length} municipalities in #{state}"
+    #puts "found #{municipalities.length} municipalities in #{state}"
 
-    Core::StateManager.update_municipalities(state, municipalities)
+    # Core::StateManager.update_municipalities(state, municipalities)
 
-    # Services::Census.download_municipalities(state)
-    # Services::Census.convert_to_geojson(state, Core::PathHelper.project_path(File.join("data", state, ".maps")))
+    Services::Census.download_municipalities(state)
+    Services::Census.convert_to_geojson(state, Core::PathHelper.project_path(File.join("data", state, ".maps")))
   end
 
   task "remove_government_type" do

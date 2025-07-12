@@ -14,46 +14,43 @@ module Services
     #  population: 2
     # }
 
-    def self.fetch_municipalities(title)
+    def self.fetch_municipalities(title, row_mapping)
       response = fetch_with_wikipedia(title)
-      nokogiri_doc = Nokogiri::HTML(response)
-      table = nokogiri_doc.css("table.wikitable.sortable")[0]
+      doc = Nokolexbor::HTML(response)
+      table = doc.css("table.wikitable.sortable")[0]
 
-      table_rows = table.css("tr")
+      table_rows = table.css("tbody tr")
 
-      # parse_municipalities_from_table(state, table_rows, table_data_config)
+      parse_municipalities_from_table(table_rows, row_mapping)
     end
 
-    def self.parse_cities_from_table(state, table_rows, _row_data_config)
+    def self.parse_municipalities_from_table(table_rows, row_mapping)
       places = []
-      table_rows.css("tr").each do |city_row|
-        puts city_row
-        columns = city_row.css("td, th")
-        city_name = format_name(columns[0].text)
-        city_type = columns[1].text
-        county_names = without_superscripts(columns[2])
-                       .text.split(",").map do |county|
-          format_name(county)
-        end
-        city_link = columns[0].css("a")[0].attr("href")
 
-        city_page_title = city_link.split("/").last
-        city_population = columns[3].text.gsub(/[^\d]/, "").to_i
+      rows = table_rows.drop(row_mapping[:row_start] || 0) # Skip header rows if specified
+      rows.each do |city_row|
+        columns = city_row.css("td")
+        next if columns.empty? # Skip empty rows
+        next if columns[row_mapping[:municipality_name]].nil? # Skip rows without municipality name
+        municipality_name = format_name(columns[row_mapping[:municipality_name]].text)
+        county_names = columns[row_mapping[:county_names]].text
+                        .split(",").map do |county|
+                          format_name(county)
+                        end
+        municipality_link = columns[row_mapping[:municipality_name]].css("a")[0].attr("href")
 
-        puts "Fetching city page for #{city_name}"
+        municipality_page_title = municipality_link.split("/").last
 
-        city_website, fips, gnis = fetch_city_page(city_page_title)
+        city_website, fips = fetch_municipality_page(municipality_page_title)
 
         place = {
-          "ocd_ids" => generate_ocd_ids(state, county_names, city_name),
-          "name" => city_name,
+          "name" => municipality_name,
           "counties" => county_names,
           "website" => city_website,
-          "fips" => fips,
-          "gnis" => gnis,
-          "type" => city_type,
-          "population" => city_population
+          "fips" => fips
         }
+
+        puts "Found municipality: #{municipality_name} in counties: #{county_names.join(", ")} with website: #{city_website} and FIPS: #{fips}"
 
         places << place
       end
@@ -70,11 +67,11 @@ module Services
       response.parsed_response
     end
 
-    def self.fetch_city_page(wikipedia_title)
+    def self.fetch_municipality_page(wikipedia_title)
       response = fetch_with_wikipedia(wikipedia_title)
-      nokogiri_doc = Nokogiri::HTML(response)
+      doc = Nokolexbor::HTML(response)
 
-      infobox = nokogiri_doc.css("table.infobox")
+      infobox = doc.css("table.infobox")
       # find tr with th that has a td that contains "website"
       # then find the a tag within that tr that has a href attribute
       website_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("website") }
@@ -82,44 +79,23 @@ module Services
       website = website ? Utils::UrlHelper.format_url(website.attr("href")) : ""
 
       fips_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("fips") }
-      fips = fips_row.present? ? without_superscripts(fips_row.css("td")).text : ""
+      fips = fips_row.present? ? fips_row.css("td").text : ""
+      fips = fips.strip.gsub("-", "") # Remove dashes
 
-      geoid_row = infobox.css("tr").find { |tr| tr.css("th").text.downcase.include?("geoid") }
-      geoid = geoid_row.present? ? without_superscripts(geoid_row.css("td")).text : ""
+      if fips.empty?
+        puts "Warning: No FIPS code found for #{wikipedia_title}"
+      end
 
-      [website, fips, geoid]
+      [website, fips]
     end
 
     # Clean up text
 
-    def self.format_municipality_name(name)
-      name = name.gsub("[c]", "")
-      name = name.gsub("†", "")
-      name = name.gsub("‡", "")
-      # get rid of trailing spaces
-      name = name.gsub(/\s+$/, "")
-      # convert to key-friendly format
-      name = name.gsub(" ", "_").downcase
-
-      # get weird of wikipedia symbols
-      name.gsub(" ", "_")
-    end
-
-    def self.without_superscripts(nokogiri_doc)
-      nokogiri_doc.css("sup").each(&:remove) # Remove <sup> elements entirely
-      nokogiri_doc # Return the modified document
-    end
-
-    def self.generate_ocd_ids(state, county_names, city_name)
-      ocd_ids = [
-        "ocd-division/country:us/state:#{state}/place:#{city_name}"
-      ]
-
-      county_names.each do |county_name|
-        ocd_ids << "ocd-division/country:us/state:#{state}/county:#{county_name}/place:#{city_name}"
-      end
-
-      ocd_ids
+    def self.format_name(name)
+      name = name.strip
+      # Remove anything that is not a letter, number, dash, apostrophe
+      name = name.gsub(/[^a-zA-Z0-9\s'-]/, "")
+      name.squeeze(" ").strip # Remove leading/trailing spaces and squeeze multiple spaces
     end
   end
 end
