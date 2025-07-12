@@ -299,7 +299,14 @@
       ],
       "population": 12316,
       "website": "https://gardencityidaho.org",
-      "fips": "1629620"
+      "fips": "1629620",
+      "meta_updated_at": "2025-07-12T20:46:50Z",
+      "meta_hash": "7712079b273c390b251e0c854212c620",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Burley",
