@@ -541,7 +541,14 @@
       ],
       "population": 4626,
       "website": "https://www.cityofkimberly.org",
-      "fips": "1643570"
+      "fips": "1643570",
+      "meta_updated_at": "2025-07-12T23:49:33Z",
+      "meta_hash": "6e958ba128e775f7ad5eb55b7415a132",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "American Falls",
