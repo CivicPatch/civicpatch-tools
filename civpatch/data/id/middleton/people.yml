@@ -1,0 +1,16 @@
+---
+- name: Jackie Hutchison
+  roles:
+  - Mayor
+  divisions:
+  image: https://middleton.id.gov/Portals/0/Images/Home/mayor_jackie_hutchison.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/id/middleton/images/c763b2463f88bdc300628e2e44eb149f36a0466ce5a17425e4bd65af05fa6243.jpg
+  email: jhutjhutchison@middletoncity.org
+  phone_number: "(208) 585-3133"
+  website: https://middleton.id.gov/city-government/elected-officials
+  start_date:
+  end_date:
+  sources:
+  - https://middleton.id.gov
+  - https://middleton.id.gov/contact-us
+  updated_at: '2025-07-12T20:50:25Z'
