@@ -255,7 +255,14 @@
       ],
       "population": 15570,
       "website": "https://www.cityofhaydenid.us",
-      "fips": "1636370"
+      "fips": "1636370",
+      "meta_updated_at": "2025-07-12T20:45:27Z",
+      "meta_hash": "735fddb709ac063b2e4c2b8bc66d6304",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Chubbuck",
