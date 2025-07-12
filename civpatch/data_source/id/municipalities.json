@@ -284,7 +284,14 @@
       ],
       "population": 12349,
       "website": "https://www.ci.jerome.id.us",
-      "fips": "1641320"
+      "fips": "1641320",
+      "meta_updated_at": "2025-07-12T20:45:14Z",
+      "meta_hash": "3f1426399eb8806c1a6efde0540b1301",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Blackfoot",
