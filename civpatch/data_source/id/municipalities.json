@@ -9,7 +9,14 @@
       ],
       "population": 235684,
       "website": "https://www.cityofboise.org",
-      "fips": "1608830"
+      "fips": "1608830",
+      "meta_updated_at": "2025-07-12T19:55:28Z",
+      "meta_hash": "84128ba4195017202e11ebc197dd4dde",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Meridian",
