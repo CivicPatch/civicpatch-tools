@@ -731,7 +731,14 @@
       ],
       "population": 3133,
       "website": "https://www.sodaspringsid.com",
-      "fips": "1675195"
+      "fips": "1675195",
+      "meta_updated_at": "2025-07-13T00:33:10Z",
+      "meta_hash": "c39d3e47d347f68083f903d4f0e0173b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Salmon",
