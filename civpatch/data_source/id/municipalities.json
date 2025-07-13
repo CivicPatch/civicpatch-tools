@@ -820,8 +820,8 @@
       "population": 2560,
       "website": "https://bellevueidaho.gov",
       "fips": "1606220",
-      "meta_updated_at": "2025-07-13T00:35:30Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-13T02:11:41Z",
+      "meta_hash": "d3b4cd9e0f9e99029c0c7a0f7428950a",
       "meta_sources": [
         "state_source",
         "gemini",
