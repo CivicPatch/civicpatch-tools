@@ -1001,7 +1001,14 @@
       ],
       "population": 2157,
       "website": "https://www.victoridaho.gov",
-      "fips": "1684250"
+      "fips": "1684250",
+      "meta_updated_at": "2025-07-13T02:22:16Z",
+      "meta_hash": "29fde79aa450d1dd985585254f1402e7",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Parma",
