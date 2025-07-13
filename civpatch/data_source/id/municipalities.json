@@ -1067,7 +1067,14 @@
       ],
       "population": 1696,
       "website": "https://priestriver-id.gov",
-      "fips": "1665530"
+      "fips": "1665530",
+      "meta_updated_at": "2025-07-13T02:25:49Z",
+      "meta_hash": "59cf6dd337c11ad24f113db24174b00b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Pinehurst",
