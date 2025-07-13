@@ -7,37 +7,7 @@
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-12T23:42:09Z"
-  },
-  {
-    "name": "John Hatcher",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-12T23:42:09Z"
-  },
-  {
-    "name": "John Hodgkins",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-12T23:42:09Z"
-  },
-  {
-    "name": "Ken Owens",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-12T23:42:09Z"
+    "updated_at": "2025-07-13T00:13:46Z"
   },
   {
     "name": "Larry Sanders",
@@ -47,6 +17,36 @@
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-12T23:42:09Z"
+    "updated_at": "2025-07-13T00:13:46Z"
+  },
+  {
+    "name": "John Hodgkins",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T00:13:46Z"
+  },
+  {
+    "name": "Ken Owens",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T00:13:46Z"
+  },
+  {
+    "name": "Loran Hatcher",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T00:13:46Z"
   }
 ]
