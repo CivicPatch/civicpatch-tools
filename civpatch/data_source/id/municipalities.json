@@ -513,8 +513,8 @@
       "population": 5038,
       "website": "https://www.cityofrigby.com",
       "fips": "1667780",
-      "meta_updated_at": "2025-07-12T23:45:35Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-13T00:15:27Z",
+      "meta_hash": "aab576b1789473d9a1093ce40f8fec05",
       "meta_sources": [
         "state_source",
         "gemini",
