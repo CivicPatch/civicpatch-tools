@@ -797,7 +797,14 @@
       ],
       "population": 2656,
       "website": "https://www.cityoforofino.org",
-      "fips": "1659320"
+      "fips": "1659320",
+      "meta_updated_at": "2025-07-13T00:34:05Z",
+      "meta_hash": "4bcb22c8951ed8e4eabad0ef7f2e62de",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Montpelier",
