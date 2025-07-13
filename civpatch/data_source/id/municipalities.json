@@ -808,7 +808,14 @@
       ],
       "population": 2643,
       "website": "https://montpelier.id.gov",
-      "fips": "1653920"
+      "fips": "1653920",
+      "meta_updated_at": "2025-07-13T00:34:33Z",
+      "meta_hash": "dfeb2fef8946c566012d2524e4efa472",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Bellevue",
