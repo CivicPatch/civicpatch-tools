@@ -1023,7 +1023,14 @@
       ],
       "population": 1984,
       "website": "https://www.driggs.govoffice.com",
-      "fips": "1622690"
+      "fips": "1622690",
+      "meta_updated_at": "2025-07-13T02:25:52Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Sun Valley",
