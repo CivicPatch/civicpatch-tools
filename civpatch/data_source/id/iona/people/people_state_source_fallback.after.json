@@ -5,7 +5,31 @@
       "Mayor"
     ],
     "divisions": [],
-    "updated_at": "2025-07-13T00:30:30Z"
+    "updated_at": "2025-07-13T00:47:31Z"
+  },
+  {
+    "name": "Rylea Farrens",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T00:47:31Z"
+  },
+  {
+    "name": "Michael Thompson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T00:47:31Z"
+  },
+  {
+    "name": "Evan Mann",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T00:47:31Z"
   },
   {
     "name": "Rob Geray",
@@ -14,30 +38,6 @@
       "Council President"
     ],
     "divisions": [],
-    "updated_at": "2025-07-13T00:30:30Z"
-  },
-  {
-    "name": "Rylea Farrens",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [],
-    "updated_at": "2025-07-13T00:30:30Z"
-  },
-  {
-    "name": "Michael Thompson",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [],
-    "updated_at": "2025-07-13T00:30:30Z"
-  },
-  {
-    "name": "Evan Mann",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [],
-    "updated_at": "2025-07-13T00:30:30Z"
+    "updated_at": "2025-07-13T00:47:31Z"
   }
 ]
