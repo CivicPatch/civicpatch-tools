@@ -46,8 +46,8 @@
       "population": 100200,
       "website": "https://www.cityofnampa.us",
       "fips": "1656260",
-      "meta_updated_at": "2025-07-12T19:56:06Z",
-      "meta_hash": "fc392e5c1374351ff5c84dae196ef8fe",
+      "meta_updated_at": "2025-07-13T00:22:34Z",
+      "meta_hash": "28969bb90d36b9aefd88af1a4e9eb1d9",
       "meta_sources": [
         "state_source",
         "gemini",

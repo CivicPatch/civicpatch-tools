@@ -15,7 +15,44 @@
   - https://www.cityofnampa.us/216/Mayors-Office
   - https://www.cityofnampa.us
   - https://www.cityofnampa.us/518/mayor-newsletters
-  updated_at: '2025-07-12T19:56:06Z'
+  updated_at: '2025-07-13T00:22:34Z'
+- name: Dale Reynolds
+  roles:
+  - Council President
+  - Council Member
+  divisions:
+  - District 4
+  image: https://www.cityofnampa.us/ImageRepository/Document?documentID=14794
+  cdn_image: https://cdn.civicpatch.org/open-data/id/nampa/images/0a356c1f3d33f34ea849a1b45abcf36619713591ac312828d939505b56f29ea9.png
+  email: reynoldsd@cityofnampa.us
+  phone_number:
+  website: https://www.cityofnampa.us/526/Dale-Reynolds
+  start_date: '2024-01-02'
+  end_date: '2028-01-01'
+  sources:
+  - https://www.cityofnampa.us/94/City-Government
+  - https://www.cityofnampa.us/1308/Natalie-Jangula
+  - https://www.cityofnampa.us/526/Dale-Reynolds
+  - https://www.cityofnampa.us/622/Randy-Haverfield
+  updated_at: '2025-07-13T00:22:34Z'
+- name: Victor Rodriguez
+  roles:
+  - Council Member
+  divisions:
+  - District 1
+  image: https://www.cityofnampa.us/ImageRepository/Document?documentID=11306
+  cdn_image: https://cdn.civicpatch.org/open-data/id/nampa/images/de41c0d116bca2480b66a89067fadcc33a33c40276580d9c3d3d6b7bc9850572.jpg
+  email: rodriguezv@cityofnampa.us
+  phone_number:
+  website: https://www.cityofnampa.us/525/Victor-Rodriguez
+  start_date: 2021-11
+  end_date:
+  sources:
+  - https://www.cityofnampa.us/525/Victor-Rodriguez
+  - https://www.cityofnampa.us/94/City-Government
+  - https://www.cityofnampa.us/1308/Natalie-Jangula
+  - https://www.cityofnampa.us/622/Randy-Haverfield
+  updated_at: '2025-07-13T00:22:34Z'
 - name: Natalie Jangula
   roles:
   - Council Member
@@ -29,24 +66,45 @@
   start_date: '2024-01-02'
   end_date:
   sources:
+  - https://www.cityofnampa.us/94/City-Government
   - https://www.cityofnampa.us/1308/Natalie-Jangula
-  updated_at: '2025-07-12T19:56:06Z'
-- name: Dale Reynolds
+  - https://www.cityofnampa.us/622/Randy-Haverfield
+  updated_at: '2025-07-13T00:22:34Z'
+- name: David Bills
   roles:
   - Council Member
   divisions:
-  - District 4
-  image: https://www.cityofnampa.us/ImageRepository/Document?documentID=14794
-  cdn_image: https://cdn.civicpatch.org/open-data/id/nampa/images/0a356c1f3d33f34ea849a1b45abcf36619713591ac312828d939505b56f29ea9.png
-  email: reynoldsd@cityofnampa.us
+  - District 3
+  image: https://www.cityofnampa.us/ImageRepository/Document?documentID=17733
+  cdn_image: https://cdn.civicpatch.org/open-data/id/nampa/images/90c176f62d8cf8f09d35737cf8614c85c29ff881effb333e84436621e17a9d82.jpg
+  email: billsd@cityofnampa.us
   phone_number:
-  website: https://www.cityofnampa.us/526/Dale-Reynolds
-  start_date: '2024-01-02'
-  end_date: '2028-01-01'
+  website: https://www.cityofnampa.us/524/David-Bills
+  start_date: 2024-01
+  end_date:
   sources:
+  - https://www.cityofnampa.us/94/City-Government
   - https://www.cityofnampa.us/1308/Natalie-Jangula
-  - https://www.cityofnampa.us/526/Dale-Reynolds
-  updated_at: '2025-07-12T19:56:06Z'
+  - https://www.cityofnampa.us/524/David-Bills
+  - https://www.cityofnampa.us/622/Randy-Haverfield
+  updated_at: '2025-07-13T00:22:34Z'
+- name: Randy Haverfield
+  roles:
+  - Council Member
+  divisions:
+  - District 5
+  image: https://www.cityofnampa.us/ImageRepository/Document?documentID=19086
+  cdn_image: https://cdn.civicpatch.org/open-data/id/nampa/images/e25481c52b0be6fa45c7a6df2386e7ba2bd4137417a9d3a34f6be09e52d78af7.jpg
+  email: haverfieldr@cityofnampa.us
+  phone_number:
+  website: https://www.cityofnampa.us/622/Randy-Haverfield
+  start_date: 2021-11
+  end_date:
+  sources:
+  - https://www.cityofnampa.us/94/City-Government
+  - https://www.cityofnampa.us/1308/Natalie-Jangula
+  - https://www.cityofnampa.us/622/Randy-Haverfield
+  updated_at: '2025-07-13T00:22:34Z'
 - name: Sebastian Griffin
   roles:
   - Council Member
@@ -60,6 +118,8 @@
   start_date: '2024-01-02'
   end_date: 2026-12
   sources:
-  - https://www.cityofnampa.us/1307/Sebastian-Griffin
+  - https://www.cityofnampa.us/94/City-Government
   - https://www.cityofnampa.us/1308/Natalie-Jangula
-  updated_at: '2025-07-12T19:56:06Z'
+  - https://www.cityofnampa.us/622/Randy-Haverfield
+  - https://www.cityofnampa.us/1307/Sebastian-Griffin
+  updated_at: '2025-07-13T00:22:34Z'

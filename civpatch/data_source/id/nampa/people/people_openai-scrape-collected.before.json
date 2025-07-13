@@ -11,19 +11,19 @@
       {
         "data": "https://www.cityofnampa.us/ImageRepository/Document?documentID=11476",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image URL near the name and title of Mayor Debbie Kling.",
+        "llm_confidence_reason": "Image is a headshot of Nampa Mayor Debbie Kling near her name and role.",
         "source": "https://www.cityofnampa.us/529/Office-of-the-Mayor"
       },
       {
         "data": "https://www.cityofnampa.us/ImageRepository/Document?documentID=11476",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Image near the name with alt text 'Headshot of Nampa Mayor Debbie Kling (taken 2020)' clearly indicates a portrait of the mayor.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a headshot near the name 'Mayor Debbie Kling' with alt text indicating it is a headshot of the mayor.",
         "source": "https://www.cityofnampa.us/216/Mayors-Office"
       },
       {
         "data": "https://www.cityofnampa.us/ImageRepository/Document?documentId=16071",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image near the Mayor's Message section and Debbie Kling's name, likely her official portrait.",
+        "llm_confidence_reason": "Image near the Mayor's Message section with alt text 'Mayor Kling header image' strongly indicates this is the mayor's portrait.",
         "source": "https://www.cityofnampa.us"
       }
     ],
@@ -31,22 +31,22 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as Mayor of Nampa in the content."
+        "llm_confidence_reason": "The text explicitly states Debbie Kling is the Mayor of Nampa and provides detailed information about her mayoral terms."
       },
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page is titled 'Mayor's Office' and explicitly names Debbie Kling as 'Mayor Debbie Kling'."
+        "llm_confidence_reason": "The page is titled 'Mayor's Office' and prominently features Debbie Kling as 'Mayor Debbie Kling' with a dedicated mayor's office phone number and photo."
       },
       {
         "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Mayor in the content under 'Mayor's Message' and 'Debbie Kling Mayor'."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor in the content under 'Mayor's Message' section."
       },
       {
         "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "The page is titled 'Mayor Newsletters' and all newsletters are signed 'Mayor Kling' indicating Debbie Kling is the Mayor of Nampa."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The newsletters are titled 'Mayor Kling' and are from the City of Nampa, indicating Debbie Kling is the Mayor."
       }
     ],
     "divisions": [],
@@ -54,25 +54,19 @@
       {
         "data": "(208) 468-5401",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly given for the Mayor's office contact.",
+        "llm_confidence_reason": "Phone number is given as contact for the Mayor's Office.",
         "source": "https://www.cityofnampa.us/529/Office-of-the-Mayor"
       },
       {
         "data": "(208) 468-5401",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number labeled 'Office of the Mayor' directly under the Mayor's name.",
+        "llm_confidence_reason": "Phone number labeled 'Office of the Mayor' directly associated with Debbie Kling.",
         "source": "https://www.cityofnampa.us/216/Mayors-Office"
       },
       {
         "data": "(208) 468-4413",
-        "llm_confidence": 0.7,
-        "llm_confidence_reason": "General city phone number listed under Contact Us; no direct phone number for Mayor found.",
-        "source": "https://www.cityofnampa.us"
-      },
-      {
-        "data": "(208) 468-4413",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "General City of Nampa contact phone number is provided near the bottom of the page; no direct phone number for Debbie Kling found.",
+        "llm_confidence_reason": "General City of Nampa contact phone number listed near mayor newsletters; no direct phone number for Debbie Kling found.",
         "source": "https://www.cityofnampa.us/518/mayor-newsletters"
       }
     ],
@@ -80,7 +74,7 @@
       {
         "data": "mayor@cityofnampa.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly given as mayor {at} cityofnampa {dot} us, normalized to standard email format.",
+        "llm_confidence_reason": "Email is provided as mayor {at} cityofnampa {dot} us, normalized to standard email format.",
         "source": "https://www.cityofnampa.us/529/Office-of-the-Mayor"
       }
     ],
@@ -88,25 +82,25 @@
       {
         "data": "https://www.cityofnampa.us/216/Mayors-Office",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Official Mayor's Office website link provided in the content.",
+        "llm_confidence_reason": "Website link labeled 'Mayor's Office Website' is relevant to the mayor.",
         "source": "https://www.cityofnampa.us/529/Office-of-the-Mayor"
       },
       {
         "data": "https://www.cityofnampa.us/529/Office-of-the-Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Link text 'Learn more about Mayor Kling' points to this URL, indicating it is the official mayor's office page.",
+        "llm_confidence_reason": "Link labeled 'Learn more about Mayor Kling' points to a mayor's office page.",
         "source": "https://www.cityofnampa.us/216/Mayors-Office"
       },
       {
         "data": "https://www.cityofnampa.us/518/mayor-newsletters",
         "llm_confidence": 0.8,
-        "llm_confidence_reason": "Link to Mayor newsletters page associated with Debbie Kling's Mayor section.",
+        "llm_confidence_reason": "Link to Mayor's newsletters page associated with Debbie Kling as Mayor.",
         "source": "https://www.cityofnampa.us"
       },
       {
         "data": "https://www.cityofnampa.us/216/Mayors-Office",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The Mayor's Office page is linked in the navigation and is the most relevant official website for the Mayor.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Mayor's Office page URL from the site navigation is the most relevant website for the mayor.",
         "source": "https://www.cityofnampa.us/518/mayor-newsletters"
       }
     ],
@@ -114,164 +108,254 @@
       {
         "data": "2018-01-02",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Sworn in as Mayor on January 2, 2018.",
+        "llm_confidence_reason": "Text states she was sworn in as mayor on January 2, 2018.",
         "source": "https://www.cityofnampa.us/529/Office-of-the-Mayor"
       },
       {
         "data": "2018",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "Newsletters from 2018 onward are signed 'Mayor Kling', indicating term started at least by 2018.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Newsletters from 2018 onward are labeled 'Mayor Kling', indicating term started at least by 2018.",
         "source": "https://www.cityofnampa.us/518/mayor-newsletters"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:54:50Z"
+    "updated_at": "2025-07-13T00:21:17Z"
   },
   {
-    "name": "Sebastian Griffin",
+    "name": "Victor Rodriguez",
     "sources": [
-      "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+      "https://www.cityofnampa.us/525/Victor-Rodriguez",
+      "https://www.cityofnampa.us/94/City-Government"
     ],
     "images": [
       {
-        "data": "https://www.cityofnampa.us/ImageRepository/Document?documentID=17735",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is directly associated with Sebastian Griffin's profile.",
-        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+        "data": "https://www.cityofnampa.us/ImageRepository/Document?documentID=11306",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The image near the name with alt text 'Victor Rodriguez 2020' is likely his official portrait.",
+        "source": "https://www.cityofnampa.us/525/Victor-Rodriguez"
       }
     ],
     "roles": [
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text states 'Nampa City Councilman for District 6' which corresponds to a Council Member role."
+        "llm_confidence_reason": "The text states 'Councilman Rodriguez' and 'elected to the Nampa City Council', indicating he is a council member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under City Council members; role inferred as Council Member."
       }
     ],
     "divisions": [
       {
-        "data": "District 6",
+        "data": "District 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly mentioned as 'District 6' in the content."
+        "llm_confidence_reason": "The heading and text explicitly state 'District 1'."
       }
     ],
     "phone_numbers": [],
     "emails": [
       {
-        "data": "griffins@cityofnampa.us",
+        "data": "rodriguezv@cityofnampa.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email is explicitly provided in the content near the person's name.",
-        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+        "llm_confidence_reason": "Email is explicitly provided as 'Email Councilman Rodriguez' with mailto link.",
+        "source": "https://www.cityofnampa.us/525/Victor-Rodriguez"
       }
     ],
     "websites": [
       {
-        "data": "https://www.cityofnampa.us/1307/Sebastian-Griffin",
+        "data": "https://www.cityofnampa.us/525/Victor-Rodriguez",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL provided is the official city profile page for Sebastian Griffin.",
-        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+        "llm_confidence_reason": "The page URL is the official profile page for Victor Rodriguez.",
+        "source": "https://www.cityofnampa.us/525/Victor-Rodriguez"
+      },
+      {
+        "data": "https://www.cityofnampa.us/525/Victor-Rodriguez",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is a profile page for Victor Rodriguez on the official city website.",
+        "source": "https://www.cityofnampa.us/94/City-Government"
       }
     ],
     "start_dates": [
       {
-        "data": "2024-01-02",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text states he was sworn in on January 2, 2024.",
-        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+        "data": "2017-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states he was elected in November 2017 and re-elected in November 2021; the most recent term likely started November 2021 but initial election date is more precise.",
+        "source": "https://www.cityofnampa.us/525/Victor-Rodriguez"
       }
     ],
-    "end_dates": [
-      {
-        "data": "2026-12",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The term is stated to conclude in December 2026.",
-        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
-      }
-    ],
-    "updated_at": "2025-07-12T19:54:50Z"
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:21:17Z"
   },
   {
     "name": "Natalie Jangula",
     "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
       "https://www.cityofnampa.us/1308/Natalie-Jangula"
     ],
     "images": [
       {
         "data": "https://www.cityofnampa.us/ImageRepository/Document?documentID=14176",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is labeled as 'Councilwoman Natalie Jangula' and is on her official page.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image is labeled as 'Councilwoman Natalie Jangula' and is near her name.",
         "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
       }
     ],
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "The page states she was sworn into office for District 2 and refers to her as 'Councilwoman Jangula', indicating she is a council member."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under City Council members; role inferred as Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states she was sworn into office for District 2 and refers to her as Councilwoman Jangula."
       }
     ],
     "divisions": [
       {
         "data": "District 2",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as representing District 2."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states she was sworn into office for District 2."
       },
       {
         "data": "Seat 3",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "She served in Seat 3 for two years before the district change, indicating prior division by seat."
+        "llm_confidence_reason": "She served in Seat 3 for two years before the district change, indicating a previous division."
       }
     ],
     "phone_numbers": [],
     "emails": [
       {
         "data": "jangulan@cityofnampa.us",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email is explicitly provided as 'Councilwoman Jangula here' mailto link.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The email is explicitly provided as 'Councilwoman Jangula here' with a mailto link.",
         "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofnampa.us/1308/Natalie-Jangula",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "This is the official city webpage for Natalie Jangula.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is a profile page for Natalie Jangula on the official city website.",
+        "source": "https://www.cityofnampa.us/94/City-Government"
+      },
+      {
+        "data": "https://www.cityofnampa.us/1308/Natalie-Jangula",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the official city page for Natalie Jangula.",
         "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
       }
     ],
     "start_dates": [
       {
         "data": "2024-01-02",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated she was sworn into office on January 2, 2024.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text states she was sworn into office for District 2 on January 2, 2024.",
         "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:54:50Z"
+    "updated_at": "2025-07-13T00:21:17Z"
+  },
+  {
+    "name": "David Bills",
+    "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
+      "https://www.cityofnampa.us/524/David-Bills"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofnampa.us/ImageRepository/Document?documentID=17733",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image near the name David Bills with alt text 'David Bills 2024 Nampa City Council' clearly a portrait.",
+        "source": "https://www.cityofnampa.us/524/David-Bills"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under City Council members; role inferred as Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states David Bills was appointed to the Nampa City Council in January 2024, indicating an active council member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'DISTRICT 3' under David Bills' name."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "billsd@cityofnampa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email link text explicitly 'Email David Bills' with mailto:billsd@cityofnampa.us.",
+        "source": "https://www.cityofnampa.us/524/David-Bills"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofnampa.us/524/David-Bills",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is a profile page for David Bills on the official city website.",
+        "source": "https://www.cityofnampa.us/94/City-Government"
+      },
+      {
+        "data": "https://www.cityofnampa.us/524/David-Bills",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official profile page for David Bills on the City of Nampa website.",
+        "source": "https://www.cityofnampa.us/524/David-Bills"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Text states 'David Bills was appointed to the Nampa City Council January 2024'.",
+        "source": "https://www.cityofnampa.us/524/David-Bills"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:21:17Z"
   },
   {
     "name": "Dale Reynolds",
     "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
       "https://www.cityofnampa.us/526/Dale-Reynolds"
     ],
     "images": [
       {
         "data": "https://www.cityofnampa.us/ImageRepository/Document?documentID=14794",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Image URL is a portrait near the name and role description.",
+        "llm_confidence_reason": "Image URL is near the name Dale Reynolds and labeled as his photo.",
         "source": "https://www.cityofnampa.us/526/Dale-Reynolds"
       }
     ],
     "roles": [
       {
         "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under City Council members; role inferred as Council Member."
+      },
+      {
+        "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as elected to District 4 and sworn in as council member; also referred to as Councilman."
+        "llm_confidence_reason": "Explicitly stated as elected to District 4 and sworn in as council member."
       },
       {
         "data": "Council President",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated that Reynolds currently serves as the Nampa City Council President."
+        "llm_confidence_reason": "Explicitly stated as currently serving as Nampa City Council President."
       }
     ],
     "divisions": [
@@ -286,15 +370,21 @@
       {
         "data": "reynoldsd@cityofnampa.us",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly provided as 'Email Councilman Dale Reynolds' mailto link.",
+        "llm_confidence_reason": "Explicitly provided as 'Email Councilman Dale Reynolds' with mailto link.",
         "source": "https://www.cityofnampa.us/526/Dale-Reynolds"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofnampa.us/526/Dale-Reynolds",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is a profile page for Dale Reynolds on the official city website.",
+        "source": "https://www.cityofnampa.us/94/City-Government"
+      },
+      {
+        "data": "https://www.cityofnampa.us/526/Dale-Reynolds",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Page URL is the official profile page for Dale Reynolds on the City of Nampa website.",
+        "llm_confidence_reason": "Page URL is the official profile page for Dale Reynolds.",
         "source": "https://www.cityofnampa.us/526/Dale-Reynolds"
       }
     ],
@@ -302,7 +392,7 @@
       {
         "data": "2024-01-02",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated sworn into office for a four-year term on January 2, 2024.",
+        "llm_confidence_reason": "Explicitly stated sworn into office on January 2, 2024.",
         "source": "https://www.cityofnampa.us/526/Dale-Reynolds"
       }
     ],
@@ -310,10 +400,156 @@
       {
         "data": "2028-01-01",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Four-year term starting January 2, 2024 implies term ends approximately January 1, 2028.",
+        "llm_confidence_reason": "Elected for a four-year term starting January 2, 2024, so term likely ends January 2028.",
         "source": "https://www.cityofnampa.us/526/Dale-Reynolds"
       }
     ],
-    "updated_at": "2025-07-12T19:54:50Z"
+    "updated_at": "2025-07-13T00:21:17Z"
+  },
+  {
+    "name": "Randy Haverfield",
+    "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
+      "https://www.cityofnampa.us/622/Randy-Haverfield"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofnampa.us/ImageRepository/Document?documentID=19086",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image near the name Randy Haverfield with alt text 'Randy Haverfield'.",
+        "source": "https://www.cityofnampa.us/622/Randy-Haverfield"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under City Council members; role inferred as Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states Randy Haverfield was elected to the Nampa City Council and is currently serving; 'Councilman' title indicates council member role."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Text states he is the past president of the Nampa City Council and served in that position for six years; no indication he currently holds this role, so only past role noted but included as relevant."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'DISTRICT 5' for Randy Haverfield."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "haverfieldr@cityofnampa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicit mailto link provided for Councilman Haverfield's email.",
+        "source": "https://www.cityofnampa.us/622/Randy-Haverfield"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofnampa.us/622/Randy-Haverfield",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is a profile page for Randy Haverfield on the official city website.",
+        "source": "https://www.cityofnampa.us/94/City-Government"
+      },
+      {
+        "data": "https://www.cityofnampa.us/622/Randy-Haverfield",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Page URL is the official profile page for Randy Haverfield.",
+        "source": "https://www.cityofnampa.us/622/Randy-Haverfield"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Most recent re-election date is November 2021, indicating current term start.",
+        "source": "https://www.cityofnampa.us/622/Randy-Haverfield"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:21:17Z"
+  },
+  {
+    "name": "Sebastian Griffin",
+    "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
+      "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofnampa.us/ImageRepository/Document?documentID=17735",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Image is directly associated with Sebastian Griffin's section and has alt text 'Sebastian Griffin'.",
+        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under City Council members; role inferred as Council Member."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text explicitly states 'Nampa City Councilman for District 6' which corresponds to Council Member role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 6",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text explicitly states he is councilman for District 6."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "griffins@cityofnampa.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly provided in the contact section for Sebastian Griffin.",
+        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofnampa.us/1307/Sebastian-Griffin",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "URL is a profile page for Sebastian Griffin on the official city website.",
+        "source": "https://www.cityofnampa.us/94/City-Government"
+      },
+      {
+        "data": "https://www.cityofnampa.us/1307/Sebastian-Griffin",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Page URL is the official profile page for Sebastian Griffin.",
+        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-02",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states he was sworn in on January 2, 2024.",
+        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Text states term concludes in December 2026.",
+        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+      }
+    ],
+    "updated_at": "2025-07-13T00:21:17Z"
   }
 ]
