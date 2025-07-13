@@ -1,1 +1,16 @@
---- []
+---
+- name: Jarom Wagoner
+  roles:
+  - Mayor
+  divisions:
+  image: https://www.cityofcaldwell.org/files/assets/city/v/2/mayors-office/images/portrait_jarom-wagoner.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/id/caldwell/images/c842ec98bd18f5abea872815ad4a438baf9b35d56e27d1bb74947ce1c2398bf6.png
+  email: mayorsoffice@cityofcaldwell.org
+  phone_number: "(208) 455-3000"
+  website: https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor
+  start_date: '2022'
+  end_date: '2025'
+  sources:
+  - https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present
+  - https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor
+  updated_at: '2025-07-13T00:19:59Z'

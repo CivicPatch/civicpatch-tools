@@ -1,1 +1,573 @@
-[]
+[
+  {
+    "name": "Jarom Wagoner",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jarom Wagoner' and 'Serving as Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Jarom Wagoner'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mayorsoffice@cityofcaldwell.org",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Email is for the Mayor's office, not explicitly Jarom Wagoner's personal email, but it is the most relevant contact provided for the Mayor.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly provided as a link associated with the person.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page is dedicated to 'About the Mayor' and features Jarom Wagoner, serving as his profile page.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Serving a 4-year term as Mayor from 2022'.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The start date 'November, 2021' is explicitly stated as when he was elected.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The end date '2025' is explicitly stated as the term expiration year.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      }
+    ],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Brad Doty",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed directly under the 'City Council' menu with a link to a 'City-Council-Seat' page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' with a dedicated link, strongly implying the role of Council Member."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and matches a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Normalized role from 'Councilmember' which is a direct match to 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Seat 1",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the URL path '/City-Council-Seat-1' associated with the person's name under 'City Council'."
+      },
+      {
+        "data": "Seat 1",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL for this person explicitly states 'City-Council-Seat-1', indicating their division."
+      },
+      {
+        "data": "Seat #1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Seat #1' directly associated with his role."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(208) 504-9520",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and labeled 'Telephone' for Brad Doty.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bdoty@cityofcaldwell.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked to Brad Doty.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly provided as a link associated with the person.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The provided link is a direct profile page for this person as a City Council member.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Brad Doty.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'began his term on the Caldwell City Council in January of 2022'.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Chuck Stadick",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed directly under the 'City Council' menu with a link to a 'City-Council-Seat' page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' with a dedicated link, strongly implying the role of Council Member."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Seat 2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the URL path '/City-Council-Seat-2' associated with the person's name under 'City Council'."
+      },
+      {
+        "data": "Seat 2",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL for this person explicitly states 'City-Council-Seat-2', indicating their division."
+      },
+      {
+        "data": "Seat #2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Seat #2' next to his role."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(208) 250-2410",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with Chuck Stadick.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2"
+      }
+    ],
+    "emails": [
+      {
+        "data": "cstadick@cityofcaldwell.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and clearly associated with Chuck Stadick.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly provided as a link associated with the person.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The provided link is a direct profile page for this person as a City Council member.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly linked to Chuck Stadick's profile page in the navigation menu.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2021",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text states he 'was elected in 2021 to his current term', indicating the start of his active role.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Diana Register",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed directly under the 'City Council' menu with a link to a 'City-Council-Seat' page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' with a dedicated link, strongly implying the role of Council Member."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and matches a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Seat 3",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the URL path '/City-Council-Seat-3' associated with the person's name under 'City Council'."
+      },
+      {
+        "data": "Seat 3",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL for this person explicitly states 'City-Council-Seat-3', indicating their division."
+      },
+      {
+        "data": "Seat #3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Seat #3' in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(208) 614-8462",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided and linked to Diana Register.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dregister@cityofcaldwell.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided and linked to Diana Register.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly provided as a link associated with the person.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The provided link is a direct profile page for this person as a City Council member.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the specific profile page for Diana Register.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that she 'took office in January of 2022'.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Geoff Williams",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed directly under the 'City Council' menu with a link to a 'City-Council-Seat' page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' with a dedicated link, strongly implying the role of Council Member."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and matches a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Seat 4",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the URL path '/City-Council-Seat-4' associated with the person's name under 'City Council'."
+      },
+      {
+        "data": "Seat 4",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL for this person explicitly states 'City-Council-Seat-4', indicating their division."
+      },
+      {
+        "data": "Seat #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Seat #4' in conjunction with his role."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(208) 504-7770",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly provided and clearly associated with Geoff Williams.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4"
+      }
+    ],
+    "emails": [
+      {
+        "data": "gwilliams@cityofcaldwell.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly provided and clearly associated with Geoff Williams.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly provided as a link associated with the person.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The provided link is a direct profile page for this person as a City Council member.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Geoff Williams.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-02-16",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'appointed on February 16, 2022'.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Chris Allgood",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed directly under the 'City Council' menu with a link to a 'City-Council-Seat' page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' with a dedicated link, strongly implying the role of Council Member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Seat 5",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the URL path '/City-Council-Seat-5' associated with the person's name under 'City Council'."
+      },
+      {
+        "data": "Seat 5",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL for this person explicitly states 'City-Council-Seat-5', indicating their division."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly provided as a link associated with the person.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The provided link is a direct profile page for this person as a City Council member.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Mike Dittenber",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-6"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from being listed directly under the 'City Council' menu with a link to a 'City-Council-Seat' page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'City Council' with a dedicated link, strongly implying the role of Council Member."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember', which is a target role."
+      },
+      {
+        "data": "Trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'current President of the West Valley Medical Center Board of Trustees', and 'Trustee' is a target role."
+      },
+      {
+        "data": "President of the West Valley Medical Center Board of Trustees",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'current President of the West Valley Medical Center Board of Trustees', which is a specific role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Seat 6",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from the URL path '/City-Council-Seat-6' associated with the person's name under 'City Council'."
+      },
+      {
+        "data": "Seat 6",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The URL for this person explicitly states 'City-Council-Seat-6', indicating their division."
+      },
+      {
+        "data": "Seat #6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The division 'Seat #6' is explicitly stated next to his role."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(208) 504-7201",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly provided and clearly associated with Mike Dittenber.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-6"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mdittenber@cityofcaldwell.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided and clearly associated with Mike Dittenber.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-6"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly provided as a link associated with the person.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The provided link is a direct profile page for this person as a City Council member.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly linked to Mike Dittenber's profile page in the navigation.",
+        "source": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-6"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:19:58Z"
+  }
+]
