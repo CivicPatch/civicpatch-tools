@@ -2,72 +2,59 @@
   {
     "name": "Ruth Pierce",
     "roles": [
-      "Mayor"
+      "Mayor",
+      "Council Member"
     ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-12T19:58:51Z"
+    "divisions": null,
+    "updated_at": "2025-07-13T00:20:50Z"
   },
   {
     "name": "Jason Brown",
     "roles": [
-      "Vice-Mayor",
+      "Vice-mayor",
       "Council Member"
     ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-12T19:58:51Z"
+    "divisions": null,
+    "updated_at": "2025-07-13T00:20:50Z"
   },
   {
-    "name": "Christopher Reid",
+    "name": "Chris Reid",
     "roles": [
       "Council Member"
     ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-12T19:58:51Z"
-  },
-  {
-    "name": "Craig Hawkins",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-12T19:58:51Z"
+    "divisions": null,
+    "updated_at": "2025-07-13T00:20:50Z"
   },
   {
     "name": "Spencer Cutler",
     "roles": [
       "Council Member"
     ],
-    "divisions": [
-      null
+    "divisions": null,
+    "updated_at": "2025-07-13T00:20:50Z"
+  },
+  {
+    "name": "Craig Hawkins",
+    "roles": [
+      "Council Member"
     ],
-    "updated_at": "2025-07-12T19:58:51Z"
+    "divisions": null,
+    "updated_at": "2025-07-13T00:20:50Z"
   },
   {
     "name": "Grayson Stone",
     "roles": [
       "Council Member"
     ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-12T19:58:51Z"
+    "divisions": null,
+    "updated_at": "2025-07-13T00:20:50Z"
   },
   {
     "name": "Cherie Vollmer",
     "roles": [
       "Council Member"
     ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-12T19:58:51Z"
+    "divisions": null,
+    "updated_at": "2025-07-13T00:20:50Z"
   }
 ]

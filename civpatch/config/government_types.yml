@@ -41,6 +41,8 @@ government_types:
       - role: assistant mayor
       - role: deputy mayor
       - role: vice mayor
+        aliases:
+        - vice-mayor
       - role: commission president
         aliases:
           - commissioner president

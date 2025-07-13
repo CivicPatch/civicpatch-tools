@@ -2,7 +2,7 @@
   {
     "name": "Ruth Pierce",
     "roles": [
-      "Mayor"
+      "mayor"
     ],
     "divisions": [],
     "image": null,
@@ -14,12 +14,12 @@
     "sources": [
       "https://www.tfid.org/133/City-Council"
     ],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Jason Brown",
     "roles": [
-      "Vice-mayor"
+      "vice mayor"
     ],
     "divisions": [],
     "image": null,
@@ -31,12 +31,12 @@
     "sources": [
       "https://www.tfid.org/133/City-Council"
     ],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Christopher Reid",
     "roles": [
-      "council member"
+      "vice mayor"
     ],
     "divisions": [],
     "image": null,
@@ -48,7 +48,7 @@
     "sources": [
       "https://www.tfid.org/133/City-Council"
     ],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Craig Hawkins",
@@ -65,7 +65,7 @@
     "sources": [
       "https://www.tfid.org/133/City-Council"
     ],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Spencer Cutler",
@@ -82,7 +82,7 @@
     "sources": [
       "https://www.tfid.org/133/City-Council"
     ],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Cherie Vollmer",
@@ -99,7 +99,7 @@
     "sources": [
       "https://www.tfid.org/133/City-Council"
     ],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Grayson Stone",
@@ -116,6 +116,6 @@
     "sources": [
       "https://www.tfid.org/133/City-Council"
     ],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   }
 ]
