@@ -979,7 +979,14 @@
       ],
       "population": 2314,
       "website": "https://kellogg.id.gov",
-      "fips": "1642580"
+      "fips": "1642580",
+      "meta_updated_at": "2025-07-13T02:21:13Z",
+      "meta_hash": "f1a5ce8504e9b8e67ba83ad44678cc45",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Malad City",
