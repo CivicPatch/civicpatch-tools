@@ -17,26 +17,27 @@
       "https://www.cityofnampa.us",
       "https://www.cityofnampa.us/518/mayor-newsletters"
     ],
-    "updated_at": "2025-07-12T19:54:50Z"
+    "updated_at": "2025-07-13T00:21:17Z"
   },
   {
-    "name": "Sebastian Griffin",
+    "name": "Victor Rodriguez",
     "roles": [
       "Council Member"
     ],
     "divisions": [
-      "District 6"
+      "District 1"
     ],
-    "image": "https://www.cityofnampa.us/ImageRepository/Document?documentID=17735",
+    "image": "https://www.cityofnampa.us/ImageRepository/Document?documentID=11306",
     "phone_number": null,
-    "email": "griffins@cityofnampa.us",
-    "website": "https://www.cityofnampa.us/1307/Sebastian-Griffin",
-    "start_date": "2024-01-02",
-    "end_date": "2026-12",
+    "email": "rodriguezv@cityofnampa.us",
+    "website": "https://www.cityofnampa.us/525/Victor-Rodriguez",
+    "start_date": "2017-11",
+    "end_date": null,
     "sources": [
-      "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+      "https://www.cityofnampa.us/525/Victor-Rodriguez",
+      "https://www.cityofnampa.us/94/City-Government"
     ],
-    "updated_at": "2025-07-12T19:54:50Z"
+    "updated_at": "2025-07-13T00:21:17Z"
   },
   {
     "name": "Natalie Jangula",
@@ -54,9 +55,30 @@
     "start_date": "2024-01-02",
     "end_date": null,
     "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
       "https://www.cityofnampa.us/1308/Natalie-Jangula"
     ],
-    "updated_at": "2025-07-12T19:54:50Z"
+    "updated_at": "2025-07-13T00:21:17Z"
+  },
+  {
+    "name": "David Bills",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 3"
+    ],
+    "image": "https://www.cityofnampa.us/ImageRepository/Document?documentID=17733",
+    "phone_number": null,
+    "email": "billsd@cityofnampa.us",
+    "website": "https://www.cityofnampa.us/524/David-Bills",
+    "start_date": "2024-01",
+    "end_date": null,
+    "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
+      "https://www.cityofnampa.us/524/David-Bills"
+    ],
+    "updated_at": "2025-07-13T00:21:17Z"
   },
   {
     "name": "Dale Reynolds",
@@ -74,8 +96,50 @@
     "start_date": "2024-01-02",
     "end_date": "2028-01-01",
     "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
       "https://www.cityofnampa.us/526/Dale-Reynolds"
     ],
-    "updated_at": "2025-07-12T19:54:50Z"
+    "updated_at": "2025-07-13T00:21:17Z"
+  },
+  {
+    "name": "Randy Haverfield",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [
+      "District 5"
+    ],
+    "image": "https://www.cityofnampa.us/ImageRepository/Document?documentID=19086",
+    "phone_number": null,
+    "email": "haverfieldr@cityofnampa.us",
+    "website": "https://www.cityofnampa.us/622/Randy-Haverfield",
+    "start_date": "2021-11",
+    "end_date": null,
+    "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
+      "https://www.cityofnampa.us/622/Randy-Haverfield"
+    ],
+    "updated_at": "2025-07-13T00:21:17Z"
+  },
+  {
+    "name": "Sebastian Griffin",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 6"
+    ],
+    "image": "https://www.cityofnampa.us/ImageRepository/Document?documentID=17735",
+    "phone_number": null,
+    "email": "griffins@cityofnampa.us",
+    "website": "https://www.cityofnampa.us/1307/Sebastian-Griffin",
+    "start_date": "2024-01-02",
+    "end_date": "2026-12",
+    "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
+      "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+    ],
+    "updated_at": "2025-07-13T00:21:17Z"
   }
 ]

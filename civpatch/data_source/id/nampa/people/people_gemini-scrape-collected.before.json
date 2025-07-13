@@ -11,17 +11,17 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor Debbie Kling' and 'Mayor of the City of Nampa'."
+        "llm_confidence_reason": "Explicitly stated as 'Mayor of the City of Nampa'."
       },
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor Debbie Kling'."
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Debbie Kling' and 'Mayor' is a target role."
       },
       {
         "data": "Mayor",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor' directly below her name."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' directly under her name."
       }
     ],
     "divisions": [],
@@ -29,13 +29,13 @@
       {
         "data": "(208) 468-5401",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly stated for the Mayor's Office.",
+        "llm_confidence_reason": "Phone number explicitly stated for the Mayor's office.",
         "source": "https://www.cityofnampa.us/529/Office-of-the-Mayor"
       },
       {
         "data": "(208) 468-5401",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The phone number is listed directly under 'Office of the Mayor' which is associated with Debbie Kling.",
+        "llm_confidence_reason": "Phone number is explicitly listed for the 'Office of the Mayor'.",
         "source": "https://www.cityofnampa.us/216/Mayors-Office"
       }
     ],
@@ -43,7 +43,7 @@
       {
         "data": "mayor@cityofnampa.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly stated and converted from 'at' and 'dot' format.",
+        "llm_confidence_reason": "Email address explicitly stated and formatted correctly.",
         "source": "https://www.cityofnampa.us/529/Office-of-the-Mayor"
       }
     ],
@@ -51,13 +51,13 @@
       {
         "data": "https://www.cityofnampa.us/529/Office-of-the-Mayor",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The current page is dedicated to the Mayor's Office and provides information about Debbie Kling, serving as her primary profile page.",
+        "llm_confidence_reason": "This is the current page about the Mayor, serving as her primary online presence within the city's website.",
         "source": "https://www.cityofnampa.us/529/Office-of-the-Mayor"
       },
       {
         "data": "https://www.cityofnampa.us/529/Office-of-the-Mayor",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "A link 'Learn more about Mayor Kling' points to this URL, indicating it's her profile page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided to 'Learn more about Mayor Kling' which is a person-specific profile page.",
         "source": "https://www.cityofnampa.us/216/Mayors-Office"
       }
     ],
@@ -65,108 +65,120 @@
       {
         "data": "2022",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 're-elected to office for her second term which began in 2022', which is the most recent start date.",
+        "llm_confidence_reason": "Explicitly stated 're-elected to office for her second term which began in 2022'.",
         "source": "https://www.cityofnampa.us/529/Office-of-the-Mayor"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:56:04Z"
+    "updated_at": "2025-07-13T00:22:31Z"
   },
   {
-    "name": "Sebastian Griffin",
+    "name": "Victor Rodriguez",
     "sources": [
-      "https://www.cityofnampa.us/1307/Sebastian-Griffin",
-      "https://www.cityofnampa.us/1308/Natalie-Jangula"
+      "https://www.cityofnampa.us/525/Victor-Rodriguez",
+      "https://www.cityofnampa.us/94/City-Government",
+      "https://www.cityofnampa.us/1308/Natalie-Jangula",
+      "https://www.cityofnampa.us/622/Randy-Haverfield"
     ],
     "images": [],
     "roles": [
       {
         "data": "council member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Nampa City Councilman', which is a target role."
+        "llm_confidence_reason": "Explicitly stated as 'elected to the Nampa City Council' and referred to as 'Councilman Rodriguez'."
       },
       {
-        "data": "Nampa City Councilman",
+        "data": "board member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Nampa City Councilman', which is a specific role."
+        "llm_confidence_reason": "Explicitly stated as serving on the 'Compass Board of Directors'."
       },
       {
-        "data": "Council member",
+        "data": "trustee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Library Board of Trustees Liaison'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Council' and described as a 'City Council member'."
+      },
+      {
+        "data": "council member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed on the 'City Council' page under 'Liaison Assignments' and is on the provided list of likely council members."
+        "llm_confidence_reason": "Listed under 'Liaison Assignments' with a link to a City Council profile page, and is on the list of likely council members."
       }
     ],
     "divisions": [
       {
-        "data": "District 6",
+        "data": "District 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text."
+        "llm_confidence_reason": "Explicitly stated as 'DISTRICT 1' for Victor Rodriguez."
       }
     ],
     "phone_numbers": [],
     "emails": [
       {
-        "data": "griffins@cityofnampa.us",
+        "data": "rodriguezv@cityofnampa.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
-        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link associated with Councilman Rodriguez.",
+        "source": "https://www.cityofnampa.us/525/Victor-Rodriguez"
       }
     ],
     "websites": [
       {
-        "data": "https://www.cityofnampa.us/1307/Sebastian-Griffin",
+        "data": "https://www.cityofnampa.us/525/Victor-Rodriguez",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The current page URL is the person's profile page.",
-        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+        "llm_confidence_reason": "The URL is explicitly provided in the breadcrumb navigation and a list of council members, directly linking to Victor Rodriguez's profile.",
+        "source": "https://www.cityofnampa.us/525/Victor-Rodriguez"
       },
       {
-        "data": "https://www.cityofnampa.us/1307/Sebastian-Griffin",
+        "data": "https://www.cityofnampa.us/525/Victor-Rodriguez",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "llm_confidence_reason": "The name is a direct link to their profile page.",
         "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
       }
     ],
     "start_dates": [
       {
-        "data": "2024-01-02",
+        "data": "2021-11",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'sworn in... on January 2, 2024'.",
-        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+        "llm_confidence_reason": "Explicitly stated that he was 're-elected in November of 2021', which is the most recent election date.",
+        "source": "https://www.cityofnampa.us/525/Victor-Rodriguez"
       }
     ],
-    "end_dates": [
-      {
-        "data": "2026-12",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'concluding in December of 2026'.",
-        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
-      }
-    ],
-    "updated_at": "2025-07-12T19:56:04Z"
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:22:31Z"
   },
   {
     "name": "Natalie Jangula",
     "sources": [
-      "https://www.cityofnampa.us/1308/Natalie-Jangula"
+      "https://www.cityofnampa.us/94/City-Government",
+      "https://www.cityofnampa.us/1308/Natalie-Jangula",
+      "https://www.cityofnampa.us/622/Randy-Haverfield"
     ],
     "images": [],
     "roles": [
       {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Council' and described as a 'City Council member'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly referred to as 'Councilwoman Jangula' and listed under 'City Council'."
+      },
+      {
         "data": "Councilwoman",
         "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly referred to as 'Councilwoman Jangula'."
-      },
-      {
-        "data": "Council member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Normalized role from 'Councilwoman', which is a target role."
       }
     ],
     "divisions": [
       {
         "data": "District 2",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'DISTRICT 2' for her current role."
+        "llm_confidence_reason": "Explicitly stated as 'DISTRICT 2' for Natalie Jangula."
       }
     ],
     "phone_numbers": [],
@@ -174,7 +186,7 @@
       {
         "data": "jangulan@cityofnampa.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "llm_confidence_reason": "Email address explicitly provided with a mailto link.",
         "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
       }
     ],
@@ -182,7 +194,7 @@
       {
         "data": "https://www.cityofnampa.us/1308/Natalie-Jangula",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The current page is the profile page for Natalie Jangula.",
+        "llm_confidence_reason": "The current page URL is her dedicated profile page.",
         "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
       }
     ],
@@ -195,122 +207,39 @@
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:56:04Z"
-  },
-  {
-    "name": "Victor Rodriguez",
-    "sources": [
-      "https://www.cityofnampa.us/1308/Natalie-Jangula",
-      "https://www.cityofnampa.us/525/Victor-Rodriguez"
-    ],
-    "images": [],
-    "roles": [
-      {
-        "data": "Council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed on the 'City Council' page under 'Liaison Assignments' and is on the provided list of likely council members."
-      },
-      {
-        "data": "council member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'elected to the Nampa City Council' and referred to as 'Councilman Rodriguez'."
-      },
-      {
-        "data": "Board Member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Stated 'serves on the following Boards and Commissions' and specifically 'Compass Board of Directors' and 'Library Foundation Board'."
-      },
-      {
-        "data": "Board of Directors",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated 'Compass Board of Directors'."
-      },
-      {
-        "data": "Trustee",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated 'Library Board of Trustees Liaison'."
-      },
-      {
-        "data": "Library Board of Trustees Liaison",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated 'Library Board of Trustees Liaison'."
-      },
-      {
-        "data": "Library Foundation Board",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated 'Library Foundation Board'."
-      }
-    ],
-    "divisions": [
-      {
-        "data": "District 1",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'DISTRICT 1' directly under his name."
-      }
-    ],
-    "phone_numbers": [],
-    "emails": [
-      {
-        "data": "rodriguezv@cityofnampa.us",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for 'Councilman Rodriguez'.",
-        "source": "https://www.cityofnampa.us/525/Victor-Rodriguez"
-      }
-    ],
-    "websites": [
-      {
-        "data": "https://www.cityofnampa.us/525/Victor-Rodriguez",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
-        "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
-      },
-      {
-        "data": "https://www.cityofnampa.us/525/Victor-Rodriguez",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The current page URL is a dedicated profile page for Victor Rodriguez.",
-        "source": "https://www.cityofnampa.us/525/Victor-Rodriguez"
-      }
-    ],
-    "start_dates": [
-      {
-        "data": "2021-11",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 're-elected in November of 2021', which is the most recent election date.",
-        "source": "https://www.cityofnampa.us/525/Victor-Rodriguez"
-      }
-    ],
-    "end_dates": [],
-    "updated_at": "2025-07-12T19:56:04Z"
+    "updated_at": "2025-07-13T00:22:31Z"
   },
   {
     "name": "David Bills",
     "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
       "https://www.cityofnampa.us/1308/Natalie-Jangula",
-      "https://www.cityofnampa.us/524/David-Bills"
+      "https://www.cityofnampa.us/524/David-Bills",
+      "https://www.cityofnampa.us/622/Randy-Haverfield"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Council member",
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Council' and described as a 'City Council member'."
+      },
+      {
+        "data": "council member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed on the 'City Council' page under 'Liaison Assignments' and is on the provided list of likely council members."
+        "llm_confidence_reason": "Listed under 'Liaison Assignments' with a link to a City Council profile page, and is on the list of likely council members."
       },
       {
-        "data": "Council Member",
+        "data": "council member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'appointed to the Nampa City Council'."
-      },
-      {
-        "data": "City Council",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'appointed to the Nampa City Council'."
+        "llm_confidence_reason": "Explicitly stated 'David Bills was appointed to the Nampa City Council'."
       }
     ],
     "divisions": [
       {
         "data": "District 3",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'DISTRICT 3' directly above his name."
+        "llm_confidence_reason": "Explicitly stated as 'DISTRICT 3' in the heading for David Bills."
       }
     ],
     "phone_numbers": [],
@@ -326,13 +255,13 @@
       {
         "data": "https://www.cityofnampa.us/524/David-Bills",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "llm_confidence_reason": "The name is a direct link to their profile page.",
         "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
       },
       {
         "data": "https://www.cityofnampa.us/524/David-Bills",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is a direct link to David Bills' profile page, indicated by the 'Skip to Main Content' link and the breadcrumbs.",
+        "llm_confidence_reason": "The current page URL is a direct profile page for David Bills.",
         "source": "https://www.cityofnampa.us/524/David-Bills"
       }
     ],
@@ -345,37 +274,49 @@
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:56:04Z"
+    "updated_at": "2025-07-13T00:22:31Z"
   },
   {
     "name": "Dale Reynolds",
     "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
       "https://www.cityofnampa.us/1308/Natalie-Jangula",
-      "https://www.cityofnampa.us/526/Dale-Reynolds"
+      "https://www.cityofnampa.us/526/Dale-Reynolds",
+      "https://www.cityofnampa.us/622/Randy-Haverfield"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed on the 'City Council' page under 'Liaison Assignments' and is on the provided list of likely council members."
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Council' and described as a 'City Council member'."
       },
       {
         "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'Liaison Assignments' with a link to a City Council profile page, and is on the list of likely council members."
+      },
+      {
+        "data": "Council member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilman Reynolds'."
+        "llm_confidence_reason": "Explicitly referred to as 'Councilman Reynolds' and 'elected to District 4'."
       },
       {
         "data": "Nampa City Council President",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilman Reynolds currently serves as the Nampa City Council President'."
+        "llm_confidence_reason": "Explicitly stated 'currently serves as the Nampa City Council President'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Derived from 'Nampa City Council President' which is a specific type of Council President."
       }
     ],
     "divisions": [
       {
         "data": "District 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'DISTRICT 4' and 'elected to District 4'."
+        "llm_confidence_reason": "Explicitly stated as 'elected to District 4'."
       }
     ],
     "phone_numbers": [],
@@ -383,7 +324,7 @@
       {
         "data": "reynoldsd@cityofnampa.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Dale Reynolds.",
+        "llm_confidence_reason": "Email address explicitly provided in a mailto link.",
         "source": "https://www.cityofnampa.us/526/Dale-Reynolds"
       }
     ],
@@ -391,13 +332,13 @@
       {
         "data": "https://www.cityofnampa.us/526/Dale-Reynolds",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "llm_confidence_reason": "The name is a direct link to their profile page.",
         "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
       },
       {
         "data": "https://www.cityofnampa.us/526/Dale-Reynolds",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is directly associated with Dale Reynolds' name in the breadcrumbs and the list of council members.",
+        "llm_confidence_reason": "The provided content is the dedicated webpage for Dale Reynolds.",
         "source": "https://www.cityofnampa.us/526/Dale-Reynolds"
       }
     ],
@@ -410,32 +351,38 @@
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:56:04Z"
+    "updated_at": "2025-07-13T00:22:31Z"
   },
   {
     "name": "Randy Haverfield",
     "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
       "https://www.cityofnampa.us/1308/Natalie-Jangula",
       "https://www.cityofnampa.us/622/Randy-Haverfield"
     ],
     "images": [],
     "roles": [
       {
-        "data": "Council member",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed on the 'City Council' page under 'Liaison Assignments' and is on the provided list of likely council members."
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Council' and described as a 'City Council member'."
       },
       {
         "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'Liaison Assignments' with a link to a City Council profile page, and is on the list of likely council members."
+      },
+      {
+        "data": "Council member",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated he was 'elected to the Nampa City Council'."
+        "llm_confidence_reason": "Explicitly referred to as 'Councilman Haverfield', which is a target role."
       }
     ],
     "divisions": [
       {
-        "data": "DISTRICT 5",
+        "data": "District 5",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'DISTRICT 5' directly under his name."
+        "llm_confidence_reason": "Explicitly stated as 'DISTRICT 5'."
       }
     ],
     "phone_numbers": [],
@@ -443,7 +390,7 @@
       {
         "data": "haverfieldr@cityofnampa.us",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided as a mailto link for Councilman Haverfield.",
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
         "source": "https://www.cityofnampa.us/622/Randy-Haverfield"
       }
     ],
@@ -451,13 +398,13 @@
       {
         "data": "https://www.cityofnampa.us/622/Randy-Haverfield",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "llm_confidence_reason": "The name is a direct link to their profile page.",
         "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
       },
       {
         "data": "https://www.cityofnampa.us/622/Randy-Haverfield",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The URL is directly linked to Randy Haverfield's name and profile page.",
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Randy Haverfield.",
         "source": "https://www.cityofnampa.us/622/Randy-Haverfield"
       }
     ],
@@ -465,11 +412,90 @@
       {
         "data": "2021-11",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The most recent re-election date is explicitly stated as 'November of 2021'.",
+        "llm_confidence_reason": "Explicitly stated 're-elected for a third term in November of 2021', which is the most recent election date.",
         "source": "https://www.cityofnampa.us/622/Randy-Haverfield"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:56:04Z"
+    "updated_at": "2025-07-13T00:22:31Z"
+  },
+  {
+    "name": "Sebastian Griffin",
+    "sources": [
+      "https://www.cityofnampa.us/94/City-Government",
+      "https://www.cityofnampa.us/1308/Natalie-Jangula",
+      "https://www.cityofnampa.us/622/Randy-Haverfield",
+      "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed under 'City Council' and described as a 'City Council member'."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Listed under 'Liaison Assignments' with a link to a City Council profile page, and is on the list of likely council members."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Nampa City Councilman'."
+      },
+      {
+        "data": "Nampa City Councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Nampa City Councilman'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Nampa City Councilman for District 6'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "griffins@cityofnampa.us",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided for Sebastian Griffin.",
+        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofnampa.us/1307/Sebastian-Griffin",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The name is a direct link to their profile page.",
+        "source": "https://www.cityofnampa.us/1308/Natalie-Jangula"
+      },
+      {
+        "data": "https://www.cityofnampa.us/1307/Sebastian-Griffin",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is a dedicated profile page for Sebastian Griffin.",
+        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-01-02",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'sworn in as a Nampa City Councilman for District 6 on January 2, 2024'.",
+        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'concluding in December of 2026'.",
+        "source": "https://www.cityofnampa.us/1307/Sebastian-Griffin"
+      }
+    ],
+    "updated_at": "2025-07-13T00:22:31Z"
   }
 ]
