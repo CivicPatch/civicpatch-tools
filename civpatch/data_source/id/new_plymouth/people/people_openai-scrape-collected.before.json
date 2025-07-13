@@ -1,1 +1,170 @@
-[]
+[
+  {
+    "name": "Lisa Grace",
+    "sources": [
+      "https://www.npidaho.com/mayor"
+    ],
+    "images": [
+      {
+        "data": "https://clients.municipalimpact.com/images/images_mi/mi_54_NPCityCouncil-42copy_1352902479_8105.jpg",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This image is directly below the Mayor Lisa Grace section and likely depicts her.",
+        "source": "https://www.npidaho.com/mayor"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor Lisa Grace' and describes her role as Mayor of New Plymouth."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-278-5338",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is given as City Hall contact to schedule a meeting with the mayor.",
+        "source": "https://www.npidaho.com/mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayor@npidaho.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly listed as mayor@npidaho.com for Mayor Lisa Grace.",
+        "source": "https://www.npidaho.com/mayor"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.npidaho.com/mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page URL and navigation indicate this is the official mayor page.",
+        "source": "https://www.npidaho.com/mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'Mayor Lisa Grace was elected in November of 2023.'",
+        "source": "https://www.npidaho.com/mayor"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:54:58Z"
+  },
+  {
+    "name": "Ron Martinez",
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title explicitly stated as 'Council President' under City Council members."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ron@npidaho.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed next to Ron Martinez's name.",
+        "source": "https://www.npidaho.com/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:54:58Z"
+  },
+  {
+    "name": "Josh Davis",
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title explicitly stated as 'Councilmember' under City Council members."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Josh@npidaho.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed next to Josh Davis's name.",
+        "source": "https://www.npidaho.com/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:54:58Z"
+  },
+  {
+    "name": "Suzanne Evans",
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title explicitly stated as 'Councilmember' under City Council members."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Suzanne@npidaho.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed next to Suzanne Evans's name.",
+        "source": "https://www.npidaho.com/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:54:58Z"
+  },
+  {
+    "name": "Michael Hughes",
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Title explicitly stated as 'Councilmember' under City Council members."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "michael@npidaho.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed next to Michael Hughes's name.",
+        "source": "https://www.npidaho.com/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:54:58Z"
+  }
+]

@@ -1,1 +1,71 @@
---- []
+---
+- name: Lisa Grace
+  roles:
+  - Mayor
+  divisions:
+  image: https://clients.municipalimpact.com/images/images_mi/mi_54_NPCityCouncil-42copy_1352902479_8105.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/id/new_plymouth/images/10939347455ef3734abf21651c90aec5f7b5d2b0ed6a4557617becc0f4dea385.jpg
+  email: mayor@npidaho.com
+  phone_number: "(208) 278-5338"
+  website: https://www.npidaho.com/mayor
+  start_date: 2023-11
+  end_date:
+  sources:
+  - https://www.npidaho.com/mayor
+  updated_at: '2025-07-13T02:55:11Z'
+- name: Ron Martinez
+  roles:
+  - Council President
+  divisions:
+  image:
+  cdn_image:
+  email: ron@npidaho.com
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.npidaho.com/city-council
+  updated_at: '2025-07-13T02:55:11Z'
+- name: Josh Davis
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: Josh@npidaho.com
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.npidaho.com/city-council
+  updated_at: '2025-07-13T02:55:11Z'
+- name: Michael Hughes
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: michael@npidaho.com
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.npidaho.com/city-council
+  updated_at: '2025-07-13T02:55:11Z'
+- name: Suzanne Evans
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: Suzanne@npidaho.com
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.npidaho.com/city-council
+  updated_at: '2025-07-13T02:55:11Z'

@@ -1,1 +1,87 @@
-[]
+[
+  {
+    "name": "Lisa Grace",
+    "roles": [
+      "mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "208-278-5338",
+    "email": "mayor@npidaho.com",
+    "website": "https://www.npidaho.com/mayor",
+    "start_date": "2023-11",
+    "end_date": null,
+    "sources": [
+      "https://www.npidaho.com/mayor"
+    ],
+    "updated_at": "2025-07-13T02:55:10Z"
+  },
+  {
+    "name": "Ron Martinez",
+    "roles": [
+      "Council President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "ron@npidaho.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "updated_at": "2025-07-13T02:55:10Z"
+  },
+  {
+    "name": "Josh Davis",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "Josh@npidaho.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "updated_at": "2025-07-13T02:55:10Z"
+  },
+  {
+    "name": "Suzanne Evans",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "Suzanne@npidaho.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "updated_at": "2025-07-13T02:55:10Z"
+  },
+  {
+    "name": "Michael Hughes",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "michael@npidaho.com",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "updated_at": "2025-07-13T02:55:10Z"
+  }
+]

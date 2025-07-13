@@ -1,1 +1,163 @@
-[]
+[
+  {
+    "name": "Lisa Grace",
+    "sources": [
+      "https://www.npidaho.com/mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Lisa Grace'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-278-5338",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number provided for contacting the mayor at City Hall.",
+        "source": "https://www.npidaho.com/mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayor@npidaho.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided and associated with the mayor.",
+        "source": "https://www.npidaho.com/mayor"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.npidaho.com/mayor",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "This is the dedicated page for the Mayor, serving as the most relevant profile link available.",
+        "source": "https://www.npidaho.com/mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected in November of 2023'.",
+        "source": "https://www.npidaho.com/mayor"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:55:10Z"
+  },
+  {
+    "name": "Ron Martinez",
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated next to the name and matches a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ron@npidaho.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.npidaho.com/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:55:10Z"
+  },
+  {
+    "name": "Josh Davis",
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated next to the name and matches a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Josh@npidaho.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.npidaho.com/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:55:10Z"
+  },
+  {
+    "name": "Suzanne Evans",
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated next to the name and matches a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Suzanne@npidaho.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.npidaho.com/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:55:10Z"
+  },
+  {
+    "name": "Michael Hughes",
+    "sources": [
+      "https://www.npidaho.com/city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated next to the name and matches a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "michael@npidaho.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.npidaho.com/city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:55:10Z"
+  }
+]
