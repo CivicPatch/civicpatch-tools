@@ -64,6 +64,83 @@ Middleton City operates under the five-member form of government. The elected of
 
 [Fee schedule](https://middleton.dnn4less.net/Portals/0/Files/Fee%20Schedule%20FY%202025%20%28RESOLUTION%20508-24%29%20w%20Exhibits.pdf?ver=2024-09-30-181643-360.pdf "Fee Schedule")
 
+## Jackie Hutchison - Mayor
+
+### Contact
+
+- (208) 671-5802 - Cell
+- [jhutchison@middletoncity.org](mailto:jhutchison@middletoncity.org)
+
+### Terms of Service
+
+Serving 1st Full Term. Current term ends December 2027.
+
+![Mayor Jackie Hutchison](https://cdn.sanity.io/images/4vjerzrk/production/15bc807f3bdc3d7aac7d88decf862ae457b17995-400x600.jpg)
+
+## Tim O'Meara - Council Member
+
+### Contact
+
+- (208) 850-1869 - Cell
+- [tomeara@middletoncity.org](mailto:tomeara@middletoncity.org)
+
+### Terms of Service
+
+Serving 2nd Full Term. Current term ends December 2027.
+
+![Council Member Tim O'Meara](https://cdn.sanity.io/images/4vjerzrk/production/4de594991cabb52b8912d1a66bc86e4f7daf5be5-1240x1618.jpg)
+
+## Mark Christiansen - Council Member
+
+### Contact
+
+- (503) 929-7136 - Cell
+- [mchristiansen@middletoncity.org](mailto:mchristiansen@middletoncity.org)
+
+### Terms of Service
+
+Serving 1st Full Term. Current term ends December 2027.
+
+![Council Member Mark Christiansen](https://cdn.sanity.io/images/4vjerzrk/production/996bf8ffcf7d357460ba386f8c194f80786b0e83-706x588.jpg)
+
+## David Murray - Council Member
+
+### Contact
+
+- (406) 465-5451 - Cell
+- [dmurray@middletoncity.org](mailto:dmurray@middletoncity.org)
+
+### Terms of Service
+
+Serving 1st Term. Current term ends December 2025
+
+![Council Member David Murray](https://cdn.sanity.io/images/4vjerzrk/production/0f4391a7b65b93fc131fb6caac81dff6afb252f6-637x638.jpg)
+
+## Rob Kiser - Council Member
+
+### Contact
+
+- (208) 392-7998 - Cell
+- [rkiser@middletoncity.org](mailto:rkiser@middletoncity.org)
+
+### Terms of Service
+
+Serving 3rd Term. Current term ends December 2025.
+
+![Council Member Rob Kiser](https://cdn.sanity.io/images/4vjerzrk/production/b1e63d097bc574fe4e20b9dcf185f35284056316-167x250.jpg)
+
+## Other City Officials
+
+### City Engineer
+
+Civil Dynamics - Amy Woodruff
+
+### City Attorney
+
+Hamilton, Michaelson &amp; Hilty LLP
+
+Phone: (208) 467-4479
+
 ### Quick Links
 
 - [City Permits](https://www4.citizenserve.com/Portal/PortalController?Action=showHomePage&ctzPagePrefix=Portal_&installationID=242&original_iid=0&original_contactID=0)

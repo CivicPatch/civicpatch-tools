@@ -108,6 +108,7 @@ module Core
     end
 
     private_class_method def self.process_page(page, url, options, api_data)
+      page_source = flatten_shadow_root(page)
       page_source = page.content
 
       page_source = process_images(page, page_source, options, url) if options[:image_dir].present?
@@ -121,6 +122,25 @@ module Core
       puts "Error processing page: #{e.message}, skipping"
       puts e.backtrace
       nil
+    end
+
+    def self.flatten_shadow_root(page)
+      page.evaluate <<~JS
+        (() => {
+          const flattenShadowRoots = (element) => {
+            if (element.shadowRoot) {
+              const shadowContent = element.shadowRoot.innerHTML;
+              const shadowWrapper = document.createElement('div');
+              shadowWrapper.innerHTML = shadowContent;
+              element.appendChild(shadowWrapper);
+              element.shadowRoot.innerHTML = ''; // Clear shadow root to avoid duplication
+            }
+            Array.from(element.children).forEach(flattenShadowRoots);
+          };
+
+          flattenShadowRoots(document.body);
+        })();
+      JS
     end
 
     private_class_method def self.format_page_html(page_source, api_content)
