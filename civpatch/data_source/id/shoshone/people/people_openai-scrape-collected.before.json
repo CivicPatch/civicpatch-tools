@@ -1,1 +1,212 @@
-[]
+[
+  {
+    "name": "Dan Pierson",
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'Mayor' heading and City Council is described as including the city mayor."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-886-2030",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "City Hall contact number provided near council info; no direct personal number found.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "emails": [
+      {
+        "data": "shocity@shoshonecityid.gov",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city email provided near council info; no personal email found.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.shoshonecityid.gov/city-council.html",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city council page URL where the info is found.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:58:12Z"
+  },
+  {
+    "name": "Dale Sluder",
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'City Council' members; council members are part of the governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-886-2030",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No personal phone found; city hall number used as contact.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "emails": [
+      {
+        "data": "shocity@shoshonecityid.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No personal email found; general city email used.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.shoshonecityid.gov/city-council.html",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city council page URL.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:58:12Z"
+  },
+  {
+    "name": "Mike Wallace",
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'City Council' members; council members are part of the governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-886-2030",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No personal phone found; city hall number used as contact.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "emails": [
+      {
+        "data": "shocity@shoshonecityid.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No personal email found; general city email used.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.shoshonecityid.gov/city-council.html",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city council page URL.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:58:12Z"
+  },
+  {
+    "name": "Jodi Waite",
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'City Council' members; council members are part of the governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-886-2030",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No personal phone found; city hall number used as contact.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "emails": [
+      {
+        "data": "shocity@shoshonecityid.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No personal email found; general city email used.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.shoshonecityid.gov/city-council.html",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city council page URL.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:58:12Z"
+  },
+  {
+    "name": "Ross Gedeborg",
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed under 'City Council' members; council members are part of the governing body."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-886-2030",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No personal phone found; city hall number used as contact.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "emails": [
+      {
+        "data": "shocity@shoshonecityid.gov",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "No personal email found; general city email used.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.shoshonecityid.gov/city-council.html",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Official city council page URL.",
+        "source": "https://www.shoshonecityid.gov/city-council.html"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:58:12Z"
+  }
+]

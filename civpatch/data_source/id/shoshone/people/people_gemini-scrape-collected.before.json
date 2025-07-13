@@ -1,1 +1,107 @@
-[]
+[
+  {
+    "name": "Dan Pierson",
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Name is listed under the 'City Council' heading, indicating membership in the governing body, though specific individual roles (mayor vs. council member) are not explicitly assigned."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:58:45Z"
+  },
+  {
+    "name": "Dale Sluder",
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Name is listed under the 'City Council' heading, indicating membership in the governing body, though specific individual roles (mayor vs. council member) are not explicitly assigned."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:58:45Z"
+  },
+  {
+    "name": "Mike Wallace",
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Name is listed under the 'City Council' heading, indicating membership in the governing body, though specific individual roles (mayor vs. council member) are not explicitly assigned."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:58:45Z"
+  },
+  {
+    "name": "Jodi Waite",
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Name is listed under the 'City Council' heading, indicating membership in the governing body, though specific individual roles (mayor vs. council member) are not explicitly assigned."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:58:45Z"
+  },
+  {
+    "name": "Ross Gedeborg",
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Name is listed under the 'City Council' heading, indicating membership in the governing body, though specific individual roles (mayor vs. council member) are not explicitly assigned."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T02:58:45Z"
+  }
+]

@@ -1,1 +1,70 @@
---- []
+---
+- name: Dale Sluder
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: shocity@shoshonecityid.gov
+  phone_number: "(208) 886-2030"
+  website: https://www.shoshonecityid.gov/city-council.html
+  start_date:
+  end_date:
+  sources:
+  - https://www.shoshonecityid.gov/city-council.html
+  updated_at: '2025-07-13T02:58:45Z'
+- name: Jodi Waite
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: shocity@shoshonecityid.gov
+  phone_number: "(208) 886-2030"
+  website: https://www.shoshonecityid.gov/city-council.html
+  start_date:
+  end_date:
+  sources:
+  - https://www.shoshonecityid.gov/city-council.html
+  updated_at: '2025-07-13T02:58:45Z'
+- name: Mike Wallace
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: shocity@shoshonecityid.gov
+  phone_number: "(208) 886-2030"
+  website: https://www.shoshonecityid.gov/city-council.html
+  start_date:
+  end_date:
+  sources:
+  - https://www.shoshonecityid.gov/city-council.html
+  updated_at: '2025-07-13T02:58:45Z'
+- name: Ross Gedeborg
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: shocity@shoshonecityid.gov
+  phone_number: "(208) 886-2030"
+  website: https://www.shoshonecityid.gov/city-council.html
+  start_date:
+  end_date:
+  sources:
+  - https://www.shoshonecityid.gov/city-council.html
+  updated_at: '2025-07-13T02:58:45Z'
+- name: Dan Pierson
+  roles: []
+  divisions:
+  image:
+  cdn_image:
+  email: shocity@shoshonecityid.gov
+  phone_number: "(208) 886-2030"
+  website: https://www.shoshonecityid.gov/city-council.html
+  start_date:
+  end_date:
+  sources:
+  - https://www.shoshonecityid.gov/city-council.html
+  updated_at: '2025-07-13T02:58:45Z'

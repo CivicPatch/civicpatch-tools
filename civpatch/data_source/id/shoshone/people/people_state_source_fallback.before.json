@@ -1,52 +1,52 @@
 [
   {
-    "name": "Pierson",
+    "name": "Dan Pierson",
     "roles": [
       "Mayor"
     ],
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-13T02:28:00Z"
+    "updated_at": "2025-07-13T02:56:53Z"
   },
   {
-    "name": "Gedeborg",
+    "name": "Dale Sluder",
     "roles": [
       "Council Member"
     ],
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-13T02:28:00Z"
+    "updated_at": "2025-07-13T02:56:53Z"
   },
   {
-    "name": "Waite",
+    "name": "Mike Wallace",
     "roles": [
       "Council Member"
     ],
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-13T02:28:00Z"
+    "updated_at": "2025-07-13T02:56:53Z"
   },
   {
-    "name": "Wallace",
+    "name": "Justin Schoolcraft",
     "roles": [
       "Council Member"
     ],
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-13T02:28:00Z"
+    "updated_at": "2025-07-13T02:56:53Z"
   },
   {
-    "name": "Sluder",
+    "name": "Jodi Waite",
     "roles": [
       "Council Member"
     ],
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-13T02:28:00Z"
+    "updated_at": "2025-07-13T02:56:53Z"
   }
 ]

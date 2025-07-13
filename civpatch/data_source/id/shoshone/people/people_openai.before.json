@@ -1,1 +1,87 @@
-[]
+[
+  {
+    "name": "Dan Pierson",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "208-886-2030",
+    "email": "shocity@shoshonecityid.gov",
+    "website": "https://www.shoshonecityid.gov/city-council.html",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "updated_at": "2025-07-13T02:58:12Z"
+  },
+  {
+    "name": "Dale Sluder",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "208-886-2030",
+    "email": "shocity@shoshonecityid.gov",
+    "website": "https://www.shoshonecityid.gov/city-council.html",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "updated_at": "2025-07-13T02:58:12Z"
+  },
+  {
+    "name": "Mike Wallace",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "208-886-2030",
+    "email": "shocity@shoshonecityid.gov",
+    "website": "https://www.shoshonecityid.gov/city-council.html",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "updated_at": "2025-07-13T02:58:12Z"
+  },
+  {
+    "name": "Jodi Waite",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "208-886-2030",
+    "email": "shocity@shoshonecityid.gov",
+    "website": "https://www.shoshonecityid.gov/city-council.html",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "updated_at": "2025-07-13T02:58:12Z"
+  },
+  {
+    "name": "Ross Gedeborg",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "208-886-2030",
+    "email": "shocity@shoshonecityid.gov",
+    "website": "https://www.shoshonecityid.gov/city-council.html",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "updated_at": "2025-07-13T02:58:12Z"
+  }
+]

@@ -1,1 +1,87 @@
-[]
+[
+  {
+    "name": "Dan Pierson",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "updated_at": "2025-07-13T02:58:45Z"
+  },
+  {
+    "name": "Dale Sluder",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "updated_at": "2025-07-13T02:58:45Z"
+  },
+  {
+    "name": "Mike Wallace",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "updated_at": "2025-07-13T02:58:45Z"
+  },
+  {
+    "name": "Jodi Waite",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "updated_at": "2025-07-13T02:58:45Z"
+  },
+  {
+    "name": "Ross Gedeborg",
+    "roles": [
+      "council member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.shoshonecityid.gov/city-council.html"
+    ],
+    "updated_at": "2025-07-13T02:58:45Z"
+  }
+]
