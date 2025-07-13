@@ -1,36 +1,28 @@
 [
   {
-    "name": "Dan Keller",
+    "name": "Daniel M. Keller",
     "roles": [
       "Mayor"
     ],
     "divisions": [],
-    "updated_at": "2025-07-12T23:44:48Z"
+    "updated_at": "2025-07-13T00:11:24Z"
   },
   {
-    "name": "Terry D. Larson",
+    "name": "Brent Dodge",
     "roles": [
       "Council Member",
       "Council President"
     ],
     "divisions": [],
-    "updated_at": "2025-07-12T23:44:48Z"
+    "updated_at": "2025-07-13T00:11:24Z"
   },
   {
-    "name": "Todd D. Thomas",
+    "name": "Terry D. Larson",
     "roles": [
       "Council Member"
     ],
     "divisions": [],
-    "updated_at": "2025-07-12T23:44:48Z"
-  },
-  {
-    "name": "Brent Dodge",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [],
-    "updated_at": "2025-07-12T23:44:48Z"
+    "updated_at": "2025-07-13T00:11:24Z"
   },
   {
     "name": "Chris Larsen",
@@ -38,6 +30,14 @@
       "Council Member"
     ],
     "divisions": [],
-    "updated_at": "2025-07-12T23:44:48Z"
+    "updated_at": "2025-07-13T00:11:24Z"
+  },
+  {
+    "name": "Todd D. Thomas",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T00:11:24Z"
   }
 ]
