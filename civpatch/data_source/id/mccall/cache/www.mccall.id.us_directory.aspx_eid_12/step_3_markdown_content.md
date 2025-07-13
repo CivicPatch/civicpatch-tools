@@ -1,10 +1,10 @@
 This website is AudioEye enabled and is being optimized for accessibility. To open the AudioEye Toolbar, press "shift + =". Some assistive technologies may require the use of a passthrough function before this keystroke. For more information, activate the button labeled “Explore your accessibility options”.
 
-[Skip To Main Content](https://www.mccall.id.us/FormCenter/City-Manager-City-Council-16/Get-Married-by-the-Mayor-59/)
+[Skip To Main Content](https://www.mccall.id.us/directory.aspx?eid=12%2F)
 
 Loading
 
-[Skip to Main Content](https://www.mccall.id.us/FormCenter/City-Manager-City-Council-16/Get-Married-by-the-Mayor-59/)
+[Skip to Main Content](https://www.mccall.id.us/directory.aspx?eid=12%2F)
 
 [Create a Website Account](https://www.mccall.id.us/MyAccount/ProfileCreate) - Manage notification subscriptions, save form progress and more.   
 
@@ -23,73 +23,23 @@ Search
 ![](https://www.mccall.id.us/ImageRepository/Document?documentID=70)
 
 1. [Home](https://www.mccall.id.us)
-2. Form Center
+2. Staff Directory
 
-# Form Center
+![Colby Nielsen](https://www.mccall.id.us/ImageRepository/Document?documentID=877)
 
-### Search Forms by:
+# Colby Nielsen
 
-Enter Search Terms [Select a Category](https://www.mccall.id.us/FormCenter/City-Manager-City-Council-16/Get-Married-by-the-Mayor-59/)
+ 
 
-Select category/categories to filter
+[City Council](https://www.mccall.id.us/Directory.aspx?DID=7)  
+Title: Council President  
+[Email Colby Nielsen](mailto:cnielsen@mccall.id.us)
 
-1. All Categories
-2. City Manager
-3. City Manager / City Council
-4. Comment to City Council
-5. Communications
-
-<!--THE END-->
-
-1. Focus on McCall
-2. General Forms
-3. Historic Preservation Commission
-4. Lakeside Liberty Fest
-5. McCall Municipal Golf Club
-
-<!--THE END-->
-
-1. McCall Public Library
-2. Parks &amp; Recreation
-3. Police Department
-4. Public Records
-5. Public Works
-
-Search
-
-By [signing in or creating an account](https://www.mccall.id.us/FormCenter/City-Manager-City-Council-16/Get-Married-by-the-Mayor-59), some fields will auto-populate with your information.
-
-## Get Married by the Mayor
-
-[Sign in to Save Progress](https://www.mccall.id.us/FormCenter/City-Manager-City-Council-16/Get-Married-by-the-Mayor-59)
-
-This form has been modified since it was saved. Please review all fields before submitting.
-
-01. Thank you for inquiring about a ceremony performed by the Mayor of McCall Bob Giles. Mayor Giles requests advanced notice of 3 weeks and a copy of any special reading or vow requests in advance. The Mayor prefers City Parks or City Hall but will travel within city limits with appropriate notice. Please note, the City of McCall does not issue Marriage Licenses. A Marriage License must be procured from any County Clerk office prior to your ceremony date.
-02. First Name*
-03. Last Name*
-04. Email Address*
-05. Phone*
-06. Address*
-07. City*
-08. State / Province*
-09. Zip Code*
-10. Questions
-11. Vows or readings upload for approval.
-12. Date and location request of ceremony.*
-    
-    Leave This Blank:
-13. 1. Receive an email copy of this form.
-14. Email address
-    
-    This field is not part of the form submission.
-15. [Submit](https://www.mccall.id.us/FormCenter/City-Manager-City-Council-16/Get-Married-by-the-Mayor-59)
-
-\* indicates a required field
+[Return to Staff Directory](https://www.mccall.id.us/Directory.aspx)
 
 [Short Term Rentals](https://www.mccall.id.us/529/Short-Term-Rental-Business-Information)
 
-[Project Closures &amp; Updates](https://www.mccall.id.us/FormCenter/City-Manager-City-Council-16/Get-Married-by-the-Mayor-59/333/Public-Works-Improvement-Projects)
+[Project Closures &amp; Updates](https://www.mccall.id.us/333/Public-Works-Improvement-Projects)
 
 [Jobs](https://www.mccall.id.us/Jobs.aspx)
 
@@ -150,6 +100,8 @@ Do Not Show Again Close
 Select LanguageAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu
 
 Powered by [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)Translate](https://translate.google.com)
+
+### Live Edit
 
 Original text
 
