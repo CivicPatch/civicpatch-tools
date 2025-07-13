@@ -32,7 +32,8 @@
 - name: Dennis Norris
   roles:
   - Council Member
-  divisions: []
+  divisions:
+  - Position 4
   image:
   cdn_image:
   email:
