@@ -7,27 +7,7 @@
     "divisions": [
       "Weiser City Government"
     ],
-    "updated_at": "2025-07-12T23:42:25Z"
-  },
-  {
-    "name": "Larry Hogg",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
-      "Weiser City Council"
-    ],
-    "updated_at": "2025-07-12T23:42:25Z"
-  },
-  {
-    "name": "Katie von Brethorst",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
-      "Weiser City Council"
-    ],
-    "updated_at": "2025-07-12T23:42:25Z"
+    "updated_at": "2025-07-12T23:57:42Z"
   },
   {
     "name": "Herb Haun",
@@ -37,17 +17,27 @@
     "divisions": [
       "Weiser City Council"
     ],
-    "updated_at": "2025-07-12T23:42:25Z"
+    "updated_at": "2025-07-12T23:57:42Z"
   },
   {
-    "name": "Marg Chipman",
+    "name": "Larry Hogg",
     "roles": [
       "Council Member"
     ],
     "divisions": [
       "Weiser City Council"
     ],
-    "updated_at": "2025-07-12T23:42:25Z"
+    "updated_at": "2025-07-12T23:57:42Z"
+  },
+  {
+    "name": "Blackwell",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Weiser City Council"
+    ],
+    "updated_at": "2025-07-12T23:57:42Z"
   },
   {
     "name": "Mike Hopkins",
@@ -57,16 +47,26 @@
     "divisions": [
       "Weiser City Council"
     ],
-    "updated_at": "2025-07-12T23:42:25Z"
+    "updated_at": "2025-07-12T23:57:42Z"
   },
   {
-    "name": "Sterling",
+    "name": "Marg Chipman",
     "roles": [
       "Council Member"
     ],
     "divisions": [
       "Weiser City Council"
     ],
-    "updated_at": "2025-07-12T23:42:25Z"
+    "updated_at": "2025-07-12T23:57:42Z"
+  },
+  {
+    "name": "Katie von Brethorst",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Weiser City Council"
+    ],
+    "updated_at": "2025-07-12T23:57:42Z"
   }
 ]

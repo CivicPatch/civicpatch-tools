@@ -498,8 +498,8 @@
       "population": 5630,
       "website": "https://cityofweiser.net",
       "fips": "1686140",
-      "meta_updated_at": "2025-07-12T23:45:02Z",
-      "meta_hash": "e07ba038d691cba6985e15bd6d5a2b48",
+      "meta_updated_at": "2025-07-13T00:00:34Z",
+      "meta_hash": "93ff5d6f56dfe12d942ac1522dfdcb82",
       "meta_sources": [
         "state_source",
         "gemini",
