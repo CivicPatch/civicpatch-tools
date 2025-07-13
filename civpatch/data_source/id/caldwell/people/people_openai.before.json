@@ -9,165 +9,134 @@
     "phone_number": "208-455-3000",
     "email": "mayorsoffice@cityofcaldwell.org",
     "website": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
-    "start_date": "2022",
+    "start_date": "2021-11",
     "end_date": "2025",
     "sources": [
-      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
       "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
     ],
-    "updated_at": "2025-07-13T00:18:27Z"
+    "updated_at": "2025-07-13T02:44:14Z"
   },
   {
-    "name": "Garret L. Nancolas",
+    "name": "Brad Doty",
     "roles": [
-      "Mayor"
+      "Council Member",
+      "Councilmember, Seat 1"
     ],
-    "divisions": [],
-    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_garret-l.-nancolas.jpg",
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1998-garret-l-nancolas.pdf",
-    "start_date": "1998",
-    "end_date": "2022",
+    "divisions": [
+      "Seat 1"
+    ],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/3/city-clerk/images/portrait_councilor-brad-doty.jpg?dimension=userprofile&w=150&h=150",
+    "phone_number": "(208) 504-9520",
+    "email": "bdoty@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1",
+    "start_date": "2022-01",
+    "end_date": null,
     "sources": [
-      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      "https://www.cityofcaldwell.org/Government/City-Council",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1"
     ],
-    "updated_at": "2025-07-13T00:18:27Z"
+    "updated_at": "2025-07-13T02:44:14Z"
   },
   {
-    "name": "Richard H. Winder",
+    "name": "Chuck Stadick",
     "roles": [
-      "Mayor"
+      "Council Member",
+      "Council Member, Seat 2"
     ],
-    "divisions": [],
-    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_richard-h.-winder.png",
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1994-richard-h-winder.pdf",
-    "start_date": "1994",
-    "end_date": "1998",
+    "divisions": [
+      "Seat 2"
+    ],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/4/city-clerk/images/portrait_councilor-chuck-stadick.jpg?dimension=userprofile&w=150&h=150",
+    "phone_number": "(208) 250-2410",
+    "email": "cstadick@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2",
+    "start_date": "2021",
+    "end_date": null,
     "sources": [
-      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      "https://www.cityofcaldwell.org/Government/City-Council",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2"
     ],
-    "updated_at": "2025-07-13T00:18:27Z"
+    "updated_at": "2025-07-13T02:44:14Z"
   },
   {
-    "name": "James R. Dakan",
+    "name": "Diana Register",
     "roles": [
-      "Mayor"
+      "Council Member"
     ],
-    "divisions": [],
-    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_james-r.-dakan.png",
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1990-james-dakan.pdf",
-    "start_date": "1990",
-    "end_date": "1994",
+    "divisions": [
+      "Seat 3"
+    ],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/3/city-clerk/images/portrait_councilor-diana-register.jpg?dimension=userprofile&w=150&h=150",
+    "phone_number": "(208) 614-8462",
+    "email": "dregister@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3",
+    "start_date": "2022-01",
+    "end_date": null,
     "sources": [
-      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      "https://www.cityofcaldwell.org/Government/City-Council",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3"
     ],
-    "updated_at": "2025-07-13T00:18:27Z"
+    "updated_at": "2025-07-13T02:44:14Z"
   },
   {
-    "name": "Peter B. Cowles",
+    "name": "Geoff Williams",
     "roles": [
-      "Mayor"
+      "Council Member"
     ],
-    "divisions": [],
-    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_peter-b.-cowles.png",
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1986-peter-b-cowles.pdf",
-    "start_date": "1986",
-    "end_date": "1990",
+    "divisions": [
+      "Seat 4"
+    ],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/2/city-clerk/images/portrait_councilor-geoff-williams.jpg?dimension=userprofile&w=150&h=150",
+    "phone_number": "(208) 504-7770",
+    "email": "gwilliams@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4",
+    "start_date": "2022-02-16",
+    "end_date": null,
     "sources": [
-      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      "https://www.cityofcaldwell.org/Government/City-Council",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4"
     ],
-    "updated_at": "2025-07-13T00:18:27Z"
+    "updated_at": "2025-07-13T02:44:14Z"
   },
   {
-    "name": "Alfred H. McCluskey",
+    "name": "Chris Allgood",
     "roles": [
-      "Mayor"
+      "Council Member",
+      "Councilmember"
     ],
-    "divisions": [],
-    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_alfred-h.-mccluskey.png",
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1980-alfred-h-mccluskey.pdf",
-    "start_date": "1980",
-    "end_date": "1986",
+    "divisions": [
+      "Seat 5"
+    ],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/3/city-clerk/images/portrait_councilor-chris-allgood.jpg?dimension=userprofile&w=150&h=150",
+    "phone_number": "(208) 249-0876",
+    "email": "callgood@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5",
+    "start_date": "2019",
+    "end_date": "2023-12-31",
     "sources": [
-      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      "https://www.cityofcaldwell.org/Government/City-Council",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5"
     ],
-    "updated_at": "2025-07-13T00:18:27Z"
+    "updated_at": "2025-07-13T02:44:14Z"
   },
   {
-    "name": "Robert E. Pasley",
+    "name": "Mike Dittenber",
     "roles": [
-      "Mayor"
+      "Council Member"
     ],
-    "divisions": [],
-    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_robert-e.-pasley.png",
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1974-robert-e-pasley.pdf",
-    "start_date": "1973",
-    "end_date": "1980",
+    "divisions": [
+      "Seat 6"
+    ],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/2/city-clerk/images/portrait_councilor-mike-dittenber.jpg?dimension=userprofile&w=150&h=150",
+    "phone_number": "(208) 504-7201",
+    "email": "mdittenber@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-6",
+    "start_date": null,
+    "end_date": null,
     "sources": [
-      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      "https://www.cityofcaldwell.org/Government/City-Council",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-6"
     ],
-    "updated_at": "2025-07-13T00:18:27Z"
-  },
-  {
-    "name": "Charles W. Carpenter",
-    "roles": [
-      "Mayor"
-    ],
-    "divisions": [],
-    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_charles-w.-carpenter.png",
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1970-charles-w-carpenter.pdf",
-    "start_date": "1970",
-    "end_date": "1973",
-    "sources": [
-      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
-    ],
-    "updated_at": "2025-07-13T00:18:27Z"
-  },
-  {
-    "name": "N.E. \"Coley\" Smith",
-    "roles": [
-      "Mayor"
-    ],
-    "divisions": [],
-    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_n.e.-coley-smith.png",
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1964-ne-coley-smith.pdf",
-    "start_date": "1964",
-    "end_date": "1969",
-    "sources": [
-      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
-    ],
-    "updated_at": "2025-07-13T00:18:27Z"
-  },
-  {
-    "name": "Emery L. Vassar",
-    "roles": [
-      "Mayor"
-    ],
-    "divisions": [],
-    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_emery-l.-vassar.png",
-    "phone_number": null,
-    "email": null,
-    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1933-emery-l-vassar.pdf",
-    "start_date": "1933",
-    "end_date": "1936",
-    "sources": [
-      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
-    ],
-    "updated_at": "2025-07-13T00:18:27Z"
+    "updated_at": "2025-07-13T02:44:14Z"
   }
 ]
