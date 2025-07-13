@@ -990,7 +990,14 @@
       ],
       "population": 2299,
       "website": "https://www.maladidaho.org",
-      "fips": "1650140"
+      "fips": "1650140",
+      "meta_updated_at": "2025-07-13T02:19:34Z",
+      "meta_hash": "6d25a53de9a6e8acaddeb94e20449277",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Victor",
