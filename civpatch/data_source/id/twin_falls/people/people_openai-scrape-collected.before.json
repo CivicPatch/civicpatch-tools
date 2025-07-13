@@ -7,15 +7,15 @@
     "images": [
       {
         "data": "https://www.tfid.org/ImageRepository/Document?documentId=5620",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image near the name 'Mayor Ruth Pierce' on the page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly next to the name 'Mayor Ruth Pierce'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "roles": [
       {
         "data": "Mayor",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 'Mayor Ruth Pierce' on the Twin Falls City Council page."
       }
     ],
@@ -24,15 +24,15 @@
     "emails": [
       {
         "data": "rpierce@tfid.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email link directly associated with 'Mayor Ruth Pierce'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is linked directly with the name 'Mayor Ruth Pierce'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:26Z"
+    "updated_at": "2025-07-13T00:21:27Z"
   },
   {
     "name": "Jason Brown",
@@ -42,15 +42,15 @@
     "images": [
       {
         "data": "https://www.tfid.org/ImageRepository/Document?documentId=5616",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image near the name 'Vice-mayor Jason Brown' on the page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly next to the name 'Vice-mayor Jason Brown'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "roles": [
       {
         "data": "Vice Mayor",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Explicitly stated as 'Vice-mayor Jason Brown' on the Twin Falls City Council page."
       }
     ],
@@ -59,15 +59,15 @@
     "emails": [
       {
         "data": "jbrown@tfid.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email link directly associated with 'Vice-mayor Jason Brown'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is linked directly with the name 'Jason Brown'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:26Z"
+    "updated_at": "2025-07-13T00:21:27Z"
   },
   {
     "name": "Christopher Reid",
@@ -77,8 +77,8 @@
     "images": [
       {
         "data": "https://www.tfid.org/ImageRepository/Document?documentId=5614",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image near the name 'Vice-mayor Christopher Reid' on the page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly next to the name 'Vice-mayor Christopher Reid'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
@@ -86,7 +86,7 @@
       {
         "data": "Vice Mayor",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed as 'Vice-mayor Christopher Reid' indicating a vice mayor role on the City Council."
+        "llm_confidence_reason": "Listed as 'Vice-mayor Christopher Reid' indicating the role of Vice Mayor."
       }
     ],
     "divisions": [],
@@ -94,15 +94,15 @@
     "emails": [
       {
         "data": "creid@tfid.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email link directly associated with 'Vice-mayor Christopher Reid'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is linked directly with the name 'Christopher Reid'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:26Z"
+    "updated_at": "2025-07-13T00:21:27Z"
   },
   {
     "name": "Craig Hawkins",
@@ -112,15 +112,15 @@
     "images": [
       {
         "data": "https://www.tfid.org/ImageRepository/Document?documentId=5615",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image near the name 'Craig Hawkins' on the page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly next to the name 'Craig Hawkins'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.8,
         "llm_confidence_reason": "Listed among City Council members without specific title, inferred as Council Member."
       }
     ],
@@ -129,15 +129,15 @@
     "emails": [
       {
         "data": "chawkins@tfid.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email link directly associated with 'Craig Hawkins'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is linked directly with the name 'Craig Hawkins'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:26Z"
+    "updated_at": "2025-07-13T00:21:27Z"
   },
   {
     "name": "Spencer Cutler",
@@ -147,15 +147,15 @@
     "images": [
       {
         "data": "https://www.tfid.org/ImageRepository/Document?documentId=5617",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image near the name 'Spencer Cutler' on the page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly next to the name 'Spencer Cutler'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.8,
         "llm_confidence_reason": "Listed among City Council members without specific title, inferred as Council Member."
       }
     ],
@@ -164,15 +164,15 @@
     "emails": [
       {
         "data": "scutler@tfid.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email link directly associated with 'Spencer Cutler'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is linked directly with the name 'Spencer Cutler'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:26Z"
+    "updated_at": "2025-07-13T00:21:27Z"
   },
   {
     "name": "Cherie Vollmer",
@@ -182,15 +182,15 @@
     "images": [
       {
         "data": "https://www.tfid.org/ImageRepository/Document?documentId=6850",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image near the name 'Cherie Vollmer' on the page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly next to the name 'Cherie Vollmer'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.8,
         "llm_confidence_reason": "Listed among City Council members without specific title, inferred as Council Member."
       }
     ],
@@ -199,15 +199,15 @@
     "emails": [
       {
         "data": "cvollmer@tfid.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email link directly associated with 'Cherie Vollmer'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is linked directly with the name 'Cherie Vollmer'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:26Z"
+    "updated_at": "2025-07-13T00:21:27Z"
   },
   {
     "name": "Grayson Stone",
@@ -217,15 +217,15 @@
     "images": [
       {
         "data": "https://www.tfid.org/ImageRepository/Document?documentId=6849",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Image near the name 'Grayson Stone' on the page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly next to the name 'Grayson Stone'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.8,
         "llm_confidence_reason": "Listed among City Council members without specific title, inferred as Council Member."
       }
     ],
@@ -234,14 +234,14 @@
     "emails": [
       {
         "data": "gstone@tfid.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email link directly associated with 'Grayson Stone'.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is linked directly with the name 'Grayson Stone'.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:26Z"
+    "updated_at": "2025-07-13T00:21:27Z"
   }
 ]

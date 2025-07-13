@@ -7,9 +7,9 @@
     "images": [],
     "roles": [
       {
-        "data": "Mayor",
+        "data": "mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated as 'Mayor'."
+        "llm_confidence_reason": "Role 'Mayor' is explicitly stated next to the name."
       }
     ],
     "divisions": [],
@@ -18,14 +18,14 @@
       {
         "data": "rpierce@tfid.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "llm_confidence_reason": "Email address is explicitly provided and linked to the name.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Jason Brown",
@@ -35,9 +35,9 @@
     "images": [],
     "roles": [
       {
-        "data": "Vice-mayor",
+        "data": "vice mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated as 'Vice-mayor'."
+        "llm_confidence_reason": "Role 'Vice-mayor' is explicitly stated next to the name."
       }
     ],
     "divisions": [],
@@ -46,14 +46,14 @@
       {
         "data": "jbrown@tfid.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "llm_confidence_reason": "Email address is explicitly provided and linked to the name.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Christopher Reid",
@@ -63,9 +63,9 @@
     "images": [],
     "roles": [
       {
-        "data": "council member",
+        "data": "vice mayor",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under 'Twin Falls City Council' and explicitly mentioned in prompt as 'very likely to be on the council'."
+        "llm_confidence_reason": "Role 'Vice-mayor' is explicitly stated in the image alt text and implied by proximity to 'Vice-mayor Jason Brown'."
       }
     ],
     "divisions": [],
@@ -74,14 +74,14 @@
       {
         "data": "creid@tfid.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "llm_confidence_reason": "Email address is explicitly provided and linked to the name.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Craig Hawkins",
@@ -93,7 +93,7 @@
       {
         "data": "council member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under 'Twin Falls City Council' and explicitly mentioned in prompt as 'very likely to be on the council'."
+        "llm_confidence_reason": "Listed under 'Twin Falls City Council' heading alongside other confirmed council members."
       }
     ],
     "divisions": [],
@@ -102,14 +102,14 @@
       {
         "data": "chawkins@tfid.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "llm_confidence_reason": "Email address is explicitly provided and linked to the name.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Spencer Cutler",
@@ -121,7 +121,7 @@
       {
         "data": "council member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under 'Twin Falls City Council' and explicitly mentioned in prompt as 'very likely to be on the council'."
+        "llm_confidence_reason": "Listed under 'Twin Falls City Council' heading alongside other confirmed council members."
       }
     ],
     "divisions": [],
@@ -130,14 +130,14 @@
       {
         "data": "scutler@tfid.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "llm_confidence_reason": "Email address is explicitly provided and linked to the name.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Cherie Vollmer",
@@ -149,7 +149,7 @@
       {
         "data": "council member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under 'Twin Falls City Council' and explicitly mentioned in prompt as 'very likely to be on the council'."
+        "llm_confidence_reason": "Listed under 'Twin Falls City Council' heading alongside other confirmed council members."
       }
     ],
     "divisions": [],
@@ -158,14 +158,14 @@
       {
         "data": "cvollmer@tfid.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "llm_confidence_reason": "Email address is explicitly provided and linked to the name.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   },
   {
     "name": "Grayson Stone",
@@ -177,7 +177,7 @@
       {
         "data": "council member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Listed under 'Twin Falls City Council' and explicitly mentioned in prompt as 'very likely to be on the council'."
+        "llm_confidence_reason": "Listed under 'Twin Falls City Council' heading alongside other confirmed council members."
       }
     ],
     "divisions": [],
@@ -186,13 +186,13 @@
       {
         "data": "gstone@tfid.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email explicitly provided next to name.",
+        "llm_confidence_reason": "Email address is explicitly provided and linked to the name.",
         "source": "https://www.tfid.org/133/City-Council"
       }
     ],
     "websites": [],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-12T19:59:35Z"
+    "updated_at": "2025-07-13T00:21:39Z"
   }
 ]
