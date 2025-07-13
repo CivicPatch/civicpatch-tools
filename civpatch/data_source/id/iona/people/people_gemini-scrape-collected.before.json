@@ -1,0 +1,149 @@
+[
+  {
+    "name": "Dan Gubler",
+    "sources": [
+      "https://www.cityofiona.org/mayor-city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-520-0558",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly stated.",
+        "source": "https://www.cityofiona.org/mayor-city-council"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dangubler@cityofiona.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated.",
+        "source": "https://www.cityofiona.org/mayor-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:31:06Z"
+  },
+  {
+    "name": "Rob Geray",
+    "sources": [
+      "https://www.cityofiona.org/mayor-city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "robgeray@cityofiona.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated.",
+        "source": "https://www.cityofiona.org/mayor-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:31:06Z"
+  },
+  {
+    "name": "Michael Thompson",
+    "sources": [
+      "https://www.cityofiona.org/mayor-city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "michaelthompson@cityofiona.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated.",
+        "source": "https://www.cityofiona.org/mayor-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:31:06Z"
+  },
+  {
+    "name": "Evan Mann",
+    "sources": [
+      "https://www.cityofiona.org/mayor-city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "evanmann@cityofiona.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated in the link text.",
+        "source": "https://www.cityofiona.org/mayor-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:31:06Z"
+  },
+  {
+    "name": "Rylea Ferrans",
+    "sources": [
+      "https://www.cityofiona.org/mayor-city-council"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ryleaferrans@cityofiona.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly stated.",
+        "source": "https://www.cityofiona.org/mayor-city-council"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-13T00:31:06Z"
+  }
+]
