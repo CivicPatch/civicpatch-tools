@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Jon Thorson",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T02:22:36Z"
+  },
+  {
+    "name": "Jane Conard",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T02:22:36Z"
+  },
+  {
+    "name": "Michelle Griffith",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T02:22:36Z"
+  }
+]

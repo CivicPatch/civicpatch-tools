@@ -1034,7 +1034,14 @@
       ],
       "population": 1783,
       "website": "https://www.sunvalley.govoffice.com",
-      "fips": "1678850"
+      "fips": "1678850",
+      "meta_updated_at": "2025-07-13T02:28:19Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Aberdeen",
