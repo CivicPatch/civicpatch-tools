@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Pierson",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T02:28:00Z"
+  },
+  {
+    "name": "Gedeborg",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T02:28:00Z"
+  },
+  {
+    "name": "Waite",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T02:28:00Z"
+  },
+  {
+    "name": "Wallace",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T02:28:00Z"
+  },
+  {
+    "name": "Sluder",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T02:28:00Z"
+  }
+]
