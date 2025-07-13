@@ -760,7 +760,14 @@
       ],
       "population": 2917,
       "website": "https://wendell.id.gov",
-      "fips": "1686320"
+      "fips": "1686320",
+      "meta_updated_at": "2025-07-13T00:27:33Z",
+      "meta_hash": "ddac9082669717db56f120db336b0585",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Homedale",
