@@ -1,0 +1,87 @@
+[
+  {
+    "name": "Dan Gubler",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "(208) 520-0558",
+    "email": "dangubler@cityofiona.org",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofiona.org/mayor-city-council"
+    ],
+    "updated_at": "2025-07-13T00:31:06Z"
+  },
+  {
+    "name": "Rob Geray",
+    "roles": [
+      "Council President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "robgeray@cityofiona.org",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofiona.org/mayor-city-council"
+    ],
+    "updated_at": "2025-07-13T00:31:06Z"
+  },
+  {
+    "name": "Michael Thompson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "michaelthompson@cityofiona.org",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofiona.org/mayor-city-council"
+    ],
+    "updated_at": "2025-07-13T00:31:06Z"
+  },
+  {
+    "name": "Evan Mann",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "evanmann@cityofiona.org",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofiona.org/mayor-city-council"
+    ],
+    "updated_at": "2025-07-13T00:31:06Z"
+  },
+  {
+    "name": "Rylea Ferrans",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "ryleaferrans@cityofiona.org",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofiona.org/mayor-city-council"
+    ],
+    "updated_at": "2025-07-13T00:31:06Z"
+  }
+]

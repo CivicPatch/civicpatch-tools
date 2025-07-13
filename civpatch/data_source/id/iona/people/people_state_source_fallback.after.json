@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Dan Gubler",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T00:30:30Z"
+  },
+  {
+    "name": "Rob Geray",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T00:30:30Z"
+  },
+  {
+    "name": "Rylea Farrens",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T00:30:30Z"
+  },
+  {
+    "name": "Michael Thompson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T00:30:30Z"
+  },
+  {
+    "name": "Evan Mann",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-13T00:30:30Z"
+  }
+]

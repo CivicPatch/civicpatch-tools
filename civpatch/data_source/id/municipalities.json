@@ -786,7 +786,14 @@
       ],
       "population": 2717,
       "website": "https://www.cityofiona.org",
-      "fips": "1640420"
+      "fips": "1640420",
+      "meta_updated_at": "2025-07-13T00:31:08Z",
+      "meta_hash": "766f3aa82233523b7f4264b51f86e80b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Orofino",
