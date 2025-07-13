@@ -1,1 +1,162 @@
-[]
+[
+  {
+    "name": "Jarom Wagoner",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "mayorsoffice@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+    "start_date": "2022",
+    "end_date": "2025",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+    ],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Brad Doty",
+    "roles": [
+      "council member",
+      "Council Member",
+      "Councilmember"
+    ],
+    "divisions": [
+      "Seat 1",
+      "Seat #1"
+    ],
+    "image": null,
+    "phone_number": "(208) 504-9520",
+    "email": "bdoty@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1",
+    "start_date": "2022-01",
+    "end_date": null,
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-1"
+    ],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Chuck Stadick",
+    "roles": [
+      "council member",
+      "Council Member"
+    ],
+    "divisions": [
+      "Seat 2",
+      "Seat #2"
+    ],
+    "image": null,
+    "phone_number": "(208) 250-2410",
+    "email": "cstadick@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2",
+    "start_date": "2021",
+    "end_date": null,
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-2"
+    ],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Diana Register",
+    "roles": [
+      "council member",
+      "Council Member",
+      "Councilmember"
+    ],
+    "divisions": [
+      "Seat 3",
+      "Seat #3"
+    ],
+    "image": null,
+    "phone_number": "(208) 614-8462",
+    "email": "dregister@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3",
+    "start_date": "2022-01",
+    "end_date": null,
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-3"
+    ],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Geoff Williams",
+    "roles": [
+      "council member",
+      "Council Member",
+      "Councilmember"
+    ],
+    "divisions": [
+      "Seat 4",
+      "Seat #4"
+    ],
+    "image": null,
+    "phone_number": "(208) 504-7770",
+    "email": "gwilliams@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4",
+    "start_date": "2022-02-16",
+    "end_date": null,
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-4"
+    ],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Chris Allgood",
+    "roles": [
+      "council member",
+      "Council Member"
+    ],
+    "divisions": [
+      "Seat 5"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+    ],
+    "updated_at": "2025-07-13T00:19:58Z"
+  },
+  {
+    "name": "Mike Dittenber",
+    "roles": [
+      "council member",
+      "Council Member",
+      "Council member",
+      "Trustee",
+      "President of the West Valley Medical Center Board of Trustees"
+    ],
+    "divisions": [
+      "Seat 6",
+      "Seat #6"
+    ],
+    "image": null,
+    "phone_number": "(208) 504-7201",
+    "email": "mdittenber@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-6",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+      "https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-6"
+    ],
+    "updated_at": "2025-07-13T00:19:58Z"
+  }
+]

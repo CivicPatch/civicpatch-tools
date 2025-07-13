@@ -1,1 +1,173 @@
-[]
+[
+  {
+    "name": "Jarom Wagoner",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/2/mayors-office/images/portrait_jarom-wagoner.jpg",
+    "phone_number": "(208) 455-3000",
+    "email": "mayorsoffice@cityofcaldwell.org",
+    "website": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+    "start_date": "2022",
+    "end_date": "2025",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Garret L. Nancolas",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_garret-l.-nancolas.jpg",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1998-garret-l-nancolas.pdf",
+    "start_date": "1998",
+    "end_date": "2022",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Richard H. Winder",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_richard-h.-winder.png",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1994-richard-h-winder.pdf",
+    "start_date": "1994",
+    "end_date": "1998",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "James R. Dakan",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_james-r.-dakan.png",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1990-james-dakan.pdf",
+    "start_date": "1990",
+    "end_date": "1994",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Peter B. Cowles",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_peter-b.-cowles.png",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1986-peter-b-cowles.pdf",
+    "start_date": "1986",
+    "end_date": "1990",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Alfred H. McCluskey",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_alfred-h.-mccluskey.png",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1980-alfred-h-mccluskey.pdf",
+    "start_date": "1980",
+    "end_date": "1986",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Robert E. Pasley",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_robert-e.-pasley.png",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1974-robert-e-pasley.pdf",
+    "start_date": "1973",
+    "end_date": "1980",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Charles W. Carpenter",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_charles-w.-carpenter.png",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1970-charles-w-carpenter.pdf",
+    "start_date": "1970",
+    "end_date": "1973",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "N.E. \"Coley\" Smith",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_n.e.-coley-smith.png",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1964-ne-coley-smith.pdf",
+    "start_date": "1964",
+    "end_date": "1969",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Emery L. Vassar",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_emery-l.-vassar.png",
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1933-emery-l-vassar.pdf",
+    "start_date": "1933",
+    "end_date": "1936",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  }
+]

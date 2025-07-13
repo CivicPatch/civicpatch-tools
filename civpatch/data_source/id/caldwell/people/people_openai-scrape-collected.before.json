@@ -1,1 +1,530 @@
-[]
+[
+  {
+    "name": "Jarom Wagoner",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present",
+      "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/2/mayors-office/images/portrait_jarom-wagoner.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and title of current Mayor Jarom Wagoner.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/2/mayors-office/images/portrait_jarom-wagoner.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly associated with Mayor Jarom Wagoner in the content.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as current Mayor serving a 4-year term from 2022-Present."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The text explicitly states 'Mayor Jarom Wagoner' and describes his election and current term as Mayor."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-455-3000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed under 'Contact Us' for City of Caldwell and likely the main city phone; no direct personal phone found.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mayorsoffice@cityofcaldwell.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided as contact for the Mayor's office.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'About Mayor Jarom Wagoner' is a relevant official profile page.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      },
+      {
+        "data": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page URL is the official Mayor's About page for Jarom Wagoner.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start explicitly stated as 2022.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      },
+      {
+        "data": "2021-11",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states 'Mayor Wagoner was elected Mayor of Caldwell in November, 2021'.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2025",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states he will serve a 4-year term expiring in 2025.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor"
+      }
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Garret L. Nancolas",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_garret-l.-nancolas.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and title of past Mayor Garret L. Nancolas.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as past Mayor who served from 1998-2022."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1998-garret-l-nancolas.pdf",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'About Mayor Garret L. Nancolas' is a relevant official PDF profile.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "1998",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start explicitly stated as 1998.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end explicitly stated as 2022.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Richard H. Winder",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_richard-h.-winder.png",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and title of past Mayor Richard H. Winder.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as past Mayor who served from 1994-1998."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1994-richard-h-winder.pdf",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'About Mayor Richard H. Winder' is a relevant official PDF profile.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "1994",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start explicitly stated as 1994.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "1998",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end explicitly stated as 1998.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "James R. Dakan",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_james-r.-dakan.png",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and title of past Mayor James R. Dakan.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as past Mayor who served from 1990-1994."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1990-james-dakan.pdf",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'About Mayor James R. Dakan' is a relevant official PDF profile.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "1990",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start explicitly stated as 1990.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "1994",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end explicitly stated as 1994.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Peter B. Cowles",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_peter-b.-cowles.png",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and title of past Mayor Peter B. Cowles.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as past Mayor who served from 1986-1990."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1986-peter-b-cowles.pdf",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'About Mayor Peter B. Cowles' is a relevant official PDF profile.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "1986",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start explicitly stated as 1986.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "1990",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end explicitly stated as 1990.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Alfred H. McCluskey",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_alfred-h.-mccluskey.png",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and title of past Mayor Alfred H. McCluskey.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as past Mayor who served from 1980-1986."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1980-alfred-h-mccluskey.pdf",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'About Mayor Alfred H. McCluskey' is a relevant official PDF profile.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "1980",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start explicitly stated as 1980.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "1986",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end explicitly stated as 1986.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Robert E. Pasley",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_robert-e.-pasley.png",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and title of past Mayor Robert E. Pasley.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as past Mayor who served from 1973-1980."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1974-robert-e-pasley.pdf",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'About Mayor Robert E. Pasley' is a relevant official PDF profile.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "1973",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start explicitly stated as 1973.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "1980",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end explicitly stated as 1980.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Charles W. Carpenter",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_charles-w.-carpenter.png",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and title of past Mayor Charles W. Carpenter.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as past Mayor who served from 1970-1973."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1970-charles-w-carpenter.pdf",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'About Mayor Charles W. Carpenter' is a relevant official PDF profile.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "1970",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start explicitly stated as 1970.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "1973",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end explicitly stated as 1973.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "N.E. \"Coley\" Smith",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_n.e.-coley-smith.png",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and title of past Mayor N.E. \"Coley\" Smith.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as past Mayor who served from 1964-1969."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1964-ne-coley-smith.pdf",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'About Mayor N.E. \"Coley\" Smith' is a relevant official PDF profile.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "1964",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start explicitly stated as 1964.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "1969",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end explicitly stated as 1969.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  },
+  {
+    "name": "Emery L. Vassar",
+    "sources": [
+      "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+    ],
+    "images": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_emery-l.-vassar.png",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and title of past Mayor Emery L. Vassar.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as past Mayor who served 1933-1936 and acting Mayor Oct 1962-Dec 1963."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1933-emery-l-vassar.pdf",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Link labeled 'About Mayor Emery L. Vassar' is a relevant official PDF profile.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "1933",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term start explicitly stated as 1933.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "1936",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term end explicitly stated as 1936.",
+        "source": "https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present"
+      }
+    ],
+    "updated_at": "2025-07-13T00:18:27Z"
+  }
+]
