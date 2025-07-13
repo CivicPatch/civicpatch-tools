@@ -709,7 +709,14 @@
       ],
       "population": 3555,
       "website": "https://ketchumidaho.org",
-      "fips": "1643030"
+      "fips": "1643030",
+      "meta_updated_at": "2025-07-13T00:25:27Z",
+      "meta_hash": "16324cda21e954a3cf9610b617ba67d0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Grangeville",
