@@ -294,7 +294,14 @@
       ],
       "population": 15570,
       "website": "https://www.cityofchubbuck.us",
-      "fips": "1614680"
+      "fips": "1614680",
+      "meta_updated_at": "2025-07-13T00:24:24Z",
+      "meta_hash": "f5962f14f6d7fdb3a1f84b36e1cfab29",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Jerome",
