@@ -749,7 +749,14 @@
       ],
       "population": 3119,
       "website": "https://www.cityofsalmon.com",
-      "fips": "1671650"
+      "fips": "1671650",
+      "meta_updated_at": "2025-07-13T00:27:32Z",
+      "meta_hash": "8b87e60252e346628ef78bff9f461c32",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Wendell",
