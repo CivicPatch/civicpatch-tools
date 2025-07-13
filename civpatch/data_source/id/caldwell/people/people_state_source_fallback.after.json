@@ -5,17 +5,15 @@
       "Mayor"
     ],
     "divisions": [],
-    "updated_at": "2025-07-13T00:17:11Z"
+    "updated_at": "2025-07-13T02:41:51Z"
   },
   {
     "name": "Brad Doty",
     "roles": [
       "Council Member"
     ],
-    "divisions": [
-      "Seat 1"
-    ],
-    "updated_at": "2025-07-13T00:17:11Z"
+    "divisions": [],
+    "updated_at": "2025-07-13T02:41:51Z"
   },
   {
     "name": "Chuck Stadick",
@@ -23,7 +21,7 @@
       "Council Member"
     ],
     "divisions": [],
-    "updated_at": "2025-07-13T00:17:11Z"
+    "updated_at": "2025-07-13T02:41:51Z"
   },
   {
     "name": "Diana Register",
@@ -31,36 +29,30 @@
       "Council Member"
     ],
     "divisions": [],
-    "updated_at": "2025-07-13T00:17:11Z"
+    "updated_at": "2025-07-13T02:41:51Z"
   },
   {
     "name": "Geoff Williams",
     "roles": [
       "Council Member"
     ],
-    "divisions": [
-      "Seat 4"
-    ],
-    "updated_at": "2025-07-13T00:17:11Z"
+    "divisions": [],
+    "updated_at": "2025-07-13T02:41:51Z"
   },
   {
     "name": "Chris Allgood",
     "roles": [
       "Council Member"
     ],
-    "divisions": [
-      "Seat 5"
-    ],
-    "updated_at": "2025-07-13T00:17:11Z"
+    "divisions": [],
+    "updated_at": "2025-07-13T02:41:51Z"
   },
   {
     "name": "Mike Dittenber",
     "roles": [
       "Council Member"
     ],
-    "divisions": [
-      "Seat 6"
-    ],
-    "updated_at": "2025-07-13T00:17:11Z"
+    "divisions": [],
+    "updated_at": "2025-07-13T02:41:51Z"
   }
 ]

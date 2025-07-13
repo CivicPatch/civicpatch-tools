@@ -1,4 +1,4 @@
-[Skip to main content](https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present/)
+[Skip to main content](https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5/)
 
 opens in new tab or window
 
@@ -13,12 +13,12 @@ Quick Links
 - [Financial Reports](https://www.cityofcaldwell.org/Departments/Finance)
 - [Contact](https://www.cityofcaldwell.org/Departments)
 
-[English (United States) Select this as your preferred language](https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present?oc_lang=en-US)[Spanish Select this as your preferred language](https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present?oc_lang=es)[Ukrainian Select this as your preferred language](https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present?oc_lang=uk)
+[English (United States) Select this as your preferred language](https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5?oc_lang=en-US)[Spanish Select this as your preferred language](https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5?oc_lang=es)[Ukrainian Select this as your preferred language](https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5?oc_lang=uk)
 
 English (United States) is your current preferred language.
 
-- [Spanish Select this as your preferred language](https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present?oc_lang=es)
-- [Ukrainian Select this as your preferred language](https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present?oc_lang=uk)
+- [Spanish Select this as your preferred language](https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5?oc_lang=es)
+- [Ukrainian Select this as your preferred language](https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5?oc_lang=uk)
 
 [City of Caldwell, Idaho - Home - Logo](https://www.cityofcaldwell.org/Home)
 
@@ -241,378 +241,37 @@ Search
 
 ![Image fade background image](https://www.cityofcaldwell.org/files/oc-templates/00000000-0000-0000-0000-000000000000/ae74f797-53a7-4cb3-9073-893a13f1f87e/v/136/interior-bg-img.jpg?t=638864087138432909)
 
-You Are Here : [Home](https://www.cityofcaldwell.org/Home) / [Government](https://www.cityofcaldwell.org/Government)/ [Mayor](https://www.cityofcaldwell.org/Government/Mayor) / Mayors Past &amp; Present
+You Are Here : [Home](https://www.cityofcaldwell.org/Home) / [Government](https://www.cityofcaldwell.org/Government)/ [City Council](https://www.cityofcaldwell.org/Government/City-Council) / Chris Allgood
 
- 
+# Chris Allgood
 
-In This Section
+Councilmember, Seat #5
 
-- [Mayor](https://www.cityofcaldwell.org/Government/Mayor)
-  
-  - [About the Mayor](https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor)
-  - [State of the City Address](https://www.cityofcaldwell.org/Government/Mayor/State-of-the-City-Address)
-  - [Proclamations](https://www.cityofcaldwell.org/Government/Mayor/Proclamations)
-  - [Mayors Past &amp; Present](https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present)
-  - [Mayor's Golf Scramble](https://www.cityofcaldwell.org/Government/Mayor/Mayors-Golf-Scramble)
-  - [Mayor's Seasons of Caldwell](https://www.cityofcaldwell.org/Government/Mayor/Mayors-Seasons-of-Caldwell)
-- [City Council](https://www.cityofcaldwell.org/Government/City-Council)
-- [Appointed Officials &amp; Directors](https://www.cityofcaldwell.org/Government/Appointed-Officials-Directors)
-- [Boards &amp; Commissions](https://www.cityofcaldwell.org/Government/Boards-Commissions)
-- [Public Meetings](https://www.cityofcaldwell.org/Government/Public-Meetings)
-- [City Clerk](https://www.cityofcaldwell.org/Government/City-Clerk)
-- [Elections](https://www.cityofcaldwell.org/Government/Elections)
-- [Press Releases](https://www.cityofcaldwell.org/Government/Press-Releases)
-- [Municipal Code](https://www.cityofcaldwell.org/Government/Municipal-Code)
-- [Administration](https://www.cityofcaldwell.org/Government/Administration)
-- [Policies and Procedures](https://www.cityofcaldwell.org/Government/Policies-and-Procedures)
+*Serving the City of Caldwell*
 
-# Mayors Past &amp; Present
+- Telephone(208) 249-0876
+- Email [callgood@cityofcaldwell.org](mailto:callgood@cityofcaldwell.org "Compose an email to callgood@cityofcaldwell.org")
 
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/web-admin/images/old-caldwell-city-hall.jpg)
+![Portrait_Councilor-Chris-Allgood.jpg](https://www.cityofcaldwell.org/files/assets/city/v/3/city-clerk/images/portrait_councilor-chris-allgood.jpg?dimension=pageimage&w=480)
 
-Learn more about our current and past mayors from the City of Caldwell!
+Councilmember Chris Allgood's family moved to Idaho in 1976. At that time the Allgood family lived on a remote ranch and Chris was home schooled. Once the family moved to Caldwell, Chris attended Gem State Academy for a couple of years before moving on to work numerous jobs around the valley, mostly involving agriculture.
 
-## Current Mayor
+In 1985 Chris joined the Caldwell Police Department and discovered his passion. Chris served the citizens of Caldwell for the next 30 years, doing everything from patrol officer, to detective, to becoming the Chief of Police. Chris served the citizens of Caldwell as the Chief of Police for 8 years before retiring in 2015.
 
-### Mayor Jarom Wagoner
+Chris' commitment to Caldwell has not diminished and his desire to make Caldwell a great place for his children to live is stronger than ever. Chris became a proud member of the City Council in 2016. He was elected again in 2017 and 2019. City Councilman Allgood's current term ends December 31, 2023.
 
-![](https://www.cityofcaldwell.org/files/assets/city/v/2/mayors-office/images/portrait_jarom-wagoner.jpg)Serving a 4-year term as Mayor from 2022-Present
+Chris has a degree in business leadership and management from George Fox University. Chris and his wife Alisha have two teenage children. They enjoy travel, camping and other outdoor activities.
 
-- [About Mayor Jarom Wagoner](https://www.cityofcaldwell.org/Government/Mayor/About-the-Mayor)
+## Civil Interests
 
-* * *
+- Caldwell Optimist Club - 15 years. Currently Vice President
+- Coach/member of the Caldwell Police Athletic League
 
-## Past Mayors
+## Liaison Committees
 
-### Mayor Garret L. Nancolas
+- Urban Renewal Agency
 
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_garret-l.-nancolas.jpg)Served a 24-year term as Mayor from 1998-2022
-
-- [About Mayor Garret L. Nancolas(PDF, 316KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1998-garret-l-nancolas.pdf)
-
-* * *
-
-### Mayor Richard H. Winder
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_richard-h.-winder.png)Served a 4-year term as Mayor from 1994-1998
-
-- [About Mayor Richard H. Winder(PDF, 263KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1994-richard-h-winder.pdf)
-
-* * *
-
-### Mayor James R. Dakan
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_james-r.-dakan.png)Served a 4-year term as Mayor from 1990-1994
-
-- [About Mayor James R. Dakan(PDF, 261KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1990-james-dakan.pdf)
-
-* * *
-
-### Mayor Peter B. Cowles
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_peter-b.-cowles.png)Served a 4-year term as Mayor from 1986-1990
-
-- [About Mayor Peter B. Cowles(PDF, 280KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1986-peter-b-cowles.pdf)
-
-* * *
-
-### Mayor Alfred H. McCluskey
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_alfred-h.-mccluskey.png)Served a 6-year term as Mayor from 1980-1986
-
-- [About Mayor Alfred H. McCluskey(PDF, 263KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1980-alfred-h-mccluskey.pdf)
-
-* * *
-
-### Mayor Robert E. Pasley
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_robert-e.-pasley.png)Served a 7-year term as Mayor from 1973-1980
-
-- [About Mayor Robert E. Pasley(PDF, 360KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1974-robert-e-pasley.pdf)
-
-* * *
-
-### Mayor Charles W. Carpenter
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_charles-w.-carpenter.png)Served a 4-year term as Mayor from 1970-1973
-
-- [About Mayor Charles W. Carpenter(PDF, 358KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1970-charles-w-carpenter.pdf)
-
-* * *
-
-### Mayor N.E. "Coley" Smith
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_n.e.-coley-smith.png)Served a 6-year term as Mayor from 1964-1969
-
-- [About Mayor N.E. "Coley" Smith(PDF, 262KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1964-ne-coley-smith.pdf)
-
-* * *
-
-### Mayor Emery L. Vassar
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_emery-l.-vassar.png)Served a 1-year term as acting Mayor from October 1962- December 1963
-
-- [About Mayor Emery L. Vassar(PDF, 184KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1933-emery-l-vassar.pdf)
-
-* * *
-
-### Mayor Edmund E. Simmerman
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_edmund-e.-simmerman.png)Served a 5-year term as Mayor from 1957- September 1962
-
-- [About Mayor Edmund E. Simmerman(PDF, 262KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1957-edmund-e-simmerman.pdf)
-
-* * *
-
-### Mayor Jason C. Smith
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_jason-c.-smith.png)Served a 6-year term as Mayor from 1951-1956
-
-- [About Mayor Jason C. Smith(PDF, 90KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1951-jason-c-smith.pdf)
-
-* * *
-
-### Mayor Leo J. Mason
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_leo-j.-mason.png)Served a 2-year term as Mayor from 1949-1950
-
-- [About Mayor Leo J. Mason(PDF, 287KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1949-leo-j-mason.pdf)
-
-* * *
-
-### Mayor George L. Crookham, Jr.
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_george-l.-crookham-jr.png)Served a 2-year term as Mayor from 1945-1946
-
-- [About Mayor George L. Crookham, Jr.(PDF, 355KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1945-george-l-crookham-jr.pdf)
-
-* * *
-
-### Mayor Thurlow Bryant
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_thurlow-bryant.png)Served a 2-year term as Mayor from 1943-1944
-
-- [About Mayor Thurlow Bryant(PDF, 184KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1943-thurlow-bryant.pdf)
-
-* * *
-
-### Mayor Harry E. McCluskey
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_harry-e.-mccluskey.png)Served a 2-year term as Mayor from 1941-1942
-
-- [About Mayor Harry E. McCluskey(PDF, 187KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1941-harry-e-mccluskey.pdf)
-
-* * *
-
-### Mayor Edgar L. Oakes
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_edgar-l.-oakes.png)Served a 2-year term as Mayor from 1939-1940
-
-- [About Mayor Edgar L. Oakes(PDF, 281KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1939-edgar-l-oakes.pdf)
-
-* * *
-
-### Mayor W.R. Hollingsworth
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_w.r.-hollingsworth.png)Served a 2-year term as Mayor from 1937-1938
-
-- [About Mayor W.R. Hollingsworth(PDF, 184KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1937-wr-holingsworth-no.pdf)
-
-* * *
-
-### Mayor Emery L. Vassar
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_emery-l.-vassar.png)Served a 3-year term as Mayor from 1933-1936, and served as acting Mayor Oct 1962-Dec 1963
-
-- [About Mayor Emery L. Vassar(PDF, 184KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1933-emery-l-vassar.pdf)
-
-* * *
-
-### Mayor Fred Lilly
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_fred-lilly.png)Served a 2-year term as Mayor from 1931-1932 and a one-year term in 1918.
-
-- [About Mayor Fred Lilly(PDF, 279KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1931-fred-lilly.pdf)
-
-* * *
-
-### Mayor Fred H. McConnell
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_fred-h.-mcconnell.png)Served a 2-year term as Mayor from 1929-1930
-
-- [About Mayor Fred H. McConnell(PDF, 186KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1929-fred-h-mcconnell.pdf)
-
-* * *
-
-### Mayor S. Ben Dunlap
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/s-ben-dunlap.png)Served a 2-year term as Mayor in 1927 - 1928
-
-* * *
-
-### Mayor Dr. C.M. Kaley
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/dr-cm-kaley.png)Served a 2-year term as Mayor in 1925 - 1926
-
-* * *
-
-### Mayor John Smeed
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/john-smeed.png)Served a 2-year term as Mayor in 1923 - 1924
-
-* * *
-
-### Mayor Amos J. Miller
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/amos-j-miller.png)Served a 2-year term as Mayor in 1921 - 1922
-
-* * *
-
-### Mayor Grant Ward
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/grant-ward.png)Served a 2-year term as Mayor in 1919 - 1920
-
-* * *
-
-### Mayor Fred Lilly
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/portrait_fred-lilly.png)Served a 1-year term as Mayor in 1918, and a 2-year term as Mayor in 1931-1932
-
-- [About Mayor Fred Lilly(PDF, 279KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/1931-fred-lilly.pdf)
-
-* * *
-
-### Mayor E.H. Plowhead
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/eh-plowhead.png)Served a 1-year term as Mayor in 1917
-
-* * *
-
-### Mayor Fred C. Boyes
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/fred-c-boyes.png)Served a 2-year term as Mayor in 1915 - 1916
-
-* * *
-
-### Mayor Charles H. Turner
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/charles-h-turner.png)Served a 2-year term as Mayor in 1913 - 1914
-
-- [About Charles H. Turner(PDF, 132KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/charles-h-turner.pdf)
-
-* * *
-
-### Mayor Walter Griffiths
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/walter-griffiths.png)Served a 2-year term as Mayor in 1913 - 1914
-
-- [About Walter Griffiths(PDF, 113KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/walter-griffiths.pdf)
-
-* * *
-
-### Mayor Justin B. Gowen
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/justin-b-gowen.png)Served a 2-year term as Mayor in 1909 - 1910
-
-- [About Justin B. Gowen(PDF, 118KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/justin-b-gowen.pdf)
-
-* * *
-
-### Mayor C.C. Smith
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/cc-smith.png)Served a 2-year term as Mayor in 1907 - 1908
-
-- [About C.C. Smith(PDF, 118KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/cc-smith.pdf)
-
-* * *
-
-### Mayor Ross S. Madden
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/ross-s-madden.png)Served a 2-year term as Mayor in 1905 - 1906
-
-- [About Ross S. Madden(, 0B)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/ross-s.-madden.pdf)
-
-* * *
-
-### Mayor T.K. Little
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/tk-little.png)Served a 1-year term as Mayor in 1904
-
-- [About T.K. Little(PDF, 129KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/t.k.-little.pdf)
-
-* * *
-
-### Mayor A.K. Steunenberg
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/ak-steunenberg.png)Served a 1-year term as Mayor in 1903
-
-- [About A.K. Steunenberg(PDF, 127KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/a.k.-steunenberg.pdf)
-
-* * *
-
-### Mayor John C. Rice
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/john-c-rice.png)Served a 1-year term as Mayor in 1902
-
-- [About John C. Rice(PDF, 119KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/john-c.-rice.pdf)
-
-* * *
-
-### Mayor A.F. Isham
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/af-isham.png)Served a 1-year term as Mayor in 1900
-
-- [About A.F. Isham(PDF, 117KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/a.f.-isham.pdf)
-
-* * *
-
-### Mayor George Little
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/george-little.png)Served a 1-year term as Mayor in 1899
-
-- [About George Little(PDF, 127KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/george-little.pdf)
-
-* * *
-
-### Mayor Charles S. Doan
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/charles-s-doan.gif)Served a 1-year term as Mayor in 1898
-
-- [About Charles S. Doan(PDF, 127KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/charles-s.-doan.pdf)
-
-* * *
-
-### Mayor George L. Alley
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/george-l-alley.gif)Served a 1-year term as Mayor in 1897
-
-- [About George L. Alley(PDF, 124KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/george-l.-alley.pdf)
-
-* * *
-
-### Mayor Trowbridge C. Egleston
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/trowbridge-c-egleston.gif)Served a 1-year term as Mayor in 1895
-
-- [About Trowbridge C. Egleston(PDF, 130KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/trowbridge-c.-egleston.pdf)
-
-* * *
-
-### Mayor Montie B. (M.B.) Gwinn
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/montie-b-gwinn.png)Served a 1-year term as Mayor in 1894, and again in 1896
-
-- [About Montie B. (M.B.) Gwinn(PDF, 241KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/montie-b.-m.b.-gwinn.pdf)
-
-* * *
-
-### Caldwell's First Mayor, Howard Sebree
-
-![](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/images/mayors/howard-sebree.gif)Served a 1-year term as Mayor in 1893 and again in 1901.
-
-- [About Howard Sebree(PDF, 133KB)](https://www.cityofcaldwell.org/files/assets/city/v/1/mayors-office/documents/past-mayors/howard-sebree.pdf)
-
-[Back to top](https://www.cityofcaldwell.org/Government/Mayor/Mayors-Past-Present/)
+[Back to top](https://www.cityofcaldwell.org/Government/City-Council/City-Council-Seat-5/)
 
 ### Contact Us
 
