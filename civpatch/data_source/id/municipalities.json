@@ -720,7 +720,14 @@
       ],
       "population": 3308,
       "website": "https://www.grangeville.us",
-      "fips": "1632950"
+      "fips": "1632950",
+      "meta_updated_at": "2025-07-13T00:26:46Z",
+      "meta_hash": "824c0c708eb22126617e4a4427c15fda",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Soda Springs",
