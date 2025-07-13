@@ -147,6 +147,8 @@ government_types:
           - councilman
           - councilor
           - councillor
+          - city councilman
+          - city councilwoman
           - city councilmember
           - city council member
           - city council
