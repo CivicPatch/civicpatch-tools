@@ -765,8 +765,8 @@
       "population": 2881,
       "website": "https://cityofhomedale.org",
       "fips": "1638170",
-      "meta_updated_at": "2025-07-13T00:28:52Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-13T02:16:09Z",
+      "meta_hash": "066aa31a0484318081b53172cd6d2977",
       "meta_sources": [
         "state_source",
         "gemini",
