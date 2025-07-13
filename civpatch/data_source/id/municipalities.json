@@ -1133,7 +1133,14 @@
       ],
       "population": 1289,
       "website": "https://www.cityofponderay.org",
-      "fips": "1664450"
+      "fips": "1664450",
+      "meta_updated_at": "2025-07-13T02:33:34Z",
+      "meta_hash": "cbd4e1ae2b1ff5818272b535c1ece855",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Glenns Ferry",
