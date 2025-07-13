@@ -1056,7 +1056,14 @@
       ],
       "population": 1715,
       "website": "https://www.sugarcityidaho.gov",
-      "fips": "1678040"
+      "fips": "1678040",
+      "meta_updated_at": "2025-07-13T02:25:12Z",
+      "meta_hash": "65036345f7feb7a1ccc5c05f294d1912",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Priest River",
