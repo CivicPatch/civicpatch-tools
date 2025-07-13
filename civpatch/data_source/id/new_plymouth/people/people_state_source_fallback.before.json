@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Lisa Grace",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T02:28:37Z"
+  },
+  {
+    "name": "Ron Martinez",
+    "roles": [
+      "Council President",
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T02:28:37Z"
+  },
+  {
+    "name": "Josh Davis",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T02:28:37Z"
+  },
+  {
+    "name": "Suzanne Evans",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T02:28:37Z"
+  },
+  {
+    "name": "Michael Hughes",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-13T02:28:37Z"
+  }
+]
