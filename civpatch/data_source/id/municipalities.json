@@ -1128,7 +1128,14 @@
       ],
       "population": 1597,
       "website": "https://cityofwilder.org",
-      "fips": "1687670"
+      "fips": "1687670",
+      "meta_updated_at": "2025-07-13T02:30:24Z",
+      "meta_hash": "3cfe5e22dcc6c9feda2103f1928d41c0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Osburn",
