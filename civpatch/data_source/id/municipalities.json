@@ -844,7 +844,14 @@
       ],
       "population": 2537,
       "website": "https://daltongardens.govoffice.com",
-      "fips": "1620350"
+      "fips": "1620350",
+      "meta_updated_at": "2025-07-13T00:38:34Z",
+      "meta_hash": "280713de526645b3d68504e41dd62330",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Bonners Ferry",
