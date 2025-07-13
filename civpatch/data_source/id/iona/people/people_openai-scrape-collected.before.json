@@ -46,7 +46,7 @@
         "source": "https://www.cityofiona.org/mayor-city-council"
       }
     ],
-    "updated_at": "2025-07-13T00:30:56Z"
+    "updated_at": "2025-07-13T00:47:57Z"
   },
   {
     "name": "Rob Geray",
@@ -88,7 +88,7 @@
         "source": "https://www.cityofiona.org/mayor-city-council"
       }
     ],
-    "updated_at": "2025-07-13T00:30:56Z"
+    "updated_at": "2025-07-13T00:47:57Z"
   },
   {
     "name": "Michael Thompson",
@@ -130,7 +130,7 @@
         "source": "https://www.cityofiona.org/mayor-city-council"
       }
     ],
-    "updated_at": "2025-07-13T00:30:56Z"
+    "updated_at": "2025-07-13T00:47:57Z"
   },
   {
     "name": "Evan Mann",
@@ -158,7 +158,7 @@
       {
         "data": "peterwadsworth@cityofiona.org",
         "llm_confidence": 0.3,
-        "llm_confidence_reason": "Email listed under Evan Mann is peterwadsworth@cityofiona.org, likely an error but no alternative provided.",
+        "llm_confidence_reason": "Email listed under Evan Mann is peterwadsworth@cityofiona.org, likely an error but no correction available.",
         "source": "https://www.cityofiona.org/mayor-city-council"
       }
     ],
@@ -172,10 +172,10 @@
         "source": "https://www.cityofiona.org/mayor-city-council"
       }
     ],
-    "updated_at": "2025-07-13T00:30:56Z"
+    "updated_at": "2025-07-13T00:47:57Z"
   },
   {
-    "name": "Rylea Farrens",
+    "name": "Rylea Ferrans",
     "sources": [
       "https://www.cityofiona.org/mayor-city-council"
     ],
@@ -191,7 +191,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Explicitly stated as Council Member Rylea Farrens."
+        "llm_confidence_reason": "Explicitly stated as Council Member Rylea Ferrans."
       }
     ],
     "divisions": [],
@@ -200,7 +200,7 @@
       {
         "data": "ryleaferrans@cityofiona.org",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email explicitly listed under Council Member Rylea Farrens.",
+        "llm_confidence_reason": "Email explicitly listed under Council Member Rylea Ferrans.",
         "source": "https://www.cityofiona.org/mayor-city-council"
       }
     ],
@@ -214,6 +214,6 @@
         "source": "https://www.cityofiona.org/mayor-city-council"
       }
     ],
-    "updated_at": "2025-07-13T00:30:56Z"
+    "updated_at": "2025-07-13T00:47:57Z"
   }
 ]
