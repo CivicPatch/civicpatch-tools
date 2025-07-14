@@ -1294,7 +1294,14 @@
       ],
       "population": 1086,
       "website": "https://cityofhansen.org",
-      "fips": "1634930"
+      "fips": "1634930",
+      "meta_updated_at": "2025-07-14T16:43:20Z",
+      "meta_hash": "5df40ffd8036f5b5d931949e01faad99",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Genesee",
