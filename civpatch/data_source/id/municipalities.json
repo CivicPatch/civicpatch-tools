@@ -1347,7 +1347,14 @@
       ],
       "population": 1030,
       "website": "https://www.cityofgenesee.com",
-      "fips": "1630160"
+      "fips": "1630160",
+      "meta_updated_at": "2025-07-14T16:47:12Z",
+      "meta_hash": "0087ac75217b34d813410a745f3150ac",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Franklin",
