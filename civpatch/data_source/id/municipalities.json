@@ -1272,7 +1272,14 @@
       ],
       "population": 1160,
       "website": "https://www.cityofucon.us",
-      "fips": "1683350"
+      "fips": "1683350",
+      "meta_updated_at": "2025-07-14T16:40:54Z",
+      "meta_hash": "813f29759b6bca8d48c92091f5cddc8d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Kamiah",
