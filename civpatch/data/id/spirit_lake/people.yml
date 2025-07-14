@@ -1,0 +1,70 @@
+---
+- name: Charlene Phipps
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: charlene.phipps@spiritlakeid.gov
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.spiritlakeid.gov/electedofficials
+  updated_at: '2025-07-14T16:36:29Z'
+- name: Darrell Woods
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: darrell.woods@spiritlakeid.gov
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.spiritlakeid.gov/electedofficials
+  updated_at: '2025-07-14T16:36:29Z'
+- name: Mark Privitt
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: mark.privitt@spiritlakeid.gov
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.spiritlakeid.gov/electedofficials
+  updated_at: '2025-07-14T16:36:29Z'
+- name: Wendy Walter
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: wendy.walter@spiritlakeid.gov
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.spiritlakeid.gov/electedofficials
+  updated_at: '2025-07-14T16:36:29Z'
+- name: Jeremy Cowperthwaite
+  roles: []
+  divisions:
+  image:
+  cdn_image:
+  email: jeremy.cowperthwaite@spiritlakeid.gov
+  phone_number: "(208) 623-2131"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.spiritlakeid.gov/electedofficials
+  updated_at: '2025-07-14T16:36:29Z'

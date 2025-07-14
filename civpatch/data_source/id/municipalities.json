@@ -1003,7 +1003,14 @@
       ],
       "population": 2337,
       "website": "https://www.spiritlakeid.gov",
-      "fips": "1676060"
+      "fips": "1676060",
+      "meta_updated_at": "2025-07-14T16:36:29Z",
+      "meta_hash": "15bcb1810e24b5f2c82765a7bd5d6ea0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Kellogg",

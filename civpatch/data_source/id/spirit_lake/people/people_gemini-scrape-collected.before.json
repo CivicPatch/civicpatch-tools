@@ -1,0 +1,149 @@
+[
+  {
+    "name": "Jeremy Cowperthwaite",
+    "sources": [
+      "https://www.spiritlakeid.gov/electedofficials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(208) 623-2131",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly extracted from text.",
+        "source": "https://www.spiritlakeid.gov/electedofficials"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jeremy.cowperthwaite@spiritlakeid.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email directly extracted from text.",
+        "source": "https://www.spiritlakeid.gov/electedofficials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-14T16:36:29Z"
+  },
+  {
+    "name": "Charlene Phipps",
+    "sources": [
+      "https://www.spiritlakeid.gov/electedofficials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role inferred from being listed under 'City Council' section and matching target role 'council member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "charlene.phipps@spiritlakeid.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email directly extracted from text.",
+        "source": "https://www.spiritlakeid.gov/electedofficials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-14T16:36:29Z"
+  },
+  {
+    "name": "Mark Privitt",
+    "sources": [
+      "https://www.spiritlakeid.gov/electedofficials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role inferred from being listed under 'City Council' section and matching target role 'council member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mark.privitt@spiritlakeid.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email directly extracted from text.",
+        "source": "https://www.spiritlakeid.gov/electedofficials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-14T16:36:29Z"
+  },
+  {
+    "name": "Wendy Walter",
+    "sources": [
+      "https://www.spiritlakeid.gov/electedofficials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role inferred from being listed under 'City Council' section and matching target role 'council member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "wendy.walter@spiritlakeid.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email directly extracted from text.",
+        "source": "https://www.spiritlakeid.gov/electedofficials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-14T16:36:29Z"
+  },
+  {
+    "name": "Darrell Woods",
+    "sources": [
+      "https://www.spiritlakeid.gov/electedofficials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role inferred from being listed under 'City Council' section and matching target role 'council member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "darrell.woods@spiritlakeid.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email directly extracted from text.",
+        "source": "https://www.spiritlakeid.gov/electedofficials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-14T16:36:29Z"
+  }
+]
