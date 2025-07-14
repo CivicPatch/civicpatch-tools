@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Steve Knepper",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-14T16:44:03Z"
+  },
+  {
+    "name": "Megan Oliphant",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-14T16:44:03Z"
+  },
+  {
+    "name": "Bill Hosch",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-14T16:44:03Z"
+  },
+  {
+    "name": "Mike Delaney",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-14T16:44:03Z"
+  },
+  {
+    "name": "Mark Weber",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-14T16:44:03Z"
+  }
+]

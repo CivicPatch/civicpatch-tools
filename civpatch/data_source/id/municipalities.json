@@ -1338,7 +1338,14 @@
       ],
       "population": 1005,
       "website": "https://cascadeid.us",
-      "fips": "1613150"
+      "fips": "1613150",
+      "meta_updated_at": "2025-07-14T16:45:32Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hagerman",
