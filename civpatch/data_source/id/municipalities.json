@@ -1371,7 +1371,14 @@
       ],
       "population": 941,
       "website": "https://cityofkootenai.org",
-      "fips": "1644200"
+      "fips": "1644200",
+      "meta_updated_at": "2025-07-14T16:49:19Z",
+      "meta_hash": "c7347445cc9c4fcb98387c824813a2b5",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Grace",
