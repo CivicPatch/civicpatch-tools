@@ -495,7 +495,14 @@
       ],
       "population": 8127,
       "website": "https://payette.govoffice.com",
-      "fips": "1661300"
+      "fips": "1661300",
+      "meta_updated_at": "2025-07-14T16:37:53Z",
+      "meta_hash": "a05eb52ee2f90785e92578f7fc2f9595",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Emmett",
