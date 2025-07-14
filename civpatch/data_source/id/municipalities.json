@@ -1250,7 +1250,14 @@
       ],
       "population": 1195,
       "website": "https://cityofpaul.org",
-      "fips": "1661210"
+      "fips": "1661210",
+      "meta_updated_at": "2025-07-14T16:36:29Z",
+      "meta_hash": "3adbf74f62a9e2ece17261124779b973",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Lapwai",
