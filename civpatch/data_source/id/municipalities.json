@@ -1261,7 +1261,14 @@
       ],
       "population": 1169,
       "website": "https://cityoflapwai.com",
-      "fips": "1645370"
+      "fips": "1645370",
+      "meta_updated_at": "2025-07-14T16:40:16Z",
+      "meta_hash": "4a14fcf5933f3f923cddb90f4516536e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Ucon",
