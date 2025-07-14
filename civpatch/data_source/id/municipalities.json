@@ -1228,7 +1228,14 @@
       ],
       "population": 1282,
       "website": "https://glennsferryidaho.org",
-      "fips": "1631690"
+      "fips": "1631690",
+      "meta_updated_at": "2025-07-14T16:36:57Z",
+      "meta_hash": "c99bd85979ae2acb1baae66b0167fdb2",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Marsing",
