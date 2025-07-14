@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Hayzen Corder",
+    "sources": [
+      "https://cityofmarsing.org/government/mayors-office"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Mayor' is explicitly stated under the 'Mayor' heading for this person."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-697-9900",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "source": "https://cityofmarsing.org/government/mayors-office"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Marsingmayor@marsingcity.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://cityofmarsing.org/government/mayors-office"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-14T16:39:41Z"
+  }
+]

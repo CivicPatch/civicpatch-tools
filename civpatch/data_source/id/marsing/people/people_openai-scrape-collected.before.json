@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Hayzen Corder",
+    "sources": [
+      "https://cityofmarsing.org/government/mayors-office"
+    ],
+    "images": [
+      {
+        "data": "https://cityofmarsing.org/wp-content/uploads/2023/01/20230124_092244.jpg",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image is directly under the Mayor section and above the name Hayzen Corder.",
+        "source": "https://cityofmarsing.org/government/mayors-office"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor in the Mayor's Office section."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(208) 697-9900",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is listed directly under the Mayor's name and email.",
+        "source": "https://cityofmarsing.org/government/mayors-office"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Marsingmayor@marsingcity.com",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is listed directly under the Mayor's name.",
+        "source": "https://cityofmarsing.org/government/mayors-office"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-14T16:39:12Z"
+  }
+]

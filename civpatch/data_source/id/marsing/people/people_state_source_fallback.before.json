@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Hayzen Corder",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      "Marsing"
+    ],
+    "updated_at": "2025-07-14T16:36:20Z"
+  },
+  {
+    "name": "Chris Even",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Marsing"
+    ],
+    "updated_at": "2025-07-14T16:36:20Z"
+  },
+  {
+    "name": "Shawn Bales",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Marsing"
+    ],
+    "updated_at": "2025-07-14T16:36:20Z"
+  }
+]

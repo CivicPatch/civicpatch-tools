@@ -1,0 +1,15 @@
+---
+- name: Hayzen Corder
+  roles:
+  - Mayor
+  divisions:
+  image: https://cityofmarsing.org/wp-content/uploads/2023/01/20230124_092244.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/id/marsing/images/5418796090a692a35167dcacdf99a33a402a8cd08a4eb558c6f67b1f52b6045a.jpg
+  email: Marsingmayor@marsingcity.com
+  phone_number: "(208) 697-9900"
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://cityofmarsing.org/government/mayors-office
+  updated_at: '2025-07-14T16:39:42Z'

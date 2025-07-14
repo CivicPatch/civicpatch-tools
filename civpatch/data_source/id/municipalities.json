@@ -1239,7 +1239,14 @@
       ],
       "population": 1229,
       "website": "https://cityofmarsing.org",
-      "fips": "1650950"
+      "fips": "1650950",
+      "meta_updated_at": "2025-07-14T16:39:42Z",
+      "meta_hash": "536e62138474a798ae3bfea03d51ada3",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Paul",
