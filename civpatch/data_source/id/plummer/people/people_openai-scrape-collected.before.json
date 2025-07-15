@@ -1,1 +1,142 @@
-[]
+[
+  {
+    "name": "Christopher Dohrman",
+    "sources": [
+      "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor in the text."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires 2028 as stated.",
+        "source": "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+      }
+    ],
+    "updated_at": "2025-07-15T18:02:24Z"
+  },
+  {
+    "name": "Wesley Carpenter",
+    "sources": [
+      "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council, interpreted as Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires 2026 as stated.",
+        "source": "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+      }
+    ],
+    "updated_at": "2025-07-15T18:02:24Z"
+  },
+  {
+    "name": "Robert Spaulding",
+    "sources": [
+      "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council, interpreted as Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires 2026 as stated.",
+        "source": "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+      }
+    ],
+    "updated_at": "2025-07-15T18:02:24Z"
+  },
+  {
+    "name": "Julie Miller",
+    "sources": [
+      "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council President."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires 2028 as stated.",
+        "source": "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+      }
+    ],
+    "updated_at": "2025-07-15T18:02:24Z"
+  },
+  {
+    "name": "Leticia Kennar",
+    "sources": [
+      "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Listed as Council, interpreted as Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Term expires 2028 as stated.",
+        "source": "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+      }
+    ],
+    "updated_at": "2025-07-15T18:02:24Z"
+  }
+]

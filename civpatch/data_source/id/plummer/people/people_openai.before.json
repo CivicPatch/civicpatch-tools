@@ -1,1 +1,87 @@
-[]
+[
+  {
+    "name": "Christopher Dohrman",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2028",
+    "sources": [
+      "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+    ],
+    "updated_at": "2025-07-15T18:02:24Z"
+  },
+  {
+    "name": "Wesley Carpenter",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2026",
+    "sources": [
+      "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+    ],
+    "updated_at": "2025-07-15T18:02:24Z"
+  },
+  {
+    "name": "Robert Spaulding",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2026",
+    "sources": [
+      "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+    ],
+    "updated_at": "2025-07-15T18:02:24Z"
+  },
+  {
+    "name": "Julie Miller",
+    "roles": [
+      "Council President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2028",
+    "sources": [
+      "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+    ],
+    "updated_at": "2025-07-15T18:02:24Z"
+  },
+  {
+    "name": "Leticia Kennar",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": null,
+    "start_date": null,
+    "end_date": "2028",
+    "sources": [
+      "https://www.cityofplummer.org/?SEC=46D87402-2F99-4CE5-9A8C-101059D67207"
+    ],
+    "updated_at": "2025-07-15T18:02:24Z"
+  }
+]

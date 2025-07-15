@@ -1,18 +1,10 @@
 [
   {
-    "name": null,
+    "name": "Chris Dohrman",
     "roles": [
       "Mayor"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-15T16:29:27Z"
-  },
-  {
-    "name": null,
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [],
-    "updated_at": "2025-07-15T16:29:27Z"
+    "divisions": null,
+    "updated_at": "2025-07-15T18:00:58Z"
   }
 ]
