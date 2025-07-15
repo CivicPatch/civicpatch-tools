@@ -1863,7 +1863,14 @@
       ],
       "population": 517,
       "website": "https://firthidaho.gov",
-      "fips": "1627910"
+      "fips": "1627910",
+      "meta_updated_at": "2025-07-15T16:35:43Z",
+      "meta_hash": "b30990c82c0970474222376609599995",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Kooskia",
