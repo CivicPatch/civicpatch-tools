@@ -1,0 +1,60 @@
+---
+- name: Greg Kunz
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(208) 847-2120"
+  website:
+  start_date: 2024-12
+  end_date:
+  sources:
+  - https://georgetown.id.gov
+  - https://georgetown.id.gov/page/9
+  updated_at: '2025-07-15T16:40:36Z'
+- name: Marty Nate
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(208) 847-2120"
+  website:
+  start_date: 2024-12
+  end_date:
+  sources:
+  - https://georgetown.id.gov
+  updated_at: '2025-07-15T16:40:36Z'
+- name: Tee Steadman
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(208) 847-2120"
+  website:
+  start_date: 2024-12
+  end_date:
+  sources:
+  - https://georgetown.id.gov
+  - https://georgetown.id.gov/page/9
+  updated_at: '2025-07-15T16:40:36Z'
+- name: Trenton Morrell
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(208) 847-2120"
+  website:
+  start_date: 2024-12
+  end_date:
+  sources:
+  - https://georgetown.id.gov
+  - https://georgetown.id.gov/page/9
+  updated_at: '2025-07-15T16:40:36Z'

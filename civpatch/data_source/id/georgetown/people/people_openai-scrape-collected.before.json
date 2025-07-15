@@ -1,0 +1,177 @@
+[
+  {
+    "name": "Steve Waechtler",
+    "sources": [
+      "https://georgetown.id.gov"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly referred to as Mayor Steve Waechtler in multiple council minutes and meeting content."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed for City of Georgetown, likely main contact for Mayor as primary city official.",
+        "source": "https://georgetown.id.gov"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024-12",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Mayor Steve Waechtler is active in council minutes from January 2025 through July 2025; no explicit start date found, assumed current term started by December 2024 or earlier.",
+        "source": "https://georgetown.id.gov"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-15T16:38:46Z"
+  },
+  {
+    "name": "Greg Kunz",
+    "sources": [
+      "https://georgetown.id.gov"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Referred to as Councilor Greg Kunz consistently in council minutes; no other title specified."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Same city phone number; no personal phone found.",
+        "source": "https://georgetown.id.gov"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024-12",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Active in council minutes from January 2025 through July 2025; no explicit start date found.",
+        "source": "https://georgetown.id.gov"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-15T16:38:46Z"
+  },
+  {
+    "name": "Trenton Morrell",
+    "sources": [
+      "https://georgetown.id.gov"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Referred to as Councilor Trenton Morrell consistently in council minutes; no other title specified."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Same city phone number; no personal phone found.",
+        "source": "https://georgetown.id.gov"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024-12",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Active in council minutes from January 2025 through July 2025; no explicit start date found.",
+        "source": "https://georgetown.id.gov"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-15T16:38:46Z"
+  },
+  {
+    "name": "Marty Nate",
+    "sources": [
+      "https://georgetown.id.gov"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Referred to as Councilor Marty Nate consistently in council minutes; no other title specified."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Same city phone number; no personal phone found.",
+        "source": "https://georgetown.id.gov"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024-12",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Active in council minutes from January 2025 through July 2025; no explicit start date found.",
+        "source": "https://georgetown.id.gov"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-15T16:38:46Z"
+  },
+  {
+    "name": "Tee Steadman",
+    "sources": [
+      "https://georgetown.id.gov"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Referred to as Councilor Tee Steadman consistently in council minutes; no other title specified."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.6,
+        "llm_confidence_reason": "Same city phone number; no personal phone found.",
+        "source": "https://georgetown.id.gov"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2024-12",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "Active in council minutes from January 2025 through July 2025; no explicit start date found.",
+        "source": "https://georgetown.id.gov"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-15T16:38:46Z"
+  }
+]

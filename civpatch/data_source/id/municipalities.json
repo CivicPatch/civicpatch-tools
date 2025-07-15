@@ -1933,7 +1933,14 @@
       ],
       "population": 503,
       "website": "https://georgetown.id.gov",
-      "fips": "1630340"
+      "fips": "1630340",
+      "meta_updated_at": "2025-07-15T16:40:36Z",
+      "meta_hash": "2d398e2ff5c4aa66b4e7f058f43586ee",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Roberts",

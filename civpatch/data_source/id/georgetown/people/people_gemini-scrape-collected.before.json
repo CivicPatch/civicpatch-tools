@@ -1,0 +1,271 @@
+[
+  {
+    "name": "Stephan R. Waechtler",
+    "sources": [
+      "https://georgetown.id.gov",
+      "https://georgetown.id.gov/city-ordinances/ordinance-64-city-cemetery-with-amendments",
+      "https://georgetown.id.gov/departments/mayor",
+      "https://georgetown.id.gov/about",
+      "https://georgetown.id.gov/city-ordinances",
+      "https://georgetown.id.gov/city-ordinances/ordinance-106-regulation-and-control-of-animals",
+      "https://georgetown.id.gov/page/9",
+      "https://georgetown.id.gov/city-ordinances/ordinance-99-dogs",
+      "https://georgetown.id.gov/online-payments",
+      "https://georgetown.id.gov/contact-us"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Steve Waechtler' and 'Mayor Waechtler'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Stephan Waechtler, Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Stephan R. Waechtler, Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Stephan Waechtler' and 'Mayor Steve Waechtler'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor' next to the person's name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-847-2120",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The phone number is listed under 'The City of Georgetown' contact information, and Stephan R. Waechtler is listed as Mayor directly below it, implying it's a general contact for the city's head.",
+        "source": "https://georgetown.id.gov"
+      },
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "The phone number is listed as the general contact for the City of Georgetown, directly above the Mayor's name, implying it is the contact for the Mayor's office.",
+        "source": "https://georgetown.id.gov/city-ordinances/ordinance-64-city-cemetery-with-amendments"
+      },
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number is listed directly under the Mayor's section, although it appears to be a general city contact, it is the only number provided in close proximity to the Mayor's name.",
+        "source": "https://georgetown.id.gov/departments/mayor"
+      },
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "The phone number is listed under the City of Georgetown, directly above the mayor's name, suggesting it's a general city contact number but also applicable to the mayor as a city official.",
+        "source": "https://georgetown.id.gov/about"
+      },
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Phone number is listed directly under the city contact information, immediately above the mayor's name, indicating it is the official contact number for the city and likely for the mayor in an official capacity.",
+        "source": "https://georgetown.id.gov/city-ordinances"
+      },
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly listed under the city contact information, directly associated with the Mayor.",
+        "source": "https://georgetown.id.gov/city-ordinances/ordinance-106-regulation-and-control-of-animals"
+      },
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed as the general city contact and associated with the Mayor.",
+        "source": "https://georgetown.id.gov/page/9"
+      },
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed directly under the person's name in the contact information section, although it appears to be a general city number.",
+        "source": "https://georgetown.id.gov/city-ordinances/ordinance-99-dogs"
+      },
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The phone number is listed under the City of Georgetown, directly above the mayor's name, implying it's a general contact number for the city and its officials.",
+        "source": "https://georgetown.id.gov/online-payments"
+      },
+      {
+        "data": "(208) 847-2120",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The phone number is listed directly below the city's address and above the mayor's name, indicating it is the primary contact for the city and likely the mayor.",
+        "source": "https://georgetown.id.gov/contact-us"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T16:40:36Z"
+  },
+  {
+    "name": "Greg Kunz",
+    "sources": [
+      "https://georgetown.id.gov",
+      "https://georgetown.id.gov/page/9"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Greg Kunz'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Council President, Greg Kunz'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'councilor Greg Kunz'."
+      },
+      {
+        "data": "Council President",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Council President Greg Kunz'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T16:40:36Z"
+  },
+  {
+    "name": "Trenton Morrell",
+    "sources": [
+      "https://georgetown.id.gov",
+      "https://georgetown.id.gov/page/9"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Trenton Morrell'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'councilor Trenton Morrell'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T16:40:36Z"
+  },
+  {
+    "name": "Marty Nate",
+    "sources": [
+      "https://georgetown.id.gov"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Marty Nate'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T16:40:36Z"
+  },
+  {
+    "name": "Tee Steadman",
+    "sources": [
+      "https://georgetown.id.gov",
+      "https://georgetown.id.gov/page/9"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor Tee Steadman'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'councilor Tee Steadman'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T16:40:36Z"
+  },
+  {
+    "name": "DeLoy Kunz",
+    "sources": [
+      "https://georgetown.id.gov/page/9"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilor DeLoy Kunz'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T16:40:36Z"
+  }
+]

@@ -1,0 +1,232 @@
+# [Georgetown Idaho](https://georgetown.id.gov)
+
+Official Website for the City of Georgetown
+
+- [Home](https://georgetown.id.gov)
+- [Ordinance #111 – Subdivision Ordinance](https://georgetown.id.gov/ordinance-111-subdivision-ordinance)
+- [Departments](https://georgetown.id.gov/departments)
+- [Ordinances](https://georgetown.id.gov/city-ordinances)
+- [Resolutions](https://georgetown.id.gov/resolutions)
+- [Events](https://georgetown.id.gov/events)
+- [Online Payments](https://georgetown.id.gov/online-payments)
+- [About](https://georgetown.id.gov/about)
+- [Contact Us](https://georgetown.id.gov/contact-us)
+- [Privacy](https://georgetown.id.gov/privacy)
+
+* * *
+
+## Contact Us
+
+To contact the City of Georgetown, please fill out the form below.
+
+In order to verify that a real person is contacting the City, please answer the simple math question.
+
+City Hall is open Tuesday, Wednesday, and Thursday. Summer hours are 9am to noon and winter hours are 11am to 2pm. Your message will be acknowledged by the next business day of the City.
+
+Required fields are marked \*.
+
+Your information
+
+Name *
+
+Email *
+
+Website
+
+Your message
+
+Subject *
+
+Message *
+
+Confirmation
+
+What is the sum of 995 and 6? *
+
+Email yourself a copy?
+
+- **The City of Georgetown**  
+  P.O. Box 99  
+  382 Main Street  
+  Georgetown, ID 83239
+  
+  (208) 847-2120
+  
+  Stephan R. Waechtler, Mayor  
+  Lynette Smith, City Clerk/Treasurer
+  
+  Office Hours:  
+  Tues, Wed, Thur  
+  12:00 am - 3:00 pm
+- ## Categories
+  
+  - [Minutes](https://georgetown.id.gov/archives/category/minutes) (65)
+  - [Other](https://georgetown.id.gov/archives/category/other) (235)
+  - [Public Hearings](https://georgetown.id.gov/archives/category/public-hearings) (6)
+  - [Upcoming Events](https://georgetown.id.gov/archives/category/upcoming-events) (5)
+- ## Archives
+  
+  - [July 2025](https://georgetown.id.gov/archives/date/2025/07)
+  - [June 2025](https://georgetown.id.gov/archives/date/2025/06)
+  - [May 2025](https://georgetown.id.gov/archives/date/2025/05)
+  - [April 2025](https://georgetown.id.gov/archives/date/2025/04)
+  - [February 2025](https://georgetown.id.gov/archives/date/2025/02)
+  - [January 2025](https://georgetown.id.gov/archives/date/2025/01)
+  - [December 2024](https://georgetown.id.gov/archives/date/2024/12)
+  - [November 2024](https://georgetown.id.gov/archives/date/2024/11)
+  - [October 2024](https://georgetown.id.gov/archives/date/2024/10)
+  - [September 2024](https://georgetown.id.gov/archives/date/2024/09)
+  - [August 2024](https://georgetown.id.gov/archives/date/2024/08)
+  - [July 2024](https://georgetown.id.gov/archives/date/2024/07)
+  - [June 2024](https://georgetown.id.gov/archives/date/2024/06)
+  - [May 2024](https://georgetown.id.gov/archives/date/2024/05)
+  - [April 2024](https://georgetown.id.gov/archives/date/2024/04)
+  - [March 2024](https://georgetown.id.gov/archives/date/2024/03)
+  - [February 2024](https://georgetown.id.gov/archives/date/2024/02)
+  - [January 2024](https://georgetown.id.gov/archives/date/2024/01)
+  - [December 2023](https://georgetown.id.gov/archives/date/2023/12)
+  - [November 2023](https://georgetown.id.gov/archives/date/2023/11)
+  - [October 2023](https://georgetown.id.gov/archives/date/2023/10)
+  - [September 2023](https://georgetown.id.gov/archives/date/2023/09)
+  - [August 2023](https://georgetown.id.gov/archives/date/2023/08)
+  - [July 2023](https://georgetown.id.gov/archives/date/2023/07)
+  - [May 2023](https://georgetown.id.gov/archives/date/2023/05)
+  - [March 2023](https://georgetown.id.gov/archives/date/2023/03)
+  - [February 2023](https://georgetown.id.gov/archives/date/2023/02)
+  - [January 2023](https://georgetown.id.gov/archives/date/2023/01)
+  - [November 2022](https://georgetown.id.gov/archives/date/2022/11)
+  - [October 2022](https://georgetown.id.gov/archives/date/2022/10)
+  - [September 2022](https://georgetown.id.gov/archives/date/2022/09)
+  - [July 2022](https://georgetown.id.gov/archives/date/2022/07)
+  - [May 2022](https://georgetown.id.gov/archives/date/2022/05)
+  - [April 2022](https://georgetown.id.gov/archives/date/2022/04)
+  - [March 2022](https://georgetown.id.gov/archives/date/2022/03)
+  - [February 2022](https://georgetown.id.gov/archives/date/2022/02)
+  - [January 2022](https://georgetown.id.gov/archives/date/2022/01)
+  - [December 2021](https://georgetown.id.gov/archives/date/2021/12)
+  - [November 2021](https://georgetown.id.gov/archives/date/2021/11)
+  - [October 2021](https://georgetown.id.gov/archives/date/2021/10)
+  - [September 2021](https://georgetown.id.gov/archives/date/2021/09)
+  - [August 2021](https://georgetown.id.gov/archives/date/2021/08)
+  - [July 2021](https://georgetown.id.gov/archives/date/2021/07)
+  - [June 2021](https://georgetown.id.gov/archives/date/2021/06)
+  - [May 2021](https://georgetown.id.gov/archives/date/2021/05)
+  - [March 2021](https://georgetown.id.gov/archives/date/2021/03)
+  - [February 2021](https://georgetown.id.gov/archives/date/2021/02)
+  - [December 2020](https://georgetown.id.gov/archives/date/2020/12)
+  - [November 2020](https://georgetown.id.gov/archives/date/2020/11)
+  - [October 2020](https://georgetown.id.gov/archives/date/2020/10)
+  - [September 2020](https://georgetown.id.gov/archives/date/2020/09)
+  - [August 2020](https://georgetown.id.gov/archives/date/2020/08)
+  - [July 2020](https://georgetown.id.gov/archives/date/2020/07)
+  - [June 2020](https://georgetown.id.gov/archives/date/2020/06)
+  - [May 2020](https://georgetown.id.gov/archives/date/2020/05)
+  - [April 2020](https://georgetown.id.gov/archives/date/2020/04)
+  - [March 2020](https://georgetown.id.gov/archives/date/2020/03)
+  - [February 2020](https://georgetown.id.gov/archives/date/2020/02)
+  - [January 2020](https://georgetown.id.gov/archives/date/2020/01)
+  - [November 2019](https://georgetown.id.gov/archives/date/2019/11)
+  - [September 2019](https://georgetown.id.gov/archives/date/2019/09)
+  - [August 2019](https://georgetown.id.gov/archives/date/2019/08)
+  - [June 2019](https://georgetown.id.gov/archives/date/2019/06)
+  - [May 2019](https://georgetown.id.gov/archives/date/2019/05)
+  - [April 2019](https://georgetown.id.gov/archives/date/2019/04)
+  - [March 2019](https://georgetown.id.gov/archives/date/2019/03)
+  - [February 2019](https://georgetown.id.gov/archives/date/2019/02)
+  - [January 2019](https://georgetown.id.gov/archives/date/2019/01)
+  - [December 2018](https://georgetown.id.gov/archives/date/2018/12)
+  - [November 2018](https://georgetown.id.gov/archives/date/2018/11)
+  - [October 2018](https://georgetown.id.gov/archives/date/2018/10)
+  - [August 2018](https://georgetown.id.gov/archives/date/2018/08)
+  - [July 2018](https://georgetown.id.gov/archives/date/2018/07)
+  - [June 2018](https://georgetown.id.gov/archives/date/2018/06)
+  - [May 2018](https://georgetown.id.gov/archives/date/2018/05)
+  - [March 2017](https://georgetown.id.gov/archives/date/2017/03)
+  - [February 2017](https://georgetown.id.gov/archives/date/2017/02)
+  - [July 2016](https://georgetown.id.gov/archives/date/2016/07)
+  - [June 2016](https://georgetown.id.gov/archives/date/2016/06)
+  - [May 2016](https://georgetown.id.gov/archives/date/2016/05)
+  - [December 2015](https://georgetown.id.gov/archives/date/2015/12)
+  - [November 2015](https://georgetown.id.gov/archives/date/2015/11)
+  - [October 2015](https://georgetown.id.gov/archives/date/2015/10)
+  - [September 2015](https://georgetown.id.gov/archives/date/2015/09)
+  - [August 2015](https://georgetown.id.gov/archives/date/2015/08)
+  - [July 2015](https://georgetown.id.gov/archives/date/2015/07)
+  - [June 2015](https://georgetown.id.gov/archives/date/2015/06)
+  - [May 2015](https://georgetown.id.gov/archives/date/2015/05)
+  - [April 2015](https://georgetown.id.gov/archives/date/2015/04)
+  - [March 2015](https://georgetown.id.gov/archives/date/2015/03)
+  - [February 2015](https://georgetown.id.gov/archives/date/2015/02)
+  - [January 2015](https://georgetown.id.gov/archives/date/2015/01)
+  - [December 2014](https://georgetown.id.gov/archives/date/2014/12)
+  - [November 2014](https://georgetown.id.gov/archives/date/2014/11)
+  - [September 2014](https://georgetown.id.gov/archives/date/2014/09)
+  - [August 2014](https://georgetown.id.gov/archives/date/2014/08)
+  - [July 2014](https://georgetown.id.gov/archives/date/2014/07)
+  - [June 2014](https://georgetown.id.gov/archives/date/2014/06)
+  - [May 2014](https://georgetown.id.gov/archives/date/2014/05)
+  - [April 2014](https://georgetown.id.gov/archives/date/2014/04)
+  - [March 2014](https://georgetown.id.gov/archives/date/2014/03)
+  - [February 2014](https://georgetown.id.gov/archives/date/2014/02)
+  - [January 2014](https://georgetown.id.gov/archives/date/2014/01)
+  - [December 2013](https://georgetown.id.gov/archives/date/2013/12)
+  - [November 2013](https://georgetown.id.gov/archives/date/2013/11)
+  - [October 2013](https://georgetown.id.gov/archives/date/2013/10)
+  - [September 2013](https://georgetown.id.gov/archives/date/2013/09)
+  - [August 2013](https://georgetown.id.gov/archives/date/2013/08)
+  - [July 2013](https://georgetown.id.gov/archives/date/2013/07)
+  - [June 2013](https://georgetown.id.gov/archives/date/2013/06)
+  - [May 2013](https://georgetown.id.gov/archives/date/2013/05)
+  - [April 2013](https://georgetown.id.gov/archives/date/2013/04)
+  - [March 2013](https://georgetown.id.gov/archives/date/2013/03)
+  - [February 2013](https://georgetown.id.gov/archives/date/2013/02)
+  - [January 2013](https://georgetown.id.gov/archives/date/2013/01)
+  - [December 2012](https://georgetown.id.gov/archives/date/2012/12)
+  - [November 2012](https://georgetown.id.gov/archives/date/2012/11)
+  - [October 2012](https://georgetown.id.gov/archives/date/2012/10)
+  - [September 2012](https://georgetown.id.gov/archives/date/2012/09)
+  - [August 2012](https://georgetown.id.gov/archives/date/2012/08)
+  - [July 2012](https://georgetown.id.gov/archives/date/2012/07)
+  - [June 2012](https://georgetown.id.gov/archives/date/2012/06)
+  - [May 2012](https://georgetown.id.gov/archives/date/2012/05)
+  - [April 2012](https://georgetown.id.gov/archives/date/2012/04)
+  - [March 2012](https://georgetown.id.gov/archives/date/2012/03)
+  - [February 2012](https://georgetown.id.gov/archives/date/2012/02)
+  - [January 2012](https://georgetown.id.gov/archives/date/2012/01)
+  - [December 2011](https://georgetown.id.gov/archives/date/2011/12)
+  - [November 2011](https://georgetown.id.gov/archives/date/2011/11)
+  - [October 2011](https://georgetown.id.gov/archives/date/2011/10)
+  - [September 2011](https://georgetown.id.gov/archives/date/2011/09)
+  - [August 2011](https://georgetown.id.gov/archives/date/2011/08)
+  - [July 2011](https://georgetown.id.gov/archives/date/2011/07)
+  - [May 2011](https://georgetown.id.gov/archives/date/2011/05)
+  - [February 2011](https://georgetown.id.gov/archives/date/2011/02)
+  - [December 2010](https://georgetown.id.gov/archives/date/2010/12)
+  - [November 2010](https://georgetown.id.gov/archives/date/2010/11)
+  - [September 2010](https://georgetown.id.gov/archives/date/2010/09)
+  - [August 2010](https://georgetown.id.gov/archives/date/2010/08)
+  - [July 2010](https://georgetown.id.gov/archives/date/2010/07)
+  - [June 2010](https://georgetown.id.gov/archives/date/2010/06)
+  - [May 2010](https://georgetown.id.gov/archives/date/2010/05)
+  - [April 2010](https://georgetown.id.gov/archives/date/2010/04)
+  - [March 2010](https://georgetown.id.gov/archives/date/2010/03)
+  - [January 2010](https://georgetown.id.gov/archives/date/2010/01)
+  - [December 2009](https://georgetown.id.gov/archives/date/2009/12)
+  - [November 2009](https://georgetown.id.gov/archives/date/2009/11)
+  - [October 2009](https://georgetown.id.gov/archives/date/2009/10)
+  - [September 2009](https://georgetown.id.gov/archives/date/2009/09)
+  - [August 2009](https://georgetown.id.gov/archives/date/2009/08)
+  - [June 2009](https://georgetown.id.gov/archives/date/2009/06)
+  - [May 2009](https://georgetown.id.gov/archives/date/2009/05)
+  - [April 2009](https://georgetown.id.gov/archives/date/2009/04)
+  - [March 2009](https://georgetown.id.gov/archives/date/2009/03)
+- ## Meta
+  
+  - [Log in](https://georgetown.id.gov/wp-login.php)
+
+* * *
+
+Copyright © 2025 Georgetown Idaho  
+*[Theme](https://beach-house.idano.net) designed by [Pure 1 Media](https://www.pure1media.com)*
+
+![](https://pixel.wp.com/g.gif?blog=6893654&v=ext&post=6&host=georgetown.id.gov&ref=&fcp=0&rand=0.3682604090162056)
