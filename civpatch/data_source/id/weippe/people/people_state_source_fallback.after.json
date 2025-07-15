@@ -1,0 +1,33 @@
+[
+  {
+    "name": "Ron Larson",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-15T18:20:36Z"
+  },
+  {
+    "name": "Sheila Barteaux",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-15T18:20:36Z"
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-15T18:20:36Z",
+    "images": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "sources": []
+  }
+]
