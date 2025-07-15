@@ -1845,7 +1845,14 @@
       ],
       "population": 517,
       "website": "https://www.newmeadowsidaho.us",
-      "fips": "1656890"
+      "fips": "1656890",
+      "meta_updated_at": "2025-07-15T16:36:24Z",
+      "meta_hash": "52ee70035d1f4c1a31ef69c5d1bb359f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Firth",
