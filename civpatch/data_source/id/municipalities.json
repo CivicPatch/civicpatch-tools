@@ -1599,7 +1599,14 @@
       ],
       "population": 763,
       "website": "https://www.cityofpotlatch.org",
-      "fips": "1664900"
+      "fips": "1664900",
+      "meta_updated_at": "2025-07-15T15:02:24Z",
+      "meta_hash": "0ae25c6929a9904992a4d87a096374db",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hauser",
