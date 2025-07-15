@@ -1566,7 +1566,14 @@
       ],
       "population": 791,
       "website": "https://wallace.id.gov",
-      "fips": "1684790"
+      "fips": "1684790",
+      "meta_updated_at": "2025-07-15T15:00:15Z",
+      "meta_hash": "dd11700a6356999cb9a6fe6d9b9c63c0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Teton",
