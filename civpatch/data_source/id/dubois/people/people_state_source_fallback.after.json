@@ -5,7 +5,15 @@
       "Mayor"
     ],
     "divisions": [],
-    "updated_at": "2025-07-15T16:35:35Z"
+    "updated_at": "2025-07-15T18:05:47Z"
+  },
+  {
+    "name": "Blake Dory",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-15T18:05:47Z"
   },
   {
     "name": "Erica Perez",
@@ -14,15 +22,7 @@
       "Council President"
     ],
     "divisions": [],
-    "updated_at": "2025-07-15T16:35:35Z"
-  },
-  {
-    "name": "Blake Dory",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [],
-    "updated_at": "2025-07-15T16:35:35Z"
+    "updated_at": "2025-07-15T18:05:47Z"
   },
   {
     "name": "Michelle Ames",
@@ -30,7 +30,7 @@
       "Council Member"
     ],
     "divisions": [],
-    "updated_at": "2025-07-15T16:35:35Z"
+    "updated_at": "2025-07-15T18:05:47Z"
   },
   {
     "name": "Norman \"Tub\" Tavenner",
@@ -38,6 +38,6 @@
       "Council Member"
     ],
     "divisions": [],
-    "updated_at": "2025-07-15T16:35:35Z"
+    "updated_at": "2025-07-15T18:05:47Z"
   }
 ]
