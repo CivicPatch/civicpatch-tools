@@ -1661,7 +1661,14 @@
       ],
       "population": 709,
       "website": "https://cityofathol.us",
-      "fips": "1603700"
+      "fips": "1603700",
+      "meta_updated_at": "2025-07-15T15:06:12Z",
+      "meta_hash": "428d305615d79fadd0a7c075bea1836e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Carey",
