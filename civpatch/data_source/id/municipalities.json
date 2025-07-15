@@ -1555,7 +1555,14 @@
       ],
       "population": 792,
       "website": "https://inkomcity.org",
-      "fips": "1640330"
+      "fips": "1640330",
+      "meta_updated_at": "2025-07-15T14:58:35Z",
+      "meta_hash": "1a6cbfb60f71c1e4a408013a7a21a9f1",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Wallace",
