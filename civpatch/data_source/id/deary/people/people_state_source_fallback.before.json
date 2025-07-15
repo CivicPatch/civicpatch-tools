@@ -1,0 +1,55 @@
+[
+  {
+    "name": "Jason Johnson",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:37:00Z"
+  },
+  {
+    "name": "Jamie Johnston",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [
+      "Water"
+    ],
+    "updated_at": "2025-07-15T16:37:00Z"
+  },
+  {
+    "name": "Courtney Warner",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Sewer"
+    ],
+    "updated_at": "2025-07-15T16:37:00Z"
+  },
+  {
+    "name": "Eric Sutton",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Streets"
+    ],
+    "updated_at": "2025-07-15T16:37:00Z"
+  },
+  {
+    "name": "Christy Sanderson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Parks",
+      "Library",
+      "Sanitation"
+    ],
+    "updated_at": "2025-07-15T16:37:00Z"
+  }
+]
