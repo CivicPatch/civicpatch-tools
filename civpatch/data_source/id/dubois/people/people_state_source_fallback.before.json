@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Dan Bramwell",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:35:35Z"
+  },
+  {
+    "name": "Erica Perez",
+    "roles": [
+      "Council Member",
+      "President"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:35:35Z"
+  },
+  {
+    "name": "Blake Dory",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:35:35Z"
+  },
+  {
+    "name": "Michelle Ames",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:35:35Z"
+  },
+  {
+    "name": "Norman \"Tub\" Tavenner",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:35:35Z"
+  }
+]
