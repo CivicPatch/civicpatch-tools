@@ -1790,7 +1790,14 @@
       ],
       "population": 624,
       "website": "https://cityofjuliaetta.com",
-      "fips": "1642130"
+      "fips": "1642130",
+      "meta_updated_at": "2025-07-15T16:31:02Z",
+      "meta_hash": "612c3ee70ccf69a6612a18eef3b652a9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Notus",
