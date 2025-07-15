@@ -2191,7 +2191,14 @@
       ],
       "population": 354,
       "website": "https://arimo.id.gov",
-      "fips": "1603340"
+      "fips": "1603340",
+      "meta_updated_at": "2025-07-15T18:23:50Z",
+      "meta_hash": "8b636c0e47b4197ad0e4a0dfa292fbaa",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Declo",
