@@ -1665,7 +1665,14 @@
       ],
       "population": 685,
       "website": "https://www.cityofcarey.org",
-      "fips": "1612790"
+      "fips": "1612790",
+      "meta_updated_at": "2025-07-15T15:08:55Z",
+      "meta_hash": "93001bea78590eb65d67c20ddb9bf770",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Smelterville",
