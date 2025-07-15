@@ -1826,7 +1826,14 @@
       ],
       "population": 572,
       "website": "https://www.cityofmelba.org",
-      "fips": "1651850"
+      "fips": "1651850",
+      "meta_updated_at": "2025-07-15T16:29:55Z",
+      "meta_hash": "7b43af227f1ca8f89242b880d8de0da3",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Downey",
