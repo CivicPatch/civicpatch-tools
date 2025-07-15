@@ -5,9 +5,20 @@
       "Mayor"
     ],
     "divisions": [
-      null
+      "Grand View"
     ],
-    "updated_at": "2025-07-15T16:41:36Z"
+    "updated_at": "2025-07-15T17:59:46Z"
+  },
+  {
+    "name": "Terry Neilson",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [
+      "Grand View City Council"
+    ],
+    "updated_at": "2025-07-15T17:59:46Z"
   },
   {
     "name": "Tom Payne",
@@ -15,9 +26,9 @@
       "Council Member"
     ],
     "divisions": [
-      null
+      "Grand View City Council"
     ],
-    "updated_at": "2025-07-15T16:41:36Z"
+    "updated_at": "2025-07-15T17:59:46Z"
   },
   {
     "name": "Andrea Owens",
@@ -25,20 +36,9 @@
       "Council Member"
     ],
     "divisions": [
-      null
+      "Grand View City Council"
     ],
-    "updated_at": "2025-07-15T16:41:36Z"
-  },
-  {
-    "name": "Terry Neilson",
-    "roles": [
-      "Council President",
-      "Council Member"
-    ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-15T16:41:36Z"
+    "updated_at": "2025-07-15T17:59:46Z"
   },
   {
     "name": "Michael Smith",
@@ -46,8 +46,8 @@
       "Council Member"
     ],
     "divisions": [
-      null
+      "Grand View City Council"
     ],
-    "updated_at": "2025-07-15T16:41:36Z"
+    "updated_at": "2025-07-15T17:59:46Z"
   }
 ]
