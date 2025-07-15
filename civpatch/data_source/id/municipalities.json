@@ -2376,7 +2376,14 @@
       ],
       "population": 249,
       "website": "https://www.cityofdonnelly.org",
-      "fips": "1622330"
+      "fips": "1622330",
+      "meta_updated_at": "2025-07-15T18:34:28Z",
+      "meta_hash": "39c41a63f5e3edddd086410828f2ef9d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hollister",
