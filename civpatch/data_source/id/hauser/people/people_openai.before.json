@@ -1,0 +1,95 @@
+[
+  {
+    "name": "Bill Ray",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "mayor@cityofhauser.us",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "updated_at": "2025-07-15T15:02:18Z"
+  },
+  {
+    "name": "Jeff Hoerner",
+    "roles": [
+      "Council Member, Seat 1"
+    ],
+    "divisions": [
+      "Seat 1"
+    ],
+    "image": "https://cityofhauser.us/wp-content/uploads/2025/03/Mark-CC-Photo.jpg",
+    "phone_number": null,
+    "email": "citycouncil1@cityofhauser.us",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "updated_at": "2025-07-15T15:02:18Z"
+  },
+  {
+    "name": "Mark Duchesne",
+    "roles": [
+      "Council Member, Seat 2"
+    ],
+    "divisions": [
+      "Seat 2"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "councilseat2@cityofhauser.us",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "updated_at": "2025-07-15T15:02:18Z"
+  },
+  {
+    "name": "Alice Pomakaly",
+    "roles": [
+      "Council Member, Seat 3"
+    ],
+    "divisions": [
+      "Seat 3"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "citycouncil3@cityofhauser.us",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "updated_at": "2025-07-15T15:02:18Z"
+  },
+  {
+    "name": "Daniel Finley",
+    "roles": [
+      "Council Member, Seat 4"
+    ],
+    "divisions": [
+      "Seat 4"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "councilseat4@cityofhauser.us",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "updated_at": "2025-07-15T15:02:18Z"
+  }
+]

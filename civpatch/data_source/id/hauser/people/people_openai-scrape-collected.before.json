@@ -1,0 +1,173 @@
+[
+  {
+    "name": "Bill Ray",
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor and member of Hauser City Council."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mayor@cityofhauser.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly linked with Bill Ray as Mayor.",
+        "source": "https://cityofhauser.us/elected-officials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T15:02:18Z"
+  },
+  {
+    "name": "Jeff Hoerner",
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "images": [
+      {
+        "data": "https://cityofhauser.us/wp-content/uploads/2025/03/Mark-CC-Photo.jpg",
+        "llm_confidence": 0.3,
+        "llm_confidence_reason": "Image is near Mark Duchesne's section, not Jeff Hoerner's; likely misattributed.",
+        "source": "https://cityofhauser.us/elected-officials"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member, Seat 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as City council member for Seat 1."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Seat 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council Seat 1."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "citycouncil1@cityofhauser.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly linked with Jeff Hoerner as Council Seat 1.",
+        "source": "https://cityofhauser.us/elected-officials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T15:02:18Z"
+  },
+  {
+    "name": "Mark Duchesne",
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member, Seat 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council Seat 2 member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Seat 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council Seat 2."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "councilseat2@cityofhauser.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly linked with Mark Duchesne as Council Seat 2.",
+        "source": "https://cityofhauser.us/elected-officials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T15:02:18Z"
+  },
+  {
+    "name": "Alice Pomakaly",
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member, Seat 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council Seat 3 member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Seat 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council Seat 3."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "citycouncil3@cityofhauser.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly linked with Alice Pomakaly as Council Seat 3.",
+        "source": "https://cityofhauser.us/elected-officials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T15:02:18Z"
+  },
+  {
+    "name": "Daniel Finley",
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member, Seat 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council Seat 4 member."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "Seat 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Council Seat 4."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "councilseat4@cityofhauser.us",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly linked with Daniel Finley as Council Seat 4.",
+        "source": "https://cityofhauser.us/elected-officials"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T15:02:18Z"
+  }
+]

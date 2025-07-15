@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Bill Ray",
+    "roles": [
+      "Council Member",
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "mayor@cityofhauser.us",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "updated_at": "2025-07-15T15:02:24Z"
+  },
+  {
+    "name": "Jeff Hoerner",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Seat 1"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "citycouncil1@cityofhauser.us",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "updated_at": "2025-07-15T15:02:24Z"
+  },
+  {
+    "name": "Mark Duchesne",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Seat 2"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "councilseat2@cityofhauser.us",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "updated_at": "2025-07-15T15:02:24Z"
+  },
+  {
+    "name": "Alice Pomakaly",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Seat 3"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "citycouncil3@cityofhauser.us",
+    "website": null,
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://cityofhauser.us/elected-officials"
+    ],
+    "updated_at": "2025-07-15T15:02:24Z"
+  }
+]

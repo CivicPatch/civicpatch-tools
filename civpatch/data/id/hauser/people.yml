@@ -1,0 +1,60 @@
+---
+- name: Bill Ray
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email: mayor@cityofhauser.us
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://cityofhauser.us/elected-officials
+  updated_at: '2025-07-15T15:02:25Z'
+- name: Jeff Hoerner
+  roles:
+  - Council Member
+  divisions:
+  - Seat 1
+  image: https://cityofhauser.us/wp-content/uploads/2025/03/Mark-CC-Photo.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/id/hauser/images/39c3dd74f9f59d4b1b3fdd6c57b4cd14e6ed98dd9a0ed1447dcfbed3eb71406b.jpg
+  email: citycouncil1@cityofhauser.us
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://cityofhauser.us/elected-officials
+  updated_at: '2025-07-15T15:02:25Z'
+- name: Mark Duchesne
+  roles:
+  - Council Member
+  divisions:
+  - Seat 2
+  image:
+  cdn_image:
+  email: councilseat2@cityofhauser.us
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://cityofhauser.us/elected-officials
+  updated_at: '2025-07-15T15:02:25Z'
+- name: Alice Pomakaly
+  roles:
+  - Council Member
+  divisions:
+  - Seat 3
+  image:
+  cdn_image:
+  email: citycouncil3@cityofhauser.us
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://cityofhauser.us/elected-officials
+  updated_at: '2025-07-15T15:02:25Z'

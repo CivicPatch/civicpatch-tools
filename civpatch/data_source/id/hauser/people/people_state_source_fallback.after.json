@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Bill Ray",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-15T15:01:32Z"
+  },
+  {
+    "name": "Sean Taylor",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-15T15:01:32Z"
+  },
+  {
+    "name": "Jeff Hoerner",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-15T15:01:32Z"
+  },
+  {
+    "name": "Alice Pomykala",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-15T15:01:32Z"
+  },
+  {
+    "name": "Daniel Finley",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-15T15:01:32Z"
+  }
+]
