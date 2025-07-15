@@ -1621,7 +1621,14 @@
       ],
       "population": 752,
       "website": "https://cityofdover.id.gov",
-      "fips": "1622510"
+      "fips": "1622510",
+      "meta_updated_at": "2025-07-15T15:03:53Z",
+      "meta_hash": "0d9f41d4095440ed299e62924badd2f1",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Menan",
