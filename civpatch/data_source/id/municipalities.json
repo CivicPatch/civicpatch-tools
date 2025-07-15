@@ -1503,7 +1503,14 @@
       ],
       "population": 867,
       "website": "https://www.cityofcouncilidaho.org",
-      "fips": "1618820"
+      "fips": "1618820",
+      "meta_updated_at": "2025-07-15T16:32:01Z",
+      "meta_hash": "366e71683c449c794385cc531d5fd110",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "McCammon",
