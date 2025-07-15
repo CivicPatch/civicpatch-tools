@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Tom Naylor",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:19:35Z"
+  },
+  {
+    "name": "Leav'en Hatch",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:19:35Z"
+  },
+  {
+    "name": "Levi Long",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:19:35Z"
+  },
+  {
+    "name": "Mitch Henson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:19:35Z"
+  },
+  {
+    "name": "Mark Whitesell",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:19:35Z"
+  }
+]
