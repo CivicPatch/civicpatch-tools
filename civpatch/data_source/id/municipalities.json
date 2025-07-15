@@ -1999,7 +1999,14 @@
       ],
       "population": 441,
       "website": "https://cityoffairfieldidaho.com",
-      "fips": "1626290"
+      "fips": "1626290",
+      "meta_updated_at": "2025-07-15T16:42:27Z",
+      "meta_hash": "4a825c41c666a0763dfdaeea242f1a5f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Grand View",
