@@ -1,1 +1,15 @@
---- []
+---
+- name: Dan Bramwell
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number: "(208) 374-5241"
+  website: https://dubois.municipalimpact.com/mayor
+  start_date:
+  end_date:
+  sources:
+  - https://dubois.municipalimpact.com/mayor
+  updated_at: '2025-07-15T18:15:18Z'

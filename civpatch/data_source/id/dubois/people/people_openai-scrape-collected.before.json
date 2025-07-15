@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "name": "Dan Bramwell",
+    "sources": [
+      "https://dubois.municipalimpact.com/mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor of City of Dubois on the page."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-374-5241",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number listed directly under Dan Bramwell's contact info.",
+        "source": "https://dubois.municipalimpact.com/mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [
+      {
+        "data": "https://dubois.municipalimpact.com/mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Page URL is the official mayor page associated with Dan Bramwell.",
+        "source": "https://dubois.municipalimpact.com/mayor"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T18:14:48Z"
+  }
+]

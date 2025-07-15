@@ -1,23 +1,13 @@
 [
   {
-    "name": "Dan Bramwell",
+    "name": "Bill Smith",
     "roles": [
       "Mayor"
     ],
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-15T18:05:47Z"
-  },
-  {
-    "name": "Blake Dory",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-15T18:05:47Z"
+    "updated_at": "2025-07-15T18:12:26Z"
   },
   {
     "name": "Erica Perez",
@@ -28,7 +18,17 @@
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-15T18:05:47Z"
+    "updated_at": "2025-07-15T18:12:26Z"
+  },
+  {
+    "name": "Blake Dory",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:12:26Z"
   },
   {
     "name": "Michelle Ames",
@@ -38,7 +38,7 @@
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-15T18:05:47Z"
+    "updated_at": "2025-07-15T18:12:26Z"
   },
   {
     "name": "Norman \"Tub\" Tavenner",
@@ -48,6 +48,6 @@
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-15T18:05:47Z"
+    "updated_at": "2025-07-15T18:12:26Z"
   }
 ]

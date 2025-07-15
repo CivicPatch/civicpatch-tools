@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "name": "Dan Bramwell",
+    "sources": [
+      "https://dubois.municipalimpact.com/mayor"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated next to the person's name and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "208-374-5241",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The phone number is explicitly listed next to the person's name and role.",
+        "source": "https://dubois.municipalimpact.com/mayor"
+      }
+    ],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-15T18:15:18Z"
+  }
+]
