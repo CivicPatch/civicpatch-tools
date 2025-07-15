@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Tyler Roland Boswell Jr.",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-15T14:53:22Z"
+  },
+  {
+    "name": "Bill Abbott",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [
+      "Community Relations",
+      "Parks & Recreation"
+    ],
+    "updated_at": "2025-07-15T14:53:22Z"
+  },
+  {
+    "name": "Patrick Cordova",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Water & Sewer Services"
+    ],
+    "updated_at": "2025-07-15T14:53:22Z"
+  },
+  {
+    "name": "Cindy Gray",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Public Safety: Police, Fire, Ambulance"
+    ],
+    "updated_at": "2025-07-15T14:53:22Z"
+  },
+  {
+    "name": "Mike Yenney",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Streets, Solid Waste, Library"
+    ],
+    "updated_at": "2025-07-15T14:53:22Z"
+  }
+]
