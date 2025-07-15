@@ -1533,7 +1533,14 @@
       ],
       "population": 812,
       "website": "https://www.greenleaf-idaho.us",
-      "fips": "1633490"
+      "fips": "1633490",
+      "meta_updated_at": "2025-07-15T15:05:51Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hazelton",

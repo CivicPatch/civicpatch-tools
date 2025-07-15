@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Brad Holton",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      "Greenleaf"
+    ],
+    "updated_at": "2025-07-15T14:55:50Z"
+  },
+  {
+    "name": "Dan Hyer",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Greenleaf City Council - Seat 1"
+    ],
+    "updated_at": "2025-07-15T14:55:50Z"
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Greenleaf City Council - Seat 2"
+    ],
+    "updated_at": "2025-07-15T14:55:50Z"
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Greenleaf City Council - Seat 3"
+    ],
+    "updated_at": "2025-07-15T14:55:50Z"
+  },
+  {
+    "name": null,
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Greenleaf City Council - Seat 4"
+    ],
+    "updated_at": "2025-07-15T14:55:50Z"
+  }
+]
