@@ -2059,7 +2059,14 @@
       ],
       "population": 440,
       "website": "https://www.grandview.id.gov",
-      "fips": "1632770"
+      "fips": "1632770",
+      "meta_updated_at": "2025-07-15T16:48:21Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Mackay",
