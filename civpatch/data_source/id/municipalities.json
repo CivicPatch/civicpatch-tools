@@ -2070,7 +2070,14 @@
       ],
       "population": 439,
       "website": "https://mackayidaho-city.com",
-      "fips": "1649240"
+      "fips": "1649240",
+      "meta_updated_at": "2025-07-15T18:20:01Z",
+      "meta_hash": "af44c39be10dc059b7ec8c7592f892c0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Richfield",
