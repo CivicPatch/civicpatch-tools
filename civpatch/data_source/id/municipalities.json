@@ -2314,7 +2314,14 @@
       ],
       "population": 288,
       "website": "https://www.cityofkendrick.com",
-      "fips": "1642760"
+      "fips": "1642760",
+      "meta_updated_at": "2025-07-15T18:33:01Z",
+      "meta_hash": "fbc2d2f71ce2412cd717dbd183a9f262",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Dietrich",
