@@ -1318,7 +1318,14 @@
       ],
       "population": 1117,
       "website": "https://cityofkamiah.org",
-      "fips": "1642400"
+      "fips": "1642400",
+      "meta_updated_at": "2025-07-15T14:56:50Z",
+      "meta_hash": "5486a8c20cdd01bc175b866739697637",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hansen",
