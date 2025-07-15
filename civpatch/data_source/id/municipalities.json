@@ -1416,7 +1416,14 @@
       ],
       "population": 949,
       "website": "https://www.cityofashton.com",
-      "fips": "1603610"
+      "fips": "1603610",
+      "meta_updated_at": "2025-07-15T14:54:01Z",
+      "meta_hash": "19342bd5618b51ac7f4ae93667fbf8d8",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Kootenai",
