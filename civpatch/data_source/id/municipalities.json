@@ -1988,7 +1988,14 @@
       ],
       "population": 458,
       "website": "https://www.cityofnezperce.com",
-      "fips": "1657250"
+      "fips": "1657250",
+      "meta_updated_at": "2025-07-15T16:41:17Z",
+      "meta_hash": "224039bb3e7ff4711ee0a8f445b1a6f0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fairfield",
