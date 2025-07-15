@@ -1632,7 +1632,14 @@
       ],
       "population": 715,
       "website": "https://www.cityofmenan.org",
-      "fips": "1652030"
+      "fips": "1652030",
+      "meta_updated_at": "2025-07-15T15:06:18Z",
+      "meta_hash": "68ad3e9792de0b2b643de1ba2840cf4d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Horseshoe Bend",
