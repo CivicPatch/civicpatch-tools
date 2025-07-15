@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Jon Pennington",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:41:36Z"
+  },
+  {
+    "name": "Tom Payne",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:41:36Z"
+  },
+  {
+    "name": "Andrea Owens",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:41:36Z"
+  },
+  {
+    "name": "Terry Neilson",
+    "roles": [
+      "Council President",
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:41:36Z"
+  },
+  {
+    "name": "Michael Smith",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:41:36Z"
+  }
+]
