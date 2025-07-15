@@ -2213,7 +2213,14 @@
       ],
       "population": 337,
       "website": "https://cityofnewdale.org",
-      "fips": "1656800"
+      "fips": "1656800",
+      "meta_updated_at": "2025-07-15T18:27:53Z",
+      "meta_hash": "6694a97c268146aa3deaf649a46e7b4b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Cambridge",
