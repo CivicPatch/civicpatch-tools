@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Aaron Nicholes",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:30:52Z"
+  },
+  {
+    "name": "John Howard",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:30:52Z"
+  },
+  {
+    "name": "Shauna Stewart",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:30:52Z"
+  },
+  {
+    "name": "Dean Grisson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:30:52Z"
+  },
+  {
+    "name": "Trent Hanson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:30:52Z"
+  }
+]
