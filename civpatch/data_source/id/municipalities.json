@@ -1801,7 +1801,14 @@
       ],
       "population": 609,
       "website": "https://notusidaho.org/index.html",
-      "fips": "1658060"
+      "fips": "1658060",
+      "meta_updated_at": "2025-07-15T16:34:20Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Melba",
