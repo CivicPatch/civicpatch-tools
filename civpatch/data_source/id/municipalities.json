@@ -1507,7 +1507,14 @@
       ],
       "population": 825,
       "website": "https://www.mccammoncity.com",
-      "fips": "1648880"
+      "fips": "1648880",
+      "meta_updated_at": "2025-07-15T14:56:32Z",
+      "meta_hash": "0cf9fd03461d992f9cbeacc92037b775",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Cottonwood",
