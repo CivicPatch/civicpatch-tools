@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Rex Nielsen",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:32:40Z"
+  },
+  {
+    "name": "Grant Johnson",
+    "roles": [
+      "Council Member",
+      "President"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:32:40Z"
+  },
+  {
+    "name": "Bonnie Hill",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:32:40Z"
+  },
+  {
+    "name": "John Hyde",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:32:40Z"
+  },
+  {
+    "name": "Dianna Burden",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T16:32:40Z"
+  }
+]
