@@ -2092,7 +2092,14 @@
       ],
       "population": 421,
       "website": "https://www.cityoflewisville.org",
-      "fips": "1646720"
+      "fips": "1646720",
+      "meta_updated_at": "2025-07-15T18:26:11Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Culdesac",

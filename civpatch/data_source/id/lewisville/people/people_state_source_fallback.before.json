@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Curtis Thomas",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:19:38Z"
+  },
+  {
+    "name": "James Ball",
+    "roles": [
+      "Council Member",
+      "Council President"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:19:38Z"
+  },
+  {
+    "name": "Blake Ball",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:19:38Z"
+  },
+  {
+    "name": "Brigham Briggs",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:19:38Z"
+  },
+  {
+    "name": "Celena Lewis",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-15T18:19:38Z"
+  }
+]
