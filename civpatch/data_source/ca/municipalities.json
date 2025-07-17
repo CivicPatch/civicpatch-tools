@@ -64,7 +64,14 @@
       ],
       "population": 524943,
       "website": "https://www.cityofsacramento.gov",
-      "fips": "0664000"
+      "fips": "0664000",
+      "meta_updated_at": "2025-07-17T03:18:30Z",
+      "meta_hash": "8b5ecdbe60985c0a31d9a4e4458bbef0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Long Beach",
