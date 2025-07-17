@@ -425,7 +425,14 @@
       ],
       "population": 174453,
       "website": "https://www.cityofrc.us",
-      "fips": "0659451"
+      "fips": "0659451",
+      "meta_updated_at": "2025-07-17T17:32:13Z",
+      "meta_hash": "3acd5e9acf105e00d8b1f013c76d2fbc",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Oceanside",
