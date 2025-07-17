@@ -258,7 +258,14 @@
       ],
       "population": 230504,
       "website": "https://www.fremont.gov",
-      "fips": "0626000"
+      "fips": "0626000",
+      "meta_updated_at": "2025-07-17T17:17:43Z",
+      "meta_hash": "631c841fc7d16f05941bb6ac373bbc34",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Santa Clarita",
