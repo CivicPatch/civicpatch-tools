@@ -93,7 +93,14 @@
       ],
       "population": 440646,
       "website": "https://www.oaklandca.gov",
-      "fips": "0653000"
+      "fips": "0653000",
+      "meta_updated_at": "2025-07-17T03:20:13Z",
+      "meta_hash": "f9bb87e793d225429c6085105fe5eaae",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Bakersfield",
