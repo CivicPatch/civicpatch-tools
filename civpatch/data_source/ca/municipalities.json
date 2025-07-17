@@ -609,8 +609,8 @@
       "population": 151713,
       "website": "https://www.pomonaca.gov",
       "fips": "0658072",
-      "meta_updated_at": "2025-07-17T18:53:16Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-17T19:19:34Z",
+      "meta_hash": "ba811ef2d5177f4b77b1ca7078786313",
       "meta_sources": [
         "state_source",
         "gemini",
