@@ -701,7 +701,14 @@
       ],
       "population": 143617,
       "website": "https://www.cityoffullerton.com",
-      "fips": "0628000"
+      "fips": "0628000",
+      "meta_updated_at": "2025-07-17T19:20:43Z",
+      "meta_hash": "ea9d2817c800f03f9ce564ebe97d173d",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Visalia",
