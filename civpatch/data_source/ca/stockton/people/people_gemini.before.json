@@ -4,8 +4,7 @@
     "roles": [
       "Mayor",
       "Chair",
-      "Chair of the Budget Committee",
-      "mayor"
+      "Chair of the Budget Committee"
     ],
     "divisions": [
       "at-large"
@@ -19,26 +18,34 @@
     "sources": [
       "https://www.stocktonca.gov/government/city_council/mayor.php",
       "https://www.stocktonca.gov/government/city_council/index.php",
-      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_6.php",
+      "https://www.stocktonca.gov/government/city_council/district_2.php",
       "https://www.stocktonca.gov/government/city_council/district_3.php",
       "https://www.stocktonca.gov/government/city_council/district_4.php",
       "https://www.stocktonca.gov/government/city_council/district_5.php"
     ],
-    "updated_at": "2025-07-17T17:41:23Z"
+    "updated_at": "2025-07-17T18:16:53Z"
   },
   {
     "name": "Jason Lee",
     "roles": [
       "Vice Mayor",
-      "District 6 Vice Mayor",
       "Councilmember",
-      "vice mayor",
-      "council member",
-      "Council member",
       "Chair",
+      "Audit Committee Chair",
       "Vice-Chair",
+      "Budget Committee Vice-Chair",
       "Member",
-      "Board Member"
+      "Charter Review Ad Hoc Committee Member",
+      "Legislation/Environmental Committee Member",
+      "City-County Port Liaison Member",
+      "City of Stockton and Manteca Unified School District 2x2 Joint Committee Member",
+      "City of Stockton and Port of Stockton 3x3 Joint Committee Member",
+      "City of Stockton and Stockton Unified School District 3x3 Joint Committee Member",
+      "League of California Cities Legislative Liaison, Assembly Member Ransom Member",
+      "San Joaquin Partnership Board of Directors Member",
+      "Board Member",
+      "Council member"
     ],
     "divisions": [
       "District 6"
@@ -52,64 +59,59 @@
     "sources": [
       "https://www.stocktonca.gov/government/city_council/mayor.php",
       "https://www.stocktonca.gov/government/city_council/index.php",
-      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_6.php",
+      "https://www.stocktonca.gov/government/city_council/district_2.php",
       "https://www.stocktonca.gov/government/city_council/district_3.php",
       "https://www.stocktonca.gov/government/city_council/district_4.php",
       "https://www.stocktonca.gov/government/city_council/district_5.php",
-      "https://www.stocktonca.gov/government/city_council/district_6.php"
+      "https://www.stocktonca.gov/ViceMayor"
     ],
-    "updated_at": "2025-07-17T17:41:23Z"
+    "updated_at": "2025-07-17T18:16:53Z"
   },
   {
     "name": "Michele Padilla",
     "roles": [
       "Councilmember",
-      "District 1 Councilmember",
-      "council member",
-      "chair",
-      "Chair Ad Hoc Committee on Homelessness",
-      "Chair Charter Review Ad Hoc Committee",
-      "vice chair",
-      "Vice Chair Audit Committee",
-      "Vice Chair Legislation/Environmental Committee",
-      "board member",
-      "Alternate Member San Joaquin Council of Governments Board",
-      "Council member"
+      "Council member",
+      "Chair",
+      "Ad Hoc Committee on Homelessness Chair",
+      "Charter Review Ad Hoc Committee Chair",
+      "Vice Chair",
+      "Audit Committee Vice Chair",
+      "Legislation/Environmental Committee Vice Chair",
+      "Board Member",
+      "City-County Coordinating Committee Member",
+      "City of Stockton and Lodi Unified School District 2x2 Joint Committee Member",
+      "City of Stockton and Stockton Unified School District 3x3 Joint Committee Member",
+      "Stockton Parks & Recreation Commission Member",
+      "City Selection Committee Alternate Member",
+      "San Joaquin Council of Governments Board (SJCOG) Alternate Member"
     ],
     "divisions": [
       "District 1"
     ],
     "image": null,
     "phone_number": "(209) 937-8279",
-    "email": "michele.padilla@stocktonca.gov",
+    "email": "dist1@stocktonca.gov",
     "website": "https://www.stocktonca.gov/government/city_council/district_1.php",
     "start_date": "2023-01",
     "end_date": null,
     "sources": [
       "https://www.stocktonca.gov/government/city_council/mayor.php",
       "https://www.stocktonca.gov/government/city_council/index.php",
+      "https://www.stocktonca.gov/government/city_council/district_6.php",
       "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_2.php",
       "https://www.stocktonca.gov/government/city_council/district_3.php",
       "https://www.stocktonca.gov/government/city_council/district_4.php",
       "https://www.stocktonca.gov/government/city_council/district_5.php"
     ],
-    "updated_at": "2025-07-17T17:41:23Z"
+    "updated_at": "2025-07-17T18:16:53Z"
   },
   {
     "name": "Mariela Ponce",
     "roles": [
       "Councilmember",
-      "District 2 Councilmember",
-      "council member",
-      "Board Member",
-      "San Joaquin Council of Governments Board Member",
-      "Ad Hoc Committee on Homelessness Member",
-      "Budget Committee Member",
-      "Community Improvement and Crime Prevention Member",
-      "Charter Review Ad Hoc Committee Member",
-      "Water Committee Alternate Member",
-      "City of Stockton and Lodi Unified School District 2x2 Joint Committee Member",
-      "San Joaquin Area Flood Control Agency Alternate Member",
       "Council member"
     ],
     "divisions": [
@@ -124,23 +126,38 @@
     "sources": [
       "https://www.stocktonca.gov/government/city_council/mayor.php",
       "https://www.stocktonca.gov/government/city_council/index.php",
-      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_6.php",
       "https://www.stocktonca.gov/government/city_council/district_2.php",
       "https://www.stocktonca.gov/government/city_council/district_3.php",
       "https://www.stocktonca.gov/government/city_council/district_4.php",
       "https://www.stocktonca.gov/government/city_council/district_5.php"
     ],
-    "updated_at": "2025-07-17T17:41:23Z"
+    "updated_at": "2025-07-17T18:16:53Z"
   },
   {
     "name": "Michael Blower",
     "roles": [
       "Councilmember",
-      "District 3 Councilmember",
-      "council member",
+      "Council member",
       "Chair",
+      "Community Improvement and Crime Prevention Chair",
       "Vice Chair",
-      "Council member"
+      "Water Committee Vice Chair",
+      "Board member",
+      "Ad Hoc Committee on Homelessness Alternate Member",
+      "Audit Committee Member",
+      "Ava Community Energy Authority Alternate Member",
+      "Budget Committee Alternate Member",
+      "California State University Stockton Center Site Authority Member",
+      "City-County Transit District Liaison Member",
+      "City of Stockton and Lincoln Unified School District 2x2 Member",
+      "Legislation/Environmental Alternate Member",
+      "League of CA Cities Central Valley Division Executive Committee Member",
+      "Northeastern San Joaquin County Groundwater Banking Authority Member",
+      "San Joaquin Area Flood Control Agency (SJAFCA) Member",
+      "San Joaquin County Advisory Water Commission Member",
+      "San Joaquin County Flood Control and Water Conservation District Member",
+      "Stockton Convention and Visitors Bureau (SCVB) Ex Officio Member"
     ],
     "divisions": [
       "District 3"
@@ -154,19 +171,18 @@
     "sources": [
       "https://www.stocktonca.gov/government/city_council/mayor.php",
       "https://www.stocktonca.gov/government/city_council/index.php",
-      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_6.php",
+      "https://www.stocktonca.gov/government/city_council/district_2.php",
       "https://www.stocktonca.gov/government/city_council/district_3.php",
       "https://www.stocktonca.gov/government/city_council/district_4.php",
       "https://www.stocktonca.gov/government/city_council/district_5.php"
     ],
-    "updated_at": "2025-07-17T17:41:23Z"
+    "updated_at": "2025-07-17T18:16:53Z"
   },
   {
     "name": "Mario Enriquez",
     "roles": [
       "Councilmember",
-      "District 4 Councilmember",
-      "council member",
       "Council member"
     ],
     "divisions": [
@@ -181,32 +197,30 @@
     "sources": [
       "https://www.stocktonca.gov/government/city_council/mayor.php",
       "https://www.stocktonca.gov/government/city_council/index.php",
-      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_6.php",
+      "https://www.stocktonca.gov/government/city_council/district_2.php",
       "https://www.stocktonca.gov/government/city_council/district_3.php",
       "https://www.stocktonca.gov/government/city_council/district_4.php",
       "https://www.stocktonca.gov/government/city_council/district_5.php"
     ],
-    "updated_at": "2025-07-17T17:41:23Z"
+    "updated_at": "2025-07-17T18:16:53Z"
   },
   {
     "name": "Brando Villapudua",
     "roles": [
       "Councilmember",
-      "District 5 Councilmember",
-      "council member",
       "Council member",
       "Vice Chair",
       "Ad Hoc Committee on Homelessness Vice Chair",
       "Community Improvement and Crime Prevention Vice Chair",
       "Chair",
       "Water Committee Chair",
-      "Board member",
       "Alternate Member",
       "California State University Stockton Center Site Authority Alternate Member",
       "Member",
       "City-County Transit Liaison Member",
       "Northeastern San Joaquin County Groundwater Banking Authority Alternate Member",
-      "San Joaquin Area Flood Control Agency Chair",
+      "San Joaquin Area Flood Control Agency (SJAFCA) Chair",
       "San Joaquin County Advisory Water Commission Alternate Member",
       "San Joaquin Area Flood Control and Water Conservation District Member"
     ],
@@ -222,11 +236,12 @@
     "sources": [
       "https://www.stocktonca.gov/government/city_council/mayor.php",
       "https://www.stocktonca.gov/government/city_council/index.php",
-      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_6.php",
+      "https://www.stocktonca.gov/government/city_council/district_2.php",
       "https://www.stocktonca.gov/government/city_council/district_3.php",
       "https://www.stocktonca.gov/government/city_council/district_4.php",
       "https://www.stocktonca.gov/government/city_council/district_5.php"
     ],
-    "updated_at": "2025-07-17T17:41:23Z"
+    "updated_at": "2025-07-17T18:16:53Z"
   }
 ]
