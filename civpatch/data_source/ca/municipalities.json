@@ -843,7 +843,14 @@
       ],
       "population": 120124,
       "website": "https://cityofclovis.com",
-      "fips": "0614218"
+      "fips": "0614218",
+      "meta_updated_at": "2025-07-17T19:32:06Z",
+      "meta_hash": "44766aa5fac9a2b64726ca78854d2b2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fairfield",
