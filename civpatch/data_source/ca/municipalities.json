@@ -396,7 +396,14 @@
       ],
       "population": 176124,
       "website": "https://elkgrove.gov",
-      "fips": "0622020"
+      "fips": "0622020",
+      "meta_updated_at": "2025-07-17T17:32:17Z",
+      "meta_hash": "7190b12d619bc49bcd0af783cd96aedf",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Ontario",
