@@ -619,7 +619,14 @@
       ],
       "population": 151038,
       "website": "https://www.escondido.org",
-      "fips": "0622804"
+      "fips": "0622804",
+      "meta_updated_at": "2025-07-17T19:02:26Z",
+      "meta_hash": "f43bbf0c78e8b746c0068cc1b1b621a9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Roseville",
