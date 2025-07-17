@@ -130,7 +130,14 @@
       ],
       "population": 314998,
       "website": "https://riversideca.gov",
-      "fips": "0662000"
+      "fips": "0662000",
+      "meta_updated_at": "2025-07-17T03:26:11Z",
+      "meta_hash": "392a853965299727fe21ddf8a9e1233f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Santa Ana",
