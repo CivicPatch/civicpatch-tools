@@ -97,7 +97,14 @@
       ],
       "population": 403455,
       "website": "https://www.bakersfieldcity.us",
-      "fips": "0603526"
+      "fips": "0603526",
+      "meta_updated_at": "2025-07-17T03:21:18Z",
+      "meta_hash": "c057557fc068f3d1be76ea0a1d82ee65",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Anaheim",
