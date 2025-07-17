@@ -1,0 +1,189 @@
+[
+  {
+    "name": "Helen Tran",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "909-384-5133",
+    "email": "Mayor@SBCity.org",
+    "website": null,
+    "start_date": "2022",
+    "end_date": null,
+    "sources": [
+      "https://insidesb.sanbernardino.gov/737/Mayors-Office"
+    ],
+    "updated_at": "2025-07-17T17:20:21Z"
+  },
+  {
+    "name": "Theodore Sanchez",
+    "roles": [
+      "Member",
+      "Council member",
+      "First Ward Member",
+      "Council Member",
+      "City Councilman"
+    ],
+    "divisions": [
+      "First Ward",
+      "Ward"
+    ],
+    "image": null,
+    "phone_number": "909-384-5188",
+    "email": null,
+    "website": "https://www.sanbernardino.gov/directory.aspx?eid=96",
+    "start_date": "2018-11",
+    "end_date": null,
+    "sources": [
+      "https://www.sanbernardino.gov/694/City-Council",
+      "https://www.sanbernardino.gov/directory.aspx?eid=96"
+    ],
+    "updated_at": "2025-07-17T17:20:21Z"
+  },
+  {
+    "name": "Sandra Ibarra",
+    "roles": [
+      "Member",
+      "Council member",
+      "Second Ward Member",
+      "Council Member"
+    ],
+    "divisions": [
+      "Second Ward",
+      "Ward"
+    ],
+    "image": null,
+    "phone_number": "909-384-5188",
+    "email": null,
+    "website": "https://www.sanbernardino.gov/directory.aspx?eid=97",
+    "start_date": "2018-11-06",
+    "end_date": null,
+    "sources": [
+      "https://www.sanbernardino.gov/694/City-Council",
+      "https://www.sanbernardino.gov/directory.aspx?eid=97"
+    ],
+    "updated_at": "2025-07-17T17:20:21Z"
+  },
+  {
+    "name": "Juan Figueroa",
+    "roles": [
+      "Mayor Pro Tem",
+      "Member",
+      "Council member",
+      "Third Ward Member",
+      "Council Member"
+    ],
+    "divisions": [
+      "Third Ward",
+      "Ward"
+    ],
+    "image": null,
+    "phone_number": "909-384-5188",
+    "email": null,
+    "website": "https://www.sanbernardino.gov/directory.aspx?eid=98",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.sanbernardino.gov/694/City-Council",
+      "https://www.sanbernardino.gov/directory.aspx?eid=98"
+    ],
+    "updated_at": "2025-07-17T17:20:21Z"
+  },
+  {
+    "name": "Fred Shorett",
+    "roles": [
+      "Member",
+      "Council member",
+      "Fourth Ward Member",
+      "Council Member"
+    ],
+    "divisions": [
+      "Fourth Ward",
+      "Ward"
+    ],
+    "image": null,
+    "phone_number": "909-384-5188",
+    "email": null,
+    "website": "https://www.sanbernardino.gov/directory.aspx?eid=99",
+    "start_date": "2018-11",
+    "end_date": null,
+    "sources": [
+      "https://www.sanbernardino.gov/694/City-Council",
+      "https://www.sanbernardino.gov/directory.aspx?eid=99"
+    ],
+    "updated_at": "2025-07-17T17:20:21Z"
+  },
+  {
+    "name": "Kimberly Knaus",
+    "roles": [
+      "Member",
+      "Council member",
+      "Fifth Ward Member",
+      "Council Member"
+    ],
+    "divisions": [
+      "Fifth Ward",
+      "Ward"
+    ],
+    "image": null,
+    "phone_number": "909-384-5188",
+    "email": null,
+    "website": "https://www.sanbernardino.gov/directory.aspx?eid=100",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.sanbernardino.gov/694/City-Council",
+      "https://www.sanbernardino.gov/directory.aspx?eid=100"
+    ],
+    "updated_at": "2025-07-17T17:20:21Z"
+  },
+  {
+    "name": "Mario Flores",
+    "roles": [
+      "Member",
+      "Council member",
+      "Sixth Ward Member",
+      "Council Member"
+    ],
+    "divisions": [
+      "Sixth Ward",
+      "Ward"
+    ],
+    "image": null,
+    "phone_number": "909-384-5188",
+    "email": null,
+    "website": "https://www.sanbernardino.gov/directory.aspx?eid=101",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.sanbernardino.gov/694/City-Council",
+      "https://www.sanbernardino.gov/directory.aspx?eid=101"
+    ],
+    "updated_at": "2025-07-17T17:20:21Z"
+  },
+  {
+    "name": "Treasure Ortiz",
+    "roles": [
+      "Member",
+      "Council member",
+      "Seventh Ward Member",
+      "council member"
+    ],
+    "divisions": [
+      "Seventh Ward",
+      "Ward"
+    ],
+    "image": null,
+    "phone_number": "909-384-5188",
+    "email": null,
+    "website": "https://www.sanbernardino.gov/directory.aspx?eid=102",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.sanbernardino.gov/694/City-Council",
+      "https://www.sanbernardino.gov/directory.aspx?eid=102"
+    ],
+    "updated_at": "2025-07-17T17:20:21Z"
+  }
+]
