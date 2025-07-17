@@ -814,7 +814,14 @@
       ],
       "population": 125410,
       "website": "https://www.cityofconcord.org",
-      "fips": "0616000"
+      "fips": "0616000",
+      "meta_updated_at": "2025-07-17T19:29:17Z",
+      "meta_hash": "b92e82f91b94b0d145a080132ec816ca",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Berkeley",
