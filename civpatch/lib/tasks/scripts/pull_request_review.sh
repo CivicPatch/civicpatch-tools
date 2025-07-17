@@ -15,11 +15,11 @@ if [ -z "$GITHUB_TOKEN" ]; then
   exit 1
 fi
 
-cd /app/civpatch || exit 1
+cd /app/civpatch 
 
 REVIEW=$(rake "github_pipeline:generate_review[$STATE,$GEOID]")
 
-SHOULD_APPROVE=$(printf '%s' "$REVIEW" | jq '.should_approve')
+SHOULD_APPROVE=$(printf '%s' "$REVIEW" | jq -r '.should_approve')
 COMMENT=$(printf '%s' "$REVIEW" | jq -r '.comment' | sed 's/\\n/\n/g')
 
 APPROVED_COMMENT="Approved by Bot."
