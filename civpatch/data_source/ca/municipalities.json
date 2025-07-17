@@ -531,7 +531,14 @@
       ],
       "population": 173516,
       "website": "https://www.cityoflancasterca.org",
-      "fips": "0640130"
+      "fips": "0640130",
+      "meta_updated_at": "2025-07-17T18:49:34Z",
+      "meta_hash": "eaf1468882074679b54e4585d50f1767",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Garden Grove",
