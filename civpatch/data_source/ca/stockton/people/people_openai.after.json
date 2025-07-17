@@ -15,33 +15,33 @@
       "https://www.stocktonca.gov/government/city_council/mayor.php",
       "https://www.stocktonca.gov/government/city_council/index.php"
     ],
-    "updated_at": "2025-07-17T17:38:58Z"
+    "updated_at": "2025-07-17T18:13:53Z"
   },
   {
-    "name": "Lee",
+    "name": "Jason Lee",
     "roles": [
+      "Council Member",
       "Vice Mayor"
     ],
     "divisions": [
       "District 6"
     ],
-    "image": null,
-    "phone_number": null,
-    "email": null,
+    "image": "https://www.stocktonca.gov/Images/Government/City%20Council/Approver_Jason_Lee_HD%20-%20Copy%20%282%29.jpg",
+    "phone_number": "(209) 937-8279",
+    "email": "dist6@stocktonca.gov",
     "website": "https://www.stocktonca.gov/government/city_council/district_6.php",
     "start_date": null,
     "end_date": null,
     "sources": [
-      "https://www.stocktonca.gov/government/city_council/index.php"
+      "https://www.stocktonca.gov/government/city_council/index.php",
+      "https://www.stocktonca.gov/government/city_council/district_6.php"
     ],
-    "updated_at": "2025-07-17T17:38:58Z"
+    "updated_at": "2025-07-17T18:13:53Z"
   },
   {
     "name": "Michele Padilla",
     "roles": [
-      "Chair",
-      "Council Member",
-      "Vice Chair"
+      "Council Member"
     ],
     "divisions": [
       "District 1"
@@ -56,7 +56,7 @@
       "https://www.stocktonca.gov/government/city_council/index.php",
       "https://www.stocktonca.gov/government/city_council/district_1.php"
     ],
-    "updated_at": "2025-07-17T17:38:58Z"
+    "updated_at": "2025-07-17T18:13:53Z"
   },
   {
     "name": "Mariela Ponce",
@@ -76,15 +76,12 @@
       "https://www.stocktonca.gov/government/city_council/index.php",
       "https://www.stocktonca.gov/government/city_council/district_2.php"
     ],
-    "updated_at": "2025-07-17T17:38:58Z"
+    "updated_at": "2025-07-17T18:13:53Z"
   },
   {
     "name": "Michael Blower",
     "roles": [
-      "Board Member",
-      "Chair",
-      "Council Member",
-      "Vice Chair"
+      "Council Member"
     ],
     "divisions": [
       "District 3"
@@ -99,12 +96,11 @@
       "https://www.stocktonca.gov/government/city_council/index.php",
       "https://www.stocktonca.gov/government/city_council/district_3.php"
     ],
-    "updated_at": "2025-07-17T17:38:58Z"
+    "updated_at": "2025-07-17T18:13:53Z"
   },
   {
     "name": "Mario Enriquez",
     "roles": [
-      "Chair",
       "Council Member"
     ],
     "divisions": [
@@ -120,14 +116,12 @@
       "https://www.stocktonca.gov/government/city_council/index.php",
       "https://www.stocktonca.gov/government/city_council/district_4.php"
     ],
-    "updated_at": "2025-07-17T17:38:58Z"
+    "updated_at": "2025-07-17T18:13:53Z"
   },
   {
     "name": "Brando Villapudua",
     "roles": [
-      "Chair",
-      "Council Member",
-      "Vice Chair"
+      "Council Member"
     ],
     "divisions": [
       "District 5"
@@ -142,6 +136,6 @@
       "https://www.stocktonca.gov/government/city_council/index.php",
       "https://www.stocktonca.gov/government/city_council/district_5.php"
     ],
-    "updated_at": "2025-07-17T17:38:58Z"
+    "updated_at": "2025-07-17T18:13:53Z"
   }
 ]
