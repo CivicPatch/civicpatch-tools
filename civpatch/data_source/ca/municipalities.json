@@ -164,7 +164,14 @@
       ],
       "population": 346824,
       "website": "https://www.anaheim.net",
-      "fips": "0602000"
+      "fips": "0602000",
+      "meta_updated_at": "2025-07-17T17:22:50Z",
+      "meta_hash": "265cadec635719abbf937c952d454c52",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Stockton",
