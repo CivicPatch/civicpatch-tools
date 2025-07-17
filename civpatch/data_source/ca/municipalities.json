@@ -632,7 +632,14 @@
       ],
       "population": 155805,
       "website": "https://sunnyvale.ca.gov",
-      "fips": "0677000"
+      "fips": "0677000",
+      "meta_updated_at": "2025-07-17T19:18:53Z",
+      "meta_hash": "a894484fdccd5a04735e085d11a8166f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Pomona",
