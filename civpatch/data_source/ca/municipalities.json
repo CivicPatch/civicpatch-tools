@@ -346,7 +346,14 @@
       ],
       "population": 196543,
       "website": "https://glendaleca.gov",
-      "fips": "0630000"
+      "fips": "0630000",
+      "meta_updated_at": "2025-07-17T17:29:06Z",
+      "meta_hash": "986cdbfb78ba9143681814bc7c932006",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Santa Rosa",
