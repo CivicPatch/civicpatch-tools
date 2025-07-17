@@ -1,0 +1,120 @@
+---
+- name: George K. Chen
+  roles:
+  - Mayor
+  divisions:
+  - District 2
+  image: https://www.torranceca.gov/home/showpublishedimage/8066/637087768050400000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/torrance/images/81afd2c0af68e483f79357872af47cdbe31769598b3a954b4e707d589645c5a1.jpg
+  email: GChen@TorranceCA.Gov
+  phone_number: "(310) 618-2801"
+  website: https://www.torranceca.gov/government/city-council-and-elected-officials/chen
+  start_date: '2022-06-07'
+  end_date:
+  sources:
+  - https://www.torranceca.gov/our-city/elected-officials
+  - https://www.torranceca.gov/government/city-council-and-elected-officials/chen
+  updated_at: '2025-07-17T19:21:55Z'
+- name: Aurelio Mattucci
+  roles:
+  - Mayor Pro Tempore
+  - Chair
+  - Council Member
+  divisions:
+  - District 5
+  image: https://www.torranceca.gov/home/showpublishedimage/8068/637087767743170000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/torrance/images/8b1ca7ebe6bae92ea3ea1c86662bc94acf0c9c738ca0e2f08626488bbb78dc0c.png
+  email: AMattucci@TorranceCA.Gov
+  phone_number: "(310) 618-2801"
+  website: https://www.torranceca.gov/government/city-council-and-elected-officials/aurelio-mattucci-councilmember
+  start_date: '2022-06-07'
+  end_date:
+  sources:
+  - https://www.torranceca.gov/our-city/elected-officials
+  - https://www.torranceca.gov/government/city-council-and-elected-officials/aurelio-mattucci-councilmember
+  updated_at: '2025-07-17T19:21:55Z'
+- name: Jon Kaji
+  roles:
+  - Chair
+  - Council Member
+  divisions:
+  - District 1
+  image: https://www.torranceca.gov/home/showpublishedimage/17169/637984217092170000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/torrance/images/194f3e2fbedb6f9f6032444adfb78140f13c55cd4ba395cac851d6d8a300ac5e.jpg
+  email: JKaji@TorranceCA.Gov
+  phone_number: "(310) 618-2801"
+  website: https://www.torranceca.gov/government/city-council-and-elected-officials/kaji
+  start_date: '2022-06-07'
+  end_date:
+  sources:
+  - https://www.torranceca.gov/our-city/elected-officials
+  - https://www.torranceca.gov/government/city-council-and-elected-officials/kaji
+  updated_at: '2025-07-17T19:21:55Z'
+- name: Bridgett Lewis
+  roles:
+  - Chair
+  - Council Member
+  divisions:
+  - District 2
+  image: https://www.torranceca.gov/home/showpublishedimage/17171/637984217100600000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/torrance/images/86e28c575bc559b554d247c64c15b2b716dfde7ddc996f7f3934ee4251d9c1d3.png
+  email: BLewis@TorranceCA.Gov
+  phone_number: "(310) 781-7668"
+  website: https://www.torranceca.gov/government/city-council-and-elected-officials/lewis
+  start_date: '2024-03-05'
+  end_date:
+  sources:
+  - https://www.torranceca.gov/our-city/elected-officials
+  - https://www.torranceca.gov/government/city-council-and-elected-officials/lewis
+  updated_at: '2025-07-17T19:21:55Z'
+- name: Asam Sheikh
+  roles:
+  - Chair
+  - Council Member
+  divisions:
+  - District 3
+  image: https://www.torranceca.gov/home/showpublishedimage/21664/638533785547970000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/torrance/images/7e9a77f5e187b740a2b3e5462a69cc7f4b572553f6aefc8e001c16b354f3a1dc.jpg
+  email: ASheikh@TorranceCA.Gov
+  phone_number: "(310) 618-2801"
+  website: https://www.torranceca.gov/government/city-council-and-elected-officials/sheikh
+  start_date: '2022-06-07'
+  end_date:
+  sources:
+  - https://www.torranceca.gov/our-city/elected-officials
+  - https://www.torranceca.gov/government/city-council-and-elected-officials/sheikh
+  updated_at: '2025-07-17T19:21:55Z'
+- name: Sharon Kalani
+  roles:
+  - Chair
+  - Council Member
+  divisions:
+  - District 4
+  image: https://www.torranceca.gov/home/showpublishedimage/13180/637305200693530000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/torrance/images/d433ed79d5aacef741ca2b6e8afdf45be24927b594436264b2a81c2a965abc42.jpg
+  email: SKalani@TorranceCA.Gov
+  phone_number: "(310) 618-2801"
+  website: https://www.torranceca.gov/government/city-council-and-elected-officials/sharon-kalani
+  start_date: '2024-03-05'
+  end_date:
+  sources:
+  - https://www.torranceca.gov/our-city/elected-officials
+  - https://www.torranceca.gov/government/city-council-and-elected-officials/sharon-kalani
+  updated_at: '2025-07-17T19:21:55Z'
+- name: Dr. Jeremy Gerson
+  roles:
+  - Chair
+  - Council Member
+  divisions:
+  - District 6
+  image: https://www.torranceca.gov/home/showpublishedimage/20316/638481880454930000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/torrance/images/74622ed6c14e5cab03d22f150d9423ab73d9633a00dd75d663474bdefb849d8e.jpg
+  email: JGerson@TorranceCA.Gov
+  phone_number: "(310) 618-2801"
+  website: https://www.torranceca.gov/government/city-council-and-elected-officials/gerson
+  start_date: '2024-03-05'
+  end_date:
+  sources:
+  - https://www.torranceca.gov/our-city/elected-officials
+  - https://www.torranceca.gov/government/city-council-and-elected-officials/gerson
+  updated_at: '2025-07-17T19:21:55Z'

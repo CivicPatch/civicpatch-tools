@@ -1,0 +1,93 @@
+[
+  {
+    "name": "George K. Chen",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-17T19:17:07Z"
+  },
+  {
+    "name": "Jon Kaji",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District #1"
+    ],
+    "updated_at": "2025-07-17T19:17:07Z"
+  },
+  {
+    "name": "Bridgett Lewis",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District #2"
+    ],
+    "updated_at": "2025-07-17T19:17:07Z"
+  },
+  {
+    "name": "Asam Sheikh",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District #3"
+    ],
+    "updated_at": "2025-07-17T19:17:07Z"
+  },
+  {
+    "name": "Sharon Kalani",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District #4"
+    ],
+    "updated_at": "2025-07-17T19:17:07Z"
+  },
+  {
+    "name": "Aurelio Mattucci",
+    "roles": [
+      "Mayor Pro Tem",
+      "Council Member"
+    ],
+    "divisions": [
+      "District #5"
+    ],
+    "updated_at": "2025-07-17T19:17:07Z"
+  },
+  {
+    "name": "Dr. Jeremy Gerson",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District #6"
+    ],
+    "updated_at": "2025-07-17T19:17:07Z"
+  },
+  {
+    "name": "Rebecca Poirier",
+    "roles": [
+      "City Clerk"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-17T19:17:07Z"
+  },
+  {
+    "name": "Tim Goodrich",
+    "roles": [
+      "City Treasurer"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-17T19:17:07Z"
+  }
+]

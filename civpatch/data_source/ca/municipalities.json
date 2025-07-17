@@ -690,7 +690,14 @@
       ],
       "population": 147067,
       "website": "https://www.torranceca.gov",
-      "fips": "0680000"
+      "fips": "0680000",
+      "meta_updated_at": "2025-07-17T19:21:55Z",
+      "meta_hash": "8b6afcc9ad25ecc594be8ab4411e4c9f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fullerton",

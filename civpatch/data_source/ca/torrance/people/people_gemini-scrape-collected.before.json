@@ -1,0 +1,710 @@
+[
+  {
+    "name": "George K. Chen",
+    "sources": [
+      "https://www.torranceca.gov/our-city/elected-officials",
+      "https://www.torranceca.gov/government/city-council-and-elected-officials/chen"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'George K. Chen, Mayor' and 'garnered the mayoral seat'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that the Mayor is elected At-Large."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that he was elected to represent District 2."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(310) 618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "(310) 618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/chen"
+      }
+    ],
+    "emails": [
+      {
+        "data": "GChen@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "GChen@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/chen"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/chen",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/chen",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the direct URL for his profile page within the city's website, which serves as his primary online presence.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/chen"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-06-07",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'He garnered the mayoral seat on June 7, 2022'.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/chen"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:21:51Z"
+  },
+  {
+    "name": "Jon Kaji",
+    "sources": [
+      "https://www.torranceca.gov/our-city/elected-officials",
+      "https://www.torranceca.gov/government/city-council-and-elected-officials/kaji"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as his primary role."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair for the Finance and Governmental Operations Committee', and 'Chair' is a target role."
+      },
+      {
+        "data": "Chair for the Finance and Governmental Operations Committee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair for the Finance and Governmental Operations Committee', and 'Chair' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District #1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name and role."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as the district he represents."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(310) 618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "(310) 618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided on his profile page, clearly associated with him.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/kaji"
+      }
+    ],
+    "emails": [
+      {
+        "data": "JKaji@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "JKaji@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided on his profile page.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/kaji"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/kaji",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/kaji",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is his dedicated profile page.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/kaji"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-06-07",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as the date he was elected to City Council.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/kaji"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:21:51Z"
+  },
+  {
+    "name": "Bridgett Lewis",
+    "sources": [
+      "https://www.torranceca.gov/our-city/elected-officials",
+      "https://www.torranceca.gov/government/city-council-and-elected-officials/lewis"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair of the Torrance Strategic Plan Committee'."
+      },
+      {
+        "data": "Chair of the Torrance Strategic Plan Committee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair of the Torrance Strategic Plan Committee'."
+      },
+      {
+        "data": "member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'member of the Transportation and Community Planning and Design Committees'."
+      },
+      {
+        "data": "member of the Transportation and Community Planning and Design Committees",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'member of the Transportation and Community Planning and Design Committees'."
+      },
+      {
+        "data": "member of the SCAG Transportation Committee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'SCAG (Southern California Association of Governments) appointment to the Transportation Committee'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District #2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name and role."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Torrance District 2'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(310)781-7668",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "(310) 781-7668",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/lewis"
+      }
+    ],
+    "emails": [
+      {
+        "data": "BLewis@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "BLewis@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/lewis"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/lewis",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/lewis",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly associated with Bridgett Lewis's profile.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/lewis"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-03-05",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The most recent date for securing her position is March 5, 2024.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/lewis"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:21:51Z"
+  },
+  {
+    "name": "Asam Sheikh",
+    "sources": [
+      "https://www.torranceca.gov/our-city/elected-officials",
+      "https://www.torranceca.gov/government/city-council-and-elected-officials/sheikh"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and matches a target role."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Identified as 'Chair of the Strategic Plan Committee', 'Chair' is a target role."
+      },
+      {
+        "data": "Chair of the Strategic Plan Committee",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as a specific committee role within the city council structure."
+      },
+      {
+        "data": "Member of the Employee Relations and Public Safety Committee",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Explicitly stated as a specific committee role for a council member, although 'member' is not a base target role, it's a specific function of his council position."
+      },
+      {
+        "data": "Member of the Finance and Governmental Operations Committee",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Explicitly stated as a specific committee role for a council member, although 'member' is not a base target role, it's a specific function of his council position."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District #3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name and role."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as representing District 3."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(310)618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "(310) 618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is directly provided in the text.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/sheikh"
+      }
+    ],
+    "emails": [
+      {
+        "data": "ASheikh@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "ASheikh@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is directly provided in the text.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/sheikh"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/sheikh",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/sheikh",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the official profile page for Asam Sheikh.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/sheikh"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-06-07",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected... on June 7, 2022'.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/sheikh"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:21:51Z"
+  },
+  {
+    "name": "Sharon Kalani",
+    "sources": [
+      "https://www.torranceca.gov/our-city/elected-officials",
+      "https://www.torranceca.gov/government/city-council-and-elected-officials/sharon-kalani"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember'."
+      },
+      {
+        "data": "chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair of the Employee Relation and Public Safety Committee'."
+      },
+      {
+        "data": "Chair of the Employee Relation and Public Safety Committee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair of the Employee Relation and Public Safety Committee'."
+      },
+      {
+        "data": "board member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'member of the Armed Forces Day Ad Hoc' and other committees, which are typically boards or committees."
+      },
+      {
+        "data": "member of the Armed Forces Day Ad Hoc",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'member of the Armed Forces Day Ad Hoc'."
+      },
+      {
+        "data": "member of the Finance and Governmental Operations Committee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'member of the Finance and Governmental Operations' (Committee inferred)."
+      },
+      {
+        "data": "member of the Transportation Committees",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'member of the Transportation Committees'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District #4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name and role."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 4 Torrance City Councilmember'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(310) 618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "(310) 618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/sharon-kalani"
+      }
+    ],
+    "emails": [
+      {
+        "data": "SKalani@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "SKalani@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/sharon-kalani"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/sharon-kalani",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/sharon-kalani",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the direct profile page for Sharon Kalani.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/sharon-kalani"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-03-05",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected again to serve her second term on March 5, 2024'.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/sharon-kalani"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:21:51Z"
+  },
+  {
+    "name": "Aurelio Mattucci",
+    "sources": [
+      "https://www.torranceca.gov/our-city/elected-officials",
+      "https://www.torranceca.gov/government/city-council-and-elected-officials/aurelio-mattucci-councilmember"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and matches target role 'council member'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair of the Transportation Committee' and 'Chair' is a target role."
+      },
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Chair of the Social Services Commission' and 'Vice Chair' is a target role."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Board Member of the Torrance Rose Float Association' and 'Board Member' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District #5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name and role."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'City Council District 5'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(310) 618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "(310) 618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/aurelio-mattucci-councilmember"
+      }
+    ],
+    "emails": [
+      {
+        "data": "AMattucci@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "AMattucci@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/aurelio-mattucci-councilmember"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/aurelio-mattucci-councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/aurelio-mattucci-councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL for the person is provided at the top of the section.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/aurelio-mattucci-councilmember"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-06-07",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The most recent election date for his current role in District 5 is explicitly stated as 'June 7, 2022'.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/aurelio-mattucci-councilmember"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:21:51Z"
+  },
+  {
+    "name": "Jeremy Gerson",
+    "sources": [
+      "https://www.torranceca.gov/our-city/elected-officials",
+      "https://www.torranceca.gov/government/city-council-and-elected-officials/gerson"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated and matches a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated role."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair for the Community Planning and Design Committee', 'Chair' is a target role."
+      },
+      {
+        "data": "Chair for the Community Planning and Design Committee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair for the Community Planning and Design Committee', which is a specific role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District #6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated next to the name and role."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as the district he represents."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(310) 618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "(310) 618-2801",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/gerson"
+      }
+    ],
+    "emails": [
+      {
+        "data": "JGerson@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "JGerson@TorranceCA.Gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/gerson"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/gerson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Profile link is explicitly provided next to the name.",
+        "source": "https://www.torranceca.gov/our-city/elected-officials"
+      },
+      {
+        "data": "https://www.torranceca.gov/government/city-council-and-elected-officials/gerson",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the specific profile page for Dr. Jeremy Gerson.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/gerson"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-03-05",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected...on March 5, 2024'.",
+        "source": "https://www.torranceca.gov/government/city-council-and-elected-officials/gerson"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:21:51Z"
+  }
+]
