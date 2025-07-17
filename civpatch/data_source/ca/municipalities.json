@@ -408,7 +408,14 @@
       ],
       "population": 174068,
       "website": "https://www.ci.oceanside.ca.us",
-      "fips": "0653322"
+      "fips": "0653322",
+      "meta_updated_at": "2025-07-17T17:34:52Z",
+      "meta_hash": "4f17b43d1f5bd5ec7aa13b073303b704",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Lancaster",
