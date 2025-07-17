@@ -7,8 +7,8 @@
     "images": [
       {
         "data": "https://insidesb.sanbernardino.gov/ImageRepository/Document?documentID=2795",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image of Helen Tran is directly associated with her name and role as Mayor.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Image is a portrait near the name Helen Tran on the Mayor's Office page.",
         "source": "https://insidesb.sanbernardino.gov/737/Mayors-Office"
       }
     ],
@@ -24,7 +24,7 @@
       {
         "data": "909-384-5133",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number listed directly under Helen Tran's contact information.",
+        "llm_confidence_reason": "Phone number labeled 'Phone' directly under Helen Tran's contact info.",
         "source": "https://insidesb.sanbernardino.gov/737/Mayors-Office"
       }
     ],
@@ -32,7 +32,7 @@
       {
         "data": "Mayor@SBCity.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly linked to Helen Tran as Mayor.",
+        "llm_confidence_reason": "Email link text 'Email Helen Tran' with mailto:Mayor@SBCity.org.",
         "source": "https://insidesb.sanbernardino.gov/737/Mayors-Office"
       }
     ],
@@ -41,7 +41,7 @@
       {
         "data": "2022",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Text states Helen Tran was elected in 2022 and is serving a four-year term.",
+        "llm_confidence_reason": "Text states Helen Tran was elected in 2022 for a four-year term.",
         "source": "https://insidesb.sanbernardino.gov/737/Mayors-Office"
       }
     ],
@@ -53,7 +53,7 @@
         "source": "https://insidesb.sanbernardino.gov/737/Mayors-Office"
       }
     ],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Theodore Sanchez",
@@ -71,20 +71,20 @@
       {
         "data": "https://www.sanbernardino.gov/ImageRepository/Document?documentID=2508",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image is a portrait near the name Theodore Sanchez with alt text matching the name.",
+        "llm_confidence_reason": "Image URL is directly associated with Theodore Sanchez's name and profile.",
         "source": "https://www.sanbernardino.gov/directory.aspx?eid=96"
       }
     ],
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as 'First Ward Member' under City Council members, indicating a council member role."
       },
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The page states Theodore Sanchez is 'First Ward Member' of the City Council, which corresponds to a Council Member role."
+        "llm_confidence_reason": "The page states Theodore Sanchez is 'First Ward Member' of the City Council, which corresponds to a Council Member role representing a ward."
       }
     ],
     "divisions": [
@@ -96,14 +96,14 @@
       {
         "data": "First Ward",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'First Ward Member' on the page."
+        "llm_confidence_reason": "Explicitly stated as 'First Ward Member' in the title."
       }
     ],
     "phone_numbers": [
       {
         "data": "909-384-5188",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number labeled 'Phone' directly under Theodore Sanchez's contact info.",
+        "llm_confidence_reason": "Phone number is listed under 'Council Office' near Theodore Sanchez's name.",
         "source": "https://www.sanbernardino.gov/directory.aspx?eid=96"
       }
     ],
@@ -118,20 +118,20 @@
       {
         "data": "https://www.sanbernardino.gov/Directory.aspx?DID=41",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link labeled 'Council Office' near Theodore Sanchez's name likely leads to his official profile page.",
+        "llm_confidence_reason": "Link labeled 'Council Office' near Theodore Sanchez's profile likely leads to his official council page.",
         "source": "https://www.sanbernardino.gov/directory.aspx?eid=96"
       }
     ],
     "start_dates": [
       {
         "data": "2018-11",
-        "llm_confidence": 1.0,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Text states he was elected to City Council in November 2018.",
         "source": "https://www.sanbernardino.gov/directory.aspx?eid=96"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Sandra Ibarra",
@@ -149,14 +149,14 @@
       {
         "data": "https://www.sanbernardino.gov/ImageRepository/Document?documentID=2507",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Image URL is directly next to the name Sandra Ibarra with alt text 'Sandra Ibarra'.",
+        "llm_confidence_reason": "Image URL is directly next to the name Sandra Ibarra with alt text matching her name.",
         "source": "https://www.sanbernardino.gov/directory.aspx?eid=97"
       }
     ],
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as 'Second Ward Member' under City Council members, indicating a council member role."
       },
       {
@@ -181,7 +181,7 @@
       {
         "data": "909-384-5188",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is listed under 'Council Office' near Sandra Ibarra's name.",
+        "llm_confidence_reason": "Phone number is listed under 'Council Office' near her name and role.",
         "source": "https://www.sanbernardino.gov/directory.aspx?eid=97"
       }
     ],
@@ -196,7 +196,7 @@
       {
         "data": "https://www.sanbernardino.gov/Directory.aspx?DID=41",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "The 'Council Office' link near the contact info likely leads to her official profile page.",
+        "llm_confidence_reason": "The 'Council Office' link near her contact info likely leads to her official profile page.",
         "source": "https://www.sanbernardino.gov/directory.aspx?eid=97"
       }
     ],
@@ -209,7 +209,7 @@
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Juan Figueroa",
@@ -240,7 +240,7 @@
       {
         "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Also a Third Ward Member, indicating council membership."
+        "llm_confidence_reason": "Also identified as 'Third Ward Member', indicating council membership."
       },
       {
         "data": "Mayor Pro Tem",
@@ -290,7 +290,7 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Fred Shorett",
@@ -315,13 +315,13 @@
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as 'Fourth Ward Member' under City Council members, indicating a council member role."
       },
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "The text states Fred Shorett is a 'Fourth Ward Member' of the City Council, which corresponds to a Council Member role."
+        "llm_confidence_reason": "The text states he was elected to represent the 4th Ward on the City Council, which corresponds to a Council Member role."
       }
     ],
     "divisions": [
@@ -331,9 +331,9 @@
         "llm_confidence_reason": "Explicitly stated as 'Fourth Ward Member'."
       },
       {
-        "data": "Fourth Ward",
+        "data": "4th Ward",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Fourth Ward Member' in the text."
+        "llm_confidence_reason": "Explicitly mentioned as 'Fourth Ward Member' and representing the 4th Ward."
       }
     ],
     "phone_numbers": [
@@ -362,13 +362,13 @@
     "start_dates": [
       {
         "data": "2009-03",
-        "llm_confidence": 0.95,
+        "llm_confidence": 0.9,
         "llm_confidence_reason": "Elected in a Special Election in March 2009 as stated in the biography.",
         "source": "https://www.sanbernardino.gov/directory.aspx?eid=99"
       }
     ],
     "end_dates": [],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Kimberly Knaus",
@@ -393,7 +393,7 @@
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as 'Fifth Ward Member' under City Council members, indicating a council member role."
       },
       {
@@ -418,7 +418,7 @@
       {
         "data": "909-384-5188",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number explicitly listed under Kimberly Knaus's contact info.",
+        "llm_confidence_reason": "Phone number listed directly under Kimberly Knaus's contact info.",
         "source": "https://www.sanbernardino.gov/directory.aspx?eid=100"
       }
     ],
@@ -433,7 +433,7 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Mario Flores",
@@ -458,13 +458,13 @@
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as 'Sixth Ward Member' under City Council members, indicating a council member role."
       },
       {
         "data": "Council Member",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Title given as 'Sixth Ward Member' which corresponds to a council member representing a ward."
+        "llm_confidence_reason": "Title given as 'Sixth Ward Member' which corresponds to a council member representing the Sixth Ward."
       }
     ],
     "divisions": [
@@ -475,15 +475,15 @@
       },
       {
         "data": "Ward 6",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "Role title specifies 'Sixth Ward Member' indicating representation of Ward 6."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Sixth Ward Member', indicating representation of Ward 6."
       }
     ],
     "phone_numbers": [
       {
         "data": "909-384-5188",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is listed directly under Mario Flores' contact information.",
+        "llm_confidence_reason": "Phone number explicitly listed under Mario Flores' contact information.",
         "source": "https://www.sanbernardino.gov/directory.aspx?eid=101"
       }
     ],
@@ -498,13 +498,13 @@
       {
         "data": "https://www.sanbernardino.gov/Directory.aspx?DID=41",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Link labeled 'Council Office' likely leads to Mario Flores' official council profile page.",
+        "llm_confidence_reason": "Link labeled 'Council Office' likely leads to Mario Flores' official council webpage.",
         "source": "https://www.sanbernardino.gov/directory.aspx?eid=101"
       }
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Treasure Ortiz",
@@ -529,7 +529,7 @@
     "roles": [
       {
         "data": "Council Member",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Listed as 'Seventh Ward Member' under City Council members, indicating a council member role."
       },
       {
@@ -569,6 +569,6 @@
     ],
     "start_dates": [],
     "end_dates": [],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   }
 ]

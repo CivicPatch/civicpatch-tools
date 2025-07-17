@@ -4,8 +4,10 @@
     "roles": [
       "Mayor"
     ],
-    "divisions": [],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
     "name": "Theodore Sanchez",
@@ -13,9 +15,9 @@
       "Council Member"
     ],
     "divisions": [
-      "Ward First"
+      "Ward 1"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
     "name": "Sandra Ibarra",
@@ -23,59 +25,59 @@
       "Council Member"
     ],
     "divisions": [
-      "Ward Second"
+      "Ward 2"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
     "name": "Juan Figueroa",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward 3"
+    ],
+    "updated_at": "2025-07-17T17:53:41Z"
+  },
+  {
+    "name": "Fred Shorett",
     "roles": [
       "Council Member",
       "Mayor Pro Tempore"
     ],
     "divisions": [
-      "Ward Third"
+      "Ward 4"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
-    "name": "Fred Shorett",
+    "name": "Ben Reynoso",
     "roles": [
       "Council Member"
     ],
     "divisions": [
-      "Ward Fourth"
+      "Ward 5"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
-    "name": "Kimberly Knaus",
+    "name": "Kimberly Calvin",
     "roles": [
       "Council Member"
     ],
     "divisions": [
-      "Ward Fifth"
+      "Ward 6"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
-    "name": "Mario Flores",
+    "name": "Damon L. Alexander",
     "roles": [
       "Council Member"
     ],
     "divisions": [
-      "Ward Sixth"
+      "Ward 7"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
-  },
-  {
-    "name": "Dr. Treasure Ortiz",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
-      "Ward Seventh"
-    ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   }
 ]

@@ -14,7 +14,7 @@
     "sources": [
       "https://insidesb.sanbernardino.gov/737/Mayors-Office"
     ],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Theodore Sanchez",
@@ -34,7 +34,7 @@
       "https://www.sanbernardino.gov/694/City-Council",
       "https://www.sanbernardino.gov/directory.aspx?eid=96"
     ],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Sandra Ibarra",
@@ -54,7 +54,7 @@
       "https://www.sanbernardino.gov/694/City-Council",
       "https://www.sanbernardino.gov/directory.aspx?eid=97"
     ],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Juan Figueroa",
@@ -75,7 +75,7 @@
       "https://www.sanbernardino.gov/694/City-Council",
       "https://www.sanbernardino.gov/directory.aspx?eid=98"
     ],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Fred Shorett",
@@ -83,7 +83,8 @@
       "Council Member"
     ],
     "divisions": [
-      "Fourth Ward"
+      "Fourth Ward",
+      "4th Ward"
     ],
     "image": "https://www.sanbernardino.gov/ImageRepository/Document?documentID=2504",
     "phone_number": "909-384-5188",
@@ -95,7 +96,7 @@
       "https://www.sanbernardino.gov/694/City-Council",
       "https://www.sanbernardino.gov/directory.aspx?eid=99"
     ],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Kimberly Knaus",
@@ -115,7 +116,7 @@
       "https://www.sanbernardino.gov/694/City-Council",
       "https://www.sanbernardino.gov/directory.aspx?eid=100"
     ],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Mario Flores",
@@ -136,7 +137,7 @@
       "https://www.sanbernardino.gov/694/City-Council",
       "https://www.sanbernardino.gov/directory.aspx?eid=101"
     ],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   },
   {
     "name": "Treasure Ortiz",
@@ -156,6 +157,6 @@
       "https://www.sanbernardino.gov/694/City-Council",
       "https://www.sanbernardino.gov/directory.aspx?eid=102"
     ],
-    "updated_at": "2025-07-17T17:19:32Z"
+    "updated_at": "2025-07-17T17:57:25Z"
   }
 ]

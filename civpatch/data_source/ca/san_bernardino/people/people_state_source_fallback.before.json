@@ -4,8 +4,10 @@
     "roles": [
       "Mayor"
     ],
-    "divisions": null,
-    "updated_at": "2025-07-17T17:16:43Z"
+    "divisions": [
+      "null"
+    ],
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
     "name": "Theodore Sanchez",
@@ -15,7 +17,7 @@
     "divisions": [
       "First Ward"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
     "name": "Sandra Ibarra",
@@ -25,57 +27,57 @@
     "divisions": [
       "Second Ward"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
     "name": "Juan Figueroa",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Third Ward"
+    ],
+    "updated_at": "2025-07-17T17:53:41Z"
+  },
+  {
+    "name": "Fred Shorett",
     "roles": [
       "Council Member",
       "Mayor Pro Tem"
     ],
     "divisions": [
-      "Third Ward"
-    ],
-    "updated_at": "2025-07-17T17:16:43Z"
-  },
-  {
-    "name": "Fred Shorett",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
       "Fourth Ward"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
-    "name": "Kimberly Knaus",
+    "name": "Ben Reynoso",
     "roles": [
       "Council Member"
     ],
     "divisions": [
       "Fifth Ward"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
-    "name": "Mario Flores",
+    "name": "Kimberly Calvin",
     "roles": [
       "Council Member"
     ],
     "divisions": [
       "Sixth Ward"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   },
   {
-    "name": "Dr. Treasure Ortiz",
+    "name": "Damon L. Alexander",
     "roles": [
       "Council Member"
     ],
     "divisions": [
       "Seventh Ward"
     ],
-    "updated_at": "2025-07-17T17:16:43Z"
+    "updated_at": "2025-07-17T17:53:41Z"
   }
 ]
