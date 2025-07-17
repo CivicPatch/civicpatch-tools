@@ -405,7 +405,14 @@
       ],
       "population": 198711,
       "website": "https://www.huntingtonbeachca.gov",
-      "fips": "0636000"
+      "fips": "0636000",
+      "meta_updated_at": "2025-07-17T18:46:16Z",
+      "meta_hash": "e551ba4269b0287ec2392c7d7caaf9a6",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Glendale",
