@@ -297,7 +297,14 @@
       ],
       "population": 228673,
       "website": "https://santaclarita.gov",
-      "fips": "0669088"
+      "fips": "0669088",
+      "meta_updated_at": "2025-07-17T17:22:01Z",
+      "meta_hash": "12d2b4144637b731ce03972e6014afd1",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "San Bernardino",
