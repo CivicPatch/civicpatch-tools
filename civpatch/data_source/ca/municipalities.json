@@ -9,7 +9,14 @@
       ],
       "population": 3898747,
       "website": "https://lacity.gov",
-      "fips": "0644000"
+      "fips": "0644000",
+      "meta_updated_at": "2025-07-17T03:10:23Z",
+      "meta_hash": "1385b2dc9f725b0728214528092e68f4",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "San Diego",
