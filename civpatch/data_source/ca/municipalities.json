@@ -327,7 +327,14 @@
       ],
       "population": 208393,
       "website": "https://www.fontanaca.gov",
-      "fips": "0624680"
+      "fips": "0624680",
+      "meta_updated_at": "2025-07-17T17:27:12Z",
+      "meta_hash": "1eb54a1b1ef49bcd772ddd1482f8ea14",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Oxnard",
