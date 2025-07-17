@@ -170,7 +170,14 @@
       ],
       "population": 275487,
       "website": "https://www.chulavistaca.gov",
-      "fips": "0613392"
+      "fips": "0613392",
+      "meta_updated_at": "2025-07-17T03:27:30Z",
+      "meta_hash": "afd2fe28877df79cf010ae41a8c5eaf9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fremont",
