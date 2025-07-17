@@ -134,9 +134,10 @@ module Services
       end
 
       def parse_response(response)
-        JSON.parse(response["candidates"].first["content"]["parts"].first["text"].gsub(/```json|```/, ""))
+        response_text = response["candidates"].first["content"]["parts"].first["text"]
+        JSON.parse(response_text.gsub(/```json|```/, ""))
       rescue JSON::ParserError => e
-        puts "Failed to parse JSON response from Gemini: #{e.message}"
+        puts "Failed to parse JSON response from Gemini: #{response_text}"
         nil
       end
     end

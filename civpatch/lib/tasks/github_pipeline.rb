@@ -65,14 +65,75 @@ namespace :github_pipeline do
     merged_people = Core::PeopleManager.get_people(state, geoid)
     comparison = Resolvers::PeopleResolver.compare_people_across_sources(context)
 
+    missing_divisions = missing_divisions(merged_people)
+
+    fail_reasons = []
+
+    score = comparison[:agreement_score]
+
+    if score < 70
+      fail_reasons << "Expected: agreement score >= 70, Found: #{score}"
+    end
+    if merged_people.length < 5
+      fail_reasons << "Expected: >= 5 people, Found: #{merged_people.length}"
+    end
+    if missing_divisions.length > 0
+      fail_reasons << "Found missing divisions: #{missing_divisions.join('\n')}" 
+    end
+    if comparison[:missing_people].length > 0
+      missing_people_names = comparison[:missing_people].map { |name, _sources| name }.join(", ")
+      
+      fail_reasons << "Found missing people: #{missing_people_names}"
+    end
+
     comment = GitHub::MunicipalityOfficials.review_comment(merged_people,
                                                            comparison[:contested_people],
                                                            comparison[:missing_people],
-                                                           comparison[:agreement_score])
+                                                           comparison[:agreement_score],
+                                                           fail_reasons)
+
+    people_count = merged_people.length
+
+    should_approve = fail_reasons.empty?
+
     review = {
       "score" => comparison[:agreement_score],
+      "should_approve" => should_approve,
       "comment" => comment.gsub(/\n/, '\n')
     }
     puts JSON.generate(review)
   end
+end
+
+def self.missing_divisions(people)
+  divisions = {} # { "district": { numbers: { 1: 1, 2: 2 } } }
+
+  people.each do |person|
+    puts person
+    next if person["divisions"].nil? || person["divisions"].empty?
+    person["divisions"].each do |division|
+      parts = division.split(" ")
+      division_type = parts.first
+      division_number = parts.last
+
+      divisions[division_type] ||= { numbers: {} }
+      divisions[division_type][:numbers][division_number] ||= 0
+      divisions[division_type][:numbers][division_number] += 1
+    end
+  end
+
+  # Collect division type and division numbers that have a lower 
+  # # count than the other division numbers within the same division type.
+  # Ex: { "district", { numbers: { 1: 1, 2: 2 } } }}
+  missing = []
+  divisions.each do |division_type, division_data|
+    division_data[:numbers].each do |division_number, count|
+      expected_number = division_data[:numbers].values.max
+      if count < expected_number 
+        missing << "Expected: #{division_type} #{division_number} (#{expected_number}) division(s), Found: #{division_type} #{division_number} (#{count}) divisions"
+      end
+    end
+  end
+
+  missing
 end

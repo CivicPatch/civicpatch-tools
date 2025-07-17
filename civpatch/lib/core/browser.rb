@@ -57,13 +57,16 @@ module Core
           })
         end
 
-        with_network_retry(url) do
-          return nil if IGNORE_EXTENSIONS.any? { |ext| url.end_with?(ext) }
+        # Use the updated URL returned by with_network_retry
+        updated_url = with_network_retry(url) do |current_url|
+          return nil if IGNORE_EXTENSIONS.any? { |ext| current_url.end_with?(ext) }
 
-          page.goto(url)
+          page.goto(current_url)
           content_type = page.evaluate("document.contentType")
           return nil unless html_page?(content_type)
         end
+
+        return nil if updated_url.nil? # Exit if retries failed
 
         # Explicitly wait for the desired duration while processing responses
         if options[:wait_for].present?
@@ -79,7 +82,7 @@ module Core
 
         api_content = api_data.join(";")
 
-        process_page(page, url, options, api_content)
+        process_page(page, updated_url, options, api_content)
       end
 
     rescue StandardError => e
@@ -89,22 +92,46 @@ module Core
 
     private_class_method def self.with_network_retry(url)
       retry_attempts = 0
+      fallback_to_http = false
 
       begin
-        yield
+        # Modify the URL to use http if fallback is enabled
+        url = url.sub(/^https:/, "http:") if fallback_to_http
+
+        yield(url) # Pass the updated URL to the block
+
+      rescue Playwright::Error => e
+        # Handle Playwright-specific errors and enable fallback to http
+        if !fallback_to_http
+          puts "Playwright error with https: #{e.message}, attempting http fallback..."
+          fallback_to_http = true # Enable fallback to http
+          retry
+        else
+          puts "Playwright error with http: #{e.message}, no further fallback possible."
+          nil
+        end
+
       rescue StandardError => e
+        # Retry logic only for StandardError (non-Playwright errors)
         if retry_attempts < MAX_RETRIES
           sleep_time = BASE_SLEEP**retry_attempts + rand(0..1)
-          puts "Error trying to fetch page: #{e.message}"
-          puts "Retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
+          puts "Standard error encountered: #{e.message}, retrying in #{sleep_time} seconds... (Attempt ##{retry_attempts + 1})"
           sleep sleep_time
           retry_attempts += 1
           retry
         else
-          puts "Too many requests. Max retries reached for #{url}."
+          puts "Too many retries. Max retries reached for #{url}."
           nil
         end
+
+      rescue => e
+        # Catch-all for unexpected errors
+        puts "Unexpected error encountered: #{e.class} - #{e.message}"
+        puts e.backtrace.join("\n")
+        nil
       end
+
+      url # Return the updated URL
     end
 
     private_class_method def self.process_page(page, url, options, api_data)
