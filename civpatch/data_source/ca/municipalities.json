@@ -589,7 +589,14 @@
       ],
       "population": 162954,
       "website": "https://www.hayward-ca.gov",
-      "fips": "0633000"
+      "fips": "0633000",
+      "meta_updated_at": "2025-07-17T18:51:53Z",
+      "meta_hash": "d9a42f042bb0d1a625d04e281490f4db",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Corona",
