@@ -1,13 +1,13 @@
 [
   {
-    "name": "Jerry P. Dyer",
+    "name": "Jerry Dyer",
     "roles": [
       "Mayor"
     ],
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-17T03:06:29Z"
+    "updated_at": "2025-07-17T17:13:28Z"
   },
   {
     "name": "Annalisa Perea",
@@ -18,7 +18,7 @@
     "divisions": [
       "District 1"
     ],
-    "updated_at": "2025-07-17T03:06:29Z"
+    "updated_at": "2025-07-17T17:13:28Z"
   },
   {
     "name": "Mike Karbassi",
@@ -29,7 +29,7 @@
     "divisions": [
       "District 2"
     ],
-    "updated_at": "2025-07-17T03:06:29Z"
+    "updated_at": "2025-07-17T17:13:28Z"
   },
   {
     "name": "Miguel Angel Arias",
@@ -39,7 +39,7 @@
     "divisions": [
       "District 3"
     ],
-    "updated_at": "2025-07-17T03:06:29Z"
+    "updated_at": "2025-07-17T17:13:28Z"
   },
   {
     "name": "Tyler Maxwell",
@@ -49,7 +49,7 @@
     "divisions": [
       "District 4"
     ],
-    "updated_at": "2025-07-17T03:06:29Z"
+    "updated_at": "2025-07-17T17:13:28Z"
   },
   {
     "name": "Brandon Vang",
@@ -59,7 +59,7 @@
     "divisions": [
       "District 5"
     ],
-    "updated_at": "2025-07-17T03:06:29Z"
+    "updated_at": "2025-07-17T17:13:28Z"
   },
   {
     "name": "Nick Richardson",
@@ -69,7 +69,7 @@
     "divisions": [
       "District 6"
     ],
-    "updated_at": "2025-07-17T03:06:29Z"
+    "updated_at": "2025-07-17T17:13:28Z"
   },
   {
     "name": "Nelson Esparza",
@@ -79,6 +79,6 @@
     "divisions": [
       "District 7"
     ],
-    "updated_at": "2025-07-17T03:06:29Z"
+    "updated_at": "2025-07-17T17:13:28Z"
   }
 ]

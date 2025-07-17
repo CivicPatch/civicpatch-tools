@@ -54,8 +54,8 @@
       "population": 542107,
       "website": "https://www.fresno.gov",
       "fips": "0627000[10]",
-      "meta_updated_at": "2025-07-17T03:07:44Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-17T17:18:50Z",
+      "meta_hash": "47d3d29b932310cfe303a50318819530",
       "meta_sources": [
         "state_source",
         "gemini",
