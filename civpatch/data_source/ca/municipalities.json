@@ -672,7 +672,14 @@
       ],
       "population": 147773,
       "website": "https://www.roseville.ca.us",
-      "fips": "0662938"
+      "fips": "0662938",
+      "meta_updated_at": "2025-07-17T18:57:17Z",
+      "meta_hash": "6724907227399eafe14c7fd6a21fb025",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Torrance",
