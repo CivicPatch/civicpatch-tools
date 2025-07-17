@@ -312,7 +312,14 @@
       ],
       "population": 218464,
       "website": "https://www.modestogov.com",
-      "fips": "0648354"
+      "fips": "0648354",
+      "meta_updated_at": "2025-07-17T17:22:22Z",
+      "meta_hash": "73ec1c50c75fea6bcf36a26aeb8eacff",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Moreno Valley",
