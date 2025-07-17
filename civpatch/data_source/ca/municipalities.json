@@ -31,7 +31,14 @@
       ],
       "population": 1013240,
       "website": "https://www.sanjoseca.gov",
-      "fips": "0668000"
+      "fips": "0668000",
+      "meta_updated_at": "2025-07-17T03:13:35Z",
+      "meta_hash": "5d6654e225344563b244ad86657125ae",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "San Francisco",
