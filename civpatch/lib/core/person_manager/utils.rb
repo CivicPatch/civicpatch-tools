@@ -72,6 +72,7 @@ module Core
       # when numbers go higher than 10
       def self.format_division_identifier(division_rest_string)
         number_words_in_english = %w[one two three four five six seven eight nine ten]
+        number_words_in_english_ordinal = %w[first second third fourth fifth sixth seventh eighth ninth tenth]
         number_words_in_roman = %w[i ii iii iv v vi vii viii ix x]
 
         division_identifier_to_find = division_rest_string&.downcase&.strip
@@ -95,6 +96,10 @@ module Core
         # Convert English or Roman numerals to numbers
         if number_words_in_english.include?(division_identifier_to_find)
           return (number_words_in_english.index(division_identifier_to_find) + 1).to_s
+        end
+
+        if number_words_in_english_ordinal.include?(division_identifier_to_find)
+          return (number_words_in_english_ordinal.index(division_identifier_to_find) + 1).to_s
         end
 
         if number_words_in_roman.include?(division_identifier_to_find)
