@@ -663,7 +663,14 @@
       ],
       "population": 141384,
       "website": "https://www.visalia.city",
-      "fips": "0682954"
+      "fips": "0682954",
+      "meta_updated_at": "2025-07-17T18:58:21Z",
+      "meta_hash": "9306bbc1650fab527a9c04b5de3f5a87",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Orange",
