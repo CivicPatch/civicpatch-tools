@@ -1,0 +1,81 @@
+[
+  {
+    "name": "Helen Tran",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-17T17:16:43Z"
+  },
+  {
+    "name": "Theodore Sanchez",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward First"
+    ],
+    "updated_at": "2025-07-17T17:16:43Z"
+  },
+  {
+    "name": "Sandra Ibarra",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward Second"
+    ],
+    "updated_at": "2025-07-17T17:16:43Z"
+  },
+  {
+    "name": "Juan Figueroa",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [
+      "Ward Third"
+    ],
+    "updated_at": "2025-07-17T17:16:43Z"
+  },
+  {
+    "name": "Fred Shorett",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward Fourth"
+    ],
+    "updated_at": "2025-07-17T17:16:43Z"
+  },
+  {
+    "name": "Kimberly Knaus",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward Fifth"
+    ],
+    "updated_at": "2025-07-17T17:16:43Z"
+  },
+  {
+    "name": "Mario Flores",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward Sixth"
+    ],
+    "updated_at": "2025-07-17T17:16:43Z"
+  },
+  {
+    "name": "Dr. Treasure Ortiz",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Ward Seventh"
+    ],
+    "updated_at": "2025-07-17T17:16:43Z"
+  }
+]
