@@ -42,7 +42,14 @@
       ],
       "population": 873965,
       "website": "https://sf.gov",
-      "fips": "0667000"
+      "fips": "0667000",
+      "meta_updated_at": "2025-07-17T03:13:30Z",
+      "meta_hash": "3babceb8d83059483f8d3b551d2f632b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fresno",
