@@ -141,7 +141,14 @@
       ],
       "population": 310227,
       "website": "https://www.santa-ana.org",
-      "fips": "0669000"
+      "fips": "0669000",
+      "meta_updated_at": "2025-07-17T03:26:32Z",
+      "meta_hash": "44baae410451ef2c3f70d5b0031f352e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Irvine",
