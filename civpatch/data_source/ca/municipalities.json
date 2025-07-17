@@ -553,7 +553,14 @@
       ],
       "population": 169450,
       "website": "https://www.cityofpalmdaleca.gov",
-      "fips": "0655156"
+      "fips": "0655156",
+      "meta_updated_at": "2025-07-17T18:51:29Z",
+      "meta_hash": "5d2b64c002072cc14255cba2fcdefa75",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Salinas",
