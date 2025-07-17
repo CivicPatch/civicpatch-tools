@@ -357,7 +357,14 @@
       ],
       "population": 178127,
       "website": "https://www.srcity.org",
-      "fips": "0670098"
+      "fips": "0670098",
+      "meta_updated_at": "2025-07-17T17:29:16Z",
+      "meta_hash": "bb1ec6fb8cc0194b0aa1947bee2d6a44",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Elk Grove",
