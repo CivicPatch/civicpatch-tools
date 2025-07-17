@@ -817,7 +817,14 @@
       ],
       "population": 126090,
       "website": "https://cityofvallejo.net",
-      "fips": "0681666"
+      "fips": "0681666",
+      "meta_updated_at": "2025-07-17T19:26:30Z",
+      "meta_hash": "f56e50d1579bcbd24d6ef6768f61d0ee",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Concord",
