@@ -29,6 +29,8 @@ module Services
       raise StandardError, response.message unless response.success?
 
       parsed_response = JSON.parse(response.body)
+
+      return [] unless parsed_response["items"]
       parsed_response["items"].map { |item| item["link"] }
     end
   end

@@ -96,12 +96,20 @@ module GitHub
       MARKDOWN
     end
 
-    def self.review_comment(merged_people, contested_people, missing_people, agreement_score)
+    def self.review_comment(merged_people, contested_people, missing_people, agreement_score, fail_reasons)
       missing_people_table = to_missing_people_table(missing_people)
       disagreement_table = to_disagreement_table(contested_people, merged_people)
       <<~MARKDOWN
         ## Agreement Score: #{agreement_score}
+
         ---
+
+        ### Issues
+
+        #{fail_reasons.map { |reason| "- #{reason}" }.join("\n")}
+
+        --- 
+
         ### Missing People
         #{missing_people_table || "N/A"}
         ### Disagreements
@@ -114,7 +122,7 @@ module GitHub
 
       headers = ["Name", "Missing From"]
       table = []
-      markdown = "### Missing People\n\n"
+      markdown = "\n\n"
 
       missing_people.each do |name, sources|
         table << [name, sources.join(", ")]

@@ -32,6 +32,8 @@ module Resolvers
         results = search_service.municipal_search(municipality_context, keyword_with_type, or_terms_list)
         Utils::CostsHelper.log_search_engine_call(municipality_context[:state],
                                                   municipality_context[:municipality_entry]["name"], search_engine_name)
+ 
+        raise StandardError, "No results found with #{search_engine_name}" if results.empty?
         puts "Search successful with #{search_engine_name}."
         return results # Return results immediately on success
       rescue StandardError => e
