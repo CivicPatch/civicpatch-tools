@@ -1,1 +1,1246 @@
-[]
+[
+  {
+    "name": "Christina Fugazi",
+    "sources": [
+      "https://www.stocktonca.gov/government/city_council/mayor.php",
+      "https://www.stocktonca.gov/government/city_council/index.php",
+      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_3.php",
+      "https://www.stocktonca.gov/government/city_council/district_4.php",
+      "https://www.stocktonca.gov/government/city_council/district_5.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content and normalized to base role."
+      },
+      {
+        "data": "Chair of the Budget Committee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text and matches target role."
+      },
+      {
+        "data": "mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Christina Fugazi', which is a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Christina Fugazi'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Christina Fugazi'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that the Mayor is elected at-large."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Mayor is typically an at-large position, and no specific district/ward is mentioned."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(209) 937-8499",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content.",
+        "source": "https://www.stocktonca.gov/government/city_council/mayor.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "MayorFugazi@stocktonca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content.",
+        "source": "https://www.stocktonca.gov/government/city_council/mayor.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/mayor.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content as the current page URL for her profile.",
+        "source": "https://www.stocktonca.gov/government/city_council/mayor.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/mayor.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked profile page for the individual.",
+        "source": "https://www.stocktonca.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/mayor.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided in the navigation link for 'Mayor Christina Fugazi'.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_1.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/mayor.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link for 'Mayor Christina Fugazi' is provided.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_3.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/mayor.php",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website explicitly provided as a related link for Mayor Christina Fugazi.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_4.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/mayor.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the dedicated profile page for the person.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_5.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content as 'elected in November 2024'.",
+        "source": "https://www.stocktonca.gov/government/city_council/mayor.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T17:41:23Z"
+  },
+  {
+    "name": "Jason Lee",
+    "sources": [
+      "https://www.stocktonca.gov/government/city_council/mayor.php",
+      "https://www.stocktonca.gov/government/city_council/index.php",
+      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_3.php",
+      "https://www.stocktonca.gov/government/city_council/district_4.php",
+      "https://www.stocktonca.gov/government/city_council/district_5.php",
+      "https://www.stocktonca.gov/government/city_council/district_6.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 6 Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text and matches target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Implied by 'Vice Mayor' within the City Council context and matches target role."
+      },
+      {
+        "data": "vice mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Mayor Lee', which is a target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by 'District 6 Vice Mayor Lee' within the City Council section."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 6 Vice Mayor Lee'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Vice Mayor' role within the 'City Council' section."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Mayor Lee'."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Mayor' and is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected to represent District 6 on the Stockton City Council' and 'As a councilmember', which is a target role."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Audit Committee - Chair' and 'Chair' is a target role."
+      },
+      {
+        "data": "Vice-Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Budget Committee - Vice-Chair' and 'Vice-Chair' is a target role."
+      },
+      {
+        "data": "Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Charter Review Ad Hoc Committee - Member', 'Legislation/Environmental Committee - Member', 'City-County Port Liaison - Member', 'City of Stockton and Manteca Unified School District 2x2 Joint Committee - Member', 'City of Stockton and Port of Stockton 3x3 Joint Committee - Member', 'City of Stockton and Stockton Unified School District 3x3 Joint Committee - Member', 'League of California Cities Legislative Liaison, Assembly Member Ransom - Member', and 'Member' is a target role."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'San Joaquin Partnership Board of Directors - Member' and 'Board Member' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 6 Vice Mayor Lee'."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 6 Vice Mayor Lee'."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'District 6 Vice Mayor Lee'."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 6 Vice Mayor Lee' and 'Council Dist 6'."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(209) 937-8279",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number is explicitly provided next to his contact information.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_6.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dist6@stocktonca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to his contact information.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_6.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_6.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked as the profile page for this person.",
+        "source": "https://www.stocktonca.gov/government/city_council/mayor.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_6.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked profile page for the individual.",
+        "source": "https://www.stocktonca.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_6.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided in the navigation link for 'District 6 Vice Mayor Lee'.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_1.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_6.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link for 'District 6 Vice Mayor Lee' is provided.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_3.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_6.php",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website explicitly provided as a related link for District 6 Vice Mayor Lee.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_4.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_6.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the dedicated profile page for the person.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_5.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_6.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the direct URL for his profile page, explicitly linked in the navigation and content.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_6.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The text states 'In 2024, Jason embarked on his campaign for Stockton City Council’s District 6... culminating in a historic victory', strongly implying his term began in 2024, though a specific month or day is not provided.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_6.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T17:41:23Z"
+  },
+  {
+    "name": "Michele Padilla",
+    "sources": [
+      "https://www.stocktonca.gov/government/city_council/mayor.php",
+      "https://www.stocktonca.gov/government/city_council/index.php",
+      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_3.php",
+      "https://www.stocktonca.gov/government/city_council/district_4.php",
+      "https://www.stocktonca.gov/government/city_council/district_5.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 1 Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text and matches target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Michele Padilla'."
+      },
+      {
+        "data": "chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair' for multiple committees, which is a target role."
+      },
+      {
+        "data": "Chair Ad Hoc Committee on Homelessness",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair Ad Hoc Committee on Homelessness'."
+      },
+      {
+        "data": "Chair Charter Review Ad Hoc Committee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair Charter Review Ad Hoc Committee'."
+      },
+      {
+        "data": "vice chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Chair' for multiple committees, which is a target role."
+      },
+      {
+        "data": "Vice Chair Audit Committee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Chair Audit Committee'."
+      },
+      {
+        "data": "Vice Chair Legislation/Environmental Committee",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Chair Legislation/Environmental Committee'."
+      },
+      {
+        "data": "board member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Stated as 'Alternate Member' of 'San Joaquin Council of Governments Board', which implies a board member role."
+      },
+      {
+        "data": "Alternate Member San Joaquin Council of Governments Board",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Alternate Member San Joaquin Council of Governments Board'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 1 Councilmember Padilla'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Padilla'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 1 Councilmember Padilla' and 'representing District 1'."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 1 Councilmember Padilla'."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'District 1 Councilmember Padilla'."
+      },
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(209) 937-8279",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number explicitly provided under 'Phone' for Councilmember Padilla.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_1.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "michele.padilla@stocktonca.gov",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Email address explicitly provided for community office hours, indicating it's a direct contact.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_1.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_1.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked as the profile page for this person.",
+        "source": "https://www.stocktonca.gov/government/city_council/mayor.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_1.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked profile page for the individual.",
+        "source": "https://www.stocktonca.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_1.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page is dedicated to District 1 Councilmember Padilla, serving as her profile page.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_1.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_1.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link for 'District 1 Councilmember Padilla' is provided.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_3.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_1.php",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website explicitly provided as a related link for District 1 Councilmember Padilla.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_4.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_1.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the dedicated profile page for the person.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_5.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'beginning January 2023'.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_1.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T17:41:23Z"
+  },
+  {
+    "name": "Mariela Ponce",
+    "sources": [
+      "https://www.stocktonca.gov/government/city_council/mayor.php",
+      "https://www.stocktonca.gov/government/city_council/index.php",
+      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_2.php",
+      "https://www.stocktonca.gov/government/city_council/district_3.php",
+      "https://www.stocktonca.gov/government/city_council/district_4.php",
+      "https://www.stocktonca.gov/government/city_council/district_5.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 2 Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text and matches target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ponce', which is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated and matches target role 'council member'."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'San Joaquin Council of Governments Board - Member' which explicitly mentions 'Board'."
+      },
+      {
+        "data": "San Joaquin Council of Governments Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Directly stated as a specific role on a board."
+      },
+      {
+        "data": "Ad Hoc Committee on Homelessness Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Directly stated as a specific committee role."
+      },
+      {
+        "data": "Budget Committee Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Directly stated as a specific committee role."
+      },
+      {
+        "data": "Community Improvement and Crime Prevention Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Directly stated as a specific committee role."
+      },
+      {
+        "data": "Charter Review Ad Hoc Committee Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Directly stated as a specific committee role."
+      },
+      {
+        "data": "Water Committee Alternate Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Directly stated as a specific committee role."
+      },
+      {
+        "data": "City of Stockton and Lodi Unified School District 2x2 Joint Committee Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Directly stated as a specific committee role."
+      },
+      {
+        "data": "San Joaquin Area Flood Control Agency Alternate Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Directly stated as a specific agency role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 2 Councilmember Ponce'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ponce'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 2 Councilmember Ponce'."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 2 Councilmember Ponce'."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'District 2 Councilmember Ponce'."
+      },
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(209) 937-8279",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_2.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dist2@stocktonca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_2.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_2.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked as the profile page for this person.",
+        "source": "https://www.stocktonca.gov/government/city_council/mayor.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_2.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked profile page for the individual.",
+        "source": "https://www.stocktonca.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_2.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided in the navigation link for 'District 2 Councilmember Ponce'.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_1.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_2.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page is the person's official profile.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_2.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_2.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link for 'District 2 Councilmember Ponce' is provided.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_3.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_2.php",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website explicitly provided as a related link for District 2 Councilmember Ponce.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_4.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_2.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the dedicated profile page for the person.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_5.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'elected in the 2024 general election', year is clear but month/day are not specified.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_2.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T17:41:23Z"
+  },
+  {
+    "name": "Michael Blower",
+    "sources": [
+      "https://www.stocktonca.gov/government/city_council/mayor.php",
+      "https://www.stocktonca.gov/government/city_council/index.php",
+      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_3.php",
+      "https://www.stocktonca.gov/government/city_council/district_4.php",
+      "https://www.stocktonca.gov/government/city_council/district_5.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 3 Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text and matches target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Blower', which is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Michael Blower'."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Chair' of 'Community Improvement and Crime Prevention'."
+      },
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Chair' of 'Water Committee'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Blower'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 3 Councilmember Blower'."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Michael Blower ... representing District 3'."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'District 3 Councilmember Blower'."
+      },
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(209) 937-8279",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number directly provided next to the name.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_3.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dist3@stocktonca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly provided next to the name.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_3.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_3.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked as the profile page for this person.",
+        "source": "https://www.stocktonca.gov/government/city_council/mayor.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_3.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked profile page for the individual.",
+        "source": "https://www.stocktonca.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_3.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided in the navigation link for 'District 3 Councilmember Blower'.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_1.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_3.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the dedicated profile page for Councilmember Blower.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_3.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_3.php",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website explicitly provided as a related link for District 3 Councilmember Blower.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_4.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_3.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the dedicated profile page for the person.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_5.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'beginning January 2023' for his first elected term.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_3.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T17:41:23Z"
+  },
+  {
+    "name": "Mario Enriquez",
+    "sources": [
+      "https://www.stocktonca.gov/government/city_council/mayor.php",
+      "https://www.stocktonca.gov/government/city_council/index.php",
+      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_3.php",
+      "https://www.stocktonca.gov/government/city_council/district_4.php",
+      "https://www.stocktonca.gov/government/city_council/district_5.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 4 Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text and matches target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Enríquez', which is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 4 Councilmember Enríquez'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Mario Enríquez'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 4 Councilmember Enríquez'."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 4 Councilmember Enríquez'."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Council Dist 4' and 'representing District 4'."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(209) 937-8279",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number explicitly provided next to the name.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_4.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dist4@stocktonca.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address explicitly provided next to the name.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_4.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_4.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked as the profile page for this person.",
+        "source": "https://www.stocktonca.gov/government/city_council/mayor.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_4.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked profile page for the individual.",
+        "source": "https://www.stocktonca.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_4.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided in the navigation link for 'District 4 Councilmember Enríquez'.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_1.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_4.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link for 'District 4 Councilmember Enríquez' is provided.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_3.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_4.php",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the dedicated profile page for Mario Enríquez.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_4.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_4.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the dedicated profile page for the person.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_5.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2025-01",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated 'beginning January 2025'.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_4.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T17:41:23Z"
+  },
+  {
+    "name": "Brando Villapudua",
+    "sources": [
+      "https://www.stocktonca.gov/government/city_council/mayor.php",
+      "https://www.stocktonca.gov/government/city_council/index.php",
+      "https://www.stocktonca.gov/government/city_council/district_1.php",
+      "https://www.stocktonca.gov/government/city_council/district_3.php",
+      "https://www.stocktonca.gov/government/city_council/district_4.php",
+      "https://www.stocktonca.gov/government/city_council/district_5.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 5 Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text and matches target role."
+      },
+      {
+        "data": "council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Villapudua', which is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 5 Councilmember Villapudua'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Villapudua'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "Vice Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "Ad Hoc Committee on Homelessness Vice Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "Community Improvement and Crime Prevention Vice Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "Water Committee Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "Board member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from specific role 'Alternate Member' which implies a board/committee membership."
+      },
+      {
+        "data": "Alternate Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "California State University Stockton Center Site Authority Alternate Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "City-County Transit Liaison Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "Northeastern San Joaquin County Groundwater Banking Authority Alternate Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "San Joaquin Area Flood Control Agency Chair",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "San Joaquin County Advisory Water Commission Alternate Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "San Joaquin Area Flood Control and Water Conservation District Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in content."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 5 Councilmember Villapudua'."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 5 Councilmember Villapudua'."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'District 5 Councilmember Villapudua'."
+      },
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(209) 937-8279",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_5.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dist5@stocktonca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_5.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_5.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly linked as the profile page for this person.",
+        "source": "https://www.stocktonca.gov/government/city_council/mayor.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_5.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked profile page for the individual.",
+        "source": "https://www.stocktonca.gov/government/city_council/index.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_5.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided in the navigation link for 'District 5 Councilmember Villapudua'.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_1.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_5.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website link for 'District 5 Councilmember Villapudua' is provided.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_3.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_5.php",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Website explicitly provided as a related link for District 5 Councilmember Villapudua.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_4.php"
+      },
+      {
+        "data": "https://www.stocktonca.gov/government/city_council/district_5.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the dedicated profile page for the person.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_5.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2023-01",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text.",
+        "source": "https://www.stocktonca.gov/government/city_council/district_5.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T17:41:23Z"
+  }
+]
