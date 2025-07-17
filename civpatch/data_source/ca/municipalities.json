@@ -770,7 +770,14 @@
       ],
       "population": 127647,
       "website": "https://santaclaraca.gov",
-      "fips": "0669084"
+      "fips": "0669084",
+      "meta_updated_at": "2025-07-17T19:27:33Z",
+      "meta_hash": "84d03d466dc540aaf38f1e81a23a5220",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Thousand Oaks",
