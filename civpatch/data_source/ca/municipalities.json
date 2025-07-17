@@ -557,7 +557,14 @@
       ],
       "population": 163542,
       "website": "https://www.cityofsalinas.org",
-      "fips": "0664224"
+      "fips": "0664224",
+      "meta_updated_at": "2025-07-17T18:49:13Z",
+      "meta_hash": "37ba6b3dc824534993656c455c7858bf",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hayward",
