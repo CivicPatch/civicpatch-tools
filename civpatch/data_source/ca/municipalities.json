@@ -865,7 +865,14 @@
       ],
       "population": 116448,
       "website": "https://www.ci.richmond.ca.us",
-      "fips": "0660620"
+      "fips": "0660620",
+      "meta_updated_at": "2025-07-17T19:34:41Z",
+      "meta_hash": "fb725c65b39791149225d3101ea0b50c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Antioch",
