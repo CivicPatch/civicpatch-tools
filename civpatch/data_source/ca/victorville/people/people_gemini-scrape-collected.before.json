@@ -1,0 +1,592 @@
+[
+  {
+    "name": "Elizabeth Becerra",
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor Elizabeth Becerra'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied role as the Mayor is part of the City Council."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text and matches a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Elizabeth Becerra' in the navigation."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Elizabeth Becerra'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by her role as Mayor and being listed under 'City Council'."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as representing the City Council on the 'Community Revitalization Investment Authority (CRIA) Board' and 'Mojave Desert Air Quality Management District Board'."
+      },
+      {
+        "data": "Community Revitalization Investment Authority Board Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as representing the City Council on the 'Community Revitalization Investment Authority (CRIA) Board'."
+      },
+      {
+        "data": "Mojave Desert Air Quality Management District Board Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as representing the City Council on the 'Mojave Desert Air Quality Management District Board'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "lbecerra@victorvilleca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "lbecerra@victorvilleca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly provided as a mailto link.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1"
+      },
+      {
+        "data": "lbecerra@victorvilleca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is the current page dedicated to Elizabeth Becerra, despite the inconsistent path name.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page is a dedicated profile page for Elizabeth Becerra, despite the URL path.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date (re-election year) is explicitly stated in the text.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "2020-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date explicitly stated as 'election in November 2020'.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1"
+      },
+      {
+        "data": "2020-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'following her election in November 2020'.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:23:04Z"
+  },
+  {
+    "name": "Bob Harriman",
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor Pro Tem Bob Harriman'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied role as Mayor Pro Tem is part of the City Council."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Pro Tem Bob Harriman'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated he was 'elected to the Victorville City Council'."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text and matches a target role."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Pro Tem Bob Harriman' in the navigation."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Inferred from the URL path 'council-member-bob-harriman' and the context of the City Council section."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text as the district he represents."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "rharriman@victorvilleca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "rharriman@victorvilleca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly provided as a mailto link for Mayor Pro Tem Harriman.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is a direct link to the person's profile page, despite the inconsistent path name.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The current page is dedicated to Bob Harriman's profile, serving as his primary online presence.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL explicitly linked to the person's name/title.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL is the direct profile page for Bob Harriman, despite the unusual path.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date (election year) is explicitly stated in the text.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "2022-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated he was 'elected... in November 2022'.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:23:04Z"
+  },
+  {
+    "name": "Tiffany Gaudin",
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/tiffany-gaudin",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member Tiffany Gaudin'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Council Member' is explicitly stated and matches a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text and matches a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Council Member Tiffany Gaudin' in the navigation."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tgaudin@victorvilleca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "tgaudin@victorvilleca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address directly extracted from the text.",
+        "source": "https://www.victorvilleca.gov/government/tiffany-gaudin"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.victorvilleca.gov/government/tiffany-gaudin",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/tiffany-gaudin",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is a direct link to the person's profile page.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/tiffany-gaudin",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page URL is the person's profile page.",
+        "source": "https://www.victorvilleca.gov/government/tiffany-gaudin"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/tiffany-gaudin",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL explicitly linked to the person's name/title.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/tiffany-gaudin",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL is the direct profile page for Tiffany Gaudin.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date (election year) is explicitly stated in the text.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date '2024' is explicitly stated as her election year.",
+        "source": "https://www.victorvilleca.gov/government/tiffany-gaudin"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:23:04Z"
+  },
+  {
+    "name": "Leslie Irving",
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the URL path and implied by the list structure."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member Leslie Irving'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Inferred from the URL path 'city-council/mayor-pro-tem-leslie-irving' and the context of the City Council section."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated in the URL path 'mayor-pro-tem-leslie-irving'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected to the Victorville City Council' and 'Council Member Leslie Irving'."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'the City’s first black female Mayor Pro Tem following appointment to this position'."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Stated that she 'currently represents the City Council on the following boards, commissions and committees: City’s Community Revitalization Investment Authority (CRIA) Committee'. 'Board Member' is a target role and appropriate for committee representation."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "lirving@victorvilleca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "lirving@victorvilleca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link for Leslie Irving.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is a direct link to the person's profile page.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL is the direct profile page for Leslie Irving.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is a direct link to Leslie Irving's profile page, indicating it is her primary, stable profile page.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date (re-election year) is explicitly stated in the text.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "2020-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'elected to the Victorville City Council in November 2020'.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:23:04Z"
+  },
+  {
+    "name": "Debra Jones",
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated in the text."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Council Member Debra Jones'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text and matches a target role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated in the page title and context."
+      },
+      {
+        "data": "Chair",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Chair to the Board Mojave Desert and Mountain Recycling JPA'."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Chair to the Board Mojave Desert and Mountain Recycling JPA' and 'Delegate to the San Bernardino County Transportation Authority (SBCTA)/San Bernardino Council of Governments (SBCOG) Board of Directors'."
+      },
+      {
+        "data": "Delegate",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as 'Delegate to the San Bernardino County Transportation Authority (SBCTA)/San Bernardino Council of Governments (SBCOG) Board of Directors'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "dsjones@victorvilleca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "dsjones@victorvilleca.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website is explicitly linked to the person's name.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL is a direct link to the person's profile page.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "URL explicitly linked to the person's name/title.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1"
+      },
+      {
+        "data": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL is the direct profile page for Debra Jones.",
+        "source": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Start date (re-election year) is explicitly stated in the text.",
+        "source": "https://www.victorvilleca.gov/government/city-council"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-17T19:23:04Z"
+  }
+]

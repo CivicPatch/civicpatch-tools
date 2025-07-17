@@ -1,0 +1,123 @@
+[
+  {
+    "name": "Elizabeth Becerra",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://www.victorvilleca.gov/home/showpublishedimage/11547/638724567467630000",
+    "phone_number": "(760) 955-5000",
+    "email": "lbecerra@victorvilleca.gov",
+    "website": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+    "start_date": "2020-11",
+    "end_date": null,
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1"
+    ],
+    "updated_at": "2025-07-17T19:21:17Z"
+  },
+  {
+    "name": "Bob Harriman",
+    "roles": [
+      "Mayor Pro Tem",
+      "Council Member"
+    ],
+    "divisions": [
+      "District 4"
+    ],
+    "image": "https://www.victorvilleca.gov/home/showpublishedimage/9842/638150173053670000",
+    "phone_number": "(760) 955-5000",
+    "email": "rharriman@victorvilleca.gov",
+    "website": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman",
+    "start_date": "2022-11",
+    "end_date": null,
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman"
+    ],
+    "updated_at": "2025-07-17T19:21:17Z"
+  },
+  {
+    "name": "Tiffany Gaudin",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 4"
+    ],
+    "image": "https://www.victorvilleca.gov/home/showpublishedimage/11509/638718518885270000",
+    "phone_number": "(760) 955-5000",
+    "email": "tgaudin@victorvilleca.gov",
+    "website": "https://www.victorvilleca.gov/government/tiffany-gaudin",
+    "start_date": "2024",
+    "end_date": null,
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/tiffany-gaudin"
+    ],
+    "updated_at": "2025-07-17T19:21:17Z"
+  },
+  {
+    "name": "Leslie Irving",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tem",
+      "Board Member"
+    ],
+    "divisions": [
+      "District 1"
+    ],
+    "image": "https://www.victorvilleca.gov/home/showpublishedimage/9840/638150171768070000",
+    "phone_number": "(760) 955-5000",
+    "email": "lirving@victorvilleca.gov",
+    "website": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving",
+    "start_date": "2020-11",
+    "end_date": "2024-11",
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1"
+    ],
+    "updated_at": "2025-07-17T19:21:17Z"
+  },
+  {
+    "name": "Debra Jones",
+    "roles": [
+      "Council Member",
+      "Board Member",
+      "Alternate",
+      "Delegate"
+    ],
+    "divisions": [
+      "District 5"
+    ],
+    "image": "https://www.victorvilleca.gov/home/showpublishedimage/11667/638802320616130000",
+    "phone_number": "(760) 955-5000",
+    "email": "dsjones@victorvilleca.gov",
+    "website": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+    ],
+    "updated_at": "2025-07-17T19:21:17Z"
+  },
+  {
+    "name": "Jim Cox",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": null,
+    "website": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council"
+    ],
+    "updated_at": "2025-07-17T19:21:17Z"
+  }
+]

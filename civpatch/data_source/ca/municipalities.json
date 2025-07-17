@@ -759,7 +759,14 @@
       ],
       "population": 134810,
       "website": "https://www.victorvilleca.gov",
-      "fips": "0682590"
+      "fips": "0682590",
+      "meta_updated_at": "2025-07-17T19:23:07Z",
+      "meta_hash": "b4ccaa590517a4c7ef8432d4262d81b5",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Santa Clara",

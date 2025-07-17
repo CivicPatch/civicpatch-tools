@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Elizabeth Becerra",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-17T19:19:17Z"
+  },
+  {
+    "name": "Bob Harriman",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-17T19:19:17Z"
+  },
+  {
+    "name": "Tiffany Gaudin",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-17T19:19:17Z"
+  },
+  {
+    "name": "Leslie Irving",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-17T19:19:17Z"
+  },
+  {
+    "name": "Debra Jones",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-17T19:19:17Z"
+  }
+]

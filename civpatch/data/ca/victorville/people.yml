@@ -1,0 +1,95 @@
+---
+- name: Elizabeth Becerra
+  roles:
+  - Mayor
+  divisions: []
+  image: https://www.victorvilleca.gov/home/showpublishedimage/11547/638724567467630000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/victorville/images/5126e69e11c41c9b18bddaa3a81413d8802251f369862ba085f7171a2e7b1d01.jpg
+  email: lbecerra@victorvilleca.gov
+  phone_number: "(760) 955-5000"
+  website: https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox
+  start_date: 2020-11
+  end_date:
+  sources:
+  - https://www.victorvilleca.gov/government/city-council
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox
+  updated_at: '2025-07-17T19:23:07Z'
+- name: Leslie Irving
+  roles:
+  - Mayor Pro Tempore
+  - Board Member
+  - Council Member
+  divisions: []
+  image: https://www.victorvilleca.gov/home/showpublishedimage/9840/638150171768070000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/victorville/images/af1ab79b1eec14368f576fba97cf96f882602cc155a35555d9eb6b87420160dd.jpg
+  email: lirving@victorvilleca.gov
+  phone_number: "(760) 955-5000"
+  website: https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving
+  start_date: '2024'
+  end_date: 2024-11
+  sources:
+  - https://www.victorvilleca.gov/government/city-council
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1
+  updated_at: '2025-07-17T19:23:07Z'
+- name: Bob Harriman
+  roles:
+  - Mayor Pro Tempore
+  - Council Member
+  divisions:
+  - District 4
+  image: https://www.victorvilleca.gov/home/showpublishedimage/9842/638150173053670000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/victorville/images/89094bef6098913e88a91f603106e2b4b9555742192c7eaaa692df7743095550.jpg
+  email: rharriman@victorvilleca.gov
+  phone_number: "(760) 955-5000"
+  website: https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman
+  start_date: '2022'
+  end_date:
+  sources:
+  - https://www.victorvilleca.gov/government/city-council
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones
+  updated_at: '2025-07-17T19:23:07Z'
+- name: Debra Jones
+  roles:
+  - Board Member
+  - Council Member
+  divisions: []
+  image: https://www.victorvilleca.gov/home/showpublishedimage/11667/638802320616130000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/victorville/images/da21398c197d1c4d7a834d3d8c76159a92b74bc7741afea4f5fc70b272c28279.jpg
+  email: dsjones@victorvilleca.gov
+  phone_number: "(760) 955-5000"
+  website: https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones
+  start_date: '2022'
+  end_date:
+  sources:
+  - https://www.victorvilleca.gov/government/city-council
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones
+  updated_at: '2025-07-17T19:23:07Z'
+- name: Tiffany Gaudin
+  roles:
+  - Council Member
+  divisions: []
+  image: https://www.victorvilleca.gov/home/showpublishedimage/11509/638718518885270000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/victorville/images/fc97fe7cb117340c1e2e1b7ddd2f331cc73246682eecba6a0b3d5ae7ba3f8853.jpg
+  email: tgaudin@victorvilleca.gov
+  phone_number: "(760) 955-5000"
+  website: https://www.victorvilleca.gov/government/tiffany-gaudin
+  start_date: '2024'
+  end_date:
+  sources:
+  - https://www.victorvilleca.gov/government/city-council
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1
+  - https://www.victorvilleca.gov/government/tiffany-gaudin
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1
+  - https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones
+  updated_at: '2025-07-17T19:23:07Z'

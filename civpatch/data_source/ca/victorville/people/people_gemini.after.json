@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Elizabeth Becerra",
+    "roles": [
+      "Board Member",
+      "Council Member",
+      "Mayor"
+    ],
+    "divisions": [
+      "District 3"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "lbecerra@victorvilleca.gov",
+    "website": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox",
+    "start_date": "2020-11",
+    "end_date": null,
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox"
+    ],
+    "updated_at": "2025-07-17T19:23:04Z"
+  },
+  {
+    "name": "Bob Harriman",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [
+      "District 4"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "rharriman@victorvilleca.gov",
+    "website": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman",
+    "start_date": "2022",
+    "end_date": null,
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-blanca-gomez/council-member-bob-harriman",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+    ],
+    "updated_at": "2025-07-17T19:23:04Z"
+  },
+  {
+    "name": "Tiffany Gaudin",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 1"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "tgaudin@victorvilleca.gov",
+    "website": "https://www.victorvilleca.gov/government/tiffany-gaudin",
+    "start_date": "2024",
+    "end_date": null,
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/tiffany-gaudin",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+    ],
+    "updated_at": "2025-07-17T19:23:04Z"
+  },
+  {
+    "name": "Leslie Irving",
+    "roles": [
+      "Board Member",
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [
+      "District 5"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "lirving@victorvilleca.gov",
+    "website": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving",
+    "start_date": "2024",
+    "end_date": null,
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving"
+    ],
+    "updated_at": "2025-07-17T19:23:04Z"
+  },
+  {
+    "name": "Debra Jones",
+    "roles": [
+      "Board Member",
+      "Chair",
+      "Council Member"
+    ],
+    "divisions": [
+      "District 2"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "dsjones@victorvilleca.gov",
+    "website": "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones",
+    "start_date": "2022",
+    "end_date": null,
+    "sources": [
+      "https://www.victorvilleca.gov/government/city-council",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-jim-cox/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/mayor-pro-tem-leslie-irving/-fsiteid-1",
+      "https://www.victorvilleca.gov/government/city-departments/city-clerk/city-council/council-member-debra-jones"
+    ],
+    "updated_at": "2025-07-17T19:23:04Z"
+  }
+]
