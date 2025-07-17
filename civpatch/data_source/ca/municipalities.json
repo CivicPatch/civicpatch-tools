@@ -748,7 +748,14 @@
       ],
       "population": 138699,
       "website": "https://www.cityofpasadena.net",
-      "fips": "0656000"
+      "fips": "0656000",
+      "meta_updated_at": "2025-07-17T19:23:07Z",
+      "meta_hash": "27589968ca0a6682575ee427eb877e87",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Victorville",
