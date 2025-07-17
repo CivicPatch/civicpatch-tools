@@ -152,7 +152,14 @@
       ],
       "population": 307670,
       "website": "https://cityofirvine.org",
-      "fips": "0636770[10]"
+      "fips": "0636770[10]",
+      "meta_updated_at": "2025-07-17T03:30:11Z",
+      "meta_hash": "adc6fa1f27b3ad683f9fc78007db4a4b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Chula Vista",
