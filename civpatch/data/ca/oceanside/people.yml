@@ -3,8 +3,7 @@
   roles:
   - Mayor
   - Council Member
-  divisions:
-  - District 1
+  divisions: []
   image: https://www.ci.oceanside.ca.us/home/showpublishedimage/244/637944237368100000
   cdn_image: https://cdn.civicpatch.org/open-data/ca/oceanside/images/ad61af41a2ea8adbf9929352c53858eac1bb99c085585cd465d360619d2d38b1.jpg
   email: esanchez@oceansideca.org
