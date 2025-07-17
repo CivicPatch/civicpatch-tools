@@ -723,7 +723,14 @@
       ],
       "population": 139911,
       "website": "https://www.cityoforange.org",
-      "fips": "0653980"
+      "fips": "0653980",
+      "meta_updated_at": "2025-07-17T18:58:00Z",
+      "meta_hash": "70977aee4bac2ef498200af7079d00a2",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Pasadena",
