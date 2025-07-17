@@ -109,7 +109,6 @@ def self.missing_divisions(people)
   divisions = {} # { "district": { numbers: { 1: 1, 2: 2 } } }
 
   people.each do |person|
-    puts person
     next if person["divisions"].nil? || person["divisions"].empty?
     person["divisions"].each do |division|
       parts = division.split(" ")
