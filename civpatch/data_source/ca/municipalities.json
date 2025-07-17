@@ -792,7 +792,14 @@
       ],
       "population": 126356,
       "website": "https://www.simivalley.org",
-      "fips": "0672016"
+      "fips": "0672016",
+      "meta_updated_at": "2025-07-17T19:27:57Z",
+      "meta_hash": "1fd0ae3df46462a793ed2180a5c3e1d5",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Vallejo",
