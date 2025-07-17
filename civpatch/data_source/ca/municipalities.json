@@ -188,10 +188,10 @@
         "San Joaquin"
       ],
       "population": 320804,
-      "website": "https://www.stocktongov.com",
+      "website": "https://stocktonca.gov",
       "fips": "0675000",
-      "meta_updated_at": "2025-07-17T03:22:06Z",
-      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_updated_at": "2025-07-17T17:41:25Z",
+      "meta_hash": "9db99ca8de55ea50a8ede6fd8bf51a9a",
       "meta_sources": [
         "state_source",
         "gemini",

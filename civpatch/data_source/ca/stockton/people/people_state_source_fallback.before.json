@@ -7,7 +7,7 @@
     "divisions": [
       null
     ],
-    "updated_at": "2025-07-17T03:20:50Z"
+    "updated_at": "2025-07-17T17:34:09Z"
   },
   {
     "name": "Michele Padilla",
@@ -17,7 +17,7 @@
     "divisions": [
       "District 1"
     ],
-    "updated_at": "2025-07-17T03:20:50Z"
+    "updated_at": "2025-07-17T17:34:09Z"
   },
   {
     "name": "Mariela Ponce",
@@ -27,7 +27,7 @@
     "divisions": [
       "District 2"
     ],
-    "updated_at": "2025-07-17T03:20:50Z"
+    "updated_at": "2025-07-17T17:34:09Z"
   },
   {
     "name": "Michael Blower",
@@ -37,7 +37,7 @@
     "divisions": [
       "District 3"
     ],
-    "updated_at": "2025-07-17T03:20:50Z"
+    "updated_at": "2025-07-17T17:34:09Z"
   },
   {
     "name": "Mario Enriquez",
@@ -47,7 +47,7 @@
     "divisions": [
       "District 4"
     ],
-    "updated_at": "2025-07-17T03:20:50Z"
+    "updated_at": "2025-07-17T17:34:09Z"
   },
   {
     "name": "Brando Villapudua",
@@ -57,17 +57,17 @@
     "divisions": [
       "District 5"
     ],
-    "updated_at": "2025-07-17T03:20:50Z"
+    "updated_at": "2025-07-17T17:34:09Z"
   },
   {
     "name": "Jason Lee",
     "roles": [
-      "Council Member",
-      "Vice Mayor"
+      "Vice Mayor",
+      "Council Member"
     ],
     "divisions": [
       "District 6"
     ],
-    "updated_at": "2025-07-17T03:20:50Z"
+    "updated_at": "2025-07-17T17:34:09Z"
   }
 ]
