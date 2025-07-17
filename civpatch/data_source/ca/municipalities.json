@@ -20,7 +20,14 @@
       ],
       "population": 1386932,
       "website": "https://www.sandiego.gov",
-      "fips": "0666000"
+      "fips": "0666000",
+      "meta_updated_at": "2025-07-17T03:15:38Z",
+      "meta_hash": "8dd302ccd356ad4732f9a525bd516f5a",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "San Jose",
