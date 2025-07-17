@@ -781,7 +781,14 @@
       ],
       "population": 126966,
       "website": "https://www.toaks.org",
-      "fips": "0678582"
+      "fips": "0678582",
+      "meta_updated_at": "2025-07-17T19:30:05Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Simi Valley",

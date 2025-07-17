@@ -1,0 +1,53 @@
+[
+  {
+    "name": "David Newman",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-17T19:22:59Z"
+  },
+  {
+    "name": "Mikey Taylor",
+    "roles": [
+      "Mayor Pro Tem",
+      "Council Member"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-17T19:22:59Z"
+  },
+  {
+    "name": "Al Adam",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 4"
+    ],
+    "updated_at": "2025-07-17T19:22:59Z"
+  },
+  {
+    "name": "Bob Engler",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "At-Large"
+    ],
+    "updated_at": "2025-07-17T19:22:59Z"
+  },
+  {
+    "name": "C. Tie Gutierrez",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 5"
+    ],
+    "updated_at": "2025-07-17T19:22:59Z"
+  }
+]
