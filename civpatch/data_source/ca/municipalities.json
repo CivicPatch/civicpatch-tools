@@ -608,7 +608,14 @@
       ],
       "population": 151713,
       "website": "https://www.ci.pomona.ca.us",
-      "fips": "0658072"
+      "fips": "0658072",
+      "meta_updated_at": "2025-07-17T18:53:16Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Escondido",
