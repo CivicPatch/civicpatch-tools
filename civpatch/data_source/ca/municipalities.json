@@ -470,7 +470,14 @@
       ],
       "population": 175265,
       "website": "https://www.ontarioca.gov",
-      "fips": "0653896"
+      "fips": "0653896",
+      "meta_updated_at": "2025-07-17T17:31:17Z",
+      "meta_hash": "3e95ddb61c0a2fd151c5111df5035f65",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Rancho Cucamonga",
