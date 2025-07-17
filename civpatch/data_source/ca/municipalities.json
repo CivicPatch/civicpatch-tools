@@ -579,7 +579,14 @@
       ],
       "population": 157136,
       "website": "https://www.coronaca.gov",
-      "fips": "0616350"
+      "fips": "0616350",
+      "meta_updated_at": "2025-07-17T18:51:14Z",
+      "meta_hash": "6a257a886a805569c74c65efe676edff",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Sunnyvale",
