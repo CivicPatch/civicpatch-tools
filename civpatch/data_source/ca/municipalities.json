@@ -302,7 +302,14 @@
       ],
       "population": 208634,
       "website": "https://www.moval.org/index.shtml",
-      "fips": "0649270"
+      "fips": "0649270",
+      "meta_updated_at": "2025-07-17T17:20:31Z",
+      "meta_hash": "2ab76a06c7db1f4a7ee0261564784d2e",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Fontana",
