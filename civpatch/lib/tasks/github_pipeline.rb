@@ -71,18 +71,15 @@ namespace :github_pipeline do
 
     score = comparison[:agreement_score]
 
-    if score < 70
-      fail_reasons << "Expected: agreement score >= 70, Found: #{score}"
-    end
-    if merged_people.length < 5
-      fail_reasons << "Expected: >= 5 people, Found: #{merged_people.length}"
-    end
-    if missing_divisions.length > 0
-      fail_reasons << "Found missing divisions: #{missing_divisions.join('\n')}" 
-    end
-    if comparison[:missing_people].length > 0
+    fail_reasons << "Expected: agreement score >= 70, Found: #{score}" if score < 70
+
+    fail_reasons << "Expected: >= 5 people, Found: #{merged_people.length}" if merged_people.length < 5
+
+    fail_reasons << "Found missing divisions:\n#{missing_divisions.join('\n')}" if missing_divisions.length > 0
+
+    if comparison[:missing_people].length.positive?
       missing_people_names = comparison[:missing_people].map { |name, _sources| name }.join(", ")
-      
+
       fail_reasons << "Found missing people: #{missing_people_names}"
     end
 
@@ -91,8 +88,6 @@ namespace :github_pipeline do
                                                            comparison[:missing_people],
                                                            comparison[:agreement_score],
                                                            fail_reasons)
-
-    people_count = merged_people.length
 
     should_approve = fail_reasons.empty?
 
@@ -110,6 +105,7 @@ def self.missing_divisions(people)
 
   people.each do |person|
     next if person["divisions"].nil? || person["divisions"].empty?
+
     person["divisions"].each do |division|
       parts = division.split(" ")
       division_type = parts.first
@@ -121,15 +117,27 @@ def self.missing_divisions(people)
     end
   end
 
-  # Collect division type and division numbers that have a lower 
-  # # count than the other division numbers within the same division type.
+  # Collect division type and division numbers that:
+  # * have a lower count than the other division numbers within the same division type
+  # * are missing entirely
   # Ex: { "district", { numbers: { 1: 1, 2: 2 } } }}
+  #   missing: "Expected: district 2 (2) division(s), Found: district 1 (1) divisions"
+  # Ex: { "district", { numbers: { 1: 1, 3: 1 } } }}
+  #  missing: "Expected: district 2 (1) division(s), Found: none"
   missing = []
   divisions.each do |division_type, division_data|
-    division_data[:numbers].each do |division_number, count|
-      expected_number = division_data[:numbers].values.max
-      if count < expected_number 
-        missing << "Expected: #{division_type} #{division_number} (#{expected_number}) division(s), Found: #{division_type} #{division_number} (#{count}) divisions"
+    max_division_number = division_data[:numbers].keys.map(&:to_i).max
+
+    next if max_division_number.zero?
+
+    expected_division_numbers = (1..max_division_number).to_a
+    expected_count = division_data[:numbers].values.max
+
+    expected_division_numbers.each do |division_number|
+      if division_data[:numbers][division_number.to_s].nil?
+        missing << "Expected: #{division_type} #{division_number} (#{expected_count}) division(s), Found: none"
+      elsif division_data[:numbers][division_number.to_s] < expected_count
+        missing << "Expected: #{division_type} #{division_number} (#{expected_count}}) division(s), Found: #{division_type} #{division_number} (#{division_data[:numbers][division_number]}) divisions"
       end
     end
   end
