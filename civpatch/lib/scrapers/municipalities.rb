@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "services/census"
+require_relative "ca/municipalities"
 require_relative "id/municipalities"
 require_relative "co/municipalities"
 require_relative "nd/municipalities"
@@ -32,6 +33,8 @@ module Scrapers
 
     def self.get_scraper(state)
       case state
+      when "ca"
+        Scrapers::Ca::Municipalities
       when "id"
         Scrapers::Id::Municipalities
       when "co"

@@ -10,12 +10,12 @@ require "scrapers/nd/municipalities"
 
 namespace :one_off do
   task "init_state" do
-    state = "id"
+    state = "ca"
     #municipalities = Scrapers::Municipalities.fetch(state)
 
     #puts "found #{municipalities.length} municipalities in #{state}"
 
-    # Core::StateManager.update_municipalities(state, municipalities)
+    #Core::StateManager.update_municipalities(state, municipalities)
 
     Services::Census.download_municipalities(state)
     Services::Census.convert_to_geojson(state, Core::PathHelper.project_path(File.join("data", state, ".maps")))

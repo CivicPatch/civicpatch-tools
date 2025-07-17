@@ -17,7 +17,8 @@ module Services
     def self.fetch_municipalities(title, row_mapping)
       response = fetch_with_wikipedia(title)
       doc = Nokolexbor::HTML(response)
-      table = doc.css("table.wikitable.sortable")[0]
+      table_index = row_mapping[:table_index] || 0
+      table = doc.css("table.wikitable.sortable")[table_index]
 
       table_rows = table.css("tbody tr")
 
@@ -29,7 +30,8 @@ module Services
 
       rows = table_rows.drop(row_mapping[:row_start] || 0) # Skip header rows if specified
       rows.each do |city_row|
-        columns = city_row.css("td")
+        columns = city_row.css("th, td")
+        puts "Processing row: #{columns.map(&:text).join(", ")}"
         next if columns.empty? # Skip empty rows
         next if columns[row_mapping[:municipality_name]].nil? # Skip rows without municipality name
         municipality_name = format_name(columns[row_mapping[:municipality_name]].text)
@@ -59,7 +61,9 @@ module Services
     end
 
     def self.fetch_with_wikipedia(title)
-      url = "#{URL}/#{title}"
+      # Encode the title to ensure it is a valid URI
+      encoded_title = URI::DEFAULT_PARSER.escape(title)
+      url = "#{URL}/#{encoded_title}"
       response = HTTParty.get(url)
 
       raise "Error: #{response.code}" unless response.success?
