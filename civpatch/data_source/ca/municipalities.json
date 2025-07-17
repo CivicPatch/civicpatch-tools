@@ -75,7 +75,14 @@
       ],
       "population": 466742,
       "website": "https://www.longbeach.gov",
-      "fips": "0643000"
+      "fips": "0643000",
+      "meta_updated_at": "2025-07-17T03:25:07Z",
+      "meta_hash": "1fe90c45aa1c3b90aaea2fceab22eabc",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Oakland",
