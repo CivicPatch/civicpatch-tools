@@ -861,7 +861,14 @@
       ],
       "population": 119881,
       "website": "https://www.fairfield.ca.gov",
-      "fips": "0623182"
+      "fips": "0623182",
+      "meta_updated_at": "2025-07-17T19:31:59Z",
+      "meta_hash": "e00f1416e32d78b939ebfbc4ccc926bd",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Richmond",
