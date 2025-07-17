@@ -324,7 +324,14 @@
       ],
       "population": 202063,
       "website": "https://oxnard.gov",
-      "fips": "0654652"
+      "fips": "0654652",
+      "meta_updated_at": "2025-07-17T17:23:54Z",
+      "meta_hash": "350299d7bde956242be65b686f649692",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Huntington Beach",
