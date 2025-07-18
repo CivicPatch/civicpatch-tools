@@ -549,7 +549,14 @@
       ],
       "population": 171949,
       "website": "https://ggcity.org",
-      "fips": "0629000"
+      "fips": "0629000",
+      "meta_updated_at": "2025-07-18T20:09:05Z",
+      "meta_hash": "92fa630de424d280be985350d6ed5228",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Palmdale",
