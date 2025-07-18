@@ -1265,7 +1265,14 @@
       ],
       "population": 98381,
       "website": "https://www.cityofvista.com",
-      "fips": "0682996"
+      "fips": "0682996",
+      "meta_updated_at": "2025-07-18T21:04:53Z",
+      "meta_hash": "68a368d03400a3be7f346c3400eb291f",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Compton",
