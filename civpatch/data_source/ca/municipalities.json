@@ -986,7 +986,14 @@
       ],
       "population": 111918,
       "website": "https://www.costamesaca.gov",
-      "fips": "0616532"
+      "fips": "0616532",
+      "meta_updated_at": "2025-07-18T20:09:34Z",
+      "meta_hash": "7b4d51d61068d4b548c9cce64008ca3c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Murrieta",
