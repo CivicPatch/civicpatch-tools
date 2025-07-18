@@ -1243,7 +1243,14 @@
       ],
       "population": 101475,
       "website": "https://www.chico.ca.us",
-      "fips": "0613014"
+      "fips": "0613014",
+      "meta_updated_at": "2025-07-18T21:03:08Z",
+      "meta_hash": "a5f340be1712ae236d43e80e5850705b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Hesperia",
