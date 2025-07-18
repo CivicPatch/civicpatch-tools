@@ -1,0 +1,115 @@
+[
+  {
+    "name": "Tony Wu",
+    "roles": [
+      "Council Member",
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "Tony.Wu@westcovina.org",
+    "website": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+      "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+      "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+      "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+    ],
+    "updated_at": "2025-07-18T20:55:57Z"
+  },
+  {
+    "name": "Letty Lopez-Viado",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "llopez-viado@westcovina.org",
+    "website": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+    "start_date": "2018-11",
+    "end_date": null,
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+      "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+      "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+      "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+    ],
+    "updated_at": "2025-07-18T20:55:57Z"
+  },
+  {
+    "name": "Ollie Cantos",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "ollie.cantos@westcovina.org",
+    "website": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+      "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+      "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+      "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+    ],
+    "updated_at": "2025-07-18T20:55:57Z"
+  },
+  {
+    "name": "Rosario Diaz",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 3"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "rosario.diaz@westcovina.org",
+    "website": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+    "start_date": "2020",
+    "end_date": null,
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+      "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+      "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+      "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+    ],
+    "updated_at": "2025-07-18T20:55:57Z"
+  },
+  {
+    "name": "Brian Gutierrez",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "Brian.Gutierrez@westcovina.org",
+    "website": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+      "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+      "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+    ],
+    "updated_at": "2025-07-18T20:55:57Z"
+  }
+]

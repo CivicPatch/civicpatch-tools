@@ -1,0 +1,360 @@
+[
+  {
+    "name": "Tony Wu",
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313"
+    ],
+    "images": [
+      {
+        "data": "https://www.westcovina.org/home/showpublishedimage/8379/638690142168500000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image near the Mayor section on the page, likely his official portrait.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/home/showpublishedimage/8377/638690138637370000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image is a portrait near the name and title 'Mayor Tony Wu' on the official city page.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor on the official city council page."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page is titled 'Mayor Tony Wu' and the text explicitly states 'I am honored to serve as your mayor.'"
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(626) 939-8400",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number is listed at the bottom of the page as the main city contact number, likely the mayor's office number.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313"
+      }
+    ],
+    "emails": [
+      {
+        "data": "Tony.Wu@westcovina.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to Mayor Tony Wu's name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "Tony.Wu@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided as 'Email Mayor Tony Wu' with a mailto link.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official biography page linked from the Mayor section.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the official city webpage dedicated to Mayor Tony Wu.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:54:41Z"
+  },
+  {
+    "name": "Letty Lopez-Viado",
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+    ],
+    "images": [
+      {
+        "data": "https://www.westcovina.org/home/showpublishedimage/5748/636801153028870000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image near the Mayor Pro Tem section on the page, likely her official portrait.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/home/showpublishedimage/8381/638690162729930000",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The image is directly under the heading 'Mayor Pro Tem Letty Lopez-Viado' and is a portrait style image.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Explicitly stated as Mayor Pro Tem on the official city council page."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The page title and content explicitly state Letty Lopez-Viado is Mayor Pro Tem of West Covina."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(626) 939-8400",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city phone number listed at bottom of page; no direct personal phone found.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+      }
+    ],
+    "emails": [
+      {
+        "data": "llopez-viado@westcovina.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to Mayor Pro Tem Letty Lopez-Viado's name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "LLopez-Viado@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as 'Email Mayor Pro Tem Letty Lopez-Viado' mailto link.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official biography page linked from the Mayor Pro Tem section.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the URL of the page containing the official profile.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:54:41Z"
+  },
+  {
+    "name": "Ollie Cantos",
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos"
+    ],
+    "images": [
+      {
+        "data": "https://www.westcovina.org/home/showpublishedimage/7546/638083585293930000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image near Councilman Ollie Cantos section, likely his official portrait.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/home/showpublishedimage/7546/638083585293930000",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image is a portrait of Councilman Ollie Cantos located near his name and biography.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Referred to as Councilman Ollie Cantos on the official city council page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page title and content explicitly identify Ollie Cantos as 'Councilman Ollie Cantos' and a member of the City Council of West Covina."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ollie.cantos@westcovina.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to Councilman Ollie Cantos's name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "ollie.cantos@westcovina.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided as 'Email Councilman Ollie Cantos' with mailto link.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official biography page linked from Councilman Ollie Cantos section.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:54:41Z"
+  },
+  {
+    "name": "Rosario Diaz",
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+    ],
+    "images": [
+      {
+        "data": "https://www.westcovina.org/home/showpublishedimage/6857/637442231536770000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image near Councilwoman Rosario Diaz section, likely her official portrait.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/home/showpublishedimage/6857/637442231536770000",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image is a portrait near the name and title 'Councilwoman Rosario Diaz'.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Referred to as Councilwoman Rosario Diaz on the official city council page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text states she was elected to the West Covina City Council representing District 3, which matches the target role 'council member'."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly mentioned as representing District 3 in the text."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(626) 939-8400",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "General city phone number listed on the page; no direct personal phone found.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rosario.diaz@westcovina.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to Councilwoman Rosario Diaz's name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "rosario.diaz@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly provided as 'Email Councilwoman Rosario Diaz' mailto link.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official biography page linked from Councilwoman Rosario Diaz section.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the page is the official profile page for Councilwoman Rosario Diaz.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2020",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states she was elected in 2020 to the City Council.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:54:41Z"
+  },
+  {
+    "name": "Brian Gutierrez",
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+    ],
+    "images": [
+      {
+        "data": "https://www.westcovina.org/home/showpublishedimage/8377/638690138637370000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image near Councilmember Brian Gutierrez section, likely his official portrait.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/home/showpublishedimage/8379/638690142168500000",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The image near the name 'Councilmember Brian Gutierrez' is likely his official portrait.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Referred to as Councilmember Brian Gutierrez on the official city council page."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page title and content repeatedly refer to Brian Gutierrez as 'Councilmember' and 'Councilmember Brian Gutierrez', indicating his role as a council member in West Covina."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Brian.Gutierrez@westcovina.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly provided next to Councilmember Brian Gutierrez's name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "Brian.Gutierrez@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email is explicitly provided in the contact section for Councilmember Brian Gutierrez.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Official biography page linked from Councilmember Brian Gutierrez section.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL of the page is the official profile page for Councilmember Brian Gutierrez.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:54:41Z"
+  }
+]

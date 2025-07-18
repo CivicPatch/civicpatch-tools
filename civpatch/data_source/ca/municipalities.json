@@ -1090,7 +1090,14 @@
       ],
       "population": 109501,
       "website": "https://www.westcovina.org",
-      "fips": "0684200"
+      "fips": "0684200",
+      "meta_updated_at": "2025-07-18T20:55:59Z",
+      "meta_hash": "82c1ef4c0b50d2f006979f2899531b25",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "El Monte",

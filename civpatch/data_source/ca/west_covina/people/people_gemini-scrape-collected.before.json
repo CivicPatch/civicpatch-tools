@@ -1,0 +1,600 @@
+[
+  {
+    "name": "Tony Wu",
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+      "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+      "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+      "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'City Council members' and 'annually select one of their members to serve as Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor' and is a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Tony Wu'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Mayor' is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Tony.Wu@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided next to the name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "Tony.Wu@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link for Tony Wu.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Biography link explicitly provided next to the name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided as a link to Tony Wu's profile page.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website is explicitly linked as the person's profile page within the city's official navigation.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for 'Mayor Tony Wu'.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's profile page was explicitly provided.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:55:57Z"
+  },
+  {
+    "name": "Letty Lopez-Viado",
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+      "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+      "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+      "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'City Council members' and 'annually select one of their members to serve as Mayor'."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor Pro Tem' and is a target role."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor Pro Tem'."
+      },
+      {
+        "data": "Councilwoman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilwoman' and 'elected to the City Council'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilwoman' which is a specific type of 'Council Member'."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor Pro Tem' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Mayor Pro Tempore",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Mayor Pro Tem' is a common abbreviation for 'Mayor Pro Tempore', which is a target role."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Pro Tem Letty Lopez-Viado'."
+      },
+      {
+        "data": "Mayor Pro Tempore",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Normalized form of 'Mayor Pro Tem' based on target roles."
+      },
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Mayor Pro Tem' is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "llopez-viado@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided next to the name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "LLopez-Viado@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Biography link explicitly provided next to the name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided as a link to Letty Lopez-Viado's profile page.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website is explicitly linked as the person's profile page within the city's official navigation.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for 'Mayor Pro Tem Letty Lopez-Viado'.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's profile page was explicitly provided.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2018-11",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Start date 'November 2018' is explicitly mentioned as when she was elected to the City Council.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:55:57Z"
+  },
+  {
+    "name": "Ollie Cantos",
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+      "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+      "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+      "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'City Council members' and 'annually select one of their members to serve as Mayor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilman' and normalized to 'Council Member', which is a target role."
+      },
+      {
+        "data": "Councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilman'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilman' which is a specific type of 'Council Member'."
+      },
+      {
+        "data": "Councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilman' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilman' is a common variation of 'Council Member', which is a target role."
+      },
+      {
+        "data": "Councilman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilman Ollie Cantos'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Normalized form of 'Councilman' based on target roles."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Councilman' is explicitly stated and normalizes to 'Council Member', which is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "ollie.cantos@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided next to the name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "ollie.cantos@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The email address is explicitly provided as a mailto link for this person.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Biography link explicitly provided next to the name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided as a link to Ollie Cantos's profile page.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website is the current page and is explicitly linked as the person's profile page within the city's official navigation.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for 'Councilman Ollie Cantos'.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's profile page was explicitly provided.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:55:57Z"
+  },
+  {
+    "name": "Rosario Diaz",
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+      "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos",
+      "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+      "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilwoman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'City Council members' and 'annually select one of their members to serve as Mayor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilwoman' and normalized to 'Council Member', which is a target role."
+      },
+      {
+        "data": "Councilwoman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilwoman'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilwoman' which is a specific type of 'Council Member'."
+      },
+      {
+        "data": "Councilwoman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilwoman' is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The role 'Councilwoman' is a common variation of 'Council Member', which is a target role."
+      },
+      {
+        "data": "Councilwoman",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilwoman Rosario Diaz'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Normalized form of 'Councilwoman' based on target roles."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Councilwoman' is explicitly stated and normalizes to 'Council Member', which is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'representing the people of District 3'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "rosario.diaz@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided next to the name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "rosario.diaz@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Biography link explicitly provided next to the name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided as a link to Rosario Diaz's profile page.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The website is explicitly linked as the person's profile page within the city's official navigation.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for 'Councilwoman Rosario Diaz'.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's profile page was explicitly provided.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2020",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'In 2020, ... Rosario became ... elected to the West Covina City Council'.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:55:57Z"
+  },
+  {
+    "name": "Brian Gutierrez",
+    "sources": [
+      "https://www.westcovina.org/departments/mayor-city-council",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313",
+      "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911",
+      "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz",
+      "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated next to the name."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'City Council members' and 'annually select one of their members to serve as Mayor'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember' and is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Inferred from 'Councilmember' which is a specific type of 'Council Member'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Brian Gutierrez'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Normalized form of 'Councilmember' based on target roles."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The role 'Councilmember' is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "Brian.Gutierrez@westcovina.org",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided next to the name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "Brian.Gutierrez@westcovina.org",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The email address is explicitly provided and directly associated with the person.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Biography link explicitly provided next to the name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL explicitly provided as a link to Brian Gutierrez's profile page.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Website URL is directly linked to the person's name.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link provided for 'Councilmember Brian Gutierrez'.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz"
+      },
+      {
+        "data": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "A direct link to the person's profile page was explicitly provided.",
+        "source": "https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:55:57Z"
+  }
+]

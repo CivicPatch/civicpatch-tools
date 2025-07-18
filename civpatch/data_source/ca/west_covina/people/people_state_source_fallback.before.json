@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Brian Calderón Tabatabai",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      null
+    ],
+    "updated_at": "2025-07-18T20:53:17Z"
+  },
+  {
+    "name": "Tony Wu",
+    "roles": [
+      "Mayor Pro Tem",
+      "Council Member"
+    ],
+    "divisions": [
+      "District 5"
+    ],
+    "updated_at": "2025-07-18T20:53:17Z"
+  },
+  {
+    "name": "Letty Lopez-Viado",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 2"
+    ],
+    "updated_at": "2025-07-18T20:53:17Z"
+  },
+  {
+    "name": "Rosario Diaz",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 3"
+    ],
+    "updated_at": "2025-07-18T20:53:17Z"
+  },
+  {
+    "name": "Ollie Cantos",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 4"
+    ],
+    "updated_at": "2025-07-18T20:53:17Z"
+  }
+]

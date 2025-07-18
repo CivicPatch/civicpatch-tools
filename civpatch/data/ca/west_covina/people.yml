@@ -1,0 +1,96 @@
+---
+- name: Tony Wu
+  roles:
+  - Mayor
+  divisions:
+  image: https://www.westcovina.org/home/showpublishedimage/8377/638690138637370000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/west_covina/images/ee7c3b79be251e36b7b1aeb5115b5617e40c04c9725601acae249bacba1d961d.png
+  email: Tony.Wu@westcovina.org
+  phone_number: "(626) 939-8400"
+  website: https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313
+  start_date:
+  end_date:
+  sources:
+  - https://www.westcovina.org/departments/mayor-city-council
+  - https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313
+  - https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911
+  - https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos
+  - https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz
+  - https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez
+  updated_at: '2025-07-18T20:55:59Z'
+- name: Letty Lopez-Viado
+  roles:
+  - Mayor Pro Tempore
+  divisions:
+  image: https://www.westcovina.org/home/showpublishedimage/8381/638690162729930000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/west_covina/images/29a0407bbd5eed93028e46b3fc63282bb66ff170c4b803a15193240dadc2d9ec.png
+  email: llopez-viado@westcovina.org
+  phone_number: "(626) 939-8400"
+  website: https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911
+  start_date: 2018-11
+  end_date:
+  sources:
+  - https://www.westcovina.org/departments/mayor-city-council
+  - https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313
+  - https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911
+  - https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos
+  - https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz
+  - https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez
+  updated_at: '2025-07-18T20:55:59Z'
+- name: Brian Gutierrez
+  roles:
+  - Council Member
+  divisions:
+  image: https://www.westcovina.org/home/showpublishedimage/8377/638690138637370000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/west_covina/images/ee7c3b79be251e36b7b1aeb5115b5617e40c04c9725601acae249bacba1d961d.png
+  email: Brian.Gutierrez@westcovina.org
+  phone_number:
+  website: https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez
+  start_date:
+  end_date:
+  sources:
+  - https://www.westcovina.org/departments/mayor-city-council
+  - https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313
+  - https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911
+  - https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz
+  - https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez
+  updated_at: '2025-07-18T20:55:59Z'
+- name: Ollie Cantos
+  roles:
+  - Council Member
+  divisions:
+  image: https://www.westcovina.org/home/showpublishedimage/7546/638083585293930000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/west_covina/images/d4507ea06ef58284ff921cd988126fdc5f121abe57e196cc5a3cb4d2e8f8209a.jpg
+  email: ollie.cantos@westcovina.org
+  phone_number:
+  website: https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos
+  start_date:
+  end_date:
+  sources:
+  - https://www.westcovina.org/departments/mayor-city-council
+  - https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313
+  - https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911
+  - https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos
+  - https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz
+  - https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez
+  updated_at: '2025-07-18T20:55:59Z'
+- name: Rosario Diaz
+  roles:
+  - Council Member
+  divisions:
+  - District 3
+  image: https://www.westcovina.org/home/showpublishedimage/6857/637442231536770000
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/west_covina/images/e6198453cdd4c108a4fc98e8dbb435785bfca0fd79dc0c356c5db94c43916d16.jpg
+  email: rosario.diaz@westcovina.org
+  phone_number: "(626) 939-8400"
+  website: https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz
+  start_date: '2020'
+  end_date:
+  sources:
+  - https://www.westcovina.org/departments/mayor-city-council
+  - https://www.westcovina.org/departments/mayor-city-council/mayor-tony-wu-4313
+  - https://www.westcovina.org/departments/mayor-city-council/mayor-pro-tem-letty-lopez-viado-2911
+  - https://www.westcovina.org/departments/mayor-city-council/councilmember-ollie-cantos
+  - https://www.westcovina.org/departments/mayor-city-council/councilwoman-rosario-diaz
+  - https://www.westcovina.org/departments/mayor-city-council/councilman-brian-gutierrez
+  updated_at: '2025-07-18T20:55:59Z'
