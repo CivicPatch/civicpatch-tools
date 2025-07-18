@@ -1177,7 +1177,14 @@
       ],
       "population": 105053,
       "website": "https://jurupavalley.org",
-      "fips": "0637692"
+      "fips": "0637692",
+      "meta_updated_at": "2025-07-18T20:57:30Z",
+      "meta_hash": "b6c0706f79ce48566af9ff9a73600239",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Daly City",
