@@ -997,7 +997,14 @@
       ],
       "population": 110949,
       "website": "https://www.murrietaca.gov",
-      "fips": "0650076"
+      "fips": "0650076",
+      "meta_updated_at": "2025-07-18T20:09:10Z",
+      "meta_hash": "e85340903cf8d9d3897771afbe8ca344",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Ventura",
