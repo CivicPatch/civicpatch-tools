@@ -1096,7 +1096,14 @@
       ],
       "population": 105661,
       "website": "https://www.cityofsanmateo.org",
-      "fips": "0668252"
+      "fips": "0668252",
+      "meta_updated_at": "2025-07-18T20:21:48Z",
+      "meta_hash": "19d57dec6962430e4b07b77478b05b64",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Jurupa Valley",
