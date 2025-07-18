@@ -1,0 +1,112 @@
+---
+- name: Jessica Ancona
+  roles:
+  - Mayor
+  divisions:
+  image: https://elmonteca.gov/ImageRepository/Document?documentID=4243
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/el_monte/images/f4ddde009cc41a84e3b052826d7cc96c7e559498b7fb9fb3dca084446550ed17.jpg
+  email: jancona@elmonteca.gov
+  phone_number: "(626) 580-2001"
+  website: https://elmonteca.gov/599/Jessica-Ancona
+  start_date: '2024-11-05'
+  end_date: 2026-11
+  sources:
+  - https://elmonteca.gov/342/City-Council
+  - https://elmonteca.gov/599/Jessica-Ancona
+  updated_at: '2025-07-18T20:16:47Z'
+- name: Marisol Cortez
+  roles:
+  - Mayor Pro Tempore
+  - Council Member
+  divisions:
+  - District 6
+  image: https://elmonteca.gov/ImageRepository/Document?documentID=6295
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/el_monte/images/084b2d13725bdf74b97870c5252b6829352ce463f32ac3e3f832fbfbb825a320.jpg
+  email: mcortez@elmonteca.gov
+  phone_number: "(626) 580-2001"
+  website: https://elmonteca.gov/685/Marisol-Cortez
+  start_date: 2022-11
+  end_date: 2026-11
+  sources:
+  - https://elmonteca.gov/342/City-Council
+  - https://elmonteca.gov/685/Marisol-Cortez
+  updated_at: '2025-07-18T20:16:47Z'
+- name: Cindy Galvan
+  roles:
+  - Council Member
+  divisions: []
+  image: https://elmonteca.gov/ImageRepository/Document?documentID=7337
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/el_monte/images/235b475cfb9ce78de45095ffc2209706b76c5bf7b5df83550e449ceec6d16100.jpg
+  email: cgalvan@elmonteca.gov
+  phone_number:
+  website: https://elmonteca.gov/348/Cindy-Galvan
+  start_date: 2024-11
+  end_date: 2028-11
+  sources:
+  - https://elmonteca.gov/342/City-Council
+  - https://elmonteca.gov/directory.aspx?eid=20
+  - https://elmonteca.gov/348/Cindy-Galvan
+  updated_at: '2025-07-18T20:16:47Z'
+- name: Sheila Crippen Thomas
+  roles:
+  - Council Member
+  divisions:
+  image: https://elmonteca.gov/ImageRepository/Document?documentID=7401
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/el_monte/images/b03d7809282eab7ffa43d7135eb165cd72a9092332a15d0bc196826ecc39ae45.jpg
+  email: scrippent@elmonteca.gov
+  phone_number:
+  website: https://elmonteca.gov/687/Sheila-Crippen-Thomas
+  start_date:
+  end_date:
+  sources:
+  - https://elmonteca.gov/342/City-Council
+  - https://elmonteca.gov/directory.aspx?eid=19
+  updated_at: '2025-07-18T20:16:47Z'
+- name: Viviana Longoria
+  roles:
+  - Council Member
+  divisions: []
+  image: https://elmonteca.gov/ImageRepository/Document?documentID=7402
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/el_monte/images/c1c17608ef5e164975f907f4966dbac188d19c45535989f6d567924e3063e091.jpg
+  email: vlongoria@elmonteca.gov
+  phone_number:
+  website: https://elmonteca.gov/642/Viviana-Longoria
+  start_date: 2024-11
+  end_date: 2028-11
+  sources:
+  - https://elmonteca.gov/342/City-Council
+  - https://elmonteca.gov/directory.aspx?eid=97
+  - https://elmonteca.gov/642/Viviana-Longoria
+  updated_at: '2025-07-18T20:16:47Z'
+- name: Martin Herrera
+  roles:
+  - Council Member
+  divisions:
+  - District 2
+  image: https://elmonteca.gov/ImageRepository/Document?documentID=4337
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/el_monte/images/a1b3550428975a01f111bacf83bd4065b810a7d332ed461da201b2926b4c212b.jpg
+  email: mherrera@elmonteca.gov
+  phone_number: "(626) 580-2001"
+  website: https://elmonteca.gov/643/Martin-Herrera
+  start_date: 2022-11
+  end_date: 2026-11
+  sources:
+  - https://elmonteca.gov/342/City-Council
+  - https://elmonteca.gov/643/Martin-Herrera
+  updated_at: '2025-07-18T20:16:47Z'
+- name: Dr. Julia Ruedas
+  roles:
+  - Council Member
+  divisions:
+  - District 3
+  image: https://elmonteca.gov/ImageRepository/Document?documentID=6293
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/el_monte/images/2203caa1457593df25ef0a81d10b5247ce278e8ea3548322eac48dec9389cb10.jpg
+  email: jruedas@elmonteca.gov
+  phone_number: "(626) 580-2001"
+  website: https://elmonteca.gov/686/Dr-Julia-Ruedas
+  start_date: 2022-11
+  end_date: 2026-11
+  sources:
+  - https://elmonteca.gov/342/City-Council
+  - https://elmonteca.gov/686/Dr-Julia-Ruedas
+  updated_at: '2025-07-18T20:16:47Z'

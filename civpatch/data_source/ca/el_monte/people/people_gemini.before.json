@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Jessica Ancona",
+    "roles": [
+      "Mayor",
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "jancona@elmonteca.gov",
+    "website": "https://elmonteca.gov/599/Jessica-Ancona",
+    "start_date": "2024-11-05",
+    "end_date": "2026-11",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/599/Jessica-Ancona"
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Marisol Cortez",
+    "roles": [
+      "Mayor Pro Tem",
+      "Councilmember"
+    ],
+    "divisions": [
+      "District 6"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "mcortez@elmonteca.gov",
+    "website": "https://elmonteca.gov/685/Marisol-Cortez",
+    "start_date": "2022-11",
+    "end_date": "2026-11",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/685/Marisol-Cortez"
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Sheila Crippen Thomas",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "scrippent@elmonteca.gov",
+    "website": "https://elmonteca.gov/687/Sheila-Crippen-Thomas",
+    "start_date": null,
+    "end_date": null,
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/directory.aspx?eid=19"
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Cindy Galvan",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "District 5"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "cgalvan@elmonteca.gov",
+    "website": "https://elmonteca.gov/348/Cindy-Galvan",
+    "start_date": "2024-11",
+    "end_date": "2028-11",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/directory.aspx?eid=20",
+      "https://elmonteca.gov/348/Cindy-Galvan"
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Martin Herrera",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "District 2"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "mherrera@elmonteca.gov",
+    "website": "https://elmonteca.gov/643/Martin-Herrera",
+    "start_date": "2022-11",
+    "end_date": "2026-11",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/643/Martin-Herrera"
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Viviana Longoria",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "District 4"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "vlongoria@elmonteca.gov",
+    "website": "https://elmonteca.gov/642/Viviana-Longoria",
+    "start_date": "2024-11",
+    "end_date": "2028-11",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/directory.aspx?eid=97",
+      "https://elmonteca.gov/642/Viviana-Longoria"
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Dr. Julia Ruedas",
+    "roles": [
+      "Councilmember"
+    ],
+    "divisions": [
+      "District 3"
+    ],
+    "image": null,
+    "phone_number": null,
+    "email": "jruedas@elmonteca.gov",
+    "website": "https://elmonteca.gov/686/Dr-Julia-Ruedas",
+    "start_date": "2022-11",
+    "end_date": "2026-11",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/686/Dr-Julia-Ruedas"
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  }
+]

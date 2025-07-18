@@ -1052,7 +1052,14 @@
       ],
       "population": 109450,
       "website": "https://elmonteca.gov",
-      "fips": "0622230"
+      "fips": "0622230",
+      "meta_updated_at": "2025-07-18T20:16:47Z",
+      "meta_hash": "1d73d7842f9d1e52c214a735cc683f1c",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Inglewood",

@@ -1,0 +1,73 @@
+[
+  {
+    "name": "Jessica Ancona",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-18T20:12:46Z"
+  },
+  {
+    "name": "Marisol Cortez",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-18T20:12:46Z"
+  },
+  {
+    "name": "Sheila Crippen Thomas",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-18T20:12:46Z"
+  },
+  {
+    "name": "Cindy Galvan",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-18T20:12:46Z"
+  },
+  {
+    "name": "Martin Herrera",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-18T20:12:46Z"
+  },
+  {
+    "name": "Viviana Longoria",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-18T20:12:46Z"
+  },
+  {
+    "name": "Dr. Julia Ruedas",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Null"
+    ],
+    "updated_at": "2025-07-18T20:12:46Z"
+  }
+]

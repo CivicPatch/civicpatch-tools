@@ -1,0 +1,474 @@
+[
+  {
+    "name": "Jessica Ancona",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/599/Jessica-Ancona"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'MAYOR'."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated 'elected to the El Monte City Council', which implies the role of Council Member."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jancona@elmonteca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://elmonteca.gov/599/Jessica-Ancona",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Person-specific website link found in the 'Overview' section.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      },
+      {
+        "data": "https://elmonteca.gov/599/Jessica-Ancona",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly linked profile page for Jessica Ancona.",
+        "source": "https://elmonteca.gov/599/Jessica-Ancona"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-11-05",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Elected: November 5, 2024' for the Mayor role, which is the most recent municipal role.",
+        "source": "https://elmonteca.gov/599/Jessica-Ancona"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Terms Expires: November 2026'.",
+        "source": "https://elmonteca.gov/599/Jessica-Ancona"
+      }
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Marisol Cortez",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/685/Marisol-Cortez"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and matches a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 6",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Marisol Cortez Distrcit 6'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mcortez@elmonteca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://elmonteca.gov/685/Marisol-Cortez",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Person-specific website link found in the 'Overview' section.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      },
+      {
+        "data": "https://elmonteca.gov/685/Marisol-Cortez",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The current page is the profile page for Marisol Cortez.",
+        "source": "https://elmonteca.gov/685/Marisol-Cortez"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Elected: November 2022'.",
+        "source": "https://elmonteca.gov/685/Marisol-Cortez"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Terms Expires: November 2026'.",
+        "source": "https://elmonteca.gov/685/Marisol-Cortez"
+      }
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Sheila Crippen Thomas",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/directory.aspx?eid=19"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated and is a target role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "scrippent@elmonteca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      },
+      {
+        "data": "scrippent@elmonteca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://elmonteca.gov/directory.aspx?eid=19"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://elmonteca.gov/687/Sheila-Crippen-Thomas",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Person-specific website link found in the 'Overview' section.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      }
+    ],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Cindy Galvan",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/directory.aspx?eid=20",
+      "https://elmonteca.gov/348/Cindy-Galvan"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role is explicitly stated as 'Councilmember', which is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember District 5' and 'Councilmember' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember District 5'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "cgalvan@elmonteca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      },
+      {
+        "data": "cgalvan@elmonteca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided as a mailto link.",
+        "source": "https://elmonteca.gov/directory.aspx?eid=20"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://elmonteca.gov/348/Cindy-Galvan",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Person-specific website link found in the 'Overview' section.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      },
+      {
+        "data": "https://elmonteca.gov/348/Cindy-Galvan",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly associated with Cindy Galvan's name and profile.",
+        "source": "https://elmonteca.gov/348/Cindy-Galvan"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Elected: November 2024'.",
+        "source": "https://elmonteca.gov/348/Cindy-Galvan"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Terms Expires: November 2028'.",
+        "source": "https://elmonteca.gov/348/Cindy-Galvan"
+      }
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Martin Herrera",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/643/Martin-Herrera"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated as 'Councilmember' and matches a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 2",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Directly stated in the text."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mherrera@elmonteca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://elmonteca.gov/643/Martin-Herrera",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Person-specific website link found in the 'Overview' section.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      },
+      {
+        "data": "https://elmonteca.gov/643/Martin-Herrera",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the current page and clearly a profile page for Martin Herrera.",
+        "source": "https://elmonteca.gov/643/Martin-Herrera"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Elected: November 2022'.",
+        "source": "https://elmonteca.gov/643/Martin-Herrera"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Terms Expires : November 2026'.",
+        "source": "https://elmonteca.gov/643/Martin-Herrera"
+      }
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Viviana Longoria",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/directory.aspx?eid=97",
+      "https://elmonteca.gov/642/Viviana-Longoria"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role 'Councilmember' is explicitly stated."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember District 4' and 'council member' is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember District 4'."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "vlongoria@elmonteca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      },
+      {
+        "data": "vlongoria@elmonteca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://elmonteca.gov/directory.aspx?eid=97"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://elmonteca.gov/642/Viviana-Longoria",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Person-specific website link found in the 'Overview' section.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      },
+      {
+        "data": "https://elmonteca.gov/642/Viviana-Longoria",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to Viviana Longoria's profile page found in the text.",
+        "source": "https://elmonteca.gov/642/Viviana-Longoria"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Elected: November 2024'.",
+        "source": "https://elmonteca.gov/642/Viviana-Longoria"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2028-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Terms Expires: November 2028'.",
+        "source": "https://elmonteca.gov/642/Viviana-Longoria"
+      }
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  },
+  {
+    "name": "Dr. Julia Ruedas",
+    "sources": [
+      "https://elmonteca.gov/342/City-Council",
+      "https://elmonteca.gov/686/Dr-Julia-Ruedas"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and is a target role."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 3",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'District 3' next to her name and title."
+      }
+    ],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jruedas@elmonteca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided as a mailto link.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://elmonteca.gov/686/Dr-Julia-Ruedas",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Person-specific website link found in the 'Overview' section.",
+        "source": "https://elmonteca.gov/342/City-Council"
+      },
+      {
+        "data": "https://elmonteca.gov/686/Dr-Julia-Ruedas",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is directly associated with her name and section header.",
+        "source": "https://elmonteca.gov/686/Dr-Julia-Ruedas"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2022-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Elected: November 2022'.",
+        "source": "https://elmonteca.gov/686/Dr-Julia-Ruedas"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-11",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Terms Expires : November 2026'.",
+        "source": "https://elmonteca.gov/686/Dr-Julia-Ruedas"
+      }
+    ],
+    "updated_at": "2025-07-18T20:16:45Z"
+  }
+]
