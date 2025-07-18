@@ -975,7 +975,14 @@
       ],
       "population": 114355,
       "website": "https://www.downeyca.org",
-      "fips": "0619766"
+      "fips": "0619766",
+      "meta_updated_at": "2025-07-18T20:08:18Z",
+      "meta_hash": "6f0cb4f25d7778a39280e80ab3343080",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Costa Mesa",
