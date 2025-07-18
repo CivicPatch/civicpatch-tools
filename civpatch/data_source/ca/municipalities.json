@@ -1287,7 +1287,14 @@
       ],
       "population": 95558,
       "website": "https://ci.carson.ca.us",
-      "fips": "0611530[7]"
+      "fips": "0611530[7]",
+      "meta_updated_at": "2025-07-18T21:09:36Z",
+      "meta_hash": "ed8ad6416b32ac7e4e2fcca75cec471b",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "San Marcos",
