@@ -1008,7 +1008,14 @@
       ],
       "population": 110763,
       "website": "https://www.cityofventura.ca.gov",
-      "fips": "0665042"
+      "fips": "0665042",
+      "meta_updated_at": "2025-07-18T20:13:50Z",
+      "meta_hash": "ce1f582776710f418a227ed656d4ed48",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Temecula",
