@@ -953,7 +953,14 @@
       ],
       "population": 115291,
       "website": "https://www.ci.antioch.ca.us",
-      "fips": "0602252"
+      "fips": "0602252",
+      "meta_updated_at": "2025-07-18T20:09:24Z",
+      "meta_hash": "97307d1479ee60f06ba655c1d9b61657",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Carlsbad",
