@@ -1074,7 +1074,14 @@
       ],
       "population": 107337,
       "website": "https://burbankca.gov",
-      "fips": "0608954"
+      "fips": "0608954",
+      "meta_updated_at": "2025-07-18T20:18:58Z",
+      "meta_hash": "06525aec2898269459d3af563b577898",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "El Cajon",
