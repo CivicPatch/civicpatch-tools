@@ -1063,7 +1063,14 @@
       ],
       "population": 107762,
       "website": "https://www.cityofinglewood.org",
-      "fips": "0636546"
+      "fips": "0636546",
+      "meta_updated_at": "2025-07-18T20:16:11Z",
+      "meta_hash": "6c29255de030d14f2bb9a52c2c978338",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Burbank",
