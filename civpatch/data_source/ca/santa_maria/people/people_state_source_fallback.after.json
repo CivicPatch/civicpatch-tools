@@ -1,0 +1,49 @@
+[
+  {
+    "name": "Alice Patino",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [
+      "At-large"
+    ],
+    "updated_at": "2025-07-18T20:11:50Z"
+  },
+  {
+    "name": "Gloria Soto",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-18T20:11:50Z"
+  },
+  {
+    "name": "Maribel Aguilera-Hernandez",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [],
+    "updated_at": "2025-07-18T20:11:50Z"
+  },
+  {
+    "name": "Carlos Escobedo",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 1"
+    ],
+    "updated_at": "2025-07-18T20:11:50Z"
+  },
+  {
+    "name": "Gloria Flores",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 2"
+    ],
+    "updated_at": "2025-07-18T20:11:50Z"
+  }
+]
