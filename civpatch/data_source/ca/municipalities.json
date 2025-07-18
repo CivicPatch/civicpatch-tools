@@ -1085,7 +1085,14 @@
       ],
       "population": 106215,
       "website": "https://www.ci.el-cajon.ca.us",
-      "fips": "0621712"
+      "fips": "0621712",
+      "meta_updated_at": "2025-07-18T20:24:29Z",
+      "meta_hash": "abf21d52b80795715a38aefdd8c3eb97",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "San Mateo",

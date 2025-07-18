@@ -1,0 +1,71 @@
+---
+- name: Bill Wells
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.ci.el-cajon.ca.us/your-government/departments/city-clerk/economic-interests-form-700
+  updated_at: '2025-07-18T20:24:29Z'
+- name: Gary Kendrick
+  roles:
+  - Mayor Pro Tempore
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.ci.el-cajon.ca.us/your-government/departments/city-clerk/economic-interests-form-700
+  updated_at: '2025-07-18T20:24:29Z'
+- name: Michelle Metschel
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.ci.el-cajon.ca.us/your-government/departments/city-clerk/economic-interests-form-700
+  updated_at: '2025-07-18T20:24:29Z'
+- name: Phil Ortiz
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.ci.el-cajon.ca.us/your-government/departments/city-clerk/economic-interests-form-700
+  updated_at: '2025-07-18T20:24:29Z'
+- name: Steve Goble
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email:
+  phone_number:
+  website:
+  start_date:
+  end_date:
+  sources:
+  - https://www.ci.el-cajon.ca.us/your-government/departments/city-clerk/economic-interests-form-700
+  updated_at: '2025-07-18T20:24:29Z'

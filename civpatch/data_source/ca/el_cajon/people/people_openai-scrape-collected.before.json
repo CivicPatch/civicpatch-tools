@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Bill Wells",
+    "sources": [
+      "https://www.ci.el-cajon.ca.us/your-government/departments/city-clerk/economic-interests-form-700"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Mayor Bill Wells' under City of El Cajon Elected Officials."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:23:52Z"
+  },
+  {
+    "name": "Gary Kendrick",
+    "sources": [
+      "https://www.ci.el-cajon.ca.us/your-government/departments/city-clerk/economic-interests-form-700"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly listed as 'Mayor Pro Tem Gary Kendrick' under City of El Cajon Elected Officials."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:23:52Z"
+  },
+  {
+    "name": "Steve Goble",
+    "sources": [
+      "https://www.ci.el-cajon.ca.us/your-government/departments/city-clerk/economic-interests-form-700"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as 'Councilmember Steve Goble' under City of El Cajon Elected Officials; normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:23:52Z"
+  },
+  {
+    "name": "Michelle Metschel",
+    "sources": [
+      "https://www.ci.el-cajon.ca.us/your-government/departments/city-clerk/economic-interests-form-700"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as 'Councilmember Michelle Metschel' under City of El Cajon Elected Officials; normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:23:52Z"
+  },
+  {
+    "name": "Phil Ortiz",
+    "sources": [
+      "https://www.ci.el-cajon.ca.us/your-government/departments/city-clerk/economic-interests-form-700"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Listed as 'Councilmember Phil Ortiz' under City of El Cajon Elected Officials; normalized to 'Council Member'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [],
+    "updated_at": "2025-07-18T20:23:52Z"
+  }
+]
