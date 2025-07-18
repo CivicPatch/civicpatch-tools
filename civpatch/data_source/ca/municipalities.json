@@ -1312,7 +1312,14 @@
       ],
       "population": 94833,
       "website": "https://www.san-marcos.net",
-      "fips": "0668196"
+      "fips": "0668196",
+      "meta_updated_at": "2025-07-18T21:08:01Z",
+      "meta_hash": "c9ff67c8a2467049a239c5794a508012",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Mission Viejo",
