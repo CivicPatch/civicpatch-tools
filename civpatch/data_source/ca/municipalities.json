@@ -1199,7 +1199,14 @@
       ],
       "population": 104026,
       "website": "https://www.rialtoca.gov",
-      "fips": "0660466"
+      "fips": "0660466",
+      "meta_updated_at": "2025-07-18T20:56:08Z",
+      "meta_hash": "31cf101b1769fd82b192964232fadea8",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Norwalk",
