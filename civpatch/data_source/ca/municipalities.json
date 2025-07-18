@@ -1283,7 +1283,14 @@
       ],
       "population": 95740,
       "website": "https://www.comptoncity.org",
-      "fips": "0615044"
+      "fips": "0615044",
+      "meta_updated_at": "2025-07-18T21:05:41Z",
+      "meta_hash": "68376749e9dc6a3bc792bca044550fa0",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Carson",
