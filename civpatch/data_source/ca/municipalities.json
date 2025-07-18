@@ -1254,7 +1254,14 @@
       ],
       "population": 99818,
       "website": "https://www.cityofhesperia.us",
-      "fips": "0633434"
+      "fips": "0633434",
+      "meta_updated_at": "2025-07-18T21:00:26Z",
+      "meta_hash": "fd7cd991d62e59f6a819083a19757df9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Vista",
