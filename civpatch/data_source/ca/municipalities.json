@@ -1086,8 +1086,8 @@
       "population": 106215,
       "website": "https://www.ci.el-cajon.ca.us",
       "fips": "0621712",
-      "meta_updated_at": "2025-07-18T20:24:29Z",
-      "meta_hash": "abf21d52b80795715a38aefdd8c3eb97",
+      "meta_updated_at": "2025-07-18T20:47:25Z",
+      "meta_hash": "3cb62ca233c65fd1624e03f5970695df",
       "meta_sources": [
         "state_source",
         "gemini",
