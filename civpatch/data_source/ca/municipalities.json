@@ -1232,7 +1232,14 @@
       ],
       "population": 102386,
       "website": "https://www.cityofvacaville.com",
-      "fips": "0681554"
+      "fips": "0681554",
+      "meta_updated_at": "2025-07-18T21:12:54Z",
+      "meta_hash": "7955ed283135988b83d50f01b249d9f2",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Chico",
