@@ -1188,7 +1188,14 @@
       ],
       "population": 104901,
       "website": "https://www.dalycity.org",
-      "fips": "0617918"
+      "fips": "0617918",
+      "meta_updated_at": "2025-07-18T20:55:16Z",
+      "meta_hash": "37c8ca96b3bdd685a1bde4ca68d73dc9",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Rialto",
