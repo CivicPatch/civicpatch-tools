@@ -1,0 +1,100 @@
+---
+- name: Ana Valencia
+  roles:
+  - Mayor
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: avalencia@norwalkca.gov
+  phone_number: "(562) 929-5700"
+  website: https://www.norwalk.org/government/mayor_and_city_council/valencia.php
+  start_date: '2020'
+  end_date:
+  sources:
+  - https://www.norwalk.org
+  - https://www.norwalk.org/government/mayor_and_city_council/ayala.php
+  - https://www.norwalk.org/government/mayor_and_city_council/perez.php
+  - https://www.norwalk.org/government/mayor_and_city_council/ramirez.php
+  - https://www.norwalk.org/government/mayor_and_city_council/rios.php
+  - https://www.norwalk.org/government/mayor_and_city_council/valencia.php
+  updated_at: '2025-07-18T21:01:33Z'
+- name: Margarita L. Rios
+  roles:
+  - Mayor
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: mlrios@norwalkca.gov
+  phone_number:
+  website: https://www.norwalk.org/government/mayor_and_city_council/rios.php
+  start_date: '2017'
+  end_date:
+  sources:
+  - https://www.norwalk.org
+  - https://www.norwalk.org/government/mayor_and_city_council/ayala.php
+  - https://www.norwalk.org/government/mayor_and_city_council/perez.php
+  - https://www.norwalk.org/government/mayor_and_city_council/ramirez.php
+  - https://www.norwalk.org/government/mayor_and_city_council/rios.php
+  - https://www.norwalk.org/government/mayor_and_city_council/valencia.php
+  updated_at: '2025-07-18T21:01:33Z'
+- name: Tony Ayala
+  roles:
+  - Mayor
+  divisions:
+  image:
+  cdn_image:
+  email: tayala@norwalkca.gov
+  phone_number: "(562) 929-5700"
+  website: https://www.norwalk.org/government/mayor_and_city_council/ayala.php
+  start_date: '2017'
+  end_date:
+  sources:
+  - https://www.norwalk.org
+  - https://www.norwalk.org/government/mayor_and_city_council/ayala.php
+  - https://www.norwalk.org/government/mayor_and_city_council/perez.php
+  - https://www.norwalk.org/government/mayor_and_city_council/ramirez.php
+  - https://www.norwalk.org/government/mayor_and_city_council/rios.php
+  - https://www.norwalk.org/government/mayor_and_city_council/valencia.php
+  updated_at: '2025-07-18T21:01:33Z'
+- name: Jennifer Perez
+  roles:
+  - Vice Mayor
+  - Board Member
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: jperez@norwalkca.gov
+  phone_number: "(562) 929-5700"
+  website: https://www.norwalk.org/government/mayor_and_city_council/perez.php
+  start_date: 2017-03
+  end_date:
+  sources:
+  - https://www.norwalk.org
+  - https://www.norwalk.org/government/mayor_and_city_council/ayala.php
+  - https://www.norwalk.org/government/mayor_and_city_council/perez.php
+  - https://www.norwalk.org/government/mayor_and_city_council/ramirez.php
+  - https://www.norwalk.org/government/mayor_and_city_council/rios.php
+  - https://www.norwalk.org/government/mayor_and_city_council/valencia.php
+  updated_at: '2025-07-18T21:01:33Z'
+- name: Rick Ramirez
+  roles:
+  - Council Member
+  divisions:
+  image:
+  cdn_image:
+  email: rramirez@norwalkca.gov
+  phone_number: "(562) 929-5700"
+  website: https://www.norwalk.org/government/mayor_and_city_council/ramirez.php
+  start_date: '2024'
+  end_date:
+  sources:
+  - https://www.norwalk.org
+  - https://www.norwalk.org/government/mayor_and_city_council/ayala.php
+  - https://www.norwalk.org/government/mayor_and_city_council/perez.php
+  - https://www.norwalk.org/government/mayor_and_city_council/ramirez.php
+  - https://www.norwalk.org/government/mayor_and_city_council/rios.php
+  - https://www.norwalk.org/government/mayor_and_city_council/valencia.php
+  updated_at: '2025-07-18T21:01:33Z'

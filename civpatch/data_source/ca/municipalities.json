@@ -1210,7 +1210,14 @@
       ],
       "population": 102773,
       "website": "https://www.norwalk.org",
-      "fips": "0652526"
+      "fips": "0652526",
+      "meta_updated_at": "2025-07-18T21:01:33Z",
+      "meta_hash": "c788e6180550308b2b822b887c4228a4",
+      "meta_sources": [
+        "state_source",
+        "gemini",
+        "openai"
+      ]
     },
     {
       "name": "Menifee",

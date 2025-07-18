@@ -1,0 +1,104 @@
+[
+  {
+    "name": "Tony Ayala",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "562-929-5700",
+    "email": "tayala@norwalkca.gov",
+    "website": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+    "start_date": "2017",
+    "end_date": null,
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+    ],
+    "updated_at": "2025-07-18T21:00:12Z"
+  },
+  {
+    "name": "Jennifer Perez",
+    "roles": [
+      "Vice Mayor",
+      "Mayor",
+      "Board Member",
+      "Council Member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "562-929-5700",
+    "email": "jperez@norwalkca.gov",
+    "website": "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+    "start_date": "2017-03",
+    "end_date": null,
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+    ],
+    "updated_at": "2025-07-18T21:00:12Z"
+  },
+  {
+    "name": "Rick Ramirez",
+    "roles": [
+      "Council Member",
+      "Councilmember",
+      "Mayor",
+      "Board Member",
+      "Alternate Delegate",
+      "Alternate",
+      "Advisory Body City Council Liaison"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "562-929-5700",
+    "email": "rramirez@norwalkca.gov",
+    "website": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+    "start_date": "2024",
+    "end_date": null,
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+    ],
+    "updated_at": "2025-07-18T21:00:12Z"
+  },
+  {
+    "name": "Margarita L. Rios",
+    "roles": [
+      "Council Member",
+      "Councilmember",
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "mlrios@norwalkca.gov",
+    "website": "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+    "start_date": "2017",
+    "end_date": null,
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+    ],
+    "updated_at": "2025-07-18T21:00:12Z"
+  },
+  {
+    "name": "Ana Valencia",
+    "roles": [
+      "Council Member",
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": "562-929-5700",
+    "email": "avalencia@norwalkca.gov",
+    "website": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php",
+    "start_date": "2020",
+    "end_date": null,
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "updated_at": "2025-07-18T21:00:12Z"
+  }
+]

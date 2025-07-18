@@ -1,0 +1,552 @@
+[
+  {
+    "name": "Tony Ayala",
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Ayala'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Ayala' and 'He is honored to serve as a Mayor'."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'served as Vice Mayor in 2020 and 2023'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'second term on City Council' and 'first elected to the City Council'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Ayala' and 'Mayor' is a target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Ayala'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Ayala' in the link text."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Mayor Ayala'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "tayala@norwalkca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found.",
+        "source": "https://www.norwalk.org"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was found.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2017",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'first elected to the City Council in 2017'.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T21:01:33Z"
+  },
+  {
+    "name": "Jennifer Perez",
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Mayor Perez'."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Mayor Perez'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Implied by being listed under 'Mayor and City Council' and having a 'Vice Mayor' role, which is a council position."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Mayor Perez' and 'Vice Mayor' is a target role."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'California Contract Cities Association (CCCA) Board of Directors and Executive Board' and 'California Joint Powers Insurance Authority (JPIA) Executive Board Member', and 'Board Member' is a target role."
+      },
+      {
+        "data": "President",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'currently the 24/25 President' for CCCA, and 'President' is a target role (council president)."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Mayor Perez'."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Mayor Perez' in the link text."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Vice Mayor Perez'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "jperez@norwalkca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly listed under 'Contact us' section for Jennifer Perez.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found.",
+        "source": "https://www.norwalk.org"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was found.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2017-03",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'elected in March 2017' as the start of her current tenure.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T21:01:33Z"
+  },
+  {
+    "name": "Rick Ramirez",
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ramirez'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ramirez'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ramirez' and 'Council member' is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ramirez' and 'As a Councilmember in the City of Norwalk'."
+      },
+      {
+        "data": "Boardmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Boardmember for the 1-5 Consortium', which is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ramirez' in the link text."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Ramirez'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "rramirez@norwalkca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed under 'Contact us' for Rick Ramirez.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found.",
+        "source": "https://www.norwalk.org"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was found.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 're-elected in 2024' as the most recent election date.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T21:01:33Z"
+  },
+  {
+    "name": "Margarita L. Rios",
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Rios'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Rios'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Rios' and 'Council member' is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Rios'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Margarita L. Rios' in the heading and body."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated she served as Mayor in 2019 and 2024, and the 2024 term is considered active."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Rios'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mlrios@norwalkca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly provided in the 'Contact us' section.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found.",
+        "source": "https://www.norwalk.org"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was found.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2017",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'Elected in 2017'.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T21:01:33Z"
+  },
+  {
+    "name": "Ana Valencia",
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Valencia'."
+      },
+      {
+        "data": "Council member",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Valencia'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Valencia' and 'Council member' is a target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Valencia'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Valencia' in the link text."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember Valencia' and 'served on the City Council'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'As Mayor in 2023'."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "avalencia@norwalkca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address explicitly stated next to the person's name.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page found.",
+        "source": "https://www.norwalk.org"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was provided.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page was found.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2020",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated 'served on the City Council since 2020'.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T21:01:33Z"
+  }
+]

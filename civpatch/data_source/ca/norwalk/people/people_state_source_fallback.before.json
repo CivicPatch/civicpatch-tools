@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Tony Ayala",
+    "roles": [
+      "Mayor",
+      "Council Member"
+    ],
+    "divisions": [
+      "Norwalk City Council"
+    ],
+    "updated_at": "2025-07-18T20:57:39Z"
+  },
+  {
+    "name": "Jennifer Perez",
+    "roles": [
+      "Vice Mayor",
+      "Council Member"
+    ],
+    "divisions": [
+      "Norwalk City Council"
+    ],
+    "updated_at": "2025-07-18T20:57:39Z"
+  },
+  {
+    "name": "Rick Ramirez",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Norwalk City Council"
+    ],
+    "updated_at": "2025-07-18T20:57:39Z"
+  },
+  {
+    "name": "Margarita L. Rios",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Norwalk City Council"
+    ],
+    "updated_at": "2025-07-18T20:57:39Z"
+  },
+  {
+    "name": "Ana Valencia",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "Norwalk City Council"
+    ],
+    "updated_at": "2025-07-18T20:57:39Z"
+  }
+]

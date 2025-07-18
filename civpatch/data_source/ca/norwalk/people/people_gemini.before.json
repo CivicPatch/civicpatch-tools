@@ -1,0 +1,123 @@
+[
+  {
+    "name": "Tony Ayala",
+    "roles": [
+      "Mayor",
+      "Vice Mayor",
+      "Council member"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "tayala@norwalkca.gov",
+    "website": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+    "start_date": "2017",
+    "end_date": null,
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "updated_at": "2025-07-18T21:01:33Z"
+  },
+  {
+    "name": "Jennifer Perez",
+    "roles": [
+      "Vice Mayor",
+      "Council member",
+      "Board Member",
+      "President"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "jperez@norwalkca.gov",
+    "website": "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+    "start_date": "2017-03",
+    "end_date": null,
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "updated_at": "2025-07-18T21:01:33Z"
+  },
+  {
+    "name": "Rick Ramirez",
+    "roles": [
+      "Councilmember",
+      "Council member",
+      "Boardmember"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "rramirez@norwalkca.gov",
+    "website": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+    "start_date": "2024",
+    "end_date": null,
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "updated_at": "2025-07-18T21:01:33Z"
+  },
+  {
+    "name": "Margarita L. Rios",
+    "roles": [
+      "Councilmember",
+      "Council member",
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "mlrios@norwalkca.gov",
+    "website": "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+    "start_date": "2017",
+    "end_date": null,
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "updated_at": "2025-07-18T21:01:33Z"
+  },
+  {
+    "name": "Ana Valencia",
+    "roles": [
+      "Councilmember",
+      "Council member",
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": null,
+    "phone_number": null,
+    "email": "avalencia@norwalkca.gov",
+    "website": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php",
+    "start_date": "2020",
+    "end_date": null,
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "updated_at": "2025-07-18T21:01:33Z"
+  }
+]

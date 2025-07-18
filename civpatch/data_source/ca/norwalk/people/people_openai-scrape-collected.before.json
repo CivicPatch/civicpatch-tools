@@ -1,0 +1,350 @@
+[
+  {
+    "name": "Tony Ayala",
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page lists 'Mayor Ayala' under the Mayor and City Council section, indicating Tony Ayala is the Mayor."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page title and text explicitly state he is currently serving as Mayor of Norwalk."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "562-929-5700",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed under contact info for the City of Norwalk, associated with Mayor Ayala's page.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tayala@norwalkca.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address explicitly listed next to Tony Ayala's name on the page.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL explicitly links to Mayor Ayala's profile page.",
+        "source": "https://www.norwalk.org"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the official city webpage dedicated to Mayor Ayala.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2017",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states he was first elected to City Council in 2017; currently serving as Mayor, implying term started at least by 2017.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ayala.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T21:00:12Z"
+  },
+  {
+    "name": "Jennifer Perez",
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page lists 'Vice Mayor Perez' under the Mayor and City Council section, indicating Jennifer Perez is Vice Mayor."
+      },
+      {
+        "data": "Vice Mayor",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The page title and text explicitly state 'Vice Mayor Perez' and describe her current role as Vice Mayor."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "She served as Mayor from March 2018 to March 2019 and again from March 2020 to December 2021, as stated in the text."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.85,
+        "llm_confidence_reason": "She is a Board Member and Executive Board member of the California Contract Cities Association (CCCA) and California Joint Powers Insurance Authority (JPIA), which are municipal-related boards."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Vice Mayor is typically a council member with additional duties; the text implies she is a city council member as Vice Mayor."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "562-929-5700",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "The general city phone number is provided on the page; no direct personal phone number found.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "jperez@norwalkca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email explicitly listed on the page as contact for Jennifer Perez.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL explicitly links to Vice Mayor Perez's profile page.",
+        "source": "https://www.norwalk.org"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/perez.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "This is the official city webpage dedicated to Vice Mayor Jennifer Perez.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2017-03",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "She was elected in March 2017 as stated in the text.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/perez.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T21:00:12Z"
+  },
+  {
+    "name": "Rick Ramirez",
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Councilmember Ramirez' under Mayor and City Council, indicating active council member role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The text explicitly states Rick Ramirez is a Councilmember in the City of Norwalk."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Rick Ramirez served as Mayor during 2007-2008, but this is a past role, so not currently active."
+      },
+      {
+        "data": "Board Member",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "He has served as Boardmember for the 1-5 Consortium, which is a recognized board role."
+      },
+      {
+        "data": "Alternate Delegate",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "He is Alternate Delegate for the California Contract Cities, a recognized municipal role."
+      },
+      {
+        "data": "Alternate",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "He is Alternate for the Southeast Area Animal Control and Southeast Los Angeles County Workforce Development Board; role named 'Alternate' as given."
+      },
+      {
+        "data": "Advisory Body City Council Liaison",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "He serves as Advisory Body City Council Liaison to the Public Safety and Social Services commissions, a recognized liaison role."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "562-929-5700",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Phone number listed as general city contact near the councilmember section; no direct personal number found.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "rramirez@norwalkca.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email explicitly listed as rramirez@norwalkca.gov near Rick Ramirez's name.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL explicitly links to Councilmember Ramirez's profile page.",
+        "source": "https://www.norwalk.org"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The URL provided is the official City of Norwalk page for Councilmember Ramirez.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2024",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Rick Ramirez was re-elected in 2024; this is the most recent term start date.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/ramirez.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T21:00:12Z"
+  },
+  {
+    "name": "Margarita L. Rios",
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Councilmember Rios' under Mayor and City Council, indicating active council member role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page title and content explicitly identify Margarita L. Rios as a Councilmember of Norwalk."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states she served as Mayor of Norwalk in 2019 and again in 2024, indicating active mayoral roles during those years."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [],
+    "emails": [
+      {
+        "data": "mlrios@norwalkca.gov",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email address is explicitly provided near the name on the page.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL explicitly links to Councilmember Rios's profile page.",
+        "source": "https://www.norwalk.org"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/rios.php",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the official city webpage dedicated to Councilmember Rios.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2017",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "She was elected in 2017 for her council seat as stated in the text.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/rios.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T21:00:12Z"
+  },
+  {
+    "name": "Ana Valencia",
+    "sources": [
+      "https://www.norwalk.org",
+      "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+    ],
+    "images": [],
+    "roles": [
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Listed as 'Councilmember Valencia' under Mayor and City Council, indicating active council member role."
+      },
+      {
+        "data": "Council Member",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "The text explicitly states 'Councilmember Valencia' and describes her service on the City Council since 2020, indicating an active council member role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The text states 'As Mayor in 2023, Ana continued her commitment...', indicating she served as Mayor in 2023, which is recent and likely active or very recent."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "562-929-5700",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "The general city phone number is provided near the contact info; no direct personal phone number is given.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+      }
+    ],
+    "emails": [
+      {
+        "data": "avalencia@norwalkca.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided as avalencia@norwalkca.gov in the contact section.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+      }
+    ],
+    "websites": [
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "URL explicitly links to Councilmember Valencia's profile page.",
+        "source": "https://www.norwalk.org"
+      },
+      {
+        "data": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "The URL is the official city council member page for Ana Valencia.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+      }
+    ],
+    "start_dates": [
+      {
+        "data": "2020",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "Text states Ana Valencia has served on the City Council since 2020.",
+        "source": "https://www.norwalk.org/government/mayor_and_city_council/valencia.php"
+      }
+    ],
+    "end_dates": [],
+    "updated_at": "2025-07-18T21:00:12Z"
+  }
+]
