@@ -44,8 +44,6 @@ Learn More about 2-1-1 HelpLine of Santa Barbara County](https://www.cityofsanta
 
 TranslateAbkhazAcehneseAcholiAfarAfrikaansAlbanianAlurAmharicArabicArmenianAssameseAvarAwadhiAymaraAzerbaijaniBalineseBaluchiBambaraBaouléBashkirBasqueBatak KaroBatak SimalungunBatak TobaBelarusianBembaBengaliBetawiBhojpuriBikolBosnianBretonBulgarianBuryatCantoneseCatalanCebuanoChamorroChechenChichewaChinese (Simplified)Chinese (Traditional)ChuukeseChuvashCorsicanCrimean Tatar (Cyrillic)Crimean Tatar (Latin)CroatianCzechDanishDariDhivehiDinkaDogriDombeDutchDyulaDzongkhaEsperantoEstonianEweFaroeseFijianFilipinoFinnishFonFrenchFrench (Canada)FrisianFriulianFulaniGaGalicianGeorgianGermanGreekGuaraniGujaratiHaitian CreoleHakha ChinHausaHawaiianHebrewHiligaynonHindiHmongHungarianHunsrikIbanIcelandicIgboIlocanoIndonesianInuktut (Latin)Inuktut (Syllabics)IrishItalianJamaican PatoisJapaneseJavaneseJingpoKalaallisutKannadaKanuriKapampanganKazakhKhasiKhmerKigaKikongoKinyarwandaKitubaKokborokKomiKonkaniKoreanKrioKurdish (Kurmanji)Kurdish (Sorani)KyrgyzLaoLatgalianLatinLatvianLigurianLimburgishLingalaLithuanianLombardLugandaLuoLuxembourgishMacedonianMadureseMaithiliMakassarMalagasyMalayMalay (Jawi)MalayalamMalteseMamManxMaoriMarathiMarshalleseMarwadiMauritian CreoleMeadow MariMeiteilon (Manipuri)MinangMizoMongolianMyanmar (Burmese)Nahuatl (Eastern Huasteca)NdauNdebele (South)Nepalbhasa (Newari)NepaliNKoNorwegianNuerOccitanOdia (Oriya)OromoOssetianPangasinanPapiamentoPashtoPersianPolishPortuguese (Brazil)Portuguese (Portugal)Punjabi (Gurmukhi)Punjabi (Shahmukhi)QuechuaQʼeqchiʼRomaniRomanianRundiRussianSami (North)SamoanSangoSanskritSantali (Latin)Santali (Ol Chiki)Scots GaelicSepediSerbianSesothoSeychellois CreoleShanShonaSicilianSilesianSindhiSinhalaSlovakSlovenianSomaliSpanishSundaneseSusuSwahiliSwatiSwedishTahitianTajikTamazightTamazight (Tifinagh)TamilTatarTeluguTetumThaiTibetanTigrinyaTivTok PisinTonganTshilubaTsongaTswanaTuluTumbukaTurkishTurkmenTuvanTwiUdmurtUkrainianUrduUyghurUzbekVendaVenetianVietnameseWarayWelshWolofXhosaYakutYiddishYorubaYucatec MayaZapotecZulu
 
-![](https://www.cityofsantamaria.org/home/showpublishedimage/8436/638205261517370000)
-
 [I Want To?](https:void%280%29;)
 
 - [Home](https://www.cityofsantamaria.org/home "Click to open Home")
@@ -324,9 +322,7 @@ Follow on Facebook](https://www.facebook.com/CityofSantaMariaCa "Follow on Faceb
 
 [Follow us on Twitter/X](https://www.x.com/City_SantaMaria "Follow us on Twitter/X")
 
-[![](https://www.cityofsantamaria.org/home/showpublishedimage/8426/638203074738000000)  
-\
-Subscribe on YouTube](https://www.youtube.com/c/CityofSantaMariaCalifornia "Subscribe on YouTube")
+[Subscribe on YouTube](https://www.youtube.com/c/CityofSantaMariaCalifornia "Subscribe on YouTube")
 
 [Click for More](https://www.cityofsantamaria.org/services/departments/city-manager-s-office/communications/city-social-media-pages "Click for More")
 
@@ -340,10 +336,10 @@ Design by [GRANICUS](https://www.granicus.com) - Connecting People &amp; Governm
 
 [View Full Site](https:void%280%29;)
 
-Loading ...
-
 Original text
 
 Rate this translation
 
 Your feedback will be used to help improve Google Translate
+
+Loading ...

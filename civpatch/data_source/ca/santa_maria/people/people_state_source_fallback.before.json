@@ -5,30 +5,9 @@
       "Mayor"
     ],
     "divisions": [
-      "At-Large"
+      "Citywide"
     ],
-    "updated_at": "2025-07-18T20:11:50Z"
-  },
-  {
-    "name": "Gloria Soto",
-    "roles": [
-      "Council Member",
-      "Mayor Pro-Tem"
-    ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-18T20:11:50Z"
-  },
-  {
-    "name": "Maribel Aguilera-Hernandez",
-    "roles": [
-      "Council Member"
-    ],
-    "divisions": [
-      null
-    ],
-    "updated_at": "2025-07-18T20:11:50Z"
+    "updated_at": "2025-07-19T00:10:19Z"
   },
   {
     "name": "Carlos Escobedo",
@@ -38,7 +17,7 @@
     "divisions": [
       "District 1"
     ],
-    "updated_at": "2025-07-18T20:11:50Z"
+    "updated_at": "2025-07-19T00:10:19Z"
   },
   {
     "name": "Gloria Flores",
@@ -48,6 +27,27 @@
     "divisions": [
       "District 2"
     ],
-    "updated_at": "2025-07-18T20:11:50Z"
+    "updated_at": "2025-07-19T00:10:19Z"
+  },
+  {
+    "name": "Gloria Soto",
+    "roles": [
+      "Council Member",
+      "Mayor Pro-Tem"
+    ],
+    "divisions": [
+      "District 3"
+    ],
+    "updated_at": "2025-07-19T00:10:19Z"
+  },
+  {
+    "name": "Maribel Aguilera-Hernandez",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 4"
+    ],
+    "updated_at": "2025-07-19T00:10:19Z"
   }
 ]

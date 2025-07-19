@@ -2,9 +2,7 @@
   {
     "name": "Gloria Soto",
     "roles": [
-      "Councilmember",
-      "Council member",
-      "Council Member"
+      "Councilmember"
     ],
     "divisions": [
       "District Three"
@@ -19,16 +17,16 @@
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
-      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
     ],
-    "updated_at": "2025-07-18T20:15:28Z"
+    "updated_at": "2025-07-19T00:13:41Z"
   },
   {
     "name": "Maribel Aguilera-Hernandez",
     "roles": [
-      "Councilmember",
-      "Council member",
-      "Council Member"
+      "Councilmember"
     ],
     "divisions": [
       "District 4"
@@ -43,17 +41,17 @@
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
-      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
     ],
-    "updated_at": "2025-07-18T20:15:28Z"
+    "updated_at": "2025-07-19T00:13:41Z"
   },
   {
     "name": "Alice Patino",
     "roles": [
       "Mayor",
-      "Council Member",
-      "Board Member",
-      "Air Pollution Control District Board Member"
+      "Councilmember"
     ],
     "divisions": [],
     "image": null,
@@ -66,19 +64,21 @@
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
-      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
     ],
-    "updated_at": "2025-07-18T20:15:28Z"
+    "updated_at": "2025-07-19T00:13:41Z"
   },
   {
     "name": "Carlos Escobedo",
     "roles": [
       "Councilmember",
-      "Council member",
-      "Council Member"
+      "Commissioner",
+      "Human Services Commissioner"
     ],
     "divisions": [
-      "City Council District 1"
+      "District 1"
     ],
     "image": null,
     "phone_number": "(805) 925-0951 ext. 2192",
@@ -91,16 +91,15 @@
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
-      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
     ],
-    "updated_at": "2025-07-18T20:15:28Z"
+    "updated_at": "2025-07-19T00:13:41Z"
   },
   {
     "name": "Gloria Flores",
     "roles": [
-      "Councilmember",
-      "Council member",
-      "Council Member"
+      "Councilmember"
     ],
     "divisions": [
       "District Two"
@@ -116,8 +115,9 @@
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
     ],
-    "updated_at": "2025-07-18T20:15:28Z"
+    "updated_at": "2025-07-19T00:13:41Z"
   }
 ]

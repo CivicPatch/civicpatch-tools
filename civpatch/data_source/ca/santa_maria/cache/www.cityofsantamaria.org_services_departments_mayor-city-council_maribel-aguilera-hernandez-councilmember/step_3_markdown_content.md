@@ -308,7 +308,9 @@ Follow on Instagram](https://www.instagram.com/cityofsantamariaca "Follow on Ins
 \
 Follow on Facebook](https://www.facebook.com/CityofSantaMariaCa "Follow on Facebook")
 
-[Follow us on Twitter/X](https://www.x.com/City_SantaMaria "Follow us on Twitter/X")
+[![](https://www.cityofsantamaria.org/home/showpublishedimage/8424/638203074732370000)  
+\
+Follow us on Twitter/X](https://www.x.com/City_SantaMaria "Follow us on Twitter/X")
 
 [Subscribe on YouTube](https://www.youtube.com/c/CityofSantaMariaCalifornia "Subscribe on YouTube")
 
@@ -324,10 +326,10 @@ Design by [GRANICUS](https://www.granicus.com) - Connecting People &amp; Governm
 
 [View Full Site](https:void%280%29;)
 
-Loading ...
-
 Original text
 
 Rate this translation
 
 Your feedback will be used to help improve Google Translate
+
+Loading ...

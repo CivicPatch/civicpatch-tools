@@ -15,13 +15,16 @@
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor
-  updated_at: '2025-07-18T20:15:30Z'
+  - https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember
+  - https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember
+  updated_at: '2025-07-19T00:13:42Z'
 - name: Carlos Escobedo
   roles:
   - Council Member
-  divisions: []
+  divisions:
+  - District 1
   image: https://www.cityofsantamaria.org/home/showpublishedimage/7832/638126811524370000
-  cdn_image: https://cdn.civicpatch.org/open-data/ca/santa_maria/images/4a78ca6e033bdea6d806e8f1722144e1079937c884e55609c856474219f623c3.jpg
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/santa_maria/images/4a78ca6e033bdea6d806e8f1722144e1079937c884e55609c856474219f623c3.png
   email: cescobedo@cityofsantamaria.org
   phone_number: "(805) 925-0951 ext. 2192"
   website: https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember
@@ -33,7 +36,8 @@
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember
-  updated_at: '2025-07-18T20:15:30Z'
+  - https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember
+  updated_at: '2025-07-19T00:13:42Z'
 - name: Gloria Flores
   roles:
   - Council Member
@@ -51,15 +55,16 @@
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor
+  - https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember
-  updated_at: '2025-07-18T20:15:30Z'
+  updated_at: '2025-07-19T00:13:42Z'
 - name: Gloria Soto
   roles:
   - Council Member
   divisions:
   - District 3
   image: https://www.cityofsantamaria.org/home/showpublishedimage/7142/636876294700970000
-  cdn_image: https://cdn.civicpatch.org/open-data/ca/santa_maria/images/21b96e53b32eac57be0471062723489839ea30b6be7ac98447b254a0e8df6702.png
+  cdn_image: https://cdn.civicpatch.org/open-data/ca/santa_maria/images/21b96e53b32eac57be0471062723489839ea30b6be7ac98447b254a0e8df6702.jpg
   email: gsoto@cityofsantamaria.org
   phone_number: "(805) 925-0951 ext. 2193"
   website: https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember
@@ -70,7 +75,9 @@
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor
-  updated_at: '2025-07-18T20:15:30Z'
+  - https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember
+  - https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember
+  updated_at: '2025-07-19T00:13:42Z'
 - name: Maribel Aguilera-Hernandez
   roles:
   - Council Member
@@ -88,4 +95,6 @@
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember
   - https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor
-  updated_at: '2025-07-18T20:15:30Z'
+  - https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember
+  - https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember
+  updated_at: '2025-07-19T00:13:42Z'

@@ -5,34 +5,41 @@
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
-      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
     ],
     "images": [],
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text and matches target roles."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role is explicitly stated next to the person's name."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the heading and text."
-      },
-      {
-        "data": "Council member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Normalized base role from 'Councilmember'."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember'."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the link text within the 'Mayor & City Council' section."
+        "llm_confidence_reason": "Role explicitly stated in the link text 'Gloria Soto Councilmember'."
       },
       {
-        "data": "Council Member",
+        "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the navigation link text and is a target role."
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember' in the navigation menu."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Gloria Soto Councilmember' in the navigation link and matches target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the navigation link text and matches a target role."
       }
     ],
     "divisions": [
@@ -44,45 +51,69 @@
     ],
     "phone_numbers": [
       {
+        "data": "(805) 925-0951",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The phone number provided is a general City Hall contact, not specific to this individual.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
+      },
+      {
         "data": "(805) 925-0951 ext. 2193",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'City Phone' for Gloria Soto.",
+        "llm_confidence_reason": "Phone number is explicitly provided as 'City Phone'.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
       }
     ],
     "emails": [
       {
+        "data": "CityCouncil@cityofsantamaria.org",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The email provided is a general contact for the City Council, not specific to this individual.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
+      },
+      {
         "data": "gsoto@cityofsantamaria.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Email' for Gloria Soto.",
+        "llm_confidence_reason": "Email address is explicitly provided.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page was provided.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL is the direct profile page for Gloria Soto.",
+        "llm_confidence_reason": "Direct link to the person's profile page is provided at the top of the section.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Website URL is directly associated with the person's name in the navigation menu, indicating a likely profile page.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct link to the person's profile page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
+      },
+      {
+        "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL provided in the navigation link.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
+      },
+      {
+        "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The website URL is directly from the navigation menu and clearly corresponds to the person's name and role.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2022-11",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as the most recent re-election date in November 2022.",
+        "llm_confidence_reason": "Explicitly stated as 're-elected in November 2022', which is the most recent election date.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
       }
     ],
@@ -94,7 +125,7 @@
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
       }
     ],
-    "updated_at": "2025-07-18T20:15:28Z"
+    "updated_at": "2025-07-19T00:13:41Z"
   },
   {
     "name": "Maribel Aguilera-Hernandez",
@@ -102,44 +133,57 @@
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
-      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
     ],
     "images": [],
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text and matches target roles."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role inferred from the link text 'Maribel Aguilera-Hernandez, Councilmember'."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the navigation link text."
-      },
-      {
-        "data": "Council member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Normalized base role from 'Councilmember'."
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember'."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the heading and text."
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember' in the navigation menu."
       },
       {
-        "data": "Council Member",
+        "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the navigation link text and is a target role."
+        "llm_confidence_reason": "Explicitly stated as 'Maribel Aguilera-Hernandez, Councilmember' in the navigation link and matches target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the navigation link text and matches a target role."
       }
     ],
     "divisions": [
       {
         "data": "District 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Division explicitly stated in the text: 'Maribel Aguilera-Hernandez serves as Councilmember - District 4'."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember - District 4'."
       }
     ],
     "phone_numbers": [
+      {
+        "data": "(805) 925-0951",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The phone number provided is a general City Hall contact, not specific to this individual.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
+      },
       {
         "data": "(805) 925-0951 ext. 2186",
         "llm_confidence": 1.0,
@@ -149,30 +193,42 @@
     ],
     "emails": [
       {
+        "data": "CityCouncil@cityofsantamaria.org",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The email provided is a general contact for the City Council, not specific to this individual.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
+      },
+      {
         "data": "maribel.hernandez@cityofsantamaria.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address explicitly provided in the text.",
+        "llm_confidence_reason": "Email address explicitly provided.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page was provided.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL is the direct profile page link for Maribel Aguilera-Hernandez.",
-        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
+        "llm_confidence_reason": "Direct link to the person's profile page.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Website URL is the current page's URL and is specific to the person.",
-        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
+        "llm_confidence_reason": "Direct profile URL provided in the navigation link.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
+      },
+      {
+        "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The website URL is directly from the navigation menu and clearly corresponds to the person's name and role.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
     "start_dates": [
@@ -187,11 +243,11 @@
       {
         "data": "2026",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date explicitly stated as 'Term Expires: 2026'.",
+        "llm_confidence_reason": "Term expiration date explicitly stated as 'Term Expires: 2026'.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
       }
     ],
-    "updated_at": "2025-07-18T20:15:28Z"
+    "updated_at": "2025-07-19T00:13:41Z"
   },
   {
     "name": "Alice Patino",
@@ -199,94 +255,114 @@
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
-      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
     ],
     "images": [],
     "roles": [
       {
         "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text and matches target roles."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the navigation link text."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the link text within the 'Mayor & City Council' section."
-      },
-      {
-        "data": "Mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Mayor' and is a target role."
-      },
-      {
-        "data": "Council Member",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated as 'City Councilmember' in the text, which normalizes to 'Council Member'."
+        "llm_confidence_reason": "The role is explicitly stated next to the person's name."
       },
       {
-        "data": "Board Member",
+        "data": "Mayor",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Explicitly stated as 'Air Pollution Control District Board Member', which normalizes to 'Board Member'."
+        "llm_confidence_reason": "Role inferred from the link text 'Alice Patino Mayor'."
       },
       {
-        "data": "Air Pollution Control District Board Member",
+        "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Air Pollution Control District Board Member' and matches a target role pattern."
+        "llm_confidence_reason": "Role explicitly stated in the link text 'Alice Patino Mayor'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'Mayor'."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated as 'City Councilmember' and 'served on the City Council'."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as 'Alice Patino Mayor' in the navigation link and matches target role."
+      },
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the navigation link text and matches a target role."
       }
     ],
     "divisions": [],
     "phone_numbers": [
       {
+        "data": "(805) 925-0951",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The phone number provided is a general City Hall contact, not specific to this individual.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
+      },
+      {
         "data": "(805) 925-0951 ext. 2188",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided as 'City Phone'.",
+        "llm_confidence_reason": "Phone number explicitly stated as 'City Phone' on the person's profile page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
       }
     ],
     "emails": [
       {
+        "data": "CityCouncil@cityofsantamaria.org",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The email provided is a general contact for the City Council, not specific to this individual.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
+      },
+      {
         "data": "apatino@cityofsantamaria.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly stated on the person's profile page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page was provided.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL is the direct profile page link for Alice Patino.",
-        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
-      },
-      {
-        "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Website URL is directly associated with the person's name in the navigation menu, indicating a likely profile page.",
+        "llm_confidence_reason": "Direct link to the person's profile page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The current page URL is the person's dedicated profile page.",
+        "llm_confidence_reason": "Website is the direct URL to the person's profile page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
+      },
+      {
+        "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Direct profile URL provided in the navigation link.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
+      },
+      {
+        "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The website URL is directly from the navigation menu and clearly corresponds to the person's name and role.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2024-11",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Start date is explicitly stated as 'reelected in November 2024', which is the most recent election date.",
+        "llm_confidence_reason": "Start date explicitly stated as 'Date Last Elected: 2024' and 're-elected in November 2024', indicating the most recent election date.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
       }
     ],
@@ -294,11 +370,11 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly stated as 'Term expires: 2028'.",
+        "llm_confidence_reason": "End date explicitly stated as 'Term expires: 2028'.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
       }
     ],
-    "updated_at": "2025-07-18T20:15:28Z"
+    "updated_at": "2025-07-19T00:13:41Z"
   },
   {
     "name": "Carlos Escobedo",
@@ -307,95 +383,118 @@
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
-      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
     ],
     "images": [],
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text and matches target roles."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Role inferred from the link text 'Carlos Escobedo Councilmember'."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the navigation link text."
-      },
-      {
-        "data": "Council member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Normalized base role from 'Councilmember'."
+        "llm_confidence_reason": "Role explicitly stated in the link text 'Carlos Escobedo Councilmember'."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the link text within the 'Mayor & City Council' section."
-      },
-      {
-        "data": "Council Member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the navigation link text and is a target role."
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember' in the navigation menu."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the heading and body text."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember' and matches target role."
+      },
+      {
+        "data": "Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner for the Fifth District on the Human Services Commission' and 'Commissioner' is a target role."
+      },
+      {
+        "data": "Human Services Commissioner",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Explicitly stated as 'Commissioner for the Fifth District on the Human Services Commission' and 'Human Services Commissioner' is a specific role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the navigation link text and matches a target role."
       }
     ],
     "divisions": [
       {
-        "data": "City Council District 1",
+        "data": "District 1",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the text as the district he was elected by."
+        "llm_confidence_reason": "Explicitly stated as 'City Council District 1'."
       }
     ],
     "phone_numbers": [
       {
+        "data": "(805) 925-0951",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The phone number provided is a general City Hall contact, not specific to this individual.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
+      },
+      {
         "data": "(805) 925-0951 ext. 2192",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided as 'City Phone'.",
+        "llm_confidence_reason": "Phone number explicitly provided as 'City Phone'.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
       }
     ],
     "emails": [
       {
+        "data": "CityCouncil@cityofsantamaria.org",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The email provided is a general contact for the City Council, not specific to this individual.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
+      },
+      {
         "data": "cescobedo@cityofsantamaria.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided.",
+        "llm_confidence_reason": "Email address explicitly provided.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Direct link to the person's profile page is provided.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "A direct link to the person's profile page was provided.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "URL is the direct profile page link for Carlos Escobedo.",
-        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
-      },
-      {
-        "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Website URL is directly associated with the person's name in the navigation menu, indicating a likely profile page.",
+        "llm_confidence_reason": "Direct link to the person's profile page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "This is the direct URL of the page dedicated to Carlos Escobedo.",
+        "llm_confidence_reason": "Direct profile URL provided for Carlos Escobedo.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
+      },
+      {
+        "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The website URL is directly from the navigation menu and clearly corresponds to the person's name and role.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2024-11",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text states he was 're-elected in November 2024', which is the most recent election date.",
+        "llm_confidence_reason": "Explicitly stated 're-elected in November 2024', which is the most recent election date.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
       }
     ],
@@ -403,11 +502,11 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The text explicitly states 'Term expires: 2028'.",
+        "llm_confidence_reason": "Explicitly stated 'Term expires: 2028'.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
       }
     ],
-    "updated_at": "2025-07-18T20:15:28Z"
+    "updated_at": "2025-07-19T00:13:41Z"
   },
   {
     "name": "Gloria Flores",
@@ -416,75 +515,88 @@
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
+      "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
       "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
     ],
     "images": [],
     "roles": [
       {
         "data": "Councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the text and matches target roles."
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "The role is explicitly stated next to the person's name."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "Role inferred from the link text 'Gloria Flores, Councilmember', but the associated URL is for 'mike-cordero-councilmember', indicating a potential discrepancy or outdated link."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated in the navigation link text."
-      },
-      {
-        "data": "Council member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Normalized base role from 'Councilmember'."
+        "llm_confidence_reason": "Role explicitly stated in the link text 'Gloria Flores, Councilmember'."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role explicitly stated in the link text within the 'Mayor & City Council' section."
-      },
-      {
-        "data": "Council Member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Councilmember' in the navigation link text and is a target role."
+        "llm_confidence_reason": "Role explicitly stated as 'Councilmember' in the navigation menu."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'Gloria Flores, Councilmember' and matches a target role."
+        "llm_confidence_reason": "Explicitly stated as 'Gloria Flores, Councilmember' in the navigation link and matches target role."
+      },
+      {
+        "data": "Councilmember",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Role explicitly stated in the text and matches a target role."
       }
     ],
     "divisions": [
       {
         "data": "District Two",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated as 'City Council District Two'."
+        "llm_confidence_reason": "Division explicitly stated in the text as 'City Council District Two'."
       }
     ],
     "phone_numbers": [
       {
+        "data": "(805) 925-0951",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The phone number provided is a general City Hall contact, not specific to this individual.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
+      },
+      {
         "data": "(805) 925-0951 extension 2198",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number with extension is directly provided in the text.",
+        "llm_confidence_reason": "Phone number explicitly stated in the text.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
     "emails": [
       {
+        "data": "CityCouncil@cityofsantamaria.org",
+        "llm_confidence": 0.5,
+        "llm_confidence_reason": "The email provided is a general contact for the City Council, not specific to this individual.",
+        "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
+      },
+      {
         "data": "gloriaflores@cityofsantamaria.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is directly provided in the text.",
+        "llm_confidence_reason": "Email address explicitly stated in the text.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
     "websites": [
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Direct link associated with the person's name and image is provided, despite the URL path discrepancy.",
+        "llm_confidence": 0.8,
+        "llm_confidence_reason": "A direct link was provided, but the URL path contains a different name ('mike-cordero-councilmember') than the person's name ('Gloria Flores').",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The URL of the page displaying Gloria Flores's information is used, despite the URL path containing 'mike-cordero-councilmember' which appears to be a discrepancy in the source.",
+        "llm_confidence": 0.7,
+        "llm_confidence_reason": "The URL path contains a different name ('mike-cordero-councilmember') but the content on the page and the navigation link explicitly refer to Gloria Flores, indicating this is her designated profile page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
@@ -492,7 +604,7 @@
       {
         "data": "2024-11",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'elected to the City Council in November 2024'.",
+        "llm_confidence_reason": "Start date explicitly stated as 'elected in November 2024'.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
@@ -500,10 +612,10 @@
       {
         "data": "2028",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Explicitly stated 'Term expires: 2028'.",
+        "llm_confidence_reason": "End date explicitly stated as 'Term expires: 2028'.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
-    "updated_at": "2025-07-18T20:15:28Z"
+    "updated_at": "2025-07-19T00:13:41Z"
   }
 ]

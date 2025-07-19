@@ -290,6 +290,8 @@ They can be downloaded by clicking on the icons below.
 
 [Acrobat Reader ![Download Acrobat Reader](https://www.cityofsantamaria.org/DefaultContent/Default/_gfx/downloadmessage/acrobat.jpg)](https://get.adobe.com/reader "Download Acrobat Reader") [Windows Media Player ![Download Windows Media Player](https://www.cityofsantamaria.org/DefaultContent/Default/_gfx/downloadmessage/wmp.jpg)](https://windows.microsoft.com/en-us/windows/windows-media-player "Download Windows Media Player") [Word Viewer ![Download Word Viewer](https://www.cityofsantamaria.org/DefaultContent/Default/_gfx/downloadmessage/word.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online "Download Word Viewer") [Excel Viewer ![Download Excel Viewer](https://www.cityofsantamaria.org/DefaultContent/Default/_gfx/downloadmessage/excel.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online "Download Excel Viewer") [PowerPoint Viewer ![Download PowerPoint Viewer](https://www.cityofsantamaria.org/DefaultContent/Default/_gfx/downloadmessage/powerpoint.jpg)](https://products.office.com/en-US/office-online/documents-spreadsheets-presentations-office-online "Download PowerPoint Viewer")
 
+![](https://www.cityofsantamaria.org/home/showpublishedimage/8422/638203074219700000)
+
 ## Contact Us
 
 City Hall [110 E. Cook Street Santa Maria, CA 93454](https://goo.gl/maps/Pdf1G5EbY4mZXvF96) [View on Map](https://goo.gl/maps/Pdf1G5EbY4mZXvF96) Phone: (805) 925-0951 City Hall Fax: (805) 349-0657
@@ -320,10 +322,10 @@ Design by [GRANICUS](https://www.granicus.com) - Connecting People &amp; Governm
 
 [View Full Site](https:void%280%29;)
 
-Loading ...
-
 Original text
 
 Rate this translation
 
 Your feedback will be used to help improve Google Translate
+
+Loading ...

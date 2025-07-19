@@ -14,8 +14,8 @@
       },
       {
         "data": "https://www.cityofsantamaria.org/home/showpublishedimage/7142/636876294700970000",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The image URL is directly next to her name and labeled as her photo.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image URL is directly associated with Gloria Soto's councilmember photo on the page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
       }
     ],
@@ -27,30 +27,30 @@
       },
       {
         "data": "Council Member",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The page title and text explicitly state Gloria Soto is a Councilmember for Santa Maria."
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The page explicitly states Gloria Soto is a Councilmember for Santa Maria City Council."
       }
     ],
     "divisions": [
       {
         "data": "District Three",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "The text states she was elected by voters in City Council District Three."
       }
     ],
     "phone_numbers": [
       {
         "data": "(805) 925-0951 ext. 2193",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is listed under her office contact information.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Phone number is listed under Gloria Soto's contact info as City Phone.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
       }
     ],
     "emails": [
       {
         "data": "gsoto@cityofsantamaria.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email is explicitly provided as her contact email.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "Email is explicitly provided as gsoto@cityofsantamaria.org.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
       }
     ],
@@ -63,7 +63,7 @@
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "This is the official city webpage dedicated to Gloria Soto as Councilmember.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
       }
@@ -71,8 +71,8 @@
     "start_dates": [
       {
         "data": "2018-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "She was elected in November 2018 as stated in the text.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "She was elected in November 2018; exact day not specified, so month precision used.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
       }
     ],
@@ -80,11 +80,11 @@
       {
         "data": "2026",
         "llm_confidence": 0.95,
-        "llm_confidence_reason": "Her current term expires in 2026 as stated.",
+        "llm_confidence_reason": "Term expires in 2026 as stated; no specific month or day given.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/gloria-soto-councilmember"
       }
     ],
-    "updated_at": "2025-07-18T20:14:01Z"
+    "updated_at": "2025-07-19T00:12:02Z"
   },
   {
     "name": "Maribel Aguilera-Hernandez",
@@ -102,7 +102,7 @@
       {
         "data": "https://www.cityofsantamaria.org/home/showpublishedimage/8350/638126809345230000",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The image URL is directly associated with Maribel Aguilera-Hernandez's profile picture on the page.",
+        "llm_confidence_reason": "The image URL is directly associated with Maribel Aguilera-Hernandez's name and portrait on the page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
       }
     ],
@@ -129,7 +129,7 @@
       {
         "data": "(805) 925-0951 ext. 2186",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The phone number is listed under her office contact information.",
+        "llm_confidence_reason": "Phone number is listed under her contact information as 'City Phone: (805) 925-0951 ext. 2186'.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
       }
     ],
@@ -137,7 +137,7 @@
       {
         "data": "maribel.hernandez@cityofsantamaria.org",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "The email is explicitly provided as her contact email.",
+        "llm_confidence_reason": "Email is explicitly provided as maribel.hernandez@cityofsantamaria.org.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
       }
     ],
@@ -151,7 +151,7 @@
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "This is the URL of the page containing her profile.",
+        "llm_confidence_reason": "The URL provided is the official city council member page for Maribel Aguilera-Hernandez.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
       }
     ],
@@ -171,7 +171,7 @@
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/maribel-aguilera-hernandez-councilmember"
       }
     ],
-    "updated_at": "2025-07-18T20:14:01Z"
+    "updated_at": "2025-07-19T00:12:02Z"
   },
   {
     "name": "Alice Patino",
@@ -188,7 +188,7 @@
       },
       {
         "data": "https://www.cityofsantamaria.org/home/showpublishedimage/4652/636209508637030000",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Image is directly adjacent to the name and title 'Mayor' on the page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
       }
@@ -201,7 +201,7 @@
       },
       {
         "data": "Mayor",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "The page title and content explicitly state Alice Patino is the Mayor of Santa Maria."
       }
     ],
@@ -209,7 +209,7 @@
     "phone_numbers": [
       {
         "data": "(805) 925-0951 ext. 2188",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "Phone number is listed under office contact details for Alice Patino.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
       }
@@ -217,8 +217,8 @@
     "emails": [
       {
         "data": "apatino@cityofsantamaria.org",
-        "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly provided as Alice Patino's contact email.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email is explicitly provided as contact for Alice Patino.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
       }
     ],
@@ -231,28 +231,28 @@
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor",
-        "llm_confidence": 1,
+        "llm_confidence": 1.0,
         "llm_confidence_reason": "This is the official city webpage dedicated to Alice Patino as Mayor.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
       }
     ],
     "start_dates": [
       {
-        "data": "2012-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "She became Mayor in the November 2012 election, as stated in the text.",
+        "data": "2024",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "She was last elected Mayor in November 2024, indicating term start in 2024.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
       }
     ],
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "Term expires in 2028 as stated; last elected in 2024 for a term expiring 2028.",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expires in 2028 as stated on the page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/alice-patino-mayor"
       }
     ],
-    "updated_at": "2025-07-18T20:14:01Z"
+    "updated_at": "2025-07-19T00:12:02Z"
   },
   {
     "name": "Carlos Escobedo",
@@ -269,8 +269,8 @@
       },
       {
         "data": "https://www.cityofsantamaria.org/home/showpublishedimage/7832/638126811524370000",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "The image is a portrait near the name and title of Carlos Escobedo on the page.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "The image URL is directly associated with Carlos Escobedo's councilmember section and includes his name in alt text.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
       }
     ],
@@ -282,21 +282,21 @@
       },
       {
         "data": "Council Member",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "The page explicitly states 'Carlos Escobedo, Councilmember' and describes his election to the City Council."
       }
     ],
     "divisions": [
       {
         "data": "District 1",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "The text states he was elected by voters in City Council District 1."
       }
     ],
     "phone_numbers": [
       {
         "data": "(805) 925-0951 ext. 2192",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Phone number is listed under his office contact details.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
       }
@@ -304,7 +304,7 @@
     "emails": [
       {
         "data": "cescobedo@cityofsantamaria.org",
-        "llm_confidence": 1.0,
+        "llm_confidence": 1,
         "llm_confidence_reason": "Email is explicitly provided as his contact email.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
       }
@@ -318,28 +318,28 @@
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "This is the official city council member profile page URL.",
+        "llm_confidence": 1,
+        "llm_confidence_reason": "This is the URL of the page containing his official profile.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2020-11",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "He was elected to City Council in November 2020.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "He was elected in November 2020 to the City Council.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
       }
     ],
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.95,
-        "llm_confidence_reason": "He was re-elected in 2024 with term expiring in 2028.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "His current term expires in 2028 as stated on the page.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/carlos-escobedo-councilmember"
       }
     ],
-    "updated_at": "2025-07-18T20:14:01Z"
+    "updated_at": "2025-07-19T00:12:02Z"
   },
   {
     "name": "Gloria Flores",
@@ -357,7 +357,7 @@
       {
         "data": "https://www.cityofsantamaria.org/home/showpublishedimage/9075/638742577157800000",
         "llm_confidence": 1,
-        "llm_confidence_reason": "The image is labeled 'Councilmember Gloria Flores' and is directly associated with her profile.",
+        "llm_confidence_reason": "The image is labeled 'Councilmember Gloria Flores' and is directly associated with her section.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
@@ -384,7 +384,7 @@
       {
         "data": "(805) 925-0951 extension 2198",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Phone number is listed under her office contact information.",
+        "llm_confidence_reason": "Phone number is listed under her office contact details.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
@@ -392,7 +392,7 @@
       {
         "data": "gloriaflores@cityofsantamaria.org",
         "llm_confidence": 1,
-        "llm_confidence_reason": "Email is explicitly provided as gloriaflores@cityofsantamaria.org.",
+        "llm_confidence_reason": "Email is explicitly provided in the contact section for Gloria Flores.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
@@ -400,32 +400,32 @@
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "URL is for Mike Cordero but linked under Gloria Flores's name; likely a page error but no other URL provided.",
+        "llm_confidence_reason": "URL text shows 'mike-cordero-councilmember' but linked text and image alt text identify Gloria Flores as Councilmember; likely a page naming inconsistency but role and name are clear.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council"
       },
       {
         "data": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember",
-        "llm_confidence": 0.8,
-        "llm_confidence_reason": "The URL provided is the source page for Gloria Flores's councilmember profile, though the URL contains 'mike-cordero-councilmember' which may be a site structure artifact.",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "This is the URL of the page provided, which includes Gloria Flores's profile.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
     "start_dates": [
       {
         "data": "2024-11",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "She was elected in November 2024, so term start is inferred as 2024-11.",
+        "llm_confidence": 0.95,
+        "llm_confidence_reason": "She was elected in November 2024 as stated in the text.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
     "end_dates": [
       {
         "data": "2028",
-        "llm_confidence": 0.9,
+        "llm_confidence": 0.95,
         "llm_confidence_reason": "Term expires in 2028 as explicitly stated.",
         "source": "https://www.cityofsantamaria.org/services/departments/mayor-city-council/mike-cordero-councilmember"
       }
     ],
-    "updated_at": "2025-07-18T20:14:01Z"
+    "updated_at": "2025-07-19T00:12:02Z"
   }
 ]
