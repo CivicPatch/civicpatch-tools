@@ -1,1 +1,99 @@
-[]
+[
+  {
+    "name": "David Newman",
+    "roles": [
+      "Council Member",
+      "Mayor"
+    ],
+    "divisions": [
+      "At-large"
+    ],
+    "image": null,
+    "phone_number": "(805) 449-2103",
+    "email": "dnewman@toaks.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-15",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "updated_at": "2025-07-19T00:10:27Z"
+  },
+  {
+    "name": "Mikey Taylor",
+    "roles": [
+      "Council Member",
+      "Mayor Pro Tempore"
+    ],
+    "divisions": [
+      "At-large"
+    ],
+    "image": null,
+    "phone_number": "(805) 449-2101",
+    "email": "mtaylor@toaks.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-15",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "updated_at": "2025-07-19T00:10:27Z"
+  },
+  {
+    "name": "Al Adam",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 4"
+    ],
+    "image": null,
+    "phone_number": "(805) 449-2102",
+    "email": "aadam@toaks.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-12",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "updated_at": "2025-07-19T00:10:27Z"
+  },
+  {
+    "name": "Bob Engler",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "At-large"
+    ],
+    "image": null,
+    "phone_number": "(805) 449-2105",
+    "email": "bengler@toaks.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-15",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "updated_at": "2025-07-19T00:10:27Z"
+  },
+  {
+    "name": "C. Tie Gutierrez",
+    "roles": [
+      "Council Member"
+    ],
+    "divisions": [
+      "District 5"
+    ],
+    "image": null,
+    "phone_number": "(805) 449-2104",
+    "email": "tgutierrez@toaks.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-12",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "updated_at": "2025-07-19T00:10:27Z"
+  }
+]

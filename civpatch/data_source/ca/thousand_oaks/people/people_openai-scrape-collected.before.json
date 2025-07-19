@@ -1,1 +1,279 @@
-[]
+[
+  {
+    "name": "David Newman",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "images": [
+      {
+        "data": "https://toaks.gov/corecode/uploads/user/uploaded_images/corecode/22DNewman-0006-Edit-5x_38.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor and presiding officer of City Council meetings."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(805) 449-2103",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "emails": [
+      {
+        "data": "dnewman@toaks.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address listed directly under the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2022",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected to City Council in 2022; currently serving as Mayor.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-15",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expires December 15, 2026 as explicitly stated.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-07-19T00:10:16Z"
+  },
+  {
+    "name": "Mikey Taylor",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "images": [
+      {
+        "data": "https://toaks.gov/corecode/uploads/user/uploaded_images/corecode/Mikey%20Taylor_36.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Mayor Pro Tem",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Mayor Pro Tem of Thousand Oaks."
+      }
+    ],
+    "divisions": [],
+    "phone_numbers": [
+      {
+        "data": "(805) 449-2101",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "emails": [
+      {
+        "data": "mtaylor@toaks.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address listed directly under the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2026-12-15",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expires December 15, 2026 as explicitly stated.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-07-19T00:10:16Z"
+  },
+  {
+    "name": "Al Adam",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "images": [
+      {
+        "data": "https://toaks.gov/corecode/uploads/user/uploaded_images/corecode/12AAdam-010_5x_35.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Councilmember, District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Councilmember representing District 4."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 4",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "District 4 explicitly mentioned."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(805) 449-2102",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "emails": [
+      {
+        "data": "aadam@toaks.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address listed directly under the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expires December 12, 2028 as explicitly stated.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-07-19T00:10:16Z"
+  },
+  {
+    "name": "Bob Engler",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "images": [
+      {
+        "data": "https://toaks.gov/corecode/uploads/user/uploaded_images/corecode/Bob%20Engler_37.jpg",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Image URL is directly next to the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Councilmember-At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Councilmember At-Large."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "At-Large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "At-Large explicitly mentioned."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(805) 449-2105",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "emails": [
+      {
+        "data": "bengler@toaks.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address listed directly under the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "websites": [],
+    "start_dates": [
+      {
+        "data": "2018",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Elected to City Council in 2018; currently serving.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "end_dates": [
+      {
+        "data": "2026-12-15",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expires December 15, 2026 as explicitly stated.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-07-19T00:10:16Z"
+  },
+  {
+    "name": "C. Tie Gutierrez",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "images": [
+      {
+        "data": "https://toaks.gov/corecode/uploads/user/uploaded_images/corecode/Contact%20Group%20Photos_178.jpg",
+        "llm_confidence": 0.9,
+        "llm_confidence_reason": "Image URL is near the name and role but is a group photo; likely includes this person.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "roles": [
+      {
+        "data": "Councilmember, District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated as Councilmember representing District 5."
+      }
+    ],
+    "divisions": [
+      {
+        "data": "District 5",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "District 5 explicitly mentioned."
+      }
+    ],
+    "phone_numbers": [
+      {
+        "data": "(805) 449-2104",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Phone number listed directly under the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "emails": [
+      {
+        "data": "tgutierrez@toaks.gov",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Email address listed directly under the name and role.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "websites": [],
+    "start_dates": [],
+    "end_dates": [
+      {
+        "data": "2028-12-12",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Term expires December 12, 2028 as explicitly stated.",
+        "source": "https://toaks.gov/citycouncil"
+      }
+    ],
+    "updated_at": "2025-07-19T00:10:16Z"
+  }
+]

@@ -1,1 +1,93 @@
-[]
+[
+  {
+    "name": "David Newman",
+    "roles": [
+      "Mayor"
+    ],
+    "divisions": [],
+    "image": "https://toaks.gov/corecode/uploads/user/uploaded_images/corecode/22DNewman-0006-Edit-5x_38.jpg",
+    "phone_number": "(805) 449-2103",
+    "email": "dnewman@toaks.gov",
+    "website": null,
+    "start_date": "2022",
+    "end_date": "2026-12-15",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "updated_at": "2025-07-19T00:10:17Z"
+  },
+  {
+    "name": "Mikey Taylor",
+    "roles": [
+      "Mayor Pro Tem"
+    ],
+    "divisions": [],
+    "image": "https://toaks.gov/corecode/uploads/user/uploaded_images/corecode/Mikey%20Taylor_36.jpg",
+    "phone_number": "(805) 449-2101",
+    "email": "mtaylor@toaks.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2026-12-15",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "updated_at": "2025-07-19T00:10:17Z"
+  },
+  {
+    "name": "Al Adam",
+    "roles": [
+      "Councilmember, District 4"
+    ],
+    "divisions": [
+      "District 4"
+    ],
+    "image": "https://toaks.gov/corecode/uploads/user/uploaded_images/corecode/12AAdam-010_5x_35.jpg",
+    "phone_number": "(805) 449-2102",
+    "email": "aadam@toaks.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-12",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "updated_at": "2025-07-19T00:10:17Z"
+  },
+  {
+    "name": "Bob Engler",
+    "roles": [
+      "Councilmember-At-Large"
+    ],
+    "divisions": [
+      "At-Large"
+    ],
+    "image": "https://toaks.gov/corecode/uploads/user/uploaded_images/corecode/Bob%20Engler_37.jpg",
+    "phone_number": "(805) 449-2105",
+    "email": "bengler@toaks.gov",
+    "website": null,
+    "start_date": "2018",
+    "end_date": "2026-12-15",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "updated_at": "2025-07-19T00:10:17Z"
+  },
+  {
+    "name": "C. Tie Gutierrez",
+    "roles": [
+      "Councilmember, District 5"
+    ],
+    "divisions": [
+      "District 5"
+    ],
+    "image": "https://toaks.gov/corecode/uploads/user/uploaded_images/corecode/Contact%20Group%20Photos_178.jpg",
+    "phone_number": "(805) 449-2104",
+    "email": "tgutierrez@toaks.gov",
+    "website": null,
+    "start_date": null,
+    "end_date": "2028-12-12",
+    "sources": [
+      "https://toaks.gov/citycouncil"
+    ],
+    "updated_at": "2025-07-19T00:10:17Z"
+  }
+]
