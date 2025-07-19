@@ -9,26 +9,26 @@
       {
         "data": "Mayor",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Mayor'."
+        "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by being a member of the City Council."
+        "llm_confidence_reason": "Inferred as Mayor is a role within the City Council."
       }
     ],
     "divisions": [
       {
         "data": "at-large",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text states \"The Council consists of five members elected from the City at-large.\" and David Newman is a council member."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that council members are elected from the City at-large."
       }
     ],
     "phone_numbers": [
       {
         "data": "(805) 449-2103",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "llm_confidence_reason": "Directly extracted from the text.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -36,7 +36,7 @@
       {
         "data": "dnewman@toaks.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence_reason": "Directly extracted from the text.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -46,11 +46,11 @@
       {
         "data": "2026-12-15",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly provided in the text.",
+        "llm_confidence_reason": "Directly extracted from the text under 'Term Expires'.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-07-19T00:10:27Z"
+    "updated_at": "2025-07-19T00:18:20Z"
   },
   {
     "name": "Mikey Taylor",
@@ -62,26 +62,26 @@
       {
         "data": "Mayor Pro Tem",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Mayor Pro Tem'."
+        "llm_confidence_reason": "Explicitly stated in the text."
       },
       {
         "data": "Councilmember",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Implied by being a member of the City Council."
+        "llm_confidence_reason": "Inferred as Mayor Pro Tem is a role within the City Council."
       }
     ],
     "divisions": [
       {
         "data": "at-large",
-        "llm_confidence": 0.9,
-        "llm_confidence_reason": "The text states \"The Council consists of five members elected from the City at-large.\" and Mikey Taylor is a council member."
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that council members are elected from the City at-large."
       }
     ],
     "phone_numbers": [
       {
         "data": "(805) 449-2101",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "llm_confidence_reason": "Directly extracted from the text.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -89,7 +89,7 @@
       {
         "data": "mtaylor@toaks.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence_reason": "Directly extracted from the text.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -99,11 +99,11 @@
       {
         "data": "2026-12-15",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly provided in the text.",
+        "llm_confidence_reason": "Directly extracted from the text under 'Term Expires'.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-07-19T00:10:27Z"
+    "updated_at": "2025-07-19T00:18:20Z"
   },
   {
     "name": "Al Adam",
@@ -115,21 +115,26 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Councilmember'."
+        "llm_confidence_reason": "Explicitly stated in the text."
       }
     ],
     "divisions": [
       {
         "data": "District 4",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Division is explicitly stated as 'Councilmember, District 4'."
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that council members are elected from the City at-large."
       }
     ],
     "phone_numbers": [
       {
         "data": "(805) 449-2102",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "llm_confidence_reason": "Directly extracted from the text.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -137,7 +142,7 @@
       {
         "data": "aadam@toaks.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence_reason": "Directly extracted from the text.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -147,11 +152,11 @@
       {
         "data": "2028-12-12",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly provided in the text.",
+        "llm_confidence_reason": "Directly extracted from the text under 'Term Expires'.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-07-19T00:10:27Z"
+    "updated_at": "2025-07-19T00:18:20Z"
   },
   {
     "name": "Bob Engler",
@@ -163,21 +168,21 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Councilmember'."
+        "llm_confidence_reason": "Explicitly stated in the text."
       }
     ],
     "divisions": [
       {
-        "data": "At-Large",
+        "data": "at-large",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Division is explicitly stated as 'Councilmember-At-Large'."
+        "llm_confidence_reason": "Explicitly stated as 'Councilmember-At-Large'."
       }
     ],
     "phone_numbers": [
       {
         "data": "(805) 449-2105",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "llm_confidence_reason": "Directly extracted from the text.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -185,7 +190,7 @@
       {
         "data": "bengler@toaks.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence_reason": "Directly extracted from the text.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -195,11 +200,11 @@
       {
         "data": "2026-12-15",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly provided in the text.",
+        "llm_confidence_reason": "Directly extracted from the text under 'Term Expires'.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-07-19T00:10:27Z"
+    "updated_at": "2025-07-19T00:18:20Z"
   },
   {
     "name": "C. Tie Gutierrez",
@@ -211,21 +216,26 @@
       {
         "data": "Councilmember",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Role is explicitly stated as 'Councilmember'."
+        "llm_confidence_reason": "Explicitly stated in the text."
       }
     ],
     "divisions": [
       {
         "data": "District 5",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Division is explicitly stated as 'Councilmember, District 5'."
+        "llm_confidence_reason": "Explicitly stated in the text."
+      },
+      {
+        "data": "at-large",
+        "llm_confidence": 1.0,
+        "llm_confidence_reason": "Explicitly stated that council members are elected from the City at-large."
       }
     ],
     "phone_numbers": [
       {
         "data": "(805) 449-2104",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Phone number is explicitly provided next to the name.",
+        "llm_confidence_reason": "Directly extracted from the text.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -233,7 +243,7 @@
       {
         "data": "tgutierrez@toaks.gov",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "Email address is explicitly provided next to the name.",
+        "llm_confidence_reason": "Directly extracted from the text.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -243,10 +253,10 @@
       {
         "data": "2028-12-12",
         "llm_confidence": 1.0,
-        "llm_confidence_reason": "End date is explicitly provided in the text.",
+        "llm_confidence_reason": "Directly extracted from the text under 'Term Expires'.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-07-19T00:10:27Z"
+    "updated_at": "2025-07-19T00:18:20Z"
   }
 ]

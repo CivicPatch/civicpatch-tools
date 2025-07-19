@@ -53,7 +53,7 @@
         "source": "https://toaks.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-07-19T00:10:16Z"
+    "updated_at": "2025-07-19T00:18:03Z"
   },
   {
     "name": "Mikey Taylor",
@@ -102,7 +102,7 @@
         "source": "https://toaks.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-07-19T00:10:16Z"
+    "updated_at": "2025-07-19T00:18:03Z"
   },
   {
     "name": "Al Adam",
@@ -157,7 +157,7 @@
         "source": "https://toaks.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-07-19T00:10:16Z"
+    "updated_at": "2025-07-19T00:18:03Z"
   },
   {
     "name": "Bob Engler",
@@ -207,7 +207,7 @@
       {
         "data": "2018",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Elected to City Council in 2018; currently serving.",
+        "llm_confidence_reason": "Elected to City Council in 2018.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -219,7 +219,7 @@
         "source": "https://toaks.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-07-19T00:10:16Z"
+    "updated_at": "2025-07-19T00:18:03Z"
   },
   {
     "name": "C. Tie Gutierrez",
@@ -230,7 +230,7 @@
       {
         "data": "https://toaks.gov/corecode/uploads/user/uploaded_images/corecode/Contact%20Group%20Photos_178.jpg",
         "llm_confidence": 0.9,
-        "llm_confidence_reason": "Image URL is near the name and role but is a group photo; likely includes this person.",
+        "llm_confidence_reason": "Image URL is near the name and role but is a group photo; still likely correct.",
         "source": "https://toaks.gov/citycouncil"
       }
     ],
@@ -274,6 +274,6 @@
         "source": "https://toaks.gov/citycouncil"
       }
     ],
-    "updated_at": "2025-07-19T00:10:16Z"
+    "updated_at": "2025-07-19T00:18:03Z"
   }
 ]

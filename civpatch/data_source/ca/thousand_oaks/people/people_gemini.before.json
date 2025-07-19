@@ -17,7 +17,7 @@
     "sources": [
       "https://toaks.gov/citycouncil"
     ],
-    "updated_at": "2025-07-19T00:10:27Z"
+    "updated_at": "2025-07-19T00:18:20Z"
   },
   {
     "name": "Mikey Taylor",
@@ -37,7 +37,7 @@
     "sources": [
       "https://toaks.gov/citycouncil"
     ],
-    "updated_at": "2025-07-19T00:10:27Z"
+    "updated_at": "2025-07-19T00:18:20Z"
   },
   {
     "name": "Al Adam",
@@ -45,7 +45,8 @@
       "Councilmember"
     ],
     "divisions": [
-      "District 4"
+      "District 4",
+      "at-large"
     ],
     "image": null,
     "phone_number": "(805) 449-2102",
@@ -56,7 +57,7 @@
     "sources": [
       "https://toaks.gov/citycouncil"
     ],
-    "updated_at": "2025-07-19T00:10:27Z"
+    "updated_at": "2025-07-19T00:18:20Z"
   },
   {
     "name": "Bob Engler",
@@ -64,7 +65,7 @@
       "Councilmember"
     ],
     "divisions": [
-      "At-Large"
+      "at-large"
     ],
     "image": null,
     "phone_number": "(805) 449-2105",
@@ -75,7 +76,7 @@
     "sources": [
       "https://toaks.gov/citycouncil"
     ],
-    "updated_at": "2025-07-19T00:10:27Z"
+    "updated_at": "2025-07-19T00:18:20Z"
   },
   {
     "name": "C. Tie Gutierrez",
@@ -83,7 +84,8 @@
       "Councilmember"
     ],
     "divisions": [
-      "District 5"
+      "District 5",
+      "at-large"
     ],
     "image": null,
     "phone_number": "(805) 449-2104",
@@ -94,6 +96,6 @@
     "sources": [
       "https://toaks.gov/citycouncil"
     ],
-    "updated_at": "2025-07-19T00:10:27Z"
+    "updated_at": "2025-07-19T00:18:20Z"
   }
 ]
