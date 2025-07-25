@@ -135,9 +135,6 @@ government_types:
           - council member vice president
           - council member vice-president
       - role: council manager
-      - role: board member
-        aliases:
-          - town board member
       - role: trustee
       - role: council member
         aliases:
@@ -159,6 +156,7 @@ government_types:
           - town council member
           - town councilmember
           - town council
+          - town board member
           - representative
           - member
     # position_examples: *position_examples

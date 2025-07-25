@@ -1,0 +1,8 @@
+[tools]
+python = "3.11"
+
+[tasks.setup]
+run = "pip install -r requirements.txt"
+
+[tasks.test]
+run = "PYTHONPATH=. pytest -s"
