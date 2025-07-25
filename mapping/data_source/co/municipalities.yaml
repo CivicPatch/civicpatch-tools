@@ -1,0 +1,1434 @@
+- name: Denver
+  geoid: '0820000'
+  divisions:
+    - District 1
+    - District 10
+    - District 11
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+    - District 6
+    - District 7
+    - District 8
+    - District 9
+  population: 715522
+  website: http://www.denvergov.org/
+- name: Colorado Springs
+  geoid: '0816000'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+    - District 6
+  map_url: https://gis.coloradosprings.gov/Html5Viewer/?viewer=councildistricts
+  population: 478961
+  website: http://www.coloradosprings.gov
+- name: Aurora
+  geoid: '0804000'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+    - Ward 5
+    - Ward 6
+  map_url: https://experience.arcgis.com/experience/5a1f496ec38746bf8e90867c6966e295
+  population: 386261
+  website: https://www.auroragov.org/
+- name: Fort Collins
+  geoid: '0827425'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+    - District 6
+  population: 169810
+  website: http://www.fcgov.com/
+- name: Lakewood
+  geoid: '0843000'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+    - Ward 5
+  population: 155984
+  website: https://www.lakewood.org
+- name: Thornton
+  geoid: '0877290'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+  population: 141867
+  website: https://www.thorntonco.gov/Pages/default.aspx
+- name: Arvada
+  geoid: '0803455'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+  population: 124402
+  website: http://www.arvada.org/
+- name: Westminster
+  geoid: '0883835'
+  divisions: []
+  population: 116317
+  website: https://www.cityofwestminster.us/
+- name: Pueblo
+  geoid: '0862000'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+  population: 111876
+  website: http://www.pueblo.us/
+- name: Greeley
+  geoid: '0832155'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+  population: 108795
+  website: http://www.greeleygov.com/
+- name: Centennial
+  geoid: '0812815'
+  divisions: []
+  population: 108418
+- name: Boulder
+  geoid: '0807850'
+  divisions: []
+  population: 108250
+  website: http://www.bouldercolorado.gov
+- name: Longmont
+  geoid: '0845970'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+  population: 98885
+  website: https://www.longmontcolorado.gov/
+- name: Loveland
+  geoid: '0846465'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+  population: 76378
+  website: https://www.lovgov.org/
+- name: Broomfield
+  geoid: '0809280'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+    - Ward 5
+  population: 74112
+  website: http://www.broomfield.org/
+- name: Castle Rock
+  geoid: '0812415'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+    - District 6
+  population: 73158
+  website: http://www.crgov.com
+- name: Grand Junction
+  geoid: '0831660'
+  divisions: []
+  population: 65560
+- name: Commerce City
+  geoid: '0816495'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+  population: 62418
+  website: http://www.c3gov.com/
+- name: Parker
+  geoid: '0857630'
+  divisions: []
+  population: 58512
+  website: http://www.parkeronline.org/
+- name: Littleton
+  geoid: '0845255'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+  population: 45652
+  website: http://www.littletonco.gov/
+- name: Brighton
+  geoid: '0808675'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+  map_url: https://experience.arcgis.com/experience/6b5bc2af4dcf409e87db2775b5dd29f5/
+  population: 40083
+  website: http://www.brightonco.gov/
+- name: Northglenn
+  geoid: '0854330'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+    - Ward 4
+  population: 38131
+  website: http://www.northglenn.org/
+- name: Englewood
+  geoid: '0824785'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+  population: 33659
+  website: https://www.englewoodco.gov/
+- name: Windsor
+  geoid: '0885485'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+    - District 5
+    - District 6
+  population: 32716
+  website: http://www.windsorgov.com/
+- name: Wheat Ridge
+  geoid: '0884440'
+  divisions:
+    - District 1
+    - District 2
+    - District 3
+    - District 4
+  population: 32398
+  website: http://www.ci.wheatridge.co.us/
+- name: Lafayette
+  geoid: '0841835'
+  divisions: []
+  population: 30411
+  website: https://lafayetteco.gov/
+- name: Erie
+  geoid: '0824950'
+  divisions: []
+  population: 30038
+  website: http://www.erieco.gov/index.cfm
+- name: Fountain
+  geoid: '0827865'
+  divisions:
+    - Ward 1
+    - Ward 2
+    - Ward 3
+  population: 29802
+  website: http://www.fountaincolorado.org/
+- name: Evans
+  geoid: '0825280'
+  divisions: []
+  population: 22165
+  website: https://www.evanscolorado.gov/
+- name: Louisville
+  geoid: '0846355'
+  divisions: []
+  population: 21226
+  website: http://www.louisvilleco.gov/
+- name: Golden
+  geoid: '0830835'
+  divisions: []
+  population: 20399
+  website: http://www.cityofgolden.net/
+- name: Montrose
+  geoid: '0851745'
+  divisions: []
+  population: 20291
+  website: http://www.cityofmontrose.org/
+- name: Durango
+  geoid: '0822035'
+  divisions: []
+  population: 19071
+  website: http://www.durangogov.org/
+- name: Johnstown
+  geoid: '0839855'
+  divisions: []
+  population: 17303
+  website: https://johnstown.colorado.gov/
+- name: Cañon City
+  geoid: '0811810'
+  divisions: []
+  population: 17141
+- name: Firestone
+  geoid: '0826600'
+  divisions: []
+  population: 16381
+  website: https://www.firestoneco.gov/
+- name: Greenwood Village
+  geoid: '0833035'
+  divisions: []
+  population: 15691
+  website: http://www.greenwoodvillage.com/
+- name: Frederick
+  geoid: '0828360'
+  divisions: []
+  population: 14513
+  website: http://www.frederickco.gov/
+- name: Federal Heights
+  geoid: '0826270'
+  divisions: []
+  population: 14382
+- name: Lone Tree
+  geoid: '0845955'
+  divisions: []
+  population: 14253
+  website: http://www.cityoflonetree.com/
+- name: Sterling
+  geoid: '0873935'
+  divisions: []
+  population: 13735
+  website: http://www.sterlingcolo.com/
+- name: Fruita
+  geoid: '0828745'
+  divisions: []
+  population: 13395
+  website: http://fruita.org/
+- name: Steamboat Springs
+  geoid: '0873825'
+  divisions: []
+  population: 13224
+  website: http://www.steamboatsprings.net/
+- name: Superior
+  geoid: '0875640'
+  divisions: []
+  population: 13094
+  website: http://superiorcolorado.gov/
+- name: Fort Morgan
+  geoid: '0827810'
+  divisions: []
+  population: 11597
+  website: http://www.cityoffortmorgan.com/
+- name: Wellington
+  geoid: '0883230'
+  divisions: []
+  population: 11047
+  website: http://www.townofwellington.com/
+- name: Castle Pines
+  geoid: '0812387'
+  divisions: []
+  population: 11036
+- name: Rifle
+  geoid: '0864255'
+  divisions: []
+  population: 10437
+  website: http://www.rifleco.org/
+- name: Monument
+  geoid: '0851800'
+  divisions: []
+  population: 10399
+  website: http://www.townofmonument.org/
+- name: Berthoud
+  geoid: '0806255'
+  divisions: []
+  population: 10332
+  website: http://www.berthoud.org/
+- name: Glenwood Springs
+  geoid: '0830780'
+  divisions: []
+  population: 9963
+- name: Alamosa
+  geoid: '0801090'
+  divisions: []
+  population: 9806
+  website: http://www.cityofalamosa.org/
+- name: Craig
+  geoid: '0817760'
+  divisions: []
+  population: 9060
+  website: http://www.ci.craig.co.us/
+- name: Delta
+  geoid: '0819850'
+  divisions: []
+  population: 9035
+  website: http://cityofdelta.net/
+- name: Cortez
+  geoid: '0817375'
+  divisions: []
+  population: 8766
+  website: https://www.cortezco.gov/
+- name: Milliken
+  geoid: '0850480'
+  divisions: []
+  population: 8386
+  website: http://www.millikenco.gov/
+- name: Trinidad
+  geoid: '0878610'
+  divisions: []
+  population: 8329
+  website: http://www.trinidad.co.gov/
+- name: Lochbuie
+  geoid: '0845530'
+  divisions: []
+  population: 8088
+  website: http://www.lochbuie.org/
+- name: Gypsum
+  geoid: '0833695'
+  divisions: []
+  population: 8040
+  website: http://www.townofgypsum.com/
+- name: Fort Lupton
+  geoid: '0827700'
+  divisions: []
+  population: 7955
+  website: http://www.fortlupton.org/
+- name: Woodland Park
+  geoid: '0886090'
+  divisions: []
+  population: 7920
+  website: http://www.city-woodlandpark.org/
+- name: Lamar
+  geoid: '0843110'
+  divisions: []
+  population: 7687
+  website: http://www.ci.lamar.co.us/
+- name: Severance
+  geoid: '0869150'
+  divisions: []
+  population: 7683
+  website: http://www.townofseverance.org/
+- name: Eagle
+  geoid: '0822200'
+  divisions: []
+  population: 7511
+- name: La Junta
+  geoid: '0842110'
+  divisions: []
+  population: 7322
+  website: http://www.lajuntacolorado.org/
+- name: Aspen
+  geoid: '0803620'
+  divisions: []
+  population: 7004
+  website: https://www.cityofaspen.com/
+- name: Gunnison
+  geoid: '0833640'
+  divisions: []
+  population: 6560
+  website: https://www.gunnisonco.gov/
+- name: Timnath
+  geoid: '0877510'
+  divisions: []
+  population: 6487
+  website: http://www.timnath.org/
+- name: Cherry Hills Village
+  geoid: '0813845'
+  divisions: []
+  population: 6442
+  website: http://www.cherryhillsvillage.com/
+- name: Carbondale
+  geoid: '0812045'
+  divisions: []
+  population: 6434
+  website: http://www.carbondalegov.org/
+- name: Dacono
+  geoid: '0819080'
+  divisions: []
+  population: 6297
+  website: http://www.cityofdacono.com
+- name: Sheridan
+  geoid: '0869645'
+  divisions: []
+  population: 6105
+  website: http://www.ci.sheridan.co.us/
+- name: Avon
+  geoid: '0804110'
+  divisions: []
+  population: 6072
+  website: http://www.avon.org/
+- name: Estes Park
+  geoid: '0825115'
+  divisions: []
+  population: 5904
+  website: https://estespark.colorado.gov/
+- name: Eaton
+  geoid: '0822860'
+  divisions: []
+  population: 5802
+  website: http://www.eatonco.org/
+- name: Salida
+  geoid: '0867280'
+  divisions: []
+  population: 5666
+  website: http://www.cityofsalida.com/
+- name: Brush
+  geoid: '0809555'
+  divisions: []
+  population: 5339
+  website: http://www.brushcolo.com/
+- name: Breckenridge
+  geoid: '0808400'
+  divisions: []
+  population: 5078
+  website: http://www.townofbreckenridge.com/
+- name: Edgewater
+  geoid: '0823135'
+  divisions: []
+  population: 5005
+  website: http://www.edgewaterco.com/
+- name: New Castle
+  geoid: '0853395'
+  divisions: []
+  population: 4923
+  website: http://www.newcastlecolorado.org/
+- name: Manitou Springs
+  geoid: '0848445'
+  divisions: []
+  population: 4858
+  website: http://www.manitouspringsgov.com/
+- name: Vail
+  geoid: '0880040'
+  divisions: []
+  population: 4835
+  website: http://vailgov.com/
+- name: Mead
+  geoid: '0849600'
+  divisions: []
+  population: 4781
+  website: http://www.townofmead.org/
+- name: Glendale
+  geoid: '0830340'
+  divisions: []
+  population: 4613
+  website: http://www.glendale.co.us/
+- name: Silverthorne
+  geoid: '0870525'
+  divisions: []
+  population: 4402
+  website: http://www.silverthorne.org/
+- name: Monte Vista
+  geoid: '0851635'
+  divisions: []
+  population: 4247
+- name: Basalt
+  geoid: '0804935'
+  divisions: []
+  population: 3984
+  website: http://www.basalt.net/
+- name: Rocky Ford
+  geoid: '0865190'
+  divisions: []
+  population: 3876
+  website: https://cityofrockyford.colorado.gov/
+- name: Florence
+  geoid: '0827040'
+  divisions: []
+  population: 3822
+  website: https://www.cityofflorenceco.gov/.
+- name: Silt
+  geoid: '0870195'
+  divisions: []
+  population: 3536
+  website: http://www.townofsilt.org/
+- name: Yuma
+  geoid: '0886750'
+  divisions: []
+  population: 3456
+  website: https://cityofyuma.colorado.gov/
+- name: Burlington
+  geoid: '0810600'
+  divisions: []
+  population: 3172
+  website: http://www.burlingtoncolo.com/
+- name: Orchard City
+  geoid: '0855980'
+  divisions: []
+  population: 3142
+  website: http://www.orchardcityco.org/
+- name: Snowmass Village
+  geoid: '0871755'
+  divisions: []
+  population: 3096
+  website: http://tosv.com/
+- name: Walsenburg
+  geoid: '0882350'
+  divisions: []
+  population: 3049
+- name: Platteville
+  geoid: '0860160'
+  divisions: []
+  population: 2955
+  website: http://www.plattevillegov.org/
+- name: Frisco
+  geoid: '0828690'
+  divisions: []
+  population: 2913
+  website: http://www.friscogov.com/
+- name: Bennett
+  geoid: '0806090'
+  divisions: []
+  population: 2862
+  website: https://townofbennett.colorado.gov
+- name: Buena Vista
+  geoid: '0810105'
+  divisions: []
+  population: 2855
+  website: http://www.buenavistaco.gov/
+- name: Bayfield
+  geoid: '0805265'
+  divisions: []
+  population: 2838
+  website: http://www.bayfieldgov.org/
+- name: Palmer Lake
+  geoid: '0857025'
+  divisions: []
+  population: 2636
+  website: https://www.townofpalmerlake.com/
+- name: Leadville
+  geoid: '0844320'
+  divisions: []
+  population: 2633
+  website: https://cityofleadville.colorado.gov/
+- name: Telluride
+  geoid: '0876795'
+  divisions: []
+  population: 2607
+  website: http://www.telluride-co.gov/
+- name: Palisade
+  geoid: '0856970'
+  divisions: []
+  population: 2565
+  website: http://www.townofpalisade.org/
+- name: Meeker
+  geoid: '0849875'
+  divisions: []
+  population: 2374
+  website: http://www.townofmeeker.org/
+- name: La Salle
+  geoid: '0843605'
+  divisions: []
+  population: 2359
+  website: http://www.lasalletown.com/
+- name: Wray
+  geoid: '0886310'
+  divisions: []
+  population: 2358
+  website: http://www.cityofwray.org/
+- name: Holyoke
+  geoid: '0837270'
+  divisions: []
+  population: 2346
+  website: http://www.cityofholyoke-co.gov/
+- name: Las Animas
+  geoid: '0843660'
+  divisions: []
+  population: 2300
+  website: https://cityoflasanimas.colorado.gov/#main-content
+- name: Rangely
+  geoid: '0862880'
+  divisions: []
+  population: 2299
+  website: https://townofrangely.colorado.gov/
+- name: Cedaredge
+  geoid: '0812635'
+  divisions: []
+  population: 2279
+- name: Lyons
+  geoid: '0847070'
+  divisions: []
+  population: 2209
+  website: http://www.townoflyons.com/
+- name: Granby
+  geoid: '0831605'
+  divisions: []
+  population: 2079
+- name: Limon
+  geoid: '0844980'
+  divisions: []
+  population: 2043
+- name: Olathe
+  geoid: '0855540'
+  divisions: []
+  population: 2019
+  website: http://www.townofolathe.org/
+- name: Hayden
+  geoid: '0835070'
+  divisions: []
+  population: 1941
+  website: https://www.haydencolorado.com/
+- name: Center
+  geoid: '0812855'
+  divisions: []
+  population: 1929
+  website: https://townofcenter.colorado.gov
+- name: Ault
+  geoid: '0803950'
+  divisions: []
+  population: 1887
+  website: http://www.townofault.org/
+- name: Idaho Springs
+  geoid: '0838370'
+  divisions: []
+  population: 1782
+  website: http://www.idahospringsco.com/
+- name: Akron
+  geoid: '0800925'
+  divisions: []
+  population: 1757
+  website: https://townofakron.colorado.gov
+- name: Elizabeth
+  geoid: '0823740'
+  divisions: []
+  population: 1675
+  website: http://www.townofelizabeth.org/
+- name: Hudson
+  geoid: '0837820'
+  divisions: []
+  population: 1651
+- name: Crested Butte
+  geoid: '0818310'
+  divisions: []
+  population: 1639
+  website: https://www.crestedbutte-co.gov/
+- name: Pagosa Springs
+  geoid: '0856860'
+  divisions: []
+  population: 1571
+  website: https://www.pagosasprings.co.gov/
+- name: Kremmling
+  geoid: '0841560'
+  divisions: []
+  population: 1509
+  website: http://www.townofkremmling.org/
+- name: Columbine Valley
+  geoid: '0816385'
+  divisions: []
+  population: 1502
+  website: http://www.columbinevalley.org/
+- name: Kersey
+  geoid: '0840515'
+  divisions: []
+  population: 1495
+  website: http://www.townofkersey.com/
+- name: Nederland
+  geoid: '0853175'
+  divisions: []
+  population: 1471
+  website: https://townofnederland.colorado.gov/
+- name: Del Norte
+  geoid: '0819795'
+  divisions: []
+  population: 1458
+  website: http://www.delnortecolorado.com/
+- name: Paonia
+  geoid: '0857300'
+  divisions: []
+  population: 1447
+  website: http://townofpaonia.com/
+- name: Wiggins
+  geoid: '0884770'
+  divisions: []
+  population: 1401
+  website: https://townofwiggins.colorado.gov/
+- name: Fraser
+  geoid: '0828305'
+  divisions: []
+  population: 1400
+  website: http://www.frasercolorado.com/
+- name: Parachute
+  geoid: '0857400'
+  divisions: []
+  population: 1390
+  website: https://townofparachute.colorado.gov/
+- name: Springfield
+  geoid: '0873330'
+  divisions: []
+  population: 1325
+  website: https://townofspringfield.colorado.gov/
+- name: Julesburg
+  geoid: '0839965'
+  divisions: []
+  population: 1307
+  website: http://www.townofjulesburg.com/
+- name: Mountain Village
+  geoid: '0852550'
+  divisions: []
+  population: 1264
+  website: https://townofmountainvillage.com/
+- name: Fowler
+  geoid: '0827975'
+  divisions: []
+  population: 1253
+  website: http://www.fowlercolorado.com/
+- name: Keenesburg
+  geoid: '0840185'
+  divisions: []
+  population: 1250
+  website: https://www.townofkeenesburg.com/
+- name: Mancos
+  geoid: '0848115'
+  divisions: []
+  population: 1196
+  website: http://www.mancoscolorado.com/
+- name: Ridgway
+  geoid: '0864200'
+  divisions: []
+  population: 1183
+  website: http://town.ridgway.co.us/
+- name: Cripple Creek
+  geoid: '0818530'
+  divisions: []
+  population: 1155
+  website: http://www.cityofcripplecreek.com/
+- name: Georgetown
+  geoid: '0829735'
+  divisions: []
+  population: 1118
+  website: http://www.townofgeorgetown.us/
+- name: Pierce
+  geoid: '0859005'
+  divisions: []
+  population: 1097
+  website: http://www.townofpierce.org/
+- name: Deer Trail
+  geoid: '0819630'
+  divisions: []
+  population: 1068
+  website: https://townofdeertrail.colorado.gov
+- name: Ordway
+  geoid: '0856145'
+  divisions: []
+  population: 1066
+  website: https://townofordway.colorado.gov
+- name: Dillon
+  geoid: '0820440'
+  divisions: []
+  population: 1064
+  website: https://www.townofdillon.com/
+- name: Minturn
+  geoid: '0850920'
+  divisions: []
+  population: 1033
+  website: http://www.minturn.org/
+- name: Winter Park
+  geoid: '0885705'
+  divisions: []
+  population: 1033
+  website: http://www.wpgov.com/
+- name: Gilcrest
+  geoid: '0829955'
+  divisions: []
+  population: 1029
+  website: http://www.townofgilcrest.org/
+- name: Haxtun
+  geoid: '0834960'
+  divisions: []
+  population: 981
+- name: Manassa
+  geoid: '0848060'
+  divisions: []
+  population: 947
+  website: http://www.manassa.com/
+- name: Mount Crested Butte
+  geoid: '0852570'
+  divisions: []
+  population: 941
+- name: Poncha Springs
+  geoid: '0860600'
+  divisions: []
+  population: 925
+  website: http://www.ponchaspringscolorado.us/
+- name: Log Lane Village
+  geoid: '0845695'
+  divisions: []
+  population: 913
+  website: https://www.townofllv.com/
+- name: Ouray
+  geoid: '0856420'
+  divisions: []
+  population: 898
+  website: https://www.cityofouray.com/
+- name: Oak Creek
+  geoid: '0855155'
+  divisions: []
+  population: 889
+  website: http://www.townofoakcreek.com/
+- name: Dolores
+  geoid: '0820770'
+  divisions: []
+  population: 885
+  website: https://townofdolores.colorado.gov
+- name: Sanford
+  geoid: '0867830'
+  divisions: []
+  population: 879
+- name: Blue River
+  geoid: '0807410'
+  divisions: []
+  population: 877
+  website: https://townofblueriver.colorado.gov
+- name: Hotchkiss
+  geoid: '0837545'
+  divisions: []
+  population: 875
+  website: http://www.townofhotchkiss.com/
+- name: La Veta
+  geoid: '0844100'
+  divisions: []
+  population: 862
+  website: http://www.townoflaveta-co.gov/
+- name: Bow Mar
+  geoid: '0808070'
+  divisions: []
+  population: 853
+  website: https://townofbowmar.colorado.gov
+- name: Ignacio
+  geoid: '0838535'
+  divisions: []
+  population: 852
+  website: https://townofignacio.colorado.gov/#main-content
+- name: Holly
+  geoid: '0837215'
+  divisions: []
+  population: 837
+  website: http://www.townofholly.com/
+- name: Hugo
+  geoid: '0837875'
+  divisions: []
+  population: 787
+  website: http://www.townhugo.com/
+- name: Central City
+  geoid: '0812910'
+  divisions: []
+  population: 779
+- name: Calhan
+  geoid: '0811260'
+  divisions: []
+  population: 762
+  website: http://www.calhan.co/
+- name: Cheyenne Wells
+  geoid: '0814175'
+  divisions: []
+  population: 758
+  website: http://www.townofcheyennewells.com/
+- name: Foxfield
+  geoid: '0828105'
+  divisions: []
+  population: 754
+  website: https://townoffoxfield.colorado.gov
+- name: Williamsburg
+  geoid: '0885155'
+  divisions: []
+  population: 731
+  website: https://townofwilliamsburg.colorado.gov/
+- name: La Jara
+  geoid: '0842055'
+  divisions: []
+  population: 730
+  website: https://townoflajara.colorado.gov/
+- name: Kiowa
+  geoid: '0840790'
+  divisions: []
+  population: 725
+  website: https://townofkiowa.colorado.gov/
+- name: Fairplay
+  geoid: '0825610'
+  divisions: []
+  population: 724
+  website: http://fairplayco.us/
+- name: Hot Sulphur Springs
+  geoid: '0837600'
+  divisions: []
+  population: 687
+  website: http://www.hotsulphurspringsco.com/
+- name: Eads
+  geoid: '0822145'
+  divisions: []
+  population: 672
+  website: null
+- name: Stratton
+  geoid: '0874485'
+  divisions: []
+  population: 656
+  website: https://townofstratton.colorado.gov
+- name: Antonito
+  geoid: '0802355'
+  divisions: []
+  population: 647
+  website: null
+- name: Green Mountain Falls
+  geoid: '0832650'
+  divisions: []
+  population: 646
+  website: https://greenmountainfalls.colorado.gov/
+- name: Dove Creek
+  geoid: '0821265'
+  divisions: []
+  population: 635
+  website: https://townofdovecreek.colorado.gov
+- name: Silverton
+  geoid: '0870580'
+  divisions: []
+  population: 622
+  website: https://townofsilverton.colorado.gov
+- name: Silver Cliff
+  geoid: '0870250'
+  divisions: []
+  population: 609
+  website: http://silvercliffco.com/
+- name: Walden
+  geoid: '0882130'
+  divisions: []
+  population: 606
+  website: null
+- name: Swink
+  geoid: '0875970'
+  divisions: []
+  population: 604
+  website: http://townofswinkco.ourlocalview.com/
+- name: Simla
+  geoid: '0870635'
+  divisions: []
+  population: 601
+  website: http://www.townofsimla.com/
+- name: San Luis
+  geoid: '0868105'
+  divisions: []
+  population: 598
+  website: http://townofsanluisco.org/index.html
+- name: Nucla
+  geoid: '0854935'
+  divisions: []
+  population: 585
+  website: https://townofnucla.colorado.gov/
+- name: Flagler
+  geoid: '0826765'
+  divisions: []
+  population: 567
+  website: http://www.flaglercolorado.com/
+- name: Walsh
+  geoid: '0882460'
+  divisions: []
+  population: 543
+  website: https://townofwalsh.colorado.gov
+- name: Mountain View
+  geoid: '0852350'
+  divisions: []
+  population: 541
+  website: http://www.townofmountainviewcolorado.org/
+- name: Saguache
+  geoid: '0867005'
+  divisions: []
+  population: 539
+  website: http://www.townofsaguache.org/
+- name: Norwood
+  geoid: '0854880'
+  divisions: []
+  population: 535
+  website: http://www.norwoodtown.com/
+- name: Otis
+  geoid: '0856365'
+  divisions: []
+  population: 511
+  website: https://townofotis.colorado.gov/
+- name: Rockvale
+  geoid: '0864970'
+  divisions: []
+  population: 511
+  website: https://townofrockvale.colorado.gov/
+- name: South Fork
+  geoid: '0872395'
+  divisions: []
+  population: 510
+  website: https://townofsouthfork.colorado.gov
+- name: Nunn
+  geoid: '0855045'
+  divisions: []
+  population: 504
+  website: http://www.nunncolorado.com/
+- name: De Beque
+  geoid: '0819355'
+  divisions: []
+  population: 493
+  website: http://debeque.org/
+- name: Naturita
+  geoid: '0853120'
+  divisions: []
+  population: 485
+  website: http://townofnaturita.org/ubweb/
+- name: Aguilar
+  geoid: '0800760'
+  divisions: []
+  population: 456
+  website: http://www.aguilarco.us/
+- name: Granada
+  geoid: '0831550'
+  divisions: []
+  population: 445
+  website: null
+- name: Wiley
+  geoid: '0885045'
+  divisions: []
+  population: 437
+  website: http://www.townofwiley.us/
+- name: Westcliffe
+  geoid: '0883450'
+  divisions: []
+  population: 435
+  website: https://townofwestcliffe.colorado.gov/
+- name: Lake City
+  geoid: '0842330'
+  divisions: []
+  population: 432
+  website: http://www.townoflakecity.co
+- name: Fleming
+  geoid: '0826875'
+  divisions: []
+  population: 428
+  website: https://www.flemingcolorado.us/
+- name: Grand Lake
+  geoid: '0831715'
+  divisions: []
+  population: 410
+- name: Crawford
+  geoid: '0817925'
+  divisions: []
+  population: 403
+  website: https://townofcrawford.colorado.gov
+- name: Yampa
+  geoid: '0886475'
+  divisions: []
+  population: 399
+  website: https://www.townofyampa.com/
+- name: Morrison
+  geoid: '0852075'
+  divisions: []
+  population: 396
+  website: https://www.morrisonco.us/
+- name: Victor
+  geoid: '0880865'
+  divisions: []
+  population: 379
+  website: http://www.cityofvictor.com/
+- name: Collbran
+  geoid: '0815605'
+  divisions: []
+  population: 369
+- name: Coal Creek
+  geoid: '0815330'
+  divisions: []
+  population: 364
+  website: https://townofcoalcreek.colorado.gov
+- name: Empire
+  geoid: '0824620'
+  divisions: []
+  population: 345
+- name: Manzanola
+  geoid: '0848500'
+  divisions: []
+  population: 341
+  website: null
+- name: Blanca
+  geoid: '0807190'
+  divisions: []
+  population: 322
+  website: http://users.gojade.org/~blancaco
+- name: Olney Springs
+  geoid: '0855705'
+  divisions: []
+  population: 315
+  website: https://townofolneysprings.colorado.gov/
+- name: Hillrose
+  geoid: '0836610'
+  divisions: []
+  population: 312
+- name: Boone
+  geoid: '0807795'
+  divisions: []
+  population: 305
+  website: null
+- name: Romeo
+  geoid: '0865740'
+  divisions: []
+  population: 302
+  website: null
+- name: Alma
+  geoid: '0801530'
+  divisions: []
+  population: 296
+  website: http://www.townofalma.com/
+- name: Rico
+  geoid: '0864090'
+  divisions: []
+  population: 288
+  website: https://townofrico.colorado.gov
+- name: Merino
+  geoid: '0850040'
+  divisions: []
+  population: 281
+  website: null
+- name: Ovid
+  geoid: '0856475'
+  divisions: []
+  population: 271
+  website: null
+- name: Sugar City
+  geoid: '0874815'
+  divisions: []
+  population: 259
+  website: https://sugarcitycolorado.com/
+- name: City of Creede
+  geoid: '0814765'
+  divisions: []
+  population: 257
+- name: Red Cliff
+  geoid: '0863265'
+  divisions: []
+  population: 257
+  website: https://townofredcliff.colorado.gov
+- name: Jamestown
+  geoid: '0839195'
+  divisions: []
+  population: 256
+  website: http://www.jamestownco.org/
+- name: Kit Carson
+  geoid: '0841010'
+  divisions: []
+  population: 255
+  website: https://www.townofkitcarson.com/
+- name: Garden City
+  geoid: '0829185'
+  divisions: []
+  population: 254
+  website: http://townofgardencity.com/
+- name: Iliff
+  geoid: '0838590'
+  divisions: []
+  population: 246
+  website: null
+- name: Dinosaur
+  geoid: '0820495'
+  divisions: []
+  population: 243
+  website: https://townofdinosaur.colorado.gov
+- name: Cheraw
+  geoid: '0813460'
+  divisions: []
+  population: 237
+  website: https://townofcheraw.colorado.gov/
+- name: Brookside
+  geoid: '0809115'
+  divisions: []
+  population: 236
+  website: https://townofbrookside.colorado.gov
+- name: Eckley
+  geoid: '0823025'
+  divisions: []
+  population: 232
+  website: https://townofeckley.colorado.gov/
+- name: Peetz
+  geoid: '0858235'
+  divisions: []
+  population: 213
+  website: https://www.townofpeetz.com/
+- name: Silver Plume
+  geoid: '0870360'
+  divisions: []
+  population: 207
+  website: https://silverplumetown.com/
+- name: Larkspur
+  geoid: '0843550'
+  divisions: []
+  population: 206
+  website: http://www.townoflarkspur.org/
+- name: Rye
+  geoid: '0866895'
+  divisions: []
+  population: 206
+  website: https://townofrye.colorado.gov/
+- name: Arriba
+  geoid: '0803235'
+  divisions: []
+  population: 202
+  website: https://townofarriba.colorado.gov
+- name: Ophir
+  geoid: '0855870'
+  divisions: []
+  population: 197
+  website: https://townofophir.colorado.gov
+- name: Bethune
+  geoid: '0806530'
+  divisions: []
+  population: 183
+  website: null
+- name: Sedgwick
+  geoid: '0868930'
+  divisions: []
+  population: 172
+  website: https://www.sedgwickcolorado.com/
+- name: Seibert
+  geoid: '0869040'
+  divisions: []
+  population: 172
+  website: null
+- name: Crowley
+  geoid: '0818750'
+  divisions: []
+  population: 166
+  website: null
+- name: Grover
+  geoid: '0833310'
+  divisions: []
+  population: 157
+  website: null
+- name: Genoa
+  geoid: '0829680'
+  divisions: []
+  population: 153
+- name: Crestone
+  geoid: '0818420'
+  divisions: []
+  population: 141
+- name: Crook
+  geoid: '0818640'
+  divisions: []
+  population: 133
+  website: null
+- name: Marble
+  geoid: '0848555'
+  divisions: []
+  population: 133
+  website: http://www.townofmarble.com/
+- name: Ward
+  geoid: '0882735'
+  divisions: []
+  population: 128
+  website: null
+- name: Black Hawk
+  geoid: '0807025'
+  divisions: []
+  population: 127
+  website: http://www.cityofblackhawk.org/
+- name: Cokedale
+  geoid: '0815550'
+  divisions: []
+  population: 127
+  website: https://townofcokedale.colorado.gov
+- name: Pritchett
+  geoid: '0861315'
+  divisions: []
+  population: 112
+  website: null
+- name: Ramah
+  geoid: '0862660'
+  divisions: []
+  population: 111
+  website: https://ramah.colorado.gov/
+- name: Raymer (New Raymer)
+  geoid: '0863045'
+  divisions: []
+  population: 110
+- name: Moffat
+  geoid: '0851250'
+  divisions: []
+  population: 108
+  website: https://townofmoffat.colorado.gov/
+- name: Campo
+  geoid: '0811645'
+  divisions: []
+  population: 103
+  website: null
+- name: Vilas
+  geoid: '0881030'
+  divisions: []
+  population: 98
+  website: null
+- name: Vona
+  geoid: '0881690'
+  divisions: []
+  population: 95
+  website: null
+- name: Hooper
+  geoid: '0837380'
+  divisions: []
+  population: 81
+  website: null
+- name: Montezuma
+  geoid: '0851690'
+  divisions: []
+  population: 74
+  website: https://www.townofmontezuma.com/
+- name: Pitkin
+  geoid: '0859830'
+  divisions: []
+  population: 72
+  website: https://townofpitkin.colorado.gov/
+- name: Haswell
+  geoid: '0834740'
+  divisions: []
+  population: 71
+- name: Kim
+  geoid: '0840570'
+  divisions: []
+  population: 63
+  website: null
+- name: Starkville
+  geoid: '0873715'
+  divisions: []
+  population: 62
+  website: null
+- name: Branson
+  geoid: '0808345'
+  divisions: []
+  population: 57
+  website: http://www.bransoncolorado.com/
+- name: Hartman
+  geoid: '0834520'
+  divisions: []
+  population: 56
+- name: Sheridan Lake
+  geoid: '0869700'
+  divisions: []
+  population: 55
+- name: Paoli
+  geoid: '0857245'
+  divisions: []
+  population: 51
+  website: null
+- name: Sawpit
+  geoid: '0868655'
+  divisions: []
+  population: 38
+  website: null
+- name: Two Buttes
+  geoid: '0879270'
+  divisions: []
+  population: 34
+  website: null
+- name: Bonanza
+  geoid: '0807571'
+  divisions: []
+  population: 17
+- name: Lakeside
+  geoid: '0842495'
+  divisions: []
+  population: 16
+  website: https://www.townoflakesideco.org/
+- name: Carbonate
+  geoid: '0812030'
+  divisions: []
+  population: 0
