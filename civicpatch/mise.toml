@@ -1,8 +1,9 @@
 [tools]
-python = "3.11"
+python = "3.13"
+poetry = "latest"
 
 [tasks.setup]
-run = "pip install -r requirements.txt"
+run = "poetry install"
 
 [tasks.test]
-run = "PYTHONPATH=. pytest -s"
+run = "poetry run pytest -s"
