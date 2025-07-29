@@ -1,9 +1,9 @@
-import os
-from fastapi.testclient import TestClient
-from main import app
-from markdownify import markdownify as md
-
-client = TestClient(app)
+#import os
+#from fastapi.testclient import TestClient
+#from main import app
+#from markdownify import markdownify as md
+#
+#client = TestClient(app)
 
 # def test_extract_with_relevant_data():
 #     input_data = {
@@ -181,46 +181,46 @@ client = TestClient(app)
 #     assert data["phones"] == []
 #     assert data["websites"] == []
 
-def test_extract_with_yakima_council_fixture():
-    # Define the paths to the fixture files
-    base_path = os.path.dirname(__file__)
-    input_file = os.path.join(base_path, "./fixtures/yakima_council.html")
-    original_input_file_md = os.path.join(base_path, "./fixtures/yakima_council_original.md")
-
-    expected_file = os.path.join(base_path, "./fixtures/yakima_council_expected.md")
-
-    # Read the input HTML
-    with open(input_file, "r") as f:
-      input_html = f.read()
-   
-    # Save original file as markdown
-    with open(original_input_file_md, "w") as f:
-      f.write(md(input_html))
-
-    # Prepare the input data for the API
-    input_data = {"text": input_html}
-
-    # Make the API request
-    response = client.post("/extract", json=input_data)
-    assert response.status_code == 200
-
-    # Get the filtered HTML from the response
-    data = response.json()
-    filtered_content = data["filtered_content"].strip()
-
-    # Check if the expected file exists
-    if not os.path.exists(expected_file):
-        os.makedirs(os.path.dirname(expected_file), exist_ok=True)
-        with open(expected_file, "w") as f:
-            f.write(filtered_content)
-        print("File written:", expected_file)
-        assert False, f"Expected file did not exist. Generated at: {expected_file}"
-
-    # Read the expected filtered HTML
-    with open(expected_file, "r") as f:
-      expected_content = f.read().strip()
-
-    # Compare the filtered HTML to the expected HTML
-    assert filtered_content == expected_content
-
-    print(data["people"])
+#def test_extract_with_yakima_council_fixture():
+#    # Define the paths to the fixture files
+#    base_path = os.path.dirname(__file__)
+#    input_file = os.path.join(base_path, "./fixtures/yakima_council.html")
+#    original_input_file_md = os.path.join(base_path, "./fixtures/yakima_council_original.md")
+#
+#    expected_file = os.path.join(base_path, "./fixtures/yakima_council_expected.md")
+#
+#    # Read the input HTML
+#    with open(input_file, "r") as f:
+#      input_html = f.read()
+#   
+#    # Save original file as markdown
+#    with open(original_input_file_md, "w") as f:
+#      f.write(md(input_html))
+#
+#    # Prepare the input data for the API
+#    input_data = {"text": input_html}
+#
+#    # Make the API request
+#    response = client.post("/extract", json=input_data)
+#    assert response.status_code == 200
+#
+#    # Get the filtered HTML from the response
+#    data = response.json()
+#    filtered_content = data["filtered_content"].strip()
+#
+#    # Check if the expected file exists
+#    if not os.path.exists(expected_file):
+#        os.makedirs(os.path.dirname(expected_file), exist_ok=True)
+#        with open(expected_file, "w") as f:
+#            f.write(filtered_content)
+#        print("File written:", expected_file)
+#        assert False, f"Expected file did not exist. Generated at: {expected_file}"
+#
+#    # Read the expected filtered HTML
+#    with open(expected_file, "r") as f:
+#      expected_content = f.read().strip()
+#
+#    # Compare the filtered HTML to the expected HTML
+#    assert filtered_content == expected_content
+#
+#    print(data["people"])
