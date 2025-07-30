@@ -1,9 +1,9 @@
 [tools]
 python = "3.13"
 poetry = "latest"
-
 [tasks.setup]
-run = "poetry install"
-
-[tasks.test]
-run = "poetry run pytest -s"
+run = "poetry install && poetry run post-install"
+[tasks.unit]
+run = "PYTHONPATH=./src poetry run pytest -s tests/unit"
+[tasks.integration]
+run = "PYTHONPATH=./src poetry run pytest -s tests/integration"
