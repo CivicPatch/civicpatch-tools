@@ -1,0 +1,9 @@
+services:
+  civicpatch:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app/src

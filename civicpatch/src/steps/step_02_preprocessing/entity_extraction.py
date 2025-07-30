@@ -2,10 +2,9 @@ import spacy
 import re
 from spacy.matcher import PhraseMatcher
 
-app = FastAPI()
 nlp = spacy.load("en_core_web_trf")
 
-# Config for titles (can be loaded from a file if needed)
+# TODO: load from config
 TITLES = ["mayor", "council member", "councilwoman", "councilman", "representative"]
 
 # Initialize the PhraseMatcher
@@ -40,6 +39,7 @@ def extract_data(text):
     found_emails = [token.text for token in doc if token.like_email] 
 
     # Prepare patterns for phones
+    # TODO: add regex to nlp
     phone_pattern = r"\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}"
     found_phones = extract_with_context(phone_pattern, text)
 
