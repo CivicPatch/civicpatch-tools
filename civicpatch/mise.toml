@@ -1,9 +1,14 @@
 [tools]
-python = "3.13"
-poetry = "latest"
-[tasks.setup]
-run = "poetry install && poetry run post-install"
+# python = "3.11"
+# poetry = "latest"
+#[tasks.setup]
+#run = "poetry install && poetry run post-install"
+#[tasks.unit]
+#run = "PYTHONPATH=./src poetry run pytest -s tests/unit"
+#[tasks.integration]
+#run = "PYTHONPATH=./src poetry run pytest -s tests/integration"
+
 [tasks.unit]
-run = "PYTHONPATH=./src poetry run pytest -s tests/unit"
+run = "docker compose run --rm civicpatch xvfb-run poetry run pytest -s tests/unit"
 [tasks.integration]
-run = "PYTHONPATH=./src poetry run pytest -s tests/integration"
+run = "docker compose run --rm civicpatch xvfb-run poetry run pytest -s tests/integration"
