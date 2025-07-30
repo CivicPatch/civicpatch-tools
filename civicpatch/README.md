@@ -10,4 +10,9 @@
 
 ```bash
 mise install
+mise setup
 ```
+
+### Commands
+
+* `mise test`

@@ -311,10 +311,6 @@ module Core
       false
     end
 
-    private_class_method def self.remove_image_element(img_element)
-      img_element.evaluate("el => el.remove()")
-    end
-
     private_class_method def self.download_image(page, absolute_src, img_element)
       # Try downloading with HTTParty first
       file = download_with_httparty(absolute_src)

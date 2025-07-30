@@ -1,22 +1,12 @@
 import os
 import json
-
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-
-def get_municipalities_file_path(state):
-    """
-    Returns the file path for the municipalities JSON file based on the state.
-    """
-    
-    data_source_dir = os.path.join(ROOT_DIR, 'data_source', state)
-    
-    return os.path.join(data_source_dir, 'municipalities.json')
+import src.utils.path_utils as path_utils
 
 def get_municipalities_to_scrape(state, num_to_scrape, geoids_to_ignore=None):
     """
     Returns a list of GEOIDs for municipalities to scrape based on the state and number specified.
     """
-    file_path = get_municipalities_file_path(state)
+    file_path = path_utils.get_municipalities_file_path(state)
     
     with open(file_path, 'r') as file:
         data = json.load(file)
