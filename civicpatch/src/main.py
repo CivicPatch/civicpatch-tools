@@ -11,7 +11,7 @@ def main():
     
     args = parser.parse_args()
 
-    if args.action == "search":
+    if args.action == "pipeline":
         if args.num >= 1:
             geoids = get_municipalities_to_scrape(args.state, args.num)
             print(geoids)

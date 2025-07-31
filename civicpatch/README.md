@@ -19,9 +19,16 @@ Roles and divisions are standardized via the rules listed under [./config](./con
 
 ### Requirements
 
-- [environment setup](#environment-setup)
 - [mise](https://mise.jdx.dev/getting-started.html)
 - [docker](https://www.docker.com/products/docker-desktop/)
+
+## Setup
+
+1. Set up [environment variables](#environment-setup) # TODO setup
+2. Run `mise install`
+  This will install python & poetry, but these are used for
+  typehinting (ex: with vs code). Actual development and scripts
+  should run inside docker
 
 ### Commands
 

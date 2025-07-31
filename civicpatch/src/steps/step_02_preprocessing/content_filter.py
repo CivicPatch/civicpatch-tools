@@ -3,7 +3,7 @@ from . import entity_extraction
 
 IMAGE_EXTENSIONS_WHITELIST = ["png", "jpg", "jpeg", "webp"]
 
-def process_node(node):
+def filter_relevant_nodes(node):
     """Recursively process each node to remove irrelevant content."""
     found_people = []
     found_dates = []
@@ -18,7 +18,7 @@ def process_node(node):
         children_to_remove = []
         for child in list(node.children):
             if hasattr(child, 'name'):  # It's a tag, not text
-                child_is_relevant = process_node(child)
+                child_is_relevant = filter_relevant_nodes(child)
                 if child_is_relevant:
                     has_relevant_children = True
                 else:

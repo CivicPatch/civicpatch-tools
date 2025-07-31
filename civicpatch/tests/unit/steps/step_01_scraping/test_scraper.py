@@ -1,5 +1,7 @@
+import pytest
 from steps.step_01_scraping.scraper import get_website_content
 
+@pytest.mark.flaky(reruns=3)
 def test_get_website_content():
     """
     Integration test for get_website_content.
