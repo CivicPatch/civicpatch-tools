@@ -35,7 +35,11 @@ Roles and divisions are standardized via the rules listed under [./config](./con
 #### Run tests
 
 - `mise unit`
+  - Quick tests
+
 - `mise integration`
+  - Calls 3rd party services
+  - Runs (local) nlp tests
 
 ## Environment Setup
 
