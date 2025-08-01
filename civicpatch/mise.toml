@@ -1,7 +1,6 @@
 [tools] # Note: this is just for typehinting, development should happen in docker
 python = "3.11" 
 poetry = "latest"
-
 [tasks.pipeline]
 # TODO
 run = "docker compose run --rm civicpatch xvfb-run -a poetry run python main.py pipeline --state"
@@ -9,5 +8,8 @@ run = "docker compose run --rm civicpatch xvfb-run -a poetry run python main.py 
 run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s tests/unit"
 [tasks.integration]
 run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s tests/integration"
+[tasks.container]
+run = "docker compose run --rm civicpatch"
+
 [tasks.scratch]
-run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s tests/unit/steps/step_02_preprocessing/test_content_filter.py"
+run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s tests/unit/steps/step_02_preprocessing/test_entity_extraction.py"

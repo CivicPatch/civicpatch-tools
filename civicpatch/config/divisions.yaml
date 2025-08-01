@@ -1,0 +1,23 @@
+---
+divisions:
+  at-large:
+    aliases: 
+      - citywide
+      - city-wide
+      - at large
+      - city wide
+  ward:
+    aliases:
+      - council ward
+      - ward council
+  district:
+    aliases:
+      - council district
+      - district council
+  position:
+    aliases:
+      - council position
+      - position council
+  seat:
+    aliases:
+      - council seat
