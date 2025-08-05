@@ -1,0 +1,11 @@
+---
+ignore_url_paths:
+  - alert
+  - news
+  - event
+  - calendar
+  - archive
+  - meeting
+  - documentcenter
+max_crawl_depth: 2
+max_crawl_pages: 15

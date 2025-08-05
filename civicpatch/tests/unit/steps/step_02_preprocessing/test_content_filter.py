@@ -1,6 +1,6 @@
 from unittest.mock import patch
 from bs4 import BeautifulSoup
-from steps.step_02_preprocessing.content_filter import filter_relevant_nodes
+from steps.step_03_preprocessing.content_filter import filter_relevant_nodes
 
 def test_filter_with_relevant_content():
   """

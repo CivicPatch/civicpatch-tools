@@ -1,4 +1,3 @@
-import os
 import json
 import src.utils.path_utils as path_utils
 

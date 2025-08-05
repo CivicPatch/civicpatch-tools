@@ -41,24 +41,36 @@ Roles and divisions are standardized via the rules listed under [./config](./con
   - Calls 3rd party services
   - Runs (local) nlp tests
 
+#### Add new package
+
+- `mise container poetry add <package>`
+
 ## Environment Setup
 
 Add a .env file with the following variables:
 
 ```dotenv
-GOOGLE_GEMINI_TOKEN=
-OPENAI_TOKEN=
 BRAVE_SEARCH_TOKEN=
 GOOGLE_SEARCH_TOKEN=
+GOOGLE_SEARCH_ENGINE_ID=
 SERP_SEARCH_TOKEN=
+
+GOOGLE_GEMINI_TOKEN=
+OPENAI_TOKEN=
 ```
 
 Optional environment variables:
 
 - GOOGLE_SHEETS_TOKEN and GOOGLE_SHEETS_ID are used to log
-  calculated operating costs of running each scrape job.
+  calculated (worst case-ish) operating costs of running each scrape job.
 
 ```dotenv
 GOOGLE_SHEETS_TOKEN=
 GOOGLE_SHEETS_ID=
 ```
+
+## TODOS
+
+- [ ] Update token variables
+- [ ] Add logger for search engine costs
+- [ ] Add logger for llm costs

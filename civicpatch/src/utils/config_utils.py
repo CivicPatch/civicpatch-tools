@@ -23,3 +23,14 @@ def get_government_types():
         config_data = yaml.safe_load(config_file)
     
     return config_data.get('government_types', {})
+
+def get_search():
+    """
+    Returns the search configuration from the configuration file.
+    """
+    config_path = path_utils.get_config_path()
+    search_file_path = os.path.join(config_path, 'search.yaml')
+    with open(search_file_path, 'r') as config_file:
+        search_config = yaml.safe_load(config_file)
+    
+    return search_config

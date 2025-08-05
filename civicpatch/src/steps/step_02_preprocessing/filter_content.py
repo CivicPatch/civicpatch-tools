@@ -3,13 +3,14 @@ from . import entity_extraction
 
 IMAGE_EXTENSIONS_WHITELIST = ["png", "jpg", "jpeg", "webp"]
 
-def filter_relevant_nodes(node):
+def filter_content(node):
     """Recursively process each node to remove irrelevant content."""
     found_people = []
     found_dates = []
     found_emails = []
     found_phones = []
     found_roles = []
+    found_divisions = []
     found_websites = []
     found_images = []
     has_relevant_children = False
@@ -41,7 +42,7 @@ def filter_relevant_nodes(node):
         direct_text = " ".join(direct_text_parts).strip()
         
     if direct_text:
-        found_people, found_dates, found_emails, found_phones, found_roles = entity_extraction.extract_data(direct_text)
+        found_people, found_dates, found_emails, found_phones, found_roles, found_divisions = entity_extraction.extract_data(direct_text)
 
     # Check for person-linked websites
     if isinstance(node, Tag):
@@ -55,7 +56,7 @@ def filter_relevant_nodes(node):
                 link_text = a.get_text().strip()
                 if link_text:
                     # Extract people from link text specifically
-                    link_people, _, _, _, _ = entity_extraction.extract_data(link_text)
+                    link_people, _, _, _, _, _ = entity_extraction.extract_data(link_text)
                     if link_people:
                         found_websites.append(a["href"])
                         # Add link people to our found people
@@ -63,7 +64,7 @@ def filter_relevant_nodes(node):
 
     # Determine relevance
     is_relevant = bool(
-        found_people or found_roles or found_dates or found_emails or 
+        found_people or found_roles or found_divisions or found_dates or found_emails or 
         found_phones or found_websites or found_images or has_relevant_children
     )
     

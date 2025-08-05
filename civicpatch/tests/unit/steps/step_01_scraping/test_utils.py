@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from steps.step_01_scraping.utils import flatten_shadow_root, html_relative_to_absolute_urls, download_images
+from steps.step_02_scraping.utils import flatten_shadow_root, html_relative_to_absolute_urls, download_images
 
 def test_flatten_shadow_root():
     with sync_playwright() as p:
