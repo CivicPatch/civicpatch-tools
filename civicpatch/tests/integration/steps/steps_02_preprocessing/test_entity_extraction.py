@@ -1,6 +1,6 @@
 import pytest
 import spacy
-from steps.step_02_preprocessing.entity_extraction import extract_data
+from steps.step_03_preprocessing.entity_extraction import extract_data
 
 @pytest.fixture(scope="module")
 def nlp():

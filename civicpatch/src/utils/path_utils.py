@@ -10,6 +10,17 @@ def get_config_path():
 
     return config_path
 
+def get_data_path():
+    """
+    Returns the absolute path to the 'data' directory.
+    """
+    data_path = os.path.join(ROOT_DIR, "data")
+
+    if not os.path.exists(data_path):
+        raise FileNotFoundError(f"'data' directory not found at {data_path}")
+
+    return data_path
+
 def get_data_source_path():
     """
     Returns the absolute path to the 'data_source' directory.
@@ -27,5 +38,4 @@ def get_municipalities_file_path(state):
     """
 
     data_source_dir = get_data_source_path()
-    
     return os.path.join(data_source_dir, state, 'municipalities.json')

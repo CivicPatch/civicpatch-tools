@@ -1,24 +1,27 @@
 import argparse
-from utils.municipalities import get_municipalities_to_scrape
+from civicpatch.src.utils.pipeline_utils import get_municipalities_to_scrape
 
 
 def main():
     parser = argparse.ArgumentParser(description="CivicPatch CLI")
-    parser.add_argument("action", choices=["search", "github"], help="Action to perform")
+    parser.add_argument("action", choices=["search", "pipeline", "github"], help="Action to perform")
     parser.add_argument("--state", type=str, required=True, help="State to process")
-    parser.add_argument("--num", type=int, default=0, help="Number of GEOIDs to find")
-    parser.add_argument("--geoid", type=str, default=None, help="GEOID to process")
+    parser.add_argument("--num", type=int, default=0, help="GEOIDs to find")
+    parser.add_argument("--geoid", type=str, default=None, help="Municipality GEOID to process")
+    parser.add_argument("--geoids-to-ignore", type=str, nargs='*', default=None, help="List of GEOIDs to ignore")
     
     args = parser.parse_args()
 
-    if args.action == "pipeline":
-        if args.num >= 1:
-            geoids = get_municipalities_to_scrape(args.state, args.num)
-            print(geoids)
-        else:
-            print("Please specify a valid number of GEOIDs to scrape.")
-    elif args.action == "github":
-        print(f"Triggered GitHub steps for state: {args.state}, geoid: {args.geoid}")
+    if args.action == "search":
+        geoids = get_municipalities_to_scrape(args.state, args.num, args.geoids_to_ignore)
+        if len(geoids) == 0:
+            print(f"No municipalities found for state {args.state} with the specified criteria.")
+            return
+        print(geoids)
+    elif args.action == "pipeline":
+        print("To be implemented")
+    #elif args.action == "github":
+    #    print(f"Triggered GitHub steps for state: {args.state}, geoid: {args.geoid}")
     else:
         print("Invalid action specified. Use 'search' or 'github'.")
 
