@@ -1,5 +1,5 @@
 from utils.scrape_utils import scrape
-from schemas import PipelineContext, Link, LinkStatus
+from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
 from utils.array_utils import interleave_arrays
 from utils.data_utils import get_municipality_context, MunicipalityContext
 from utils.config_utils import search_keywords
@@ -9,7 +9,7 @@ def search_links(context: PipelineContext):
     """
     Search for links using multiple search engines and queries.
     """
-    print(f"Searching for links for state: {context['state']}, GEOID: {context['geoid']}")
+    print(f"Step 1: {PipelineStatus.SEARCH_LINKS.value}")
 
     # Load keyword term groups
     municipality_context = get_municipality_context(context["state"], context["geoid"])

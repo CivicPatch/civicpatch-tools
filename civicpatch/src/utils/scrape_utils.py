@@ -1,9 +1,11 @@
-
 import os
 import uuid
 import json
 from playwright.sync_api import sync_playwright, Page
 from typing import TypedDict
+
+IMAGE_URL_BLACKLIST = ["https://google.com"]
+IMAGE_EXT_BLACKLIST = [".svg", ".gif"]
 
 class ScrapeOptions(TypedDict):
     image_dir: str  # Directory to save images
@@ -28,9 +30,9 @@ def scrape(website_url, options=None):
         flatten_shadow_root(page) 
         html_relative_to_absolute_urls(page)
 
-        if options and options.get('image_dir'):
+        if options and options.get('image_directory'):
             # Download images if the option is set
-            download_images(page, options.get('image_dir'))
+            download_images(page, options.get('image_directory'))
 
         content = page.content()
         browser.close()
@@ -78,22 +80,29 @@ def html_relative_to_absolute_urls(page: Page):
     base_element = page.query_selector("base")
     base_href = base_element.get_attribute("href") if base_element else None
     if base_href:
-        # If base_href is relative, resolve it against the page's URL
         from urllib.parse import urljoin
         base_url = urljoin(page.url, base_href)
     else:
         base_url = page.url
 
-    # Pass the base_url directly as an argument to the function
+    # Improved: convert all non-absolute URLs, not just those starting with /
     page.evaluate("""
         (baseUrl) => {
-            console.log("Converting html_relative_to_absolute_urls with baseUrl:", baseUrl);
+            function isAbsolute(url) {
+                return /^(?:[a-z]+:)?\\/\\//i.test(url);
+            }
             const elements = document.querySelectorAll('a[href], img[src]');
             elements.forEach((el) => {
-                if (el.tagName === 'A' && el.getAttribute('href').startsWith('/')) {
-                    el.setAttribute('href', new URL(el.getAttribute('href'), baseUrl).href);
-                } else if (el.tagName === 'IMG' && el.getAttribute('src').startsWith('/')) {
-                    el.setAttribute('src', new URL(el.getAttribute('src'), baseUrl).href);
+                if (el.tagName === 'A') {
+                    const href = el.getAttribute('href');
+                    if (href && !isAbsolute(href)) {
+                        el.setAttribute('href', new URL(href, baseUrl).href);
+                    }
+                } else if (el.tagName === 'IMG') {
+                    const src = el.getAttribute('src');
+                    if (src && !isAbsolute(src)) {
+                        el.setAttribute('src', new URL(src, baseUrl).href);
+                    }
                 }
             });
         }
@@ -117,6 +126,9 @@ def download_images(page: Page, image_dir: str):
         try:
             src = img.get_attribute("src")
             if not src:
+                continue
+            
+            if any(src.endswith(ext) for ext in IMAGE_EXT_BLACKLIST):
                 continue
 
             image_uuid = str(uuid.uuid4())

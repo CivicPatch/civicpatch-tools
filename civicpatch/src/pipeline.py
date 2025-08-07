@@ -3,6 +3,7 @@ import json
 from schemas import PipelineContext, PipelineStatus, LinkStatus, SearchEngineStatus
 
 import utils.data_path_utils as data_path_utils
+from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from steps.step_01_search_links.search_links import search_links
 from steps.step_02_scrape_page.scrape_page import scrape_page
 from steps.step_03_preprocess_page_content.preprocess_page_content import preprocess_page_content
@@ -47,7 +48,6 @@ class Pipeline:
         context_file_path = data_path_utils.get_pipeline_context_file_path(state, geoid)
         with open(context_file_path, "w") as f:
             json.dump(self.context, f, indent=4)
-        print("Pipeline context saved.")
 
     def load_context(self, state: str, geoid: str) -> PipelineContext:
         """
@@ -81,14 +81,12 @@ class Pipeline:
 
         while self.state != PipelineStatus.DONE:
             print(f"Running pipeline for state: {state}, geoid: {geoid}, current step: {self.state}")
-            if self.state == PipelineStatus.INIT:
-                # TODO:
-                # clear folder cache, create cache folder if not exists
 
-                self.context = self.load_context(state, geoid)
+            if self.state == PipelineStatus.INIT:
+                prepare_pipeline(self.context)
                 self.state = PipelineStatus.SEARCH_LINKS
 
-            if self.state == PipelineStatus.SEARCH_LINKS:
+            elif self.state == PipelineStatus.SEARCH_LINKS:
                 self.context.update(search_links(self.context))
                 self.state = PipelineStatus.SCRAPE_PAGE
 
@@ -105,6 +103,8 @@ class Pipeline:
             elif self.state == PipelineStatus.PROCESS_PAGE_CONTENT:
                 page_to_process = self.get_next_link(LinkStatus.PREPROCESSED)
                 self.context.update(process_page_content(self.context, page_to_process))
+                print("Current data:", self.context["progress"]["current_data"])
+                print("Required data:", self.context["progress"]["required_data"])
 
                 if self.context["progress"]["current_data"] < self.context["progress"]["required_data"]:
                     print("Not enough data processed yet, collecting more data...")

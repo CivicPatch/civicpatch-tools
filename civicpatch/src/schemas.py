@@ -24,6 +24,7 @@ class LinkStatus(Enum):
 class Link(TypedDict):
     url: str
     status: str # LinkStatus value
+    folder_name: str = ""
 
 class PipelineStatus(Enum):
     INIT = "INIT"

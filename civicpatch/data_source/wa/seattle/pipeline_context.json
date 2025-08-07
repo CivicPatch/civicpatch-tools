@@ -4,9 +4,9 @@
             "links": [
                 "https://www.seattle.gov/council",
                 "https://seattle.gov/council/meet-the-council",
+                "https://www.seattle.gov/council/meet-the-council/find-your-district-and-councilmembers",
                 "https://www.seattle.gov/elected-officials",
                 "https://www.seattle.gov/mayor",
-                "https://www.seattle.gov/council/meet-the-council/find-your-district-and-councilmembers",
                 "https://www.seattle.gov/",
                 "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district",
                 "https://harrell.seattle.gov/2024/02/20/mayor-harrell-delivers-2024-state-of-the-city-address-persistent-and-pioneering-progress/",
@@ -14,16 +14,16 @@
                 "https://www.seattle.gov/light/",
                 "https://seattle.gov/council/calendar",
                 "https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members",
-                "https://www.seattle.gov/civil-rights",
+                "https://www.seattle.gov/city-light/outages",
                 "https://harrell.seattle.gov/2025/07/08/mayor-harrell-announces-city-filing-to-conclude-federal-consent-decree/",
                 "https://www.seattle.gov/cityattorney",
                 "https://www.seattle.gov/council/committees/public-comment",
+                "https://www.seattle.gov/civil-rights",
                 "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
                 "https://www.seattle.gov/council/committees",
-                "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials",
                 "https://harrell.seattle.gov/2025/02/18/mayor-harrell-delivers-2025-state-of-the-city-address-seattle-on-the-rise/",
                 "https://council.seattle.gov/2024/01/02/new-seattle-city-councilmembers-sworn-in-during-inauguration-city-hall/",
-                "https://www.seattle.gov/ethics"
+                "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials"
             ],
             "status": "processing"
         },
@@ -40,23 +40,27 @@
     "links": [
         {
             "url": "https://www.seattle.gov/council",
-            "status": "done"
+            "status": "done",
+            "folder_name": "www_seattle_gov_council"
         },
         {
             "url": "https://seattle.gov/council/meet-the-council",
-            "status": "done"
-        },
-        {
-            "url": "https://www.seattle.gov/elected-officials",
-            "status": "done"
-        },
-        {
-            "url": "https://www.seattle.gov/mayor",
-            "status": "done"
+            "status": "done",
+            "folder_name": "seattle_gov_council_meet-the-council"
         },
         {
             "url": "https://www.seattle.gov/council/meet-the-council/find-your-district-and-councilmembers",
-            "status": "done"
+            "status": "done",
+            "folder_name": "www_seattle_gov_council_meet-the-council_find-your-district-and-councilmembers"
+        },
+        {
+            "url": "https://www.seattle.gov/elected-officials",
+            "status": "scraped",
+            "folder_name": "www_seattle_gov_elected-officials"
+        },
+        {
+            "url": "https://www.seattle.gov/mayor",
+            "status": "pending"
         },
         {
             "url": "https://www.seattle.gov/",
@@ -87,7 +91,7 @@
             "status": "pending"
         },
         {
-            "url": "https://www.seattle.gov/civil-rights",
+            "url": "https://www.seattle.gov/city-light/outages",
             "status": "pending"
         },
         {
@@ -103,15 +107,15 @@
             "status": "pending"
         },
         {
+            "url": "https://www.seattle.gov/civil-rights",
+            "status": "pending"
+        },
+        {
             "url": "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
             "status": "pending"
         },
         {
             "url": "https://www.seattle.gov/council/committees",
-            "status": "pending"
-        },
-        {
-            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials",
             "status": "pending"
         },
         {
@@ -123,7 +127,7 @@
             "status": "pending"
         },
         {
-            "url": "https://www.seattle.gov/ethics",
+            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials",
             "status": "pending"
         }
     ],
@@ -140,7 +144,7 @@
     },
     "progress": {
         "required_data": 5,
-        "current_data": 5
+        "current_data": 3
     },
     "state": "wa",
     "geoid": "5363000"
