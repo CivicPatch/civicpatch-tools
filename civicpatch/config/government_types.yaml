@@ -24,7 +24,7 @@ government_types:
       - role: commissioner
         aliases:
           - city commissioner
-    search_keywords: # Keys are for google search, values are for web crawling
+    keywords: # Keys are for google search, values are for web crawling
       mayor:
         - mayor and city council
         - about mayor
@@ -130,7 +130,7 @@ government_types:
           - member
     exclude_positions:
       - youth councilor
-    search_keywords: # Keys are for google search, values are for web crawling
+    keywords: # Keys are for google search, values are for web crawling
       mayor:
         - mayor and city council
         - about mayor
@@ -210,7 +210,7 @@ government_types:
         - selectboard member
         - select board member
         - member
-    search_keywords:
+    keywords:
       selectmen:
         - board of selectmen
         - departments
@@ -253,7 +253,7 @@ government_types:
         - alderman
         - alderwoman
         - member
-    search_keywords: # Keys are for google search, values are for web crawling
+    keywords: # Keys are for google search, values are for web crawling
       mayor:
         - mayor and city council
         - about mayor

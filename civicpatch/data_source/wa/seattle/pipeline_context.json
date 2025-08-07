@@ -1,0 +1,147 @@
+{
+    "search_engines": {
+        "google": {
+            "links": [
+                "https://www.seattle.gov/council",
+                "https://seattle.gov/council/meet-the-council",
+                "https://www.seattle.gov/elected-officials",
+                "https://www.seattle.gov/mayor",
+                "https://www.seattle.gov/council/meet-the-council/find-your-district-and-councilmembers",
+                "https://www.seattle.gov/",
+                "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district",
+                "https://harrell.seattle.gov/2024/02/20/mayor-harrell-delivers-2024-state-of-the-city-address-persistent-and-pioneering-progress/",
+                "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council",
+                "https://www.seattle.gov/light/",
+                "https://seattle.gov/council/calendar",
+                "https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members",
+                "https://www.seattle.gov/civil-rights",
+                "https://harrell.seattle.gov/2025/07/08/mayor-harrell-announces-city-filing-to-conclude-federal-consent-decree/",
+                "https://www.seattle.gov/cityattorney",
+                "https://www.seattle.gov/council/committees/public-comment",
+                "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
+                "https://www.seattle.gov/council/committees",
+                "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials",
+                "https://harrell.seattle.gov/2025/02/18/mayor-harrell-delivers-2025-state-of-the-city-address-seattle-on-the-rise/",
+                "https://council.seattle.gov/2024/01/02/new-seattle-city-councilmembers-sworn-in-during-inauguration-city-hall/",
+                "https://www.seattle.gov/ethics"
+            ],
+            "status": "processing"
+        },
+        "brave": {
+            "status": "not_started"
+        },
+        "serp": {
+            "status": "not_started"
+        },
+        "crawl": {
+            "status": "not_started"
+        }
+    },
+    "links": [
+        {
+            "url": "https://www.seattle.gov/council",
+            "status": "done"
+        },
+        {
+            "url": "https://seattle.gov/council/meet-the-council",
+            "status": "done"
+        },
+        {
+            "url": "https://www.seattle.gov/elected-officials",
+            "status": "done"
+        },
+        {
+            "url": "https://www.seattle.gov/mayor",
+            "status": "done"
+        },
+        {
+            "url": "https://www.seattle.gov/council/meet-the-council/find-your-district-and-councilmembers",
+            "status": "done"
+        },
+        {
+            "url": "https://www.seattle.gov/",
+            "status": "pending"
+        },
+        {
+            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district",
+            "status": "pending"
+        },
+        {
+            "url": "https://harrell.seattle.gov/2024/02/20/mayor-harrell-delivers-2024-state-of-the-city-address-persistent-and-pioneering-progress/",
+            "status": "pending"
+        },
+        {
+            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council",
+            "status": "pending"
+        },
+        {
+            "url": "https://www.seattle.gov/light/",
+            "status": "pending"
+        },
+        {
+            "url": "https://seattle.gov/council/calendar",
+            "status": "pending"
+        },
+        {
+            "url": "https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members",
+            "status": "pending"
+        },
+        {
+            "url": "https://www.seattle.gov/civil-rights",
+            "status": "pending"
+        },
+        {
+            "url": "https://harrell.seattle.gov/2025/07/08/mayor-harrell-announces-city-filing-to-conclude-federal-consent-decree/",
+            "status": "pending"
+        },
+        {
+            "url": "https://www.seattle.gov/cityattorney",
+            "status": "pending"
+        },
+        {
+            "url": "https://www.seattle.gov/council/committees/public-comment",
+            "status": "pending"
+        },
+        {
+            "url": "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
+            "status": "pending"
+        },
+        {
+            "url": "https://www.seattle.gov/council/committees",
+            "status": "pending"
+        },
+        {
+            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials",
+            "status": "pending"
+        },
+        {
+            "url": "https://harrell.seattle.gov/2025/02/18/mayor-harrell-delivers-2025-state-of-the-city-address-seattle-on-the-rise/",
+            "status": "pending"
+        },
+        {
+            "url": "https://council.seattle.gov/2024/01/02/new-seattle-city-councilmembers-sworn-in-during-inauguration-city-hall/",
+            "status": "pending"
+        },
+        {
+            "url": "https://www.seattle.gov/ethics",
+            "status": "pending"
+        }
+    ],
+    "steps": {
+        "INIT": {},
+        "SEARCH_LINKS": {},
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {},
+        "PROCESS_PAGE_CONTENT": {},
+        "GENERATE_REPORT": {},
+        "SEND_TO_GITHUB": {},
+        "RETRY": {},
+        "DONE": {}
+    },
+    "progress": {
+        "required_data": 5,
+        "current_data": 5
+    },
+    "state": "wa",
+    "geoid": "5363000"
+}

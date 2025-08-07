@@ -1,4 +1,6 @@
-def report():
+from schemas import PipelineContext
+
+def generate_report(context: PipelineContext):
     """
     Generate a report based on the processed data.
     """
@@ -7,4 +9,5 @@ def report():
     # This is a placeholder for actual reporting logic
     report_data = {"report": "some_report_data"}
     print(f"Report generated: {report_data}")
-    return report_data
+
+    return {}

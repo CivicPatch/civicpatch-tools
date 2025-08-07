@@ -1,13 +1,14 @@
 def interleave_arrays(arrays):
     """
-    Interleave multiple arrays into a single array, maintaining the order of elements.
-    If arrays are of different lengths, the shorter ones will be padded with None.
-    
-    Args:
-        *arrays: Variable number of arrays to interleave.
-        
-    Returns:
-        A single list containing elements from all input arrays interleaved.
+    Interleave multiple arrays into a single array, maintaining the order of elements,
+    and deduplicate items while preserving the order of first appearance.
     """
     from itertools import zip_longest
-    return [item for sublist in zip_longest(*arrays, fillvalue=None) for item in sublist if item is not None]
+    seen = set()
+    result = []
+    for group in zip_longest(*arrays, fillvalue=None):
+        for item in group:
+            if item is not None and item not in seen:
+                seen.add(item)
+                result.append(item)
+    return result

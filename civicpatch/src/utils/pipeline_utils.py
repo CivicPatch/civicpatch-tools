@@ -1,5 +1,5 @@
 import json
-import src.utils.path_utils as path_utils
+import utils.path_utils as path_utils
 
 def get_municipalities_to_scrape(state, num_to_scrape, geoids_to_ignore=None):
     """

@@ -1,29 +1,44 @@
 import os
 import json
-from enum import Enum
-import utils.data_path_utils as data_path_utils
-from steps.step_01_collecting import collect
-from steps.step_02_preprocessing import preprocess
-from steps.step_03_processing import process
-from steps.step_04_validation import validate
-from steps.step_05_reporting import report
-from steps.step_06_submission import submit
+from schemas import PipelineContext, PipelineStatus, LinkStatus, SearchEngineStatus
 
-class PipelineState(Enum):
-    INIT = "INIT",
-    COLLECT = "COLLECT"
-    PREPROCESS = "PREPROCESS"
-    PROCESS = "PROCESS"
-    VALIDATE = "VALIDATE"
-    SUBMIT = "SUBMIT"
-    REPORT = "REPORT"
-    RETRY = "RETRY"
-    DONE = "DONE"
+import utils.data_path_utils as data_path_utils
+from steps.step_01_search_links.search_links import search_links
+from steps.step_02_scrape_page.scrape_page import scrape_page
+from steps.step_03_preprocess_page_content.preprocess_page_content import preprocess_page_content
+from steps.step_04_process_page_content.process_page_content import process_page_content
+from steps.step_05_generate_report.generate_report import generate_report
+from steps.step_06_send_to_github.send_to_github import send_to_github
+
+DEFAULT_STATE: PipelineContext = {
+    "search_engines": {
+        "google": {"status": SearchEngineStatus.NOT_STARTED.value}, # not_started, processing, completed, failed  
+        "brave": {"status": SearchEngineStatus.NOT_STARTED.value},
+        "serp": {"status": SearchEngineStatus.NOT_STARTED.value},
+        "crawl": {"status": SearchEngineStatus.NOT_STARTED.value},
+    },
+    "links": [],
+    "steps": {
+        PipelineStatus.INIT.value: {},
+        PipelineStatus.SEARCH_LINKS.value: {},
+        PipelineStatus.SCRAPE_PAGE.value: {},
+        PipelineStatus.PREPROCESS_PAGE_CONTENT.value: {},
+        PipelineStatus.PROCESS_PAGE_CONTENT.value: {},
+        PipelineStatus.GENERATE_REPORT.value: {},
+        PipelineStatus.SEND_TO_GITHUB.value: {},
+        PipelineStatus.RETRY.value: {},
+        PipelineStatus.DONE.value: {},
+    },
+    "progress": {
+        "required_data": 5, # Default number of council members, for example
+        "current_data": 0,
+    },
+}
 
 class Pipeline:
-    def __init__(self, state=PipelineState.INIT, context=None):
-        self.state = state
-        self.context = context or {"state": None, "geoid": None, "data": {}}
+    def __init__(self, pipeline_state=PipelineStatus.INIT, context=DEFAULT_STATE):
+        self.state = pipeline_state
+        self.context: PipelineContext = context
 
     def save_context(self, state, geoid):
         """
@@ -31,77 +46,87 @@ class Pipeline:
         """
         context_file_path = data_path_utils.get_pipeline_context_file_path(state, geoid)
         with open(context_file_path, "w") as f:
-            json.dump(self.context, f)
+            json.dump(self.context, f, indent=4)
         print("Pipeline context saved.")
 
-    def load_context(self, state, geoid):
+    def load_context(self, state: str, geoid: str) -> PipelineContext:
         """
-        Load the pipeline context from a file.
+        Always create a new pipeline context and overwrite any existing file.
         """
-        context = {}
-        try:
-            context_file_path = data_path_utils.get_pipeline_context_file_path(state, geoid)
-            with open(context_file_path, "r") as f:
-                context = json.load(f)
-            print("Pipeline context loaded.")
-        except FileNotFoundError:
-            print("No saved context found. Starting fresh.")
-            context = {"state": state, "geoid": geoid, "data": {}}
-            
-            os.makedirs(os.path.dirname(context_file_path), exist_ok=True)
-            with open(context_file_path, "w") as f:
-                json.dump(context, f, indent=4)
-        
+        context: PipelineContext = {
+            **DEFAULT_STATE,
+            "state": state,
+            "geoid": geoid
+        }
+
+        context_file_path = data_path_utils.get_pipeline_context_file_path(state, geoid)
+        os.makedirs(os.path.dirname(context_file_path), exist_ok=True)
+        with open(context_file_path, "w") as f:
+            json.dump(context, f, indent=4)
+        print("New pipeline context created and saved.")
+
         return context
-        
+    
+    def get_next_link(self, status: LinkStatus):
+        for link in self.context["links"]:
+            if link["status"] == status.value:
+                return link
+        return None
+
     def run(self, state, geoid):
         """
         Main function to run the pipeline for a given state and geoid.
         """
         self.context = self.load_context(state, geoid)
 
-        while self.state != PipelineState.DONE:
+        while self.state != PipelineStatus.DONE:
             print(f"Running pipeline for state: {state}, geoid: {geoid}, current step: {self.state}")
-            if self.state == PipelineState.COLLECT:
-                self.context["data"]["collected"] = collect.collect(state, geoid)
-                self.state = PipelineState.PREPROCESS
+            if self.state == PipelineStatus.INIT:
+                # TODO:
+                # clear folder cache, create cache folder if not exists
 
-            elif self.state == PipelineState.PREPROCESS:
-                self.context["data"]["preprocessed"] = preprocess.preprocess(self.context["data"]["collected"])
-                self.state = PipelineState.PROCESS
+                self.context = self.load_context(state, geoid)
+                self.state = PipelineStatus.SEARCH_LINKS
 
-            elif self.state == PipelineState.PROCESS:
-                self.context["data"]["processed"] = process.process(self.context["data"]["preprocessed"])
-                self.state = PipelineState.VALIDATE
+            if self.state == PipelineStatus.SEARCH_LINKS:
+                self.context.update(search_links(self.context))
+                self.state = PipelineStatus.SCRAPE_PAGE
 
-            elif self.state == PipelineState.VALIDATE:
-                validated = validate.validate(self.context["data"]["processed"])
-                self.context["data"]["validated"] = validated
-                if validated.get("is_valid", True):
-                    print("Data validation passed.")
-                    self.state = PipelineState.REPORT
+            elif self.state == PipelineStatus.SCRAPE_PAGE:
+                page_to_scrape = self.get_next_link(LinkStatus.PENDING)
+                self.context.update(scrape_page(self.context, page_to_scrape))
+                self.state = PipelineStatus.PREPROCESS_PAGE_CONTENT
+
+            elif self.state == PipelineStatus.PREPROCESS_PAGE_CONTENT:
+                page_to_preprocess = self.get_next_link(LinkStatus.SCRAPED)
+                self.context.update(preprocess_page_content(self.context, page_to_preprocess))
+                self.state = PipelineStatus.PROCESS_PAGE_CONTENT
+
+            elif self.state == PipelineStatus.PROCESS_PAGE_CONTENT:
+                page_to_process = self.get_next_link(LinkStatus.PREPROCESSED)
+                self.context.update(process_page_content(self.context, page_to_process))
+
+                if self.context["progress"]["current_data"] < self.context["progress"]["required_data"]:
+                    print("Not enough data processed yet, collecting more data...")
+                    self.state = PipelineStatus.SCRAPE_PAGE
                 else:
-                    print("Data validation failed. Moving onto next step...")
-                    # self.state = PipelineState.RETRY
-                    # TODO: maybe implement retry, but let's just skip to
-                    # submission so human in the loop can fix it
-                    self.state = PipelineState.REPORT
+                    print("Enough data processed, moving to report generation...")
+                    self.state = PipelineStatus.GENERATE_REPORT
 
+            elif self.state == PipelineStatus.GENERATE_REPORT:
+                self.context.update(generate_report(self.context))
+                self.state = PipelineStatus.SEND_TO_GITHUB
 
-            elif self.state == PipelineState.REPORT:
-                self.context["data"]["reported"] = report.report(self.context["data"]["validated"])
-                self.state = PipelineState.SUBMIT
+            elif self.state == PipelineStatus.SEND_TO_GITHUB:
+                self.context.update(send_to_github(self.context))
+                self.state = PipelineStatus.DONE
 
-            elif self.state == PipelineState.SUBMIT:
-                self.context["data"]["submitted"] = submit.submit(self.context["data"]["reported"])
-                self.state = PipelineState.DONE
-            
-            elif self.state == PipelineState.RETRY:
-                print("Retrying pipeline...")
-                self.state = PipelineState.COLLECT
+            #elif self.state == PipelineStatus.RETRY:
+            #    print("Retrying pipeline...")
+            #    self.state = PipelineStatus.COLLECT
             else:
                 print("Pipeline logic not yet implemented.")
-                self.state = PipelineState.DONE
+                self.state = PipelineStatus.DONE
 
             # Save the context after each step
             self.save_context(state, geoid)
