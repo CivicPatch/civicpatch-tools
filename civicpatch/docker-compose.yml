@@ -1,10 +1,9 @@
 services:
   civicpatch:
+    env_file: .env
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       - .:/app
-    environment:
-      - PYTHONPATH=/app/src

@@ -6,6 +6,9 @@ def search(search_query, site_search=None):
     api_key = os.getenv("GOOGLE_SEARCH_TOKEN")
     search_engine_id = os.getenv("GOOGLE_SEARCH_ENGINE_ID")
 
+    if not api_key or not search_engine_id:
+        raise ValueError("Google Search API key or search engine ID not set in environment variables.")
+
     params = {
         "key": api_key,
         "cx": search_engine_id,
@@ -25,5 +28,5 @@ def search(search_query, site_search=None):
 
     if "items" not in parsed_response:
         return []
-
+    
     return [item["link"] for item in parsed_response["items"]]

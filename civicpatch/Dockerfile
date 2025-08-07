@@ -4,6 +4,8 @@ FROM python:3.11-slim
 # Set the working directory in the container
 WORKDIR /app
 
+ENV PYTHONPATH=/app/src
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     curl \
@@ -13,7 +15,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN curl -sSL https://install.python-poetry.org | python3 - --version 2.1.3
 
 # Add Poetry to PATH
 ENV PATH="/root/.local/bin:$PATH"

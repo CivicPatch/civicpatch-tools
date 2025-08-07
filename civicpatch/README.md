@@ -71,6 +71,8 @@ GOOGLE_SHEETS_ID=
 
 ## TODOS
 
-- [ ] Update token variables
+- [ ] 
+- [ ] Add logger for each step
+  - [ ] collect
+- [ ] Update token variables on github
 - [ ] Add logger for search engine costs
-- [ ] Add logger for llm costs

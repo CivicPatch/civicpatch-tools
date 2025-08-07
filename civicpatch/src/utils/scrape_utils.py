@@ -1,5 +1,12 @@
-from playwright.sync_api import sync_playwright
-from . import utils
+
+import os
+import uuid
+import json
+from playwright.sync_api import sync_playwright, Page
+from typing import TypedDict
+
+class ScrapeOptions(TypedDict):
+    image_dir: str  # Directory to save images
 
 def scrape(website_url, options=None):
     """
@@ -18,12 +25,12 @@ def scrape(website_url, options=None):
 
         page.goto(website_url)
 
-        utils.flatten_shadow_root(page) 
-        utils.html_relative_to_absolute_urls(page)
+        flatten_shadow_root(page) 
+        html_relative_to_absolute_urls(page)
 
-        if options and options.get('image_dir', False):
+        if options and options.get('image_dir'):
             # Download images if the option is set
-            utils.download_images(page, options.get('image_dir'))
+            download_images(page, options.get('image_dir'))
 
         content = page.content()
         browser.close()
@@ -69,7 +76,13 @@ def html_relative_to_absolute_urls(page: Page):
         page (Page): The Playwright page object.
     """
     base_element = page.query_selector("base")
-    base_url = base_element.get_attribute("href") if base_element else page.url
+    base_href = base_element.get_attribute("href") if base_element else None
+    if base_href:
+        # If base_href is relative, resolve it against the page's URL
+        from urllib.parse import urljoin
+        base_url = urljoin(page.url, base_href)
+    else:
+        base_url = page.url
 
     # Pass the base_url directly as an argument to the function
     page.evaluate("""
@@ -119,5 +132,3 @@ def download_images(page: Page, image_dir: str):
     map_file_path = os.path.join(image_dir, "image_map.json")
     with open(map_file_path, "w") as json_file:
         json.dump(image_map, json_file, indent=4)
-
-

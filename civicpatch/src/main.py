@@ -1,5 +1,6 @@
 import argparse
-from civicpatch.src.utils.pipeline_utils import get_municipalities_to_scrape
+from utils.pipeline_utils import get_municipalities_to_scrape
+from pipeline import Pipeline, PipelineStatus
 
 
 def main():
@@ -19,7 +20,9 @@ def main():
             return
         print(geoids)
     elif args.action == "pipeline":
-        print("To be implemented")
+        pipeline = Pipeline(pipeline_state=PipelineStatus.INIT)
+        pipeline.run(args.state, args.geoid)
+
     #elif args.action == "github":
     #    print(f"Triggered GitHub steps for state: {args.state}, geoid: {args.geoid}")
     else:

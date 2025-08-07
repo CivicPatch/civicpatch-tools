@@ -19,7 +19,7 @@ def filter_content(node):
         children_to_remove = []
         for child in list(node.children):
             if hasattr(child, 'name'):  # It's a tag, not text
-                child_is_relevant = filter_relevant_nodes(child)
+                child_is_relevant = filter_content(child)
                 if child_is_relevant:
                     has_relevant_children = True
                 else:
