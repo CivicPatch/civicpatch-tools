@@ -1,10 +1,36 @@
-from bs4 import Tag
+import time
+from bs4 import Tag, BeautifulSoup
 from . import entity_extraction
 
 IMAGE_EXTENSIONS_WHITELIST = ["png", "jpg", "jpeg", "webp"]
 
-def filter_content(node):
-    """Recursively process each node to remove irrelevant content."""
+def count_nodes(node: Tag):
+    count = 1 if isinstance(node, Tag) else 0
+    for child in getattr(node, "children", []):
+        if isinstance(child, Tag):
+            count += count_nodes(child)
+    return count
+
+def filter_content(input_html: str, progress_log_interval: int = 10) -> str:
+    soup = BeautifulSoup(input_html, "html.parser")
+    total_nodes = count_nodes(soup)
+    state = {
+        "processed": 0,
+        "total": total_nodes,
+        "last_progress_time": time.time(),
+        "progress_log_interval": progress_log_interval
+    }
+    filter_node_content(soup, state)
+    print()  # Newline after progress
+    return str(soup)
+
+def filter_node_content(node: Tag, state):
+    # Process children first
+    for child in list(node.children):
+        if isinstance(child, Tag):
+            filter_node_content(child, state)
+
+    # Check direct relevance
     found_people = []
     found_dates = []
     found_emails = []
@@ -13,60 +39,47 @@ def filter_content(node):
     found_divisions = []
     found_websites = []
     found_images = []
-    has_relevant_children = False
 
-    if not node.string:  # Has children
-        children_to_remove = []
-        for child in list(node.children):
-            if hasattr(child, 'name'):  # It's a tag, not text
-                child_is_relevant = filter_content(child)
-                if child_is_relevant:
-                    has_relevant_children = True
-                else:
-                    children_to_remove.append(child)
-        
-        # Remove irrelevant children after processing all
-        for child in children_to_remove:
-            child.decompose()
+    if node.name == "img":
+        src_clean = node.get("src", "").split("?")[0].lower()
+        if src_clean.endswith(tuple(IMAGE_EXTENSIONS_WHITELIST)):
+            found_images.append(node["src"])
+    elif node.name == "a" and node.get("href", "").startswith("http"):
+        link_text = node.get_text().strip()
+        if link_text:
+            link_people, _, _, _, _, _ = entity_extraction.extract_data(link_text)
+            if link_people:
+                found_websites.append(node["href"])
+                found_people.extend(link_people)
+    elif node.string:
+        text_content = node.string.strip()
+        if text_content:
+            people, dates, emails, phones, roles, divisions = entity_extraction.extract_data(text_content)
+            found_people.extend(people)
+            found_dates.extend(dates)
+            found_emails.extend(emails)
+            found_phones.extend(phones)
+            found_roles.extend(roles)
+            found_divisions.extend(divisions)
 
-    # Extract text only from this node's direct content (not descendants)
-    direct_text = ""
-    if node.string:  # Leaf node with direct text
-        direct_text = str(node.string).strip()
-    elif isinstance(node, Tag):
-        # For non-leaf nodes, get only the direct text (not from children)
-        direct_text_parts = []
-        for content in node.contents:
-            if isinstance(content, str):  # Direct text content
-                direct_text_parts.append(content.strip())
-        direct_text = " ".join(direct_text_parts).strip()
-        
-    if direct_text:
-        found_people, found_dates, found_emails, found_phones, found_roles, found_divisions = entity_extraction.extract_data(direct_text)
+    is_directly_relevant = any([
+        found_people, found_roles, found_divisions, found_dates,
+        found_emails, found_phones, found_websites, found_images
+    ])
 
-    # Check for person-linked websites
-    if isinstance(node, Tag):
-        if node.name == "img":
-            src_clean = node["src"].split("?")[0].lower()
-            if src_clean.endswith(tuple(IMAGE_EXTENSIONS_WHITELIST)):
-                found_images.append(node["src"])
-        # Collect all whitelisted image URLs in this node
-        for a in node.find_all("a", href=True, recursive=False):  # Only direct children
-            if a.get("href") and a.get("href").startswith("http"):
-                link_text = a.get_text().strip()
-                if link_text:
-                    # Extract people from link text specifically
-                    link_people, _, _, _, _, _ = entity_extraction.extract_data(link_text)
-                    if link_people:
-                        found_websites.append(a["href"])
-                        # Add link people to our found people
-                        found_people.extend(link_people)
+    has_relevant_children = any(isinstance(child, Tag) for child in node.children)
+    if node.name in {"document", "html", "body"}:
+        return
 
-    # Determine relevance
-    is_relevant = bool(
-        found_people or found_roles or found_divisions or found_dates or found_emails or 
-        found_phones or found_websites or found_images or has_relevant_children
-    )
-    
-    return is_relevant
+    if not is_directly_relevant and not has_relevant_children:
+        node.decompose()
+
+    # --- Progress logging ---
+    state["processed"] += 1
+    now = time.time()
+    if now - state["last_progress_time"] >= state["progress_log_interval"]:
+        percent = int(100 * state["processed"] / state["total"])
+        print(f"Progress: {percent}% ({state['processed']}/{state['total']})")
+        state["last_progress_time"] = now
+    # ------------------------
 

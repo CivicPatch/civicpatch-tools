@@ -1,6 +1,6 @@
 import os
 import utils.scrape_utils as scrape_utils
-from schemas import PipelineContext, Link, LinkStatus
+from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
 import utils.data_path_utils as data_path_utils
 import utils.url_utils as url_utils
 
@@ -8,8 +8,10 @@ def scrape_page(context: PipelineContext, link_to_scrape: Link):
     """
     Scrape pages based on the links found in the previous search step.
     """
-    print(f"Scraping page: {link_to_scrape['url']} for state: {context['state']}, GEOID: {context['geoid']}")
-    html_content = scrape_utils.scrape(link_to_scrape["url"], {})
+    print(f"Step 2: {PipelineStatus.SCRAPE_PAGE.value}")
+
+    image_directory = data_path_utils.get_images_path(context["state"], context["geoid"])
+    html_content = scrape_utils.scrape(link_to_scrape["url"], { "image_directory": image_directory })
 
     # Save html_content to file under data_source
     cache_path = data_path_utils.get_cache_path(context["state"], context["geoid"])
@@ -27,7 +29,7 @@ def scrape_page(context: PipelineContext, link_to_scrape: Link):
     for link in context["links"]:
         if link["url"] == link_to_scrape["url"]:
             # Update the status/content for this link
-            updated_links.append({**link, "status": LinkStatus.SCRAPED.value})
+            updated_links.append({**link, "status": LinkStatus.SCRAPED.value, "folder_name": folder_name})
         else:
             updated_links.append(link)
     return {
