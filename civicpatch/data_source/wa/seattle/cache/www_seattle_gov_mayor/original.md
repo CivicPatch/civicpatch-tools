@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Mayor Bruce Harrell - Mayor | seattle.gov
 
 
 
@@ -17,7 +17,7 @@ Website addresses ending in .gov belong to official government organizations in 
 **Secure .gov websites use HTTPS**  
 A lock () or https:// means you've safely connected to the .gov website. Only share sensitive information on official, secure websites.
 
-[Skip to main content](https://www.seattle.gov/council#content)
+[Skip to main content](https://www.seattle.gov/mayor#content)
 
 Seattle
 
@@ -497,261 +497,278 @@ ContinueCancel
 * Close Close
 * Main Menu+ Back to
     Main MenuBack to Main Menu
-  + [Council](https://www.seattle.gov/council)
-  + [Meet the CouncilMeet the Council](https://www.seattle.gov/council/meet-the-council "Main Menu Mobile - Home Meet the Council")
-    - [Newsletter Signup](https://www.seattle.gov/council/meet-the-council/newsletter-signup "Main Menu Mobile - Meet the Council Newsletter Signup")
-    - [Find Your District and Councilmembers](https://www.seattle.gov/council/meet-the-council/find-your-district-and-councilmembers "Main Menu Mobile - Meet the Council Find Your District and Councilmembers")
-    - [Visiting City Hall](https://www.seattle.gov/council/meet-the-council/visiting-city-hall "Main Menu Mobile - Meet the Council Visiting City Hall")
-    - [Visitor Sign-in Sheets](https://www.seattle.gov/council/meet-the-council/visitor-sign-in-sheets "Main Menu Mobile - Meet the Council Visitor Sign-in Sheets")
-    - [Rob SakaRob Saka](https://www.seattle.gov/council/saka "Main Menu Mobile - Meet the Council Rob Saka")
-      * [About Councilmember Rob Saka](https://www.seattle.gov/council/meet-the-council/rob-saka/about-rob "Main Menu Mobile - Rob Saka About Councilmember Rob Saka")
-      * [Councilmember Rob Saka's Staff](https://www.seattle.gov/council/meet-the-council/rob-saka/staff "Main Menu Mobile - Rob Saka Councilmember Rob Saka's Staff")
-      * [Rob's Committees & Calendar](https://www.seattle.gov/council/meet-the-council/rob-saka/committees-and-calendar "Main Menu Mobile - Rob Saka Rob's Committees & Calendar")
-      * [Request a Meeting](https://forms.office.com/Pages/ResponsePage.aspx?id=RR7meOtrCUCPmTWdi1T0G4F4Xp8Qwp1Jlw6kY-dCCslUOVM0MEExWTNVT0dJQkU5TExHS0FMNjlHTi4u "Main Menu Mobile - Rob Saka Request a Meeting")
-      * [Newsletter Archives](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=026c7aa0f5 "Main Menu Mobile - Rob Saka Newsletter Archives")
-      * [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=026c7aa0f5 "Main Menu Mobile - Rob Saka Newsletter Sign Up")
-      * [Rob's Blog](https://saka.seattle.gov "Rob Saka Blog")
-    - [Mark SolomonMark Solomon](https://www.seattle.gov/council/solomon "Main Menu Mobile - Meet the Council Mark Solomon")
-      * [Councilmember Mark Solomon's Staff](https://www.seattle.gov/council/meet-the-council/mark-solomon/staff "Main Menu Mobile - Mark Solomon Councilmember Mark Solomon's Staff")
-      * [Mark's Committees & Calendar](https://www.seattle.gov/council/meet-the-council/mark-solomon/committees-and-calendar "Main Menu Mobile - Mark Solomon Mark's Committees & Calendar")
-      * [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=e205296124 "Main Menu Mobile - Mark Solomon Newsletter Archive")
-      * [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=e205296124 "Main Menu Mobile - Mark Solomon Newsletter Sign Up")
-      * [Mark's Blog](https://council.seattle.gov/solomon/ "Mark Solomon Blog")
-      * [About Councilmember Mark Solomon](https://www.seattle.gov/council/meet-the-council/mark-solomon/about-mark "Main Menu Mobile - Mark Solomon About Councilmember Mark Solomon")
-    - [Joy HollingsworthJoy Hollingsworth](https://www.seattle.gov/council/hollingsworth "Main Menu Mobile - Meet the Council Joy Hollingsworth")
-      * [About Councilmember Joy Hollingsworth](https://www.seattle.gov/council/meet-the-council/joy-hollingsworth/about-joy "Main Menu Mobile - Joy Hollingsworth About Councilmember Joy Hollingsworth")
-      * [Councilmember Joy Hollingsworth's Staff](https://www.seattle.gov/council/meet-the-council/joy-hollingsworth/staff "Main Menu Mobile - Joy Hollingsworth Councilmember Joy Hollingsworth's Staff")
-      * [Joy's Committees & Calendar](https://www.seattle.gov/council/meet-the-council/joy-hollingsworth/committees-and-calendar "Main Menu Mobile - Joy Hollingsworth Joy's Committees & Calendar")
-      * [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=95e60b79b0 "Main Menu Mobile - Joy Hollingsworth Newsletter Archive")
-      * [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=95e60b79b0 "Main Menu Mobile - Joy Hollingsworth Newsletter Sign Up")
-      * [Joy's Blog](https://hollingsworth.seattle.gov "Joy Hollingsworth Blog")
-    - [Maritza RiveraMaritza Rivera](https://www.seattle.gov/council/rivera "Main Menu Mobile - Meet the Council Maritza Rivera")
-      * [About Councilmember Maritza Rivera](https://www.seattle.gov/council/meet-the-council/maritza-rivera/about-maritza "Main Menu Mobile - Maritza Rivera About Councilmember Maritza Rivera")
-      * [Councilmember Maritza Rivera's Staff](https://www.seattle.gov/council/meet-the-council/maritza-rivera/staff "Main Menu Mobile - Maritza Rivera Councilmember Maritza Rivera's Staff")
-      * [Maritza's Committees & Calendar](https://www.seattle.gov/council/meet-the-council/maritza-rivera/committees-and-calendar "Main Menu Mobile - Maritza Rivera Maritza's Committees & Calendar")
-      * [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=307be6bfce "Main Menu Mobile - Maritza Rivera Newsletter Archive")
-      * [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=307be6bfce "Main Menu Mobile - Maritza Rivera Newsletter Sign Up")
-      * [Maritza's Blog](https://rivera.seattle.gov "Maritza Rivera Blog")
-    - [Debora JuarezDebora Juarez](https://www.seattle.gov/council/meet-the-council/debora-juarez "Main Menu Mobile - Meet the Council Debora Juarez")
-      * [Debora's Committees & Calendar](https://www.seattle.gov/council/meet-the-council/debora-juarez/committees-and-calendar "Main Menu Mobile - Debora Juarez Debora's Committees & Calendar")
-      * [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=ec10469090 "Main Menu Mobile - Debora Juarez Newsletter Sign Up")
-      * [Debora's Blog](https://council.seattle.gov/juarez/ "Debora Juarez Blog")
-      * [About Councilmember Debora Juarez](https://www.seattle.gov/council/meet-the-council/debora-juarez/about-debora "Main Menu Mobile - Debora Juarez About Councilmember Debora Juarez")
-    - [Dan StraussDan Strauss](https://www.seattle.gov/council/strauss "Main Menu Mobile - Meet the Council Dan Strauss")
-      * [About Councilmember Dan Strauss](https://www.seattle.gov/council/meet-the-council/dan-strauss/about-dan "Main Menu Mobile - Dan Strauss About Councilmember Dan Strauss")
-      * [Councilmember Dan Strauss' Staff](https://www.seattle.gov/council/meet-the-council/dan-strauss/staff "Main Menu Mobile - Dan Strauss Councilmember Dan Strauss' Staff")
-      * [Dan's Committees & Calendar](https://www.seattle.gov/council/meet-the-council/dan-strauss/committees-and-calendar "Main Menu Mobile - Dan Strauss Dan's Committees & Calendar")
-      * [Request a Meeting](https://outlook.office365.com/book/OfficeofCouncilmemberDanStraussOfficeHours@seattle.gov/ "Main Menu Mobile - Dan Strauss Request a Meeting")
-      * [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=d57b26f739 "Main Menu Mobile - Dan Strauss Newsletter Archive")
-      * [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=d57b26f739 "Main Menu Mobile - Dan Strauss Newsletter Sign Up")
-      * [Dan's Blog](http://strauss.seattle.gov/ "Dan Strauss Blog")
-    - [Robert KettleRobert Kettle](https://www.seattle.gov/council/kettle "Main Menu Mobile - Meet the Council Robert Kettle")
-      * [About Councilmember Robert Kettle](https://www.seattle.gov/council/meet-the-council/robert-kettle/about-robert "Main Menu Mobile - Robert Kettle About Councilmember Robert Kettle")
-      * [Councilmember Robert Kettle's Staff](https://www.seattle.gov/council/meet-the-council/robert-kettle/staff "Main Menu Mobile - Robert Kettle Councilmember Robert Kettle's Staff")
-      * [Robert's Committees & Calendar](https://www.seattle.gov/council/meet-the-council/robert-kettle/committees-and-calendar "Main Menu Mobile - Robert Kettle Robert's Committees & Calendar")
-      * [Request a Meeting](https://outlook.office365.com/book/CMKettleTeamMeetings@seattlegov.onmicrosoft.com/s/_G0Y_al2iEi-8DdMN9h-yg2 "Main Menu Mobile - Robert Kettle Request a Meeting")
-      * [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=689952e8cd "Main Menu Mobile - Robert Kettle Newsletter Archive")
-      * [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=689952e8cd "Main Menu Mobile - Robert Kettle Newsletter Sign Up")
-      * [Robert's Blog](https://kettle.seattle.gov "Robert Kettle Blog")
-      * [Good Governance Pledge](https://www.seattle.gov/council/meet-the-council/robert-kettle/good-governance-pledge "Main Menu Mobile - Robert Kettle Good Governance Pledge")
-    - [Alexis Mercedes RinckAlexis Mercedes Rinck](https://www.seattle.gov/council/rinck "Main Menu Mobile - Meet the Council Alexis Mercedes Rinck")
-      * [About Councilmember Alexis Mercedes Rinck](https://www.seattle.gov/council/meet-the-council/alexis-mercedes-rinck/about-alexis "Main Menu Mobile - Alexis Mercedes Rinck About Councilmember Alexis Mercedes Rinck")
-      * [Councilmember Alexis Mercedes Rinck's Staff](https://www.seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff "Main Menu Mobile - Alexis Mercedes Rinck Councilmember Alexis Mercedes Rinck's Staff")
-      * [Alexis' Committees & Calendar](https://www.seattle.gov/council/meet-the-council/alexis-mercedes-rinck/committees-and-calendar "Main Menu Mobile - Alexis Mercedes Rinck Alexis' Committees & Calendar")
-      * [Newsletter Archive](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=f60af58778 "Main Menu Mobile - Alexis Mercedes Rinck Newsletter Archive")
-      * [Newsletter Sign Up](https://eepurl.com/i47iEs "Main Menu Mobile - Alexis Mercedes Rinck Newsletter Sign Up")
-      * [Alexis' Blog](https://council.seattle.gov/rinck/ "Alexis Mercedes Rinck Blog")
-      * [Protecting our community from changes at the federal level](https://www.seattle.gov/council/meet-the-council/alexis-mercedes-rinck/federal-changes-and-city-protections "Main Menu Mobile - Alexis Mercedes Rinck Protecting our community from changes at the federal level")
-    - [Sara NelsonSara Nelson](https://www.seattle.gov/council/meet-the-council/sara-nelson "Main Menu Mobile - Meet the Council Sara Nelson")
-      * [About Councilmember Sara Nelson](https://www.seattle.gov/council/meet-the-council/sara-nelson/about-sara "Main Menu Mobile - Sara Nelson About Councilmember Sara Nelson")
-      * [Councilmember Sara Nelson's Staff](https://www.seattle.gov/council/meet-the-council/sara-nelson/staff "Main Menu Mobile - Sara Nelson Councilmember Sara Nelson's Staff")
-      * [Drug Possession and Public Use Legislation](https://www.seattle.gov/council/meet-the-council/sara-nelson/drug-possession-and-public-use-legislation "Main Menu Mobile - Sara Nelson Drug Possession and Public Use Legislation")
-      * [Seattle Film Commission](https://www.seattle.gov/council/meet-the-council/sara-nelson/seattle-film-commission "Main Menu Mobile - Sara Nelson Seattle Film Commission")
-      * [Helping Small Businesses](https://www.seattle.gov/council/meet-the-council/sara-nelson/helping-small-businesses "Main Menu Mobile - Sara Nelson Helping Small Businesses")
-      * [Sara's Committees & Calendar](https://www.seattle.gov/council/meet-the-council/sara-nelson/committees-and-calendar "Main Menu Mobile - Sara Nelson Sara's Committees & Calendar")
-      * [Sara's Newsletters](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=974e33336d "Main Menu Mobile - Sara Nelson Sara's Newsletters")
-      * [Newsletter Sign Up](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=974e33336d "Main Menu Mobile - Sara Nelson Newsletter Sign Up")
-      * [Sara's Blog](https://nelson.seattle.gov "Sara Nelson Blog")
-  + [Current Issues](https://www.seattle.gov/council/issues "Home Issues")
-  + [NewsNews](https://www.seattle.gov/council/news "Main Menu Mobile - Home News")
-    - [Seattle Channel Videos](http://www.seattlechannel.org/CityCouncil "Main Menu Mobile - News Seattle Channel Videos")
-    - [Request a List of Names](https://www.seattle.gov/documents/Departments/Council/SignIn/ListOfNamesDeclaration.pdf "Main Menu Mobile - News Request a List of Names")
-  + [Committees and AgendasCommittees and Agendas](https://www.seattle.gov/council/committees "Main Menu Mobile - Home Committees and Agendas")
-    - [CommitteesCommittees](https://www.seattle.gov/x60873.xml "Main Menu Mobile - Committees and Agendas Committees")
-      * [Select Committee on the Families, Education, Preschool, and Promise (FEPP) Levy](https://www.seattle.gov/council/committees/fepp-levy "Main Menu Mobile - Committees Select Committee on the Families, Education, Preschool, and Promise (FEPP) Levy")
-      * [Select Committee on Federal Administration and Policy Changes](https://www.seattle.gov/council/committees/select-committee-on-federal-administration-and-policy-changes "Main Menu Mobile - Committees Select Committee on Federal Administration and Policy Changes")
-      * [Select Committee on the Comprehensive Plan](https://www.seattle.gov/council/committees/select-committee-on-the-comprehensive-plan "Main Menu Mobile - Committees Select Committee on the Comprehensive Plan")
-      * [Budget](https://www.seattle.gov/x11967.xml "Main Menu Mobile - Committees Budget")
-      * [Finance, Native Communities & Tribal Governments](https://www.seattle.gov/council/committees/finance-native-communities-and-tribal-governments "Main Menu Mobile - Committees Finance, Native Communities & Tribal Governments")
-      * [Governance, Accountability & Economic Development](https://www.seattle.gov/council/committees/governance-accountability-and-economic-development "Main Menu Mobile - Committees Governance, Accountability & Economic Development")
-      * [Housing & Human Services](https://www.seattle.gov/council/committees/housing-and-human-services "Main Menu Mobile - Committees Housing & Human Services")
-      * [Land Use](https://www.seattle.gov/council/committees/land-use "Main Menu Mobile - Committees Land Use")
-      * [Libraries, Education & Neighborhoods](https://www.seattle.gov/council/committees/libraries-education-and-neighborhoods "Main Menu Mobile - Committees Libraries, Education & Neighborhoods")
-      * [Parks, Public Utilities & Technology](https://www.seattle.gov/council/committees/parks-public-utilities-and-technology "Main Menu Mobile - Committees Parks, Public Utilities & Technology")
-      * [Public Safety](https://www.seattle.gov/council/committees/public-safety "Main Menu Mobile - Committees Public Safety")
-      * [Sustainability, City Light, Arts & Culture](https://www.seattle.gov/council/committees/sustainability-city-light-arts-and-culture "Main Menu Mobile - Committees Sustainability, City Light, Arts & Culture")
-      * [Transportation](https://www.seattle.gov/council/committees/transportation "Main Menu Mobile - Committees Transportation")
-      * [Select Labor Committee for 2024-25](https://www.seattle.gov/council/committees/select-labor-committee-for-2024-25 "Main Menu Mobile - Committees Select Labor Committee for 2024-25")
-      * [2025 Select Budget Committee](https://www.seattle.gov/council/committees/2025-select-budget-committee "Main Menu Mobile - Committees 2025 Select Budget Committee")
-    - [Public Comment](https://www.seattle.gov/council/committees/public-comment "Main Menu Mobile - Committees and Agendas Public Comment")
-  + [Legislation & ResearchLegislation & Research](https://www.seattle.gov/council/legislation-and-research "Main Menu Mobile - Home Legislation & Research")
-    - [Legislative Process Guide](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources "Main Menu Mobile - Legislation & Research Legislative Process Guide")
-    - [Council Agendas](https://seattle.legistar.com/Calendar.aspx "Main Menu Mobile - Legislation & Research Council Agendas")
-    - [Seattle Municipal Code (SMC)](http://clerk.seattle.gov/~public/code1.htm "Main Menu Mobile - Legislation & Research Seattle Municipal Code (SMC)")
-    - [Council Rules](http://clerk.seattle.gov/search/council-rules/ "Main Menu Mobile - Legislation & Research Council Rules")
-    - [City Charter](http://clerk.seattle.gov/~public/char1.htm "Main Menu Mobile - Legislation & Research City Charter")
-    - [City Clerk](https://www.seattle.gov/cityclerk "Main Menu Mobile - Legislation & Research City Clerk")
-  + [Calendar](https://www.seattle.gov/council/calendar "Main Menu Mobile - Home Calendar")
-  + [Watch Council Live](https://www.seattle.gov/council/watch-council-live "Main Menu Mobile - Home Watch Council Live")
-  + [Elected Officials](https://www.seattle.gov/elected-officials "Main Menu Mobile - Seattle.gov Elected Officials")
+  + [Mayor](https://www.seattle.gov/mayor)
+  + [One Seattle InitiativesOne Seattle Initiatives](https://www.seattle.gov/mayor/one-seattle-initiatives "Main Menu Mobile - Home One Seattle Initiatives")
+    - [One Seattle Day of ServiceOne Seattle Day of Service](https://www.seattle.gov/mayor/one-seattle-initiatives/day-of-service "Main Menu Mobile - One Seattle Initiatives One Seattle Day of Service")
+      * [የተባበረች ሲያትል የፈቃደኛ አገልግሎት ቀን፡ ቅዳሜ፣ ሜይ 21፣ 2022](https://www.seattle.gov/mayor/day-of-service/amharic "Main Menu Mobile - One Seattle Day of Service የተባበረች ሲያትል የፈቃደኛ አገልግሎት ቀን፡ ቅዳሜ፣ ሜይ 21፣ 2022 ")
+      * [Day of Service 「團結西雅圖義工日」：2022 年 5 月 21 日，星期六](https://www.seattle.gov/mayor/day-of-service/chinese-traditional "Main Menu Mobile - One Seattle Day of Service Day of Service 「團結西雅圖義工日」：2022 年 5 月 21 日，星期六")
+      * [하나된 시애틀 자원봉사의 날: 2022년 5월 21일 토요일](https://www.seattle.gov/mayor/day-of-service/korean "Main Menu Mobile - One Seattle Day of Service 하나된 시애틀 자원봉사의 날: 2022년 5월 21일 토요일 ")
+      * [Maalinta Adeegga ee midowga Seattle: Sabti, Meey 21, 2022](https://www.seattle.gov/mayor/day-of-service/somali "Main Menu Mobile - One Seattle Day of Service Maalinta Adeegga ee midowga Seattle: Sabti, Meey 21, 2022")
+      * [Día de voluntariado Unidos por Seattle: sábado, 21 de mayo de 2022](https://www.seattle.gov/mayor/day-of-service/spanish "Main Menu Mobile - One Seattle Day of Service Día de voluntariado Unidos por Seattle: sábado, 21 de mayo de 2022 ")
+      * [Ngày Chung Tay Tình Nguyện Seattle: Thứ bảy, ngày 21 tháng 5 năm 2022](https://www.seattle.gov/mayor/day-of-service/vietnamese "Main Menu Mobile - One Seattle Day of Service Ngày Chung Tay Tình Nguyện Seattle: Thứ bảy, ngày 21 tháng 5 năm 2022")
+      * [One Seattle Day of Service: Event Partners](https://www.seattle.gov/mayor/one-seattle-initiatives/day-of-service/day-of-service---partners "Main Menu Mobile - One Seattle Day of Service One Seattle Day of Service: Event Partners")
+    - [Seattle Refugee Fund](https://www.seattle.gov/mayor/one-seattle-initiatives/seattle-refugee-fund "Main Menu Mobile - One Seattle Initiatives Seattle Refugee Fund")
+    - [Welcome Back Bash](https://www.seattle.gov/mayor/one-seattle-initiatives/welcome-back-bash "Main Menu Mobile - One Seattle Initiatives Welcome Back Bash")
+    - [Homelessness Action Plan](https://www.seattle.gov/mayor/one-seattle-initiatives/homelessness-action-plan "Main Menu Mobile - One Seattle Initiatives Homelessness Action Plan")
+    - [Seattle Rescue Plan Transparency Portal](https://www.seattle.gov/mayor/one-seattle-initiatives/rescue-plan-transparency-portal "Main Menu Mobile - One Seattle Initiatives Seattle Rescue Plan Transparency Portal")
+    - [One Seattle Gun Violence Prevention Plan](https://www.seattle.gov/mayor/one-seattle-initiatives/gun-violence-prevention "Main Menu Mobile - One Seattle Initiatives One Seattle Gun Violence Prevention Plan")
+    - [Climate Justice Agenda](https://www.seattle.gov/mayor/one-seattle-initiatives/climate-agenda "Main Menu Mobile - One Seattle Initiatives Climate Justice Agenda")
+    - [Mayor's Public Policy Fellowship](https://www.seattle.gov/mayor/one-seattle-initiatives/public-policy-fellowship "Main Menu Mobile - One Seattle Initiatives Mayor's Public Policy Fellowship")
+    - [Unified Care Team](https://www.seattle.gov/mayor/one-seattle-initiatives/unified-care-team "Main Menu Mobile - One Seattle Initiatives Unified Care Team")
+    - [One Seattle Civic Partnership](https://www.seattle.gov/mayor/one-seattle-initiatives/one-seattle-civic-partnership "Main Menu Mobile - One Seattle Initiatives One Seattle Civic Partnership")
+    - [Reach Out Seattle](https://www.seattle.gov/mayor/one-seattle-initiatives/youth-mental-health "Main Menu Mobile - One Seattle Initiatives Reach Out Seattle")
+    - [One Seattle Graffiti Plan](https://www.seattle.gov/mayor/one-seattle-initiatives/one-seattle-graffiti-plan "Main Menu Mobile - One Seattle Initiatives One Seattle Graffiti Plan")
+    - [Downtown Activation Plan](https://www.seattle.gov/mayor/one-seattle-initiatives/downtown-activation-plan "Main Menu Mobile - One Seattle Initiatives Downtown Activation Plan")
+    - [Data Strategy](https://www.seattle.gov/mayor/one-seattle-initiatives/one-seattle-data-strategy "Main Menu Mobile - One Seattle Initiatives Data Strategy")
+    - [One Seattle Restoration Framework](https://www.seattle.gov/mayor/one-seattle-initiatives/restoration-framework "Main Menu Mobile - One Seattle Initiatives One Seattle Restoration Framework")
+    - [Police Recruitment](https://www.seattle.gov/mayor/one-seattle-initiatives/police-recruitment "Main Menu Mobile - One Seattle Initiatives Police Recruitment")
+    - [Utility Commitments to You](https://www.seattle.gov/mayor/one-seattle-initiatives/utility-commitments "Main Menu Mobile - One Seattle Initiatives Utility Commitments to You")
+  + [About Mayor Bruce Harrell](https://www.seattle.gov/mayor/about "Main Menu Mobile - Home About Mayor Bruce Harrell")
+  + [Contact the Mayor](https://www.seattle.gov/mayor/contact "Main Menu Mobile - Home Contact the Mayor")
+  + [Mayor's Team](https://www.seattle.gov/mayor/team "Main Menu Mobile - Home Mayor's Team")
+  + [Service of Legal Documents on the City of Seattle](https://www.seattle.gov/mayor/service-of-legal-documents "Main Menu Mobile - Home Service of Legal Documents on the City of Seattle")
   + [Departments](https://www.seattle.gov/departments "Main Menu Mobile - Seattle.gov Departments")
-  + [News.Seattle.Gov](https://news.seattle.gov "Main Menu Mobile - Seattle.gov News.Seattle.Gov")
+  + [Elected Officials](https://www.seattle.gov/elected-officials "Main Menu Mobile - Seattle.gov Elected Officials")
+  + [Boards and Commissions](https://www.seattle.gov/boards-and-commissions "Main Menu Mobile - Seattle.gov Boards and Commissions")
+  + [Media Contacts](https://www.seattle.gov/media-contacts "Main Menu Mobile - Seattle.gov Media Contacts ")
+  + [News](https://news.seattle.gov "Main Menu Mobile - Seattle.gov News")
   + [Events](https://www.seattle.gov/event-calendar "Main Menu Mobile - Seattle.gov Events")
 
-[Seattle City Council](https://www.seattle.gov/council)
-=======================================================
+[Office of the Mayor](https://www.seattle.gov/mayor)
+====================================================
 
 
 
-* [Meet the Council](https://www.seattle.gov/council/meet-the-council)
-* [Issues](https://www.seattle.gov/council/issues "undefined Issues")
-* [News](https://www.seattle.gov/council/news)
-* [Committees](https://www.seattle.gov/council/committees)
-* [Legislation & Research](https://www.seattle.gov/council/legislation-and-research)
-* [Calendar](https://www.seattle.gov/council/calendar)
+* [One Seattle Initiatives](https://www.seattle.gov/mayor/one-seattle-initiatives)
+* [Contact](https://www.seattle.gov/mayor/contact)
+* [Mayor's Team](https://www.seattle.gov/mayor/team)
+* [About the Mayor](https://www.seattle.gov/mayor/about)
 
-[### Focus on Public Safety](https://www.seattle.gov/council/issues/councils-focus-on-public-safety "Focus on Public Safety")
+Stay up-to-date with the latest news
+------------------------------------
 
-[### 2026 Families, Education, Preschool, and Promise Levy Renewal](https://www.seattle.gov/council/issues/families-education-preschool-and-promise-(fepp)-levy "2026 Families, Education, Preschool, and Promise Levy Renewal")
+Receive the latest updates from the Mayor’s Office as they happen – directly from the source. Sign up below to receive future newsletters from Mayor Harrell.
 
-[### 2025-26 Budget Adoption](https://www.seattle.gov/council/issues/2025-26-budget-adoption "2025-26 Budget Adoption")
+[Subscribe to Mayor's Newsletter external link](https://public.govdelivery.com/accounts/WASEATTLE/subscriber/new?topic_id=WASEATTLE_389 "Subscribe to Mayor's Newsletter")
 
-[Previous](https://www.seattle.gov/#featuredTilesCarousel)
-[Pause](https://www.seattle.gov/#featuredTilesCarousel)
-[Play](https://www.seattle.gov/#featuredTilesCarousel)
-[Next](https://www.seattle.gov/#featuredTilesCarousel)
+A Message from Mayor Harrell
+----------------------------
 
-[3 days ago
+![Mayor Bruce Harrell](https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg "images/MayorHarrell/Home/headshotwebcrop.jpg")
 
-### Council approves Business & Occupation (B&O) Tax rebalancing proposal for November ballot
+Seattle is a global destination and leader in industry, innovation, and creativity. As your Mayor, I am committed to uniting our diverse communities around shared priorities and meaningful progress on our biggest challenges. Through our focus on a back-to-basics approach like restoring public safety, helping people move indoors, keeping parks open and welcoming, and fixing potholes, we can build a strong foundation and bright future for our city and our families.
 
-Source: News Releases Archives - Seattle City Council Blog](https://council.seattle.gov/2025/08/04/council-approves-business-occupation-bo-tax-rebalancing-proposal-for-november-ballot/ "undefined News Releases")
+We recognize change does not come quickly or easily. But improvement is possible if we act boldly, intentionally – and together. We can change the course of our city if we are willing to work collaboratively, to turn common ground into common cause, to think – and act – big.
 
-[### 2025 Comprehensive Plan](https://www.seattle.gov/council/issues/2025-comprehensive-plan "2025 Comprehensive Plan")
+That’s my vision for ***One Seattle***, to turn our city’s pioneering spirit into progress, I hope you’ll join me in creating the Seattle we all want to see.
 
-[### Protecting our Seattle](https://www.seattle.gov/council/issues/federal-changes-protecting-our-seattle "Protecting our Seattle")
+ - Mayor Bruce Harrell
 
-Please update your browser to view the iframe content.
+Mayor Bruce Harrell
+-------------------
 
-Your browser must support JavaScript to view this content.
-Please enable JavaScript in your browser settings then try again.
-[Events calendar powered by Trumba](http://www.trumba.com)
-
-**Photo Credit** Photo Credit
-
-**Photo Credit:** 
-[Seattle Parks and Recreation, TIA International Photography](https://www.flickr.com/photos/seattleparks/)
-
-Close
-
-### Council Members (Legislative)
-
-[### Sara Nelson
-
-Council President](https://www.seattle.gov/council/meet-the-council/sara-nelson)
-
-[### Alexis Mercedes Rinck
-
-Councilmember](https://www.seattle.gov/council/rinck)
-
-[### Robert Kettle
-
-Councilmember](https://www.seattle.gov/council/kettle)
-
-[### Dan Strauss
-
-Councilmember](https://www.seattle.gov/council/strauss)
-
-[### Debora Juarez
-
-Councilmember](https://www.seattle.gov/council/meet-the-council/debora-juarez)
-
-[### Maritza Rivera
-
-Councilmember](https://www.seattle.gov/council/rivera)
-
-[### Joy Hollingsworth
-
-Councilmember](https://www.seattle.gov/council/hollingsworth)
-
-[### Mark Solomon
-
-Councilmember](https://www.seattle.gov/council/solomon)
-
-[### Rob Saka
-
-Councilmember](https://www.seattle.gov/council/saka)
-
-[Council Connection Blog](https://council.seattle.gov/ "undefined Blog")
-------------------------------------------------------------------------
-
-[Council Connection Blog RSS FeedCouncil Connection Blog RSS Feed](https://council.seattle.gov/feed/ "undefined Blog")
-
-8/4
-
-[Council approves Business & Occupation (B&O) Tax rebalancing proposal for November ballot](https://council.seattle.gov/2025/08/04/council-approves-business-occupation-bo-tax-rebalancing-proposal-for-november-ballot/)
-
-8/4
-
-[Councilmember Rivera statement on proposed B&O exemptions for Fred Hutchinson Cancer Center and Seattle Children’s Hospital](https://council.seattle.gov/2025/08/04/councilmember-rivera-statement-on-proposed-bo-exemptions-for-fred-hutchinson-cancer-center-and-seattle-childrens-hospital/)
-
-8/1
-
-[Council President Sara Nelson and Mayor Bruce Harrell Announce Proposals to Ease Small Business Permitting](https://council.seattle.gov/2025/08/01/council-president-sara-nelson-and-mayor-bruce-harrell-announce-proposals-to-ease-small-business-permitting/)
-
-7/29
-
-[Council approves Council President Nelson’s bill dedicating anticipated public safety tax revenue to recovery services](https://council.seattle.gov/2025/07/29/council-approves-council-president-nelsons-bill-dedicating-anticipated-public-safety-tax-revenue-to-recovery-services/)
-
-7/28
-
-[Councilmember Strauss celebrates appointment of Councilmember Juarez](https://council.seattle.gov/2025/07/28/councilmember-strauss-celebrates-appointment-of-councilmember-juarez/)
-
-Recent Videos
--------------
-
-[### Land Use Committee 8/6/2025
-
-Agenda: Call to Order; Approval of the Angeda; Public Comment; CB 121009: relating to land use and zoning, updating subdivision procedures; CF 314536: relating to Jeffe[...]](https://www.seattlechannel.org/video.asp?ID=2722529 "Land Use Committee 8/6/2025")
-
-[### Finance, Native Communities and Tribal Governments Committee 8/6/2025
-
-Agenda: Call to Order; Approval of the Agenda; Public Comment; Appointments and Reappointments to the Indigenous Advisory Council; CB 121046:  relating to public works [...]](https://www.seattlechannel.org/video.asp?ID=2742527 "Finance, Native Communities and Tribal Governments Committee 8/6/2025")
-
-[### Transportation Committee 8/5/2025
-
-Agenda: Call to Order; Approval of the Agenda; Public Comment; PSRC Regional Transportation Plan; CB 121026: alley vacation; CB 121016: relating to the NE 130th Street [...]](https://www.seattlechannel.org/video.asp?ID=2132529 "Transportation Committee 8/5/2025")
-
-[### City Council 8/5/2025
-
-Agenda: Call to Order; Roll Call; Presentations; Public Comment; Adoption of Introduction and Referral Calendar, Approval of the Agenda; Approval of the Consent Calenda[...]](https://www.seattlechannel.org/video.asp?ID=2022567 "City Council 8/5/2025")
-
-City Council
-------------
+Phone:[(206) 684-4000](tel: +1 (206) 684-4000)
 
 Address:
-[600 4th Ave. 2nd Floor, Seattle, WA, 98104](https://www.google.com/maps/place/600 4th Ave. 2nd Floor, Seattle, WA, 98104)  
-Mailing Address:
-PO Box 34025, Seattle, WA , 98124-4025  
-Phone: [(206) 684-8888](tel: +1 (206) 684-8888)  
-Phone Alt: Listen Line: [(206) 684-8566](tel: +1 (206) 684-8566)  
-Fax: [(206) 684-8587](fax: +1 (206) 684-8587)  
-[Meet the Council](https://www.seattle.gov/council/meet-the-council)
+[Office](https://www.seattle.gov/#tileMailing_x133611 "Expand the office address for Mayor Bruce Harrell")
+ | 
+[Mailing](https://www.seattle.gov/#tileOffice_x133611 "Expand the mailing address for Mayor Bruce Harrell")
 
-[Seattle City Council Facebook](http://www.facebook.com/seattlecouncil)
-[Seattle City Council Twitter](http://twitter.com/SeattleCouncil)
-[Seattle City Council Instagram](https://www.instagram.com/theseattlecouncil/)
-[Seattle City Council Bluesky](https://bsky.app/profile/council.seattle.gov)
+### Follow Us
+
+[Seattle Mayor's Office Facebook
+external link](https://www.facebook.com/MayorofSeattle)
+[Seattle Mayor's Office Twitter
+external link](https://www.twitter.com/mayorofseattle)
+[Seattle Mayor's Office Instagram
+external link](https://www.instagram.com/mayorofseattle)
+
+Close
+**Street Address:**  
+600 4th Ave, Seattle, WA   
+7th Floor   
+Seattle,
+WA
+98104
+
+Close
+**Mailing Address:**  
+P.O. Box 94749  
+Seattle,
+WA
+98124-4749
+
+Press Releases
+--------------
+
+Mayor's Office Press Releases
+
+[Seattle Launches "Back to Business" Program to Support Small Businesses Impacted by Property Damage and Vandalism](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ece7bb?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 08/07/2025 09:22 AM PDT
+
+[Council Approves, Mayor Harrell Signs Legislation to Send Small Business Tax Relief and Revenue Proposal to Seattle Voters](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ec7e03?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 08/04/2025 04:34 PM PDT
+
+[FOR PLANNING PURPOSES: THIS AFTERNOON: Mayor Harrell to Sign Legislation to Send Small Business Tax Relief and Revenue Proposal to Seattle Voters](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ec6e12?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 08/04/2025 10:47 AM PDT
+
+[Mayor Bruce Harrell and Council President Sara Nelson Announce Proposals to Ease Small Business Permitting](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ec1a79?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 08/01/2025 11:07 AM PDT
+
+[TODAY: Mayor Harrell and City Attorney Davison Announce New Lawsuit Against Trump Administration](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ebd373?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/31/2025 07:30 AM PDT
+
+[TOMORROW: Mayor Harrell and City Attorney Davison Announce New Lawsuit Against Trump Administration](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ebd15d?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/30/2025 05:17 PM PDT
+
+[Mayor Harrell announces expansion of available shelter, adding more than 100 new tiny houses](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ebc258?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/30/2025 10:38 AM PDT
+
+[Seattle Police Department Hires More Than 100 New Recruits, Setting Recent Record](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3eb7e4d?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/28/2025 04:57 PM PDT
+
+[Mayor Harrell, City of Seattle, and Partners Celebrate Ribbon Cutting of Pier 58 and Announce Grand Opening Celebration Date for Completed Waterfront Park](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3eb2465?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/25/2025 03:55 PM PDT
+
+[TODAY: Mayor Harrell to Join Community and Civic Leaders for Pier 58 Ribbon Cutting](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3eaf9cf?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/25/2025 07:30 AM PDT
+
+[TOMORROW: Mayor Harrell to Join Community and Civic Leaders for Pier 58 Ribbon Cutting](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3eaf760?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/24/2025 01:05 PM PDT
+
+[TODAY: Mayor Bruce Harrell will announce a significant City investment to create hundreds of new affordable homes at Northgate Commons in partnership with the Seattle Housing Authority](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ead938?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/24/2025 08:00 AM PDT
+
+[TOMORROW: Mayor Bruce Harrell will announce a significant City investment to create hundreds of new affordable homes at Northgate Commons in partnership with the Seattle Housing Authority](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ead0c0?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/23/2025 02:15 PM PDT
+
+[Mayor Harrell Announces New Legislation to Protect Homeowners from Predatory Homebuying Practices](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3eac0e5?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/23/2025 09:30 AM PDT
+
+[TOMORROW: City of Seattle to Host Advance Media Tour for Pier 58 on Seattle’s Waterfront](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3eaa014?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/22/2025 11:41 AM PDT
+
+[ICYMI: City of Seattle Invites Public to Attend Summer Food Celebration Event on July 18](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e9fa97?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/18/2025 07:30 AM PDT
+
+[ICYMI: Mayor Harrell pens Op-Ed celebrating more than 500 newly sworn‑in Americans at Seattle’s 40th annual Naturalization Ceremony.](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e9fe46?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/17/2025 02:57 PM PDT
+
+[Seattle’s Real Time Crime Center Delivers Early Results to Improve Public Safety](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e9a17a?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/15/2025 12:12 PM PDT
+
+[Tuesday: Mayor Harrell, Chief Barnes Celebrate Early Successes of Real Time Crime Center](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e978dc?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/14/2025 01:00 PM PDT
+
+[Seattle Wins 2025 All-America City Award](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3e91e6b?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/14/2025 09:00 AM PDT
+
+Receive Email Updates
+
+
+
+[![View RSS](https://content.govdelivery.com/assets/widget/rss-4bd1539f37385414b69a84c4ddcc8ddfc25f1f00c774fb4a621bc3c3c4bffd6e.png)](https://content.govdelivery.com/accounts/WASEATTLE/widgets/WASEATTLE_WIDGET_93.rss)
+[![Get Widget](https://content.govdelivery.com/assets/widget/embed-ba0a7070a9340da5e06ed50cf3bdc606f4658bb6cb9885078e193c75113b0538.png)](https://www.seattle.gov/#)
+
+Copy the code below and paste it into your blog or Web page:
+
+<script id="govd\_widget\_js\_waseattle\_waseattle\_widget\_93" src="https://content.govdelivery.com/accounts/WASEATTLE/widgets/WASEATTLE\_WIDGET\_93.js" type="text/javascript"></script>
+[close](https://www.seattle.gov/#)
+
+[Latest News - Mayor's Blog](https://harrell.seattle.gov/)
+----------------------------------------------------------
+
+[Council Approves, Mayor Harrell Signs Legislation to Send Small Business Tax Relief and Revenue Proposal to Seattle Voters
+
+Proposal would protect critical investments from Trump ...
+
+ Posted Aug. 04
+
+![Mayor Harrell, Councilmember Rinck, and small business owners clap after the legislation is signed.](https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/08/20250804_231343030_iOS-150x150.jpg)](https://harrell.seattle.gov/2025/08/04/council-approves-mayor-harrell-signs-legislation-to-send-small-business-tax-relief-and-revenue-proposal-to-seattle-voters/ "Council Approves, Mayor Harrell Signs Legislation to Send Small Business Tax Relief and Revenue Proposal to Seattle Voters  ")
+
+[Mayor Bruce Harrell and Council President Sara Nelson Announce Proposals to Ease Small Business Permitting
+
+Seattle— Today, Mayor Bruce Harrell and Seattle City C ...
+
+ Posted Aug. 01
+
+![Seattle skyline with Space Needle and snow covered mountains](https://harrell.seattle.gov/wp-content/uploads/sites/23/2024/10/271660677_10227508063912477_4799005216720843206_n-150x150.jpg)](https://harrell.seattle.gov/2025/08/01/mayor-bruce-harrell-and-council-president-sara-nelson-announce-proposals-to-ease-small-business-permitting/ "Mayor Bruce Harrell and Council President Sara Nelson Announce Proposals to Ease Small Business Permitting")
+
+[Mayor Harrell announces expansion of available shelter, adding more than 100 new tiny houses
+
+Tiny houses will be part of two new villages set to op ...
+
+ Posted Jul. 30
+
+![Tiny Houses at LIHI village](https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/07/LIHI-Tiny-Houses-150x150.jpg)](https://harrell.seattle.gov/2025/07/30/mayor-harrell-announces-expansion-of-available-shelter-adding-more-than-100-new-tiny-houses/ "Mayor Harrell announces expansion of available shelter, adding more than 100 new tiny houses")
+
+[Mayor Harrell, City of Seattle, and Partners Celebrate Ribbon Cutting of Pier 58 and Announce Grand Opening Celebration Date for Completed Waterfront Park
+
+With the opening of Pier 58, Seattle completes its 20- ...
+
+ Posted Jul. 29
+
+![children running on Pier 58](https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/07/DSC3210-2-150x150.jpg)](https://harrell.seattle.gov/2025/07/29/mayor-harrell-city-of-seattle-and-partners-celebrate-ribbon-cutting-of-pier-58-and-announce-grand-opening-celebration-date-for-completed-waterfront-park/ "Mayor Harrell, City of Seattle, and Partners Celebrate Ribbon Cutting of Pier 58 and Announce Grand Opening Celebration Date for Completed Waterfront Park")
+
+Requests and Services
+---------------------
+
+Requests and Services
+---------------------
+
+[Send a Message to the Mayor](https://seattlegov.powerappsportals.us/contact-mayor/ "Send a Message to the Mayor")
+
+[Request the Mayor to Attend an Event](https://web8.seattle.gov/MORequest "Request the Mayor to Attend an Event")
+
+[Service on Legal Documents on the City of Seattle](https://www.seattle.gov/mayor/service-of-legal-documents "Service of Legal Documents on the City of Seattle")
+
+[Request Proclamation or Letter
+
+external link](https://forms.office.com/Pages/ResponsePage.aspx?id=RR7meOtrCUCPmTWdi1T0GyBsffvOIRZHo10mP-LPxldUNTFUQ1EwOERRRjM3STFZSTNRVTRIR09aSC4u "Request Proclamation or Letter")
+
+* [About Seattle](https://www.seattle.gov/opcd/population-and-demographics/about-seattle)
+* [Downtown Campus Map](https://www.seattle.gov/customer-service-bureau/downtown-campus-map)
+* [City Jobs](https://www.governmentjobs.com/careers/seattle)
+* [Seattle Facts](https://www.seattle.gov/cityarchives/seattle-facts)
+
+Mayor Bruce Harrell
+-------------------
+
+Address:
+[600 4th Ave, Seattle, WA, 7th Floor, Seattle, WA, 98104](https://www.google.com/maps/place/600 4th Ave, Seattle, WA, 7th Floor, Seattle, WA, 98104)  
+Mailing Address:
+P.O. Box 94749, Seattle, WA, 98124-4749  
+Phone: [(206) 684-4000](tel: +1 (206) 684-4000)
+
+[Seattle Mayor's Office Facebook](https://www.facebook.com/MayorofSeattle)
+[Seattle Mayor's Office Twitter](https://www.twitter.com/mayorofseattle)
+[Seattle Mayor's Office Instagram](https://www.instagram.com/mayorofseattle)
+
+Newsletter Updates
+
+[Subscribe external link](https://public.govdelivery.com/accounts/WASEATTLE/subscriber/topics?qsp=WASEATTLE_12 "Subscribe to Newsletter")
+
+Sign up for the latest updates from Mayor Bruce Harrell
 
 Citywide Information
 --------------------
@@ -769,13 +786,13 @@ Citywide Information
 
 ### Popular Pages
 
-1. [Meet The Council](https://www.seattle.gov/council/meet-the-council)
-2. [Watch Council Meetings Live](https://www.seattle.gov/council/watch-council-live)
-3. [Learn About Council Committees](https://www.seattle.gov/council/committees)
-4. [Find Your District and Councilmembers](https://www.seattle.gov/council/meet-the-council/find-your-district-and-councilmembers)
-5. [View a Calendar of Upcoming Meetings](https://www.seattle.gov/council/calendar)
+1. [Power Outages](https://www.seattle.gov/city-light/outages)
+2. [Police Jobs](https://www.seattle.gov/police/police-jobs)
+3. [Pay My Ticket](https://www.seattle.gov/courts/tickets-and-payments/pay-my-ticket)
+4. [Adopt a Pet](https://www.seattle.gov/animal-shelter/find-an-animal/adopt)
+5. [Look Up Collection Day](https://www.seattle.gov/utilities/your-services/collection-and-disposal/your-collection-day/look-up-collection-day)
 
-The Seattle City Council establishes City policy through enactment of ordinances (laws) and adoption of resolutions. The City Council also approves and adopts the City's budget. The nine Council members and their legislative assistants are part of the City of Seattle Legislative Department.
+Seattle's Mayor is the head of the Executive department. The Mayor directs and controls all City offices and departments except where that authority is granted to another office by the City Charter.
 
 Policies
 --------
@@ -789,8 +806,6 @@ Policies
 [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)
 
 [Sitemap](//www.seattle.gov/sitemap)
-
-
 
 
 

@@ -124,6 +124,8 @@ def download_images(page: Page, image_dir: str):
 
     for img in image_elements:
         try:
+            if not img.is_visible():
+                continue
             src = img.get_attribute("src")
             if not src:
                 continue
@@ -142,5 +144,14 @@ def download_images(page: Page, image_dir: str):
             print(f"Failed to capture image {src}: {e}")
 
     map_file_path = os.path.join(image_dir, "image_map.json")
-    with open(map_file_path, "w") as json_file:
-        json.dump(image_map, json_file, indent=4)
+
+    # Append to existing map if it exists, otherwise create new
+    if os.path.exists(map_file_path):
+        with open(map_file_path, "r") as f:
+            existing_map = json.load(f)
+        existing_map.update(image_map)
+        image_map = existing_map
+
+    with open(map_file_path, "w") as f:
+        json.dump(image_map, f, indent=4)
+

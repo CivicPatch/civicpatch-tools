@@ -28,6 +28,7 @@ class Link(TypedDict):
 
 class PipelineStatus(Enum):
     INIT = "INIT"
+    RESEARCH_MUNICIPALITY = "RESEARCH_MUNICIPALITY"
     SEARCH_LINKS = "SEARCH_LINKS"
     SCRAPE_PAGE = "SCRAPE_PAGE"
     PREPROCESS_PAGE_CONTENT = "PREPROCESS_PAGE_CONTENT"
@@ -44,3 +45,4 @@ class PipelineContext(TypedDict):
     links: List[Link]
     steps: Dict[str, Dict] # PipelineStatus value
     data: Dict[str, Dict]
+    progress: ProgressState

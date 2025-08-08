@@ -1,3 +1,12 @@
+Mayor Bruce Harrell - Mayor | seattle.gov
+
+
+
+
+
+
+* [Office of Inspector General](https://www.seattle.gov/oig)
+
 Google Translate may not accurately translate all content. .For general City questions, please call [206-684-2489](tel:206-684-2489). Tell us your requested language in English, and we can connect you with an interpreter.
 
 Es posible que Google Translate no traduzca con precisión todo el contenido. .Si necesita ayuda en otro idioma, díganos en inglés nombre del idioma que necesita y lo conectaremos con un intérprete: [206-684-2489](tel:206-684-2489)
@@ -42,34 +51,95 @@ Google Translate ንኹሉ ትሕዝቶ ብትኽክል ከይትርጉሞ ይ�
 
 
 
-* + - [Rob SakaRob Saka](https://www.seattle.gov/council/saka "Main Menu Mobile - Meet the Council Rob Saka")
-      * [About Councilmember Rob Saka](https://www.seattle.gov/council/meet-the-council/rob-saka/about-rob "Main Menu Mobile - Rob Saka About Councilmember Rob Saka")
-      * [Councilmember Rob Saka's Staff](https://www.seattle.gov/council/meet-the-council/rob-saka/staff "Main Menu Mobile - Rob Saka Councilmember Rob Saka's Staff")
-    - [Mark SolomonMark Solomon](https://www.seattle.gov/council/solomon "Main Menu Mobile - Meet the Council Mark Solomon")
-      * [Councilmember Mark Solomon's Staff](https://www.seattle.gov/council/meet-the-council/mark-solomon/staff "Main Menu Mobile - Mark Solomon Councilmember Mark Solomon's Staff")
-      * [About Councilmember Mark Solomon](https://www.seattle.gov/council/meet-the-council/mark-solomon/about-mark "Main Menu Mobile - Mark Solomon About Councilmember Mark Solomon")
-    - [Joy HollingsworthJoy Hollingsworth](https://www.seattle.gov/council/hollingsworth "Main Menu Mobile - Meet the Council Joy Hollingsworth")
-      * [About Councilmember Joy Hollingsworth](https://www.seattle.gov/council/meet-the-council/joy-hollingsworth/about-joy "Main Menu Mobile - Joy Hollingsworth About Councilmember Joy Hollingsworth")
-      * [Councilmember Joy Hollingsworth's Staff](https://www.seattle.gov/council/meet-the-council/joy-hollingsworth/staff "Main Menu Mobile - Joy Hollingsworth Councilmember Joy Hollingsworth's Staff")
-    - [Maritza RiveraMaritza Rivera](https://www.seattle.gov/council/rivera "Main Menu Mobile - Meet the Council Maritza Rivera")
-      * [About Councilmember Maritza Rivera](https://www.seattle.gov/council/meet-the-council/maritza-rivera/about-maritza "Main Menu Mobile - Maritza Rivera About Councilmember Maritza Rivera")
-      * [Councilmember Maritza Rivera's Staff](https://www.seattle.gov/council/meet-the-council/maritza-rivera/staff "Main Menu Mobile - Maritza Rivera Councilmember Maritza Rivera's Staff")
-    - [Debora JuarezDebora Juarez](https://www.seattle.gov/council/meet-the-council/debora-juarez "Main Menu Mobile - Meet the Council Debora Juarez")
-      * [About Councilmember Debora Juarez](https://www.seattle.gov/council/meet-the-council/debora-juarez/about-debora "Main Menu Mobile - Debora Juarez About Councilmember Debora Juarez")
-    - [Dan StraussDan Strauss](https://www.seattle.gov/council/strauss "Main Menu Mobile - Meet the Council Dan Strauss")
-      * [About Councilmember Dan Strauss](https://www.seattle.gov/council/meet-the-council/dan-strauss/about-dan "Main Menu Mobile - Dan Strauss About Councilmember Dan Strauss")
-      * [Councilmember Dan Strauss' Staff](https://www.seattle.gov/council/meet-the-council/dan-strauss/staff "Main Menu Mobile - Dan Strauss Councilmember Dan Strauss' Staff")
-    - [Robert KettleRobert Kettle](https://www.seattle.gov/council/kettle "Main Menu Mobile - Meet the Council Robert Kettle")
-      * [About Councilmember Robert Kettle](https://www.seattle.gov/council/meet-the-council/robert-kettle/about-robert "Main Menu Mobile - Robert Kettle About Councilmember Robert Kettle")
-      * [Councilmember Robert Kettle's Staff](https://www.seattle.gov/council/meet-the-council/robert-kettle/staff "Main Menu Mobile - Robert Kettle Councilmember Robert Kettle's Staff")
-    - [Alexis Mercedes RinckAlexis Mercedes Rinck](https://www.seattle.gov/council/rinck "Main Menu Mobile - Meet the Council Alexis Mercedes Rinck")
-      * [About Councilmember Alexis Mercedes Rinck](https://www.seattle.gov/council/meet-the-council/alexis-mercedes-rinck/about-alexis "Main Menu Mobile - Alexis Mercedes Rinck About Councilmember Alexis Mercedes Rinck")
-      * [Councilmember Alexis Mercedes Rinck's Staff](https://www.seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff "Main Menu Mobile - Alexis Mercedes Rinck Councilmember Alexis Mercedes Rinck's Staff")
-    - [Sara NelsonSara Nelson](https://www.seattle.gov/council/meet-the-council/sara-nelson "Main Menu Mobile - Meet the Council Sara Nelson")
-      * [About Councilmember Sara Nelson](https://www.seattle.gov/council/meet-the-council/sara-nelson/about-sara "Main Menu Mobile - Sara Nelson About Councilmember Sara Nelson")
-      * [Councilmember Sara Nelson's Staff](https://www.seattle.gov/council/meet-the-council/sara-nelson/staff "Main Menu Mobile - Sara Nelson Councilmember Sara Nelson's Staff")
+* + - * [Maalinta Adeegga ee midowga Seattle: Sabti, Meey 21, 2022](https://www.seattle.gov/mayor/day-of-service/somali "Main Menu Mobile - One Seattle Day of Service Maalinta Adeegga ee midowga Seattle: Sabti, Meey 21, 2022")
+      * [Ngày Chung Tay Tình Nguyện Seattle: Thứ bảy, ngày 21 tháng 5 năm 2022](https://www.seattle.gov/mayor/day-of-service/vietnamese "Main Menu Mobile - One Seattle Day of Service Ngày Chung Tay Tình Nguyện Seattle: Thứ bảy, ngày 21 tháng 5 năm 2022")
+  + [About Mayor Bruce Harrell](https://www.seattle.gov/mayor/about "Main Menu Mobile - Home About Mayor Bruce Harrell")
 
-PO Box 34025, Seattle, WA , 98124-4025
-[(206) 684-8888](tel: +1 (206) 684-8888)
-Listen Line: [(206) 684-8566](tel: +1 (206) 684-8566)
-[(206) 684-8587](fax: +1 (206) 684-8587)
+[Office of the Mayor](https://www.seattle.gov/mayor)
+====================================================
+
+![Mayor Bruce Harrell](https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg "images/MayorHarrell/Home/headshotwebcrop.jpg")
+
+ - Mayor Bruce Harrell
+
+Mayor Bruce Harrell
+-------------------
+
+[(206) 684-4000](tel: +1 (206) 684-4000)
+
+* 08/07/2025 09:22 AM PDT
+
+* 08/04/2025 04:34 PM PDT
+
+* 08/04/2025 10:47 AM PDT
+
+[Mayor Bruce Harrell and Council President Sara Nelson Announce Proposals to Ease Small Business Permitting](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ec1a79?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 08/01/2025 11:07 AM PDT
+
+* 07/31/2025 07:30 AM PDT
+
+* 07/30/2025 05:17 PM PDT
+
+* 07/30/2025 10:38 AM PDT
+
+* 07/28/2025 04:57 PM PDT
+
+* 07/25/2025 03:55 PM PDT
+
+* 07/25/2025 07:30 AM PDT
+
+* 07/24/2025 01:05 PM PDT
+
+[TODAY: Mayor Bruce Harrell will announce a significant City investment to create hundreds of new affordable homes at Northgate Commons in partnership with the Seattle Housing Authority](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ead938?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/24/2025 08:00 AM PDT
+
+[TOMORROW: Mayor Bruce Harrell will announce a significant City investment to create hundreds of new affordable homes at Northgate Commons in partnership with the Seattle Housing Authority](https://content.govdelivery.com/bulletins/gd/WASEATTLE-3ead0c0?wgt_ref=WASEATTLE_WIDGET_93)
+
+* 07/23/2025 02:15 PM PDT
+
+* 07/23/2025 09:30 AM PDT
+
+* 07/22/2025 11:41 AM PDT
+
+* 07/18/2025 07:30 AM PDT
+
+* 07/17/2025 02:57 PM PDT
+
+* 07/15/2025 12:12 PM PDT
+
+* 07/14/2025 01:00 PM PDT
+
+* 07/14/2025 09:00 AM PDT
+
+[![View RSS](https://content.govdelivery.com/assets/widget/rss-4bd1539f37385414b69a84c4ddcc8ddfc25f1f00c774fb4a621bc3c3c4bffd6e.png)](https://content.govdelivery.com/accounts/WASEATTLE/widgets/WASEATTLE_WIDGET_93.rss)
+[![Get Widget](https://content.govdelivery.com/assets/widget/embed-ba0a7070a9340da5e06ed50cf3bdc606f4658bb6cb9885078e193c75113b0538.png)](https://www.seattle.gov/#)
+
+[Posted Aug. 04
+
+![Mayor Harrell, Councilmember Rinck, and small business owners clap after the legislation is signed.](https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/08/20250804_231343030_iOS-150x150.jpg)](https://harrell.seattle.gov/2025/08/04/council-approves-mayor-harrell-signs-legislation-to-send-small-business-tax-relief-and-revenue-proposal-to-seattle-voters/ "Council Approves, Mayor Harrell Signs Legislation to Send Small Business Tax Relief and Revenue Proposal to Seattle Voters  ")
+
+[Mayor Bruce Harrell and Council President Sara Nelson Announce Proposals to Ease Small Business Permitting
+
+Seattle— Today, Mayor Bruce Harrell and Seattle City C ...
+
+ Posted Aug. 01
+
+![Seattle skyline with Space Needle and snow covered mountains](https://harrell.seattle.gov/wp-content/uploads/sites/23/2024/10/271660677_10227508063912477_4799005216720843206_n-150x150.jpg)](https://harrell.seattle.gov/2025/08/01/mayor-bruce-harrell-and-council-president-sara-nelson-announce-proposals-to-ease-small-business-permitting/ "Mayor Bruce Harrell and Council President Sara Nelson Announce Proposals to Ease Small Business Permitting")
+
+[Posted Jul. 30
+
+![Tiny Houses at LIHI village](https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/07/LIHI-Tiny-Houses-150x150.jpg)](https://harrell.seattle.gov/2025/07/30/mayor-harrell-announces-expansion-of-available-shelter-adding-more-than-100-new-tiny-houses/ "Mayor Harrell announces expansion of available shelter, adding more than 100 new tiny houses")
+
+[Posted Jul. 29
+
+![children running on Pier 58](https://harrell.seattle.gov/wp-content/uploads/sites/23/2025/07/DSC3210-2-150x150.jpg)](https://harrell.seattle.gov/2025/07/29/mayor-harrell-city-of-seattle-and-partners-celebrate-ribbon-cutting-of-pier-58-and-announce-grand-opening-celebration-date-for-completed-waterfront-park/ "Mayor Harrell, City of Seattle, and Partners Celebrate Ribbon Cutting of Pier 58 and Announce Grand Opening Celebration Date for Completed Waterfront Park")
+
+Mayor Bruce Harrell
+-------------------
+
+P.O. Box 94749, Seattle, WA, 98124-4749
+[(206) 684-4000](tel: +1 (206) 684-4000)
+
+Sign up for the latest updates from Mayor Bruce Harrell

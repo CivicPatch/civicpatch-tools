@@ -4,12 +4,13 @@ from schemas import PipelineContext, PipelineStatus, LinkStatus, SearchEngineSta
 
 import utils.data_path_utils as data_path_utils
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
-from steps.step_01_search_links.search_links import search_links
-from steps.step_02_scrape_page.scrape_page import scrape_page
-from steps.step_03_preprocess_page_content.preprocess_page_content import preprocess_page_content
-from steps.step_04_process_page_content.process_page_content import process_page_content
-from steps.step_05_generate_report.generate_report import generate_report
-from steps.step_06_send_to_github.send_to_github import send_to_github
+from steps.step_01_research_municipality.research_municipality import research_municipality
+from steps.step_02_search_links.search_links import search_links
+from steps.step_03_scrape_page.scrape_page import scrape_page
+from steps.step_04_preprocess_page_content.preprocess_page_content import preprocess_page_content
+from steps.step_05_process_page_content.process_page_content import process_page_content
+from steps.step_06_generate_report.generate_report import generate_report
+from steps.step_07_send_to_github.send_to_github import send_to_github
 
 DEFAULT_STATE: PipelineContext = {
     "search_engines": {
@@ -18,9 +19,14 @@ DEFAULT_STATE: PipelineContext = {
         "serp": {"status": SearchEngineStatus.NOT_STARTED.value},
         "crawl": {"status": SearchEngineStatus.NOT_STARTED.value},
     },
-    "links": [],
+    "links": [], 
+    "progress": {
+        "required_data": 5, # Default number of council members, for example
+        "current_data": 0,
+    },
     "steps": {
         PipelineStatus.INIT.value: {},
+        PipelineStatus.RESEARCH_MUNICIPALITY.value: {},
         PipelineStatus.SEARCH_LINKS.value: {},
         PipelineStatus.SCRAPE_PAGE.value: {},
         PipelineStatus.PREPROCESS_PAGE_CONTENT.value: {},
@@ -29,10 +35,6 @@ DEFAULT_STATE: PipelineContext = {
         PipelineStatus.SEND_TO_GITHUB.value: {},
         PipelineStatus.RETRY.value: {},
         PipelineStatus.DONE.value: {},
-    },
-    "progress": {
-        "required_data": 5, # Default number of council members, for example
-        "current_data": 0,
     },
 }
 
@@ -84,6 +86,10 @@ class Pipeline:
 
             if self.state == PipelineStatus.INIT:
                 prepare_pipeline(self.context)
+                self.state = PipelineStatus.RESEARCH_MUNICIPALITY
+
+            elif self.state == PipelineStatus.RESEARCH_MUNICIPALITY:
+                self.context.update(research_municipality(self.context))
                 self.state = PipelineStatus.SEARCH_LINKS
 
             elif self.state == PipelineStatus.SEARCH_LINKS:

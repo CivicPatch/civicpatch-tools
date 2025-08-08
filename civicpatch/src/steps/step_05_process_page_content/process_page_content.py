@@ -1,10 +1,10 @@
-from schemas import PipelineContext, Link, LinkStatus
+from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
 
 def process_page_content(context: PipelineContext, page_to_process: Link):
     """
     Process the preprocessed data to extract relevant information.
     """
-    print(f"Step 4: {PipelineStatus.PROCESS_PAGE_CONTENT.value}")
+    print(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}")
     # Example: Print the data or perform some processing
     # This is a placeholder for actual processing logic
 

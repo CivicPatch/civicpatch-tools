@@ -9,11 +9,12 @@ def search_links(context: PipelineContext):
     """
     Search for links using multiple search engines and queries.
     """
-    print(f"Step 1: {PipelineStatus.SEARCH_LINKS.value}")
+    print(f"Step 2: {PipelineStatus.SEARCH_LINKS.value}")
 
     # Load keyword term groups
     municipality_context = get_municipality_context(context["state"], context["geoid"])
-    government_type = municipality_context["municipality_entry"]["government_type"]
+    government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
+
     keyword_term_groups = search_keywords(government_type)
 
     all_urls = []
