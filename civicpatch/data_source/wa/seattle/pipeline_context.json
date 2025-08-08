@@ -15,13 +15,13 @@
                 "https://seattle.gov/council/calendar",
                 "https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members",
                 "https://www.seattle.gov/city-light/outages",
-                "https://harrell.seattle.gov/2025/07/08/mayor-harrell-announces-city-filing-to-conclude-federal-consent-decree/",
                 "https://www.seattle.gov/cityattorney",
+                "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
                 "https://www.seattle.gov/council/committees/public-comment",
                 "https://www.seattle.gov/civil-rights",
-                "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
-                "https://www.seattle.gov/council/committees",
                 "https://harrell.seattle.gov/2025/02/18/mayor-harrell-delivers-2025-state-of-the-city-address-seattle-on-the-rise/",
+                "https://www.seattle.gov/council/committees",
+                "https://www.seattle.gov/mayor/team",
                 "https://council.seattle.gov/2024/01/02/new-seattle-city-councilmembers-sworn-in-during-inauguration-city-hall/",
                 "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials"
             ],
@@ -55,16 +55,18 @@
         },
         {
             "url": "https://www.seattle.gov/elected-officials",
-            "status": "scraped",
+            "status": "done",
             "folder_name": "www_seattle_gov_elected-officials"
         },
         {
             "url": "https://www.seattle.gov/mayor",
-            "status": "pending"
+            "status": "done",
+            "folder_name": "www_seattle_gov_mayor"
         },
         {
             "url": "https://www.seattle.gov/",
-            "status": "pending"
+            "status": "scraped",
+            "folder_name": "www_seattle_gov_"
         },
         {
             "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district",
@@ -95,11 +97,11 @@
             "status": "pending"
         },
         {
-            "url": "https://harrell.seattle.gov/2025/07/08/mayor-harrell-announces-city-filing-to-conclude-federal-consent-decree/",
+            "url": "https://www.seattle.gov/cityattorney",
             "status": "pending"
         },
         {
-            "url": "https://www.seattle.gov/cityattorney",
+            "url": "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
             "status": "pending"
         },
         {
@@ -111,7 +113,7 @@
             "status": "pending"
         },
         {
-            "url": "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
+            "url": "https://harrell.seattle.gov/2025/02/18/mayor-harrell-delivers-2025-state-of-the-city-address-seattle-on-the-rise/",
             "status": "pending"
         },
         {
@@ -119,7 +121,7 @@
             "status": "pending"
         },
         {
-            "url": "https://harrell.seattle.gov/2025/02/18/mayor-harrell-delivers-2025-state-of-the-city-address-seattle-on-the-rise/",
+            "url": "https://www.seattle.gov/mayor/team",
             "status": "pending"
         },
         {
@@ -131,8 +133,142 @@
             "status": "pending"
         }
     ],
+    "progress": {
+        "required_data": 10,
+        "current_data": 5
+    },
     "steps": {
         "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "Bruce Harrell",
+                    "roles": [
+                        "Mayor"
+                    ]
+                },
+                {
+                    "name": "Sara Nelson",
+                    "roles": [
+                        "Council President",
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Alexis Mercedes Rinck",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Robert Kettle",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Dan Strauss",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Debora Juarez",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Maritza Rivera",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Joy Hollingsworth",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Mark Solomon",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Rob Saka",
+                    "roles": [
+                        "Council Member"
+                    ]
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "Bruce Harrell",
+                    "roles": [
+                        "Mayor"
+                    ]
+                },
+                {
+                    "name": "Sara Nelson",
+                    "roles": [
+                        "Council President",
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Alexis Mercedes Rinck",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Robert Kettle",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Dan Strauss",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Debora Juarez",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Maritza Rivera",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Joy Hollingsworth",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Mark Solomon",
+                    "roles": [
+                        "Council Member"
+                    ]
+                },
+                {
+                    "name": "Rob Saka",
+                    "roles": [
+                        "Council Member"
+                    ]
+                }
+            ],
+            "notes": "Seattle operates under a mayor-council form of government. [2, 3, 9] The Mayor is Bruce Harrell, who took office on January 1, 2022. [4, 7, 12] The Seattle City Council consists of nine members, including a Council President. [10, 15] Seven council members are elected by electoral districts, and two are elected at-large. [15] Other elected offices in Seattle include the City Attorney and Municipal Court Judges. [2, 16]"
+        },
         "SEARCH_LINKS": {},
         "SCRAPE_PAGE": {},
         "PREPROCESS_PAGE_CONTENT": {},
@@ -141,10 +277,6 @@
         "SEND_TO_GITHUB": {},
         "RETRY": {},
         "DONE": {}
-    },
-    "progress": {
-        "required_data": 5,
-        "current_data": 3
     },
     "state": "wa",
     "geoid": "5363000"

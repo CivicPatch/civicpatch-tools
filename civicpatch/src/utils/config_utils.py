@@ -25,6 +25,22 @@ def get_government_types():
     
     return config_data.get('government_types', {})
 
+def get_roles_by_government_type(government_type: str) -> List[str]:
+    """
+    Returns a list of roles associated with a specific government type from the configuration file.
+    
+    Args:
+        government_type: The type of government (e.g., "mayor_council", "commission").
+    
+    Returns:
+        List of roles associated with the specified government type.
+    """
+    government_types = get_government_types()
+    role_configs = government_types.get(government_type, {}).get('roles', [])
+    return [role['role'] for role in role_configs]
+
+
+
 def get_crawl():
     """
     Returns the crawl configuration from the configuration file.

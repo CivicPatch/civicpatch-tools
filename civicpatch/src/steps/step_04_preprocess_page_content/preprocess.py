@@ -1,5 +1,5 @@
 from markdownify import markdownify as md 
-from steps.step_03_preprocess_page_content.filter_content import filter_content
+from steps.step_04_preprocess_page_content.filter_content import filter_content
 
 def preprocess(input_html):
     output_html =  filter_content(input_html)

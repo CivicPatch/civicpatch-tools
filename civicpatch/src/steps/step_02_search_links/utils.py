@@ -6,7 +6,7 @@ from utils.array_utils import interleave_arrays
 from utils.config_utils import search_keywords
 from utils.data_utils import MunicipalityContext
 
-from src.steps.step_01_search_links.crawl import crawl
+from src.steps.step_02_search_links.crawl import crawl
 
 SEARCH_SERVICES = {
     "google": google_search,
