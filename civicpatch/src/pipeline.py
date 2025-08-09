@@ -12,22 +12,23 @@ from steps.step_05_process_page_content.process_page_content import process_page
 from steps.step_06_generate_report.generate_report import generate_report
 from steps.step_07_send_to_github.send_to_github import send_to_github
 
-DEFAULT_STATE: PipelineContext = {
-    "search_engines": {
-        "google": {"status": SearchEngineStatus.NOT_STARTED.value}, # not_started, processing, completed, failed  
-        "brave": {"status": SearchEngineStatus.NOT_STARTED.value},
-        "serp": {"status": SearchEngineStatus.NOT_STARTED.value},
-        "crawl": {"status": SearchEngineStatus.NOT_STARTED.value},
-    },
+DEFAULT_STATE: PipelineContext = { 
     "links": [], 
     "progress": {
-        "required_data": 5, # Default number of council members, for example
+        "required_data": 5, # Default number of council members
         "current_data": 0,
     },
     "steps": {
         PipelineStatus.INIT.value: {},
         PipelineStatus.RESEARCH_MUNICIPALITY.value: {},
-        PipelineStatus.SEARCH_LINKS.value: {},
+        PipelineStatus.SEARCH_LINKS.value: {
+            "search_engines": {
+                "google": {"status": SearchEngineStatus.NOT_STARTED.value}, # not_started, processing, completed, failed  
+                "brave": {"status": SearchEngineStatus.NOT_STARTED.value},
+                "serp": {"status": SearchEngineStatus.NOT_STARTED.value},
+                "crawl": {"status": SearchEngineStatus.NOT_STARTED.value},
+            },
+        },
         PipelineStatus.SCRAPE_PAGE.value: {},
         PipelineStatus.PREPROCESS_PAGE_CONTENT.value: {},
         PipelineStatus.PROCESS_PAGE_CONTENT.value: {},

@@ -9,7 +9,7 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
     """
     Preprocess the scraped HTML content of a page.
     """
-    print(f"Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}")
+    print(f"Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}: {page_to_preprocess['url']}")
 
     time_start = time.time()
 
@@ -32,7 +32,7 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
     with open(output_md_file_path, "w", encoding="utf-8") as f:
         f.write(preprocessed_md)
 
-    # Update link status to 
+    # Update link status to PREPROCESSED
     updated_links = []
     for link in context["links"]:
         if link["url"] == page_to_preprocess["url"]:
@@ -44,15 +44,25 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
     time_end = time.time()
     elapsed_time = time_end - time_start
     total_elapsed_time_seconds = context["steps"][PipelineStatus.PREPROCESS_PAGE_CONTENT.value].get("total_elapsed_time_seconds", 0) + elapsed_time
-    
-    print(f"/Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value} - Elapsed time: {elapsed_time:.2f} seconds.")
+
+    elapsed_times = context["steps"][PipelineStatus.PREPROCESS_PAGE_CONTENT.value].get("elapsed_times", [])
+    elapsed_times.append(elapsed_time)
+
+    average_elapsed_time_seconds = total_elapsed_time_seconds / len(elapsed_times) if elapsed_times else 0
+
+    print(f"/Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}")
+    print(f"-> Elapsed time: {elapsed_time:.2f} seconds")
+    print(f"-> Average elapsed time: {average_elapsed_time_seconds:.2f} seconds")
+    print(f"-> Total elapsed time: {total_elapsed_time_seconds:.2f} seconds")
 
     return {
         "links": updated_links,
         "steps": {
             **context["steps"],
             PipelineStatus.PREPROCESS_PAGE_CONTENT.value: {
+                "elapsed_times": elapsed_times,
                 "total_elapsed_time_seconds": total_elapsed_time_seconds,
+                "average_elapsed_time_seconds": average_elapsed_time_seconds
             }
         }
     }

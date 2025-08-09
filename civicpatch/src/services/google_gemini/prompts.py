@@ -53,22 +53,10 @@ def research_municipality_prompt(municipality_context: MunicipalityContext):
     """
 
 
-def municipality_officials_prompt(municipality_context, government_type, content, people_hint):
+def municipality_officials_prompt(government_type, content, people_hint):
     """
     Generate a prompt for extracting municipality officials.
-
-    Args:
-        municipality_context: Dictionary containing municipality context (e.g., state, government type).
-        content: Content to analyze (e.g., markdown text).
-        people: List of people hints (e.g., names).
-        person_name: Specific person name to focus on (optional).
-
-    Returns:
-        A string containing the prompt.
     """
-    state = municipality_context["state"]
-    municipality_name = municipality_context["municipality_entry"]["name"]
-
     roles = config_utils.get_roles_by_government_type(government_type)
     division_names = config_utils.get_divisions()
     current_date = datetime.now().strftime("%Y-%m-%d")
@@ -95,7 +83,6 @@ def municipality_officials_prompt(municipality_context, government_type, content
     First, determine if the content contains relevant information about {target_text}.
     If not, return an empty JSON array `[]`.
 
-    Target Municipality: {municipality_name}, {state}
     Target Roles: {', '.join(roles)}
     Target Divisions: {', '.join(division_names)}
     Current Date: {current_date}

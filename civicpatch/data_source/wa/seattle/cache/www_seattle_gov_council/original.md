@@ -631,7 +631,7 @@ ContinueCancel
 [Play](https://www.seattle.gov/#featuredTilesCarousel)
 [Next](https://www.seattle.gov/#featuredTilesCarousel)
 
-[4 days ago
+[5 days ago
 
 ### Council approves Business & Occupation (B&O) Tax rebalancing proposal for November ballot
 
