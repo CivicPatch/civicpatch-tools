@@ -1,3 +1,4 @@
+from datetime import datetime
 from utils.data_utils import MunicipalityContext
 import utils.config_utils as config_utils
 
@@ -52,7 +53,7 @@ def research_municipality_prompt(municipality_context: MunicipalityContext):
     """
 
 
-def municipality_officials_prompt(municipality_context, government_type, content, people, person_name=""):
+def municipality_officials_prompt(municipality_context, government_type, content, people_hint):
     """
     Generate a prompt for extracting municipality officials.
 
@@ -68,17 +69,27 @@ def municipality_officials_prompt(municipality_context, government_type, content
     state = municipality_context["state"]
     municipality_name = municipality_context["municipality_entry"]["name"]
 
-    roles = config_utils.get_roles_for_government_type(government_type)
+    roles = config_utils.get_roles_by_government_type(government_type)
     division_names = config_utils.get_divisions()
-    current_date = municipality_context["current_date"]
-    maybe_target_people = [person.get("name") for person in people if person.get("name")]
+    current_date = datetime.now().strftime("%Y-%m-%d")
 
-    target_text = (
-        person_name if person_name else
-        f"the main governing body of the target municipality. If the content includes information about the following people, they are very likely to be on the council: {', '.join(maybe_target_people)}"
-        if maybe_target_people else
-        "the main governing body of the target municipality."
-    )
+    person_name = None
+    maybe_target_people = [person.get("name") for person in people_hint if person.get("name")]
+
+    if len(maybe_target_people) == 1:
+        person_name = maybe_target_people[0]
+
+    if person_name:
+        target_text = person_name
+    elif maybe_target_people:
+        target_text = (
+            "the main governing body of the target municipality. "
+            "If the content includes information about the following people, "
+            "they are very likely to be on the council: "
+            f"{', '.join(maybe_target_people)}"
+        )
+    else:
+        target_text = "the main governing body of the target municipality."
 
     return f"""
     First, determine if the content contains relevant information about {target_text}.

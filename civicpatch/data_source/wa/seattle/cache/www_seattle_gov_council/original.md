@@ -631,7 +631,7 @@ ContinueCancel
 [Play](https://www.seattle.gov/#featuredTilesCarousel)
 [Next](https://www.seattle.gov/#featuredTilesCarousel)
 
-[3 days ago
+[4 days ago
 
 ### Council approves Business & Occupation (B&O) Tax rebalancing proposal for November ballot
 
@@ -789,6 +789,7 @@ Policies
 [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)
 
 [Sitemap](//www.seattle.gov/sitemap)
+
 
 
 

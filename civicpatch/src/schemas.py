@@ -42,7 +42,7 @@ class PipelineContext(TypedDict):
     state: str
     geoid: str
     search_engines: Dict[str, SearchEngineState]
-    links: List[Link]
+    links: List[Link] # TODO: move to SEARCH_LINKS
     steps: Dict[str, Dict] # PipelineStatus value
     data: Dict[str, Dict]
     progress: ProgressState
