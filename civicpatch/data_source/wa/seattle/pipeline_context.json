@@ -1,42 +1,4 @@
 {
-    "search_engines": {
-        "google": {
-            "links": [
-                "https://www.seattle.gov/council",
-                "https://seattle.gov/council/meet-the-council",
-                "https://www.seattle.gov/elected-officials",
-                "https://www.seattle.gov/mayor",
-                "https://www.seattle.gov/council/meet-the-council/find-your-district-and-councilmembers",
-                "https://www.seattle.gov/",
-                "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district",
-                "https://harrell.seattle.gov/2024/02/20/mayor-harrell-delivers-2024-state-of-the-city-address-persistent-and-pioneering-progress/",
-                "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council",
-                "https://www.seattle.gov/light/",
-                "https://seattle.gov/council/calendar",
-                "https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members",
-                "https://www.seattle.gov/cityattorney",
-                "https://www.seattle.gov/civil-rights",
-                "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
-                "https://www.seattle.gov/council/committees/public-comment",
-                "https://harrell.seattle.gov/2025/02/18/mayor-harrell-delivers-2025-state-of-the-city-address-seattle-on-the-rise/",
-                "https://www.seattle.gov/council/committees",
-                "https://www.seattle.gov/city-light/outages",
-                "https://www.seattle.gov/mayor/team",
-                "https://council.seattle.gov/2024/01/02/new-seattle-city-councilmembers-sworn-in-during-inauguration-city-hall/",
-                "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials"
-            ],
-            "status": "processing"
-        },
-        "brave": {
-            "status": "not_started"
-        },
-        "serp": {
-            "status": "not_started"
-        },
-        "crawl": {
-            "status": "not_started"
-        }
-    },
     "links": [
         {
             "url": "https://www.seattle.gov/council",
@@ -45,23 +7,20 @@
         },
         {
             "url": "https://seattle.gov/council/meet-the-council",
-            "status": "done",
+            "status": "scraped",
             "folder_name": "seattle_gov_council_meet-the-council"
         },
         {
+            "url": "https://www.seattle.gov/council/meet-the-council/find-your-district-and-councilmembers",
+            "status": "pending"
+        },
+        {
             "url": "https://www.seattle.gov/elected-officials",
-            "status": "done",
-            "folder_name": "www_seattle_gov_elected-officials"
+            "status": "pending"
         },
         {
             "url": "https://www.seattle.gov/mayor",
-            "status": "done",
-            "folder_name": "www_seattle_gov_mayor"
-        },
-        {
-            "url": "https://www.seattle.gov/council/meet-the-council/find-your-district-and-councilmembers",
-            "status": "scraped",
-            "folder_name": "www_seattle_gov_council_meet-the-council_find-your-district-and-councilmembers"
+            "status": "pending"
         },
         {
             "url": "https://www.seattle.gov/",
@@ -96,11 +55,11 @@
             "status": "pending"
         },
         {
-            "url": "https://www.seattle.gov/civil-rights",
+            "url": "http://web6.seattle.gov/ethics/elections/campaigns.aspx?cycle=2025",
             "status": "pending"
         },
         {
-            "url": "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
+            "url": "https://www.seattle.gov/human-resources/working-at-the-city",
             "status": "pending"
         },
         {
@@ -108,7 +67,11 @@
             "status": "pending"
         },
         {
-            "url": "https://harrell.seattle.gov/2025/02/18/mayor-harrell-delivers-2025-state-of-the-city-address-seattle-on-the-rise/",
+            "url": "https://www.seattle.gov/civil-rights",
+            "status": "pending"
+        },
+        {
+            "url": "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
             "status": "pending"
         },
         {
@@ -120,21 +83,17 @@
             "status": "pending"
         },
         {
-            "url": "https://www.seattle.gov/mayor/team",
+            "url": "https://harrell.seattle.gov/2025/02/18/mayor-harrell-delivers-2025-state-of-the-city-address-seattle-on-the-rise/",
             "status": "pending"
         },
         {
             "url": "https://council.seattle.gov/2024/01/02/new-seattle-city-councilmembers-sworn-in-during-inauguration-city-hall/",
             "status": "pending"
-        },
-        {
-            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials",
-            "status": "pending"
         }
     ],
     "progress": {
         "required_data": 10,
-        "current_data": 4
+        "current_data": 1
     },
     "steps": {
         "INIT": {},
@@ -150,8 +109,8 @@
                 {
                     "name": "Sara Nelson",
                     "roles": [
-                        "Council President",
-                        "Council Member"
+                        "Council Member",
+                        "Council President"
                     ]
                 },
                 {
@@ -200,54 +159,6 @@
                     "name": "Rob Saka",
                     "roles": [
                         "Council Member"
-                    ]
-                },
-                {
-                    "name": "Ann Davison",
-                    "roles": [
-                        "City Attorney"
-                    ]
-                },
-                {
-                    "name": "Faye Chess",
-                    "roles": [
-                        "Municipal Court Judge"
-                    ]
-                },
-                {
-                    "name": "Andrea Chin",
-                    "roles": [
-                        "Municipal Court Judge"
-                    ]
-                },
-                {
-                    "name": "Anita Crawford-Willis",
-                    "roles": [
-                        "Municipal Court Judge"
-                    ]
-                },
-                {
-                    "name": "Willie Gregory",
-                    "roles": [
-                        "Municipal Court Judge"
-                    ]
-                },
-                {
-                    "name": "Catherine McDowall",
-                    "roles": [
-                        "Municipal Court Judge"
-                    ]
-                },
-                {
-                    "name": "Damon Shadid",
-                    "roles": [
-                        "Municipal Court Judge"
-                    ]
-                },
-                {
-                    "name": "Pooja Vaddadi",
-                    "roles": [
-                        "Municipal Court Judge"
                     ]
                 }
             ],
@@ -261,8 +172,8 @@
                 {
                     "name": "Sara Nelson",
                     "roles": [
-                        "Council President",
-                        "Council Member"
+                        "Council Member",
+                        "Council President"
                     ]
                 },
                 {
@@ -314,12 +225,55 @@
                     ]
                 }
             ],
-            "notes": "Seattle operates under a mayor-council form of government. The elected officials include the Mayor, nine City Council members (seven by district, two at-large), the City Attorney, and seven Municipal Court Judges. [2, 7, 8, 11]"
+            "notes": "Seattle operates under a mayor-council form of government. [3, 4, 9, 16] The Mayor is the head of the executive branch, and the City Council is the legislative body. [3, 5, 9] The Seattle City Council consists of nine members, with seven elected by electoral districts and two elected in citywide at-large positions. [9, 13] Bruce Harrell assumed office as Mayor on January 1, 2022, and his current term ends on December 31, 2025. [6, 7] Debora Juarez was appointed to the District 5 seat on July 28, 2025. [15]"
         },
-        "SEARCH_LINKS": {},
+        "SEARCH_LINKS": {
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "https://www.seattle.gov/council",
+                        "https://seattle.gov/council/meet-the-council",
+                        "https://www.seattle.gov/council/meet-the-council/find-your-district-and-councilmembers",
+                        "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/mayor",
+                        "https://www.seattle.gov/",
+                        "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district",
+                        "https://harrell.seattle.gov/2024/02/20/mayor-harrell-delivers-2024-state-of-the-city-address-persistent-and-pioneering-progress/",
+                        "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council",
+                        "https://www.seattle.gov/light/",
+                        "https://seattle.gov/council/calendar",
+                        "https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members",
+                        "https://www.seattle.gov/cityattorney",
+                        "http://web6.seattle.gov/ethics/elections/campaigns.aspx?cycle=2025",
+                        "https://www.seattle.gov/human-resources/working-at-the-city",
+                        "https://www.seattle.gov/council/committees/public-comment",
+                        "https://www.seattle.gov/civil-rights",
+                        "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
+                        "https://www.seattle.gov/council/committees",
+                        "https://www.seattle.gov/city-light/outages",
+                        "https://harrell.seattle.gov/2025/02/18/mayor-harrell-delivers-2025-state-of-the-city-address-seattle-on-the-rise/",
+                        "https://council.seattle.gov/2024/01/02/new-seattle-city-councilmembers-sworn-in-during-inauguration-city-hall/"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
         "SCRAPE_PAGE": {},
         "PREPROCESS_PAGE_CONTENT": {
-            "total_elapsed_time_seconds": 286.44656467437744
+            "elapsed_times": [
+                58.90649056434631
+            ],
+            "total_elapsed_time_seconds": 58.90649056434631,
+            "average_elapsed_time_seconds": 58.90649056434631
         },
         "PROCESS_PAGE_CONTENT": {
             "google_gemini": [
@@ -327,20 +281,21 @@
                     "people": [
                         {
                             "name": "Rob Saka",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific phone number found for this person."
-                            },
+                            "divisions": [],
                             "email": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific email address found for this person."
+                                "llm_confidence_reason": "No email address found in the provided text."
                             },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/saka",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website explicitly linked to the person's name."
+                            "end_date": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No end date explicitly mentioned in the text."
+                            },
+                            "phone_number": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No specific phone number for this person was found; general city numbers are not assigned to individuals."
                             },
                             "roles": [
                                 {
@@ -349,34 +304,34 @@
                                     "llm_confidence_reason": "Explicitly stated as 'Councilmember Rob Saka'."
                                 }
                             ],
-                            "divisions": [],
                             "start_date": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date explicitly mentioned."
+                                "llm_confidence_reason": "No start date explicitly mentioned in the text."
                             },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date explicitly mentioned."
+                            "website": {
+                                "data": "https://www.seattle.gov/council/saka",
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Website URL is directly linked to the person's name."
                             }
                         },
                         {
                             "name": "Mark Solomon",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific phone number found for this person."
-                            },
+                            "divisions": [],
                             "email": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific email address found for this person."
+                                "llm_confidence_reason": "No email address found in the provided text."
                             },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/solomon",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website explicitly linked to the person's name."
+                            "end_date": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No end date explicitly mentioned in the text."
+                            },
+                            "phone_number": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No specific phone number for this person was found; general city numbers are not assigned to individuals."
                             },
                             "roles": [
                                 {
@@ -385,34 +340,34 @@
                                     "llm_confidence_reason": "Explicitly stated as 'Councilmember Mark Solomon'."
                                 }
                             ],
-                            "divisions": [],
                             "start_date": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date explicitly mentioned."
+                                "llm_confidence_reason": "No start date explicitly mentioned in the text."
                             },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date explicitly mentioned."
+                            "website": {
+                                "data": "https://www.seattle.gov/council/solomon",
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Website URL is directly linked to the person's name."
                             }
                         },
                         {
                             "name": "Joy Hollingsworth",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific phone number found for this person."
-                            },
+                            "divisions": [],
                             "email": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific email address found for this person."
+                                "llm_confidence_reason": "No email address found in the provided text."
                             },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/hollingsworth",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website explicitly linked to the person's name."
+                            "end_date": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No end date explicitly mentioned in the text."
+                            },
+                            "phone_number": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No specific phone number for this person was found; general city numbers are not assigned to individuals."
                             },
                             "roles": [
                                 {
@@ -421,34 +376,34 @@
                                     "llm_confidence_reason": "Explicitly stated as 'Councilmember Joy Hollingsworth'."
                                 }
                             ],
-                            "divisions": [],
                             "start_date": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date explicitly mentioned."
+                                "llm_confidence_reason": "No start date explicitly mentioned in the text."
                             },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date explicitly mentioned."
+                            "website": {
+                                "data": "https://www.seattle.gov/council/hollingsworth",
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Website URL is directly linked to the person's name."
                             }
                         },
                         {
                             "name": "Maritza Rivera",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific phone number found for this person."
-                            },
+                            "divisions": [],
                             "email": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific email address found for this person."
+                                "llm_confidence_reason": "No email address found in the provided text."
                             },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/rivera",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website explicitly linked to the person's name."
+                            "end_date": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No end date explicitly mentioned in the text."
+                            },
+                            "phone_number": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No specific phone number for this person was found; general city numbers are not assigned to individuals."
                             },
                             "roles": [
                                 {
@@ -457,34 +412,34 @@
                                     "llm_confidence_reason": "Explicitly stated as 'Councilmember Maritza Rivera'."
                                 }
                             ],
-                            "divisions": [],
                             "start_date": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date explicitly mentioned."
+                                "llm_confidence_reason": "No start date explicitly mentioned in the text."
                             },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date explicitly mentioned."
+                            "website": {
+                                "data": "https://www.seattle.gov/council/rivera",
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Website URL is directly linked to the person's name."
                             }
                         },
                         {
                             "name": "Debora Juarez",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific phone number found for this person."
-                            },
+                            "divisions": [],
                             "email": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific email address found for this person."
+                                "llm_confidence_reason": "No email address found in the provided text."
                             },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/meet-the-council/debora-juarez",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website explicitly linked to the person's name."
+                            "end_date": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No end date explicitly mentioned in the text."
+                            },
+                            "phone_number": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No specific phone number for this person was found; general city numbers are not assigned to individuals."
                             },
                             "roles": [
                                 {
@@ -493,34 +448,34 @@
                                     "llm_confidence_reason": "Explicitly stated as 'Councilmember Debora Juarez'."
                                 }
                             ],
-                            "divisions": [],
                             "start_date": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date explicitly mentioned."
+                                "llm_confidence_reason": "No start date explicitly mentioned in the text."
                             },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date explicitly mentioned."
+                            "website": {
+                                "data": "https://www.seattle.gov/council/meet-the-council/debora-juarez",
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Website URL is directly linked to the person's name."
                             }
                         },
                         {
                             "name": "Dan Strauss",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific phone number found for this person."
-                            },
+                            "divisions": [],
                             "email": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific email address found for this person."
+                                "llm_confidence_reason": "No email address found in the provided text."
                             },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/strauss",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website explicitly linked to the person's name."
+                            "end_date": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No end date explicitly mentioned in the text."
+                            },
+                            "phone_number": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No specific phone number for this person was found; general city numbers are not assigned to individuals."
                             },
                             "roles": [
                                 {
@@ -529,34 +484,34 @@
                                     "llm_confidence_reason": "Explicitly stated as 'Councilmember Dan Strauss'."
                                 }
                             ],
-                            "divisions": [],
                             "start_date": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date explicitly mentioned."
+                                "llm_confidence_reason": "No start date explicitly mentioned in the text."
                             },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date explicitly mentioned."
+                            "website": {
+                                "data": "https://www.seattle.gov/council/strauss",
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Website URL is directly linked to the person's name."
                             }
                         },
                         {
                             "name": "Robert Kettle",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific phone number found for this person."
-                            },
+                            "divisions": [],
                             "email": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific email address found for this person."
+                                "llm_confidence_reason": "No email address found in the provided text."
                             },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/kettle",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website explicitly linked to the person's name."
+                            "end_date": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No end date explicitly mentioned in the text."
+                            },
+                            "phone_number": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No specific phone number for this person was found; general city numbers are not assigned to individuals."
                             },
                             "roles": [
                                 {
@@ -565,34 +520,34 @@
                                     "llm_confidence_reason": "Explicitly stated as 'Councilmember Robert Kettle'."
                                 }
                             ],
-                            "divisions": [],
                             "start_date": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date explicitly mentioned."
+                                "llm_confidence_reason": "No start date explicitly mentioned in the text."
                             },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date explicitly mentioned."
+                            "website": {
+                                "data": "https://www.seattle.gov/council/kettle",
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Website URL is directly linked to the person's name."
                             }
                         },
                         {
                             "name": "Alexis Mercedes Rinck",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific phone number found for this person."
-                            },
+                            "divisions": [],
                             "email": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific email address found for this person."
+                                "llm_confidence_reason": "No email address found in the provided text."
                             },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/rinck",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website explicitly linked to the person's name."
+                            "end_date": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No end date explicitly mentioned in the text."
+                            },
+                            "phone_number": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No specific phone number for this person was found; general city numbers are not assigned to individuals."
                             },
                             "roles": [
                                 {
@@ -601,75 +556,75 @@
                                     "llm_confidence_reason": "Explicitly stated as 'Councilmember Alexis Mercedes Rinck'."
                                 }
                             ],
-                            "divisions": [],
                             "start_date": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date explicitly mentioned."
+                                "llm_confidence_reason": "No start date explicitly mentioned in the text."
                             },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date explicitly mentioned."
+                            "website": {
+                                "data": "https://www.seattle.gov/council/rinck",
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Website URL is directly linked to the person's name."
                             }
                         },
                         {
                             "name": "Sara Nelson",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific phone number found for this person."
-                            },
+                            "divisions": [],
                             "email": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific email address found for this person."
+                                "llm_confidence_reason": "No email address found in the provided text."
                             },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website explicitly linked to the person's name."
+                            "end_date": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No end date explicitly mentioned in the text."
+                            },
+                            "phone_number": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No specific phone number for this person was found; general city numbers are not assigned to individuals."
                             },
                             "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Councilmember Sara Nelson'."
-                                },
                                 {
                                     "data": "council president",
                                     "llm_confidence": 1.0,
                                     "llm_confidence_reason": "Explicitly stated as 'Council President Sara Nelson'."
+                                },
+                                {
+                                    "data": "council member",
+                                    "llm_confidence": 0.9,
+                                    "llm_confidence_reason": "Implied by her role as Council President and being listed among other council members."
                                 }
                             ],
-                            "divisions": [],
                             "start_date": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date explicitly mentioned."
+                                "llm_confidence_reason": "No start date explicitly mentioned in the text."
                             },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date explicitly mentioned."
+                            "website": {
+                                "data": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Website URL is directly linked to the person's name."
                             }
                         },
                         {
                             "name": "Bruce Harrell",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific phone number found for this person."
-                            },
+                            "divisions": [],
                             "email": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific email address found for this person."
+                                "llm_confidence_reason": "No email address found in the provided text."
                             },
-                            "website": {
-                                "data": null,
+                            "end_date": {
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No specific website found for this person."
+                                "llm_confidence_reason": "No end date explicitly mentioned in the text."
+                            },
+                            "phone_number": {
+                                "data": "null",
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No specific phone number for this person was found; general city numbers are not assigned to individuals."
                             },
                             "roles": [
                                 {
@@ -678,881 +633,386 @@
                                     "llm_confidence_reason": "Explicitly stated as 'Mayor Bruce Harrell'."
                                 }
                             ],
-                            "divisions": [],
                             "start_date": {
-                                "data": null,
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date explicitly mentioned."
+                                "llm_confidence_reason": "No start date explicitly mentioned in the text."
                             },
-                            "end_date": {
-                                "data": null,
+                            "website": {
+                                "data": "null",
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date explicitly mentioned."
+                                "llm_confidence_reason": "No website URL found for this person in the provided text."
                             }
                         }
                     ],
-                    "thought": "The content contains relevant information about the Seattle City Council and Mayor, including names and roles that match the target criteria."
-                },
+                    "thought": "The content contains relevant information about the main governing body, specifically listing several council members and the mayor, all of whom are on the provided list of likely council members."
+                }
+            ],
+            "openai": [
                 {
                     "people": [
                         {
                             "name": "Rob Saka",
-                            "phone_number": {
-                                "data": "(206) 684-8801",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person."
-                            },
-                            "email": {
-                                "data": "rob.saka@seattle.gov",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person."
-                            },
-                            "website": {
-                                "data": "https://seattle.gov/council/saka",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website URL is explicitly provided and clearly associated with the person."
-                            },
                             "roles": [
                                 {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Councilmember Rob Saka' and 'Councilmembers' is a target role."
+                                    "data": "Council Member",
+                                    "llm_confidence": 0.9,
+                                    "llm_confidence_reason": "Listed under 'Meet the Council' section, with council member link and staff, strong indicator of active council member role."
                                 }
                             ],
-                            "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 1 - Rob Saka'."
-                                }
-                            ],
+                            "divisions": [],
+                            "phone_number": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No phone number found in content."
+                            },
+                            "email": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No email found in content."
+                            },
+                            "website": {
+                                "data": "https://www.seattle.gov/council/saka",
+                                "llm_confidence": 0.8,
+                                "llm_confidence_reason": "Direct official council profile URL."
+                            },
                             "start_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term start date found."
                             },
                             "end_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term end date found."
                             }
                         },
                         {
                             "name": "Mark Solomon",
-                            "phone_number": {
-                                "data": "(206) 684-8802",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person."
-                            },
-                            "email": {
-                                "data": "mark.solomon2@seattle.gov",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person."
-                            },
-                            "website": {
-                                "data": "https://seattle.gov/council/solomon",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website URL is explicitly provided and clearly associated with the person."
-                            },
                             "roles": [
                                 {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Councilmember Mark Solomon' and 'Councilmembers' is a target role."
+                                    "data": "Council Member",
+                                    "llm_confidence": 0.9,
+                                    "llm_confidence_reason": "Listed in 'Meet the Council' with staff and about pages indicating active council member role."
                                 }
                             ],
-                            "divisions": [
-                                {
-                                    "data": "District 2",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 2 - Mark Solomon'."
-                                }
-                            ],
+                            "divisions": [],
+                            "phone_number": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No phone number found in content."
+                            },
+                            "email": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No email found in content."
+                            },
+                            "website": {
+                                "data": "https://www.seattle.gov/council/solomon",
+                                "llm_confidence": 0.8,
+                                "llm_confidence_reason": "Official council profile URL."
+                            },
                             "start_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term start date found."
                             },
                             "end_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term end date found."
                             }
                         },
                         {
                             "name": "Joy Hollingsworth",
-                            "phone_number": {
-                                "data": "(206) 684-8803",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person."
-                            },
-                            "email": {
-                                "data": "joy.hollingsworth@seattle.gov",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person."
-                            },
-                            "website": {
-                                "data": "https://seattle.gov/council/hollingsworth",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website URL is explicitly provided and clearly associated with the person."
-                            },
                             "roles": [
                                 {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Councilmember Joy Hollingsworth' and 'Councilmembers' is a target role."
+                                    "data": "Council Member",
+                                    "llm_confidence": 0.9,
+                                    "llm_confidence_reason": "Mentioned under 'Meet the Council' with 'About' and 'Staff' links indicating active council member."
                                 }
                             ],
-                            "divisions": [
-                                {
-                                    "data": "District 3",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 3 - Joy Hollingsworth'."
-                                }
-                            ],
+                            "divisions": [],
+                            "phone_number": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No phone number found in content."
+                            },
+                            "email": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No email found in content."
+                            },
+                            "website": {
+                                "data": "https://www.seattle.gov/council/hollingsworth",
+                                "llm_confidence": 0.8,
+                                "llm_confidence_reason": "Official council member profile URL."
+                            },
                             "start_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term start date found."
                             },
                             "end_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term end date found."
                             }
                         },
                         {
                             "name": "Maritza Rivera",
-                            "phone_number": {
-                                "data": "(206) 684-8804",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person."
-                            },
-                            "email": {
-                                "data": "maritza.rivera@seattle.gov",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person."
-                            },
-                            "website": {
-                                "data": "https://seattle.gov/council/rivera",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website URL is explicitly provided and clearly associated with the person."
-                            },
                             "roles": [
                                 {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Councilmember Maritza Rivera' and 'Councilmembers' is a target role."
+                                    "data": "Council Member",
+                                    "llm_confidence": 0.9,
+                                    "llm_confidence_reason": "Included in council list under 'Meet the Council' with about and staff pages, indicating active council member."
                                 }
                             ],
-                            "divisions": [
-                                {
-                                    "data": "District 4",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 4 - Maritza Rivera'."
-                                }
-                            ],
+                            "divisions": [],
+                            "phone_number": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No phone number found in content."
+                            },
+                            "email": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No email found in content."
+                            },
+                            "website": {
+                                "data": "https://www.seattle.gov/council/rivera",
+                                "llm_confidence": 0.8,
+                                "llm_confidence_reason": "Official council profile URL."
+                            },
                             "start_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term start date found."
                             },
                             "end_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term end date found."
                             }
                         },
                         {
                             "name": "Debora Juarez",
-                            "phone_number": {
-                                "data": "(206) 684-8805",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person."
-                            },
-                            "email": {
-                                "data": "debora.juarez@seattle.gov",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person."
-                            },
-                            "website": {
-                                "data": "https://seattle.gov/council/meet-the-council/debora-juarez",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website URL is explicitly provided and clearly associated with the person."
-                            },
                             "roles": [
                                 {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Councilmember Debora Juarez' and 'Councilmembers' is a target role."
+                                    "data": "Council Member",
+                                    "llm_confidence": 0.9,
+                                    "llm_confidence_reason": "Listed under council members with about page, strong indication of council member status."
                                 }
                             ],
-                            "divisions": [
-                                {
-                                    "data": "District 5",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 5 - Debora Juarez'."
-                                }
-                            ],
+                            "divisions": [],
+                            "phone_number": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No phone number found in content."
+                            },
+                            "email": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No email found in content."
+                            },
+                            "website": {
+                                "data": "https://www.seattle.gov/council/meet-the-council/debora-juarez",
+                                "llm_confidence": 0.8,
+                                "llm_confidence_reason": "Official council member about page link."
+                            },
                             "start_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term start date found."
                             },
                             "end_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term end date found."
                             }
                         },
                         {
                             "name": "Dan Strauss",
-                            "phone_number": {
-                                "data": "(206) 684-8806",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person."
-                            },
-                            "email": {
-                                "data": "dan.strauss@seattle.gov",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person."
-                            },
-                            "website": {
-                                "data": "https://seattle.gov/council/strauss",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website URL is explicitly provided and clearly associated with the person."
-                            },
                             "roles": [
                                 {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Councilmember Dan Strauss' and 'Councilmembers' is a target role."
+                                    "data": "Council Member",
+                                    "llm_confidence": 0.9,
+                                    "llm_confidence_reason": "Included within council members section with about and staff pages."
                                 }
                             ],
-                            "divisions": [
-                                {
-                                    "data": "District 6",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 6 - Dan Strauss'."
-                                }
-                            ],
+                            "divisions": [],
+                            "phone_number": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No phone number found in content."
+                            },
+                            "email": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No email found in content."
+                            },
+                            "website": {
+                                "data": "https://www.seattle.gov/council/meet-the-council/dan-strauss",
+                                "llm_confidence": 0.8,
+                                "llm_confidence_reason": "Official council member about page link."
+                            },
                             "start_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term start date found."
                             },
                             "end_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term end date found."
                             }
                         },
                         {
                             "name": "Robert Kettle",
-                            "phone_number": {
-                                "data": "(206) 684-8807",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person."
-                            },
-                            "email": {
-                                "data": "robert.kettle@seattle.gov",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person."
-                            },
-                            "website": {
-                                "data": "https://seattle.gov/council/kettle",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website URL is explicitly provided and clearly associated with the person."
-                            },
                             "roles": [
                                 {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Councilmember Robert Kettle' and 'Councilmembers' is a target role."
+                                    "data": "Council Member",
+                                    "llm_confidence": 0.9,
+                                    "llm_confidence_reason": "Listed in council members section with links to about and staff pages."
                                 }
                             ],
-                            "divisions": [
-                                {
-                                    "data": "District 7",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 7 - Robert Kettle'."
-                                }
-                            ],
+                            "divisions": [],
+                            "phone_number": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No phone number found in content."
+                            },
+                            "email": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No email found in content."
+                            },
+                            "website": {
+                                "data": "https://www.seattle.gov/council/meet-the-council/robert-kettle",
+                                "llm_confidence": 0.8,
+                                "llm_confidence_reason": "Official council profile page URL provided."
+                            },
                             "start_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term start date found."
                             },
                             "end_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term end date found."
                             }
                         },
                         {
                             "name": "Alexis Mercedes Rinck",
-                            "phone_number": {
-                                "data": "(206) 684-8808",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person."
-                            },
-                            "email": {
-                                "data": "AlexisMercedes.Rinck@seattle.gov",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person."
-                            },
-                            "website": {
-                                "data": "https://seattle.gov/council/rinck",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website URL is explicitly provided and clearly associated with the person."
-                            },
                             "roles": [
                                 {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Councilmember Alexis Mercedes Rinck' and 'Councilmembers' is a target role."
+                                    "data": "Council Member",
+                                    "llm_confidence": 0.9,
+                                    "llm_confidence_reason": "Named in council members section with about and staff pages."
                                 }
                             ],
-                            "divisions": [
-                                {
-                                    "data": "Position 8",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Position 8 - Alexis Mercedes Rinck'."
-                                }
-                            ],
+                            "divisions": [],
+                            "phone_number": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No phone number found in content."
+                            },
+                            "email": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No email found in content."
+                            },
+                            "website": {
+                                "data": "https://www.seattle.gov/council/meet-the-council/alexis-mercedes-rinck",
+                                "llm_confidence": 0.8,
+                                "llm_confidence_reason": "Official council member profile page link."
+                            },
                             "start_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term start date found."
                             },
                             "end_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned in the text."
+                                "llm_confidence_reason": "No term end date found."
                             }
                         },
                         {
                             "name": "Sara Nelson",
-                            "phone_number": {
-                                "data": "(206) 684-8809",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly provided and clearly associated with the person."
-                            },
-                            "email": {
-                                "data": "sara.nelson@seattle.gov",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address is explicitly provided and clearly associated with the person."
-                            },
-                            "website": {
-                                "data": "https://seattle.gov/council/meet-the-council/sara-nelson",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website URL is explicitly provided and clearly associated with the person."
-                            },
-                            "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Councilmember Sara Nelson' and 'Councilmembers' is a target role."
-                                }
-                            ],
-                            "divisions": [
-                                {
-                                    "data": "Position 9",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Position 9 - Sara Nelson'."
-                                }
-                            ],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned in the text."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned in the text."
-                            }
-                        }
-                    ],
-                    "thought": "The content contains relevant information about the Seattle City Council, including names, roles, divisions, phone numbers, emails, and websites for the listed council members."
-                },
-                {
-                    "people": [
-                        {
-                            "name": "Bruce Harrell",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number explicitly associated with this person was found in the content."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address explicitly associated with this person was found in the content."
-                            },
-                            "website": {
-                                "data": "https://www.seattle.gov/mayor",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "The website URL is directly provided as a link for Bruce Harrell."
-                            },
-                            "roles": [
-                                {
-                                    "data": "mayor",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "The role 'Mayor' is explicitly stated in the link title and image alt text associated with Bruce Harrell."
-                                }
-                            ],
-                            "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date for the current term was explicitly mentioned in the content."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date for the current term was explicitly mentioned in the content."
-                            }
-                        },
-                        {
-                            "name": "Rob Saka",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number explicitly associated with this person was found in the content."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address explicitly associated with this person was found in the content."
-                            },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/saka",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "The website URL is directly provided as a link for Rob Saka."
-                            },
-                            "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "The role 'Council Members (Legislative)' is explicitly stated in the link title and 'Seattle Council Member' in the image alt text associated with Rob Saka."
-                                }
-                            ],
-                            "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date for the current term was explicitly mentioned in the content."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date for the current term was explicitly mentioned in the content."
-                            }
-                        },
-                        {
-                            "name": "Mark Solomon",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number explicitly associated with this person was found in the content."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address explicitly associated with this person was found in the content."
-                            },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/solomon",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "The website URL is directly provided as a link for Mark Solomon."
-                            },
-                            "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "The role 'Council Members (Legislative)' is explicitly stated in the link title and 'Seattle Council Member' in the image alt text associated with Mark Solomon."
-                                }
-                            ],
-                            "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date for the current term was explicitly mentioned in the content."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date for the current term was explicitly mentioned in the content."
-                            }
-                        },
-                        {
-                            "name": "Joy Hollingsworth",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number explicitly associated with this person was found in the content."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address explicitly associated with this person was found in the content."
-                            },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/hollingsworth",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "The website URL is directly provided as a link for Joy Hollingsworth."
-                            },
-                            "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "The role 'Council Members (Legislative)' is explicitly stated in the link title associated with Joy Hollingsworth."
-                                }
-                            ],
-                            "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date for the current term was explicitly mentioned in the content."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date for the current term was explicitly mentioned in the content."
-                            }
-                        },
-                        {
-                            "name": "Maritza Rivera",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number explicitly associated with this person was found in the content."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address explicitly associated with this person was found in the content."
-                            },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/rivera",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "The website URL is directly provided as a link for Maritza Rivera."
-                            },
-                            "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "The role 'Council Members (Legislative)' is explicitly stated in the link title associated with Maritza Rivera."
-                                }
-                            ],
-                            "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date for the current term was explicitly mentioned in the content."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date for the current term was explicitly mentioned in the content."
-                            }
-                        },
-                        {
-                            "name": "Debora Juarez",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number explicitly associated with this person was found in the content."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address explicitly associated with this person was found in the content."
-                            },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/meet-the-council/debora-juarez",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "The website URL is directly provided as a link for Debora Juarez."
-                            },
-                            "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "The role 'Council Members (Legislative)' is explicitly stated in the link title associated with Debora Juarez."
-                                }
-                            ],
-                            "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date for the current term was explicitly mentioned in the content."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date for the current term was explicitly mentioned in the content."
-                            }
-                        },
-                        {
-                            "name": "Dan Strauss",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number explicitly associated with this person was found in the content."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address explicitly associated with this person was found in the content."
-                            },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/strauss",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "The website URL is directly provided as a link for Dan Strauss."
-                            },
-                            "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "The role 'Council Members (Legislative)' is explicitly stated in the link title associated with Dan Strauss."
-                                }
-                            ],
-                            "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date for the current term was explicitly mentioned in the content."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date for the current term was explicitly mentioned in the content."
-                            }
-                        },
-                        {
-                            "name": "Bob Kettle",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number explicitly associated with this person was found in the content."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address explicitly associated with this person was found in the content."
-                            },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/kettle",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "The website URL is directly provided as a link for Bob Kettle."
-                            },
-                            "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "The role 'Council Members (Legislative)' is explicitly stated in the link title associated with Bob Kettle."
-                                }
-                            ],
-                            "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date for the current term was explicitly mentioned in the content."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date for the current term was explicitly mentioned in the content."
-                            }
-                        },
-                        {
-                            "name": "Alexis Mercedes Rinck",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number explicitly associated with this person was found in the content."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address explicitly associated with this person was found in the content."
-                            },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/rinck",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "The website URL is directly provided as a link for Alexis Mercedes Rinck."
-                            },
-                            "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "The role 'Council Members (Legislative)' is explicitly stated in the link title associated with Alexis Mercedes Rinck."
-                                }
-                            ],
-                            "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date for the current term was explicitly mentioned in the content."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date for the current term was explicitly mentioned in the content."
-                            }
-                        },
-                        {
-                            "name": "Sara Nelson",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number explicitly associated with this person was found in the content."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address explicitly associated with this person was found in the content."
-                            },
-                            "website": {
-                                "data": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "The website URL is directly provided as a link for Sara Nelson."
-                            },
-                            "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "The role 'Council Members (Legislative)' is explicitly stated in the link title associated with Sara Nelson."
-                                }
-                            ],
-                            "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No start date for the current term was explicitly mentioned in the content."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No end date for the current term was explicitly mentioned in the content."
-                            }
-                        }
-                    ],
-                    "thought": "The content contains relevant information about the Mayor and Council Members of Seattle, and I extracted details for all specified individuals who are part of the governing body, including their names, roles, and websites, while noting the absence of phone numbers, emails, divisions, and dates."
-                },
-                {
-                    "people": [
-                        {
-                            "name": "Bruce Harrell",
-                            "phone_number": {
-                                "data": "206-684-4000",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly stated and linked."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address found in the content."
-                            },
-                            "website": {
-                                "data": "https://www.seattle.gov/mayor",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website is explicitly linked as 'Office of the Mayor' and 'About Mayor Bruce Harrell'."
-                            },
-                            "roles": [
-                                {
-                                    "data": "Mayor",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated multiple times as 'Mayor Bruce Harrell'."
-                                }
-                            ],
-                            "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned."
-                            }
-                        },
-                        {
-                            "name": "Sara Nelson",
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number found for Sara Nelson."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address found for Sara Nelson."
-                            },
-                            "website": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No website found for Sara Nelson."
-                            },
                             "roles": [
                                 {
                                     "data": "Council President",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'Council President Sara Nelson'."
+                                    "llm_confidence": 0.95,
+                                    "llm_confidence_reason": "Referred to as 'Council President Sara Nelson' in news announcement, indicating active role as Council President."
                                 }
                             ],
                             "divisions": [],
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned."
-                            }
-                        },
-                        {
-                            "name": "Alexis Mercedes Rinck",
                             "phone_number": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No phone number found for Alexis Mercedes Rinck."
+                                "llm_confidence_reason": "No phone number found in content."
                             },
                             "email": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No email address found for Alexis Mercedes Rinck."
+                                "llm_confidence_reason": "No email found in content."
                             },
                             "website": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No website found for Alexis Mercedes Rinck."
+                                "data": "https://www.seattle.gov/council/meet-the-council/sara-nelson",
+                                "llm_confidence": 0.85,
+                                "llm_confidence_reason": "Official council member profile page."
                             },
-                            "roles": [
-                                {
-                                    "data": "Council member",
-                                    "llm_confidence": 0.9,
-                                    "llm_confidence_reason": "Mentioned as 'Councilmember Rinck', implying a council member role."
-                                }
-                            ],
-                            "divisions": [],
                             "start_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit start date for the current term is mentioned."
+                                "llm_confidence_reason": "No term start date found."
                             },
                             "end_date": {
                                 "data": null,
                                 "llm_confidence": 0.0,
-                                "llm_confidence_reason": "No explicit end date for the current term is mentioned."
+                                "llm_confidence_reason": "No term end date found."
+                            }
+                        },
+                        {
+                            "name": "Bruce Harrell",
+                            "roles": [
+                                {
+                                    "data": "Mayor",
+                                    "llm_confidence": 0.95,
+                                    "llm_confidence_reason": "Mentioned in conjunction with Council President Sara Nelson as Mayor Bruce Harrell in a recent announcement, indicating active mayoral role."
+                                }
+                            ],
+                            "divisions": [],
+                            "phone_number": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No phone number found in content."
+                            },
+                            "email": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No email found in content."
+                            },
+                            "website": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No website found."
+                            },
+                            "start_date": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No term start date found."
+                            },
+                            "end_date": {
+                                "data": null,
+                                "llm_confidence": 0.0,
+                                "llm_confidence_reason": "No term end date found."
                             }
                         }
                     ],
-                    "thought": "The content provided information about Mayor Bruce Harrell, Council President Sara Nelson, and Councilmember Alexis Mercedes Rinck, allowing for the extraction of their names, roles, and available contact details."
+                    "thought": null
                 }
             ]
         },

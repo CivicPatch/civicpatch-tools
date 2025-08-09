@@ -21,12 +21,10 @@ def search_links(context: PipelineContext):
 
     search_engine = None
     for search_engine_name in SEARCH_SERVICES.keys():
-        if context["search_engines"][search_engine_name]["status"] == "not_started":
+        if context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_engines"][search_engine_name]["status"] == "not_started":
             search_engine = search_engine_name
             break
 
-    # TODO: implement
-    
     if not search_engine:
         return {
             "search_engines": {} # Set failure
@@ -48,13 +46,19 @@ def search_links(context: PipelineContext):
 
     return {
         "links": updated_links,
-        "search_engines": {
-            **context["search_engines"],
-            search_engine: {
-                "links": interleaved_urls,
-                "status": "processing"
+        "steps": {
+            **context["steps"],
+            PipelineStatus.SEARCH_LINKS.value: {
+                "search_engines": {
+                    **context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_engines"],
+                    search_engine: {
+                        "links": interleaved_urls,
+                        "status": "completed"
+                    }
+                }
             }
-        }
+        },
+        
     }
 
 def municipality_search(municipality_context: MunicipalityContext, search_engine, keyword_term: str):

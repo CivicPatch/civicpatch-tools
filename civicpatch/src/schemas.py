@@ -46,3 +46,17 @@ class PipelineContext(TypedDict):
     steps: Dict[str, Dict] # PipelineStatus value
     data: Dict[str, Dict]
     progress: ProgressState
+
+class Person(TypedDict):
+    name: str
+    roles: List[str]
+    divisions: List[str]
+    image: str
+    cdn_image: str
+    email: str
+    phone_number: str
+    website: str
+    start_date: str
+    end_date: str
+    sources: List[str]
+    updated_at: str

@@ -6,28 +6,33 @@ import utils.data_path_utils as data_path_utils
 from typing import List, Any, Dict
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
+import services.openai.llm as openai_llm
+import services.openai.prompts as openai_prompt
 import utils.data_utils as data_utils
+import services.google_gemini.response_schemas as gemini_response_schemas
+import services.openai.response_schemas as openai_response_schemas
 
 LLMS = [
     {
         "name": "google_gemini",
         "service": google_gemini_llm,
         "prompt": google_gemini_prompt,
+        "response_schema": gemini_response_schemas.GEMINI_PEOPLE_ARRAY_SCHEMA
     },
-    #{
-    #    "name": "openai",
-    #}
+    {
+        "name": "openai",
+        "service": openai_llm,
+        "prompt": openai_prompt,
+        "response_schema": openai_response_schemas.OpenAIPeopleArray
+    }
 ]
 
 def process_page_content(context: PipelineContext, page_to_process: Link):
     """
     Process the preprocessed data to extract relevant information.
     """
-    print(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}")
-    # Example: Print the data or perform some processing
-    # This is a placeholder for actual processing logic
+    print(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process['url']}")
 
-    # TODO: do work to actually call LLM, figure out if there's more data here...
     government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
     people_hint = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["elected_officials"]
 
@@ -83,8 +88,8 @@ def process_with_llms(municipality_context: MunicipalityContext, government_type
     """
     responses = []
     for llm in LLMS:
-        prompt = llm["prompt"].municipality_officials_prompt(municipality_context, government_type, content, people_hint)
-        response = llm["service"].run_prompt(municipality_context, prompt)
+        prompt = llm["prompt"].municipality_officials_prompt(government_type, content, people_hint)
+        response = llm["service"].run_prompt(municipality_context, prompt, response_schema=llm["response_schema"])
         responses.append({
             "name": llm["name"],
             "data": response

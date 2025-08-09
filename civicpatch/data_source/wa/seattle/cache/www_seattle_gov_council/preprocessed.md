@@ -75,7 +75,7 @@ Google Translate ንኹሉ ትሕዝቶ ብትኽክል ከይትርጉሞ ይ�
 
 [### 2025-26 Budget Adoption](https://www.seattle.gov/council/issues/2025-26-budget-adoption "2025-26 Budget Adoption")
 
-[4 days ago
+[5 days ago
 
 ### Council approves Business & Occupation (B&O) Tax rebalancing proposal for November ballot](https://council.seattle.gov/2025/08/04/council-approves-business-occupation-bo-tax-rebalancing-proposal-for-november-ballot/ "undefined News Releases")
 
