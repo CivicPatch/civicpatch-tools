@@ -17,6 +17,15 @@ MODELS = [
 DEFAULT_TIMEOUT = 180
 MAX_RETRIES = 5
 
+def run_prompt(municipality_context: MunicipalityContext, prompt, with_search=False, response_schema=None):
+    """
+    Run the prompt with model fallback and retry logic.
+    """
+    def execute_request(model):
+        return make_request(model, prompt, municipality_context, with_search, response_schema)
+
+    return with_retry(MAX_RETRIES, lambda: fallback_models(execute_request))
+
 def make_request(model, prompt, municipality_context, with_search=False, response_schema=None):
     """
     Make an HTTP request to the Google Gemini API.
@@ -44,15 +53,6 @@ def make_request(model, prompt, municipality_context, with_search=False, respons
     else:
         log_error(response)
         return None
-
-def run_prompt(municipality_context: MunicipalityContext, prompt, with_search=False, response_schema=None):
-    """
-    Run the prompt with model fallback and retry logic.
-    """
-    def execute_request(model):
-        return make_request(model, prompt, municipality_context, with_search, response_schema)
-
-    return with_retry(MAX_RETRIES, lambda: fallback_models(execute_request))
 
 def fallback_models(execute_request):
     """
@@ -98,6 +98,7 @@ def parse_response(response):
     except (KeyError, json.JSONDecodeError) as e:
         print(f"Failed to parse JSON response: {e}")
         return None
+
 def extract_municipality_data(client, municipality_context, content_file, page_url):
     """
     Extract municipality data using Google Gemini's LLM.

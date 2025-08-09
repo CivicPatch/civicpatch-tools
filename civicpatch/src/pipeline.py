@@ -82,8 +82,6 @@ class Pipeline:
         self.context = self.load_context(state, geoid)
 
         while self.state != PipelineStatus.DONE:
-            print(f"Running pipeline for state: {state}, geoid: {geoid}, current step: {self.state}")
-
             if self.state == PipelineStatus.INIT:
                 prepare_pipeline(self.context)
                 self.state = PipelineStatus.RESEARCH_MUNICIPALITY

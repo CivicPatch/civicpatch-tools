@@ -1,6 +1,6 @@
 import os
 import shutil
-from schemas import PipelineContext
+from schemas import PipelineContext, PipelineStatus
 from utils.data_path_utils import get_cache_path, get_people_path, get_images_path
 
 def prepare_pipeline(context: PipelineContext):
@@ -8,6 +8,7 @@ def prepare_pipeline(context: PipelineContext):
     Prepare the pipeline context for the next steps.
     """
     print(f"Preparing pipeline for state: {context['state']}, GEOID: {context['geoid']}, step: 'prepare_pipeline'")
+    print("Step 00: {PipelineStatus.INIT.value}")
 
     # Create/clear cache folder
     cache_path = get_cache_path(context["state"], context["geoid"])
