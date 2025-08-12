@@ -50,7 +50,7 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
 
     average_elapsed_time_seconds = total_elapsed_time_seconds / len(elapsed_times) if elapsed_times else 0
 
-    print(f"/Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}")
+    print(f"/Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}\n")
     print(f"-> Elapsed time: {elapsed_time:.2f} seconds")
     print(f"-> Average elapsed time: {average_elapsed_time_seconds:.2f} seconds")
     print(f"-> Total elapsed time: {total_elapsed_time_seconds:.2f} seconds")

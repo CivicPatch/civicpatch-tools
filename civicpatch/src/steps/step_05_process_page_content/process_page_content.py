@@ -1,6 +1,18 @@
 import os
 import copy
-from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
+from schemas import (
+  PipelineContext, 
+  Link, 
+  LinkStatus, 
+  PipelineStatus, 
+  LLMPerson, 
+  PeopleArrayLLMResponseSchema, 
+  ProcessedDataDict, 
+  ProcessedLLMPeople,
+  LLMResponsesDict,
+  pydantic_to_dict,
+  dict_to_pydantic
+)
 from utils.data_utils import MunicipalityContext
 import utils.data_path_utils as data_path_utils
 from typing import List, Any, Dict
@@ -11,6 +23,7 @@ import services.openai.prompts as openai_prompt
 import utils.data_utils as data_utils
 import services.google_gemini.response_schemas as gemini_response_schemas
 import services.openai.response_schemas as openai_response_schemas
+import steps.step_05_process_page_content.merge_utils as merge_utils
 
 LLMS = [
     {
@@ -27,7 +40,10 @@ LLMS = [
     }
 ]
 
-def process_page_content(context: PipelineContext, page_to_process: Link):
+def process_page_content(
+    context: PipelineContext,
+    page_to_process: Link
+) -> Dict[str, Any]:
     """
     Process the preprocessed data to extract relevant information.
     """
@@ -44,12 +60,10 @@ def process_page_content(context: PipelineContext, page_to_process: Link):
     municipality_context = data_utils.get_municipality_context(context["state"], context["geoid"])
     responses = process_with_llms(municipality_context, government_type, content, people_hint)
 
-    # TODO: if there is no response, do not bump the progress
     updated_processed_data = copy.deepcopy(context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value])
     updated_processed_data = update_data(updated_processed_data, responses)
 
-    updated_progress = context["progress"].copy()
-    updated_progress["current_data"] += 1  # Increment the count of processed data
+    updated_progress = update_progress(context["progress"].copy(), updated_processed_data)
 
     updated_links = []
     for link in context["links"]:
@@ -67,32 +81,68 @@ def process_page_content(context: PipelineContext, page_to_process: Link):
         }
     }
 
-def update_data(responses: Dict[str, Any], current_responses: List[Any]):
+def update_data(
+    updated_processed_data: ProcessedDataDict, # map of llm name to Dict[str, ProcessedLLMPeople]
+    current_responses: LLMResponsesDict
+) -> ProcessedDataDict:
     """
     Update the data with the new responses.
     """
-    updated_responses = copy.deepcopy(responses)
+    processed_data = copy.deepcopy(updated_processed_data)
     # Check if the current responses already exist in the updated responses
     # If not, add them  
-    for current_response in current_responses:
-        llm_name = current_response.get("name")
-        if llm_name not in updated_responses.keys():
-            updated_responses[llm_name] = []
-        updated_responses[llm_name].append(current_response["data"])
+    for llm_name, llm_people_list in current_responses.items():
+        people_by_name = processed_data[llm_name]
+        people_by_name = dict_to_pydantic(people_by_name, ProcessedLLMPeople)
+        processed_data[llm_name] = merge_utils.group_people_by_name(people_by_name, llm_people_list)
 
-    return updated_responses
+    return pydantic_to_dict(processed_data)
 
-def process_with_llms(municipality_context: MunicipalityContext, government_type: str, content: str, people_hint: List[Any]):
+def process_with_llms(
+    municipality_context: MunicipalityContext,
+    government_type: str,
+    content: str,
+    people_hint: List[Any]
+) -> Dict[str, List[LLMPerson]]:
     """
     Run the LLM prompt to process the page content.
     """
-    responses = []
+    responses: Dict[str, List[LLMPerson]] = {}
     for llm in LLMS:
         prompt = llm["prompt"].municipality_officials_prompt(government_type, content, people_hint)
-        response = llm["service"].run_prompt(municipality_context, prompt, response_schema=llm["response_schema"])
-        responses.append({
-            "name": llm["name"],
-            "data": response
-        })
+        response: PeopleArrayLLMResponseSchema = llm["service"].run_prompt(
+            municipality_context, prompt, response_schema=PeopleArrayLLMResponseSchema
+        )
+
+        people = response["people"] if response else []
+        people_llm = [LLMPerson.model_validate(p) if not isinstance(p, LLMPerson) else p for p in people]
+        responses[llm["name"]] = people_llm
 
     return responses
+
+def update_progress(
+    progress: Dict[str, Any],
+    updated_processed_data: Dict[str, Dict[str, dict]]
+) -> Dict[str, Any]:
+    # For each LLM, get all ProcessedLLMPeople dicts, filter by has_contact_info, and find the shortest list
+    min_length = float('inf')
+    for llm_name, people_by_name in updated_processed_data.items():
+        filtered = [
+            p for p in people_by_name.values()
+            if has_contact_info(p["records"])
+        ]
+        min_length = min(min_length, len(filtered))
+    progress["current_data"] = min_length if min_length != float('inf') else 0
+    return progress
+
+def has_contact_info(records: list) -> bool:
+    """
+    Check if any record in the list has contact information.
+    """
+    for record in records:
+        # Convert to LLMPerson if not already
+        if not isinstance(record, LLMPerson):
+            record = LLMPerson.model_validate(record)
+        if record.phone_number.data or record.email.data or record.website.data:
+            return True
+    return False

@@ -7,7 +7,6 @@ def prepare_pipeline(context: PipelineContext):
     """
     Prepare the pipeline context for the next steps.
     """
-    print(f"Preparing pipeline for state: {context['state']}, GEOID: {context['geoid']}, step: 'prepare_pipeline'")
     print(f"Step 0: {PipelineStatus.INIT.value}")
 
     # Create/clear cache folder

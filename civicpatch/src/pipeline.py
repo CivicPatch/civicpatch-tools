@@ -31,7 +31,10 @@ DEFAULT_STATE: PipelineContext = {
         },
         PipelineStatus.SCRAPE_PAGE.value: {},
         PipelineStatus.PREPROCESS_PAGE_CONTENT.value: {},
-        PipelineStatus.PROCESS_PAGE_CONTENT.value: {},
+        PipelineStatus.PROCESS_PAGE_CONTENT.value: { # Lists of people by names
+            "google_gemini": {},
+            "openai": {}
+        },
         PipelineStatus.GENERATE_REPORT.value: {},
         PipelineStatus.SEND_TO_GITHUB.value: {},
         PipelineStatus.RETRY.value: {},

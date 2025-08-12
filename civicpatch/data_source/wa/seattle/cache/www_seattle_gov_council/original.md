@@ -631,7 +631,7 @@ ContinueCancel
 [Play](https://www.seattle.gov/#featuredTilesCarousel)
 [Next](https://www.seattle.gov/#featuredTilesCarousel)
 
-[5 days ago
+[7 days ago
 
 ### Council approves Business & Occupation (B&O) Tax rebalancing proposal for November ballot
 
@@ -720,6 +720,10 @@ Councilmember](https://www.seattle.gov/council/saka)
 Recent Videos
 -------------
 
+[### City Council Special Meeting 8/11/2025
+
+Agenda: Call to Order; Roll Call;, Approval of the Agenda; Presentations; Adoption of Introduction and Referral Calendar; Presentations; Adoption of Introduction and Re[...]](https://www.seattlechannel.org/video.asp?ID=2022568 "City Council Special Meeting 8/11/2025")
+
 [### Land Use Committee 8/6/2025
 
 Agenda: Call to Order; Approval of the Angeda; Public Comment; CB 121009: relating to land use and zoning, updating subdivision procedures; CF 314536: relating to Jeffe[...]](https://www.seattlechannel.org/video.asp?ID=2722529 "Land Use Committee 8/6/2025")
@@ -731,10 +735,6 @@ Agenda: Call to Order; Approval of the Agenda; Public Comment; Appointments and 
 [### Transportation Committee 8/5/2025
 
 Agenda: Call to Order; Approval of the Agenda; Public Comment; PSRC Regional Transportation Plan; CB 121026: alley vacation; CB 121016: relating to the NE 130th Street [...]](https://www.seattlechannel.org/video.asp?ID=2132529 "Transportation Committee 8/5/2025")
-
-[### City Council 8/5/2025
-
-Agenda: Call to Order; Roll Call; Presentations; Public Comment; Adoption of Introduction and Referral Calendar, Approval of the Agenda; Approval of the Consent Calenda[...]](https://www.seattlechannel.org/video.asp?ID=2022567 "City Council 8/5/2025")
 
 City Council
 ------------
