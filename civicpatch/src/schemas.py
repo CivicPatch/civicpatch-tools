@@ -25,6 +25,7 @@ class LinkStatus(Enum):
 class Link(TypedDict):
     url: str
     status: str # LinkStatus value
+    is_contact_page: bool = False
     folder_name: str = ""
 
 class PipelineStatus(Enum):
@@ -34,8 +35,10 @@ class PipelineStatus(Enum):
     SCRAPE_PAGE = "SCRAPE_PAGE"
     PREPROCESS_PAGE_CONTENT = "PREPROCESS_PAGE_CONTENT"
     PROCESS_PAGE_CONTENT = "PROCESS_PAGE_CONTENT"
-    GENERATE_REPORT = "GENERATE_REPORT"
+    MERGE_RECORDS_WITHIN_SOURCE = "MERGE_RECORDS_WITHIN_SOURCE"
+    MERGE_RECORDS_ACROSS_SOURCES = "MERGE_RECORDS_ACROSS_SOURCES"
     SEND_TO_GITHUB = "SEND_TO_GITHUB"
+    CLEANUP = "CLEANUP"
     RETRY = "RETRY"
     DONE = "DONE"
 

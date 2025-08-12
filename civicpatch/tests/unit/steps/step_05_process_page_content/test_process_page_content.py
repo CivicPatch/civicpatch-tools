@@ -1,54 +1,85 @@
 import pytest
-from schemas import LLMPerson, LLMDataPoint, ProcessedLLMPeople, pydantic_to_dict, dict_to_pydantic
-from steps.step_05_process_page_content.process_page_content import update_data
+from schemas import LLMPerson, LLMDataPoint, ProcessedLLMPeople
+from steps.step_05_process_page_content.process_page_content import (
+    update_progress, has_role_and_contact_info
+)
 
-def make_llm_person(name):
-    dp = LLMDataPoint(data="test", llm_confidence=1.0, llm_confidence_reason="test")
+def make_llm_person(name, roles=None, phone=None, email=None, website=None):
+    dp = lambda val: LLMDataPoint(data=val, llm_confidence=1.0, llm_confidence_reason="test")
     return LLMPerson(
         name=name,
-        roles=[dp],
-        divisions=[dp],
-        phone_number=dp,
-        email=dp,
-        website=dp,
-        start_date=dp,
-        end_date=dp
+        roles=[dp(r) for r in (roles or [])],
+        divisions=[],
+        phone_number=dp(phone) if phone else dp(None),
+        email=dp(email) if email else dp(None),
+        website=dp(website) if website else dp(None),
+        start_date=dp(None),
+        end_date=dp(None)
     )
 
-def test_update_data_basic():
-    # Setup initial processed data (as dict)
+def test_has_role_and_contact_info_true():
+    # One record has contact, another has role
+    records = [
+        make_llm_person("Alice", roles=[], phone="123"),
+        make_llm_person("Alice", roles=["council member"])
+    ]
+    assert has_role_and_contact_info(["council member"], records) is True
+
+def test_has_role_and_contact_info_false():
+    # No record has contact info
+    records = [
+        make_llm_person("Alice", roles=["council member"]),
+        make_llm_person("Alice", roles=[])
+    ]
+    assert has_role_and_contact_info(["council member"], records) is False
+
+def test_has_role_and_contact_info_both_in_one():
+    # One record has both
+    records = [
+        make_llm_person("Alice", roles=["council member"], phone="123")
+    ]
+    assert has_role_and_contact_info(["council member"], records) is True
+
+def test_update_progress_basic():
+    # Simulate processed data for two LLMs
     processed_data = {
         "google_gemini": {
-            "alice smith": ProcessedLLMPeople(names=["Alice Smith"], records=[make_llm_person("Alice Smith")])
-        }
-    }
-    # Convert to dict for input (simulate what your pipeline does)
-    processed_data_dict = pydantic_to_dict(processed_data)
-
-    # Setup current_responses (LLMResponsesDict)
-    current_responses = {
-        "google_gemini": [make_llm_person("Bob Jones")]
-    }
-
-    # Run update_data
-    updated = update_data(dict_to_pydantic(processed_data_dict, ProcessedLLMPeople), current_responses)
-
-    # Check output structure
-    assert "google_gemini" in updated
-    assert any("Bob Jones" in p["names"] for p in updated["google_gemini"].values())
-    assert any("Alice Smith" in p["names"] for p in updated["google_gemini"].values())
-
-def test_update_data_merges_people():
-    processed_data = {
+            "alice": {
+                "records": [
+                    make_llm_person("Alice", roles=["council member"], phone="123")
+                ]
+            },
+            "bob": {
+                "records": [
+                    make_llm_person("Bob", roles=[], phone=None)
+                ]
+            }
+        },
         "openai": {
-            "bob jones": ProcessedLLMPeople(names=["Bob Jones"], records=[make_llm_person("Bob Jones")])
+            "alice": {
+                "records": [
+                    make_llm_person("Alice", roles=["council member"], phone="123")
+                ]
+            }
         }
     }
-    processed_data_dict = pydantic_to_dict(processed_data)
-    current_responses = {
-        "openai": [make_llm_person("Bob Jones"), make_llm_person("Alice Smith")]
+    roles = ["council member"]
+    progress = {"current_data": 0}
+    updated = update_progress(progress.copy(), processed_data, roles)
+    # Only "alice" in both LLMs passes the filter, so min_length should be 1
+    assert updated["current_data"] == 1
+
+def test_update_progress_none_found():
+    processed_data = {
+        "google_gemini": {
+            "bob": {
+                "records": [
+                    make_llm_person("Bob", roles=[], phone=None)
+                ]
+            }
+        }
     }
-    updated = update_data(dict_to_pydantic(processed_data_dict, ProcessedLLMPeople), current_responses)
-    assert "openai" in updated
-    assert any("Alice Smith" in p["names"] for p in updated["openai"].values())
-    assert any("Bob Jones" in p["names"] for p in updated["openai"].values())
+    roles = ["council member"]
+    progress = {"current_data": 0}
+    updated = update_progress(progress.copy(), processed_data, roles)
+    assert updated["current_data"] == 0

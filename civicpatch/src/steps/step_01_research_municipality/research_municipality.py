@@ -25,7 +25,7 @@ def research_municipality(context: PipelineContext):
 
     return {
         "progress": {
-            "required_data": max(MINIMUM_ELECTED_OFFICIALS_NUM, len(elected_officials)),    # Elected officials (data units) needed
+            "required_data": max(MINIMUM_ELECTED_OFFICIALS_NUM, len(elected_officials)) - 2, # Elected officials (data units) needed
             "current_data": 0,  # Default current data count
         },
         "steps": {
