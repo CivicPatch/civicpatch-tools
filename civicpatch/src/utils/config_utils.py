@@ -21,7 +21,7 @@ def get_division_alias_map() -> Dict[str, str]:
     divisions_config = get_divisions()
 
     alias_map = {}
-    for canonical, entry in divisions_config["divisions"].items():
+    for canonical, entry in divisions_config.items():
         alias_map[canonical.lower()] = canonical
         for alias in entry.get("aliases", []):
             alias_map[alias.lower()] = canonical
@@ -111,3 +111,13 @@ def get_process():
         process_config = yaml.safe_load(config_file)
     
     return process_config
+
+def build_role_alias_map(government_type: str) -> Dict[str, str]:
+    role_configs = get_role_configs_by_government_type(government_type)
+    alias_map = {}
+    for entry in role_configs:
+        canonical = entry["role"]
+        alias_map[canonical.lower()] = canonical
+        for alias in entry.get("aliases", []):
+            alias_map[alias.lower()] = canonical
+    return alias_map
