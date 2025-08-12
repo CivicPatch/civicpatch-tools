@@ -64,7 +64,8 @@ def process_page_content(
     updated_processed_data = copy.deepcopy(context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value])
     updated_processed_data = update_data(updated_processed_data, responses)
 
-    updated_progress = update_progress(context["progress"].copy(), updated_processed_data)
+    roles = config_utils.get_all_roles_by_government_type(government_type)
+    updated_progress = update_progress(context["progress"].copy(), updated_processed_data, roles)
 
     updated_links = []
     for link in context["links"]:
@@ -76,11 +77,14 @@ def process_page_content(
 
     # Get potential website links from the processed data
     found_websites = []
-    for llm_name, people_by_name in updated_processed_data.items():
+    for people_by_name in updated_processed_data.values():
         for person in people_by_name.values():
-            if person.get("website") and person["website"].get("data"):
-                found_websites.append(person["website"]["data"])
+            for record in person["records"]:
+                website = record.get("website", {}).get("data")
+                if website and website not in found_websites:
+                    found_websites.append(website)
     updated_links = update_links(updated_links, found_websites)
+
     return {
         "links": updated_links,
         "progress": updated_progress,
@@ -171,10 +175,15 @@ def update_links(pipeline_context_links: List[Link], found_websites: List[str]):
     """
     Update the links in the pipeline context with the found websites.
     """
-    updated_links = []
     context_links = [link["url"] for link in pipeline_context_links]
     
     for website_link in found_websites:
         if website_link not in context_links:
-            updated_links = [website_link] + updated_links 
-    return updated_links
+            new_link: Link = {
+                "url": website_link,
+                "status": LinkStatus.PENDING.value,
+                "is_contact_page": True,
+                "folder_name": data_path_utils.get_folder_name_from_url(website_link)
+            }
+            pipeline_context_links = [new_link] + pipeline_context_links
+    return pipeline_context_links

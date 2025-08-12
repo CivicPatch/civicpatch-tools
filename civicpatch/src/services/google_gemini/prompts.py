@@ -89,11 +89,11 @@ def municipality_officials_prompt(government_type, content, people_hint):
 
     Return a JSON object with people, each having:
     - name: Full name only (not titles)
+    - roles: [{{data, llm_confidence, llm_confidence_reason}}]
+    - divisions: [{{data, llm_confidence, llm_confidence_reason}}]
     - phone_number: {{data, llm_confidence, llm_confidence_reason}}
     - email: {{data, llm_confidence, llm_confidence_reason}}
     - website: {{data, llm_confidence, llm_confidence_reason}}
-    - roles: [{{data, llm_confidence, llm_confidence_reason}}]
-    - divisions: [{{data, llm_confidence, llm_confidence_reason}}]
     - start_date: {{data, llm_confidence, llm_confidence_reason}}
     - end_date: {{data, llm_confidence, llm_confidence_reason}}
 
