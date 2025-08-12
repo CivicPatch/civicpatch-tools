@@ -13,6 +13,7 @@ from schemas import (
   pydantic_to_dict,
   dict_to_pydantic
 )
+import utils.config_utils as config_utils
 from utils.data_utils import MunicipalityContext
 import utils.data_path_utils as data_path_utils
 from typing import List, Any, Dict
@@ -72,6 +73,14 @@ def process_page_content(
             updated_links.append({**link, "status": LinkStatus.DONE.value})
         else:
             updated_links.append(link)  
+
+    # Get potential website links from the processed data
+    found_websites = []
+    for llm_name, people_by_name in updated_processed_data.items():
+        for person in people_by_name.values():
+            if person.get("website") and person["website"].get("data"):
+                found_websites.append(person["website"]["data"])
+    updated_links = update_links(updated_links, found_websites)
     return {
         "links": updated_links,
         "progress": updated_progress,
@@ -122,27 +131,50 @@ def process_with_llms(
 
 def update_progress(
     progress: Dict[str, Any],
-    updated_processed_data: Dict[str, Dict[str, dict]]
+    updated_processed_data: Dict[str, Dict[str, dict]],
+    roles: List[str]
 ) -> Dict[str, Any]:
     # For each LLM, get all ProcessedLLMPeople dicts, filter by has_contact_info, and find the shortest list
     min_length = float('inf')
-    for llm_name, people_by_name in updated_processed_data.items():
+
+    for _, people_by_name in updated_processed_data.items():
         filtered = [
             p for p in people_by_name.values()
-            if has_contact_info(p["records"])
+            if has_role_and_contact_info(roles, p["records"])
         ]
         min_length = min(min_length, len(filtered))
     progress["current_data"] = min_length if min_length != float('inf') else 0
     return progress
 
-def has_contact_info(records: list) -> bool:
+def has_role_and_contact_info(roles: List[str], records: List[Any]) -> bool:
     """
-    Check if any record in the list has contact information.
+    Return True if there is at least one record with contact info
+    AND at least one record with a matching role (can be different records).
     """
-    for record in records:
-        # Convert to LLMPerson if not already
-        if not isinstance(record, LLMPerson):
-            record = LLMPerson.model_validate(record)
-        if record.phone_number.data or record.email.data or record.website.data:
-            return True
-    return False
+    people = [LLMPerson.model_validate(r) if not isinstance(r, LLMPerson) else r for r in records]
+
+    has_contact = any(
+        (p.phone_number and p.phone_number.data) or
+        (p.email and p.email.data) or
+        (p.website and p.website.data)
+        for p in people
+    )
+    # Case-insensitive role match
+    roles_normalized = [role.strip().lower() for role in roles]
+    has_role = any(
+        any(r.data and r.data.strip().lower() in roles_normalized for r in p.roles)
+        for p in people
+    )
+    return has_contact and has_role
+
+def update_links(pipeline_context_links: List[Link], found_websites: List[str]):
+    """
+    Update the links in the pipeline context with the found websites.
+    """
+    updated_links = []
+    context_links = [link["url"] for link in pipeline_context_links]
+    
+    for website_link in found_websites:
+        if website_link not in context_links:
+            updated_links = [website_link] + updated_links 
+    return updated_links

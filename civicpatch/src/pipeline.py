@@ -3,14 +3,17 @@ import json
 from schemas import PipelineContext, PipelineStatus, LinkStatus, SearchEngineStatus
 
 import utils.data_path_utils as data_path_utils
+import utils.config_utils as config_utils
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from steps.step_01_research_municipality.research_municipality import research_municipality
 from steps.step_02_search_links.search_links import search_links
 from steps.step_03_scrape_page.scrape_page import scrape_page
 from steps.step_04_preprocess_page_content.preprocess_page_content import preprocess_page_content
 from steps.step_05_process_page_content.process_page_content import process_page_content
-from steps.step_06_generate_report.generate_report import generate_report
-from steps.step_07_send_to_github.send_to_github import send_to_github
+from steps.step_06_merge_records_within_source.merge_records_within_source import merge_records_within_source
+from steps.step_07_merge_records_across_sources.merge_records_across_sources import merge_records_across_sources
+from steps.step_08_send_to_github.send_to_github import send_to_github
+from steps.step_09_cleanup.cleanup import cleanup
 
 DEFAULT_STATE: PipelineContext = { 
     "links": [], 
@@ -35,7 +38,8 @@ DEFAULT_STATE: PipelineContext = {
             "google_gemini": {},
             "openai": {}
         },
-        PipelineStatus.GENERATE_REPORT.value: {},
+        PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value: {},
+        PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value: {},
         PipelineStatus.SEND_TO_GITHUB.value: {},
         PipelineStatus.RETRY.value: {},
         PipelineStatus.DONE.value: {},
@@ -78,12 +82,27 @@ class Pipeline:
             if link["status"] == status.value:
                 return link
         return None
+    
+
+    def get_links(self, status: LinkStatus, require_contact_page: bool = False):
+        """
+        Return all links with the given status.
+        If require_contact_page is True, only return links where is_contact_page is True.
+        """
+        links = []
+        for link in self.context["links"]:
+            if link["status"] == status.value:
+                if require_contact_page and not link.get("is_contact_page"):
+                    continue
+                links.append(link)
+        return links
 
     def run(self, state, geoid):
         """
         Main function to run the pipeline for a given state and geoid.
         """
         self.context = self.load_context(state, geoid)
+        process_config = config_utils.get_process()
 
         while self.state != PipelineStatus.DONE:
             if self.state == PipelineStatus.INIT:
@@ -109,20 +128,37 @@ class Pipeline:
                 self.state = PipelineStatus.PROCESS_PAGE_CONTENT
 
             elif self.state == PipelineStatus.PROCESS_PAGE_CONTENT:
-                page_to_process = self.get_next_link(LinkStatus.PREPROCESSED)
+                contact_link_pages = self.get_links(LinkStatus.PREPROCESSED, require_contact_page=True)
+                if len(contact_link_pages) > 0:
+                    # Process contact page first
+                    page_to_process = contact_link_pages[0]
+                else:
+                    page_to_process = self.get_next_link(LinkStatus.PREPROCESSED)
+
                 self.context.update(process_page_content(self.context, page_to_process))
                 print("Current data:", self.context["progress"]["current_data"])
                 print("Required data:", self.context["progress"]["required_data"])
+                links_processed = self.get_links(LinkStatus.DONE)
 
-                if self.context["progress"]["current_data"] < self.context["progress"]["required_data"]:
+                if len(contact_link_pages) > 1:
+                    print(f"Next step: scrape website contact pages ({len(contact_link_pages)})...")
+                    self.state = PipelineStatus.SCRAPE_PAGE
+                elif process_config["max_pages"] and len(links_processed) >= process_config["max_pages"]:
+                    print(f"Max pages ({process_config['max_pages']}) reached, moving to next step...")
+                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+                elif self.context["progress"]["current_data"] < self.context["progress"]["required_data"]:
                     print("Not enough data processed yet, collecting more data...")
                     self.state = PipelineStatus.SCRAPE_PAGE
                 else:
                     print("Enough data processed, moving to report generation...")
-                    self.state = PipelineStatus.GENERATE_REPORT
+                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
 
-            elif self.state == PipelineStatus.GENERATE_REPORT:
-                self.context.update(generate_report(self.context))
+            elif self.state == PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE:
+                self.context.update(merge_records_within_source(self.context))
+                self.state = PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES
+
+            elif self.state == PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES:
+                self.context.update(merge_records_across_sources(self.context))
                 self.state = PipelineStatus.SEND_TO_GITHUB
 
             elif self.state == PipelineStatus.SEND_TO_GITHUB:
