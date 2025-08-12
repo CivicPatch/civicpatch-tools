@@ -1,12 +1,16 @@
 import os
-import json
+import instructor
 import requests
+import json
+# from google import Gemini
 from utils.request_utils import with_retry
-from utils.log_utils import log_llm_cost 
+from utils.log_utils import log_llm_cost
 from utils.data_utils import MunicipalityContext
 
 BASE_URI = "https://generativelanguage.googleapis.com/v1beta/models"
-MODELS = [
+DEFAULT_TIMEOUT = 180  # seconds
+# Model fallback order: try flash-latest, then pro-latest
+MODEL_FALLBACKS = [
     "gemini-2.5-flash",
     "gemini-2.5-flash-lite-preview-06-17"
 ]
@@ -14,75 +18,69 @@ MODELS = [
 # gemini-2.5-flash-preview-05-20
 # gemini-2.5-flash-preview-04-17 broken as of 06/10
 # Note: CANNOT get flash-lite to extract dates
-DEFAULT_TIMEOUT = 180
 MAX_RETRIES = 5
 
-def run_prompt(municipality_context: MunicipalityContext, prompt, with_search=False, response_schema=None):
-    """
-    Run the prompt with model fallback and retry logic.
-    """
-    def execute_request(model):
-        return make_request(model, prompt, municipality_context, with_search, response_schema)
-
-    return with_retry(MAX_RETRIES, lambda: fallback_models(execute_request))
-
-def make_request(model, prompt, municipality_context, with_search=False, response_schema=None):
-    """
-    Make an HTTP request to the Google Gemini API.
-    """
+def run_prompt(municipality_context: MunicipalityContext, prompt, response_schema=None, with_search=False):
     api_key = os.getenv("GOOGLE_GEMINI_TOKEN")
     if not api_key:
         raise ValueError("GOOGLE_GEMINI_TOKEN is not set in environment variables.")
 
+    def execute(model):
+        if with_search:
+            response, input_tokens_num, output_tokens_num = make_request_with_search(model, api_key, prompt)
+        else:
+            client = instructor.from_provider(model=f"google/{model}", api_key=api_key)
+            response, completion = client.chat.completions.create_with_completion(
+                response_model=response_schema,
+                messages=[
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            
+            usage = completion.usage_metadata
+            input_tokens_num = usage.prompt_token_count
+            output_tokens_num = usage.candidates_token_count
+
+        log_llm_cost(municipality_context, "google_gemini", model, input_tokens_num, output_tokens_num, with_search=False)
+
+        if isinstance(response, dict):
+            return response
+        else:
+            return response.dict() 
+
+    for model in MODEL_FALLBACKS:
+        try:
+            return with_retry(MAX_RETRIES, lambda: execute(model))
+        except Exception:
+            continue
+
+    raise RuntimeError("All Gemini model fallbacks failed.")
+
+def make_request_with_search(model, api_key, prompt):
     url = f"{BASE_URI}/{model}:generateContent?key={api_key}"
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
             "temperature": 0,
-            "responseMimeType": None if with_search else "application/json",
-            "responseSchema": None if with_search else response_schema
         },
-        "tools": {"googleSearch": {}} if with_search else None
+        "tools": {"googleSearch": {}}
     }
     headers = {"Content-Type": "application/json"}
 
-    response = requests.post(url, json=payload, headers=headers, timeout=DEFAULT_TIMEOUT)
-    if response.status_code == 200:
-        log_usage(response.json(), model, municipality_context, with_search)
-        return parse_response(response.json())
-    else:
-        log_error(response)
-        return None
+    raw_response = requests.post(url, json=payload, headers=headers, timeout=DEFAULT_TIMEOUT)
+    print("Raw Gemini API response:", raw_response)
 
-def fallback_models(execute_request):
-    """
-    Try all models in the MODELS list until one succeeds.
-    """
-    for model in MODELS:
-        response = execute_request(model)
-        if response:
-            return response
-    return None
+    response = parse_raw_response(raw_response.json())
 
-def log_usage(response, model, municipality_context, with_search):
-    """
-    Log token usage for cost tracking.
-    """
     usage = response.get("usageMetadata", {})
-    prompt_tokens = usage.get("promptTokenCount", 0)
-    completion_tokens = usage.get("candidatesTokenCount", 0) + usage.get("thoughtsTokenCount", 0)
-    log_llm_cost(municipality_context, "google_gemini", model, prompt_tokens, completion_tokens, with_search=with_search)
+    input_tokens_num = usage.get("promptTokenCount", 0)
+    output_tokens_num = usage.get("candidatesTokenCount", 0) + usage.get("thoughtsTokenCount", 0)
 
-def log_error(response):
-    """
-    Log errors from the API response.
+    print("Response is:", response)
 
-    Args:
-        response: The API response.
-    """
-    print(f"Request failed. HTTP Status: {response.status_code}\nResponse: {response.text}")
+    return response, input_tokens_num, output_tokens_num
 
-def parse_response(response):
+def parse_raw_response(response):
     """
     Parse the JSON response from the API.
 
@@ -92,9 +90,5 @@ def parse_response(response):
     Returns:
         Parsed JSON content or None if parsing fails.
     """
-    try:
-        response_text = response["candidates"][0]["content"]["parts"][0]["text"]
-        return json.loads(response_text.replace("```json", "").replace("```", ""))
-    except (KeyError, json.JSONDecodeError) as e:
-        print(f"Failed to parse JSON response: {e}")
-        return None
+    response_text = response["candidates"][0]["content"]["parts"][0]["text"]
+    return json.loads(response_text.replace("```json", "").replace("```", ""))

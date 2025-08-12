@@ -17,16 +17,14 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, response_schem
 
     def execute():
         client = instructor.from_provider(model=MODEL, api_key=api_key)
-        response, completion = client.chat.create_with_completion(
+        response, completion = client.chat.completions.create_with_completion(
             response_model=response_schema,
             messages=[
                 {"role": "user", "content": prompt}
             ]
         )
 
-        print(completion.usage)
         usage = completion.usage
-
         input_tokens_num = usage.prompt_tokens
         output_tokens_num = usage.completion_tokens
 

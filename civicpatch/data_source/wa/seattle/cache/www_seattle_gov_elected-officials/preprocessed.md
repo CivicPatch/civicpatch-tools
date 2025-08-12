@@ -44,72 +44,100 @@ Google Translate ንኹሉ ትሕዝቶ ብትኽክል ከይትርጉሞ ይ�
 
 
 
-* + - [Rob SakaRob Saka](https://www.seattle.gov/council/saka "Main Menu Mobile - Meet the Council Rob Saka")
-      * [About Councilmember Rob Saka](https://www.seattle.gov/council/meet-the-council/rob-saka/about-rob "Main Menu Mobile - Rob Saka About Councilmember Rob Saka")
-      * [Councilmember Rob Saka's Staff](https://www.seattle.gov/council/meet-the-council/rob-saka/staff "Main Menu Mobile - Rob Saka Councilmember Rob Saka's Staff")
-    - [Mark SolomonMark Solomon](https://www.seattle.gov/council/solomon "Main Menu Mobile - Meet the Council Mark Solomon")
-      * [Councilmember Mark Solomon's Staff](https://www.seattle.gov/council/meet-the-council/mark-solomon/staff "Main Menu Mobile - Mark Solomon Councilmember Mark Solomon's Staff")
-      * [About Councilmember Mark Solomon](https://www.seattle.gov/council/meet-the-council/mark-solomon/about-mark "Main Menu Mobile - Mark Solomon About Councilmember Mark Solomon")
-    - [Joy HollingsworthJoy Hollingsworth](https://www.seattle.gov/council/hollingsworth "Main Menu Mobile - Meet the Council Joy Hollingsworth")
-      * [About Councilmember Joy Hollingsworth](https://www.seattle.gov/council/meet-the-council/joy-hollingsworth/about-joy "Main Menu Mobile - Joy Hollingsworth About Councilmember Joy Hollingsworth")
-      * [Councilmember Joy Hollingsworth's Staff](https://www.seattle.gov/council/meet-the-council/joy-hollingsworth/staff "Main Menu Mobile - Joy Hollingsworth Councilmember Joy Hollingsworth's Staff")
-    - [Maritza RiveraMaritza Rivera](https://www.seattle.gov/council/rivera "Main Menu Mobile - Meet the Council Maritza Rivera")
-      * [About Councilmember Maritza Rivera](https://www.seattle.gov/council/meet-the-council/maritza-rivera/about-maritza "Main Menu Mobile - Maritza Rivera About Councilmember Maritza Rivera")
-      * [Councilmember Maritza Rivera's Staff](https://www.seattle.gov/council/meet-the-council/maritza-rivera/staff "Main Menu Mobile - Maritza Rivera Councilmember Maritza Rivera's Staff")
-    - [Debora JuarezDebora Juarez](https://www.seattle.gov/council/meet-the-council/debora-juarez "Main Menu Mobile - Meet the Council Debora Juarez")
-      * [About Councilmember Debora Juarez](https://www.seattle.gov/council/meet-the-council/debora-juarez/about-debora "Main Menu Mobile - Debora Juarez About Councilmember Debora Juarez")
-    - [Dan StraussDan Strauss](https://www.seattle.gov/council/strauss "Main Menu Mobile - Meet the Council Dan Strauss")
-      * [About Councilmember Dan Strauss](https://www.seattle.gov/council/meet-the-council/dan-strauss/about-dan "Main Menu Mobile - Dan Strauss About Councilmember Dan Strauss")
-      * [Councilmember Dan Strauss' Staff](https://www.seattle.gov/council/meet-the-council/dan-strauss/staff "Main Menu Mobile - Dan Strauss Councilmember Dan Strauss' Staff")
-    - [Robert KettleRobert Kettle](https://www.seattle.gov/council/kettle "Main Menu Mobile - Meet the Council Robert Kettle")
-      * [About Councilmember Robert Kettle](https://www.seattle.gov/council/meet-the-council/robert-kettle/about-robert "Main Menu Mobile - Robert Kettle About Councilmember Robert Kettle")
-      * [Councilmember Robert Kettle's Staff](https://www.seattle.gov/council/meet-the-council/robert-kettle/staff "Main Menu Mobile - Robert Kettle Councilmember Robert Kettle's Staff")
-    - [Alexis Mercedes RinckAlexis Mercedes Rinck](https://www.seattle.gov/council/rinck "Main Menu Mobile - Meet the Council Alexis Mercedes Rinck")
-      * [About Councilmember Alexis Mercedes Rinck](https://www.seattle.gov/council/meet-the-council/alexis-mercedes-rinck/about-alexis "Main Menu Mobile - Alexis Mercedes Rinck About Councilmember Alexis Mercedes Rinck")
-      * [Councilmember Alexis Mercedes Rinck's Staff](https://www.seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff "Main Menu Mobile - Alexis Mercedes Rinck Councilmember Alexis Mercedes Rinck's Staff")
-    - [Sara NelsonSara Nelson](https://www.seattle.gov/council/meet-the-council/sara-nelson "Main Menu Mobile - Meet the Council Sara Nelson")
-      * [About Councilmember Sara Nelson](https://www.seattle.gov/council/meet-the-council/sara-nelson/about-sara "Main Menu Mobile - Sara Nelson About Councilmember Sara Nelson")
-      * [Councilmember Sara Nelson's Staff](https://www.seattle.gov/council/meet-the-council/sara-nelson/staff "Main Menu Mobile - Sara Nelson Councilmember Sara Nelson's Staff")
+* + - * + [Bruce Harrell](https://www.seattle.gov/x152130.xml "Main Menu Mobile - Elected Officials Mayor_CWT Bruce Harrell")
+      * + [Rob Saka](https://www.seattle.gov/x152133.xml "Main Menu Mobile - Council Members (Legislative) Rob Saka")
+        + [Mark Solomon](https://www.seattle.gov/x152136.xml "Main Menu Mobile - Council Members (Legislative) Mark Solomon")
+        + [Joy Hollingsworth](https://www.seattle.gov/x152139.xml "Main Menu Mobile - Council Members (Legislative) Joy Hollingsworth")
+        + [Maritza Rivera](https://www.seattle.gov/x152138.xml "Main Menu Mobile - Council Members (Legislative) Maritza Rivera")
+        + [Debora Juarez](https://www.seattle.gov/x178555.xml "Main Menu Mobile - Council Members (Legislative) Debora Juarez")
+        + [Dan Strauss](https://www.seattle.gov/x152140.xml "Main Menu Mobile - Council Members (Legislative) Dan Strauss")
+        + [Bob Kettle](https://www.seattle.gov/x152134.xml "Main Menu Mobile - Council Members (Legislative) Bob Kettle")
+        + [Alexis Mercedes Rinck](https://www.seattle.gov/x152135.xml "Main Menu Mobile - Council Members (Legislative) Alexis Mercedes Rinck")
+        + [Sara Nelson](https://www.seattle.gov/x152137.xml "Main Menu Mobile - Council Members (Legislative) Sara Nelson")
+      * + [Ann Davison](https://www.seattle.gov/x152142.xml "Main Menu Mobile - Law Ann Davison")
+      * + [Andrea Chin](https://www.seattle.gov/x152146.xml "Main Menu Mobile - Judicial Andrea Chin")
+        + [Anita Crawford-Willis](https://www.seattle.gov/x152147.xml "Main Menu Mobile - Judicial Anita Crawford-Willis")
+        + [Willie Gregory](https://www.seattle.gov/x152144.xml "Main Menu Mobile - Judicial Willie Gregory")
+        + [Catherine McDowall](https://www.seattle.gov/x152148.xml "Main Menu Mobile - Judicial Catherine McDowall")
+        + [Damon Shadid](https://www.seattle.gov/x152149.xml "Main Menu Mobile - Judicial Damon Shadid")
+        + [Pooja Vaddadi](https://www.seattle.gov/x153163.xml "Main Menu Mobile - Judicial Pooja Vaddadi")
 
-[### 2026 Families, Education, Preschool, and Promise Levy Renewal](https://www.seattle.gov/council/issues/families-education-preschool-and-promise-(fepp)-levy "2026 Families, Education, Preschool, and Promise Levy Renewal")
 
-[### 2025-26 Budget Adoption](https://www.seattle.gov/council/issues/2025-26-budget-adoption "2025-26 Budget Adoption")
 
-[7 days ago
+* [Office of Inspector General](https://www.seattle.gov/oig)
 
-### Council approves Business & Occupation (B&O) Tax rebalancing proposal for November ballot](https://council.seattle.gov/2025/08/04/council-approves-business-occupation-bo-tax-rebalancing-proposal-for-november-ballot/ "undefined News Releases")
+### Early Learning (age 3-5)
 
-[### Sara Nelson](https://www.seattle.gov/council/meet-the-council/sara-nelson)
+[![Mayor](https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg)
 
-[### Alexis Mercedes Rinck](https://www.seattle.gov/council/rinck)
+Bruce Harrell](https://www.seattle.gov/mayor "Mayor Home Page")
 
-[### Robert Kettle](https://www.seattle.gov/council/kettle)
+[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
 
-[### Dan Strauss](https://www.seattle.gov/council/strauss)
+Rob Saka](https://www.seattle.gov/council/saka "Rob Saka")
 
-[### Debora Juarez](https://www.seattle.gov/council/meet-the-council/debora-juarez)
+[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
 
-[### Maritza Rivera](https://www.seattle.gov/council/rivera)
+Mark Solomon](https://www.seattle.gov/council/solomon "Mark Solomon")
 
-[### Joy Hollingsworth](https://www.seattle.gov/council/hollingsworth)
+[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
 
-[### Mark Solomon](https://www.seattle.gov/council/solomon)
+Joy Hollingsworth](https://www.seattle.gov/council/hollingsworth "Joy Hollingsworth")
 
-[### Rob Saka](https://www.seattle.gov/council/saka)
+[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
 
-[Council President Sara Nelson and Mayor Bruce Harrell Announce Proposals to Ease Small Business Permitting](https://council.seattle.gov/2025/08/01/council-president-sara-nelson-and-mayor-bruce-harrell-announce-proposals-to-ease-small-business-permitting/)
+Maritza Rivera](https://www.seattle.gov/council/rivera "Maritza Rivera")
 
-7/29
+[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
 
-7/28
+Debora Juarez](https://www.seattle.gov/council/meet-the-council/debora-juarez "Debora Juarez")
 
-[### City Council Special Meeting 8/11/2025](https://www.seattlechannel.org/video.asp?ID=2022568 "City Council Special Meeting 8/11/2025")
+[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
 
-[### Finance, Native Communities and Tribal Governments Committee 8/6/2025](https://www.seattlechannel.org/video.asp?ID=2742527 "Finance, Native Communities and Tribal Governments Committee 8/6/2025")
+Dan Strauss](https://www.seattle.gov/council/strauss "Dan Strauss")
 
-[### Transportation Committee 8/5/2025](https://www.seattlechannel.org/video.asp?ID=2132529 "Transportation Committee 8/5/2025")
+[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
 
-PO Box 34025, Seattle, WA , 98124-4025
-[(206) 684-8888](tel: +1 (206) 684-8888)
-Listen Line: [(206) 684-8566](tel: +1 (206) 684-8566)
-[(206) 684-8587](fax: +1 (206) 684-8587)
+Bob Kettle](https://www.seattle.gov/council/kettle "Bob Kettle")
+
+[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
+
+Alexis Mercedes Rinck](https://www.seattle.gov/council/rinck "Alexis Mercedes Rinck")
+
+[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
+
+Sara Nelson](https://www.seattle.gov/council/meet-the-council/sara-nelson "Sara Nelson")
+
+[![Ann Davison](https://www.seattle.gov/images//images/Departments/CityAttorney/SeattleHome/AnnDavidson_CircleImage.jpg)
+
+Ann Davison](https://www.seattle.gov/cityattorney "Ann Davison")
+
+[![Anita Crawford-Willis](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAnitaCrawford-Willis_circle.jpg)
+
+Anita Crawford-Willis](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-anita-crawford-willis "Anita Crawford-Willis")
+
+[![Dan Shadid](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeDamonShadid_circle.jpg)
+
+Damon Shadid](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-damon-shadid "Damon Shadid")
+
+[![Faye Chess](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeFayeRChess_circle.jpg)](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-faye-chess "Faye Chess")
+
+[![Andrea Chin](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAndreaChin_circle.jpg)
+
+Andrea Chin](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-andrea-chin "Andrea Chin")
+
+[![Willie Gregory](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeWillieGregory_circle.jpg)
+
+Willie Gregory](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-willie-gregory "Willie Gregory")
+
+[![Catherine McDowall](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeCatherineMcDowall_circle.jpg)
+
+Catherine McDowall](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-catherine-mcdowall "Catherine McDowall")
+
+[![Pooja Vaddadi](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgePoojaVaddadi_circle.jpg)
+
+Pooja Vaddadi](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-pooja-vaddadi "Pooja Vaddadi")
+
+[![Seattle Court Judges](https://www.seattle.gov/images//images/Departments/Court/Homepage/2021JudgesGroup_300x300.png)](https://www.seattle.gov/courts "Seattle Municipal Court")
+
+[(206) 684-2489](tel:+12066842489)

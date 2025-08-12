@@ -79,7 +79,7 @@ def filter_node_content(node: Tag, state):
     now = time.time()
     if now - state["last_progress_time"] >= state["progress_log_interval"]:
         percent = int(100 * state["processed"] / state["total"])
-        print(f"Progress: {percent}% ({state['processed']}/{state['total']})")
+        print(f"-> Progress: {percent}% ({state['processed']}/{state['total']})")
         state["last_progress_time"] = now
     # ------------------------
 

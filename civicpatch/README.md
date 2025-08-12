@@ -43,7 +43,10 @@ Roles and divisions are standardized via the rules listed under [./config](./con
 
 #### Add new package
 
-- `mise container poetry add <package>`
+```sh
+mise container poetry add <package>
+docker compose build
+```
 
 ## Environment Setup
 

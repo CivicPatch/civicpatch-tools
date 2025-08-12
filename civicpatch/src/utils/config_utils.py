@@ -40,7 +40,6 @@ def get_roles_by_government_type(government_type: str) -> List[str]:
     return [role['role'] for role in role_configs]
 
 
-
 def get_crawl():
     """
     Returns the crawl configuration from the configuration file.
@@ -64,3 +63,14 @@ def search_keywords(government_type: str) -> Dict[str, List[str]]:
 
     government_type_config = government_types_config.get(government_type, {})
     return government_type_config.get('keywords', [])
+
+def get_process():
+    """
+    Returns the process configuration from the configuration file.
+    """
+    config_path = path_utils.get_config_path()
+    process_file_path = os.path.join(config_path, 'process.yaml')
+    with open(process_file_path, 'r') as config_file:
+        process_config = yaml.safe_load(config_file)
+    
+    return process_config
