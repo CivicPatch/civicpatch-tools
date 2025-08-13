@@ -13,7 +13,7 @@ def setup_division_entities():
     """
     Setup function to initialize the division entities.
     """
-    matcher = PhraseMatcher(nlp.vocab)
+    matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
     divisions = config_utils.get_divisions()
     division_patterns = []
 
@@ -23,7 +23,7 @@ def setup_division_entities():
         division_patterns += aliases  # Flatten aliases into the list
 
     # Convert patterns to Doc objects
-    patterns = [nlp.make_doc(pattern) for pattern in division_patterns]
+    patterns = [nlp.make_doc(pattern.lower()) for pattern in division_patterns]
     matcher.add("DIVISION", patterns)
     return matcher
 
@@ -44,7 +44,7 @@ def setup_role_entities():
             role_patterns += aliases  # Flatten aliases into the list
 
     # Convert patterns to Doc objects
-    patterns = [nlp.make_doc(pattern) for pattern in role_patterns]
+    patterns = [nlp.make_doc(pattern.lower()) for pattern in role_patterns]
     matcher.add("ROLE", patterns)
     return matcher
 

@@ -128,23 +128,46 @@ class Pipeline:
                 self.state = PipelineStatus.PROCESS_PAGE_CONTENT
 
             elif self.state == PipelineStatus.PROCESS_PAGE_CONTENT:
-                contact_link_pages = self.get_links(LinkStatus.PREPROCESSED, require_contact_page=True)
-                if len(contact_link_pages) > 0:
-                    # Process contact page first
-                    page_to_process = contact_link_pages[0]
-                else:
-                    page_to_process = self.get_next_link(LinkStatus.PREPROCESSED)
+                preprocessed_links = self.get_links(LinkStatus.PREPROCESSED)
+                links_processed = self.get_links(LinkStatus.DONE)
+                process_max_pages = process_config.get("max_pages", 15)
 
+                if not preprocessed_links:
+                    print("No preprocessed links left to process.")
+                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+                    continue
+
+                # Separate contact and non-contact pages
+                contact_pages = [l for l in preprocessed_links if l.get("is_contact_page")]
+                non_contact_pages = [l for l in preprocessed_links if not l.get("is_contact_page")]
+
+                # Count how many non-contact pages have already been processed
+                non_contact_processed = len([l for l in links_processed if not l.get("is_contact_page")])
+
+                # Decide what to process next
+                if contact_pages:
+                    page_to_process = contact_pages[0]
+                elif non_contact_pages and (non_contact_processed < process_max_pages):
+                    page_to_process = non_contact_pages[0]
+                else:
+                    print("Max non-contact pages reached or no preprocessed links left to process.")
+                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+                    continue
+
+                # Process the selected page
                 self.context.update(process_page_content(self.context, page_to_process))
                 print("Current data:", self.context["progress"]["current_data"])
                 print("Required data:", self.context["progress"]["required_data"])
-                links_processed = self.get_links(LinkStatus.DONE)
 
-                if len(contact_link_pages) > 1:
-                    print(f"Next step: scrape website contact pages ({len(contact_link_pages)})...")
+                # Refresh preprocessed_links after processing
+                preprocessed_links = self.get_links(LinkStatus.PREPROCESSED)
+
+                # Decide next state
+                if preprocessed_links and preprocessed_links[0].get("is_contact_page"):
+                    print(f"Next step: scrape website contact pages ({len(preprocessed_links)})...")
                     self.state = PipelineStatus.SCRAPE_PAGE
-                elif process_config["max_pages"] and len(links_processed) >= process_config["max_pages"]:
-                    print(f"Max pages ({process_config['max_pages']}) reached, moving to next step...")
+                elif (non_contact_processed + 1) >= process_max_pages:
+                    print(f"Max non-contact pages ({process_max_pages}) reached, moving to next step...")
                     self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
                 elif self.context["progress"]["current_data"] < self.context["progress"]["required_data"]:
                     print("Not enough data processed yet, collecting more data...")

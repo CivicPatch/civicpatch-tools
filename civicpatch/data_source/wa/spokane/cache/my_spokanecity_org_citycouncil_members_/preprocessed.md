@@ -13,39 +13,45 @@
 
 Term: 2024-2027[bwilkerson@spokanecity.org](mailto:bwilkerson@spokanecity.org)
 
+#### District 1
+
 [![Jonathan Bingle](//static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg)](https://my.spokanecity.org/citycouncil/members/jonathan-bingle/)
 
 ##### [Jonathan Bingle](https://my.spokanecity.org/citycouncil/members/jonathan-bingle/)
 
-Term: 2022-2025[jbingle@spokanecity.org](mailto:jbingle@spokanecity.org)
+*City Council Member, District 1*Term: 2022-2025[jbingle@spokanecity.org](mailto:jbingle@spokanecity.org)
 
 [![Michael Cathcart](//static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/large/michael-cathcart.jpg)](https://my.spokanecity.org/citycouncil/members/michael-cathcart/)
 
 ##### [Michael Cathcart](https://my.spokanecity.org/citycouncil/members/michael-cathcart/)
 
-Term: 2024-2027[mcathcart@spokanecity.org](mailto:mcathcart@spokanecity.org)
+*City Council Member, District 1*Term: 2024-2027[mcathcart@spokanecity.org](mailto:mcathcart@spokanecity.org)
+
+#### District 2
 
 [![Paul Dillon](//static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg)](https://my.spokanecity.org/citycouncil/members/paul-dillon/)
 
 ##### [Paul Dillon](https://my.spokanecity.org/citycouncil/members/paul-dillon/)
 
-Term: 2024-2027[pdillon@spokanecity.org](mailto:pdillon@spokanecity.org)
+*City Council Member, District 2*Term: 2024-2027[pdillon@spokanecity.org](mailto:pdillon@spokanecity.org)
 
 [![Photo Unavailable](//static.spokanecity.org/graphics/unavailable/chips/medium.png)](https://my.spokanecity.org/citycouncil/members/#)
 
-Term: 2024-2025
+*City Council Member, District 2*Term: 2024-2025
+
+#### District 3
 
 [![Zack Zappone](//static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg)](https://my.spokanecity.org/citycouncil/members/zack-zappone/)
 
 ##### [Zack Zappone](https://my.spokanecity.org/citycouncil/members/zack-zappone/)
 
-Term: 2022-2025[zzappone@spokanecity.org](mailto:zzappone@spokanecity.org)
+*City Council Member, District 3*Term: 2022-2025[zzappone@spokanecity.org](mailto:zzappone@spokanecity.org)
 
 [![Kitty Klitzke](//static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/large/kitty-klitzke.jpg)](https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/)
 
 ##### [Kitty Klitzke](https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/)
 
-Term: 2024-2027[kklitzke@spokanecity.org](mailto:kklitzke@spokanecity.org)
+*City Council Member, District 3*Term: 2024-2027[kklitzke@spokanecity.org](mailto:kklitzke@spokanecity.org)
 
 ![Giacobbe Byrd](//static.spokanecity.org/photos/2025/03/09/giacobbe-byrd/chips/medium/giacobbe-byrd.jpg)
 
