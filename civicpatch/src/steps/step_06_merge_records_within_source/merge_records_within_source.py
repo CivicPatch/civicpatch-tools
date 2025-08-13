@@ -67,6 +67,8 @@ def merge_roles(records: List[LLMPerson], role_alias_map: Dict[str, str]) -> Lis
     unique_roles = []
     for record in records:
         for role in record.roles:
+            if not role.data:
+                continue
             # Use the alias map to standardize the role
             standardized = role_alias_map.get(role.data.lower(), role.data)
             if standardized not in seen:
@@ -99,6 +101,9 @@ def merge_divisions(division_alias_map, records: List[LLMPerson]) -> List[str]:
     unique_divisions = []
     for record in records:
         for div in record.divisions:
+            if not div.data:
+                continue
+
             norm = normalize_division(div.data, division_alias_map)
             if norm not in seen:
                 seen.add(norm)

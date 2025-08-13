@@ -8,8 +8,5 @@ def merge_records_across_sources(context: PipelineContext):
     
     # Placeholder for actual merging logic
     # This should involve comparing records from different LLMs and merging them based on some criteria
-    merged_data = {"merged_records": "some_merged_data"}
-    
-    print(f"Merged records: {merged_data}")
 
-    return {"merged_data": merged_data}
+    return {}

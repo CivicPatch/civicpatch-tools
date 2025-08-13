@@ -76,15 +76,7 @@ def process_page_content(
         else:
             updated_links.append(link)  
 
-    # Get potential website links from the processed data
-    found_websites = []
-    for people_by_name in updated_processed_data.values():
-        for person in people_by_name.values():
-            for record in person["records"]:
-                website = record.get("website", {}).get("data")
-                if website and website not in found_websites:
-                    found_websites.append(website)
-    updated_links = update_links(updated_links, found_websites)
+    updated_links = update_website_links(updated_links, updated_processed_data)
 
     return {
         "links": updated_links,
@@ -172,19 +164,38 @@ def has_role_and_contact_info(roles: List[str], records: List[Any]) -> bool:
     )
     return has_contact and has_role
 
-def update_links(pipeline_context_links: List[Link], found_websites: List[str]):
+def update_website_links(updated_links: List[Link], updated_processed_data: ProcessedDataDict) -> List[Link]:
     """
-    Update the links in the pipeline context with the found websites.
+    Update the links with websites found in the processed data.
     """
-    context_links = [link["url"] for link in pipeline_context_links]
-    
-    for website_link in found_websites:
-        if website_link not in context_links:
+    found_websites = extract_websites_from_processed_data(updated_processed_data)
+
+    # Update existing links or add new ones
+    for website in found_websites:
+        existing_link = next((link for link in updated_links if link["url"] == website), None)
+        if existing_link and existing_link["status"] == LinkStatus.PENDING.value:
+            # Move link to the front if it already exists
+            updated_links.remove(existing_link)
+            updated_links.insert(0, existing_link)
+        else:
             new_link: Link = {
-                "url": website_link,
+                "url": website,
                 "status": LinkStatus.PENDING.value,
-                "is_contact_page": True,
-                "folder_name": url_utils.format_url_to_folder(website_link)
+                "folder_name": url_utils.format_url_to_folder(website)
             }
-            pipeline_context_links = [new_link] + pipeline_context_links
-    return pipeline_context_links
+            updated_links.append(new_link)
+
+    return updated_links
+
+def extract_websites_from_processed_data(processed_data: ProcessedDataDict) -> List[str]:
+    """
+    Extract website links from the processed data.
+    """
+    found_websites = []
+    for people_by_name in processed_data.values():
+        for person in people_by_name.values():
+            for record in person["records"]:
+                website = record.get("website", {}).get("data")
+                if website and website not in found_websites:
+                    found_websites.append(website)
+    return found_websites
