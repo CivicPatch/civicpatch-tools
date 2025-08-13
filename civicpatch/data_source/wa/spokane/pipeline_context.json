@@ -1,22 +1,16 @@
 {
     "links": [
         {
-            "url": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
-            "status": "pending",
-            "is_contact_page": true,
-            "folder_name": "my_spokanecity_org_citycouncil_members_kitty%20klitzke_"
+            "url": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
+            "status": "pending"
         },
         {
-            "url": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
-            "status": "pending",
-            "is_contact_page": true,
-            "folder_name": "my_spokanecity_org_citycouncil_members_paul-dillon_"
+            "url": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
+            "status": "pending"
         },
         {
-            "url": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
-            "status": "pending",
-            "is_contact_page": true,
-            "folder_name": "my_spokanecity_org_citycouncil_members_michael-cathcart_"
+            "url": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
+            "status": "pending"
         },
         {
             "url": "https://my.spokanecity.org/",
@@ -30,10 +24,6 @@
         },
         {
             "url": "https://my.spokanecity.org/directory/officials/elected/",
-            "status": "pending"
-        },
-        {
-            "url": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
             "status": "pending"
         },
         {
@@ -54,10 +44,6 @@
         },
         {
             "url": "https://my.spokanecity.org/directory/officials/",
-            "status": "pending"
-        },
-        {
-            "url": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
             "status": "pending"
         },
         {
@@ -93,10 +79,6 @@
             "status": "pending"
         },
         {
-            "url": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
-            "status": "pending"
-        },
-        {
             "url": "https://my.spokanecity.org/bcc/commissions/salary-review-commission/",
             "status": "pending"
         },
@@ -111,6 +93,26 @@
         {
             "url": "https://my.spokanecity.org/smc/?Section=01.04B.050&Find=wa",
             "status": "pending"
+        },
+        {
+            "url": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
+            "status": "pending",
+            "folder_name": "my_spokanecity_org_citycouncil_members_michael-cathcart_"
+        },
+        {
+            "url": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
+            "status": "pending",
+            "folder_name": "my_spokanecity_org_citycouncil_members_paul-dillon_"
+        },
+        {
+            "url": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
+            "status": "pending",
+            "folder_name": "my_spokanecity_org_citycouncil_members_kitty%20klitzke_"
+        },
+        {
+            "url": "https://my.spokanecity.org/citycouncil/members/Kitty Klitzke/",
+            "status": "pending",
+            "folder_name": "my_spokanecity_org_citycouncil_members_kitty klitzke_"
         }
     ],
     "progress": {
@@ -137,43 +139,37 @@
                 {
                     "name": "Jonathan Bingle",
                     "roles": [
-                        "City Council Member",
-                        "District 1"
+                        "City Council Member"
                     ]
                 },
                 {
                     "name": "Michael Cathcart",
                     "roles": [
-                        "City Council Member",
-                        "District 1"
+                        "City Council Member"
                     ]
                 },
                 {
                     "name": "Paul Dillon",
                     "roles": [
-                        "City Council Member",
-                        "District 2"
+                        "City Council Member"
                     ]
                 },
                 {
-                    "name": "Lili Navarrete",
+                    "name": "Shelby Lambdin",
                     "roles": [
-                        "City Council Member",
-                        "District 2"
-                    ]
-                },
-                {
-                    "name": "Kitty Klitzke",
-                    "roles": [
-                        "City Council Member",
-                        "District 3"
+                        "City Council Member"
                     ]
                 },
                 {
                     "name": "Zack Zappone",
                     "roles": [
-                        "City Council Member",
-                        "District 3"
+                        "City Council Member"
+                    ]
+                },
+                {
+                    "name": "Kitty Klitzke",
+                    "roles": [
+                        "City Council Member"
                     ]
                 }
             ],
@@ -193,47 +189,41 @@
                 {
                     "name": "Jonathan Bingle",
                     "roles": [
-                        "City Council Member",
-                        "District 1"
+                        "City Council Member"
                     ]
                 },
                 {
                     "name": "Michael Cathcart",
                     "roles": [
-                        "City Council Member",
-                        "District 1"
+                        "City Council Member"
                     ]
                 },
                 {
                     "name": "Paul Dillon",
                     "roles": [
-                        "City Council Member",
-                        "District 2"
+                        "City Council Member"
                     ]
                 },
                 {
-                    "name": "Lili Navarrete",
+                    "name": "Shelby Lambdin",
                     "roles": [
-                        "City Council Member",
-                        "District 2"
-                    ]
-                },
-                {
-                    "name": "Kitty Klitzke",
-                    "roles": [
-                        "City Council Member",
-                        "District 3"
+                        "City Council Member"
                     ]
                 },
                 {
                     "name": "Zack Zappone",
                     "roles": [
-                        "City Council Member",
-                        "District 3"
+                        "City Council Member"
+                    ]
+                },
+                {
+                    "name": "Kitty Klitzke",
+                    "roles": [
+                        "City Council Member"
                     ]
                 }
             ],
-            "notes": "Spokane operates under a strong mayor and city council form of government. [4, 10, 17] The Mayor is the head of the executive branch, and the City Council, consisting of seven members (including the Council President), forms the legislative branch. [4, 10] Lisa Brown is the current Mayor. [3, 9] Betsy Wilkerson is the City Council President. [5, 9] Lili Navarrete was appointed in early 2024 to fill a City Council seat vacated by Betsy Wilkerson when she became Council President. [18]"
+            "notes": "Spokane, WA operates under a strong mayor and city council system. The city council consists of a president elected at large and six members elected by district. There was a vacant seat in District 2, which has since been filled by appointment."
         },
         "SEARCH_LINKS": {
             "search_engines": {
@@ -279,58 +269,15 @@
         "SCRAPE_PAGE": {},
         "PREPROCESS_PAGE_CONTENT": {
             "elapsed_times": [
-                12.427298307418823,
-                15.224001169204712
+                8.09276795387268,
+                20.807113647460938
             ],
-            "total_elapsed_time_seconds": 27.651299476623535,
-            "average_elapsed_time_seconds": 13.825649738311768
+            "total_elapsed_time_seconds": 28.899881601333618,
+            "average_elapsed_time_seconds": 14.449940800666809
         },
         "PROCESS_PAGE_CONTENT": {
             "google_gemini": {
-                "lisa brown": {
-                    "names": [
-                        "Lisa Brown"
-                    ],
-                    "records": [
-                        {
-                            "name": "Lisa Brown",
-                            "roles": [
-                                {
-                                    "data": "mayor",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "The text explicitly states 'Mayor Brown', clearly indicating the role."
-                                }
-                            ],
-                            "divisions": [],
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "Information not found in the provided text."
-                            },
-                            "email": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "Information not found in the provided text."
-                            },
-                            "website": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "Information not found in the provided text."
-                            },
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "Information not found in the provided text."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "Information not found in the provided text."
-                            }
-                        }
-                    ]
-                },
-                "betsy wilkerson": {
+                "Betsy Wilkerson": {
                     "names": [
                         "Betsy Wilkerson"
                     ],
@@ -339,18 +286,12 @@
                             "name": "Betsy Wilkerson",
                             "roles": [
                                 {
-                                    "data": "City Council Member",
+                                    "data": "council member",
                                     "llm_confidence": 0.8,
-                                    "llm_confidence_reason": "Implied as a city council member by context and being listed among other council members, although not explicitly stated next to her name."
+                                    "llm_confidence_reason": "Implied role as City Council member based on being listed with other explicit City Council members and on a page for City Council members."
                                 }
                             ],
-                            "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated in the text."
-                                }
-                            ],
+                            "divisions": [],
                             "phone_number": {
                                 "data": null,
                                 "llm_confidence": 0.0,
@@ -359,27 +300,27 @@
                             "email": {
                                 "data": "bwilkerson@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from mailto link."
+                                "llm_confidence_reason": "Email address explicitly stated and correctly extracted."
                             },
                             "website": {
                                 "data": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from link."
+                                "llm_confidence_reason": "Website URL explicitly stated as a Markdown link."
                             },
                             "start_date": {
                                 "data": "2024",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming start of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Start date explicitly stated in 'Term: YYYY-YYYY' format."
                             },
                             "end_date": {
                                 "data": "2027",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming end of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "End date explicitly stated in 'Term: YYYY-YYYY' format."
                             }
                         }
                     ]
                 },
-                "jonathan bingle": {
+                "Jonathan Bingle": {
                     "names": [
                         "Jonathan Bingle"
                     ],
@@ -388,16 +329,16 @@
                             "name": "Jonathan Bingle",
                             "roles": [
                                 {
-                                    "data": "City Council Member",
+                                    "data": "council member",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated in the text."
+                                    "llm_confidence_reason": "Role 'City Council Member' explicitly stated."
                                 }
                             ],
                             "divisions": [
                                 {
                                     "data": "District 1",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated in the text."
+                                    "llm_confidence_reason": "Division explicitly stated as part of the role description."
                                 }
                             ],
                             "phone_number": {
@@ -408,27 +349,27 @@
                             "email": {
                                 "data": "jbingle@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from mailto link."
+                                "llm_confidence_reason": "Email address explicitly stated and correctly extracted."
                             },
                             "website": {
                                 "data": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from link."
+                                "llm_confidence_reason": "Website URL explicitly stated as a Markdown link."
                             },
                             "start_date": {
                                 "data": "2022",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming start of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Start date explicitly stated in 'Term: YYYY-YYYY' format."
                             },
                             "end_date": {
                                 "data": "2025",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming end of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "End date explicitly stated in 'Term: YYYY-YYYY' format."
                             }
                         }
                     ]
                 },
-                "michael cathcart": {
+                "Michael Cathcart": {
                     "names": [
                         "Michael Cathcart"
                     ],
@@ -437,16 +378,16 @@
                             "name": "Michael Cathcart",
                             "roles": [
                                 {
-                                    "data": "City Council Member",
+                                    "data": "council member",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated in the text."
+                                    "llm_confidence_reason": "Role 'City Council Member' explicitly stated."
                                 }
                             ],
                             "divisions": [
                                 {
                                     "data": "District 1",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated in the text."
+                                    "llm_confidence_reason": "Division explicitly stated as part of the role description."
                                 }
                             ],
                             "phone_number": {
@@ -457,27 +398,27 @@
                             "email": {
                                 "data": "mcathcart@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from mailto link."
+                                "llm_confidence_reason": "Email address explicitly stated and correctly extracted."
                             },
                             "website": {
                                 "data": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from link."
+                                "llm_confidence_reason": "Website URL explicitly stated as a Markdown link."
                             },
                             "start_date": {
                                 "data": "2024",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming start of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Start date explicitly stated in 'Term: YYYY-YYYY' format."
                             },
                             "end_date": {
                                 "data": "2027",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming end of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "End date explicitly stated in 'Term: YYYY-YYYY' format."
                             }
                         }
                     ]
                 },
-                "paul dillon": {
+                "Paul Dillon": {
                     "names": [
                         "Paul Dillon"
                     ],
@@ -486,16 +427,16 @@
                             "name": "Paul Dillon",
                             "roles": [
                                 {
-                                    "data": "City Council Member",
+                                    "data": "council member",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated in the text."
+                                    "llm_confidence_reason": "Role 'City Council Member' explicitly stated."
                                 }
                             ],
                             "divisions": [
                                 {
                                     "data": "District 2",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated in the text."
+                                    "llm_confidence_reason": "Division explicitly stated as part of the role description."
                                 }
                             ],
                             "phone_number": {
@@ -506,27 +447,27 @@
                             "email": {
                                 "data": "pdillon@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from mailto link."
+                                "llm_confidence_reason": "Email address explicitly stated and correctly extracted."
                             },
                             "website": {
                                 "data": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from link."
+                                "llm_confidence_reason": "Website URL explicitly stated as a Markdown link."
                             },
                             "start_date": {
                                 "data": "2024",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming start of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Start date explicitly stated in 'Term: YYYY-YYYY' format."
                             },
                             "end_date": {
                                 "data": "2027",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming end of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "End date explicitly stated in 'Term: YYYY-YYYY' format."
                             }
                         }
                     ]
                 },
-                "zack zappone": {
+                "Zack Zappone": {
                     "names": [
                         "Zack Zappone"
                     ],
@@ -535,16 +476,16 @@
                             "name": "Zack Zappone",
                             "roles": [
                                 {
-                                    "data": "City Council Member",
+                                    "data": "council member",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated in the text."
+                                    "llm_confidence_reason": "Role 'City Council Member' explicitly stated."
                                 }
                             ],
                             "divisions": [
                                 {
                                     "data": "District 3",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated in the text."
+                                    "llm_confidence_reason": "Division explicitly stated as part of the role description."
                                 }
                             ],
                             "phone_number": {
@@ -555,27 +496,27 @@
                             "email": {
                                 "data": "zzappone@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from mailto link."
+                                "llm_confidence_reason": "Email address explicitly stated and correctly extracted."
                             },
                             "website": {
                                 "data": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from link."
+                                "llm_confidence_reason": "Website URL explicitly stated as a Markdown link."
                             },
                             "start_date": {
                                 "data": "2022",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming start of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Start date explicitly stated in 'Term: YYYY-YYYY' format."
                             },
                             "end_date": {
                                 "data": "2025",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming end of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "End date explicitly stated in 'Term: YYYY-YYYY' format."
                             }
                         }
                     ]
                 },
-                "kitty klitzke": {
+                "Kitty Klitzke": {
                     "names": [
                         "Kitty Klitzke"
                     ],
@@ -584,16 +525,16 @@
                             "name": "Kitty Klitzke",
                             "roles": [
                                 {
-                                    "data": "City Council Member",
+                                    "data": "council member",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated in the text."
+                                    "llm_confidence_reason": "Role 'City Council Member' explicitly stated."
                                 }
                             ],
                             "divisions": [
                                 {
                                     "data": "District 3",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated in the text."
+                                    "llm_confidence_reason": "Division explicitly stated as part of the role description."
                                 }
                             ],
                             "phone_number": {
@@ -604,29 +545,29 @@
                             "email": {
                                 "data": "kklitzke@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from mailto link."
+                                "llm_confidence_reason": "Email address explicitly stated and correctly extracted."
                             },
                             "website": {
                                 "data": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from link."
+                                "llm_confidence_reason": "Website URL explicitly stated as a Markdown link."
                             },
                             "start_date": {
                                 "data": "2024",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming start of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "Start date explicitly stated in 'Term: YYYY-YYYY' format."
                             },
                             "end_date": {
                                 "data": "2027",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Extracted from 'Term' with year precision. Assuming end of year."
+                                "llm_confidence": 1.0,
+                                "llm_confidence_reason": "End date explicitly stated in 'Term: YYYY-YYYY' format."
                             }
                         }
                     ]
                 }
             },
             "openai": {
-                "betsy wilkerson": {
+                "Betsy Wilkerson": {
                     "names": [
                         "Betsy Wilkerson"
                     ],
@@ -637,45 +578,45 @@
                                 {
                                     "data": "City Council Member",
                                     "llm_confidence": 0.95,
-                                    "llm_confidence_reason": "Explicitly stated role as City Council Member with a term indicating an active role."
+                                    "llm_confidence_reason": "Explicitly stated as City Council Member and term dates fit current date 2025."
                                 }
                             ],
                             "divisions": [
                                 {
                                     "data": "District 1",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly specified as District 1 for Betsy Wilkerson."
+                                    "llm_confidence_reason": "Explicitly stated division 'District 1' in the text."
                                 }
                             ],
                             "phone_number": {
                                 "data": null,
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "No phone number explicitly provided in the content for this person."
+                                "llm_confidence_reason": "No phone number provided in content for this person."
                             },
                             "email": {
                                 "data": "bwilkerson@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Explicit email address provided next to name and role."
+                                "llm_confidence_reason": "Email clearly associated with Betsy Wilkerson on her profile link."
                             },
                             "website": {
                                 "data": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Official council member profile page URL provided."
+                                "llm_confidence_reason": "Profile URL contact link directly associated with Betsy Wilkerson."
                             },
                             "start_date": {
                                 "data": "2024",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term stated as 2024-2027, start date inferred as 2024-01-01 (year precision)."
+                                "llm_confidence_reason": "Term start year given as 2024 explicitly with term 2024-2027."
                             },
                             "end_date": {
                                 "data": "2027",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term stated as 2024-2027, end date inferred as 2027-12-31 (year precision)."
+                                "llm_confidence_reason": "Term end year given as 2027 explicitly with term 2024-2027."
                             }
                         }
                     ]
                 },
-                "jonathan bingle": {
+                "Jonathan Bingle": {
                     "names": [
                         "Jonathan Bingle"
                     ],
@@ -685,46 +626,46 @@
                             "roles": [
                                 {
                                     "data": "City Council Member",
-                                    "llm_confidence": 0.98,
-                                    "llm_confidence_reason": "Explicitly stated role and active term noted for City Council Member, District 1."
+                                    "llm_confidence": 0.95,
+                                    "llm_confidence_reason": "Explicitly stated role and term inclusive of current date 2025."
                                 }
                             ],
                             "divisions": [
                                 {
                                     "data": "District 1",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicit reference to District 1 for this council member."
+                                    "llm_confidence_reason": "Explicitly stated division 'District 1' in the text."
                                 }
                             ],
                             "phone_number": {
                                 "data": null,
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "No phone number explicitly provided in the content for this person."
+                                "llm_confidence_reason": "No phone number provided in content for this person."
                             },
                             "email": {
                                 "data": "jbingle@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email appears directly following the council member's name and role."
+                                "llm_confidence_reason": "Email adjacent and clearly labeled for Jonathan Bingle."
                             },
                             "website": {
                                 "data": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Profile link provided as official city council member page."
+                                "llm_confidence_reason": "Profile URL directly linked to name."
                             },
                             "start_date": {
                                 "data": "2022",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term listed as 2022-2025, start date inferred as 2022-01-01."
+                                "llm_confidence_reason": "Term start date indicated as 2022 to 2025."
                             },
                             "end_date": {
                                 "data": "2025",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term listed as 2022-2025, end date inferred as 2025-12-31."
+                                "llm_confidence_reason": "Term end date indicated as 2025."
                             }
                         }
                     ]
                 },
-                "michael cathcart": {
+                "Michael Cathcart": {
                     "names": [
                         "Michael Cathcart"
                     ],
@@ -734,46 +675,46 @@
                             "roles": [
                                 {
                                     "data": "City Council Member",
-                                    "llm_confidence": 0.98,
-                                    "llm_confidence_reason": "Explicit City Council Member role stated with current term."
+                                    "llm_confidence": 0.95,
+                                    "llm_confidence_reason": "Explicitly stated role and term inclusive of current date 2025."
                                 }
                             ],
                             "divisions": [
                                 {
                                     "data": "District 1",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "District 1 explicitly mentioned in proximity."
+                                    "llm_confidence_reason": "Explicitly stated division 'District 1' in the text."
                                 }
                             ],
                             "phone_number": {
                                 "data": null,
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "No phone number explicitly provided in the content for this person."
+                                "llm_confidence_reason": "No phone number provided in content for this person."
                             },
                             "email": {
                                 "data": "mcathcart@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address given and clearly linked to this council member."
+                                "llm_confidence_reason": "Email adjacent and clearly labeled for Michael Cathcart."
                             },
                             "website": {
                                 "data": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Official member profile page URL."
+                                "llm_confidence_reason": "Profile URL directly linked to name."
                             },
                             "start_date": {
                                 "data": "2024",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2024-2027 stated, start date inferred as 2024-01-01."
+                                "llm_confidence_reason": "Term start date indicated as 2024 to 2027."
                             },
                             "end_date": {
                                 "data": "2027",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2024-2027 stated, end date inferred as 2027-12-31."
+                                "llm_confidence_reason": "Term end date indicated as 2027."
                             }
                         }
                     ]
                 },
-                "paul dillon": {
+                "Paul Dillon": {
                     "names": [
                         "Paul Dillon"
                     ],
@@ -783,46 +724,46 @@
                             "roles": [
                                 {
                                     "data": "City Council Member",
-                                    "llm_confidence": 0.98,
-                                    "llm_confidence_reason": "Role explicitly stated and term is current."
+                                    "llm_confidence": 0.95,
+                                    "llm_confidence_reason": "Explicitly stated role and term inclusive of current date 2025."
                                 }
                             ],
                             "divisions": [
                                 {
                                     "data": "District 2",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "District 2 mentioned explicitly near the council member's name."
+                                    "llm_confidence_reason": "Explicitly stated division 'District 2' in the text."
                                 }
                             ],
                             "phone_number": {
                                 "data": null,
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "No phone number explicitly provided in the content for this person."
+                                "llm_confidence_reason": "No phone number provided in content for this person."
                             },
                             "email": {
                                 "data": "pdillon@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Direct email listed next to the council member name and role."
+                                "llm_confidence_reason": "Email adjacent and clearly labeled for Paul Dillon."
                             },
                             "website": {
                                 "data": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Profile link provided in text for this council member."
+                                "llm_confidence_reason": "Profile URL directly linked to name."
                             },
                             "start_date": {
                                 "data": "2024",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2024-2027 given, start date inferred as 2024-01-01."
+                                "llm_confidence_reason": "Term start date indicated as 2024 to 2027."
                             },
                             "end_date": {
                                 "data": "2027",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2024-2027 given, end date inferred as 2027-12-31."
+                                "llm_confidence_reason": "Term end date indicated as 2027."
                             }
                         }
                     ]
                 },
-                "zack zappone": {
+                "Zack Zappone": {
                     "names": [
                         "Zack Zappone"
                     ],
@@ -832,46 +773,46 @@
                             "roles": [
                                 {
                                     "data": "City Council Member",
-                                    "llm_confidence": 0.97,
-                                    "llm_confidence_reason": "Role directly mentioned with active term dates."
+                                    "llm_confidence": 0.95,
+                                    "llm_confidence_reason": "Explicitly stated role and term inclusive of current date 2025."
                                 }
                             ],
                             "divisions": [
                                 {
                                     "data": "District 3",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "District 3 specified explicitly for this council member."
+                                    "llm_confidence_reason": "Explicitly stated division 'District 3' in the text."
                                 }
                             ],
                             "phone_number": {
                                 "data": null,
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "No phone number explicitly provided in the content for this person."
+                                "llm_confidence_reason": "No phone number provided in content for this person."
                             },
                             "email": {
                                 "data": "zzappone@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address clearly associated with this member."
+                                "llm_confidence_reason": "Email adjacent and clearly labeled for Zack Zappone."
                             },
                             "website": {
                                 "data": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Official city council profile page URL given."
+                                "llm_confidence_reason": "Profile URL directly linked to name."
                             },
                             "start_date": {
                                 "data": "2022",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2022-2025, start date inferred as 2022-01-01."
+                                "llm_confidence_reason": "Term start date indicated as 2022 to 2025."
                             },
                             "end_date": {
                                 "data": "2025",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2022-2025, end date inferred as 2025-12-31."
+                                "llm_confidence_reason": "Term end date indicated as 2025."
                             }
                         }
                     ]
                 },
-                "kitty klitzke": {
+                "Kitty Klitzke": {
                     "names": [
                         "Kitty Klitzke"
                     ],
@@ -881,41 +822,41 @@
                             "roles": [
                                 {
                                     "data": "City Council Member",
-                                    "llm_confidence": 0.98,
-                                    "llm_confidence_reason": "Explicitly described role with stated term active."
+                                    "llm_confidence": 0.95,
+                                    "llm_confidence_reason": "Explicitly stated role and term inclusive of current date 2025."
                                 }
                             ],
                             "divisions": [
                                 {
                                     "data": "District 3",
                                     "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "District 3 explicitly indicated next to the council member name."
+                                    "llm_confidence_reason": "Explicitly stated division 'District 3' in the text."
                                 }
                             ],
                             "phone_number": {
                                 "data": null,
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "No phone number explicitly provided in the content for this person."
+                                "llm_confidence_reason": "No phone number provided in content for this person."
                             },
                             "email": {
                                 "data": "kklitzke@spokanecity.org",
                                 "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email address given clearly in council member contact section."
+                                "llm_confidence_reason": "Email adjacent and clearly labeled for Kitty Klitzke."
                             },
                             "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Official city council member profile URL available in text."
+                                "data": "https://my.spokanecity.org/citycouncil/members/Kitty Klitzke/",
+                                "llm_confidence": 0.9,
+                                "llm_confidence_reason": "Profile URL directly linked to name although contains space encoding."
                             },
                             "start_date": {
                                 "data": "2024",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2024-2027 stated, start date inferred to be 2024-01-01."
+                                "llm_confidence_reason": "Term start date indicated as 2024 to 2027."
                             },
                             "end_date": {
                                 "data": "2027",
                                 "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2024-2027 stated, end date inferred to be 2027-12-31."
+                                "llm_confidence_reason": "Term end date indicated as 2027."
                             }
                         }
                     ]
@@ -925,7 +866,7 @@
         "MERGE_RECORDS_WITHIN_SOURCE": {
             "openai": [
                 {
-                    "name": "betsy wilkerson",
+                    "name": "Betsy Wilkerson",
                     "roles": [
                         "council member"
                     ],
@@ -943,7 +884,7 @@
                     "updated_at": ""
                 },
                 {
-                    "name": "jonathan bingle",
+                    "name": "Jonathan Bingle",
                     "roles": [
                         "council member"
                     ],
@@ -961,7 +902,7 @@
                     "updated_at": ""
                 },
                 {
-                    "name": "michael cathcart",
+                    "name": "Michael Cathcart",
                     "roles": [
                         "council member"
                     ],
@@ -979,7 +920,7 @@
                     "updated_at": ""
                 },
                 {
-                    "name": "paul dillon",
+                    "name": "Paul Dillon",
                     "roles": [
                         "council member"
                     ],
@@ -997,7 +938,7 @@
                     "updated_at": ""
                 },
                 {
-                    "name": "zack zappone",
+                    "name": "Zack Zappone",
                     "roles": [
                         "council member"
                     ],
@@ -1015,7 +956,7 @@
                     "updated_at": ""
                 },
                 {
-                    "name": "kitty klitzke",
+                    "name": "Kitty Klitzke",
                     "roles": [
                         "council member"
                     ],
@@ -1026,7 +967,7 @@
                     "cdn_image": "",
                     "email": "kklitzke@spokanecity.org",
                     "phone_number": "",
-                    "website": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
+                    "website": "https://my.spokanecity.org/citycouncil/members/Kitty Klitzke/",
                     "start_date": "2024",
                     "end_date": "2027",
                     "sources": [],
@@ -1035,29 +976,11 @@
             ],
             "google_gemini": [
                 {
-                    "name": "lisa brown",
-                    "roles": [
-                        "mayor"
-                    ],
-                    "divisions": [],
-                    "image": "",
-                    "cdn_image": "",
-                    "email": "",
-                    "phone_number": "",
-                    "website": "",
-                    "start_date": "",
-                    "end_date": "",
-                    "sources": [],
-                    "updated_at": ""
-                },
-                {
-                    "name": "betsy wilkerson",
+                    "name": "Betsy Wilkerson",
                     "roles": [
                         "council member"
                     ],
-                    "divisions": [
-                        "district 1"
-                    ],
+                    "divisions": [],
                     "image": "",
                     "cdn_image": "",
                     "email": "bwilkerson@spokanecity.org",
@@ -1069,7 +992,7 @@
                     "updated_at": ""
                 },
                 {
-                    "name": "jonathan bingle",
+                    "name": "Jonathan Bingle",
                     "roles": [
                         "council member"
                     ],
@@ -1087,7 +1010,7 @@
                     "updated_at": ""
                 },
                 {
-                    "name": "michael cathcart",
+                    "name": "Michael Cathcart",
                     "roles": [
                         "council member"
                     ],
@@ -1105,7 +1028,7 @@
                     "updated_at": ""
                 },
                 {
-                    "name": "paul dillon",
+                    "name": "Paul Dillon",
                     "roles": [
                         "council member"
                     ],
@@ -1123,7 +1046,7 @@
                     "updated_at": ""
                 },
                 {
-                    "name": "zack zappone",
+                    "name": "Zack Zappone",
                     "roles": [
                         "council member"
                     ],
@@ -1141,7 +1064,7 @@
                     "updated_at": ""
                 },
                 {
-                    "name": "kitty klitzke",
+                    "name": "Kitty Klitzke",
                     "roles": [
                         "council member"
                     ],

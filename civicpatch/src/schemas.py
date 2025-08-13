@@ -25,7 +25,6 @@ class LinkStatus(Enum):
 class Link(TypedDict):
     url: str
     status: str # LinkStatus value
-    is_contact_page: bool = False
     folder_name: str = ""
 
 class PipelineStatus(Enum):

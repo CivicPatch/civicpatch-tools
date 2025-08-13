@@ -1,6 +1,7 @@
 import os
 import json
-from schemas import PipelineContext, PipelineStatus, LinkStatus, SearchEngineStatus
+from schemas import PipelineContext, PipelineStatus, LinkStatus, SearchEngineStatus, Link
+from typing import Dict, Any, List
 
 import utils.data_path_utils as data_path_utils
 import utils.config_utils as config_utils
@@ -84,18 +85,11 @@ class Pipeline:
         return None
     
 
-    def get_links(self, status: LinkStatus, require_contact_page: bool = False):
+    def get_links(self, status: LinkStatus) -> List[Link]:
         """
         Return all links with the given status.
-        If require_contact_page is True, only return links where is_contact_page is True.
         """
-        links = []
-        for link in self.context["links"]:
-            if link["status"] == status.value:
-                if require_contact_page and not link.get("is_contact_page"):
-                    continue
-                links.append(link)
-        return links
+        return [link for link in self.context["links"] if link["status"] == status.value]
 
     def run(self, state, geoid):
         """
@@ -106,91 +100,57 @@ class Pipeline:
 
         while self.state != PipelineStatus.DONE:
             if self.state == PipelineStatus.INIT:
-                prepare_pipeline(self.context)
+                result = prepare_pipeline(self.context)
+                self.context.update(result)
                 self.state = PipelineStatus.RESEARCH_MUNICIPALITY
 
             elif self.state == PipelineStatus.RESEARCH_MUNICIPALITY:
-                self.context.update(research_municipality(self.context))
+                result = research_municipality(self.context)
+                self.context.update(result)
                 self.state = PipelineStatus.SEARCH_LINKS
 
             elif self.state == PipelineStatus.SEARCH_LINKS:
-                self.context.update(search_links(self.context))
+                result = search_links(self.context)
+                self.context.update(result)
                 self.state = PipelineStatus.SCRAPE_PAGE
 
             elif self.state == PipelineStatus.SCRAPE_PAGE:
                 page_to_scrape = self.get_next_link(LinkStatus.PENDING)
-                self.context.update(scrape_page(self.context, page_to_scrape))
+                result = scrape_page(self.context, page_to_scrape)
+                self.context.update(result)
                 self.state = PipelineStatus.PREPROCESS_PAGE_CONTENT
 
             elif self.state == PipelineStatus.PREPROCESS_PAGE_CONTENT:
                 page_to_preprocess = self.get_next_link(LinkStatus.SCRAPED)
-                self.context.update(preprocess_page_content(self.context, page_to_preprocess))
+                result = preprocess_page_content(self.context, page_to_preprocess)
+                self.context.update(result)
                 self.state = PipelineStatus.PROCESS_PAGE_CONTENT
 
             elif self.state == PipelineStatus.PROCESS_PAGE_CONTENT:
-                preprocessed_links = self.get_links(LinkStatus.PREPROCESSED)
-                links_processed = self.get_links(LinkStatus.DONE)
-                process_max_pages = process_config.get("max_pages", 15)
+                result, processed_count, process_max_pages = self.process_page_content_step(process_config)
+                self.context.update(result)
 
-                if not preprocessed_links:
-                    print("No preprocessed links left to process.")
-                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
-                    continue
+                print("Current data:", result["progress"]["current_data"])
+                print("Required data:", result["progress"]["required_data"])
 
-                # Separate contact and non-contact pages
-                contact_pages = [l for l in preprocessed_links if l.get("is_contact_page")]
-                non_contact_pages = [l for l in preprocessed_links if not l.get("is_contact_page")]
-
-                # Count how many non-contact pages have already been processed
-                non_contact_processed = len([l for l in links_processed if not l.get("is_contact_page")])
-
-                # Decide what to process next
-                if contact_pages:
-                    page_to_process = contact_pages[0]
-                elif non_contact_pages and (non_contact_processed < process_max_pages):
-                    page_to_process = non_contact_pages[0]
-                else:
-                    print("Max non-contact pages reached or no preprocessed links left to process.")
-                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
-                    continue
-
-                # Process the selected page
-                self.context.update(process_page_content(self.context, page_to_process))
-                print("Current data:", self.context["progress"]["current_data"])
-                print("Required data:", self.context["progress"]["required_data"])
-
-                # Refresh preprocessed_links after processing
-                preprocessed_links = self.get_links(LinkStatus.PREPROCESSED)
-
-                # Decide next state
-                if preprocessed_links and preprocessed_links[0].get("is_contact_page"):
-                    print(f"Next step: scrape website contact pages ({len(preprocessed_links)})...")
-                    self.state = PipelineStatus.SCRAPE_PAGE
-                elif (non_contact_processed + 1) >= process_max_pages:
-                    print(f"Max non-contact pages ({process_max_pages}) reached, moving to next step...")
-                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
-                elif self.context["progress"]["current_data"] < self.context["progress"]["required_data"]:
-                    print("Not enough data processed yet, collecting more data...")
-                    self.state = PipelineStatus.SCRAPE_PAGE
-                else:
-                    print("Enough data processed, moving to report generation...")
-                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+                next_state = self.get_next_state_for_process_page_content(processed_count, process_max_pages)
+                self.state = next_state
 
             elif self.state == PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE:
-                self.context.update(merge_records_within_source(self.context))
+                result = merge_records_within_source(self.context)
+                self.context.update(result)
                 self.state = PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES
 
             elif self.state == PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES:
-                self.context.update(merge_records_across_sources(self.context))
+                result = merge_records_across_sources(self.context)
+                self.context.update(result)
                 self.state = PipelineStatus.SEND_TO_GITHUB
 
             elif self.state == PipelineStatus.SEND_TO_GITHUB:
-                self.context.update(send_to_github(self.context))
+                result = send_to_github(self.context)
+                self.context.update(result)
                 self.state = PipelineStatus.DONE
 
-            #elif self.state == PipelineStatus.RETRY:
-            #    print("Retrying pipeline...")
-            #    self.state = PipelineStatus.COLLECT
             else:
                 print("Pipeline logic not yet implemented.")
                 self.state = PipelineStatus.DONE
@@ -199,3 +159,44 @@ class Pipeline:
             self.save_context(state, geoid)
 
         print("Pipeline completed successfully.")
+
+    def process_page_content_step(self, process_config):
+        """
+        Handle the PROCESS_PAGE_CONTENT pipeline step.
+        Returns the updated context and the next state.
+        """
+        preprocessed_links = self.get_links(LinkStatus.PREPROCESSED)
+        links_processed = self.get_links(LinkStatus.DONE)
+        process_max_pages = process_config.get("max_pages", 15)
+
+        if not preprocessed_links:
+            print("No preprocessed links left to process.")
+            return {}, PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+
+        processed_count = len(links_processed)
+
+        page_to_process = preprocessed_links[0] if preprocessed_links and processed_count < process_max_pages else None
+        if not page_to_process:
+            print("Max pages reached or no preprocessed links left to process.")
+            return {}, PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+
+        updated_context = process_page_content(self.context, page_to_process)
+
+        return updated_context, processed_count, process_max_pages
+
+    def get_next_state_for_process_page_content(self, processed_count: int, max_pages: int) -> PipelineStatus:
+        """
+        Calculate the next state for the pipeline based on the current progress and processed count.
+        """
+        if self.context["progress"]["current_data"] >= self.context["progress"]["required_data"]:
+            print("Enough data processed, moving to report generation...")
+            return PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+
+        if processed_count >= max_pages:
+            print(f"Max pages ({max_pages}) reached, moving to next step...")
+            return PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+
+        print("Not enough data processed yet, collecting more data...")
+        return PipelineStatus.SCRAPE_PAGE
+
+   
