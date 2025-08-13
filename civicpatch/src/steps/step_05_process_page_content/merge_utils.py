@@ -12,7 +12,7 @@ def group_people_by_name(
     """
     def first_last_key(name: str) -> str:
         hn = HumanName(name)
-        return f"{hn.first.strip().lower()} {hn.last.strip().lower()}"
+        return f"{hn.first.strip()} {hn.last.strip()}"
 
     for person in people_to_link:
         key = first_last_key(person.name)

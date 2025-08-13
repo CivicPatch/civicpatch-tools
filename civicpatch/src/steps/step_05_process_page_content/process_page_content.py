@@ -16,6 +16,7 @@ from schemas import (
 import utils.config_utils as config_utils
 from utils.data_utils import MunicipalityContext
 import utils.data_path_utils as data_path_utils
+import utils.url_utils as url_utils
 from typing import List, Any, Dict
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
@@ -183,7 +184,7 @@ def update_links(pipeline_context_links: List[Link], found_websites: List[str]):
                 "url": website_link,
                 "status": LinkStatus.PENDING.value,
                 "is_contact_page": True,
-                "folder_name": data_path_utils.get_folder_name_from_url(website_link)
+                "folder_name": url_utils.format_url_to_folder(website_link)
             }
             pipeline_context_links = [new_link] + pipeline_context_links
     return pipeline_context_links

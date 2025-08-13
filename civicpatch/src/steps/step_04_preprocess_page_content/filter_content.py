@@ -21,8 +21,11 @@ def filter_content(input_html: str, progress_log_interval: int = 10) -> str:
         "progress_log_interval": progress_log_interval
     }
     filter_node_content(soup, state)
-    print()  # Newline after progress
-    return str(soup)
+
+    if not soup.find_all():  # No tags left in the tree
+        return ""
+    filtered_content = str(soup)
+    return filtered_content
 
 def filter_node_content(node: Tag, state):
     # Process children first
