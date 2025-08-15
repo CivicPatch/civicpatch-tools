@@ -1,4 +1,4 @@
-from typing import Dict, List, TypedDict, Optional, TypeAlias, Any, Callable
+from typing import Dict, List, Optional, TypeAlias, Any, Callable, Union
 from pydantic import BaseModel
 from enum import Enum
 
@@ -8,10 +8,10 @@ class SearchEngineStatus(Enum):
     DONE = "done"
     FAILED = "failed"
 
-class SearchEngineState(TypedDict):
+class SearchEngineState(BaseModel):
     status: str # SearchEngineStatus value 
 
-class ProgressState(TypedDict):
+class ProgressState(BaseModel):
     required_data: int
     current_data: int
 
@@ -22,7 +22,7 @@ class LinkStatus(Enum):
     DONE = "done"
     FAILED = "failed"
 
-class Link(TypedDict):
+class Link(BaseModel):
     url: str
     status: str # LinkStatus value
     folder_name: str = ""
@@ -41,15 +41,6 @@ class PipelineStatus(Enum):
     RETRY = "RETRY"
     DONE = "DONE"
 
-class PipelineContext(TypedDict):
-    state: str
-    geoid: str
-    search_engines: Dict[str, SearchEngineState]
-    links: List[Link] # TODO: move to SEARCH_LINKS
-    steps: Dict[str, Dict] # PipelineStatus value
-    data: Dict[str, Dict]
-    progress: ProgressState
-
 class LLMDataPoint(BaseModel):
     data: Optional[str] = None
     llm_confidence: float
@@ -59,19 +50,16 @@ class LLMPerson(BaseModel):
     name: str
     roles: List[LLMDataPoint]
     divisions: List[LLMDataPoint]
-    phone_number: LLMDataPoint
-    email: LLMDataPoint 
-    website: LLMDataPoint
-    start_date: LLMDataPoint 
-    end_date: LLMDataPoint 
+    phone_number: Optional[LLMDataPoint]
+    email: Optional[LLMDataPoint]
+    website: Optional[LLMDataPoint]
+    start_date: Optional[LLMDataPoint]
+    end_date: Optional[LLMDataPoint]
+    data_sources: List[str] # List of URLs where information was founda
 
 class PeopleArrayLLMResponseSchema(BaseModel):
     people: List[LLMPerson]
     thought: str
-
-class ProcessedLLMPeople(BaseModel):
-    names: List[str]
-    records: List[LLMPerson]
 
 class Person(BaseModel):
     name: str
@@ -84,8 +72,53 @@ class Person(BaseModel):
     website: str
     start_date: str
     end_date: str
-    sources: List[str]
+    data_sources: List[str] # List of source URLs where information was found
     updated_at: str
+
+OtherNamesByCanonicalName: TypeAlias = Dict[str, List[str]] # Canonical name to other names found while scraping
+PeopleByName: TypeAlias = Dict[str, List[LLMPerson]]
+RecordsBySource: TypeAlias = Dict[str, PeopleByName]
+
+class ProcessPageContentStep(BaseModel):
+    records_by_source: RecordsBySource
+
+class MergeRecordsWithinSourceStep(BaseModel):
+    people_by_source: Dict[str, List[Person]] # LLM Names to list of Person records
+
+class Disagreement(BaseModel):
+    source: str
+    person_name: str
+    field: str
+    value: str
+
+class MissingPerson(BaseModel):
+    source: str
+    person_name: str
+
+class MergeRecordsAcrossSourcesStep(BaseModel):
+    people: List[Person]
+    agreement_score: float
+    disagreements: List[Disagreement] = []  # List of disagreements found during merging
+    missing_people: List[MissingPerson] = []  # List of people missing from some sources
+
+class PipelineContext(BaseModel):
+    state: str
+    geoid: str
+    search_engines: Dict[str, SearchEngineState]
+    links: List[Link]  # TODO: move to SEARCH_LINKS
+    names: Dict[str, List[str]]  # Canonical names to names found while scraping
+    steps: Dict[str, Union[
+        MergeRecordsWithinSourceStep,
+        MergeRecordsAcrossSourcesStep,
+        Any  # Add other step types as needed
+    ]]
+    data: Dict[str, Union[
+        ProcessPageContentStep,
+        MergeRecordsWithinSourceStep,
+        MergeRecordsAcrossSourcesStep,
+        Any
+    ]]
+    progress: ProgressState
 
 def pydantic_to_dict(obj):
     """
@@ -118,6 +151,5 @@ def dict_to_pydantic(data: Any, constructor: Callable) -> Any:
     else:
         return data
 
-PeopleByNameDict: TypeAlias = Dict[str, ProcessedLLMPeople]
-LLMResponsesDict: TypeAlias = Dict[str, List[LLMPerson]]
-ProcessedDataDict: TypeAlias = Dict[str, PeopleByNameDict]
+# PeopleByNameDict: TypeAlias = Dict[str, ProcessedLLMPeople]
+# ProcessedDataDict: TypeAlias = Dict[str, PeopleByNameDict]

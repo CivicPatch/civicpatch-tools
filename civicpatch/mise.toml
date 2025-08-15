@@ -14,6 +14,6 @@ run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s tests
 [tasks.container]
 run = "docker compose run --rm civicpatch"
 [tasks.scratch]
-run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s tests/unit/steps/step_04_preprocess_page_content/test_preprocess_page_content.py"
+run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s -vv tests/unit/steps/step_07_merge_records_across_sources/test_merge_records_across_sources.py"
 [tasks.manual]
 run = "docker compose run --rm civicpatch xvfb-run -a poetry run python -m main pipeline --state wa --geoid 5367000"

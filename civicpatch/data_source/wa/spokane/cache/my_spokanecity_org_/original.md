@@ -6,7 +6,7 @@ City of Spokane, Washington
 
 ##### Checking Your Browser
 
-One Moment...Continue
+Starting Session...Continue
 
 Browser cookies and javascript are enabled.
 
@@ -22,8 +22,7 @@ Browser cookies and javascript are enabled.
 * [My Account](https://my.spokanecity.org/account/ "My Account")
 
 [Previous](https://my.spokanecity.org/# "Previous")
-[![Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law](//static.spokanecity.org/photos/2025/08/06/mayor-brown-signs-updated-complete-streets/16x7/mayor-brown-signs-updated-complete-streets.svg)
-![Loading...](//static.spokanecity.org/my/svg/spinner-fff.svg "Loading...")](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
+[![Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law](//static.spokanecity.org/photos/2025/08/06/mayor-brown-signs-updated-complete-streets/16x7/Full/mayor-brown-signs-updated-complete-streets.jpg)](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
 [Next](https://my.spokanecity.org/# "Next")
 
 [Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law

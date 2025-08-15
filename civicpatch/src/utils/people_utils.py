@@ -17,7 +17,7 @@ def filter_people_by_roles(role_configs, people):
         for alias in role_entry.get("aliases", []):
             valid_roles.add(alias.strip().lower())
 
-    # Filter people whose role matches any valid role/alias
+    # Filter people whose role matches any vigalid role/alias
     filtered = []
     for person in people:
         person_roles = [r.strip().lower() for r in person.get("roles", [])]
@@ -26,23 +26,3 @@ def filter_people_by_roles(role_configs, people):
 
     return filtered
 
-#
-#def merge_people(people_a: List[People], people_b: List[People]) -> List[People]:
-#    """
-#    Merges two lists of People objects, ensuring unique names.
-#    Args:
-#        people_a: First list of People.
-#        people_b: Second list of People.
-#    Returns:
-#        Merged list of People with unique names.
-#    """
-#    name_set = set()
-#    merged_people = []
-#
-#    for person in people_a + people_b:
-#        if person.name not in name_set:
-#            name_set.add(person.name)
-#            merged_people.append(person)
-#
-#    return merged_people
-#
