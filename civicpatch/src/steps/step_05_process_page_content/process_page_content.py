@@ -68,7 +68,7 @@ def process_page_content(
     updated_processed_data.records_by_source = updated_records_by_source
 
     roles = config_utils.get_all_roles_by_government_type(government_type)
-    updated_progress = update_progress(
+    updated_progress = calculate_progress(
         context["progress"].copy(), updated_processed_data.records_by_source, roles
     )
 
@@ -80,7 +80,7 @@ def process_page_content(
         else:
             updated_links.append(link)
 
-    updated_links = update_website_links(updated_links, updated_processed_data.records_by_source)
+    updated_links = update_website_links(roles, updated_links, updated_processed_data.records_by_source)
 
     return {
         "links": updated_links,
@@ -134,11 +134,11 @@ def process_with_llms(
 
     return responses
 
-def update_progress(
+def calculate_progress(
     progress: Dict[str, Any],
     updated_records_by_source: RecordsBySource,
     roles: List[str]
-) -> Dict[str, Any]:
+) -> Dict[str, Any]: # Return progress and names of people with contact data
     """
     Update the progress based on the processed data.
     """
@@ -167,26 +167,27 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
         for p in people
     )
     # Case-insensitive role match
-    roles_normalized = [role.strip().lower() for role in roles]
     has_role = any(
-        any(r.data and r.data.strip().lower() in roles_normalized for r in p.roles)
+        any(r.data and r.data.strip().lower() in roles for r in p.roles)
         for p in people
     )
     return has_contact and has_role
 
-def update_website_links(updated_links: List[Link], records_by_source: RecordsBySource) -> List[Link]:
+def update_website_links(roles, existing_links: List[Link], records_by_source: RecordsBySource) -> List[Link]:
     """
     Update the links with websites found in the processed data.
     """
-    found_websites = extract_websites_from_processed_data(records_by_source)
+    updated_links = copy.deepcopy(existing_links)
+    found_websites = extract_websites_from_processed_data(roles, records_by_source)
 
     # Update existing links or add new ones
     for website in found_websites:
         existing_link = next((link for link in updated_links if link["url"] == website), None)
-        if existing_link and existing_link["status"] == LinkStatus.PENDING.value:
-            # Move link to the front if it already exists
-            updated_links.remove(existing_link)
-            updated_links.insert(0, existing_link)
+        if existing_link:
+            if existing_link["status"] == LinkStatus.PENDING.value:
+                # Move link to the front if it already exists
+                updated_links.remove(existing_link)
+                updated_links.insert(0, existing_link)
         else:
             new_link: Link = {
                 "url": website,
@@ -197,15 +198,18 @@ def update_website_links(updated_links: List[Link], records_by_source: RecordsBy
 
     return updated_links
 
-def extract_websites_from_processed_data(records_by_source: RecordsBySource) -> List[str]:
+def extract_websites_from_processed_data(roles: List[str], records_by_source: RecordsBySource) -> List[str]:
     """
     Extract website links from the processed data.
     """
     found_websites = []
     for people_by_name in records_by_source.values():
         for person_list in people_by_name.values():  # Directly iterate over lists of LLMPerson
-            for person in person_list:
-                website = person.website.data if person.website else None
+            if has_role_and_contact_info(roles, person_list):
+                continue
+
+            for person_record in person_list:
+                website = person_record.website.data if person_record.website else None
                 if website and website not in found_websites:
                     found_websites.append(website)
     return found_websites

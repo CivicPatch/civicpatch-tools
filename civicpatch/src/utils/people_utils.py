@@ -1,5 +1,6 @@
 #from schemas import People
 from typing import List
+from schemas import OtherNamesByCanonicalName
 
 def filter_people_by_roles(role_configs, people):
     """
