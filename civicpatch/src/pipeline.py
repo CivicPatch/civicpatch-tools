@@ -5,6 +5,7 @@ from typing import Dict, Any, List
 
 import utils.data_path_utils as data_path_utils
 import utils.config_utils as config_utils
+import utils.people_utils as people_utils
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from steps.step_01_research_municipality.research_municipality import research_municipality
 from steps.step_02_search_links.search_links import search_links
@@ -22,6 +23,7 @@ DEFAULT_STATE: PipelineContext = {
         "required_data": 5, # Default number of council members
         "current_data": 0,
     },
+    "names": {},
     "steps": {
         PipelineStatus.INIT.value: {},
         PipelineStatus.RESEARCH_MUNICIPALITY.value: {},
@@ -36,8 +38,10 @@ DEFAULT_STATE: PipelineContext = {
         PipelineStatus.SCRAPE_PAGE.value: {},
         PipelineStatus.PREPROCESS_PAGE_CONTENT.value: {},
         PipelineStatus.PROCESS_PAGE_CONTENT.value: { # Lists of people by names
-            "google_gemini": {},
-            "openai": {}
+            "records_by_source": {
+                "google_gemini": {},
+                "openai": {}
+            },
         },
         PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value: {},
         PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value: {},

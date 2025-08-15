@@ -7,38 +7,33 @@ from schemas import (
   PipelineStatus, 
   LLMPerson, 
   PeopleArrayLLMResponseSchema, 
-  ProcessedDataDict, 
-  ProcessedLLMPeople,
-  LLMResponsesDict,
-  pydantic_to_dict,
-  dict_to_pydantic
+  RecordsBySource,
+  ProcessPageContentStep,
+  OtherNamesByCanonicalName
 )
 import utils.config_utils as config_utils
 from utils.data_utils import MunicipalityContext
 import utils.data_path_utils as data_path_utils
 import utils.url_utils as url_utils
-from typing import List, Any, Dict
+from typing import List, Any, Dict, Tuple
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 import services.openai.llm as openai_llm
 import services.openai.prompts as openai_prompt
 import utils.data_utils as data_utils
-import services.google_gemini.response_schemas as gemini_response_schemas
-import services.openai.response_schemas as openai_response_schemas
 import steps.step_05_process_page_content.merge_utils as merge_utils
+from unittest.mock import patch
 
 LLMS = [
     {
         "name": "google_gemini",
         "service": google_gemini_llm,
         "prompt": google_gemini_prompt,
-        "response_schema": gemini_response_schemas.GEMINI_PEOPLE_ARRAY_SCHEMA
     },
     {
         "name": "openai",
         "service": openai_llm,
         "prompt": openai_prompt,
-        "response_schema": openai_response_schemas.OpenAIPeopleArray
     }
 ]
 
@@ -62,11 +57,20 @@ def process_page_content(
     municipality_context = data_utils.get_municipality_context(context["state"], context["geoid"])
     responses = process_with_llms(municipality_context, government_type, content, people_hint)
 
-    updated_processed_data = copy.deepcopy(context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value])
-    updated_processed_data = update_data(updated_processed_data, responses)
+    updated_processed_data: ProcessPageContentStep = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]
+    if not isinstance(updated_processed_data, ProcessPageContentStep):
+        updated_processed_data = ProcessPageContentStep.model_validate(updated_processed_data)
+
+    names: Dict[str, List[str]] = context["names"]
+    updated_names, updated_records_by_source = update_records_by_source(
+        names, updated_processed_data.records_by_source, responses
+    )
+    updated_processed_data.records_by_source = updated_records_by_source
 
     roles = config_utils.get_all_roles_by_government_type(government_type)
-    updated_progress = update_progress(context["progress"].copy(), updated_processed_data, roles)
+    updated_progress = update_progress(
+        context["progress"].copy(), updated_processed_data.records_by_source, roles
+    )
 
     updated_links = []
     for link in context["links"]:
@@ -74,35 +78,39 @@ def process_page_content(
             # Update the status/content for this link
             updated_links.append({**link, "status": LinkStatus.DONE.value})
         else:
-            updated_links.append(link)  
+            updated_links.append(link)
 
-    updated_links = update_website_links(updated_links, updated_processed_data)
+    updated_links = update_website_links(updated_links, updated_processed_data.records_by_source)
 
     return {
         "links": updated_links,
         "progress": updated_progress,
+        "names": updated_names,
         "steps": {
             **context["steps"],
-            PipelineStatus.PROCESS_PAGE_CONTENT.value: updated_processed_data
+            PipelineStatus.PROCESS_PAGE_CONTENT.value: updated_processed_data.model_dump()
         }
     }
 
-def update_data(
-    updated_processed_data: ProcessedDataDict, # map of llm name to Dict[str, ProcessedLLMPeople]
-    current_responses: LLMResponsesDict
-) -> ProcessedDataDict:
+def update_records_by_source(
+    names: OtherNamesByCanonicalName,
+    records_by_source: RecordsBySource,  # map of llm name to Dict[str, List[LLMPerson]]
+    current_responses: Dict[str, List[LLMPerson]]  # map of llm name to List[LLMPerson]
+) -> Tuple[OtherNamesByCanonicalName, RecordsBySource]:
     """
     Update the data with the new responses.
     """
-    processed_data = copy.deepcopy(updated_processed_data)
-    # Check if the current responses already exist in the updated responses
-    # If not, add them  
+    updated_names = copy.deepcopy(names) if names else {}  # Handle empty names
+    updated_records_by_source = copy.deepcopy(records_by_source)
+    
     for llm_name, llm_people_list in current_responses.items():
-        people_by_name = processed_data[llm_name]
-        people_by_name = dict_to_pydantic(people_by_name, ProcessedLLMPeople)
-        processed_data[llm_name] = merge_utils.group_people_by_name(people_by_name, llm_people_list)
+        people_by_name = updated_records_by_source.get(llm_name, {})  # Handle missing LLM data
+        updated_names, updated_people_by_name = merge_utils.group_people_by_name(
+            updated_names, people_by_name, llm_people_list
+        )
+        updated_records_by_source[llm_name] = updated_people_by_name
 
-    return pydantic_to_dict(processed_data)
+    return updated_names, updated_records_by_source
 
 def process_with_llms(
     municipality_context: MunicipalityContext,
@@ -128,22 +136,24 @@ def process_with_llms(
 
 def update_progress(
     progress: Dict[str, Any],
-    updated_processed_data: Dict[str, Dict[str, dict]],
+    updated_records_by_source: RecordsBySource,
     roles: List[str]
 ) -> Dict[str, Any]:
-    # For each LLM, get all ProcessedLLMPeople dicts, filter by has_contact_info, and find the shortest list
+    """
+    Update the progress based on the processed data.
+    """
     min_length = float('inf')
 
-    for _, people_by_name in updated_processed_data.items():
+    for _, people_by_name in updated_records_by_source.items():
         filtered = [
             p for p in people_by_name.values()
-            if has_role_and_contact_info(roles, p["records"])
+            if has_role_and_contact_info(roles, p)
         ]
         min_length = min(min_length, len(filtered))
     progress["current_data"] = min_length if min_length != float('inf') else 0
     return progress
 
-def has_role_and_contact_info(roles: List[str], records: List[Any]) -> bool:
+def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> bool:
     """
     Return True if there is at least one record with contact info
     AND at least one record with a matching role (can be different records).
@@ -164,11 +174,11 @@ def has_role_and_contact_info(roles: List[str], records: List[Any]) -> bool:
     )
     return has_contact and has_role
 
-def update_website_links(updated_links: List[Link], updated_processed_data: ProcessedDataDict) -> List[Link]:
+def update_website_links(updated_links: List[Link], records_by_source: RecordsBySource) -> List[Link]:
     """
     Update the links with websites found in the processed data.
     """
-    found_websites = extract_websites_from_processed_data(updated_processed_data)
+    found_websites = extract_websites_from_processed_data(records_by_source)
 
     # Update existing links or add new ones
     for website in found_websites:
@@ -187,15 +197,15 @@ def update_website_links(updated_links: List[Link], updated_processed_data: Proc
 
     return updated_links
 
-def extract_websites_from_processed_data(processed_data: ProcessedDataDict) -> List[str]:
+def extract_websites_from_processed_data(records_by_source: RecordsBySource) -> List[str]:
     """
     Extract website links from the processed data.
     """
     found_websites = []
-    for people_by_name in processed_data.values():
-        for person in people_by_name.values():
-            for record in person["records"]:
-                website = record.get("website", {}).get("data")
+    for people_by_name in records_by_source.values():
+        for person_list in people_by_name.values():  # Directly iterate over lists of LLMPerson
+            for person in person_list:
+                website = person.website.data if person.website else None
                 if website and website not in found_websites:
                     found_websites.append(website)
     return found_websites

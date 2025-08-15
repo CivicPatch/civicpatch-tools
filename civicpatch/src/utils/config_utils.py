@@ -112,7 +112,7 @@ def get_process():
     
     return process_config
 
-def build_role_alias_map(government_type: str) -> Dict[str, str]:
+def get_role_alias_map(government_type: str) -> Dict[str, str]:
     role_configs = get_role_configs_by_government_type(government_type)
     alias_map = {}
     for entry in role_configs:

@@ -45,7 +45,7 @@ def search_links(context: PipelineContext):
 
 
     return {
-        "links": updated_links,
+        "links": [link.model_dump() for link in updated_links],
         "steps": {
             **context["steps"],
             PipelineStatus.SEARCH_LINKS.value: {

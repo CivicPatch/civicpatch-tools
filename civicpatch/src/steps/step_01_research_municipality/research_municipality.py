@@ -25,8 +25,7 @@ def research_municipality(context: PipelineContext):
 
     return {
         "progress": {
-            # Elected officials (data units) needed. Subtract 2 because we're not guaranteed to find contact info for everoyne,
-            "required_data": max(MINIMUM_ELECTED_OFFICIALS_NUM, len(elected_officials)) - 2,
+            "required_data": max(MINIMUM_ELECTED_OFFICIALS_NUM, len(elected_officials)),
             "current_data": 0,  # Default current data count
         },
         "steps": {
