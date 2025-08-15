@@ -172,17 +172,17 @@ class Pipeline:
         preprocessed_links = self.get_links(LinkStatus.PREPROCESSED)
         links_processed = self.get_links(LinkStatus.DONE)
         process_max_pages = process_config.get("max_pages", 15)
+        processed_count = len(links_processed)
 
         if not preprocessed_links:
             print("No preprocessed links left to process.")
-            return {}, PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+            return {}, processed_count, PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
 
-        processed_count = len(links_processed)
 
         page_to_process = preprocessed_links[0] if preprocessed_links and processed_count < process_max_pages else None
         if not page_to_process:
             print("Max pages reached or no preprocessed links left to process.")
-            return {}, PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+            return {}, processed_count, PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
 
         updated_context = process_page_content(self.context, page_to_process)
 

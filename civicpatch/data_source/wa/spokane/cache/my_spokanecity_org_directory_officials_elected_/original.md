@@ -1,4 +1,4 @@
-City of Spokane, Washington
+Directory of Elected Officials - City of Spokane, Washington
 
 
 
@@ -21,45 +21,120 @@ Browser cookies and javascript are enabled.
 * [Search](https://my.spokanecity.org/search/ "Website Search")
 * [My Account](https://my.spokanecity.org/account/ "My Account")
 
-[Previous](https://my.spokanecity.org/# "Previous")
-[![Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law](//static.spokanecity.org/photos/2025/08/06/mayor-brown-signs-updated-complete-streets/16x7/mayor-brown-signs-updated-complete-streets.svg)
-![Loading...](//static.spokanecity.org/my/svg/spinner-fff.svg "Loading...")](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
-[Next](https://my.spokanecity.org/# "Next")
+[Menu](https://my.spokanecity.org/directory/officials/elected/#)
 
-[Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law
-This legislation will incorporate more walking and biking aspects into street projects and save money while the City updates its street network.](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
+* [Directory](https://my.spokanecity.org/directory/)More
+  + [Officials](https://my.spokanecity.org/directory/officials/)
+  + [Agencies](https://my.spokanecity.org/directory/agencies/)
+  + [Boards & Commissions](https://my.spokanecity.org/directory/bcc/)
+  + [Locations](https://my.spokanecity.org/directory/locations/)
+* [Officials](https://my.spokanecity.org/directory/officials/)More
+  + [Elected](https://my.spokanecity.org/directory/officials/elected/)
+  + [By Division](https://my.spokanecity.org/directory/officials/by-division/)
+  + [A-Z](https://my.spokanecity.org/directory/officials/a-z/)
+* [Elected](https://my.spokanecity.org/directory/officials/elected/)
 
-* [Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
-* [![Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law](//static.spokanecity.org/my/svg/selected-fff.svg "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
-* [![Code Enforcement Inspection Districts and Focused Compliance Efforts](//static.spokanecity.org/my/svg/circle-fff.svg "Code Enforcement Inspection Districts and Focused Compliance Efforts")](https://my.spokanecity.org/news/stories/2025/08/04/code-enforcement-inspection-districts-and-focused-compliance-efforts/ "Code Enforcement Inspection Districts and Focused Compliance Efforts")
-* [![City of Spokane Launches 'Know Your Rights' Webpage](//static.spokanecity.org/my/svg/circle-fff.svg "City of Spokane Launches 'Know Your Rights' Webpage")](https://my.spokanecity.org/news/releases/2025/08/01/city-of-spokane-launches-know-your-rights-webpage/ "City of Spokane Launches 'Know Your Rights' Webpage")
-* [![Working Together in the Fight Against PFAS](//static.spokanecity.org/my/svg/circle-fff.svg "Working Together in the Fight Against PFAS")](https://my.spokanecity.org/news/stories/2025/07/29/working-together-in-the-fight-against-pfas/ "Working Together in the Fight Against PFAS")
-* [![Mayor Brown Pushes for Easier Path to Open Childcare Facilities](//static.spokanecity.org/my/svg/circle-fff.svg "Mayor Brown Pushes for Easier Path to Open Childcare Facilities")](https://my.spokanecity.org/news/releases/2025/07/28/mayor-brown-pushes-for-easier-path-to-open-childcare-facilities/ "Mayor Brown Pushes for Easier Path to Open Childcare Facilities")
-* [![Lincoln Park Shelter Gets Makeover with Help from Kids and Community](//static.spokanecity.org/my/svg/circle-fff.svg "Lincoln Park Shelter Gets Makeover with Help from Kids and Community")](https://my.spokanecity.org/news/stories/2025/07/25/lincoln-park-shelter-gets-makeover-with-help-from-kids-and-community/ "Lincoln Park Shelter Gets Makeover with Help from Kids and Community")
-* [![Help Shape Local Climate Policies Today](//static.spokanecity.org/my/svg/circle-fff.svg "Help Shape Local Climate Policies Today")](https://my.spokanecity.org/news/stories/2025/07/21/help-shape-local-climate-policies-today/ "Help Shape Local Climate Policies Today")
-* ![](//static.spokanecity.org/my/svg/linear-gradient-h-fff-transparent.svg)
+[Directory](https://my.spokanecity.org/directory/default.aspx "Directory")
+==========================================================================
 
-[![Shaping Spokane Housing](//static.spokanecity.org/graphics/bugs/housing/chips/full/housing.png "Shaping Spokane Housing")](https://my.spokanecity.org/housing/)
+![City of Spokane, Washington](//static.spokanecity.org/photos/2015/06/11/clock-tower-and-pavilion/16x3/Full/clock-tower-and-pavilion.jpg)
 
-[spokanecity](https://twitter.com/spokanecity/)
+* Previous
+* Next
 
-🚧 Traffic Alert! 🚧 Tomorrow, Wednesday, Aug. 13, W. Wellesley Ave. will be CLOSED in both directions between Maple St. and Division St. between 7 a.m. and 6 p.m. [#SpokaneStreets](https://twitter.com/search?q=%23SpokaneStreets&src=hash) <https://t.co/HtELJNxMrP> <https://t.co/v2XNc26VuD>
+### Office of the Mayor
 
-* [Payments](https://my.spokanecity.org/payments/ "Pay your utility bill, parking ticket and more")
-* [News](https://my.spokanecity.org/news/ "Latest news and information")
-* [Streets](https://my.spokanecity.org/streets/ "Street construction, traffic notices and more")
-* [Services](https://my.spokanecity.org/services/ "Complete list of services")
-* [Jobs](https://my.spokanecity.org/jobs/ "Job and employment opportunities")
-* [Directory](https://my.spokanecity.org/directory/ "Directory of agencies and officials")
-* [Budget](https://my.spokanecity.org/budget/ "Budget information and documents")
-* [Mayor](https://my.spokanecity.org/mayor/ "Mayor Lisa Brown")
-* [Council](https://my.spokanecity.org/citycouncil/ "City Council, districts, documents, agendas, minutes and more")
-* [Courts](https://my.spokanecity.org/courts/ "Municipal Court, Prosecutor, Probation Services and Public Defender")
+City Hall, Seventh Floor • [808 W. Spokane Falls Blvd., Spokane, WA 99201](https://www.google.com/maps/place/808+W+Spokane+Falls+Blvd,+Spokane,+WA+99201)
 
-* [![Construction Info](//static.spokanecity.org/graphics/streets/construction-info/16x10/medium/construction-info.jpg "Construction Info")](https://my.spokanecity.org/streets/notices/)
-* [![Community Update](//static.spokanecity.org/graphics/communityupdate/community-update-tile/16x10/medium/community-update-tile.png "Community Update")](https://my.spokanecity.org/communityupdate/)
+![Lisa Brown](https://static.spokanecity.org/photos/2023/01/13/lisa-brown/chips/medium/lisa-brown.jpg)
 
-[![Together Spokane](//static.spokanecity.org/graphics/parksrec/photo-tiles/together-spokane/16x3/large/together-spokane.png "Together Spokane")](https://www.togetherspokane.org/)
+#### Lisa Brown
+
+Mayor
+  
+Phone: [509.625.6250](tel:1-509-625-6250)
+  
+Email: [mayor@spokanecity.org](mailto:mayor@spokanecity.org)
+
+### City Council
+
+City Hall, Seventh Floor • [808 W. Spokane Falls Blvd., Spokane, WA 99201](https://www.google.com/maps/place/808+W+Spokane+Falls+Blvd,+Spokane,+WA+99201)
+
+![Betsy Wilkerson](https://static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg)
+
+#### Betsy Wilkerson
+
+City Council President
+  
+Phone: [509.625.6258](tel:1-509-625-6258)
+  
+Email: [bwilkerson@spokanecity.org](mailto:bwilkerson@spokanecity.org)
+
+![Michael Cathcart](https://static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/medium/michael-cathcart.jpg)
+
+#### Michael Cathcart
+
+City Council, District 1
+  
+Phone: [509.625.6257](tel:1-509-625-6257)
+  
+Email: [mcathcart@spokanecity.org](mailto:mcathcart@spokanecity.org)
+
+![Jonathan Bingle](https://static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg)
+
+#### Jonathan Bingle
+
+City Council, District 1
+  
+Phone: [509.625.6275](tel:1-509-625-6275)
+  
+Email: [jbingle@spokanecity.org](mailto:jbingle@spokanecity.org)
+
+![Paul Dillon](https://static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg)
+
+#### Paul Dillon
+
+City Council, District 2
+  
+Phone: [509.625.6254](tel:1-509-625-6254)
+  
+Email: [pdillon@spokanecity.org](mailto:pdillon@spokanecity.org)
+
+![Shelby Lambdin](https://static.spokanecity.org/graphics/unavailable/chips/medium/unavailable.png)
+
+#### Shelby Lambdin
+
+City Council, District 2
+  
+Phone: [509.625.6821](tel:1-509-625-6821)
+  
+Email: [slambdin@spokanecity.org](mailto:slambdin@spokanecity.org)
+
+![Kitty Klitzke](https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/medium/kitty-klitzke.jpg)
+
+#### Kitty Klitzke
+
+City Council, District 3
+  
+Phone: [509.625.6291](tel:1-509-625-6291)
+  
+Email: [kklitzke@spokanecity.org](mailto:kklitzke@spokanecity.org)
+
+![Zack Zappone](https://static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg)
+
+#### Zack Zappone
+
+City Council, District 3
+  
+Phone: [509.625.6256](tel:1-509-625-6256)
+  
+Email: [zzappone@spokanecity.org](mailto:zzappone@spokanecity.org)
+
+---
+
+#### Other Resources
+
+* [Boards & Commissions](https://my.spokanecity.org/bcc/)
 
 ![Spokane Mountain Silhouette](//static.spokanecity.org/my/svg/spokane-mountain-silhouette1.svg)
 
@@ -174,7 +249,7 @@ Spokane, WA 99201](https://www.google.com/maps/place/808+W+Spokane+Falls+Blvd,+S
 * [Vimeo](https://vimeo.com/spokanecity/ "Watch us on Vimeo")
 * [Instagram](https://instagram.com/spokanecity/ "See us on Instagram")
 
-[Back Top](https://my.spokanecity.org/#Top "Back Top")
+[Back Top](https://my.spokanecity.org/directory/officials/elected/#Top "Back Top")
 
 * [Terms of Use](https://my.spokanecity.org/website/terms/ "Terms of Use & Disclaimer")
 * [Your Privacy](https://my.spokanecity.org/website/privacy/ "Privacy Policy")
