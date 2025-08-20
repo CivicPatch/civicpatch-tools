@@ -23,7 +23,9 @@ dependencies = [
     "google-genai (>=1.29.0,<2.0.0)",
     "jsonref (>=1.1.0,<2.0.0)",
     "python-levenshtein (>=0.27.1,<0.28.0)",
-    "together (>=1.5.25,<2.0.0)"
+    "together (>=1.5.25,<2.0.0)",
+    "chonkie[all] (>=1.1.2,<2.0.0)",
+    "langchain (>=0.3.27,<0.4.0)"
 ]
 [tool.poetry]
 packages = [

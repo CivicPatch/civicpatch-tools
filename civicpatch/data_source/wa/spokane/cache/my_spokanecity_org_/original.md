@@ -22,21 +22,21 @@ Browser cookies and javascript are enabled.
 * [My Account](https://my.spokanecity.org/account/ "My Account")
 
 [Previous](https://my.spokanecity.org/# "Previous")
-[![Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law](//static.spokanecity.org/photos/2025/08/06/mayor-brown-signs-updated-complete-streets/16x7/mayor-brown-signs-updated-complete-streets.svg)
-![Loading...](//static.spokanecity.org/my/svg/spinner-fff.svg "Loading...")](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
+[![Millions Awarded to Affordable Housing Projects Across Spokane](//static.spokanecity.org/graphics/blogs/millions-awarded-to-affordable-housing-projects-across-spokane/affordable-housing-funds/16x7/affordable-housing-funds.svg)
+![Loading...](//static.spokanecity.org/my/svg/spinner-fff.svg "Loading...")](https://my.spokanecity.org/news/releases/2025/08/19/millions-awarded-to-affordable-housing-projects-across-spokane/ "Millions Awarded to Affordable Housing Projects Across Spokane")
 [Next](https://my.spokanecity.org/# "Next")
 
-[Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law
-This legislation will incorporate more walking and biking aspects into street projects and save money while the City updates its street network.](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
+[Millions Awarded to Affordable Housing Projects Across Spokane
+$7.5 million going to rehabilitate and build new affordable housing units](https://my.spokanecity.org/news/releases/2025/08/19/millions-awarded-to-affordable-housing-projects-across-spokane/ "Millions Awarded to Affordable Housing Projects Across Spokane")
 
-* [Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
-* [![Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law](//static.spokanecity.org/my/svg/selected-fff.svg "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
+* [Millions Awarded to Affordable Housing Projects Across Spokane](https://my.spokanecity.org/news/releases/2025/08/19/millions-awarded-to-affordable-housing-projects-across-spokane/ "Millions Awarded to Affordable Housing Projects Across Spokane")
+* [![Millions Awarded to Affordable Housing Projects Across Spokane](//static.spokanecity.org/my/svg/selected-fff.svg "Millions Awarded to Affordable Housing Projects Across Spokane")](https://my.spokanecity.org/news/releases/2025/08/19/millions-awarded-to-affordable-housing-projects-across-spokane/ "Millions Awarded to Affordable Housing Projects Across Spokane")
+* [![Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law](//static.spokanecity.org/my/svg/circle-fff.svg "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
 * [![Code Enforcement Inspection Districts and Focused Compliance Efforts](//static.spokanecity.org/my/svg/circle-fff.svg "Code Enforcement Inspection Districts and Focused Compliance Efforts")](https://my.spokanecity.org/news/stories/2025/08/04/code-enforcement-inspection-districts-and-focused-compliance-efforts/ "Code Enforcement Inspection Districts and Focused Compliance Efforts")
 * [![City of Spokane Launches 'Know Your Rights' Webpage](//static.spokanecity.org/my/svg/circle-fff.svg "City of Spokane Launches 'Know Your Rights' Webpage")](https://my.spokanecity.org/news/releases/2025/08/01/city-of-spokane-launches-know-your-rights-webpage/ "City of Spokane Launches 'Know Your Rights' Webpage")
 * [![Working Together in the Fight Against PFAS](//static.spokanecity.org/my/svg/circle-fff.svg "Working Together in the Fight Against PFAS")](https://my.spokanecity.org/news/stories/2025/07/29/working-together-in-the-fight-against-pfas/ "Working Together in the Fight Against PFAS")
 * [![Mayor Brown Pushes for Easier Path to Open Childcare Facilities](//static.spokanecity.org/my/svg/circle-fff.svg "Mayor Brown Pushes for Easier Path to Open Childcare Facilities")](https://my.spokanecity.org/news/releases/2025/07/28/mayor-brown-pushes-for-easier-path-to-open-childcare-facilities/ "Mayor Brown Pushes for Easier Path to Open Childcare Facilities")
 * [![Lincoln Park Shelter Gets Makeover with Help from Kids and Community](//static.spokanecity.org/my/svg/circle-fff.svg "Lincoln Park Shelter Gets Makeover with Help from Kids and Community")](https://my.spokanecity.org/news/stories/2025/07/25/lincoln-park-shelter-gets-makeover-with-help-from-kids-and-community/ "Lincoln Park Shelter Gets Makeover with Help from Kids and Community")
-* [![Help Shape Local Climate Policies Today](//static.spokanecity.org/my/svg/circle-fff.svg "Help Shape Local Climate Policies Today")](https://my.spokanecity.org/news/stories/2025/07/21/help-shape-local-climate-policies-today/ "Help Shape Local Climate Policies Today")
 * ![](//static.spokanecity.org/my/svg/linear-gradient-h-fff-transparent.svg)
 
 [![Shaping Spokane Housing](//static.spokanecity.org/graphics/bugs/housing/chips/full/housing.png "Shaping Spokane Housing")](https://my.spokanecity.org/housing/)

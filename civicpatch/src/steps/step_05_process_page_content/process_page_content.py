@@ -5,6 +5,7 @@ from schemas import (
   Link, 
   LinkStatus, 
   PipelineStatus, 
+  RawLLMPerson,
   LLMPerson, 
   PeopleArrayLLMResponseSchema, 
   RecordsBySource,
@@ -20,6 +21,8 @@ import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 import services.openai.llm as openai_llm
 import services.openai.prompts as openai_prompt
+import services.together_ai.llm as together_ai_llm
+import services.together_ai.prompts as together_ai_prompt
 import utils.data_utils as data_utils
 import steps.step_05_process_page_content.merge_utils as merge_utils
 from unittest.mock import patch
@@ -34,6 +37,11 @@ LLMS = [
         "name": "openai",
         "service": openai_llm,
         "prompt": openai_prompt,
+    },
+    {
+        "name": "together_ai",
+        "service": together_ai_llm,  # Placeholder for Together AI service
+        "prompt": together_ai_prompt,  # Placeholder for Together AI prompt
     }
 ]
 
@@ -55,7 +63,9 @@ def process_page_content(
         content = f.read()
 
     municipality_context = data_utils.get_municipality_context(context["state"], context["geoid"])
-    responses = process_with_llms(municipality_context, government_type, content, people_hint)
+    data_source_url = page_to_process["url"]
+
+    responses = process_with_llms(data_source_url, municipality_context, government_type, content, people_hint)
 
     updated_processed_data: ProcessPageContentStep = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]
     if not isinstance(updated_processed_data, ProcessPageContentStep):
@@ -113,6 +123,7 @@ def update_records_by_source(
     return updated_names, updated_records_by_source
 
 def process_with_llms(
+    data_source_url: str,
     municipality_context: MunicipalityContext,
     government_type: str,
     content: str,
@@ -123,14 +134,24 @@ def process_with_llms(
     """
     responses: Dict[str, List[LLMPerson]] = {}
     for llm in LLMS:
-        prompt = llm["prompt"].municipality_officials_prompt(government_type, content, people_hint)
-        response: PeopleArrayLLMResponseSchema = llm["service"].run_prompt(
-            municipality_context, prompt, response_schema=PeopleArrayLLMResponseSchema
+        prompt = llm["prompt"].municipality_officials_prompt(government_type, people_hint)
+        response = llm["service"].run_prompt(
+            municipality_context, 
+            prompt, 
+            response_schema=PeopleArrayLLMResponseSchema,
+            content=content
         )
 
-        people = response["people"] if response else []
-        people_llm = [LLMPerson.model_validate(p) if not isinstance(p, LLMPerson) else p for p in people]
-        responses[llm["name"]] = people_llm
+        # Convert LLMPerson to ProcessedLLMPerson
+        people = response.people
+        processed_people = []
+        for p in people:
+            p = p.model_dump() 
+            p["data_source"] = data_source_url  # Add data source URL
+            processed_person = LLMPerson.model_validate(p)
+            processed_people.append(processed_person)
+            
+        responses[llm["name"]] = processed_people
 
     return responses
 
@@ -150,6 +171,15 @@ def calculate_progress(
             if has_role_and_contact_info(roles, p)
         ]
         min_length = min(min_length, len(filtered))
+
+    print("Progress by source:")
+    for source, people_by_name in updated_records_by_source.items():
+        filtered = [
+            p for p in people_by_name.values()
+            if has_role_and_contact_info(roles, p)
+        ]
+        print(f"{source}: {len(filtered)} people with roles and contact info")
+    
     progress["current_data"] = min_length if min_length != float('inf') else 0
     return progress
 
@@ -161,14 +191,12 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     people = [LLMPerson.model_validate(r) if not isinstance(r, LLMPerson) else r for r in records]
 
     has_contact = any(
-        (p.phone_number and p.phone_number.data) or
-        (p.email and p.email.data) or
-        (p.website and p.website.data)
+        bool(p.phone_number) or bool(p.email) or bool(p.website)
         for p in people
     )
     # Case-insensitive role match
     has_role = any(
-        any(r.data and r.data.strip().lower() in roles for r in p.roles)
+        any(r and r.strip().lower() in roles for r in p.roles)
         for p in people
     )
     return has_contact and has_role
@@ -209,7 +237,7 @@ def extract_websites_from_processed_data(roles: List[str], records_by_source: Re
                 continue
 
             for person_record in person_list:
-                website = person_record.website.data if person_record.website else None
+                website = person_record.website if person_record.website else None
                 if website and website not in found_websites:
                     found_websites.append(website)
     return found_websites

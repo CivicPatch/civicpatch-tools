@@ -20,7 +20,10 @@ MODEL_FALLBACKS = [
 # Note: CANNOT get flash-lite to extract dates
 MAX_RETRIES = 5
 
-def run_prompt(municipality_context: MunicipalityContext, prompt, response_schema=None, with_search=False):
+def run_prompt(municipality_context: MunicipalityContext, prompt, response_schema=None, content="", with_search=False):
+    """
+    Run a prompt against Google Gemini's API
+    """
     api_key = os.getenv("GOOGLE_GEMINI_TOKEN")
     if not api_key:
         raise ValueError("GOOGLE_GEMINI_TOKEN is not set in environment variables.")
@@ -30,11 +33,17 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, response_schem
             response, input_tokens_num, output_tokens_num = make_request_with_search(model, api_key, prompt)
         else:
             client = instructor.from_provider(model=f"google/{model}", api_key=api_key)
+            
+            # Set up messages
+            messages = [
+                {"role": "system", "content": prompt}
+            ]
+            if content:
+                messages.append({"role": "user", "content": content})
+
             response, completion = client.chat.completions.create_with_completion(
                 response_model=response_schema,
-                messages=[
-                    {"role": "user", "content": prompt}
-                ]
+                messages=messages
             )
             
             usage = completion.usage_metadata
@@ -43,10 +52,7 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, response_schem
 
         log_llm_cost(municipality_context, "google_gemini", model, input_tokens_num, output_tokens_num, with_search=False)
 
-        if isinstance(response, dict):
-            return response
-        else:
-            return response.dict() 
+        return response
 
     for model in MODEL_FALLBACKS:
         try:

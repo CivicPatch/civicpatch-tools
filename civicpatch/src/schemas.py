@@ -41,37 +41,28 @@ class PipelineStatus(Enum):
     RETRY = "RETRY"
     DONE = "DONE"
 
-class LLMDataPoint(BaseModel):
-    data: Optional[str] = None
-    llm_confidence: float
-    llm_confidence_reason: str
-
-class LLMPerson(BaseModel):
+class RawLLMPerson(BaseModel):
     name: str
-    roles: List[LLMDataPoint]
-    divisions: List[LLMDataPoint]
-    phone_number: Optional[LLMDataPoint]
-    email: Optional[LLMDataPoint]
-    website: Optional[LLMDataPoint]
-    start_date: Optional[LLMDataPoint]
-    end_date: Optional[LLMDataPoint]
-    data_sources: List[str] # List of URLs where information was founda
-
-class PeopleArrayLLMResponseSchema(BaseModel):
-    people: List[LLMPerson]
-    thought: str
-
-class Person(BaseModel):
-    name: str
+    image: Optional[str]
     roles: List[str]
     divisions: List[str]
-    image: str
+    phone_number: Optional[str] = None
+    email: Optional[str] = None
+    website: Optional[str] = None
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+
+class LLMPerson(RawLLMPerson):
+    data_source: str
+    # todo: image
+    # data_sources: List[str] # List of URLs where information was founda
+
+class PeopleArrayLLMResponseSchema(BaseModel):
+    people: List[RawLLMPerson]
+    thought: str
+
+class Person(RawLLMPerson):
     cdn_image: str
-    email: str
-    phone_number: str
-    website: str
-    start_date: str
-    end_date: str
     data_sources: List[str] # List of source URLs where information was found
     updated_at: str
 

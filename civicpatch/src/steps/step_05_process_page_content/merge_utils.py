@@ -1,3 +1,5 @@
+
+
 from typing import List, Dict, Tuple
 from schemas import LLMPerson, PeopleByName, OtherNamesByCanonicalName
 from nameparser import HumanName
@@ -102,5 +104,3 @@ def group_people_by_name(
         name_map[canonical_name] = sorted(set(name_map[canonical_name]))
 
     return name_map, people_by_name
-
-

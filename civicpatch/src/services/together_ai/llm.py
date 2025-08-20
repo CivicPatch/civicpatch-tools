@@ -2,15 +2,25 @@ import os
 import json
 import instructor
 import openai
+from typing import List, Dict, Any
+from langchain.text_splitter import MarkdownHeaderTextSplitter
 from utils.request_utils import with_retry
 from utils.log_utils import log_llm_cost
 from utils.data_utils import MunicipalityContext
+
+PROMPT_TOKENS=600
+OUTPUT_BUFFER=1500
 
 MAX_RETRIES = 5
 BASE_URL = "https://api.together.xyz/v1"
 
 MODELS_BY_TYPE = {
-    "CHEAP": "together/instructor-medium",
+    "CHEAP": {
+        "model": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
+        "input_cost": 0.10 / 1000000,
+        "output_cost": 0.10 / 1000000,
+        "token_limit": 8192,
+    },
     "STANDARD": { # Used for municipality official extraction
         # MUNICIPALITY_PROMPT TESTS
         # FAILS @ temperature 0.2, top_p 1.0
@@ -32,22 +42,27 @@ MODELS_BY_TYPE = {
         # FAILS
             # Good result, but Zack Zappone is missing??
             # TODO: figure out chunking, maybe it's being cut off
+            # Cannot differentiate between ward and districts
         #"model": "meta-llama/Llama-3.2-3B-Instruct-Turbo",
         #"input_cost": 0.06 / 1000000,
-        #"output_cost": 0.06 / 1000000
+        #"output_cost": 0.06 / 1000000,
+        #"token_limit": 4096,  # Actual token limit is 4096, leave buffer for output tokens
         # PASSES with flying colors
-        #"model": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
-        #"input_cost": 0.10 / 1000000,
-        #"output_cost": 0.10 / 1000000
+        "model": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
+        "input_cost": 0.10 / 1000000,
+        "output_cost": 0.10 / 1000000,
+        "token_limit": 8192,
         # FAILS -- need to RETRY!
-        # "model": "openai/gpt-oss-120b",
-        # "input_cost": 0.15 / 1000000,
-        # "output_cost": 0.60 / 1000000
+        #"model": "openai/gpt-oss-120b",
+        #"input_cost": 0.15 / 1000000,
+        #"output_cost": 0.60 / 1000000,
+        #"token_limit": 4096,  # Actual token limit is 4096, leave buffer for output tokensjj
         # FAILS - need to chunk
           # Model limit is 4096 tokens (sent 4312 -- 2264 in messages, 2048 in completion)
-        # "model": "marin-community/marin-8b-instruct",
-        # "input_cost": 0.18 / 1000000,
-        # "output_cost": 0.18 / 1000000
+        #"model": "marin-community/marin-8b-instruct",
+        #"input_cost": 0.18 / 1000000,
+        #"output_cost": 0.18 / 1000000,
+        #"token_limit": 6500
         # FAILS - does not support response schema (tool use)
         # "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
         # "input_cost": 0.18 / 1000000,
@@ -93,32 +108,50 @@ MODELS_BY_TYPE = {
     },
 }
 
-def run_prompt(municipality_context: MunicipalityContext, prompt, response_schema=None, model_type="STANDARD"):
+def run_prompt(municipality_context: MunicipalityContext, prompt, content="", response_schema=None, model_type="STANDARD"):
+    """
+    Run a prompt against Together AI's API using OpenAI-compatible interface
+    """
     api_key = os.getenv("TOGETHER_AI_TOKEN")
-    model = MODELS_BY_TYPE.get(model_type, MODELS_BY_TYPE["STANDARD"])["model"]
-
     if not api_key:
-        raise ValueError("TOGETHER_AI_TOKEN is not set in environment variables.")
+        raise ValueError("TOGETHER_AI_TOKEN is not set")
 
+    # Get model configuration
+    model_config = MODELS_BY_TYPE.get(model_type, MODELS_BY_TYPE["STANDARD"])
+    model = model_config["model"]
+
+    # Set up messages
+    messages = [
+        {"role": "system", "content": prompt}
+    ]
+    
+    if content:
+        messages.append({"role": "user", "content": content})
+
+    # Execute request with retries
     def execute():
         together_client = openai.OpenAI(api_key=api_key, base_url=BASE_URL)
         client = instructor.from_openai(together_client)
+        
         response, completion = client.chat.completions.create_with_completion(
             model=model,
             response_model=response_schema,
-            messages=[
-                {"role": "user", "content": prompt}
-            ],
+            messages=messages,
             temperature=0.2,
             top_p=1.0
         )
 
+        # Log token usage
         usage = completion.usage
-        input_tokens_num = usage.prompt_tokens
-        output_tokens_num = usage.completion_tokens
+        log_llm_cost(
+            municipality_context, 
+            "together_ai", 
+            model, 
+            usage.prompt_tokens,
+            usage.completion_tokens,
+            with_search=False
+        )
 
-        log_llm_cost(municipality_context, "together_ai", model, input_tokens_num, output_tokens_num, with_search=False)
-
-        return response.model_dump()
+        return response
 
     return with_retry(MAX_RETRIES, execute)

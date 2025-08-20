@@ -53,7 +53,7 @@ def research_municipality_prompt(municipality_context: MunicipalityContext):
     """
 
 
-def municipality_officials_prompt(government_type, content, people_hint):
+def municipality_officials_prompt(government_type, people_hint):
     """
     Generate a prompt for extracting municipality officials.
     """
@@ -88,23 +88,17 @@ def municipality_officials_prompt(government_type, content, people_hint):
     Current Date: {current_date}
 
     Return a JSON object with people, each having:
-    - name: Full name only (not titles)
-    - roles: [{{data, llm_confidence, llm_confidence_reason}}]
-    - divisions: [{{data, llm_confidence, llm_confidence_reason}}]
-    - phone_number: {{data, llm_confidence, llm_confidence_reason}}
-    - email: {{data, llm_confidence, llm_confidence_reason}}
-    - website: {{data, llm_confidence, llm_confidence_reason}}
-    - start_date: {{data, llm_confidence, llm_confidence_reason}}
-    - end_date: {{data, llm_confidence, llm_confidence_reason}}
-
-    The JSON object should have the following structure:
-    {{
-      "people": [],
-      "thought": "Your reasoning or thought process behind the extraction" // Restrict to 1 sentence.
-    }}
+    - name: (String) Full name only (no titles)
+    - image: (String or null) URL to profile image (https://...)
+    - roles: (Array of strings) Active municipal roles
+    - divisions: (Array of strings) Specific division/district/ward names
+    - phone_number: (String or null) Formatted phone number
+    - email: (String or null) Email address
+    - website: (String or null) Website URL (http(s)://)
+    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
 
     Guidelines:
-    - For "llm_confidence": Use 0-1 scale with reason for your confidence.
     - Roles extraction:
         - Extract roles that match the **target roles** provided (e.g., {', '.join(roles)}).
     - Division extraction:
@@ -133,7 +127,4 @@ def municipality_officials_prompt(government_type, content, people_hint):
     - Use the provided `current_date` to filter out roles or terms that are no longer active.
     - Exclude individuals who have resigned, vacated their roles, or are deceased.
     - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
-
-    Here is the content (in markdown):
-    {content}
     """

@@ -40,7 +40,8 @@ DEFAULT_STATE: PipelineContext = {
         PipelineStatus.PROCESS_PAGE_CONTENT.value: { # Lists of people by names
             "records_by_source": {
                 "google_gemini": {},
-                "openai": {}
+                "openai": {},
+                "together_ai": {},
             },
         },
         PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value: {},

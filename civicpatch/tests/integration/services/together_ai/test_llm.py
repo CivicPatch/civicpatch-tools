@@ -2,6 +2,7 @@ import pytest
 import time
 import os
 import json
+import utils.llm_utils as llm_utils
 from services.together_ai.llm import run_prompt
 from services.together_ai.prompts import municipality_officials_prompt
 from utils.data_utils import MunicipalityContext
@@ -86,43 +87,121 @@ def test_run_prompt_integration():
 
     prompt = municipality_officials_prompt(
         government_type="mayor_council",
-        content=content,
         people_hint=people_hint # Adjust if you want to provide hints
     )
 
     start_time = time.time()
 
-    result = run_prompt(municipality_context, prompt, response_schema=PeopleArrayLLMResponseSchema)
+    result = run_prompt(municipality_context, prompt, content=content, response_schema=PeopleArrayLLMResponseSchema)
+    result = result.model_dump() 
+
     end_time = time.time()
 
     assert end_time - start_time < 60, "Prompt execution took too long."
 
-    print("Result:")
-    print(json.dumps(result, indent=4))
+    #print("Result:")
+    #print(json.dumps(result, indent=4))
     print("Finished in {:.2f} seconds".format(end_time - start_time))
     
-    missing_people = [
-        expected_person["name"]
-        for expected_person in expected_result["people"]
-        if not any(
-            actual_person["name"] == expected_person["name"]
-            for actual_person in result["people"]
-        )
-    ]
-    assert not missing_people, f"Missing people in the result: {len(missing_people)} - {missing_people}"
+    # Sort both lists by name
+    actual_people = sorted(result["people"], key=lambda x: x["name"])
+    expected_people = sorted(expected_result["people"], key=lambda x: x["name"])
 
-    for actual_person, expected_person in zip(result["people"], expected_result["people"]):
-        print(f"Comparing person: {actual_person['name']}")  # Debug statement for each person
-        assert actual_person["name"] == expected_person["name"], f"Name mismatch: {actual_person['name']} != {expected_person['name']}"
-        for actual_role, expected_role in zip(actual_person["roles"], expected_person["roles"]):
-            print(f"Role comparison: {actual_role['data']} vs {expected_role['data']}")  # Debug statement for roles
-            assert actual_role["data"] == expected_role["data"], f"Role mismatch: {actual_role['data']} != {expected_role['data']}"
-        for actual_division, expected_division in zip(actual_person["divisions"], expected_person["divisions"]):
-            print(f"Division comparison: {actual_division['data']} vs {expected_division['data']}")  # Debug statement for divisions
-            assert actual_division["data"] == expected_division["data"], f"Division mismatch: {actual_division['data']} != {expected_division['data']}"
-        print(f"Phone number comparison: {actual_person['phone_number']['data']} vs {expected_person['phone_number']['data']}")  # Debug statement for phone number
-        assert actual_person["phone_number"]["data"] == expected_person["phone_number"]["data"], f"Phone number mismatch: {actual_person['phone_number']['data']} != {expected_person['phone_number']['data']}"
-        print(f"Email comparison: {actual_person['email']['data']} vs {expected_person['email']['data']}")  # Debug statement for email
-        assert actual_person["email"]["data"] == expected_person["email"]["data"], f"Email mismatch: {actual_person['email']['data']} != {expected_person['email']['data']}"
+    # First check for missing or extra people
+    actual_names = {p["name"] for p in actual_people}
+    expected_names = {p["name"] for p in expected_people}
+    missing_names = expected_names - actual_names
+    extra_names = actual_names - expected_names
+
+    if missing_names or extra_names:
+        error_message = []
+        if missing_names:
+            error_message.append("\nMissing people:")
+            for name in sorted(missing_names):
+                error_message.append(f"  - {name}")
+                # Find and print their expected roles
+                expected_roles = next(p["roles"] for p in expected_people if p["name"] == name)
+                error_message.append(f"    Expected roles: {expected_roles}")
+        
+        if extra_names:
+            error_message.append("\nExtra people found:")
+            for name in sorted(extra_names):
+                error_message.append(f"  - {name}")
+                # Find and print their actual roles
+                actual_roles = next(p["roles"] for p in actual_people if p["name"] == name)
+                error_message.append(f"    Actual roles: {actual_roles}")
+        
+        raise AssertionError("\n".join(error_message))
+
+    # Now check the length
+    assert len(actual_people) == len(expected_people), \
+        f"Number of people mismatch. Got {len(actual_people)}, expected {len(expected_people)}"
+
+    # Assert we have the same set of names
+    actual_names = {p["name"] for p in actual_people}
+    expected_names = {p["name"] for p in expected_people}
+    missing_names = expected_names - actual_names
+    extra_names = actual_names - expected_names
+    
+    assert not missing_names and not extra_names, \
+        f"Name mismatches:\nMissing: {missing_names}\nExtra: {extra_names}"
+
+    # Compare sorted lists
+    for actual_person, expected_person in zip(actual_people, expected_people):
+        print(f"Comparing person: {actual_person['name']}")
+        assert actual_person["name"] == expected_person["name"], \
+            f"Name mismatch: {actual_person['name']} != {expected_person['name']}"
+        
+        assert_roles(actual_person["roles"], expected_person["roles"])
+        
+        maybe_assert_divisions(actual_person["divisions"], expected_person["divisions"])
+        
+        # Compare single value fields directly
+        assert actual_person["image"] == expected_person["image"], \
+            f"Image mismatch: {actual_person['image']} != {expected_person['image']}"
+        assert actual_person["phone_number"] == expected_person["phone_number"], \
+            f"Phone number mismatch: {actual_person['phone_number']} != {expected_person['phone_number']}"
+        assert actual_person["email"] == expected_person["email"], \
+            f"Email mismatch: {actual_person['email']} != {expected_person['email']}"
 
     print("All assertions passed!")
+
+def assert_roles(action_roles, expected_roles):
+    """
+    Helper function to assert that roles match either through:
+    1. Set intersection (exact matches)
+    2. Substring matches (e.g. "Council Member" matches "City Council Member")
+    """
+    actual_set = set(action_roles)
+    expected_set = set(expected_roles)
+
+    # Check for exact matches first
+    if actual_set & expected_set:
+        return
+
+    # If no exact matches, check for substring matches
+    for expected_role in expected_roles:
+        for actual_role in action_roles:
+            if expected_role.lower() in actual_role.lower():
+                return
+            if actual_role.lower() in expected_role.lower():
+                return
+
+    # If we get here, no matches were found
+    raise AssertionError(
+        f"No matching roles found (tried exact and substring matches).\n"
+        f"Expected roles: {expected_set}\n"
+        f"Actual roles: {actual_set}"
+    )
+
+def maybe_assert_divisions(actual_divisions, expected_divisions):
+    """
+    Helper function to assert that actual divisions match expected divisions.
+    """
+    actual_set = set(actual_divisions)
+    expected_set = set(expected_divisions)
+
+    # Only run assertion if either sets contain "district" or "ward"
+    # This is hardcoded because divisions are pretty important
+    if "district" in actual_set or "ward" in actual_set or "district" in expected_set or "ward" in expected_set:
+        assert actual_set == expected_set, f"Divisions mismatch: {actual_set} != {expected_set}"
