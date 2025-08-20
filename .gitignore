@@ -1,3 +1,7 @@
+.github_actions_data/*
+!.github_actions_data/.gitkeep
+!.github_actions_data/README.md
+
 .envrc
 .env
 todo.md
