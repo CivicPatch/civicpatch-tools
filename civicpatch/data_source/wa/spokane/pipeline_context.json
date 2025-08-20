@@ -21,6 +21,11 @@
             "folder_name": ""
         },
         {
+            "url": "https://my.spokanecity.org/opendata/charter/article-02/",
+            "status": "pending",
+            "folder_name": ""
+        },
+        {
             "url": "https://my.spokanecity.org/citycouncil/",
             "status": "pending",
             "folder_name": ""
@@ -31,22 +36,12 @@
             "folder_name": ""
         },
         {
-            "url": "https://my.spokanecity.org/opendata/charter/article-02/",
-            "status": "pending",
-            "folder_name": ""
-        },
-        {
             "url": "https://my.spokanecity.org/directory/officials/",
             "status": "pending",
             "folder_name": ""
         },
         {
-            "url": "https://my.spokanecity.org/mayor/ask-the-mayor/",
-            "status": "pending",
-            "folder_name": ""
-        },
-        {
-            "url": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
+            "url": "https://my.spokanecity.org/news/releases/2025/04/16/mayor-city-council-announce-new-traffic-safety-improvements/",
             "status": "pending",
             "folder_name": ""
         },
@@ -56,12 +51,12 @@
             "folder_name": ""
         },
         {
-            "url": "https://my.spokanecity.org/smc/?Section=02.05.030",
+            "url": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
             "status": "pending",
             "folder_name": ""
         },
         {
-            "url": "https://my.spokanecity.org/news/releases/2025/04/16/mayor-city-council-announce-new-traffic-safety-improvements/",
+            "url": "https://my.spokanecity.org/smc/?Section=02.05.030",
             "status": "pending",
             "folder_name": ""
         },
@@ -86,7 +81,12 @@
             "folder_name": ""
         },
         {
-            "url": "https://my.spokanecity.org/publicworks/utility-billing/",
+            "url": "https://my.spokanecity.org/charter/",
+            "status": "pending",
+            "folder_name": ""
+        },
+        {
+            "url": "https://my.spokanecity.org/mayor/ask-the-mayor/",
             "status": "pending",
             "folder_name": ""
         },
@@ -106,12 +106,7 @@
             "folder_name": ""
         },
         {
-            "url": "https://my.spokanecity.org/citycouncil/meetings/2023/05/08/legislative-meeting/",
-            "status": "pending",
-            "folder_name": ""
-        },
-        {
-            "url": "https://my.spokanecity.org/smc/?Section=01.04B.050&Find=wa",
+            "url": "https://my.spokanecity.org/publicworks/utility-billing/",
             "status": "pending",
             "folder_name": ""
         }
@@ -188,15 +183,33 @@
                     ]
                 },
                 {
+                    "name": "Kitty Klitzke",
+                    "roles": [
+                        "City Council Member"
+                    ]
+                },
+                {
                     "name": "Zack Zappone",
                     "roles": [
                         "City Council Member"
                     ]
                 },
                 {
-                    "name": "Kitty Klitzke",
+                    "name": null,
                     "roles": [
-                        "City Council Member"
+                        "Municipal Court Judge"
+                    ]
+                },
+                {
+                    "name": null,
+                    "roles": [
+                        "Municipal Court Judge"
+                    ]
+                },
+                {
+                    "name": null,
+                    "roles": [
+                        "Municipal Court Judge"
                     ]
                 }
             ],
@@ -238,19 +251,19 @@
                     ]
                 },
                 {
-                    "name": "Zack Zappone",
+                    "name": "Kitty Klitzke",
                     "roles": [
                         "City Council Member"
                     ]
                 },
                 {
-                    "name": "Kitty Klitzke",
+                    "name": "Zack Zappone",
                     "roles": [
                         "City Council Member"
                     ]
                 }
             ],
-            "notes": "Spokane, WA operates under a strong mayor and city council system. [6, 7, 12] There are a total of 8 elected officials: 1 Mayor, 1 City Council President, and 6 City Council Members representing three districts. [3, 5, 10] One source indicated a vacant seat in District 2 [3], but more recent directories list Shelby Lambdin for that position. [5, 10]"
+            "notes": "Spokane, WA operates under a strong mayor-council form of government. [5, 10, 15] The city has a Mayor, a City Council President, six City Council Members, and three Municipal Court Judges. [18] While the names of the Mayor and City Council members were found, the names of the three Municipal Court Judges were not available in the provided search results. One source indicated a vacant City Council position for District 2 [3], but a more recent directory listed Shelby Lambdin for that role [9], so Shelby Lambdin has been included."
         },
         "SEARCH_LINKS": {
             "search_engines": {
@@ -260,25 +273,24 @@
                         "https://my.spokanecity.org/citycouncil/members/",
                         "https://my.spokanecity.org/directory/officials/elected/",
                         "https://my.spokanecity.org/citycouncil/meetings/",
+                        "https://my.spokanecity.org/opendata/charter/article-02/",
                         "https://my.spokanecity.org/citycouncil/",
                         "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
-                        "https://my.spokanecity.org/opendata/charter/article-02/",
                         "https://my.spokanecity.org/directory/officials/",
-                        "https://my.spokanecity.org/mayor/ask-the-mayor/",
-                        "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
-                        "https://my.spokanecity.org/citycouncil/members/vacancy/",
-                        "https://my.spokanecity.org/smc/?Section=02.05.030",
                         "https://my.spokanecity.org/news/releases/2025/04/16/mayor-city-council-announce-new-traffic-safety-improvements/",
+                        "https://my.spokanecity.org/citycouncil/members/vacancy/",
+                        "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
+                        "https://my.spokanecity.org/smc/?Section=02.05.030",
                         "https://my.spokanecity.org/news/releases/2025/05/20/official-resignation-from-council-member-navarrete/",
                         "https://my.spokanecity.org/news/releases/2023/08/25/council-members-denounce-mayors-appearance-with-extremists/",
                         "https://my.spokanecity.org/mayor/",
                         "https://my.spokanecity.org/citycouncil/meetings/2025/02/10/legislative-meeting/",
-                        "https://my.spokanecity.org/publicworks/utility-billing/",
+                        "https://my.spokanecity.org/charter/",
+                        "https://my.spokanecity.org/mayor/ask-the-mayor/",
                         "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
                         "https://my.spokanecity.org/bcc/commissions/salary-review-commission/",
                         "https://my.spokanecity.org/news/releases/2024/11/02/mayors-budget-proposal-puts-city-on-path-to-fiscal-sustainability/",
-                        "https://my.spokanecity.org/citycouncil/meetings/2023/05/08/legislative-meeting/",
-                        "https://my.spokanecity.org/smc/?Section=01.04B.050&Find=wa"
+                        "https://my.spokanecity.org/publicworks/utility-billing/"
                     ],
                     "status": "completed"
                 },
@@ -296,12 +308,12 @@
         "SCRAPE_PAGE": {},
         "PREPROCESS_PAGE_CONTENT": {
             "elapsed_times": [
-                6.992467880249023,
-                15.482307195663452,
-                17.8383526802063
+                10.403288125991821,
+                23.372235774993896,
+                19.616132259368896
             ],
-            "total_elapsed_time_seconds": 40.313127756118774,
-            "average_elapsed_time_seconds": 13.43770925203959
+            "total_elapsed_time_seconds": 53.391656160354614,
+            "average_elapsed_time_seconds": 17.797218720118206
         },
         "PROCESS_PAGE_CONTENT": {
             "records_by_source": {
@@ -309,607 +321,237 @@
                     "Betsy Wilkerson": [
                         {
                             "name": "Betsy Wilkerson",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg",
                             "roles": [
-                                {
-                                    "data": "council member",
-                                    "llm_confidence": 0.9,
-                                    "llm_confidence_reason": "Inferred from context that she is a City Council Member, as she is listed under 'City Council' and has a term."
-                                }
+                                "council member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated as 'District 1' under her entry."
-                                }
+                                "District 1"
                             ],
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "Phone number not found."
-                            },
-                            "email": {
-                                "data": "bwilkerson@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the mailto link."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the Markdown link."
-                            },
-                            "start_date": {
-                                "data": "2024-01-01",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2024-2027' by taking the start year and assuming start of year."
-                            },
-                            "end_date": {
-                                "data": "2027-12-31",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2024-2027' by taking the end year and assuming end of year."
-                            },
-                            "data_sources": []
+                            "phone_number": null,
+                            "email": "bwilkerson@spokanecity.org",
+                            "website": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Betsy Wilkerson",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg",
                             "roles": [
-                                {
-                                    "data": "Council President",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Role 'City Council President' is explicitly stated and is a target role."
-                                }
+                                "City Council President"
                             ],
                             "divisions": [],
-                            "phone_number": {
-                                "data": "509.625.6258",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly stated."
-                            },
-                            "email": {
-                                "data": "bwilkerson@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email is explicitly stated and in standard format."
-                            },
-                            "website": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website is not explicitly mentioned in the text."
-                            },
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Start date is not explicitly mentioned in the text."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "End date is not explicitly mentioned in the text."
-                            },
-                            "data_sources": []
+                            "phone_number": "509.625.6258",
+                            "email": "bwilkerson@spokanecity.org",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Jonathan Bingle": [
                         {
                             "name": "Jonathan Bingle",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg",
                             "roles": [
-                                {
-                                    "data": "City Council Member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated as 'City Council Member'."
-                                }
+                                "council member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated as 'District 1' next to his role."
-                                }
+                                "District 1"
                             ],
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "Phone number not found."
-                            },
-                            "email": {
-                                "data": "jbingle@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the mailto link."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the Markdown link."
-                            },
-                            "start_date": {
-                                "data": "2022-01-01",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2022-2025' by taking the start year and assuming start of year."
-                            },
-                            "end_date": {
-                                "data": "2025-12-31",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2022-2025' by taking the end year and assuming end of year."
-                            },
-                            "data_sources": []
+                            "phone_number": null,
+                            "email": "jbingle@spokanecity.org",
+                            "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
+                            "start_date": "2022",
+                            "end_date": "2025",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Jonathan Bingle",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Role 'City Council' is explicitly stated and maps to 'council member' which is a target role."
-                                }
+                                "City Council"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Division 'District 1' is explicitly stated and is a target division."
-                                }
+                                "District 1"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6275",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly stated."
-                            },
-                            "email": {
-                                "data": "jbingle@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email is explicitly stated and in standard format."
-                            },
-                            "website": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website is not explicitly mentioned in the text."
-                            },
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Start date is not explicitly mentioned in the text."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "End date is not explicitly mentioned in the text."
-                            },
-                            "data_sources": []
+                            "phone_number": "509.625.6275",
+                            "email": "jbingle@spokanecity.org",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Michael Cathcart": [
                         {
                             "name": "Michael Cathcart",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/large/michael-cathcart.jpg",
                             "roles": [
-                                {
-                                    "data": "City Council Member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated as 'City Council Member'."
-                                }
+                                "council member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 0.9,
-                                    "llm_confidence_reason": "Implied by the heading 'District 1' and the role 'City Council Member, District 1'."
-                                }
+                                "District 1"
                             ],
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "Phone number not found."
-                            },
-                            "email": {
-                                "data": "mcathcart@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the mailto link."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the Markdown link."
-                            },
-                            "start_date": {
-                                "data": "2024-01-01",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2024-2027' by taking the start year and assuming start of year."
-                            },
-                            "end_date": {
-                                "data": "2027-12-31",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2024-2027' by taking the end year and assuming end of year."
-                            },
-                            "data_sources": []
+                            "phone_number": null,
+                            "email": "mcathcart@spokanecity.org",
+                            "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Michael Cathcart",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/medium/michael-cathcart.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Role 'City Council' is explicitly stated and maps to 'council member' which is a target role."
-                                }
+                                "City Council"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Division 'District 1' is explicitly stated and is a target division."
-                                }
+                                "District 1"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6257",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly stated."
-                            },
-                            "email": {
-                                "data": "mcathcart@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email is explicitly stated and in standard format."
-                            },
-                            "website": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website is not explicitly mentioned in the text."
-                            },
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Start date is not explicitly mentioned in the text."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "End date is not explicitly mentioned in the text."
-                            },
-                            "data_sources": []
+                            "phone_number": "509.625.6257",
+                            "email": "mcathcart@spokanecity.org",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Paul Dillon": [
                         {
                             "name": "Paul Dillon",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg",
                             "roles": [
-                                {
-                                    "data": "City Council Member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated as 'City Council Member'."
-                                }
+                                "council member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 2",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated as 'District 2' next to his role."
-                                }
+                                "District 2"
                             ],
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "Phone number not found."
-                            },
-                            "email": {
-                                "data": "pdillon@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the mailto link."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the Markdown link."
-                            },
-                            "start_date": {
-                                "data": "2024-01-01",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2024-2027' by taking the start year and assuming start of year."
-                            },
-                            "end_date": {
-                                "data": "2027-12-31",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2024-2027' by taking the end year and assuming end of year."
-                            },
-                            "data_sources": []
+                            "phone_number": null,
+                            "email": "pdillon@spokanecity.org",
+                            "website": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Paul Dillon",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Role 'City Council' is explicitly stated and maps to 'council member' which is a target role."
-                                }
+                                "City Council"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 2",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Division 'District 2' is explicitly stated and is a target division."
-                                }
+                                "District 2"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6254",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly stated."
-                            },
-                            "email": {
-                                "data": "pdillon@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email is explicitly stated and in standard format."
-                            },
-                            "website": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website is not explicitly mentioned in the text."
-                            },
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Start date is not explicitly mentioned in the text."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "End date is not explicitly mentioned in the text."
-                            },
-                            "data_sources": []
+                            "phone_number": "509.625.6254",
+                            "email": "pdillon@spokanecity.org",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Zack Zappone": [
                         {
                             "name": "Zack Zappone",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg",
                             "roles": [
-                                {
-                                    "data": "City Council Member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated as 'City Council Member'."
-                                }
+                                "council member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 3",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated as 'District 3' next to his role."
-                                }
+                                "District 3"
                             ],
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "Phone number not found."
-                            },
-                            "email": {
-                                "data": "zzappone@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the mailto link."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the Markdown link."
-                            },
-                            "start_date": {
-                                "data": "2022-01-01",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2022-2025' by taking the start year and assuming start of year."
-                            },
-                            "end_date": {
-                                "data": "2025-12-31",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2022-2025' by taking the end year and assuming end of year."
-                            },
-                            "data_sources": []
+                            "phone_number": null,
+                            "email": "zzappone@spokanecity.org",
+                            "website": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
+                            "start_date": "2022",
+                            "end_date": "2025",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Zack Zappone",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Role 'City Council' is explicitly stated and maps to 'council member' which is a target role."
-                                }
+                                "City Council"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 3",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Division 'District 3' is explicitly stated and is a target division."
-                                }
+                                "District 3"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6256",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly stated."
-                            },
-                            "email": {
-                                "data": "zzappone@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email is explicitly stated and in standard format."
-                            },
-                            "website": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website is not explicitly mentioned in the text."
-                            },
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Start date is not explicitly mentioned in the text."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "End date is not explicitly mentioned in the text."
-                            },
-                            "data_sources": []
+                            "phone_number": "509.625.6256",
+                            "email": "zzappone@spokanecity.org",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Kitty Klitzke": [
                         {
                             "name": "Kitty Klitzke",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/large/kitty-klitzke.jpg",
                             "roles": [
-                                {
-                                    "data": "City Council Member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated as 'City Council Member'."
-                                }
+                                "council member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 3",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated as 'District 3' next to her role."
-                                }
+                                "District 3"
                             ],
-                            "phone_number": {
-                                "data": null,
-                                "llm_confidence": 0.0,
-                                "llm_confidence_reason": "Phone number not found."
-                            },
-                            "email": {
-                                "data": "kklitzke@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the mailto link."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Directly extracted from the Markdown link."
-                            },
-                            "start_date": {
-                                "data": "2024-01-01",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2024-2027' by taking the start year and assuming start of year."
-                            },
-                            "end_date": {
-                                "data": "2027-12-31",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Derived from the 'Term: 2024-2027' by taking the end year and assuming end of year."
-                            },
-                            "data_sources": []
+                            "phone_number": null,
+                            "email": "kklitzke@spokanecity.org",
+                            "website": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Kitty Klitzke",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/medium/kitty-klitzke.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Role 'City Council' is explicitly stated and maps to 'council member' which is a target role."
-                                }
+                                "City Council"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 3",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Division 'District 3' is explicitly stated and is a target division."
-                                }
+                                "District 3"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6291",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly stated."
-                            },
-                            "email": {
-                                "data": "kklitzke@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email is explicitly stated and in standard format."
-                            },
-                            "website": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website is not explicitly mentioned in the text."
-                            },
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Start date is not explicitly mentioned in the text."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "End date is not explicitly mentioned in the text."
-                            },
-                            "data_sources": []
+                            "phone_number": "509.625.6291",
+                            "email": "kklitzke@spokanecity.org",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Lisa Brown": [
                         {
                             "name": "Lisa Brown",
+                            "image": "https://static.spokanecity.org/photos/2023/01/13/lisa-brown/chips/medium/lisa-brown.jpg",
                             "roles": [
-                                {
-                                    "data": "Mayor",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Role 'Mayor' is explicitly stated and is a target role."
-                                }
+                                "Mayor"
                             ],
                             "divisions": [],
-                            "phone_number": {
-                                "data": "509.625.6250",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly stated."
-                            },
-                            "email": {
-                                "data": "mayor@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email is explicitly stated and in standard format."
-                            },
-                            "website": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website is not explicitly mentioned in the text."
-                            },
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Start date is not explicitly mentioned in the text."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "End date is not explicitly mentioned in the text."
-                            },
-                            "data_sources": []
+                            "phone_number": "509.625.6250",
+                            "email": "mayor@spokanecity.org",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Shelby Lambdin": [
                         {
                             "name": "Shelby Lambdin",
+                            "image": "https://static.spokanecity.org/graphics/unavailable/chips/medium/unavailable.png",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Role 'City Council' is explicitly stated and maps to 'council member' which is a target role."
-                                }
+                                "City Council"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 2",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Division 'District 2' is explicitly stated and is a target division."
-                                }
+                                "District 2"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6821",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number is explicitly stated."
-                            },
-                            "email": {
-                                "data": "slambdin@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email is explicitly stated and in standard format."
-                            },
-                            "website": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website is not explicitly mentioned in the text."
-                            },
-                            "start_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Start date is not explicitly mentioned in the text."
-                            },
-                            "end_date": {
-                                "data": null,
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "End date is not explicitly mentioned in the text."
-                            },
-                            "data_sources": []
+                            "phone_number": "509.625.6821",
+                            "email": "slambdin@spokanecity.org",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ]
                 },
@@ -917,515 +559,593 @@
                     "Betsy Wilkerson": [
                         {
                             "name": "Betsy Wilkerson",
+                            "image": "//static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.95,
-                                    "llm_confidence_reason": "Explicitly stated as City Council Member for District 1 which is a council member role."
-                                }
+                                "City Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly mentioned with her role as City Council Member, District 1."
-                                }
+                                "District 1"
                             ],
                             "phone_number": null,
-                            "email": {
-                                "data": "bwilkerson@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email is directly listed next to name with mailto link."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Explicit URL linking to the council member's page."
-                            },
-                            "start_date": {
-                                "data": "2024",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2024-2027 mentioned indicates start in 2024."
-                            },
-                            "end_date": {
-                                "data": "2027",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term end date stated as 2027."
-                            },
-                            "data_sources": [
-                                "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/"
-                            ]
+                            "email": "bwilkerson@spokanecity.org",
+                            "website": null,
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Betsy Wilkerson",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg",
                             "roles": [
-                                {
-                                    "data": "Council President",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Role explicitly stated as 'City Council President' near Betsy Wilkerson."
-                                }
+                                "Council President"
                             ],
                             "divisions": [],
-                            "phone_number": {
-                                "data": "509.625.6258",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number explicitly labeled near Betsy Wilkerson's name."
-                            },
-                            "email": {
-                                "data": "bwilkerson@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email explicitly labeled near Betsy Wilkerson's name."
-                            },
+                            "phone_number": "509.625.6258",
+                            "email": "bwilkerson@spokanecity.org",
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_sources": [
-                                "content provided"
-                            ]
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Jonathan Bingle": [
                         {
                             "name": "Jonathan Bingle",
+                            "image": "//static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.95,
-                                    "llm_confidence_reason": "Explicitly stated as City Council Member, District 1."
-                                }
+                                "City Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly mentioned in the content."
-                                }
+                                "District 1"
                             ],
                             "phone_number": null,
-                            "email": {
-                                "data": "jbingle@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email is clearly linked next to the name."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "URL link points to council member's bio."
-                            },
-                            "start_date": {
-                                "data": "2022",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2022-2025 mentioned directly."
-                            },
-                            "end_date": {
-                                "data": "2025",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term ends in 2025 as stated."
-                            },
-                            "data_sources": [
-                                "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/"
-                            ]
+                            "email": "jbingle@spokanecity.org",
+                            "website": null,
+                            "start_date": "2022",
+                            "end_date": "2025",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Jonathan Bingle",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.9,
-                                    "llm_confidence_reason": "Role stated as 'City Council, District 1' implies council member representing District 1, normalized to 'Council Member'."
-                                }
+                                "Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 1'."
-                                }
+                                "District 1"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6275",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number explicitly labeled near Jonathan Bingle's name."
-                            },
-                            "email": {
-                                "data": "jbingle@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email explicitly labeled near Jonathan Bingle's name."
-                            },
+                            "phone_number": "509.625.6275",
+                            "email": "jbingle@spokanecity.org",
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_sources": [
-                                "content provided"
-                            ]
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Michael Cathcart": [
                         {
                             "name": "Michael Cathcart",
+                            "image": "//static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/large/michael-cathcart.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.95,
-                                    "llm_confidence_reason": "Explicitly described as City Council Member."
-                                }
+                                "City Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "District 1 is clearly stated for the role."
-                                }
+                                "District 1"
                             ],
                             "phone_number": null,
-                            "email": {
-                                "data": "mcathcart@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email found in mailto link next to name."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website link is to city council member bio page."
-                            },
-                            "start_date": {
-                                "data": "2024",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term labeled 2024-2027."
-                            },
-                            "end_date": {
-                                "data": "2027",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "End date provided explicitly 2027."
-                            },
-                            "data_sources": [
-                                "https://my.spokanecity.org/citycouncil/members/michael-cathcart/"
-                            ]
+                            "email": "mcathcart@spokanecity.org",
+                            "website": null,
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Michael Cathcart",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/medium/michael-cathcart.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.9,
-                                    "llm_confidence_reason": "Role stated as 'City Council, District 1' implies council member representing District 1, normalized to 'Council Member'."
-                                }
+                                "Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 1",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 1'."
-                                }
+                                "District 1"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6257",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number explicitly labeled near Michael Cathcart's name."
-                            },
-                            "email": {
-                                "data": "mcathcart@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email explicitly labeled near Michael Cathcart's name."
-                            },
+                            "phone_number": "509.625.6257",
+                            "email": "mcathcart@spokanecity.org",
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_sources": [
-                                "content provided"
-                            ]
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Paul Dillon": [
                         {
                             "name": "Paul Dillon",
+                            "image": "//static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.95,
-                                    "llm_confidence_reason": "Role described as City Council Member District 2."
-                                }
+                                "City Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 2",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Directly stated district for the role."
-                                }
+                                "District 2"
                             ],
                             "phone_number": null,
-                            "email": {
-                                "data": "pdillon@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Emailed clearly marked next to name."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Web link to official member's council page."
-                            },
-                            "start_date": {
-                                "data": "2024",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2024-2027 clearly stated."
-                            },
-                            "end_date": {
-                                "data": "2027",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term ends in 2027 as stated."
-                            },
-                            "data_sources": [
-                                "https://my.spokanecity.org/citycouncil/members/paul-dillon/"
-                            ]
+                            "email": "pdillon@spokanecity.org",
+                            "website": null,
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Paul Dillon",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.9,
-                                    "llm_confidence_reason": "Role stated as 'City Council, District 2' implies council member representing District 2, normalized to 'Council Member'."
-                                }
+                                "Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 2",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 2'."
-                                }
+                                "District 2"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6254",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number explicitly labeled near Paul Dillon's name."
-                            },
-                            "email": {
-                                "data": "pdillon@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email explicitly labeled near Paul Dillon's name."
-                            },
+                            "phone_number": "509.625.6254",
+                            "email": "pdillon@spokanecity.org",
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_sources": [
-                                "content provided"
-                            ]
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Zack Zappone": [
                         {
                             "name": "Zack Zappone",
+                            "image": "//static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.95,
-                                    "llm_confidence_reason": "Explicitly states City Council Member role."
-                                }
+                                "City Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 3",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "District 3 division stated clearly."
-                                }
+                                "District 3"
                             ],
                             "phone_number": null,
-                            "email": {
-                                "data": "zzappone@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email given right beside name."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Direct link to council member's profile."
-                            },
-                            "start_date": {
-                                "data": "2022",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term 2022-2025 clearly stated."
-                            },
-                            "end_date": {
-                                "data": "2025",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "End date 2025 explicitly stated."
-                            },
-                            "data_sources": [
-                                "https://my.spokanecity.org/citycouncil/members/zack-zappone/"
-                            ]
+                            "email": "zzappone@spokanecity.org",
+                            "website": null,
+                            "start_date": "2022",
+                            "end_date": "2025",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Zack Zappone",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.9,
-                                    "llm_confidence_reason": "Role stated as 'City Council, District 3' implies council member representing District 3, normalized to 'Council Member'."
-                                }
+                                "Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 3",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 3'."
-                                }
+                                "District 3"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6256",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number explicitly labeled near Zack Zappone's name."
-                            },
-                            "email": {
-                                "data": "zzappone@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email explicitly labeled near Zack Zappone's name."
-                            },
+                            "phone_number": "509.625.6256",
+                            "email": "zzappone@spokanecity.org",
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_sources": [
-                                "content provided"
-                            ]
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Kitty Klitzke": [
                         {
                             "name": "Kitty Klitzke",
+                            "image": "//static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/large/kitty-klitzke.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.95,
-                                    "llm_confidence_reason": "Listed as City Council Member for District 3."
-                                }
+                                "City Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 3",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "District 3 explicitly mentioned with role."
-                                }
+                                "District 3"
                             ],
                             "phone_number": null,
-                            "email": {
-                                "data": "kklitzke@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email shown next to name."
-                            },
-                            "website": {
-                                "data": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Website link to council member profile."
-                            },
-                            "start_date": {
-                                "data": "2024",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term stated 2024-2027."
-                            },
-                            "end_date": {
-                                "data": "2027",
-                                "llm_confidence": 0.9,
-                                "llm_confidence_reason": "Term ends in 2027 as indicated."
-                            },
-                            "data_sources": [
-                                "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/"
-                            ]
+                            "email": "kklitzke@spokanecity.org",
+                            "website": null,
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Kitty Klitzke",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/medium/kitty-klitzke.jpg",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.9,
-                                    "llm_confidence_reason": "Role stated as 'City Council, District 3' implies council member representing District 3, normalized to 'Council Member'."
-                                }
+                                "Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 3",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 3'."
-                                }
+                                "District 3"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6291",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number explicitly labeled near Kitty Klitzke's name."
-                            },
-                            "email": {
-                                "data": "kklitzke@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email explicitly labeled near Kitty Klitzke's name."
-                            },
+                            "phone_number": "509.625.6291",
+                            "email": "kklitzke@spokanecity.org",
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_sources": [
-                                "content provided"
-                            ]
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Lisa Brown": [
                         {
                             "name": "Lisa Brown",
+                            "image": "https://static.spokanecity.org/photos/2023/01/13/lisa-brown/chips/medium/lisa-brown.jpg",
                             "roles": [
-                                {
-                                    "data": "Mayor",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Role explicitly stated as 'Mayor' in Office of the Mayor section."
-                                }
+                                "Mayor"
                             ],
                             "divisions": [],
-                            "phone_number": {
-                                "data": "509.625.6250",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number explicitly labeled near Lisa Brown's name."
-                            },
-                            "email": {
-                                "data": "mayor@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email explicitly labeled near Lisa Brown's name."
-                            },
+                            "phone_number": "509.625.6250",
+                            "email": "mayor@spokanecity.org",
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_sources": [
-                                "content provided"
-                            ]
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Shelby Lambdin": [
                         {
                             "name": "Shelby Lambdin",
+                            "image": "https://static.spokanecity.org/graphics/unavailable/chips/medium/unavailable.png",
                             "roles": [
-                                {
-                                    "data": "Council Member",
-                                    "llm_confidence": 0.9,
-                                    "llm_confidence_reason": "Role stated as 'City Council, District 2' implies council member representing District 2, normalized to 'Council Member'."
-                                }
+                                "Council Member"
                             ],
                             "divisions": [
-                                {
-                                    "data": "District 2",
-                                    "llm_confidence": 1.0,
-                                    "llm_confidence_reason": "Explicitly stated as 'District 2'."
-                                }
+                                "District 2"
                             ],
-                            "phone_number": {
-                                "data": "509.625.6821",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Phone number explicitly labeled near Shelby Lambdin's name."
-                            },
-                            "email": {
-                                "data": "slambdin@spokanecity.org",
-                                "llm_confidence": 1.0,
-                                "llm_confidence_reason": "Email explicitly labeled near Shelby Lambdin's name."
-                            },
+                            "phone_number": "509.625.6821",
+                            "email": "slambdin@spokanecity.org",
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_sources": [
-                                "content provided"
-                            ]
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                        }
+                    ]
+                },
+                "together_ai": {
+                    "Lisa Brown": [
+                        {
+                            "name": "Lisa Brown",
+                            "image": "",
+                            "roles": [
+                                "Lisa Brown"
+                            ],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/"
+                        },
+                        {
+                            "name": "Lisa Brown",
+                            "image": "https://static.spokanecity.org/photos/2023/01/13/lisa-brown/chips/medium/lisa-brown.jpg",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": "509.625.6250",
+                            "email": "mayor@spokanecity.org",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                        }
+                    ],
+                    "Betsy Wilkerson": [
+                        {
+                            "name": "Betsy Wilkerson",
+                            "image": "",
+                            "roles": [
+                                "Betsy Wilkerson"
+                            ],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/"
+                        },
+                        {
+                            "name": "Betsy Wilkerson",
+                            "image": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "District 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                        },
+                        {
+                            "name": "Betsy Wilkerson",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg",
+                            "roles": [
+                                "City Council President"
+                            ],
+                            "divisions": [],
+                            "phone_number": "509.625.6258",
+                            "email": "bwilkerson@spokanecity.org",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                        }
+                    ],
+                    "Jonathan Bingle": [
+                        {
+                            "name": "Jonathan Bingle",
+                            "image": "",
+                            "roles": [
+                                "Jonathan Bingle"
+                            ],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/"
+                        },
+                        {
+                            "name": "Jonathan Bingle",
+                            "image": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "District 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": "2022",
+                            "end_date": "2025",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                        },
+                        {
+                            "name": "Jonathan Bingle",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg",
+                            "roles": [
+                                "City Council",
+                                "District 1"
+                            ],
+                            "divisions": [
+                                "District 1"
+                            ],
+                            "phone_number": "509.625.6275",
+                            "email": "jbingle@spokanecity.org",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                        }
+                    ],
+                    "Michael Cathcart": [
+                        {
+                            "name": "Michael Cathcart",
+                            "image": "",
+                            "roles": [
+                                "Michael Cathcart"
+                            ],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/"
+                        },
+                        {
+                            "name": "Michael Cathcart",
+                            "image": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "District 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                        },
+                        {
+                            "name": "Michael Cathcart",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/medium/michael-cathcart.jpg",
+                            "roles": [
+                                "City Council",
+                                "District 1"
+                            ],
+                            "divisions": [
+                                "District 1"
+                            ],
+                            "phone_number": "509.625.6257",
+                            "email": "mcathcart@spokanecity.org",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                        }
+                    ],
+                    "Paul Dillon": [
+                        {
+                            "name": "Paul Dillon",
+                            "image": "",
+                            "roles": [
+                                "Paul Dillon"
+                            ],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/"
+                        },
+                        {
+                            "name": "Paul Dillon",
+                            "image": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                        },
+                        {
+                            "name": "Paul Dillon",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg",
+                            "roles": [
+                                "City Council",
+                                "District 2"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": "509.625.6254",
+                            "email": "pdillon@spokanecity.org",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                        }
+                    ],
+                    "Shelby Lambdin": [
+                        {
+                            "name": "Shelby Lambdin",
+                            "image": "",
+                            "roles": [
+                                "Shelby Lambdin"
+                            ],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/"
+                        },
+                        {
+                            "name": "Shelby Lambdin",
+                            "image": "https://static.spokanecity.org/graphics/unavailable/chips/medium/unavailable.png",
+                            "roles": [
+                                "City Council",
+                                "District 2"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": "509.625.6821",
+                            "email": "slambdin@spokanecity.org",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                        }
+                    ],
+                    "Kitty Klitzke": [
+                        {
+                            "name": "Kitty Klitzke",
+                            "image": "",
+                            "roles": [
+                                "Kitty Klitzke"
+                            ],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/"
+                        },
+                        {
+                            "name": "Kitty Klitzke",
+                            "image": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                        },
+                        {
+                            "name": "Kitty Klitzke",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/medium/kitty-klitzke.jpg",
+                            "roles": [
+                                "City Council",
+                                "District 3"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": "509.625.6291",
+                            "email": "kklitzke@spokanecity.org",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                        }
+                    ],
+                    "Zack Zappone": [
+                        {
+                            "name": "Zack Zappone",
+                            "image": "",
+                            "roles": [
+                                "Zack Zappone"
+                            ],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/"
+                        },
+                        {
+                            "name": "Zack Zappone",
+                            "image": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": "2022",
+                            "end_date": "2025",
+                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                        },
+                        {
+                            "name": "Zack Zappone",
+                            "image": "https://static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg",
+                            "roles": [
+                                "City Council",
+                                "District 3"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": "509.625.6256",
+                            "email": "zzappone@spokanecity.org",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ]
                 }
@@ -1436,6 +1156,7 @@
                 "google_gemini": [
                     {
                         "name": "Betsy Wilkerson",
+                        "image": "https://static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg",
                         "roles": [
                             "council member",
                             "council president"
@@ -1443,144 +1164,166 @@
                         "divisions": [
                             "district 1"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "bwilkerson@spokanecity.org",
                         "phone_number": "509.625.6258",
+                        "email": "bwilkerson@spokanecity.org",
                         "website": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
-                        "start_date": "2024-01-01",
-                        "end_date": "2027-12-31",
-                        "data_sources": [],
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Jonathan Bingle",
+                        "image": "https://static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 1"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "jbingle@spokanecity.org",
                         "phone_number": "509.625.6275",
+                        "email": "jbingle@spokanecity.org",
                         "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
-                        "start_date": "2022-01-01",
-                        "end_date": "2025-12-31",
-                        "data_sources": [],
+                        "start_date": "2022",
+                        "end_date": "2025",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Michael Cathcart",
+                        "image": "https://static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/large/michael-cathcart.jpg",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 1"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "mcathcart@spokanecity.org",
                         "phone_number": "509.625.6257",
+                        "email": "mcathcart@spokanecity.org",
                         "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
-                        "start_date": "2024-01-01",
-                        "end_date": "2027-12-31",
-                        "data_sources": [],
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Paul Dillon",
+                        "image": "https://static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 2"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "pdillon@spokanecity.org",
                         "phone_number": "509.625.6254",
+                        "email": "pdillon@spokanecity.org",
                         "website": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
-                        "start_date": "2024-01-01",
-                        "end_date": "2027-12-31",
-                        "data_sources": [],
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Zack Zappone",
+                        "image": "https://static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 3"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "zzappone@spokanecity.org",
                         "phone_number": "509.625.6256",
+                        "email": "zzappone@spokanecity.org",
                         "website": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
-                        "start_date": "2022-01-01",
-                        "end_date": "2025-12-31",
-                        "data_sources": [],
+                        "start_date": "2022",
+                        "end_date": "2025",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Kitty Klitzke",
+                        "image": "https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/large/kitty-klitzke.jpg",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 3"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "kklitzke@spokanecity.org",
                         "phone_number": "509.625.6291",
+                        "email": "kklitzke@spokanecity.org",
                         "website": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
-                        "start_date": "2024-01-01",
-                        "end_date": "2027-12-31",
-                        "data_sources": [],
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Lisa Brown",
+                        "image": "https://static.spokanecity.org/photos/2023/01/13/lisa-brown/chips/medium/lisa-brown.jpg",
                         "roles": [
                             "mayor"
                         ],
                         "divisions": [],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "mayor@spokanecity.org",
                         "phone_number": "509.625.6250",
+                        "email": "mayor@spokanecity.org",
                         "website": "",
                         "start_date": "",
                         "end_date": "",
-                        "data_sources": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Shelby Lambdin",
+                        "image": "https://static.spokanecity.org/graphics/unavailable/chips/medium/unavailable.png",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 2"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "slambdin@spokanecity.org",
                         "phone_number": "509.625.6821",
+                        "email": "slambdin@spokanecity.org",
                         "website": "",
                         "start_date": "",
                         "end_date": "",
-                        "data_sources": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     }
                 ],
                 "openai": [
                     {
                         "name": "Betsy Wilkerson",
+                        "image": "//static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg",
                         "roles": [
                             "council member",
                             "council president"
@@ -1588,138 +1331,334 @@
                         "divisions": [
                             "district 1"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "bwilkerson@spokanecity.org",
                         "phone_number": "509.625.6258",
-                        "website": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
+                        "email": "bwilkerson@spokanecity.org",
+                        "website": "",
                         "start_date": "2024",
                         "end_date": "2027",
-                        "data_sources": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Jonathan Bingle",
+                        "image": "//static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 1"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "jbingle@spokanecity.org",
                         "phone_number": "509.625.6275",
-                        "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
+                        "email": "jbingle@spokanecity.org",
+                        "website": "",
                         "start_date": "2022",
                         "end_date": "2025",
-                        "data_sources": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Michael Cathcart",
+                        "image": "//static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/large/michael-cathcart.jpg",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 1"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "mcathcart@spokanecity.org",
                         "phone_number": "509.625.6257",
-                        "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
+                        "email": "mcathcart@spokanecity.org",
+                        "website": "",
                         "start_date": "2024",
                         "end_date": "2027",
-                        "data_sources": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Paul Dillon",
+                        "image": "//static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 2"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "pdillon@spokanecity.org",
                         "phone_number": "509.625.6254",
-                        "website": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
+                        "email": "pdillon@spokanecity.org",
+                        "website": "",
                         "start_date": "2024",
                         "end_date": "2027",
-                        "data_sources": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Zack Zappone",
+                        "image": "//static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 3"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "zzappone@spokanecity.org",
                         "phone_number": "509.625.6256",
-                        "website": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
+                        "email": "zzappone@spokanecity.org",
+                        "website": "",
                         "start_date": "2022",
                         "end_date": "2025",
-                        "data_sources": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Kitty Klitzke",
+                        "image": "//static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/large/kitty-klitzke.jpg",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 3"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "kklitzke@spokanecity.org",
                         "phone_number": "509.625.6291",
-                        "website": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
+                        "email": "kklitzke@spokanecity.org",
+                        "website": "",
                         "start_date": "2024",
                         "end_date": "2027",
-                        "data_sources": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Lisa Brown",
+                        "image": "https://static.spokanecity.org/photos/2023/01/13/lisa-brown/chips/medium/lisa-brown.jpg",
                         "roles": [
                             "mayor"
                         ],
                         "divisions": [],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "mayor@spokanecity.org",
                         "phone_number": "509.625.6250",
+                        "email": "mayor@spokanecity.org",
                         "website": "",
                         "start_date": "",
                         "end_date": "",
-                        "data_sources": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Shelby Lambdin",
+                        "image": "https://static.spokanecity.org/graphics/unavailable/chips/medium/unavailable.png",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
                             "district 2"
                         ],
-                        "image": "",
-                        "cdn_image": "",
-                        "email": "slambdin@spokanecity.org",
                         "phone_number": "509.625.6821",
+                        "email": "slambdin@spokanecity.org",
                         "website": "",
                         "start_date": "",
                         "end_date": "",
-                        "data_sources": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "together_ai": [
+                    {
+                        "name": "Lisa Brown",
+                        "image": "https://static.spokanecity.org/photos/2023/01/13/lisa-brown/chips/medium/lisa-brown.jpg",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "509.625.6250",
+                        "email": "mayor@spokanecity.org",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Betsy Wilkerson",
+                        "image": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
+                        "roles": [
+                            "council member",
+                            "council president"
+                        ],
+                        "divisions": [
+                            "district 1"
+                        ],
+                        "phone_number": "509.625.6258",
+                        "email": "bwilkerson@spokanecity.org",
+                        "website": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/",
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jonathan Bingle",
+                        "image": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 1"
+                        ],
+                        "phone_number": "509.625.6275",
+                        "email": "jbingle@spokanecity.org",
+                        "website": "",
+                        "start_date": "2022",
+                        "end_date": "2025",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/",
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Michael Cathcart",
+                        "image": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 1"
+                        ],
+                        "phone_number": "509.625.6257",
+                        "email": "mcathcart@spokanecity.org",
+                        "website": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/",
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Paul Dillon",
+                        "image": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 2"
+                        ],
+                        "phone_number": "509.625.6254",
+                        "email": "pdillon@spokanecity.org",
+                        "website": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/",
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Shelby Lambdin",
+                        "image": "https://static.spokanecity.org/graphics/unavailable/chips/medium/unavailable.png",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 2"
+                        ],
+                        "phone_number": "509.625.6821",
+                        "email": "slambdin@spokanecity.org",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kitty Klitzke",
+                        "image": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 3"
+                        ],
+                        "phone_number": "509.625.6291",
+                        "email": "kklitzke@spokanecity.org",
+                        "website": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/",
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Zack Zappone",
+                        "image": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 3"
+                        ],
+                        "phone_number": "509.625.6256",
+                        "email": "zzappone@spokanecity.org",
+                        "website": "",
+                        "start_date": "2022",
+                        "end_date": "2025",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://my.spokanecity.org/",
+                            "https://my.spokanecity.org/citycouncil/members/",
+                            "https://my.spokanecity.org/directory/officials/elected/"
+                        ],
                         "updated_at": ""
                     }
                 ]
@@ -1728,43 +1667,52 @@
         "MERGE_RECORDS_ACROSS_SOURCES": {
             "people": [
                 {
-                    "name": "Zack Zappone",
-                    "roles": [
-                        "council member"
-                    ],
-                    "divisions": [
-                        "district 3"
-                    ],
-                    "image": "",
-                    "cdn_image": "",
-                    "email": "zzappone@spokanecity.org",
-                    "phone_number": "509.625.6256",
-                    "website": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
-                    "start_date": "2022-01-01",
-                    "end_date": "2025-12-31",
-                    "data_sources": [],
-                    "updated_at": ""
-                },
-                {
-                    "name": "Michael Cathcart",
+                    "name": "Jonathan Bingle",
+                    "image": "https://static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg",
                     "roles": [
                         "council member"
                     ],
                     "divisions": [
                         "district 1"
                     ],
-                    "image": "",
+                    "phone_number": "509.625.6275",
+                    "email": "jbingle@spokanecity.org",
+                    "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
+                    "start_date": "2022",
+                    "end_date": "2025",
                     "cdn_image": "",
-                    "email": "mcathcart@spokanecity.org",
-                    "phone_number": "509.625.6257",
-                    "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
-                    "start_date": "2024-01-01",
-                    "end_date": "2027-12-31",
-                    "data_sources": [],
+                    "data_sources": [
+                        "https://my.spokanecity.org/citycouncil/members/",
+                        "https://my.spokanecity.org/directory/officials/elected/",
+                        "https://my.spokanecity.org/"
+                    ],
+                    "updated_at": ""
+                },
+                {
+                    "name": "Kitty Klitzke",
+                    "image": "https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/large/kitty-klitzke.jpg",
+                    "roles": [
+                        "council member"
+                    ],
+                    "divisions": [
+                        "district 3"
+                    ],
+                    "phone_number": "509.625.6291",
+                    "email": "kklitzke@spokanecity.org",
+                    "website": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://my.spokanecity.org/citycouncil/members/",
+                        "https://my.spokanecity.org/directory/officials/elected/",
+                        "https://my.spokanecity.org/"
+                    ],
                     "updated_at": ""
                 },
                 {
                     "name": "Betsy Wilkerson",
+                    "image": "https://static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg",
                     "roles": [
                         "council member",
                         "council president"
@@ -1772,180 +1720,128 @@
                     "divisions": [
                         "district 1"
                     ],
-                    "image": "",
-                    "cdn_image": "",
-                    "email": "bwilkerson@spokanecity.org",
                     "phone_number": "509.625.6258",
+                    "email": "bwilkerson@spokanecity.org",
                     "website": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
-                    "start_date": "2024-01-01",
-                    "end_date": "2027-12-31",
-                    "data_sources": [],
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://my.spokanecity.org/citycouncil/members/",
+                        "https://my.spokanecity.org/directory/officials/elected/",
+                        "https://my.spokanecity.org/"
+                    ],
                     "updated_at": ""
                 },
                 {
-                    "name": "Kitty Klitzke",
+                    "name": "Paul Dillon",
+                    "image": "https://static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg",
+                    "roles": [
+                        "council member"
+                    ],
+                    "divisions": [
+                        "district 2"
+                    ],
+                    "phone_number": "509.625.6254",
+                    "email": "pdillon@spokanecity.org",
+                    "website": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://my.spokanecity.org/citycouncil/members/",
+                        "https://my.spokanecity.org/directory/officials/elected/",
+                        "https://my.spokanecity.org/"
+                    ],
+                    "updated_at": ""
+                },
+                {
+                    "name": "Zack Zappone",
+                    "image": "https://static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg",
                     "roles": [
                         "council member"
                     ],
                     "divisions": [
                         "district 3"
                     ],
-                    "image": "",
+                    "phone_number": "509.625.6256",
+                    "email": "zzappone@spokanecity.org",
+                    "website": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
+                    "start_date": "2022",
+                    "end_date": "2025",
                     "cdn_image": "",
-                    "email": "kklitzke@spokanecity.org",
-                    "phone_number": "509.625.6291",
-                    "website": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
-                    "start_date": "2024-01-01",
-                    "end_date": "2027-12-31",
-                    "data_sources": [],
-                    "updated_at": ""
-                },
-                {
-                    "name": "Lisa Brown",
-                    "roles": [
-                        "mayor"
+                    "data_sources": [
+                        "https://my.spokanecity.org/citycouncil/members/",
+                        "https://my.spokanecity.org/directory/officials/elected/",
+                        "https://my.spokanecity.org/"
                     ],
-                    "divisions": [],
-                    "image": "",
-                    "cdn_image": "",
-                    "email": "mayor@spokanecity.org",
-                    "phone_number": "509.625.6250",
-                    "website": "",
-                    "start_date": "",
-                    "end_date": "",
-                    "data_sources": [],
                     "updated_at": ""
                 },
                 {
                     "name": "Shelby Lambdin",
+                    "image": "https://static.spokanecity.org/graphics/unavailable/chips/medium/unavailable.png",
                     "roles": [
                         "council member"
                     ],
                     "divisions": [
                         "district 2"
                     ],
-                    "image": "",
-                    "cdn_image": "",
-                    "email": "slambdin@spokanecity.org",
                     "phone_number": "509.625.6821",
+                    "email": "slambdin@spokanecity.org",
                     "website": "",
                     "start_date": "",
                     "end_date": "",
-                    "data_sources": [],
-                    "updated_at": ""
-                },
-                {
-                    "name": "Paul Dillon",
-                    "roles": [
-                        "council member"
-                    ],
-                    "divisions": [
-                        "district 2"
-                    ],
-                    "image": "",
                     "cdn_image": "",
-                    "email": "pdillon@spokanecity.org",
-                    "phone_number": "509.625.6254",
-                    "website": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
-                    "start_date": "2024-01-01",
-                    "end_date": "2027-12-31",
-                    "data_sources": [],
+                    "data_sources": [
+                        "https://my.spokanecity.org/directory/officials/elected/",
+                        "https://my.spokanecity.org/"
+                    ],
                     "updated_at": ""
                 },
                 {
-                    "name": "Jonathan Bingle",
+                    "name": "Lisa Brown",
+                    "image": "https://static.spokanecity.org/photos/2023/01/13/lisa-brown/chips/medium/lisa-brown.jpg",
+                    "roles": [
+                        "mayor"
+                    ],
+                    "divisions": [],
+                    "phone_number": "509.625.6250",
+                    "email": "mayor@spokanecity.org",
+                    "website": "",
+                    "start_date": "",
+                    "end_date": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://my.spokanecity.org/directory/officials/elected/",
+                        "https://my.spokanecity.org/"
+                    ],
+                    "updated_at": ""
+                },
+                {
+                    "name": "Michael Cathcart",
+                    "image": "https://static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/large/michael-cathcart.jpg",
                     "roles": [
                         "council member"
                     ],
                     "divisions": [
                         "district 1"
                     ],
-                    "image": "",
+                    "phone_number": "509.625.6257",
+                    "email": "mcathcart@spokanecity.org",
+                    "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
+                    "start_date": "2024",
+                    "end_date": "2027",
                     "cdn_image": "",
-                    "email": "jbingle@spokanecity.org",
-                    "phone_number": "509.625.6275",
-                    "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
-                    "start_date": "2022-01-01",
-                    "end_date": "2025-12-31",
-                    "data_sources": [],
+                    "data_sources": [
+                        "https://my.spokanecity.org/citycouncil/members/",
+                        "https://my.spokanecity.org/directory/officials/elected/",
+                        "https://my.spokanecity.org/"
+                    ],
                     "updated_at": ""
                 }
             ],
-            "agreement_score": 78.57142857142857,
-            "disagreements": [
-                {
-                    "source": "openai",
-                    "person_name": "Zack Zappone",
-                    "field": "start_date",
-                    "value": "2022"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Zack Zappone",
-                    "field": "end_date",
-                    "value": "2025"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Michael Cathcart",
-                    "field": "start_date",
-                    "value": "2024"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Michael Cathcart",
-                    "field": "end_date",
-                    "value": "2027"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Betsy Wilkerson",
-                    "field": "start_date",
-                    "value": "2024"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Betsy Wilkerson",
-                    "field": "end_date",
-                    "value": "2027"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Kitty Klitzke",
-                    "field": "start_date",
-                    "value": "2024"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Kitty Klitzke",
-                    "field": "end_date",
-                    "value": "2027"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Paul Dillon",
-                    "field": "start_date",
-                    "value": "2024"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Paul Dillon",
-                    "field": "end_date",
-                    "value": "2027"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Jonathan Bingle",
-                    "field": "start_date",
-                    "value": "2022"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Jonathan Bingle",
-                    "field": "end_date",
-                    "value": "2025"
-                }
-            ],
+            "agreement_score": 100.0,
+            "disagreements": [],
             "missing_people": []
         },
         "SEND_TO_GITHUB": {},

@@ -10,6 +10,7 @@ def post_install():
         import spacy
         spacy.cli.download("en_core_web_trf")
         print("Playwright and spaCy models installed successfully.")
+
     except Exception as e:
         print(f"Error during Playwright installation: {e}")
 

@@ -2,7 +2,7 @@ from datetime import datetime
 from utils.data_utils import MunicipalityContext
 import utils.config_utils as config_utils
 
-def municipality_officials_prompt(government_type, content, people_hint):
+def municipality_officials_prompt(government_type, people_hint):
     """
     Generate a single prompt string for extracting city officials, following the detailed Ruby and Gemini logic.
     If people_hint has exactly one entry, treat that as person_name for targeting.
@@ -42,29 +42,24 @@ Target roles: {', '.join(roles)}
 Target divisions: {', '.join(division_names)}
 Current Date: {current_date}
 
-Return a JSON object with a key "people" containing an array.
-Each object represents one person and MUST include ALL fields
-(name, roles, divisions, image, phone_number, email, website, start_date, end_date),
-populating with extracted data or null.
+Return a JSON object.
 
 Output Field Definitions & Structure:
 - name: (String) Full name only (no titles).
-- roles: (Array of Objects) Active municipal roles.
+- image: (String or null) URL to profile image (https://...)
+- roles: (Array of strings) Active municipal roles.
          Identify their official job title or specific position.
          This can be a wide variety of municipal roles (e.g., "Mayor", "City Manager", "Selectman",
          "Alderman", "Council Member At-Large", "Board Member, Position 2", "Council Member, Seat 5").
          Focus on capturing the most complete and meaningful description of
          their individual position as it appears in the text, regardless of the specific title.
-          [{{data: "Mayor", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}}]
-- divisions: (Array of Objects) Specific division/district/ward and name/number,
+- divisions: (Array of strings) Specific division/district/ward and name/number,
           only if specified (e.g., "Ward 1", "District 2", "Position 3", "Seat Blue").
-          [{{data: "Ward 1", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}}].
-- image: (Object or null) {{data: "https://...", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}}
-- phone_number: (Object or null) {{data: "Formatted Number", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}}
-- email: (Object or null) {{data: "email@example.com", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}}
-- website: (Object or null) {{data: "http(s)://...", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}}
-- start_date: (Object or null) {{data: "YYYY" or "YYYY-MM" or "YYYY-MM-DD", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}}
-- end_date: (Object or null) {{data: "YYYY" or "YYYY-MM" or "YYYY-MM-DD", llm_confidence: 0.0-1.0, llm_confidence_reason: "..."}}
+- phone_number: (String or null) Formatted phone number
+- email: (String or null) Email address (email@example.com)
+- website: (String or null) Website URL (http(s)://...)
+- start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+- end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
 
 Extraction Guidelines:
 - Roles extraction:
@@ -75,7 +70,6 @@ Extraction Guidelines:
   - Use the governing body or surrounding context to determine the correct role for ambiguous titles.
     - Example: If "Vice President" is listed under "Council Members," infer it as "Council Vice President."
     - Example: If "Vice President" appears without clear context, extract it as "Vice President."
-  - Provide a confidence score (`llm_confidence`) and a brief reason for the inference or extraction.
   - Include only active roles (today is {current_date}).
 
 - Divisions:
@@ -112,8 +106,5 @@ Extraction Guidelines:
 
 **FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting,
   paying close attention to the role inference, date extraction, and term identification rules.
-
-Here is the content (in markdown):
-{content}
 """
     return prompt

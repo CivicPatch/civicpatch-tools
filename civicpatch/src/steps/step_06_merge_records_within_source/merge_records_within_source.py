@@ -20,7 +20,10 @@ def merge_records_within_source(context: PipelineContext):
         for canonical_name, llm_people_list in people_by_name.items():
             merged_person = merge_llm_people_to_person(canonical_name, llm_people_list, government_type)
             merged_person = merged_person.model_dump()
-            merged_people.append(merged_person)
+
+            # Only include merged person if they have roles
+            if merged_person["roles"]:
+                merged_people.append(merged_person)
 
         people_by_source[source] = merged_people
 
@@ -46,6 +49,7 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     ]
     
     # Use helper functions to merge fields
+    image = merge_field(records, "image")
     merged_roles = merge_roles(records, government_type)
     merged_divisions = merge_divisions(records)
     phone_number = merge_field(records, "phone_number")
@@ -53,19 +57,20 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     website = merge_field(records, "website")
     start_date = merge_field(records, "start_date")
     end_date = merge_field(records, "end_date")
+    data_sources = [r.data_source for r in records if r.data_source]
 
     return Person(
         name=canonical_name,
         roles=merged_roles,
         divisions=merged_divisions,
-        image="",  # Placeholder for image
+        image=image,  # Placeholder for image
         cdn_image="",  # Placeholder for CDN image
         email=email,
         phone_number=phone_number,
         website=website,
         start_date=start_date,
         end_date=end_date,
-        data_sources=[],  # Placeholder for sources
+        data_sources=data_sources,
         updated_at="",  # Placeholder for updated_at
     )
 
@@ -73,32 +78,32 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
 def merge_field(records: List[LLMPerson], field_name: str) -> str:
     """
     Merge a single-value field (phone, email, website, start_date, end_date) from a list of LLMPerson records.
-    Prefer non-empty, most frequent, then highest confidence.
+    Prefer non-empty, most frequent value.
     """
     values = [
-        (getattr(r, field_name).data, getattr(r, field_name).llm_confidence)
-        for r in records if getattr(r, field_name) and getattr(r, field_name).data
+        getattr(r, field_name)
+        for r in records if getattr(r, field_name)
     ]
     if not values:
         return ""
-    value_counts = Counter([v[0] for v in values])
+    value_counts = Counter(values)
     most_common = value_counts.most_common(1)[0][0]
-    candidates = [v for v in values if v[0] == most_common]
-    best = max(candidates, key=lambda x: x[1])
-    return best[0]
+    return most_common
 
 
 def merge_roles(records: List[LLMPerson], government_type: str) -> List[str]:
     """
-    Collect all unique roles from all records and normalize them using the role alias map.
+    Collect roles from all records, but only include those that can be normalized
+    using the role alias map. This ensures we only keep roles that match our 
+    expected set of roles for the given government type.
     """
     role_alias_map = config_utils.get_role_alias_map(government_type)
     seen = set()
     unique_roles = []
     for record in records:
-        for role in record.roles:  # Access roles directly as attribute
-            if role.data:
-                normalized_role = role_alias_map.get(role.data.lower(), role.data)
+        for role in record.roles:
+            if role and role.lower() in role_alias_map:  # Only process roles found in map
+                normalized_role = role_alias_map[role.lower()]
                 if normalized_role not in seen:
                     seen.add(normalized_role)
                     unique_roles.append(normalized_role)
@@ -114,18 +119,16 @@ def merge_divisions(records: List[LLMPerson]) -> List[str]:
     seen = set()
     unique_divisions = []
     for record in records:
-        for division in record.divisions:  # Access divisions directly as attribute
-            if division.data:
-                # Normalize division using alias map
+        for division in record.divisions:
+            if division:
                 normalized_division = None
                 for alias, canonical in division_alias_map.items():
-                    if division.data.lower().startswith(alias):
-                        # Retain suffix and next word (e.g., "Ward 1")
-                        suffix = division.data[len(alias):].strip()
+                    if division.lower().startswith(alias):
+                        suffix = division[len(alias):].strip()
                         normalized_division = f"{canonical} {suffix}" if suffix else canonical
                         break
                 if not normalized_division:
-                    normalized_division = division.data  # Use raw division if no match
+                    normalized_division = division
                 if normalized_division not in seen:
                     seen.add(normalized_division)
                     unique_divisions.append(normalized_division)

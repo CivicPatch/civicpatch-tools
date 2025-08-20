@@ -1,253 +1,131 @@
 {
-  "people": [
-    {
-      "name": "Lisa Brown",
-      "roles": [
+    "people": [
         {
-          "data": "Mayor",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the title of the person."
-        }
-      ],
-      "divisions": [
+            "name": "Lisa Brown",
+            "image": "https://static.spokanecity.org/photos/2023/01/13/lisa-brown/chips/medium/lisa-brown.jpg",
+            "roles": [
+                "Mayor"
+            ],
+            "divisions": [],
+            "phone_number": "509.625.6250",
+            "email": "mayor@spokanecity.org",
+            "website": null,
+            "start_date": null,
+            "end_date": null
+        },
         {
-          "data": "At-Large",
-          "llm_confidence": 0.0,
-          "llm_confidence_reason": "No division specified in the text."
-        }
-      ],
-      "phone_number": {
-        "data": "509.625.6250",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the phone number of the person."
-      },
-      "email": {
-        "data": "mayor@spokanecity.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the email of the person."
-      },
-      "website": null,
-      "start_date": null,
-      "end_date": null,
-      "data_sources": ["https://static.spokanecity.org/"]
-    },
-    {
-      "name": "Betsy Wilkerson",
-      "roles": [
+            "name": "Betsy Wilkerson",
+            "image": "https://static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg",
+            "roles": [
+                "City Council",
+                "City Council President",
+                "Council Member",
+                "City Councilmember"
+            ],
+            "divisions": [],
+            "phone_number": "509.625.6258",
+            "email": "bwilkerson@spokanecity.org",
+            "website": null,
+            "start_date": null,
+            "end_date": null
+        },
         {
-          "data": "City Council President",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the title of the person."
-        }
-      ],
-      "divisions": [
+            "name": "Jonathan Bingle",
+            "image": "https://static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg",
+            "roles": [
+                "City Council",
+                "Council Member",
+                "City Councilmember"
+            ],
+            "divisions": [
+                "District 1"
+            ],
+            "phone_number": "509.625.6275",
+            "email": "jbingle@spokanecity.org",
+            "website": null,
+            "start_date": null,
+            "end_date": null
+        },
         {
-          "data": "At-Large",
-          "llm_confidence": 0.0,
-          "llm_confidence_reason": "No division specified in the text."
-        }
-      ],
-      "phone_number": {
-        "data": "509.625.6258",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the phone number of the person."
-      },
-      "email": {
-        "data": "bwilkerson@spokanecity.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the email of the person."
-      },
-      "website": null,
-      "start_date": null,
-      "end_date": null,
-      "data_sources": ["https://static.spokanecity.org/"]
-    },
-    {
-      "name": "Michael Cathcart",
-      "roles": [
+            "name": "Michael Cathcart",
+            "image": "https://static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/medium/michael-cathcart.jpg",
+            "roles": [
+                "City Council",
+                "Council Member"
+            ],
+            "divisions": [
+                "District 1"
+            ],
+            "phone_number": "509.625.6257",
+            "email": "mcathcart@spokanecity.org",
+            "website": null,
+            "start_date": null,
+            "end_date": null
+        },
         {
-          "data": "City Council",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the title of the person."
-        }
-      ],
-      "divisions": [
+            "name": "Paul Dillon",
+            "image": "https://static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg",
+            "roles": [
+                "City Council",
+                "Council Member"
+            ],
+            "divisions": [
+                "District 2"
+            ],
+            "phone_number": "509.625.6254",
+            "email": "pdillon@spokanecity.org",
+            "website": null,
+            "start_date": null,
+            "end_date": null
+        },
         {
-          "data": "District 1",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the division of the person."
-        }
-      ],
-      "phone_number": {
-        "data": "509.625.6257",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the phone number of the person."
-      },
-      "email": {
-        "data": "mcathcart@spokanecity.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the email of the person."
-      },
-      "website": null,
-      "start_date": null,
-      "end_date": null,
-      "data_sources": ["https://static.spokanecity.org/"]
-    },
-    {
-      "name": "Jonathan Bingle",
-      "roles": [
+            "name": "Shelby Lambdin",
+            "image": "https://static.spokanecity.org/graphics/unavailable/chips/medium/unavailable.png",
+            "roles": [
+                "City Council",
+                "Council Member"
+            ],
+            "divisions": [
+                "District 2"
+            ],
+            "phone_number": "509.625.6821",
+            "email": "slambdin@spokanecity.org",
+            "website": null,
+            "start_date": null,
+            "end_date": null
+        },
         {
-          "data": "City Council",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the title of the person."
-        }
-      ],
-      "divisions": [
+            "name": "Zack Zappone",
+            "image": "https://static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg",
+            "roles": [
+                "City Council",
+                "Council Member"
+            ],
+            "divisions": [
+                "District 3"
+            ],
+            "phone_number": "509.625.6256",
+            "email": "zzappone@spokanecity.org",
+            "website": null,
+            "start_date": null,
+            "end_date": null
+        },
         {
-          "data": "District 1",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the division of the person."
+            "name": "Kitty Klitzke",
+            "image": "https://static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/medium/kitty-klitzke.jpg",
+            "roles": [
+                "City Council",
+                "Council Member"
+            ],
+            "divisions": [
+                "District 3"
+            ],
+            "phone_number": "509.625.6291",
+            "email": "kklitzke@spokanecity.org",
+            "website": null,
+            "start_date": null,
+            "end_date": null
         }
-      ],
-      "phone_number": {
-        "data": "509.625.6275",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the phone number of the person."
-      },
-      "email": {
-        "data": "jbingle@spokanecity.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the email of the person."
-      },
-      "website": null,
-      "start_date": null,
-      "end_date": null,
-      "data_sources": ["https://static.spokanecity.org/"]
-    },
-    {
-      "name": "Paul Dillon",
-      "roles": [
-        {
-          "data": "City Council",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the title of the person."
-        }
-      ],
-      "divisions": [
-        {
-          "data": "District 2",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the division of the person."
-        }
-      ],
-      "phone_number": {
-        "data": "509.625.6254",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the phone number of the person."
-      },
-      "email": {
-        "data": "pdillon@spokanecity.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the email of the person."
-      },
-      "website": null,
-      "start_date": null,
-      "end_date": null,
-      "data_sources": ["https://static.spokanecity.org/"]
-    },
-    {
-      "name": "Shelby Lambdin",
-      "roles": [
-        {
-          "data": "City Council",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the title of the person."
-        }
-      ],
-      "divisions": [
-        {
-          "data": "District 2",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the division of the person."
-        }
-      ],
-      "phone_number": {
-        "data": "509.625.6821",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the phone number of the person."
-      },
-      "email": {
-        "data": "slambdin@spokanecity.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the email of the person."
-      },
-      "website": null,
-      "start_date": null,
-      "end_date": null,
-      "data_sources": ["https://static.spokanecity.org/"]
-    },
-    {
-      "name": "Kitty Klitzke",
-      "roles": [
-        {
-          "data": "City Council",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the title of the person."
-        }
-      ],
-      "divisions": [
-        {
-          "data": "District 3",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the division of the person."
-        }
-      ],
-      "phone_number": {
-        "data": "509.625.6291",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the phone number of the person."
-      },
-      "email": {
-        "data": "kklitzke@spokanecity.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the email of the person."
-      },
-      "website": null,
-      "start_date": null,
-      "end_date": null,
-      "data_sources": ["https://static.spokanecity.org/"]
-    },
-    {
-      "name": "Zack Zappone",
-      "roles": [
-        {
-          "data": "City Council",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the title of the person."
-        }
-      ],
-      "divisions": [
-        {
-          "data": "District 3",
-          "llm_confidence": 1.0,
-          "llm_confidence_reason": "Extracted from the text as the division of the person."
-        }
-      ],
-      "phone_number": {
-        "data": "509.625.6256",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the phone number of the person."
-      },
-      "email": {
-        "data": "zzappone@spokanecity.org",
-        "llm_confidence": 1.0,
-        "llm_confidence_reason": "Extracted from the text as the email of the person."
-      },
-      "website": null,
-      "start_date": null,
-      "end_date": null,
-      "data_sources": ["https://static.spokanecity.org/"]
-    }
-  ],
-  "thought": "The provided text contains information about the mayor and city council members of Spokane, Washington."
+    ],
+    "thought": "Combined results from multiple LLM responses."
 }

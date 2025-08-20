@@ -52,7 +52,7 @@ def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
         # Identify disagreements during merging
         for source, people in grouped_people_by_source.items():
             for person in people:
-                for field in ["roles", "divisions", "phone_number", "email", "website", "start_date", "end_date"]:
+                for field in ["roles", "divisions", "phone_number", "email", "start_date", "end_date"]:
                     merged_value = getattr(merged_person, field)
                     source_value = getattr(person, field, None)
                     if source_value and source_value != merged_value:
@@ -102,27 +102,32 @@ def merge_people_across_sources(canonical_name: str, people_by_source: Dict[str,
     divisions = [div for div, count in division_counter.items() if count > 1]  # Include divisions present in more than one source
     
     # For single-value fields, take the most common non-empty value across all sources
+    image_counter = Counter(person.image for source, people in people_by_source.items() for person in people if person.image)
     phone_counter = Counter(person.phone_number for source, people in people_by_source.items() for person in people if person.phone_number)
     email_counter = Counter(person.email for source, people in people_by_source.items() for person in people if person.email)
     website_counter = Counter(person.website for source, people in people_by_source.items() for person in people if person.website)
     start_date_counter = Counter(person.start_date for source, people in people_by_source.items() for person in people if person.start_date)
     end_date_counter = Counter(person.end_date for source, people in people_by_source.items() for person in people if person.end_date)
-
-    # Combine sources from the `sources` field in all Person objects
-    combined_sources = list(set(source for people in people_by_source.values() for person in people for source in person.data_sources))
+    data_sources = set(
+        ds
+        for people in people_by_source.values()
+        for person in people
+        if person.data_sources  # Check if data_sources exists
+        for ds in person.data_sources  # Flatten the list of data sources
+    )
 
     return Person(
         name=canonical_name,
         roles=roles,
         divisions=divisions,
-        image="",
+        image=image_counter.most_common(1)[0][0] if image_counter else "",
         cdn_image="",
         email=email_counter.most_common(1)[0][0] if email_counter else "",
         phone_number=phone_counter.most_common(1)[0][0] if phone_counter else "",
         website=website_counter.most_common(1)[0][0] if website_counter else "",
         start_date=start_date_counter.most_common(1)[0][0] if start_date_counter else "",
         end_date=end_date_counter.most_common(1)[0][0] if end_date_counter else "",
-        data_sources=combined_sources,
+        data_sources=data_sources,
         updated_at=""
     )
 
