@@ -1,6 +1,6 @@
 import time
 from bs4 import Tag, BeautifulSoup
-from . import entity_extraction
+from steps.step_04_preprocess_page_content import entity_extraction
 
 IMAGE_EXTENSIONS_WHITELIST = ["png", "jpg", "jpeg", "webp"]
 

@@ -6,7 +6,7 @@ from utils.array_utils import interleave_arrays
 from utils.config_utils import search_keywords
 from utils.data_utils import MunicipalityContext
 
-from src.steps.step_02_search_links.crawl import crawl
+from steps.step_02_search_links.crawl import crawl
 
 SEARCH_SERVICES = {
     "google": google_search,
@@ -14,6 +14,8 @@ SEARCH_SERVICES = {
     "brave": brave_search,
     "crawl": crawl
 }
+
+SearchEngineNames = list(SEARCH_SERVICES.keys())
 
 def search(search_engine: str, municipality_context: MunicipalityContext, search_query: str):
     """

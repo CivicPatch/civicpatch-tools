@@ -74,15 +74,12 @@ def make_request_with_search(model, api_key, prompt):
     headers = {"Content-Type": "application/json"}
 
     raw_response = requests.post(url, json=payload, headers=headers, timeout=DEFAULT_TIMEOUT)
-    print("Raw Gemini API response:", raw_response)
 
     response = parse_raw_response(raw_response.json())
 
     usage = response.get("usageMetadata", {})
     input_tokens_num = usage.get("promptTokenCount", 0)
     output_tokens_num = usage.get("candidatesTokenCount", 0) + usage.get("thoughtsTokenCount", 0)
-
-    print("Response is:", response)
 
     return response, input_tokens_num, output_tokens_num
 

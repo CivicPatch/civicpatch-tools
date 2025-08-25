@@ -3,7 +3,7 @@ import json
 import instructor
 import openai
 from typing import List, Dict, Any
-from langchain.text_splitter import MarkdownHeaderTextSplitter
+# from langchain.text_splitter import MarkdownHeaderTextSplitter
 from utils.request_utils import with_retry
 from utils.log_utils import log_llm_cost
 from utils.data_utils import MunicipalityContext

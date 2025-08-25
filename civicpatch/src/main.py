@@ -1,100 +1,90 @@
-import argparse
+import os
+from fastapi import FastAPI, HTTPException, Depends, Request
+from pydantic import BaseModel
+import uvicorn
+from typing import List, Optional
 from utils.pipeline_utils import get_municipalities_to_scrape
 from pipeline import Pipeline, PipelineStatus
+from auth.token_handler import verify_github_action_data_query
+import uuid
 
+app = FastAPI()
 
-def main():
-    parser = argparse.ArgumentParser(description="CivicPatch CLI")
-    parser.add_argument("action", choices=["search", "pipeline", "github"], help="Action to perform")
-    parser.add_argument("--state", type=str, required=True, help="State to process")
-    parser.add_argument("--num", type=int, default=0, help="GEOIDs to find")
-    parser.add_argument("--geoid", type=str, default=None, help="Municipality GEOID to process")
-    parser.add_argument("--geoids-to-ignore", type=str, nargs='*', default=None, help="List of GEOIDs to ignore")
-    
-    args = parser.parse_args()
+class SearchRequest(BaseModel):
+    state: str
+    num: int = 0
+    geoids_to_ignore: Optional[List[str]] = None
 
-    if args.action == "search":
-        geoids = get_municipalities_to_scrape(args.state, args.num, args.geoids_to_ignore)
-        if len(geoids) == 0:
-            print(f"No municipalities found for state {args.state} with the specified criteria.")
-            return
-        print(geoids)
-    elif args.action == "pipeline":
+class PipelineRequest(BaseModel):
+    state: str
+    geoid: str
+
+# Internal usage only
+@app.post("/api/search")
+async def search_endpoint(request: SearchRequest):
+    """Search for municipalities to scrape"""
+    geoids = get_municipalities_to_scrape(
+        request.state.lower(), 
+        request.num, 
+        request.geoids_to_ignore
+    )
+    if len(geoids) == 0:
+        raise HTTPException(
+            status_code=404,
+            detail=f"No municipalities found for state {request.state}"
+        )
+    return {"geoids": geoids}
+
+# Internal usage only
+@app.post("/api/pipeline")
+async def pipeline_endpoint(request: PipelineRequest):
+    """Run pipeline for a specific municipality"""
+    try:
         pipeline = Pipeline(pipeline_state=PipelineStatus.INIT)
-        pipeline.run(args.state, args.geoid)
+        result = pipeline.run(request.state, request.geoid)
+        return {"status": "success", "result": result}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
 
-    #elif args.action == "github":
-    #    print(f"Triggered GitHub steps for state: {args.state}, geoid: {args.geoid}")
-    else:
-        print("Invalid action specified. Use 'search' or 'github'.")
+# GitHub Actions endpoint - requires authentication
+@app.post("/api/github-actions")
+async def github_actions_endpoint(
+    request: Request,
+):
+    """
+    GitHub Actions endpoint - requires authentication
+    See: https://docs.github.com/en/rest/actions/workflows
+    """
+    timestamp = request.headers.get("X-Timestamp")
+    signature = request.headers.get("X-Signature")
 
-if __name__ == "__main__":
-    main()
+    if not timestamp or not signature:
+        raise HTTPException(
+            status_code=401,
+            detail="Missing required headers: X-Timestamp and X-Signature"
+        )
 
-#import time
-#from fastapi import FastAPI
-#from pydantic import BaseModel
-#import spacy, re
-#from bs4 import BeautifulSoup, Tag
-#from spacy.matcher import PhraseMatcher
-#from markdownify import markdownify as md
+    body = (await request.body()).decode() or ""
+    authorized = verify_github_action_data_query(timestamp=timestamp, signature=signature, body=body)
 
-# IMAGE_EXTENSIONS_WHITELIST = ["png", "jpg", "jpeg", "webp"]
-# def extract(input: Input):
-#     start_time = time.time()
-#     # Parse the input text as HTML
-#     soup = BeautifulSoup(input.text, "html.parser")
-#     people = []
-#     roles = []
-#     dates = []
-#     emails = []
-#     phones = []
-#     websites = []
-#     images = []
-#     
-#     # Process all top-level nodes
-#     nodes_to_remove = []
-#     for node in soup.find_all(True, recursive=False):
-#         if not prlevant:
-#             people.extend(found_people)
-#             roles.extend(found_roles)
-#             dates.extend(found_dates)
-#             emails.extend(found_emails)
-#             phones.extend(found_phones)
-#             websites.extend(found_websites)
-#             images.extend(ocess_node(node):
-#             nodes_to_remove.append(node)
-#     
-#     # Remove irrelevant top-level nodes
-#     for node in nodes_to_remove:
-#         node.decompose()
-# 
-#     # Deduplicate the lists while preserving order
-#     people = list(dict.fromkeys(people))
-#     roles = list(dict.fromkeys(roles))
-#     dates = list(dict.fromkeys(dates))
-#     emails = list(dict.fromkeys(emails))
-#     phones = list(dict.fromkeys(phones))
-#     websites = list(dict.fromkeys(websites))
-#     images = list(dict.fromkeys(images))
-# 
-#     # Return an object with the filtered HTML and extracted data
-#     end_time = time.time()
-#     print("People found:", people, "in: ", end_time - start_time, "seconds")
-#     print("Roles found:", roles)
-#     print("Dates found:", dates)
-#     print("Emails found:", emails)
-#     print("Phones found:", phones)
-#     print("Websites found:", websites)
-#     print("Images found:", images)
-#     return {
-#         "filtered_content": md(soup.prettify()),
-#         "people": people,
-#         "roles": roles,
-#         "dates": dates,
-#         "emails": emails,
-#         "phones": phones,
-#         "websites": websites,
-#         "images": images,
-#         "processing_time_s": (end_time - start_time)
-#     }
+    if authorized is False:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid signature"
+        )
+
+    try:
+        # TODO: package everything up into zip file under .github_actions_data folder
+        return {
+            "request_id": str(uuid.uuid4()),
+            "status": "success",
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
+

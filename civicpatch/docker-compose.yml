@@ -1,9 +1,13 @@
 services:
-  civicpatch:
+  civicpatch_app:
     env_file: .env
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: civicpatch/Dockerfile
+      target: development
+    ports:
+      - "8000:8000"
     volumes:
+      - ../shared:/app/shared:ro  # Mount shared library
       - .:/app
