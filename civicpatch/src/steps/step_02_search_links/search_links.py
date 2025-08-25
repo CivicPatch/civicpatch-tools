@@ -3,7 +3,7 @@ from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
 from utils.array_utils import interleave_arrays
 from utils.data_utils import get_municipality_context, MunicipalityContext
 from utils.config_utils import search_keywords
-from .utils import search, SEARCH_SERVICES
+from .utils import search, SearchEngineNames
 
 def search_links(context: PipelineContext):
     """
@@ -11,19 +11,17 @@ def search_links(context: PipelineContext):
     """
     print(f"Step 2: {PipelineStatus.SEARCH_LINKS.value}")
 
+    search_link_pointer = context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_link_pointer"]
+
     # Load keyword term groups
     municipality_context = get_municipality_context(context["state"], context["geoid"])
     government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
 
     keyword_term_groups = search_keywords(government_type)
 
-    all_urls = []
+    urls_found = []
 
-    search_engine = None
-    for search_engine_name in SEARCH_SERVICES.keys():
-        if context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_engines"][search_engine_name]["status"] == "not_started":
-            search_engine = search_engine_name
-            break
+    search_engine = SearchEngineNames[search_link_pointer]
 
     if not search_engine:
         return {
@@ -33,9 +31,9 @@ def search_links(context: PipelineContext):
     for keyword_term in keyword_term_groups:
         print(f"Searching for keyword term: {keyword_term}")
         urls_for_term = municipality_search(municipality_context, search_engine, keyword_term)
-        all_urls.append(urls_for_term)
+        urls_found.append(urls_for_term)
 
-    interleaved_urls = interleave_arrays(all_urls)
+    interleaved_urls = interleave_arrays(urls_found)
 
     updated_links = context["links"][:]
     for url in interleaved_urls:
@@ -49,6 +47,7 @@ def search_links(context: PipelineContext):
         "steps": {
             **context["steps"],
             PipelineStatus.SEARCH_LINKS.value: {
+                "search_link_pointer": search_link_pointer + 1,
                 "search_engines": {
                     **context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_engines"],
                     search_engine: {

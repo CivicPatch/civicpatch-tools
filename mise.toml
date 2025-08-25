@@ -1,14 +1,8 @@
 [tools]
-go = 'latest'
-air = 'latest'
 gitleaks = 'latest'
-python = 'latest' # For gitleaks
-ruby = 'latest'
+python = '3.11'
+poetry = "2.1.3"
 
-[env]
-_.file = '../.env'
+# [env]
+# _.file = '../.env'
 
-[tasks.devimg]
-run = """
-RELEASE_VERSION=develop IMAGE_NAME=ghcr.io/civicpatch/civpatch PUSH_IMAGE=true ./civpatch/build.sh
-"""

@@ -1,6 +1,6 @@
-.github_actions_data/*
-!.github_actions_data/.gitkeep
-!.github_actions_data/README.md
+github_actions_data/*
+!github_actions_data/.gitkeep
+!github_actions_data/README.md
 
 .envrc
 .env
@@ -17,6 +17,7 @@ node_modules/
 vendor/
 output/
 tmp/
+.venv
 
 todo.md
 chat.txt

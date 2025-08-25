@@ -20,12 +20,12 @@ def municipality_officials_prompt(government_type, people_hint):
     elif maybe_target_people:
         person_name = ""
         target_text = (
-            f"the main governing body of the target municipality. "
-            f"If the content includes information about the following people, they are very likely to be on the council: {', '.join(maybe_target_people)}"
+            f"any of the main governing body of a municipality."
+            f"Here is a list of known target people (may be missing or include extra): {', '.join(maybe_target_people)}"
         )
     else:
         person_name = ""
-        target_text = "the main governing body of the target municipality."
+        target_text = "any of the main governing body of a municipality."
 
     content_type = (
         f"First, determine if the content contains relevant information about {target_text}.\n"

@@ -36,14 +36,14 @@ class PipelineStatus(Enum):
     PROCESS_PAGE_CONTENT = "PROCESS_PAGE_CONTENT"
     MERGE_RECORDS_WITHIN_SOURCE = "MERGE_RECORDS_WITHIN_SOURCE"
     MERGE_RECORDS_ACROSS_SOURCES = "MERGE_RECORDS_ACROSS_SOURCES"
-    SEND_TO_GITHUB = "SEND_TO_GITHUB"
+    MAYBE_SEND_TO_GITHUB = "MAYBE_SEND_TO_GITHUB"
     CLEANUP = "CLEANUP"
     RETRY = "RETRY"
     DONE = "DONE"
 
 class RawLLMPerson(BaseModel):
     name: str
-    image: Optional[str]
+    image: Optional[str] = None
     roles: List[str]
     divisions: List[str]
     phone_number: Optional[str] = None
@@ -62,6 +62,8 @@ class PeopleArrayLLMResponseSchema(BaseModel):
     thought: str
 
 class Person(RawLLMPerson):
+    state: str = ""
+    place: str = ""
     cdn_image: str
     data_sources: List[str] # List of source URLs where information was found
     updated_at: str
@@ -144,3 +146,7 @@ def dict_to_pydantic(data: Any, constructor: Callable) -> Any:
 
 # PeopleByNameDict: TypeAlias = Dict[str, ProcessedLLMPeople]
 # ProcessedDataDict: TypeAlias = Dict[str, PeopleByNameDict]
+
+class PipelineCompletePayload(BaseModel):
+    pipeline_context: PipelineContext
+    people: List[LLMPerson]

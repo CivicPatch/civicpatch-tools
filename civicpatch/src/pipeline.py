@@ -1,7 +1,8 @@
 import os
 import json
-from schemas import PipelineContext, PipelineStatus, LinkStatus, SearchEngineStatus, Link
+from schemas import PipelineContext, PipelineStatus, LinkStatus, SearchEngineStatus, Link, Person
 from typing import Dict, Any, List
+import yaml
 
 import utils.data_path_utils as data_path_utils
 import utils.config_utils as config_utils
@@ -9,12 +10,13 @@ import utils.people_utils as people_utils
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from steps.step_01_research_municipality.research_municipality import research_municipality
 from steps.step_02_search_links.search_links import search_links
+from steps.step_02_search_links.utils import SearchEngineNames
 from steps.step_03_scrape_page.scrape_page import scrape_page
 from steps.step_04_preprocess_page_content.preprocess_page_content import preprocess_page_content
 from steps.step_05_process_page_content.process_page_content import process_page_content
 from steps.step_06_merge_records_within_source.merge_records_within_source import merge_records_within_source
 from steps.step_07_merge_records_across_sources.merge_records_across_sources import merge_records_across_sources
-from steps.step_08_send_to_github.send_to_github import send_to_github
+from steps.step_08_maybe_send_to_github import maybe_send_to_github
 from steps.step_09_cleanup.cleanup import cleanup
 
 DEFAULT_STATE: PipelineContext = { 
@@ -28,6 +30,7 @@ DEFAULT_STATE: PipelineContext = {
         PipelineStatus.INIT.value: {},
         PipelineStatus.RESEARCH_MUNICIPALITY.value: {},
         PipelineStatus.SEARCH_LINKS.value: {
+            "search_link_pointer": 0,
             "search_engines": {
                 "google": {"status": SearchEngineStatus.NOT_STARTED.value}, # not_started, processing, completed, failed  
                 "brave": {"status": SearchEngineStatus.NOT_STARTED.value},
@@ -46,7 +49,7 @@ DEFAULT_STATE: PipelineContext = {
         },
         PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value: {},
         PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value: {},
-        PipelineStatus.SEND_TO_GITHUB.value: {},
+        PipelineStatus.CLEANUP.value: {},
         PipelineStatus.RETRY.value: {},
         PipelineStatus.DONE.value: {},
     },
@@ -115,9 +118,14 @@ class Pipeline:
                 self.state = PipelineStatus.SEARCH_LINKS
 
             elif self.state == PipelineStatus.SEARCH_LINKS:
-                result = search_links(self.context)
-                self.context.update(result)
-                self.state = PipelineStatus.SCRAPE_PAGE
+                search_link_pointer = self.context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_link_pointer"]
+                if search_link_pointer >= len(SearchEngineNames):
+                    print("All search engines have been processed.")
+                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+                else:
+                    result = search_links(self.context)
+                    self.context.update(result)
+                    self.state = PipelineStatus.SCRAPE_PAGE
 
             elif self.state == PipelineStatus.SCRAPE_PAGE:
                 page_to_scrape = self.get_next_link(LinkStatus.PENDING)
@@ -148,11 +156,13 @@ class Pipeline:
 
             elif self.state == PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES:
                 result = merge_records_across_sources(self.context)
+                self.save_data(result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value]["people"])
+                
                 self.context.update(result)
-                self.state = PipelineStatus.SEND_TO_GITHUB
+                self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
-            elif self.state == PipelineStatus.SEND_TO_GITHUB:
-                result = send_to_github(self.context)
+            elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
+                result = maybe_send_to_github(self.context)
                 self.context.update(result)
                 self.state = PipelineStatus.DONE
 
@@ -203,5 +213,19 @@ class Pipeline:
 
         print("Not enough data processed yet, collecting more data...")
         return PipelineStatus.SCRAPE_PAGE
+    
+    def save_data(self, people: List[Person]):
+        """
+        Save the processed people data to a file.
+        """
+        state = self.context["state"]
+        geoid = self.context["geoid"]
+        data_municipality_path = data_path_utils.get_data_municipality_path(state, geoid)
+        people_file_path = os.path.join(data_municipality_path, 'people.yml')
 
+        # Ensure the directory exists
+        os.makedirs(data_municipality_path, exist_ok=True)
+
+        with open(people_file_path, "w") as f:
+            yaml.dump([person for person in people], f, default_flow_style=False)
    

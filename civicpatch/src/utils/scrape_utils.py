@@ -10,6 +10,9 @@ IMAGE_EXT_BLACKLIST = [".svg", ".gif"]
 class ScrapeOptions(TypedDict):
     image_dir: str  # Directory to save images
 
+class ImageError(Exception):
+    pass
+
 def scrape(website_url, options=None):
     """
     Fetches the content of a given website URL using Playwright.
@@ -125,13 +128,14 @@ def download_images(page: Page, image_dir: str):
     for img in image_elements:
         try:
             if not img.is_visible():
-                continue
+                raise ImageError("Image is not visible")
             src = img.get_attribute("src")
             if not src:
-                continue
+                raise ImageError("No src in image")
             
             if any(src.endswith(ext) for ext in IMAGE_EXT_BLACKLIST):
-                continue
+                # TODO: raise error
+                raise ImageError("Image is under blacklisted")
 
             image_uuid = str(uuid.uuid4())
             file_name = f"{image_uuid}.png"
@@ -142,6 +146,10 @@ def download_images(page: Page, image_dir: str):
             image_map[src] = file_name
         except Exception as e:
             print(f"Failed to capture image {src}: {e}")
+            # Remove image from page
+            page.evaluate("""(img) => {
+                img.parentNode.removeChild(img);
+            }""", img)
 
     map_file_path = os.path.join(image_dir, "image_map.json")
 

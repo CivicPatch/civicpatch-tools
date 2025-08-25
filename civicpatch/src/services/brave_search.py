@@ -2,7 +2,15 @@ import os
 import requests
 from utils.url_utils import format_url
 
+class BraveSearchError(Exception):
+    """Custom exception for Brave Search API errors"""
+    pass
+
 def search(search_query, site_search=None):
+    token = os.getenv("BRAVE_SEARCH_TOKEN")
+    if not token:
+        raise BraveSearchError("BRAVE_SEARCH_TOKEN environment variable is not set")
+
     if site_search:
         search_query += f" site:{site_search}"
 

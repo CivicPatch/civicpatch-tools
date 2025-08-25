@@ -1,34 +1,65 @@
-# Use an official Python image as the base
-FROM python:3.11-bullseye
-
-# Set the working directory in the container
-WORKDIR /app
-
-ENV PYTHONPATH=/app/src
+FROM python:3.11-bullseye AS image-base 
+ENV PROJECT_NAME="civicpatch"
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     curl \
-    git \
     xvfb \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+ENV PYTHONUNBUFFERED=1 \
+    POETRY_HOME="/opt/poetry" \
+    POETRY_VIRTUALENVS_CREATE=false \
+    VIRTUAL_ENV="/venv" \
+    PYTHONPATH=/app/src
+
+# Add Poetry and virtual env to PATH
+ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"
+
 # Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 - --version 2.1.3
+RUN curl -sSL https://install.python-poetry.org | python3 -
 
-# Add Poetry to PATH
-ENV PATH="/root/.local/bin:$PATH"
+# Prepare virtual env
+RUN python -m venv $VIRTUAL_ENV
 
-# Copy project files into the container
-COPY . /app
+WORKDIR /app
 
-# Install project dependencies
+COPY ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ${PROJECT_NAME}/setup.py ./
 RUN poetry install --no-root
-
 RUN poetry run playwright install-deps
+RUN poetry run playwright install chromium
 
+COPY ./${PROJECT_NAME} /app
+COPY ./shared /app/shared
 RUN poetry run post-install
 
-# Keep the container running
-CMD ["tail", "-f", "/dev/null"]
+#https://github.com/microsoft/playwright-python/issues/2572
+ENV DISPLAY=:99
+ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
+
+# DEVELOPMENT IMAGE
+FROM image-base AS development
+
+WORKDIR /app
+
+RUN useradd -m -s /bin/bash civicpatch_user
+
+RUN chown -R civicpatch_user:civicpatch_user /app
+
+USER civicpatch_user
+
+CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
+
+# PRODUCTION IMAGE
+FROM image-base AS production 
+
+WORKDIR /app
+
+RUN useradd -m -s /bin/bash civicpatch_user
+RUN chown -R civicpatch_user:civicpatch_user /app
+
+USER civicpatch_user
+# # Keep the container running
+# CMD ["tail", "-f", "/dev/null"]
+CMD ["fastapi", "run", "src/main.py", "--port", "80", "--host", "0.0.0.0"]

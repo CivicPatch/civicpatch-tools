@@ -5,7 +5,6 @@ description = ""
 authors = [
     {name = "Michelle",email = "michelle@civicpatch.org"}
 ]
-readme = "README.md"
 requires-python = ">=3.11,<3.14"
 dependencies = [
     "bs4 (>=0.0.2,<0.0.3)",
@@ -24,8 +23,8 @@ dependencies = [
     "jsonref (>=1.1.0,<2.0.0)",
     "python-levenshtein (>=0.27.1,<0.28.0)",
     "together (>=1.5.25,<2.0.0)",
-    "chonkie[all] (>=1.1.2,<2.0.0)",
-    "langchain (>=0.3.27,<0.4.0)"
+    "uvicorn (>=0.35.0,<0.36.0)",
+    "fastapi[standard] (>=0.116.1,<0.117.0)",
 ]
 [tool.poetry]
 packages = [
