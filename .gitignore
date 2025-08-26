@@ -4,6 +4,8 @@ github_actions_data/*
 
 __pycache__/
 
+database.db
+
 .envrc
 .env
 todo.md
