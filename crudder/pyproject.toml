@@ -5,13 +5,18 @@ description = ""
 authors = [
     {name = "michelle@shelltr.me",email = "michelle@shelltr.me"}
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.11,<4.0"
 dependencies = [
-    "fastapi[standard] (>=0.116.1,<0.117.0)"
+    "fastapi[standard] (>=0.116.1,<0.117.0)",
+    "fastapi-sso (>=0.18.0,<0.19.0)",
+    "jwt (>=1.4.0,<2.0.0)",
+    "python-jose[cryptography] (>=3.5.0,<4.0.0)"
 ]
 
 [tool.poetry]
-packages = [{include = "crudder", from = "src"}]
+packages = [
+    {include = "src"}
+]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

@@ -5,6 +5,7 @@ services:
       context: ..
       dockerfile: crudder/Dockerfile
       target: development
+    restart: unless-stopped
     ports:
       - "8001:8001"
     volumes:

@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <title>Crudder</title>
+    <link href="{{ url_for('static', path='/pico.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+  </head>
+  <body>
+    <main class="container">
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <h1>civicpatch - api key management</h1>
+        {% if user %}
+          <a href="/auth/logout" class="secondary" style="margin-left: auto; font-size: 1rem; padding: 0.4em 1.2em;">Logout</a>
+        {% endif %}
+      </div>
+      <p>Manage your API keys for your civicpatch server here.</p>
+
+      {% if user %}
+        <h2>Your API Keys</h2>
+        <hr />
+        <article id="api-keys-list">
+          {% if api_keys %}
+            {% for key in api_keys %}
+            <div class="grid">
+              <div role="group">
+                <strong>***************{{ key.suffix }}</strong>
+                <small>Created: {{ key.created_at.strftime('%Y-%m-%d') }}</small>
+                <button class="secondary outline"
+                        onclick="revokeKey('{{ key.id }}')"
+                        data-tooltip="This action cannot be undone">
+                  Revoke
+                </button>
+              </div>
+            </div>
+            <hr>
+            {% endfor %}
+          {% else %}
+            <article>
+              <p>No API keys found. Create one to get started.</p>
+            </article>
+          {% endif %}
+        </article>
+        <div style="display: flex; justify-content: flex-start; margin-top: 2em;">
+          <button class="secondary" style="font-size: 0.8rem; padding: 0.15em 0.7em;" onclick="createApiKey()">
+            + Create New Key
+          </button>
+        </div>
+        <script>
+          async function revokeKey(keyId) {
+              if (!confirm('Are you sure you want to revoke this API key?')) {
+                  return;
+              }
+              try {
+                  const response = await fetch(`/api-keys/${keyId}`, {
+                      method: 'DELETE',
+                  });
+                  if (response.ok) {
+                      window.location.reload();
+                  }
+              } catch (error) {
+                  console.error('Error revoking key:', error);
+              }
+          }
+
+          async function createApiKey() {
+              try {
+                  const response = await fetch('/api-keys', {
+                      method: 'POST',
+                  });
+                  if (response.ok) {
+                      window.location.reload();
+                  }
+              } catch (error) {
+                  console.error('Error creating key:', error);
+              }
+          }
+        </script>
+      {% else %}
+        <p>To start, sign up or login via GitHub SSO.</p>
+
+        <p>If you are setting this up for the first time, contact the <a href="mailto:michelle@civicpatch.org">maintainer</a>
+        to approve your account. You will want to provide your <strong>provider_user_id</strong> after logging in.</p>
+        <a href="/auth/github/login" class="contrast" role="button">Login with GitHub</a>
+      {% endif %}
+    </main>
+  </body>
+
+</html>

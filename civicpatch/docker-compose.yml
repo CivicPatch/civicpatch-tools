@@ -6,6 +6,7 @@ services:
       context: ..
       dockerfile: civicpatch/Dockerfile
       target: development
+    restart: unless-stopped
     ports:
       - "8000:8000"
     volumes:
