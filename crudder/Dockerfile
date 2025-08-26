@@ -24,7 +24,6 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN python -m venv $VIRTUAL_ENV
 
 WORKDIR /app
-
 COPY ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 RUN poetry install --no-root
 
@@ -38,6 +37,7 @@ WORKDIR /app
 
 RUN useradd -m -s /bin/bash civicpatch_user
 RUN chown -R civicpatch_user:civicpatch_user /app
+RUN chown -R civicpatch_user:civicpatch_user /venv
 
 USER civicpatch_user
 

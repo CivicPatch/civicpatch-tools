@@ -46,6 +46,7 @@ WORKDIR /app
 RUN useradd -m -s /bin/bash civicpatch_user
 
 RUN chown -R civicpatch_user:civicpatch_user /app
+RUN chown -R civicpatch_user:civicpatch_user /venv
 
 USER civicpatch_user
 

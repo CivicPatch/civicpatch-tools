@@ -2,6 +2,8 @@ github_actions_data/*
 !github_actions_data/.gitkeep
 !github_actions_data/README.md
 
+__pycache__/
+
 .envrc
 .env
 todo.md
