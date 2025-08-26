@@ -33,6 +33,8 @@ COPY ./${PROJECT_NAME} /app
 # DEVELOPMENT IMAGE
 FROM image-base AS development
 
+ENV APP_ENVIRONMENT=development
+
 WORKDIR /app
 
 RUN useradd -m -s /bin/bash civicpatch_user
@@ -46,6 +48,8 @@ CMD ["fastapi", "dev", "src/main.py", "--port", "8001", "--host", "0.0.0.0"]
 
 # PRODUCTION IMAGE
 FROM image-base AS production 
+
+ENV APP_ENVIRONMENT=production
 
 WORKDIR /app
 
