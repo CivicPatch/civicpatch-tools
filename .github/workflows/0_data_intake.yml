@@ -11,6 +11,9 @@ on:
       user_email:
         description: 'Email associated with your CivicPatch account'
         required: true
+      request_id:
+        description: 'Unique request ID for this data intake (e.g. UUID)'
+        required: true
       zip_file_url:
         description: 'Presigned URL of the ZIP file containing YAML data'
         required: true
@@ -25,3 +28,14 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
+      - name: Download ZIP file
+        run: |
+          mkdir -p civicpatch
+          curl -L "${{ github.event.inputs.zip_file_url }}" -o /tmp/data.zip
+
+      - name: Unzip data into civicpatch/
+        run: |
+          unzip -o /tmp/data.zip -d civicpatch
+          ls -l civicpatch
+          ls -l civicpatch/data
