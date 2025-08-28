@@ -143,10 +143,13 @@ async def github_intake(
         file.filename,
         "crudder",
         file
-    ) 
+    )
+
+    request_id = file.filename.split("_")[-1].replace(".zip", "")
+    print(f"Uploaded file for request_id: {request_id}, presigned_url: {presigned_url}")
 
     # Send to github actions workflow
-    trigger_github_data_intake_workflow(GITHUB_WORKFLOW_TOKEN, server_detail["user_email"], server_detail["server_url"], presigned_url)
+    trigger_github_data_intake_workflow(GITHUB_WORKFLOW_TOKEN, server_detail["user_email"], server_detail["server_url"], request_id, presigned_url)
 
     return {"filename": file.filename, "status": "uploaded", "url": presigned_url}
 

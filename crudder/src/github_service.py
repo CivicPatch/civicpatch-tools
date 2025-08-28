@@ -1,6 +1,6 @@
 import requests
 
-def trigger_github_data_intake_workflow(github_workflow_token, user_email: str, server_url: str, zip_file_url: str):
+def trigger_github_data_intake_workflow(github_workflow_token, user_email: str, server_url: str, request_id: str, zip_file_url: str):
     # Trigger GitHub Actions workflow to pull data from the given URL
     # For example, you might use the GitHub API to dispatch a workflow event
     headers = {
@@ -14,6 +14,7 @@ def trigger_github_data_intake_workflow(github_workflow_token, user_email: str, 
         "inputs": {
             "user_email": user_email,
             "server_url": server_url,
+            "request_id": request_id,
             "zip_file_url": zip_file_url
         }
     }
@@ -23,6 +24,8 @@ def trigger_github_data_intake_workflow(github_workflow_token, user_email: str, 
         headers=headers,
         json=data
     )
+
+    print("Response from GitHub API:", response.status_code, response.text)
     
     if response.status_code != 204:
         raise Exception(f"Failed to trigger workflow: {response.status_code} - {response.text}")

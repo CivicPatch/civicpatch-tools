@@ -1,4 +1,5 @@
 import boto3
+from botocore.client import Config
 from fastapi import UploadFile
 
 EXPIRATION_ONE_DAY_IN_SECONDS = 86400
@@ -8,7 +9,8 @@ def upload_file_to_storage(storage_endpoint, storage_access_key_id, storage_secr
         's3',
         endpoint_url=storage_endpoint,
         aws_access_key_id=storage_access_key_id,
-        aws_secret_access_key=storage_secret_access_key
+        aws_secret_access_key=storage_secret_access_key,
+        config=Config(signature_version='s3v4')
     )
     
     # Upload file
