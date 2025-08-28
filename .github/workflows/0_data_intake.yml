@@ -1,4 +1,6 @@
 name: 0. Data Intake
+permissions:
+  contents: read
 
 on:
   workflow_dispatch:
