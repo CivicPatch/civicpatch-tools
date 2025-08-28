@@ -2,10 +2,9 @@
   + [Jonathan Bingle](https://my.spokanecity.org/citycouncil/members/jonathan-bingle/)
   + [Michael Cathcart](https://my.spokanecity.org/citycouncil/members/michael-cathcart/)
   + [Paul Dillon](https://my.spokanecity.org/citycouncil/members/paul-dillon/)
+  + [Shelby Lambdin](https://my.spokanecity.org/citycouncil/members/shelby-lambdin/)
   + [Zack Zappone](https://my.spokanecity.org/citycouncil/members/zack-zappone/)
   + [Kitty Klitzke](https://my.spokanecity.org/citycouncil/members/kitty-klitzke/)
-
-![City of Spokane, Washington](//static.spokanecity.org/photos/2015/06/11/clock-tower-and-pavilion/16x3/Full/clock-tower-and-pavilion.jpg)
 
 [![Betsy Wilkerson](//static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg)](https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/)
 
@@ -35,9 +34,11 @@ Term: 2024-2027[bwilkerson@spokanecity.org](mailto:bwilkerson@spokanecity.org)
 
 *City Council Member, District 2*Term: 2024-2027[pdillon@spokanecity.org](mailto:pdillon@spokanecity.org)
 
-[![Photo Unavailable](//static.spokanecity.org/graphics/unavailable/chips/medium.png)](https://my.spokanecity.org/citycouncil/members/#)
+[![Photo Unavailable](//static.spokanecity.org/graphics/unavailable/chips/medium.png)](https://my.spokanecity.org/citycouncil/members/shelby-lambdin/)
 
-*City Council Member, District 2*Term: 2024-2025
+##### [Shelby Lambdin](https://my.spokanecity.org/citycouncil/members/shelby-lambdin/)
+
+*City Council Member, District 2*Term: August 2025-November 2025[slambdin@spokanecity.org](mailto:slambdin@spokanecity.org)
 
 #### District 3
 
@@ -60,7 +61,7 @@ Term: 2024-2027[bwilkerson@spokanecity.org](mailto:bwilkerson@spokanecity.org)
 [509.625.6715](tel:1-509-625-6715)
 [gbyrd@spokanecity.org](mailto:gbyrd@spokanecity.org)
 
-![Lisa Gardner](//static.spokanecity.org/photos/2020/09/24/lisa-gardner/chips/medium/lisa-gardner.jpg)
+![Lisa Gardner](//static.spokanecity.org/photos/2024/12/05/lisa-gardner/chips/medium/lisa-gardner.jpg)
 
 ##### Lisa Gardner
 

@@ -1,7 +1,6 @@
-import os
-from fastapi import FastAPI, HTTPException, Depends, Request
+import asyncio
+from fastapi import FastAPI, HTTPException, Depends, Request, BackgroundTasks
 from pydantic import BaseModel
-import uvicorn
 from typing import List, Optional
 from utils.pipeline_utils import get_municipalities_to_scrape
 from pipeline import Pipeline, PipelineStatus
@@ -37,12 +36,13 @@ async def search_endpoint(request: SearchRequest):
 
 # Internal usage only
 @app.post("/api/pipeline")
-async def pipeline_endpoint(request: PipelineRequest):
+async def pipeline_endpoint(request: PipelineRequest, background_tasks: BackgroundTasks):
     """Run pipeline for a specific municipality"""
     try:
         pipeline = Pipeline(pipeline_state=PipelineStatus.INIT)
-        result = pipeline.run(request.state, request.geoid)
-        return {"status": "success", "result": result}
+        request_id = str(uuid.uuid4())
+        background_tasks.add_task(pipeline.run, request_id, request.state.lower(), request.geoid)
+        return {"status": "started"}
     except Exception as e:
         raise HTTPException(
             status_code=500,

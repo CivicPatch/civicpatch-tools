@@ -1,1 +1,0 @@
-![](https://static.spokanecity.org/graphics/unavailable/chips/medium/unavailable.png)

@@ -2,8 +2,6 @@ City of Spokane, Washington
 
 
 
-![Loading...](//static.spokanecity.org/my/svg/spinner-999.svg "Loading...")
-
 ##### Checking Your Browser
 
 One Moment...Continue
@@ -22,28 +20,19 @@ Browser cookies and javascript are enabled.
 * [My Account](https://my.spokanecity.org/account/ "My Account")
 
 [Previous](https://my.spokanecity.org/# "Previous")
-[![Millions Awarded to Affordable Housing Projects Across Spokane](//static.spokanecity.org/graphics/blogs/millions-awarded-to-affordable-housing-projects-across-spokane/affordable-housing-funds/16x7/affordable-housing-funds.svg)
-![Loading...](//static.spokanecity.org/my/svg/spinner-fff.svg "Loading...")](https://my.spokanecity.org/news/releases/2025/08/19/millions-awarded-to-affordable-housing-projects-across-spokane/ "Millions Awarded to Affordable Housing Projects Across Spokane")
+
 [Next](https://my.spokanecity.org/# "Next")
 
-[Millions Awarded to Affordable Housing Projects Across Spokane
-$7.5 million going to rehabilitate and build new affordable housing units](https://my.spokanecity.org/news/releases/2025/08/19/millions-awarded-to-affordable-housing-projects-across-spokane/ "Millions Awarded to Affordable Housing Projects Across Spokane")
+[Spokane Fire Chief Announces Retirement, Successor Named
+After nearly four decades in the fire service, Spokane Fire Chief Julie O’Berg has announced her plans to retire in October.](https://my.spokanecity.org/news/releases/2025/08/25/spokane-fire-chief-announces-retirement-successor-named/ "Spokane Fire Chief Announces Retirement, Successor Named")
 
-* [Millions Awarded to Affordable Housing Projects Across Spokane](https://my.spokanecity.org/news/releases/2025/08/19/millions-awarded-to-affordable-housing-projects-across-spokane/ "Millions Awarded to Affordable Housing Projects Across Spokane")
-* [![Millions Awarded to Affordable Housing Projects Across Spokane](//static.spokanecity.org/my/svg/selected-fff.svg "Millions Awarded to Affordable Housing Projects Across Spokane")](https://my.spokanecity.org/news/releases/2025/08/19/millions-awarded-to-affordable-housing-projects-across-spokane/ "Millions Awarded to Affordable Housing Projects Across Spokane")
-* [![Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law](//static.spokanecity.org/my/svg/circle-fff.svg "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")](https://my.spokanecity.org/news/releases/2025/08/06/mayor-brown-signs-updated-complete-streets-ordinance-into-law/ "Mayor Brown Signs Updated 'Complete Streets' Ordinance into Law")
-* [![Code Enforcement Inspection Districts and Focused Compliance Efforts](//static.spokanecity.org/my/svg/circle-fff.svg "Code Enforcement Inspection Districts and Focused Compliance Efforts")](https://my.spokanecity.org/news/stories/2025/08/04/code-enforcement-inspection-districts-and-focused-compliance-efforts/ "Code Enforcement Inspection Districts and Focused Compliance Efforts")
-* [![City of Spokane Launches 'Know Your Rights' Webpage](//static.spokanecity.org/my/svg/circle-fff.svg "City of Spokane Launches 'Know Your Rights' Webpage")](https://my.spokanecity.org/news/releases/2025/08/01/city-of-spokane-launches-know-your-rights-webpage/ "City of Spokane Launches 'Know Your Rights' Webpage")
-* [![Working Together in the Fight Against PFAS](//static.spokanecity.org/my/svg/circle-fff.svg "Working Together in the Fight Against PFAS")](https://my.spokanecity.org/news/stories/2025/07/29/working-together-in-the-fight-against-pfas/ "Working Together in the Fight Against PFAS")
-* [![Mayor Brown Pushes for Easier Path to Open Childcare Facilities](//static.spokanecity.org/my/svg/circle-fff.svg "Mayor Brown Pushes for Easier Path to Open Childcare Facilities")](https://my.spokanecity.org/news/releases/2025/07/28/mayor-brown-pushes-for-easier-path-to-open-childcare-facilities/ "Mayor Brown Pushes for Easier Path to Open Childcare Facilities")
-* [![Lincoln Park Shelter Gets Makeover with Help from Kids and Community](//static.spokanecity.org/my/svg/circle-fff.svg "Lincoln Park Shelter Gets Makeover with Help from Kids and Community")](https://my.spokanecity.org/news/stories/2025/07/25/lincoln-park-shelter-gets-makeover-with-help-from-kids-and-community/ "Lincoln Park Shelter Gets Makeover with Help from Kids and Community")
-* ![](//static.spokanecity.org/my/svg/linear-gradient-h-fff-transparent.svg)
+* [Spokane Fire Chief Announces Retirement, Successor Named](https://my.spokanecity.org/news/releases/2025/08/25/spokane-fire-chief-announces-retirement-successor-named/ "Spokane Fire Chief Announces Retirement, Successor Named")
 
 [![Shaping Spokane Housing](//static.spokanecity.org/graphics/bugs/housing/chips/full/housing.png "Shaping Spokane Housing")](https://my.spokanecity.org/housing/)
 
 [spokanecity](https://twitter.com/spokanecity/)
 
-🚧 Traffic Alert! 🚧 Tomorrow, Wednesday, Aug. 13, W. Wellesley Ave. will be CLOSED in both directions between Maple St. and Division St. between 7 a.m. and 6 p.m. [#SpokaneStreets](https://twitter.com/search?q=%23SpokaneStreets&src=hash) <https://t.co/HtELJNxMrP> <https://t.co/v2XNc26VuD>
+The Street Department began a grind and overlay project on Boone Avenue between Washington and Monroe Streets. Drivers should expect slower speeds and traffic delays. Crews are expected to wrap up work by Monday, Sept. 8. [#SpokaneStreets](https://twitter.com/search?q=%23SpokaneStreets&src=hash) <https://t.co/niGWwd8J6G> <https://t.co/ZzQXgpVk5V>
 
 * [Payments](https://my.spokanecity.org/payments/ "Pay your utility bill, parking ticket and more")
 * [News](https://my.spokanecity.org/news/ "Latest news and information")
@@ -61,15 +50,9 @@ $7.5 million going to rehabilitate and build new affordable housing units](https
 
 [![Together Spokane](//static.spokanecity.org/graphics/parksrec/photo-tiles/together-spokane/16x3/large/together-spokane.png "Together Spokane")](https://www.togetherspokane.org/)
 
-![Spokane Mountain Silhouette](//static.spokanecity.org/my/svg/spokane-mountain-silhouette1.svg)
-
-![Spokane Landmarks](//static.spokanecity.org/my/svg/pavilion-clock-tower-bridge.svg)
-
 *The City of Choice*
 
 ---
-
-[![My Spokane 311](//static.spokanecity.org/my/svg/my-spokane-311-fff-v2.svg)](https://my.spokanecity.org/account/)
 
 [808 W. Spokane Falls Blvd.
   

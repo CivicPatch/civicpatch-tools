@@ -4,14 +4,14 @@ from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
 import utils.data_path_utils as data_path_utils
 import utils.url_utils as url_utils
 
-def scrape_page(context: PipelineContext, link_to_scrape: Link):
+async def scrape_page(context: PipelineContext, link_to_scrape: Link):
     """
     Scrape pages based on the links found in the previous search step.
     """
     print(f"Step 3: {PipelineStatus.SCRAPE_PAGE.value}")
 
     image_directory = data_path_utils.get_images_path(context["state"], context["geoid"])
-    html_content = scrape_utils.scrape(link_to_scrape["url"], { "image_directory": image_directory })
+    html_content = await scrape_utils.scrape(link_to_scrape["url"], { "image_directory": image_directory })
 
     # Save html_content to file under data_source
     cache_path = data_path_utils.get_cache_path(context["state"], context["geoid"])

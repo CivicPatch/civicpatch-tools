@@ -2,11 +2,11 @@ services:
   civicpatch:
     extends:
       file: civicpatch/docker-compose.yml
-      service: civicpatch_app
+      service: civicpatch
   crudder:
     extends:
       file: crudder/docker-compose.yml
-      service: crudder_app
+      service: crudder
 
 
 #  civicpatch:

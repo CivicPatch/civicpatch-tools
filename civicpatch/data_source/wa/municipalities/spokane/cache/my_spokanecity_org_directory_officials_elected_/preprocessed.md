@@ -1,5 +1,3 @@
-![City of Spokane, Washington](//static.spokanecity.org/photos/2015/06/11/clock-tower-and-pavilion/16x3/Full/clock-tower-and-pavilion.jpg)
-
 ### Office of the Mayor
 
 ![Lisa Brown](https://static.spokanecity.org/photos/2023/01/13/lisa-brown/chips/medium/lisa-brown.jpg)

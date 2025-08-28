@@ -1,7 +1,7 @@
 import os
 import uuid
 import json
-from playwright.sync_api import sync_playwright, Page
+from playwright.async_api import async_playwright, Page
 from typing import TypedDict
 
 IMAGE_URL_BLACKLIST = ["https://google.com"]
@@ -13,7 +13,7 @@ class ScrapeOptions(TypedDict):
 class ImageError(Exception):
     pass
 
-def scrape(website_url, options=None):
+async def scrape(website_url, options=None):
     """
     Fetches the content of a given website URL using Playwright.
 
@@ -23,26 +23,26 @@ def scrape(website_url, options=None):
     Returns:
         str: The HTML content of the website.
     """
-    with sync_playwright() as playwright:
-        browser = playwright.chromium.launch(headless=False)
-        context = browser.new_context()
-        page = context.new_page()
+    async with async_playwright() as playwright:
+        browser = await playwright.chromium.launch(headless=False)
+        context = await browser.new_context()
+        page = await context.new_page()
 
-        page.goto(website_url)
+        await page.goto(website_url)
 
-        flatten_shadow_root(page) 
-        html_relative_to_absolute_urls(page)
+        await flatten_shadow_root(page) 
+        await html_relative_to_absolute_urls(page)
 
         if options and options.get('image_directory'):
             # Download images if the option is set
-            download_images(page, options.get('image_directory'))
+            await download_images(page, options.get('image_directory'))
 
-        content = page.content()
-        browser.close()
+        content = await page.content()
+        await browser.close()
 
         return content
 
-def flatten_shadow_root(page: Page):
+async def flatten_shadow_root(page: Page):
     """
     Flattens the shadow root of the current page using Playwright.
 
@@ -68,11 +68,11 @@ def flatten_shadow_root(page: Page):
     flattenShadowRoot(document);
     """
     # Execute the JavaScript on the page
-    shadow_elements = page.evaluate(js_script)
+    shadow_elements = await page.evaluate(js_script)
     
     return shadow_elements
 
-def html_relative_to_absolute_urls(page: Page):
+async def html_relative_to_absolute_urls(page: Page):
     """
     Converts all relative URLs in the HTML content of the page to absolute URLs,
     considering the <base> element if it exists.
@@ -80,7 +80,7 @@ def html_relative_to_absolute_urls(page: Page):
     Args:
         page (Page): The Playwright page object.
     """
-    base_element = page.query_selector("base")
+    base_element = await page.query_selector("base")
     base_href = base_element.get_attribute("href") if base_element else None
     if base_href:
         from urllib.parse import urljoin
@@ -89,7 +89,7 @@ def html_relative_to_absolute_urls(page: Page):
         base_url = page.url
 
     # Improved: convert all non-absolute URLs, not just those starting with /
-    page.evaluate("""
+    await page.evaluate("""
         (baseUrl) => {
             function isAbsolute(url) {
                 return /^(?:[a-z]+:)?\\/\\//i.test(url);
@@ -111,7 +111,7 @@ def html_relative_to_absolute_urls(page: Page):
         }
     """, base_url)
 
-def download_images(page: Page, image_dir: str):
+async def download_images(page: Page, image_dir: str):
     """
     Captures screenshots of images from the current page using Playwright,
     renames them to UUIDs, and saves a mapping of original URLs to UUIDs in a JSON file.
@@ -122,14 +122,14 @@ def download_images(page: Page, image_dir: str):
     """
     os.makedirs(image_dir, exist_ok=True)
 
-    image_elements = page.query_selector_all("img")
+    image_elements = await page.query_selector_all("img")
     image_map = {}
 
     for img in image_elements:
         try:
-            if not img.is_visible():
+            if not await img.is_visible():
                 raise ImageError("Image is not visible")
-            src = img.get_attribute("src")
+            src = await img.get_attribute("src")
             if not src:
                 raise ImageError("No src in image")
             
@@ -141,13 +141,13 @@ def download_images(page: Page, image_dir: str):
             file_name = f"{image_uuid}.png"
             file_path = os.path.join(image_dir, file_name)
 
-            img.screenshot(path=file_path)
+            await img.screenshot(path=file_path)
 
             image_map[src] = file_name
         except Exception as e:
             print(f"Failed to capture image {src}: {e}")
             # Remove image from page
-            page.evaluate("""(img) => {
+            await page.evaluate("""(img) => {
                 img.parentNode.removeChild(img);
             }""", img)
 
