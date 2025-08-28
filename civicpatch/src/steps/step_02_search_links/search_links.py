@@ -24,9 +24,7 @@ def search_links(context: PipelineContext):
     search_engine = SearchEngineNames[search_link_pointer]
 
     if not search_engine:
-        return {
-            "search_engines": {} # Set failure
-        }
+        return {} # TODO set failure
 
     for keyword_term in keyword_term_groups:
         print(f"Searching for keyword term: {keyword_term}")

@@ -14,10 +14,22 @@ run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s tests
 [tasks.container]
 run = "docker compose run --rm civicpatch"
 [tasks.scratch]
-run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s -vv tests/unit/steps/step_07_merge_records_across_sources/test_merge_records_across_sources.py"
+run = "docker compose run --rm civicpatch poetry run pytest -s -vv tests/unit/steps/step_08_maybe_send_to_github"
 [tasks.inttest]
 run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s -vv tests/integration/services/together_ai/test_llm.py"
-[tasks.manual]
-run = "docker compose run --rm civicpatch xvfb-run -a poetry run python -m main pipeline --state wa --geoid 5367000"
+# [tasks.manual]
+# run = "docker compose run --rm civicpatch poetry run python -m main pipeline --state wa --geoid 5367000"
 [tasks.run-server]
 run = "docker compose run civicpatch poetry run fastapi run src/main.py --host 0.0.0.0 --port ${FASTAPI_PORT}"
+
+
+# Container must be up (docker compose up)
+[tasks.manual]
+run = """
+curl -X POST http://localhost:8000/api/pipeline \
+  -H "Content-Type: application/json" \
+  -d '{
+    "state": "wa",
+    "geoid": "5367000"
+  }'
+"""

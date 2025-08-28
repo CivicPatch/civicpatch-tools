@@ -1,0 +1,11 @@
+<h2>User Details</h2>
+<p><strong>provider:</strong> github<br />
+<strong>provider_user_id:</strong> {{user.id}}<br />
+<strong>user_email:</strong> {{ user_details.user_email }}</p>
+
+<form method="post" action="/user_details" style="margin-bottom: 2em;">
+  <label for="server_url"><strong>CivicPatch Server URL</strong></label>
+  <input type="url" id="server_url" name="server_url" value="{{user_details.server_url or ''}}" required>
+
+  <button type="submit" class="secondary">Update Server Info</button>
+</form>

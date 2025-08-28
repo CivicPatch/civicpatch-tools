@@ -2,8 +2,6 @@ Directory of Elected Officials - City of Spokane, Washington
 
 
 
-![Loading...](//static.spokanecity.org/my/svg/spinner-999.svg "Loading...")
-
 ##### Checking Your Browser
 
 Starting Session...Continue
@@ -36,9 +34,6 @@ Browser cookies and javascript are enabled.
 
 [Directory](https://my.spokanecity.org/directory/default.aspx "Directory")
 ==========================================================================
-
-![City of Spokane, Washington](//static.spokanecity.org/photos/2015/06/11/clock-tower-and-pavilion/16x3/clock-tower-and-pavilion.svg)![City of Spokane, Washington](//static.spokanecity.org/photos/2015/06/11/clock-tower-and-pavilion/16x3/Full/clock-tower-and-pavilion.jpg)
-![Loading...](//static.spokanecity.org/my/svg/spinner-fff.svg "Loading...")
 
 * Previous
 * Next
@@ -137,15 +132,9 @@ Email: [zzappone@spokanecity.org](mailto:zzappone@spokanecity.org)
 
 * [Boards & Commissions](https://my.spokanecity.org/bcc/)
 
-![Spokane Mountain Silhouette](//static.spokanecity.org/my/svg/spokane-mountain-silhouette1.svg)
-
-![Spokane Landmarks](//static.spokanecity.org/my/svg/pavilion-clock-tower-bridge.svg)
-
 *The City of Choice*
 
 ---
-
-[![My Spokane 311](//static.spokanecity.org/my/svg/my-spokane-311-fff-v2.svg)](https://my.spokanecity.org/account/)
 
 [808 W. Spokane Falls Blvd.
   

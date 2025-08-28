@@ -1,1 +1,0 @@
-unavailable.png (192×192)![](https://static.spokanecity.org/graphics/unavailable/chips/medium/unavailable.png)

@@ -1,4 +1,5 @@
 import os
+import asyncio
 import json
 from schemas import PipelineContext, PipelineStatus, LinkStatus, SearchEngineStatus, Link, Person
 from typing import Dict, Any, List
@@ -6,7 +7,6 @@ import yaml
 
 import utils.data_path_utils as data_path_utils
 import utils.config_utils as config_utils
-import utils.people_utils as people_utils
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from steps.step_01_research_municipality.research_municipality import research_municipality
 from steps.step_02_search_links.search_links import search_links
@@ -16,7 +16,7 @@ from steps.step_04_preprocess_page_content.preprocess_page_content import prepro
 from steps.step_05_process_page_content.process_page_content import process_page_content
 from steps.step_06_merge_records_within_source.merge_records_within_source import merge_records_within_source
 from steps.step_07_merge_records_across_sources.merge_records_across_sources import merge_records_across_sources
-from steps.step_08_maybe_send_to_github import maybe_send_to_github
+from steps.step_08_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
 from steps.step_09_cleanup.cleanup import cleanup
 
 DEFAULT_STATE: PipelineContext = { 
@@ -68,12 +68,13 @@ class Pipeline:
         with open(context_file_path, "w") as f:
             json.dump(self.context, f, indent=4)
 
-    def load_context(self, state: str, geoid: str) -> PipelineContext:
+    def load_context(self, request_id: str, state: str, geoid: str) -> PipelineContext:
         """
         Always create a new pipeline context and overwrite any existing file.
         """
         context: PipelineContext = {
             **DEFAULT_STATE,
+            "request_id": request_id,
             "state": state,
             "geoid": geoid
         }
@@ -98,12 +99,15 @@ class Pipeline:
         Return all links with the given status.
         """
         return [link for link in self.context["links"] if link["status"] == status.value]
-
-    def run(self, state, geoid):
+    
+    def run(self, request_id, state, geoid):
+        asyncio.run(self.run_async(request_id, state, geoid))
+    
+    async def run_async(self, request_id, state, geoid):
         """
         Main function to run the pipeline for a given state and geoid.
         """
-        self.context = self.load_context(state, geoid)
+        self.context = self.load_context(request_id, state, geoid)
         process_config = config_utils.get_process()
 
         while self.state != PipelineStatus.DONE:
@@ -129,7 +133,7 @@ class Pipeline:
 
             elif self.state == PipelineStatus.SCRAPE_PAGE:
                 page_to_scrape = self.get_next_link(LinkStatus.PENDING)
-                result = scrape_page(self.context, page_to_scrape)
+                result = await scrape_page(self.context, page_to_scrape)
                 self.context.update(result)
                 self.state = PipelineStatus.PREPROCESS_PAGE_CONTENT
 
@@ -163,6 +167,8 @@ class Pipeline:
 
             elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
                 result = maybe_send_to_github(self.context)
+
+                print("what is result", result)
                 self.context.update(result)
                 self.state = PipelineStatus.DONE
 

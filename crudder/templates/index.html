@@ -15,133 +15,23 @@
       <p>Manage your API keys for your civicpatch server here.</p>
 
       {% if user %}
-        <p>Welcome, {{user.first_name or user.display_name or user.email}}</p>
-        <h2>Your API Keys</h2>
-        <hr />
-        <article id="api-keys-list">
-          {% if api_keys %}
-            {% for key in api_keys %}
-            <div class="grid">
-              <div role="group">
-                <strong>***************{{ key.suffix }}</strong>
-                <small>
-                  Created: {{ key.created_at }}<br>
-                  Revoked: {{ key.revoked_at if key.revoked_at else "—" }}
-                </small>
-                {% if key.revoked_at %}
-                  <button class="secondary outline" disabled style="margin-left: 1em;">Revoked</button>
-                {% else %}
-                  <button class="secondary outline"
-                          onclick="revokeKey('{{ key.id }}')"
-                          data-tooltip="This action cannot be undone">
-                    Revoke
-                  </button>
-                {% endif %}
-              </div>
-            </div>
-            <hr>
-            {% endfor %}
-          {% else %}
-            <article>
-              <p>No API keys found. Create one to get started.</p>
-            </article>
-          {% endif %}
-        </article>
+        <p>Welcome, {{user.first_name or user.display_name or user.email}}</p> 
 
-        <div style="display: flex; justify-content: flex-start; margin-top: 2em;">
-          <button class="secondary" style="font-size: 0.8rem; padding: 0.15em 0.7em;" onclick="createApiKey()">
-            + Create New Key
-          </button>
-        </div>
+        {% include 'snippets/api_keys.html' %}
 
-        <h2>User Details</h2>
-        <p><strong>provider:</strong> github<br />
-        <strong>provider_user_id:</strong> {{user.id}}</p>
-
-        <form method="post" action="/update_server" style="margin-bottom: 2em;">
-          <label for="server_name"><strong>Server Name</strong></label>
-          <input type="text" id="server_name" name="server_name" value="{{user.server_name or ''}}" required>
-
-          <label for="server_url"><strong>Server URL</strong></label>
-          <input type="url" id="server_url" name="server_url" value="{{user.server_url or ''}}" required>
-
-          <button type="submit" class="secondary">Update Server Info</button>
-        </form>
+        {% include 'snippets/user_details.html' %}
 
         {% if not approved_user %}
           <p class="color: #AF291D;"><strong>Your account is not yet approved by the maintainer. Please contact the <a href="mailto:{{ maintainer_email }}">{{ maintainer_email }}</a> to get approved.
         {% endif %}
-        <script>
-          async function revokeKey(keyId) {
-              if (!confirm('Are you sure you want to revoke this API key?')) {
-                  return;
-              }
-              try {
-                  const response = await fetch(`/api_keys/${keyId}`, {
-                      method: 'DELETE',
-                  });
-                  if (response.ok) {
-                      window.location.reload();
-                  }
-              } catch (error) {
-                  console.error('Error revoking key:', error);
-              }
-          }
-
-          async function createApiKey() {
-              try {
-                  const response = await fetch('/api_keys', {
-                      method: 'POST',
-                  });
-                  if (response.ok) {
-                      const data = await response.json();
-                      showApiKeyModal(data.api_key);
-                  }
-              } catch (error) {
-                  console.error('Error creating key:', error);
-              }
-          }
-
-          function showApiKeyModal(apiKey) {
-            const modal = document.getElementById('apiKeyModal');
-            const apiKeyValue = document.getElementById('apiKeyValue');
-            apiKeyValue.textContent = apiKey;
-            modal.showModal();
-
-            document.getElementById('copyApiKeyBtn').onclick = function() {
-              navigator.clipboard.writeText(apiKey);
-            };
-
-            document.getElementById('closeApiKeyModalBtn').onclick = function() {
-              modal.close();
-              window.location.reload();
-            };
-          }
-        </script>
-      {% else %}
+ 
+      {% else %} 
         <p>To start, sign up or login via GitHub SSO.</p>
 
         <p>If you are setting this up for the first time, contact the <a href="mailto:{{ maintainer_email }}">maintainer</a>
         to approve your account. You will want to provide your <strong>provider_user_id</strong> after logging in.</p>
         <a href="/auth/github/login" class="contrast" role="button">Login with GitHub</a>
       {% endif %}
-      <dialog id="apiKeyModal">
-        <article>
-          <header>
-            <h3>New API Key</h3>
-          </header>
-          <p>
-            <strong id="apiKeyValue" style="word-break: break-all;"></strong>
-          </p>
-          <p>
-            <small style="color: #AF291D">This key will not be shown again. Copy and store it securely.</small>
-          </p>
-          <footer>
-            <button id="copyApiKeyBtn" class="secondary">Copy</button>
-            <button id="closeApiKeyModalBtn" class="contrast">Close</button>
-          </footer>
-        </article>
-      </dialog>
     </main>
   </body>
 

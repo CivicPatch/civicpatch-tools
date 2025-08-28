@@ -2,14 +2,6 @@ City Council Members - City of Spokane, Washington
 
 
 
-![Loading...](//static.spokanecity.org/my/svg/spinner-999.svg "Loading...")
-
-##### Checking Your Browser
-
-Starting Session...Continue
-
-Browser cookies and javascript are enabled.
-
 * [City of Spokane](https://my.spokanecity.org/ "City of Spokane Home Page")
 * [spokanecity](https://my.spokanecity.org/website/map/ "Website Map & Sections")
 * [Site Menu](https://my.spokanecity.org/ "Website Menu")
@@ -36,14 +28,12 @@ Browser cookies and javascript are enabled.
   + [Jonathan Bingle](https://my.spokanecity.org/citycouncil/members/jonathan-bingle/)
   + [Michael Cathcart](https://my.spokanecity.org/citycouncil/members/michael-cathcart/)
   + [Paul Dillon](https://my.spokanecity.org/citycouncil/members/paul-dillon/)
+  + [Shelby Lambdin](https://my.spokanecity.org/citycouncil/members/shelby-lambdin/)
   + [Zack Zappone](https://my.spokanecity.org/citycouncil/members/zack-zappone/)
   + [Kitty Klitzke](https://my.spokanecity.org/citycouncil/members/kitty-klitzke/)
-  + [Vacancy](https://my.spokanecity.org/citycouncil/members/vacancy/)
 
 [City Council](https://my.spokanecity.org/citycouncil/default.aspx "City Council")
 ==================================================================================
-
-![City of Spokane, Washington](//static.spokanecity.org/photos/2015/06/11/clock-tower-and-pavilion/16x3/Full/clock-tower-and-pavilion.jpg)
 
 * Previous
 * Next
@@ -86,12 +76,13 @@ Term: 2024-2027
 Term: 2024-2027  
 [pdillon@spokanecity.org](mailto:pdillon@spokanecity.org)
 
-[![Photo Unavailable](//static.spokanecity.org/graphics/unavailable/chips/medium.png)](https://my.spokanecity.org/citycouncil/members/#)
+[![Photo Unavailable](//static.spokanecity.org/graphics/unavailable/chips/medium.png)](https://my.spokanecity.org/citycouncil/members/shelby-lambdin/)
 
-##### [Vacant](https://my.spokanecity.org/citycouncil/members/#)
+##### [Shelby Lambdin](https://my.spokanecity.org/citycouncil/members/shelby-lambdin/)
 
 *City Council Member, District 2*  
-Term: 2024-2025
+Term: August 2025-November 2025  
+[slambdin@spokanecity.org](mailto:slambdin@spokanecity.org)
 
 #### District 3
 
@@ -121,7 +112,7 @@ Term: 2024-2027
 [509.625.6715](tel:1-509-625-6715)  
 [gbyrd@spokanecity.org](mailto:gbyrd@spokanecity.org)
 
-![Lisa Gardner](//static.spokanecity.org/photos/2020/09/24/lisa-gardner/chips/medium/lisa-gardner.jpg)
+![Lisa Gardner](//static.spokanecity.org/photos/2024/12/05/lisa-gardner/chips/medium/lisa-gardner.jpg)
 
 ##### Lisa Gardner
 
@@ -194,10 +185,6 @@ Spokane, WA 99201
 Email Us: [citycouncil2@spokanecity.org](mailto:citycouncil2@spokanecity.org)
 
  [Fill out my Wufoo form!](https://spokanecity.wufoo.com/forms/r1dyhvz71qfqz32/)
-
-![Spokane Mountain Silhouette](//static.spokanecity.org/my/svg/spokane-mountain-silhouette1.svg)
-
-![Spokane Landmarks](//static.spokanecity.org/my/svg/pavilion-clock-tower-bridge.svg)
 
 *The City of Choice*
 

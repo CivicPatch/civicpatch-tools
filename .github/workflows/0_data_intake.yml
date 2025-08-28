@@ -1,0 +1,25 @@
+name: 0. Data Intake
+
+on:
+  workflow_dispatch:
+    inputs:
+      server_url:
+        description: 'CivicPatch Server URL (e.g. https://civicpatch.example.com)'
+        required: true
+      user_email:
+        description: 'Email associated with your CivicPatch account'
+        required: true
+      zip_file_url:
+        description: 'Presigned URL of the ZIP file containing YAML data'
+        required: true
+
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
