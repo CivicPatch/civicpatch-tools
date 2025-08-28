@@ -146,9 +146,11 @@ async def download_images(page: Page, image_dir: str):
             image_map[src] = file_name
         except Exception as e:
             print(f"Failed to capture image {src}: {e}")
-            # Remove image from page
+            # Remove image from page, but check parentNode exists
             await page.evaluate("""(img) => {
-                img.parentNode.removeChild(img);
+                if (img && img.parentNode) {
+                    img.parentNode.removeChild(img);
+                }
             }""", img)
 
     map_file_path = os.path.join(image_dir, "image_map.json")

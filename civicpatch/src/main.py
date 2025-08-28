@@ -42,7 +42,8 @@ async def pipeline_endpoint(request: PipelineRequest, background_tasks: Backgrou
         pipeline = Pipeline(pipeline_state=PipelineStatus.INIT)
         request_id = str(uuid.uuid4())
         background_tasks.add_task(pipeline.run, request_id, request.state.lower(), request.geoid)
-        return {"status": "started"}
+        return {"status": "started",
+                "request_id": request_id}
     except Exception as e:
         raise HTTPException(
             status_code=500,

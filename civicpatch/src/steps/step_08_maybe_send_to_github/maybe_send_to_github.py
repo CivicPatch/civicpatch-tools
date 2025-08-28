@@ -9,11 +9,13 @@ from schemas import PipelineContext
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
 
 def maybe_send_to_github(context: PipelineContext):
+  print(f"Step 5: {PipelineStatus.MAYBE_SEND_TO_GITHUB.value}")
   # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
   # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
   CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
   CRUDDER_URL = os.getenv("CRUDDER_URL", "https://crudder.civicpatch.org")
-  CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/github_intake"
+  CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/api/github_intake"
+  print(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
 
   if not CRUDDER_SHARED_TOKEN:
     print("CRUDDER_SHARED_TOKEN is not set, skipping github workflow dispatch.")
@@ -52,25 +54,21 @@ def maybe_send_to_github(context: PipelineContext):
   }
 
 def zip_files(request_id, state, geoid):
-  # Get all files under get_data_municipality_path(state, geoid) and get_data_source_municipality_path(state, geoid)
-  # Zip them up under folder /crudder_data
-  # Name it request_payload_{state}_{geoid}_{generated_uuid}.zip
-  data_municipality_path = get_data_municipality_path(state, geoid)
-  data_source_municipality_path = get_data_source_municipality_path(state, geoid)
-  zip_file_name = f"request_payload_{state}_{geoid}_{request_id}.zip"
-  zip_file_path = os.path.join("crudder_data", zip_file_name)
+    data_municipality_path = get_data_municipality_path(state, geoid)
+    data_source_municipality_path = get_data_source_municipality_path(state, geoid)
+    zip_file_name = f"request_payload_{state}_{geoid}_{request_id}.zip"
+    zip_file_path = os.path.join("crudder_data", zip_file_name)
 
-  with zipfile.ZipFile(zip_file_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-    for root, _dirs, files in os.walk(data_municipality_path):
-      for file in files:
-        file_path = os.path.join(root, file)
-        arcname = os.path.relpath(file_path, data_municipality_path)
-        zipf.write(file_path, arcname)
+    # Find the common parent directory
+    common_prefix = os.path.commonpath([data_municipality_path, data_source_municipality_path])
 
-    for root, _dirs, files in os.walk(data_source_municipality_path):
-      for file in files:
-        file_path = os.path.join(root, file)
-        arcname = os.path.relpath(file_path, data_source_municipality_path)
-        zipf.write(file_path, arcname)
-  
-  return zip_file_path
+    with zipfile.ZipFile(zip_file_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for folder_path in [data_municipality_path, data_source_municipality_path]:
+            for root, _dirs, files in os.walk(folder_path):
+                for file in files:
+                    file_path = os.path.join(root, file)
+                    # arcname will include data/ or data_source/ as the top-level folder
+                    arcname = os.path.relpath(file_path, common_prefix)
+                    zipf.write(file_path, arcname)
+
+    return zip_file_path
