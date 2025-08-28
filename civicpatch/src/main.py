@@ -50,42 +50,5 @@ async def pipeline_endpoint(request: PipelineRequest, background_tasks: Backgrou
             detail=str(e)
         )
 
-# GitHub Actions endpoint - requires authentication
-@app.post("/api/github-actions")
-async def github_actions_endpoint(
-    request: Request,
-):
-    """
-    GitHub Actions endpoint - requires authentication
-    See: https://docs.github.com/en/rest/actions/workflows
-    """
-    timestamp = request.headers.get("X-Timestamp")
-    signature = request.headers.get("X-Signature")
-
-    if not timestamp or not signature:
-        raise HTTPException(
-            status_code=401,
-            detail="Missing required headers: X-Timestamp and X-Signature"
-        )
-
-    body = (await request.body()).decode() or ""
-    authorized = verify_github_action_data_query(timestamp=timestamp, signature=signature, body=body)
-
-    if authorized is False:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid signature"
-        )
-
-    try:
-        # TODO: package everything up into zip file under .github_actions_data folder
-        return {
-            "request_id": str(uuid.uuid4()),
-            "status": "success",
-        }
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=str(e)
-        )
-
+# TODO
+# @app.get("/api/pipeline/{request_id}")
