@@ -104,8 +104,10 @@ def is_active_api_key(db_cursor, database_hash_key, api_key) -> bool:
 def get_server_detail_by_active_api_key(db_cursor, database_hash_key, api_key):
     candidate_api_key_hash = hash_string(api_key, database_hash_key)
     db_cursor.execute("""
-        SELECT user_email, server_url FROM api_keys
-        WHERE api_key_hash = ? AND revoked_at IS NULL
+        SELECT u.email, u.server_url
+        FROM users u
+        JOIN api_keys k ON u.provider = k.provider AND u.provider_user_id = k.provider_user_id
+        WHERE k.api_key_hash = ? AND k.revoked_at IS NULL
     """, (candidate_api_key_hash,))
     row = db_cursor.fetchone()
     if row:

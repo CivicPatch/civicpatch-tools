@@ -5,6 +5,7 @@ ENV PROJECT_NAME="civicpatch"
 RUN apt-get update && apt-get install -y \
     curl \
     xvfb \
+    xdpyinfo \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -38,7 +39,6 @@ COPY ./shared /app/shared
 RUN poetry run post-install
 
 #https://github.com/microsoft/playwright-python/issues/2572
-ENV DISPLAY=:99
 ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
 
 RUN useradd -m -s /bin/bash civicpatch_user
@@ -46,6 +46,11 @@ RUN chown -R civicpatch_user:civicpatch_user /app
 
 # DEVELOPMENT IMAGE
 FROM image-base AS development
+
+RUN apt-get update && apt-get install -y \
+    vim \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

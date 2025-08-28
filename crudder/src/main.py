@@ -113,7 +113,7 @@ async def home(request: Request):
         }
     )
 
-@app.post("/github_intake")
+@app.post("/api/github_intake")
 async def github_intake(
     file: UploadFile = File(...),
     authorization: str = Header(None)

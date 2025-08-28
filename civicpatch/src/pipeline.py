@@ -93,6 +93,11 @@ class Pipeline:
                 return link
         return None
     
+    def get_link_status_by_url(self, url: str) -> LinkStatus:
+        for link in self.context["links"]:
+            if link["url"] == url:
+                return LinkStatus(link["status"])
+        return None
 
     def get_links(self, status: LinkStatus) -> List[Link]:
         """
@@ -135,7 +140,12 @@ class Pipeline:
                 page_to_scrape = self.get_next_link(LinkStatus.PENDING)
                 result = await scrape_page(self.context, page_to_scrape)
                 self.context.update(result)
-                self.state = PipelineStatus.PREPROCESS_PAGE_CONTENT
+
+                link_status = self.get_link_status_by_url(page_to_scrape["url"])
+                if link_status == LinkStatus.SCRAPED:
+                    self.state = PipelineStatus.PREPROCESS_PAGE_CONTENT
+                else:
+                    self.state = PipelineStatus.SCRAPE_PAGE
 
             elif self.state == PipelineStatus.PREPROCESS_PAGE_CONTENT:
                 page_to_preprocess = self.get_next_link(LinkStatus.SCRAPED)

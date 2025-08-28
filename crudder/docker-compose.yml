@@ -1,5 +1,5 @@
 services:
-  crudder_app:
+  crudder:
     env_file: .env
     build:
       context: ..

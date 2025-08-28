@@ -1,0 +1,181 @@
+- cdn_image: ''
+  data_sources:
+  - https://my.spokanecity.org/citycouncil/members/jonathan-bingle/
+  - https://my.spokanecity.org/citycouncil/members/paul-dillon/
+  - https://my.spokanecity.org/directory/officials/elected/
+  - https://my.spokanecity.org/citycouncil/members/zack-zappone/
+  - https://my.spokanecity.org/
+  - https://my.spokanecity.org/citycouncil/members/
+  - https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/
+  divisions:
+  - district 1
+  email: jbingle@spokanecity.org
+  end_date: '2025'
+  image: //static.spokanecity.org/photos/2024/12/05/jonathan-bingle/chips/medium/jonathan-bingle.jpg
+  name: Jonathan Bingle
+  phone_number: 509.625.6275
+  place: ''
+  roles:
+  - council member
+  start_date: '2022'
+  state: ''
+  updated_at: ''
+  website: https://my.spokanecity.org/citycouncil/members/jonathan-bingle/
+- cdn_image: ''
+  data_sources:
+  - https://my.spokanecity.org/citycouncil/members/jonathan-bingle/
+  - https://my.spokanecity.org/citycouncil/members/paul-dillon/
+  - https://my.spokanecity.org/directory/officials/elected/
+  - https://my.spokanecity.org/citycouncil/members/zack-zappone/
+  - https://my.spokanecity.org/
+  - https://my.spokanecity.org/citycouncil/members/
+  - https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/
+  divisions:
+  - district 2
+  - district 1
+  email: bwilkerson@spokanecity.org
+  end_date: '2027'
+  image: //static.spokanecity.org/photos/2024/12/05/betsy-wilkerson/chips/medium/betsy-wilkerson.jpg
+  name: Betsy Wilkerson
+  phone_number: 509.625.6258
+  place: ''
+  roles:
+  - council member
+  - council president
+  start_date: '2024'
+  state: ''
+  updated_at: ''
+  website: https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/
+- cdn_image: ''
+  data_sources:
+  - https://my.spokanecity.org/citycouncil/members/jonathan-bingle/
+  - https://my.spokanecity.org/citycouncil/members/paul-dillon/
+  - https://my.spokanecity.org/directory/officials/elected/
+  - https://my.spokanecity.org/citycouncil/members/zack-zappone/
+  - https://my.spokanecity.org/
+  - https://my.spokanecity.org/citycouncil/members/
+  - https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/
+  divisions:
+  - district 2
+  email: pdillon@spokanecity.org
+  end_date: '2027'
+  image: //static.spokanecity.org/photos/2024/12/05/paul-dillon/chips/medium/paul-dillon.jpg
+  name: Paul Dillon
+  phone_number: 509.564.4569
+  place: ''
+  roles:
+  - council member
+  start_date: '2024'
+  state: ''
+  updated_at: ''
+  website: https://my.spokanecity.org/citycouncil/members/paul-dillon/
+- cdn_image: ''
+  data_sources:
+  - https://my.spokanecity.org/citycouncil/members/jonathan-bingle/
+  - https://my.spokanecity.org/citycouncil/members/paul-dillon/
+  - https://my.spokanecity.org/directory/officials/elected/
+  - https://my.spokanecity.org/citycouncil/members/zack-zappone/
+  - https://my.spokanecity.org/
+  - https://my.spokanecity.org/citycouncil/members/
+  - https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/
+  divisions:
+  - district 3
+  email: zzappone@spokanecity.org
+  end_date: '2025'
+  image: //static.spokanecity.org/photos/2024/12/05/zack-zappone/chips/medium/zack-zappone.jpg
+  name: Zack Zappone
+  phone_number: 509.625.6256
+  place: ''
+  roles:
+  - council member
+  start_date: '2022'
+  state: ''
+  updated_at: ''
+  website: https://my.spokanecity.org/citycouncil/members/zack-zappone/
+- cdn_image: ''
+  data_sources:
+  - https://my.spokanecity.org/citycouncil/members/jonathan-bingle/
+  - https://my.spokanecity.org/citycouncil/members/paul-dillon/
+  - https://my.spokanecity.org/directory/officials/elected/
+  - https://my.spokanecity.org/citycouncil/members/zack-zappone/
+  - https://my.spokanecity.org/
+  - https://my.spokanecity.org/citycouncil/members/
+  - https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/
+  divisions:
+  - district 3
+  email: kklitzke@spokanecity.org
+  end_date: '2027'
+  image: //static.spokanecity.org/photos/2024/12/05/kitty-klitzke/chips/large/kitty-klitzke.jpg
+  name: Kitty Klitzke
+  phone_number: 509.625.6291
+  place: ''
+  roles:
+  - council member
+  start_date: '2024'
+  state: ''
+  updated_at: ''
+  website: https://my.spokanecity.org/citycouncil/members/kitty-klitzke/
+- cdn_image: ''
+  data_sources:
+  - https://my.spokanecity.org/
+  - https://my.spokanecity.org/citycouncil/members/jonathan-bingle/
+  - https://my.spokanecity.org/directory/officials/elected/
+  divisions: []
+  email: mayor@spokanecity.org
+  end_date: 2024-2027
+  image: https://static.spokanecity.org/photos/2023/01/13/lisa-brown/chips/medium/lisa-brown.jpg
+  name: Lisa Brown
+  phone_number: 509.625.6250
+  place: ''
+  roles:
+  - mayor
+  start_date: 2024-2027
+  state: ''
+  updated_at: ''
+  website: https://www.spokanecity.org/mayor
+- cdn_image: ''
+  data_sources:
+  - https://my.spokanecity.org/citycouncil/members/jonathan-bingle/
+  - https://my.spokanecity.org/citycouncil/members/paul-dillon/
+  - https://my.spokanecity.org/directory/officials/elected/
+  - https://my.spokanecity.org/citycouncil/members/zack-zappone/
+  - https://my.spokanecity.org/
+  - https://my.spokanecity.org/citycouncil/members/
+  - https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/
+  divisions:
+  - district 1
+  email: mcathcart@spokanecity.org
+  end_date: '2027'
+  image: //static.spokanecity.org/photos/2024/12/05/michael-cathcart/chips/large/michael-cathcart.jpg
+  name: Michael Cathcart
+  phone_number: 509.625.6257
+  place: ''
+  roles:
+  - council member
+  start_date: '2024'
+  state: ''
+  updated_at: ''
+  website: https://my.spokanecity.org/citycouncil/members/michael-cathcart/
+- cdn_image: ''
+  data_sources:
+  - https://my.spokanecity.org/citycouncil/members/jonathan-bingle/
+  - https://my.spokanecity.org/citycouncil/members/paul-dillon/
+  - https://my.spokanecity.org/directory/officials/elected/
+  - https://my.spokanecity.org/citycouncil/members/zack-zappone/
+  - https://my.spokanecity.org/
+  - https://my.spokanecity.org/citycouncil/members/
+  - https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/
+  divisions:
+  - district 2
+  email: slambdin@spokanecity.org
+  end_date: 2025-11
+  image: //static.spokanecity.org/graphics/unavailable/chips/medium.png
+  name: Shelby Lambdin
+  phone_number: 509.625.6821
+  place: ''
+  roles:
+  - council member
+  start_date: 2025-08
+  state: ''
+  updated_at: ''
+  website: https://my.spokanecity.org/citycouncil/members/shelby-lambdin/
