@@ -145,11 +145,19 @@ async def github_intake(
         file
     )
 
-    request_id = file.filename.split("_")[-1].replace(".zip", "")
+    request_id = file.filename.split("_")[1]
+    state = file.filename.split("_")[2]
+    geoid = file.filename.split("_")[-1].replace(".zip", "")
     print(f"Uploaded file for request_id: {request_id}, presigned_url: {presigned_url}")
 
     # Send to github actions workflow
-    trigger_github_data_intake_workflow(GITHUB_WORKFLOW_TOKEN, server_detail["user_email"], server_detail["server_url"], request_id, presigned_url)
+    trigger_github_data_intake_workflow(
+        GITHUB_WORKFLOW_TOKEN, 
+        server_detail["user_email"], 
+        server_detail["server_url"], 
+        request_id, 
+        state, geoid,
+        presigned_url)
 
     return {"filename": file.filename, "status": "uploaded", "url": presigned_url}
 
@@ -174,11 +182,20 @@ async def api_keys_page(request: Request):
     except HTTPException:
         return RedirectResponse(url="/", status_code=302)
 
+def can_create_api_key(provider, provider_user_id, approved_github_user_ids):
+    if provider != "github":
+        return False
+    return provider_user_id in approved_github_user_ids
+
 @app.post("/api_keys", include_in_schema=False)
 async def post_api_keys(request: Request, user: OpenID = Depends(get_logged_user)):
     """Create new API key"""
     provider = user.provider
     provider_user_id = user.id
+
+    if not can_create_api_key(provider, provider_user_id, APPROVED_GITHUB_PROVIDER_USER_IDS):
+        raise HTTPException(status_code=403, detail="You are not authorized to create an API key. Please contact the maintainer.") 
+
     api_key = create_api_key(db_connection, db_cursor, provider, provider_user_id, DATABASE_HASH_KEY)
 
     return {"api_key": api_key}

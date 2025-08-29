@@ -56,7 +56,7 @@ def maybe_send_to_github(context: PipelineContext):
 def zip_files(request_id, state, geoid):
     data_municipality_path = get_data_municipality_path(state, geoid)
     data_source_municipality_path = get_data_source_municipality_path(state, geoid)
-    zip_file_name = f"request_payload_{state}_{geoid}_{request_id}.zip"
+    zip_file_name = f"request_{request_id}_{state}_{geoid}.zip"
     zip_file_path = os.path.join("crudder_data", zip_file_name)
 
     # Find the common parent directory

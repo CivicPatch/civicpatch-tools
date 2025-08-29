@@ -14,6 +14,12 @@ on:
       request_id:
         description: 'Unique request ID for this data intake (e.g. UUID)'
         required: true
+      state:
+        description: 'State' 
+        required: true
+      geoid:
+        description: 'Geographic ID'
+        required: true
       zip_file_url:
         description: 'Presigned URL of the ZIP file containing YAML data'
         required: true
@@ -39,3 +45,27 @@ jobs:
           unzip -o /tmp/data.zip -d civicpatch
           ls -l civicpatch
           ls -l civicpatch/data
+          git status
+
+      - name: Get branch name from zip_file_url
+        id: extract_branch
+        run: |
+          ZIP_FILE=$(basename "${{ github.event.inputs.zip_file_url }}")
+          BRANCH_NAME="${ZIP_FILE%.zip}"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+      - name: Create a PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SERVER_URL: ${{ github.event.inputs.server_url }}
+          USER_EMAIL: ${{ github.event.inputs.user_email }}
+        run: |
+          git config --global user.name "civicpatch-pipeline-bot"
+          git config --global user.email "civicpatch-tools@civicpatch.org"
+          git checkout -B {{ steps.extract_branch.outputs.branch_name }}
+          git add .
+          git commit -m "Data intake for ${{ github.event.inputs.state }} - ${{ github.event.inputs.geoid }} by ${{ github.event.inputs.user_email }}"
+          git push -u origin {{ steps.extract_branch.outputs.branch_name }} 
+
+      # TODO: run script to generate people table
+      # TOOD: run script to generate disagreements table
