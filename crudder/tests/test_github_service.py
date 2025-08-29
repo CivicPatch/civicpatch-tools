@@ -7,6 +7,8 @@ def test_trigger_github_data_intake_workflow_real():
     user_email = "test@example.com"
     server_url = os.getenv("TEST_API_URL")
     request_id = os.getenv("TEST_REQUEST_ID")
+    state = "wa"
+    geoid = "5367000"
     zip_file_url = os.getenv("TEST_ZIP_URL")
 
     assert github_workflow_token, "Set GITHUB_WORKFLOW_TOKEN in your environment"
@@ -20,6 +22,8 @@ def test_trigger_github_data_intake_workflow_real():
         user_email,
         server_url,
         request_id,
+        state,
+        geoid,
         zip_file_url
     )
     assert result is True
