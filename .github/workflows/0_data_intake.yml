@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -62,10 +62,17 @@ jobs:
         run: |
           git config --global user.name "civicpatch-pipeline-bot"
           git config --global user.email "civicpatch-tools@civicpatch.org"
-          git checkout -B {{ steps.extract_branch.outputs.branch_name }}
+          git checkout -B ${{ steps.extract_branch.outputs.branch_name }}
           git add .
           git commit -m "Data intake for ${{ github.event.inputs.state }} - ${{ github.event.inputs.geoid }} by ${{ github.event.inputs.user_email }}"
-          git push -u origin {{ steps.extract_branch.outputs.branch_name }} 
+          git push -u origin ${{ steps.extract_branch.outputs.branch_name }} 
+
+          echo ${{ github.actor }}
+          
+          gh pr cerate \
+            --title "Data intake for ${{ github.event.inputs.state }} - ${{ github.event.inputs.geoid }} by ${{ github.event.inputs.user_email }}" \
+            --body "Automated data intake for request ID: ${{ github.event.inputs.request_id }}. Please review the data before merging." \
+            --base main
 
       # TODO: run script to generate people table
       # TOOD: run script to generate disagreements table
