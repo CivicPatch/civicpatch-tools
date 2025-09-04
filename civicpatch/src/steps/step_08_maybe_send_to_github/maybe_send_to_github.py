@@ -17,41 +17,53 @@ def maybe_send_to_github(context: PipelineContext):
   CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/api/github_intake"
   print(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
 
-  if not CRUDDER_SHARED_TOKEN:
-    print("CRUDDER_SHARED_TOKEN is not set, skipping github workflow dispatch.")
-    print(f"Generate api key from CRUDDER at {CRUDDER_URL}")
+  try:
+    if not CRUDDER_SHARED_TOKEN:
+      print("CRUDDER_SHARED_TOKEN is not set, skipping github workflow dispatch.")
+      print(f"Generate api key from CRUDDER at {CRUDDER_URL}")
+
+      return {
+        "steps": {
+          **context["steps"],
+          PipelineStatus.MAYBE_SEND_TO_GITHUB.value: {
+              "status": "skipped"
+          }
+        }
+      }
+
+    zip_file_path = zip_files(context["request_id"], context["state"], context["geoid"])
+
+    headers = {
+      "Authorization": CRUDDER_SHARED_TOKEN,
+    }
+  
+    files = {
+      'file': (os.path.basename(zip_file_path), open(zip_file_path, 'rb'), 'application/zip')
+    }
+
+    response = requests.post(CRUDDER_UPLOAD_URL, headers=headers, files=files)
 
     return {
       "steps": {
         **context["steps"],
         PipelineStatus.MAYBE_SEND_TO_GITHUB.value: {
-            "status": "skipped"
+            "status": "completed" if response.status_code == 200 else "failed",
+            "response_status_code": response.status_code,
+            "response_text": response.text
         }
       }
     }
-
-  zip_file_path = zip_files(context["request_id"], context["state"], context["geoid"])
-
-  headers = {
-    "Authorization": CRUDDER_SHARED_TOKEN,
-  }
-  
-  files = {
-    'file': (os.path.basename(zip_file_path), open(zip_file_path, 'rb'), 'application/zip')
-  }
-
-  response = requests.post(CRUDDER_UPLOAD_URL, headers=headers, files=files)
-
-  return {
-    "steps": {
-      **context["steps"],
-      PipelineStatus.MAYBE_SEND_TO_GITHUB.value: {
-          "status": "completed" if response.status_code == 200 else "failed",
-          "response_status_code": response.status_code,
-          "response_text": response.text
+  except Exception as e:
+    print(f"Error sending to GitHub: {e}")
+    return {
+      "steps": {
+        **context["steps"],
+        PipelineStatus.MAYBE_SEND_TO_GITHUB.value: {
+            "status": "failed",
+            "error": str(e)
+        }
       }
     }
-  }
 
 def zip_files(request_id, state, geoid):
     data_municipality_path = get_data_municipality_path(state, geoid)

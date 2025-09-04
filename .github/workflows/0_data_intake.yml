@@ -40,9 +40,9 @@ jobs:
           mkdir -p civicpatch
           curl -L "${{ github.event.inputs.zip_file_url }}" -o /tmp/data.zip
 
-      - name: Unzip data into civicpatch/
+      - name: Unzip data into root project directory
         run: |
-          unzip -o /tmp/data.zip -d civicpatch
+          unzip -o /tmp/data.zip -d 
           ls -l civicpatch
           ls -l civicpatch/data
           git status
@@ -69,7 +69,7 @@ jobs:
 
           echo ${{ github.actor }}
           
-          gh pr cerate \
+          gh pr create \
             --title "Data intake for ${{ github.event.inputs.state }} - ${{ github.event.inputs.geoid }} by ${{ github.event.inputs.user_email }}" \
             --body "Automated data intake for request ID: ${{ github.event.inputs.request_id }}. Please review the data before merging." \
             --base main

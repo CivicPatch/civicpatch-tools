@@ -1,5 +1,6 @@
 import os
 import copy
+import collections
 from schemas import (
   PipelineContext, 
   Link, 
@@ -163,24 +164,33 @@ def calculate_progress(
     """
     Update the progress based on the processed data.
     """
-    min_length = float('inf')
+    # min_length = float('inf')
+    lengths = []
 
     for _, people_by_name in updated_records_by_source.items():
         filtered = [
             p for p in people_by_name.values()
             if has_role_and_contact_info(roles, p)
         ]
-        min_length = min(min_length, len(filtered))
+        lengths.append(len(filtered))
+        # min_length = min(min_length, len(filtered))
 
-    print("Progress by source:")
     for source, people_by_name in updated_records_by_source.items():
         filtered = [
             p for p in people_by_name.values()
             if has_role_and_contact_info(roles, p)
         ]
-        print(f"{source}: {len(filtered)} people with roles and contact info")
+    print(f"{source}: {len(filtered)} people with roles and contact info")
     
-    progress["current_data"] = min_length if min_length != float('inf') else 0
+    # Gather count of each length
+    current_progress = 0
+    counts = collections.Counter(lengths)
+    for length, count in sorted(counts.items(), reverse = True):
+        if count >= 2: # At least two sources have the same count
+            current_progress = length
+            break
+
+    progress["current_data"] = current_progress
     return progress
 
 def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> bool:
@@ -209,6 +219,8 @@ def update_website_links(roles, existing_links: List[Link], records_by_source: R
     found_websites = extract_websites_from_processed_data(roles, records_by_source)
 
     # Update existing links or add new ones
+    print("I found websites:", found_websites)
+
     for website in found_websites:
         existing_link = next((link for link in updated_links if link["url"] == website), None)
         if existing_link:
@@ -220,9 +232,11 @@ def update_website_links(roles, existing_links: List[Link], records_by_source: R
             new_link: Link = {
                 "url": website,
                 "status": LinkStatus.PENDING.value,
-                "folder_name": url_utils.format_url_to_folder(website)
+                "folder_name": url_utils.format_url_to_folder(website),
+                "is_profile_page": True
             }
-            updated_links.append(new_link)
+            # Add to the front of the list
+            updated_links.insert(0, new_link)
 
     return updated_links
 
@@ -233,8 +247,8 @@ def extract_websites_from_processed_data(roles: List[str], records_by_source: Re
     found_websites = []
     for people_by_name in records_by_source.values():
         for person_list in people_by_name.values():  # Directly iterate over lists of LLMPerson
-            if has_role_and_contact_info(roles, person_list):
-                continue
+            #if has_role_and_contact_info(roles, person_list):
+            #    continue
 
             for person_record in person_list:
                 website = person_record.website if person_record.website else None

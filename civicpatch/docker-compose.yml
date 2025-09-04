@@ -10,5 +10,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ../shared:/app/shared:ro  # Mount shared library
+      - ../utils:/app/utils:ro  # Mount shared library
+      - ../data:/app/data
+      - ../data_source:/app/data_source
       - .:/app

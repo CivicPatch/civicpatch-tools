@@ -4,7 +4,6 @@ ENV PROJECT_NAME="crudder"
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     curl \
-    xvfb \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -27,8 +26,11 @@ WORKDIR /app
 COPY ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 RUN poetry install --no-root
 
-COPY ./shared /app/shared
 COPY ./${PROJECT_NAME} /app
+COPY ./utils /app/utils
+
+RUN useradd -m -s /bin/bash civicpatch_user
+RUN chown -R civicpatch_user:civicpatch_user /app
 
 # DEVELOPMENT IMAGE
 FROM image-base AS development
@@ -37,8 +39,6 @@ ENV APP_ENVIRONMENT=development
 
 WORKDIR /app
 
-RUN useradd -m -s /bin/bash civicpatch_user
-RUN chown -R civicpatch_user:civicpatch_user /app
 RUN chown -R civicpatch_user:civicpatch_user /venv
 
 USER civicpatch_user
@@ -52,9 +52,6 @@ FROM image-base AS production
 ENV APP_ENVIRONMENT=production
 
 WORKDIR /app
-
-RUN useradd -m -s /bin/bash civicpatch_user
-RUN chown -R civicpatch_user:civicpatch_user /app
 
 USER civicpatch_user
 # # Keep the container running

@@ -1,12 +1,24 @@
 #!/bin/sh
 set -e
-Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 export DISPLAY=:99
+
+[ -f /tmp/.X99-lock ] && rm -f /tmp/.X99-lock
 # Wait for Xvfb to be ready
-for i in $(seq 1 10); do
-  if xdpyinfo -display :99 > /dev/null 2>&1; then
-    break
+Xvfb :99 -screen 0 1024x768x24  &
+
+# Wait for Xvfb
+MAX_ATTEMPTS=120 # About 60 seconds
+COUNT=0
+echo -n "Waiting for Xvfb to be ready..."
+while ! xdpyinfo -display "${DISPLAY}" >/dev/null 2>&1; do
+  echo -n "."
+  sleep 0.50s
+  COUNT=$(( COUNT + 1 ))
+  if [ "${COUNT}" -ge "${MAX_ATTEMPTS}" ]; then
+    echo "  Gave up waiting for X server on ${DISPLAY}"
+    exit 1
   fi
-  sleep 0.5
 done
+echo "  Done - Xvfb is ready!"
+
 exec "$@"

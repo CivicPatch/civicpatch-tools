@@ -30,6 +30,6 @@ curl -X POST http://localhost:8000/api/pipeline \
   -H "Content-Type: application/json" \
   -d '{
     "state": "wa",
-    "geoid": "5367000"
+    "geoid": "5370000"
   }'
 """

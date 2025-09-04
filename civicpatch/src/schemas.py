@@ -26,6 +26,7 @@ class Link(BaseModel):
     url: str
     status: str # LinkStatus value
     folder_name: str = ""
+    is_profile_page: bool = False
 
 class PipelineStatus(Enum):
     INIT = "INIT"
