@@ -126,6 +126,7 @@ async def download_images(page: Page, image_dir: str):
     image_map = {}
 
     for img in image_elements:
+        src = None
         try:
             if not await img.is_visible():
                 raise ImageError("Image is not visible")
@@ -134,7 +135,6 @@ async def download_images(page: Page, image_dir: str):
                 raise ImageError("No src in image")
             
             if any(src.endswith(ext) for ext in IMAGE_EXT_BLACKLIST):
-                # TODO: raise error
                 raise ImageError("Image is under blacklisted")
 
             image_uuid = str(uuid.uuid4())
@@ -146,7 +146,6 @@ async def download_images(page: Page, image_dir: str):
             image_map[src] = file_name
         except Exception as e:
             print(f"Failed to capture image {src}: {e}")
-            # Remove image from page, but check parentNode exists
             await page.evaluate("""(img) => {
                 if (img && img.parentNode) {
                     img.parentNode.removeChild(img);

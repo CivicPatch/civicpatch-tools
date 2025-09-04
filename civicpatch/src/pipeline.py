@@ -178,9 +178,10 @@ class Pipeline:
             elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
                 result = maybe_send_to_github(self.context)
 
-                print("what is result", result)
                 self.context.update(result)
                 self.state = PipelineStatus.DONE
+
+            # TODO: cleanup step
 
             else:
                 print("Pipeline logic not yet implemented.")
@@ -219,6 +220,11 @@ class Pipeline:
         """
         Calculate the next state for the pipeline based on the current progress and processed count.
         """
+        next_pending_link = self.get_next_link(LinkStatus.PENDING)
+        if next_pending_link and next_pending_link["is_profile_page"] == True:
+            print("More pending links to scrape, continuing scraping...")
+            return PipelineStatus.SCRAPE_PAGE
+
         if self.context["progress"]["current_data"] >= self.context["progress"]["required_data"]:
             print("Enough data processed, moving to report generation...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE

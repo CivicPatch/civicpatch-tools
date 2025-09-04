@@ -12,7 +12,7 @@ def search(search_query, site_search=None):
     params = {
         "key": api_key,
         "cx": search_engine_id,
-        "q": search_query,
+        "q": f"{search_query} -filetype:pdf'",
     }
 
     # Add siteSearch and siteSearchFilter if a specific site is provided
