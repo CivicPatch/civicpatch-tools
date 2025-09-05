@@ -12,3 +12,14 @@ To see the entire set of data, check the [open-data](https://github.com/CivicPat
   Scrape jobs are run on either GitHub Actions or by volunteers running scrapes on their own servers.
 - [crudder](./crudder/README.md)
   Helper project that sits civicpatch volunteer servers & GitHub Actions.
+
+## Development
+
+### Requirements
+
+- Docker
+  You will need this to run anything here. Tested on OSX, should work on Linux, might work
+  on Windows but you may need to do extra tweaking with user permissions.
+- [mise](https://mise.jdx.dev/getting-started.html).
+  Under each project there will be mise.toml files that should make development easier (test scripts,
+  starting projects, etc)

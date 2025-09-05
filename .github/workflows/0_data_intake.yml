@@ -41,7 +41,7 @@ jobs:
 
       - name: Unzip data into root project directory
         run: |
-          unzip -o /tmp/play.zip -d .
+          unzip -o /tmp/payload.zip -d .
           ls -l 
           ls -l data
           ls -l data_source
