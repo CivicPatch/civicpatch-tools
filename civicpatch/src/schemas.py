@@ -19,6 +19,7 @@ class LinkStatus(Enum):
     PENDING = "pending"
     SCRAPED = "scraped"
     PREPROCESSED = "preprocessed"
+    PREPROCESSED_NO_CONTENT = "preprocessed_no_content"
     DONE = "done"
     FAILED = "failed"
 

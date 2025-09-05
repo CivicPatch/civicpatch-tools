@@ -45,6 +45,13 @@ LLMS = [
         "prompt": together_ai_prompt,  # Placeholder for Together AI prompt
     }
 ]
+IGNORE_WEBSITES = [
+    "facebook.com",
+    "twitter.com",
+    "instagram.com",
+    "linkedin.com",
+    "youtube.com"
+]
 
 def process_page_content(
     context: PipelineContext,
@@ -180,7 +187,7 @@ def calculate_progress(
             p for p in people_by_name.values()
             if has_role_and_contact_info(roles, p)
         ]
-    print(f"{source}: {len(filtered)} people with roles and contact info")
+        print(f"{source}: {len(filtered)} people with roles and contact info")
     
     # Gather count of each length
     current_progress = 0
@@ -218,9 +225,6 @@ def update_website_links(roles, existing_links: List[Link], records_by_source: R
     updated_links = copy.deepcopy(existing_links)
     found_websites = extract_websites_from_processed_data(roles, records_by_source)
 
-    # Update existing links or add new ones
-    print("I found websites:", found_websites)
-
     for website in found_websites:
         existing_link = next((link for link in updated_links if link["url"] == website), None)
         if existing_link:
@@ -252,6 +256,12 @@ def extract_websites_from_processed_data(roles: List[str], records_by_source: Re
 
             for person_record in person_list:
                 website = person_record.website if person_record.website else None
+
                 if website and website not in found_websites:
+                    # Check if website domain is in ignore list
+                    domain = url_utils.extract_domain(website)
+                    if domain and not any(ignore in domain for ignore in IGNORE_WEBSITES):
+                        continue
+
                     found_websites.append(website)
     return found_websites

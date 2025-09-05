@@ -48,10 +48,10 @@ MODELS_BY_TYPE = {
         #"output_cost": 0.06 / 1000000,
         #"token_limit": 4096,  # Actual token limit is 4096, leave buffer for output tokens
         # PASSES with flying colors
-        "model": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
-        "input_cost": 0.10 / 1000000,
-        "output_cost": 0.10 / 1000000,
-        "token_limit": 8192,
+        # "model": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
+        # "input_cost": 0.10 / 1000000,
+        # "output_cost": 0.10 / 1000000,
+        # "token_limit": 8192,
         # FAILS -- need to RETRY!
         #"model": "openai/gpt-oss-120b",
         #"input_cost": 0.15 / 1000000,
@@ -85,13 +85,22 @@ MODELS_BY_TYPE = {
             # Flying colors
         # "model": "meta-llama/Llama-3-8b-chat-hf",
         # "input_cost": 0.20 / 1000000,
-        # "output_cost": 0.20 / 1000000
+        # "output_cost": 0.20 / 1000000,
+        # "token_limit"
+        # ???
+        #"model": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+        #"input_cost": 0.18 / 1000000,
+        #"output_cost": 0.59 / 100000
         # FAILS
             # Maybe a better prompt would help?
             # Issues with extracting divisions/making up divisions 
         # "model": "mistralai/Mistral-7B-Instruct-v0.1",
         # "input_cost": 0.20 / 1000000,
         # "output_cost": 0.20 / 1000000
+        # ???
+        "model": "google/gemma-3n-E4B-it",
+        "input_cost": 0.02 / 1000000,
+        "output_cost": 0.04 / 1000000
         # FAILS
             # Takes too long, more for batch jobs
             # Did not stick around to get result
@@ -132,7 +141,7 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, content="", re
     def execute():
         together_client = openai.OpenAI(api_key=api_key, base_url=BASE_URL)
         client = instructor.from_openai(together_client)
-        
+
         response, completion = client.chat.completions.create_with_completion(
             model=model,
             response_model=response_schema,

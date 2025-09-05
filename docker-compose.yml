@@ -3,29 +3,15 @@ services:
     extends:
       file: civicpatch/docker-compose.yml
       service: civicpatch
+    networks:
+      - civicpatch_network
   crudder:
     extends:
       file: crudder/docker-compose.yml
       service: crudder
+    networks:
+      - civicpatch_network
 
-
-#  civicpatch:
-#    env_file: civicpatch/.env
-#    init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
-#    build:
-#      context: .
-#      dockerfile: civicpatch/Dockerfile
-#      target: development
-#    ports:
-#      - "8000:8000"
-#    volumes:
-#      - civicpatch:/app
-#  crudder:
-#    build:
-#      context: crudder/.env
-#      dockerfile: crudder/Dockerfile
-#      target: development
-#    ports:
-#      - "8001:8001"
-#    volumes:
-#      - crudder:/app
+networks:
+  civicpatch_network:
+    driver: bridge

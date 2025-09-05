@@ -32,12 +32,17 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
     with open(output_md_file_path, "w", encoding="utf-8") as f:
         f.write(preprocessed_md)
 
-    # Update link status to PREPROCESSED
+    # Update link status to PREPROCESSED or PREPROCESSED_NO_CONTENT
+    if preprocessed_md.strip():
+        new_status = LinkStatus.PREPROCESSED.value
+    else:
+        new_status = LinkStatus.PREPROCESSED_NO_CONTENT.value
+
     updated_links = []
     for link in context["links"]:
         if link["url"] == page_to_preprocess["url"]:
             # Update the status/content for this link
-            updated_links.append({**link, "status": LinkStatus.PREPROCESSED.value})
+            updated_links.append({**link, "status": new_status})
         else:
             updated_links.append(link)
     

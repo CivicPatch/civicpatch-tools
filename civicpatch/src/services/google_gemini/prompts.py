@@ -30,7 +30,12 @@ def research_municipality_prompt(municipality_context: MunicipalityContext):
     1. Determine the government type of the city. Available government types:
 {government_type_keys}
 
-    2. Identify the total number of elected officials in the local government, including the Mayor (if applicable).
+    2. Identify the elected officials in the local government, 
+       including the Mayor (if applicable).
+       2.1. For each official, extract the following details:
+            - name: Full name only (no titles)
+            - roles: List of active municipal roles (e.g., Mayor, Council Member)
+            - divisions: List of (ward, district), only if applicable
 
     3. Create a JSON object with the following structure:
        ```json
@@ -39,7 +44,8 @@ def research_municipality_prompt(municipality_context: MunicipalityContext):
          "people": [
            {{
              "name": "Full name of the official or null if uncertain",
-             "roles": ["Mayor", "Council Member", "Commissioner", etc.]
+             "roles": ["Mayor", "Council Member", "Commissioner", etc.],
+             "divisions": ["Ward 1", "District 2", etc.] or [],
            }}
          ],
          "notes": "Brief notes about the search and results"

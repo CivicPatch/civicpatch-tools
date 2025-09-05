@@ -4,6 +4,7 @@ import json
 from schemas import PipelineContext, PipelineStatus, LinkStatus, SearchEngineStatus, Link, Person
 from typing import Dict, Any, List
 import yaml
+import time
 
 import utils.data_path_utils as data_path_utils
 import utils.config_utils as config_utils
@@ -115,6 +116,9 @@ class Pipeline:
         self.context = self.load_context(request_id, state, geoid)
         process_config = config_utils.get_process()
 
+        start_time = time.time()
+        print(f"Pipeline started at {time.ctime(start_time)}")
+
         while self.state != PipelineStatus.DONE:
             if self.state == PipelineStatus.INIT:
                 result = prepare_pipeline(self.context)
@@ -151,7 +155,13 @@ class Pipeline:
                 page_to_preprocess = self.get_next_link(LinkStatus.SCRAPED)
                 result = preprocess_page_content(self.context, page_to_preprocess)
                 self.context.update(result)
-                self.state = PipelineStatus.PROCESS_PAGE_CONTENT
+
+                link_status = self.get_link_status_by_url(page_to_preprocess["url"])
+
+                if link_status == LinkStatus.PREPROCESSED:
+                    self.state = PipelineStatus.PROCESS_PAGE_CONTENT
+                else: # link_status == LinkStatus.PREPROCESSED_NO_CONTENT:
+                    self.state = PipelineStatus.SCRAPE_PAGE
 
             elif self.state == PipelineStatus.PROCESS_PAGE_CONTENT:
                 result, processed_count, process_max_pages = self.process_page_content_step(process_config)
@@ -190,7 +200,11 @@ class Pipeline:
             # Save the context after each step
             self.save_context(state, geoid)
 
-        print("Pipeline completed successfully.")
+        end_time = time.time()
+        pipeline_duration = end_time - start_time
+        self.context.update({"pipeline_duration_seconds": pipeline_duration})
+        self.save_context(state, geoid)
+        print(f"Pipeline completed successfully in {pipeline_duration:.2f} seconds.")
 
     def process_page_content_step(self, process_config):
         """
@@ -204,13 +218,13 @@ class Pipeline:
 
         if not preprocessed_links:
             print("No preprocessed links left to process.")
-            return {}, processed_count, PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+            return {}, processed_count, process_max_pages
 
 
         page_to_process = preprocessed_links[0] if preprocessed_links and processed_count < process_max_pages else None
         if not page_to_process:
             print("Max pages reached or no preprocessed links left to process.")
-            return {}, processed_count, PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+            return {}, processed_count, process_max_pages
 
         updated_context = process_page_content(self.context, page_to_process)
 
@@ -222,7 +236,7 @@ class Pipeline:
         """
         next_pending_link = self.get_next_link(LinkStatus.PENDING)
         if next_pending_link and next_pending_link["is_profile_page"] == True:
-            print("More pending links to scrape, continuing scraping...")
+            print("More pending links to scrape, continuing scraping...", next_pending_link)
             return PipelineStatus.SCRAPE_PAGE
 
         if self.context["progress"]["current_data"] >= self.context["progress"]["required_data"]:
