@@ -51,7 +51,7 @@ jobs:
         id: extract_branch
         run: |
           ZIP_FILE=$(basename "${{ github.event.inputs.zip_file_url }}")
-          BRANCH_NAME="${ZIP_FILE%.zip}"
+          BRANCH_NAME="${ZIP_FILE%%.zip*}"  # Remove everything starting from .zip
           echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
       - name: Create a PR
