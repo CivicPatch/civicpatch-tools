@@ -221,7 +221,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 6 (At-Large)"
+                        "Position 6"
                     ]
                 },
                 {
@@ -230,7 +230,8 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 7 (At-Large)"
+                        "Position 7",
+                        "At-Large"
                     ]
                 },
                 {
@@ -239,7 +240,8 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 8 (At-Large)"
+                        "Position 8",
+                        "At-Large"
                     ]
                 }
             ],
@@ -302,7 +304,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 6 (At-Large)"
+                        "Position 6"
                     ]
                 },
                 {
@@ -311,7 +313,8 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 7 (At-Large)"
+                        "Position 7",
+                        "At-Large"
                     ]
                 },
                 {
@@ -320,11 +323,12 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 8 (At-Large)"
+                        "Position 8",
+                        "At-Large"
                     ]
                 }
             ],
-            "notes": "Tacoma, WA operates under a Council-Manager form of government, which includes a Mayor and eight City Council members. The City Council consists of five district-based positions and three at-large positions. The listed officials are current as of August 2024. [3, 8, 11, 12, 14]"
+            "notes": "Tacoma operates under a Council-Manager form of government, with a Mayor and eight Council Members. Five council members represent districts, and three are at-large. The provided search results indicate specific positions for each council member, with Olgy Diaz (Position 7) and Kristina Walker (Position 8) explicitly mentioned as at-large. [3, 10, 11, 12, 15]"
         },
         "SEARCH_LINKS": {
             "search_link_pointer": 1,
@@ -368,10 +372,10 @@
         "SCRAPE_PAGE": {},
         "PREPROCESS_PAGE_CONTENT": {
             "elapsed_times": [
-                169.87987422943115
+                84.59751224517822
             ],
-            "total_elapsed_time_seconds": 169.87987422943115,
-            "average_elapsed_time_seconds": 169.87987422943115
+            "total_elapsed_time_seconds": 84.59751224517822,
+            "average_elapsed_time_seconds": 84.59751224517822
         },
         "PROCESS_PAGE_CONTENT": {
             "records_by_source": {
@@ -397,7 +401,7 @@
                             "name": "John Hines",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Hines-1-1-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "Position 1"
@@ -415,7 +419,7 @@
                             "name": "Sarah Rumbaugh",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Rumbaugh-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "Position 2"
@@ -433,7 +437,7 @@
                             "name": "Jamika Scott",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "Position 3"
@@ -451,7 +455,7 @@
                             "name": "Sandesh Sadalge",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Sadalge-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "Position 4"
@@ -469,7 +473,7 @@
                             "name": "Joe Bushnell",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Bushnell-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "Position 5"
@@ -488,11 +492,9 @@
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Daniels-1-312x300.jpg",
                             "roles": [
                                 "Deputy Mayor",
-                                "Council Member"
+                                "Council member"
                             ],
-                            "divisions": [
-                                "at-large"
-                            ],
+                            "divisions": [],
                             "phone_number": "(253) 591-5100",
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-kiara-daniels/",
@@ -506,7 +508,7 @@
                             "name": "Olgy Diaz",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Diaz-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "Position 7"
@@ -524,7 +526,7 @@
                             "name": "Kristina Walker",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "Position 8"
@@ -725,7 +727,7 @@
                                 "Council Member"
                             ],
                             "divisions": [
-                                "position 1"
+                                "district"
                             ],
                             "phone_number": null,
                             "email": null,
@@ -743,7 +745,7 @@
                                 "Council Member"
                             ],
                             "divisions": [
-                                "position 2"
+                                "district"
                             ],
                             "phone_number": null,
                             "email": null,
@@ -761,7 +763,7 @@
                                 "Council Member"
                             ],
                             "divisions": [
-                                "position 3"
+                                "district"
                             ],
                             "phone_number": null,
                             "email": null,
@@ -779,7 +781,7 @@
                                 "Council Member"
                             ],
                             "divisions": [
-                                "position 4"
+                                "district"
                             ],
                             "phone_number": null,
                             "email": null,
@@ -797,7 +799,7 @@
                                 "Council Member"
                             ],
                             "divisions": [
-                                "position 5"
+                                "district"
                             ],
                             "phone_number": null,
                             "email": null,
@@ -833,7 +835,7 @@
                                 "Council Member"
                             ],
                             "divisions": [
-                                "position 7"
+                                "district"
                             ],
                             "phone_number": null,
                             "email": null,
@@ -851,7 +853,7 @@
                                 "Council Member"
                             ],
                             "divisions": [
-                                "position 8"
+                                "district"
                             ],
                             "phone_number": null,
                             "email": null,
@@ -1004,9 +1006,7 @@
                             "deputy mayor",
                             "council member"
                         ],
-                        "divisions": [
-                            "at-large"
-                        ],
+                        "divisions": [],
                         "phone_number": "(253) 591-5100",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-kiara-daniels/",
@@ -1291,7 +1291,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 1"
+                            "district"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -1313,7 +1313,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 2"
+                            "district"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -1335,7 +1335,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 3"
+                            "district"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -1357,7 +1357,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 4"
+                            "district"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -1379,7 +1379,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 5"
+                            "district"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -1423,7 +1423,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 7"
+                            "district"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -1445,7 +1445,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 8"
+                            "district"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -1493,9 +1493,7 @@
                     "roles": [
                         "deputy mayor"
                     ],
-                    "divisions": [
-                        "at-large"
-                    ],
+                    "divisions": [],
                     "phone_number": "(253) 591-5100",
                     "email": "",
                     "website": "https://tacoma.gov/profile/council-member-kiara-daniels/",
@@ -1640,8 +1638,14 @@
                     "updated_at": ""
                 }
             ],
-            "agreement_score": 97.14285714285714,
+            "agreement_score": 87.14285714285714,
             "disagreements": [
+                {
+                    "source": "together_ai",
+                    "person_name": "Sarah Rumbaugh",
+                    "field": "divisions",
+                    "value": "district"
+                },
                 {
                     "source": "google_gemini",
                     "person_name": "Kiara Daniels",
@@ -1650,9 +1654,45 @@
                 },
                 {
                     "source": "together_ai",
+                    "person_name": "Kiara Daniels",
+                    "field": "divisions",
+                    "value": "at-large"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Sandesh Sadalge",
+                    "field": "divisions",
+                    "value": "district"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Olgy Diaz",
+                    "field": "divisions",
+                    "value": "district"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Jamika Scott",
+                    "field": "divisions",
+                    "value": "district"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Kristina Walker",
+                    "field": "divisions",
+                    "value": "district"
+                },
+                {
+                    "source": "together_ai",
                     "person_name": "Victoria Woodards",
                     "field": "divisions",
                     "value": "at-large"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "John Hines",
+                    "field": "divisions",
+                    "value": "district"
                 }
             ],
             "missing_people": [
@@ -1672,15 +1712,9 @@
         },
         "CLEANUP": {},
         "RETRY": {},
-        "DONE": {},
-        "MAYBE_SEND_TO_GITHUB": {
-            "status": "completed",
-            "response_status_code": 200,
-            "response_text": "{\"filename\":\"request_a49534ad-af34-4fcc-a15e-c9b1bb7ecbbc_wa_5370000.zip\",\"status\":\"uploaded\",\"url\":\"https://c9ae2b352766fe3e6f7dbee61bcd4c7c.r2.cloudflarestorage.com/crudder/request_a49534ad-af34-4fcc-a15e-c9b1bb7ecbbc_wa_5370000.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=83c1bf330c0ac3dc3e457dc295867d5f%2F20250905%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250905T172932Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=299042e0085104c7b7e49bc89bb0ac91dfc1e61e7dbc1ba881a37f4dbe846193\"}"
-        }
+        "DONE": {}
     },
-    "request_id": "a49534ad-af34-4fcc-a15e-c9b1bb7ecbbc",
+    "request_id": "833a34c7-e0c4-4846-805d-c2854ec60bf5",
     "state": "wa",
-    "geoid": "5370000",
-    "pipeline_duration_seconds": 251.87180304527283
+    "geoid": "5370000"
 }

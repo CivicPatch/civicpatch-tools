@@ -2,36 +2,35 @@
   data_sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions:
-  - position 5
+  - position 2
   email: ''
   end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/Bushnell-312x300.jpg
-  name: Chanjolee Bushnell
-  phone_number: ''
+  image: https://tacoma.gov/wp-content/uploads/2024/11/Rumbaugh-312x300.jpg
+  name: Sarah Rumbaugh
+  phone_number: (253) 591-5100
   place: ''
   roles:
   - council member
   start_date: ''
   state: ''
   updated_at: ''
-  website: https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/
+  website: https://tacoma.gov/profile/council-member-sarah-rumbaugh/
 - cdn_image: ''
   data_sources:
   - https://www.cityoftacoma.org/government/city_council
-  divisions:
-  - position 7
+  divisions: []
   email: ''
   end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/Diaz-312x300.jpg
-  name: Olgy Diaz
-  phone_number: ''
+  image: https://tacoma.gov/wp-content/uploads/2024/11/CM-Daniels-1-312x300.jpg
+  name: Kiara Daniels
+  phone_number: (253) 591-5100
   place: ''
   roles:
-  - council member
+  - deputy mayor
   start_date: ''
   state: ''
   updated_at: ''
-  website: https://tacoma.gov/profile/council-member-olgy-diaz/
+  website: https://tacoma.gov/profile/council-member-kiara-daniels/
 - cdn_image: ''
   data_sources:
   - https://www.cityoftacoma.org/government/city_council
@@ -41,7 +40,7 @@
   end_date: ''
   image: https://tacoma.gov/wp-content/uploads/2024/11/Sadalge-312x300.jpg
   name: Sandesh Sadalge
-  phone_number: ''
+  phone_number: (253) 591-5100
   place: ''
   roles:
   - council member
@@ -53,36 +52,53 @@
   data_sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions:
-  - position 1
+  - position 7
   email: ''
   end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/Hines-1-1-312x300.jpg
-  name: John Hines
-  phone_number: ''
+  image: https://tacoma.gov/wp-content/uploads/2024/11/Diaz-312x300.jpg
+  name: Olgy Diaz
+  phone_number: (253) 591-5100
   place: ''
   roles:
   - council member
   start_date: ''
   state: ''
   updated_at: ''
-  website: https://tacoma.gov/profile/council-member-john-hines/
+  website: https://tacoma.gov/profile/council-member-olgy-diaz/
 - cdn_image: ''
   data_sources:
   - https://www.cityoftacoma.org/government/city_council
-  divisions: []
+  divisions:
+  - position 3
   email: ''
   end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/CM-Daniels-1-312x300.jpg
-  name: Kiara Daniels
-  phone_number: ''
+  image: https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-312x300.jpg
+  name: Jamika Scott
+  phone_number: (253) 591-5100
   place: ''
   roles:
-  - deputy mayor
   - council member
   start_date: ''
   state: ''
   updated_at: ''
-  website: https://tacoma.gov/profile/council-member-kiara-daniels/
+  website: https://tacoma.gov/profile/council-member-jamika-scott/
+- cdn_image: ''
+  data_sources:
+  - https://www.cityoftacoma.org/government/city_council
+  divisions:
+  - position 8
+  email: ''
+  end_date: ''
+  image: https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-312x300.jpg
+  name: Kristina Walker
+  phone_number: (253) 591-5100
+  place: ''
+  roles:
+  - council member
+  start_date: ''
+  state: ''
+  updated_at: ''
+  website: https://tacoma.gov/profile/council-member-kristina-walker/
 - cdn_image: ''
   data_sources:
   - https://www.cityoftacoma.org/government/city_council
@@ -103,50 +119,16 @@
   data_sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions:
-  - position 3
+  - position 1
   email: ''
   end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-312x300.jpg
-  name: Jamika Scott
-  phone_number: ''
+  image: https://tacoma.gov/wp-content/uploads/2024/11/Hines-1-1-312x300.jpg
+  name: John Hines
+  phone_number: (253) 591-5100
   place: ''
   roles:
   - council member
   start_date: ''
   state: ''
   updated_at: ''
-  website: https://tacoma.gov/profile/council-member-jamika-scott/
-- cdn_image: ''
-  data_sources:
-  - https://www.cityoftacoma.org/government/city_council
-  divisions:
-  - position 8
-  email: ''
-  end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-312x300.jpg
-  name: Kristina Walker
-  phone_number: ''
-  place: ''
-  roles:
-  - council member
-  start_date: ''
-  state: ''
-  updated_at: ''
-  website: https://tacoma.gov/profile/council-member-kristina-walker/
-- cdn_image: ''
-  data_sources:
-  - https://www.cityoftacoma.org/government/city_council
-  divisions:
-  - position 2
-  email: ''
-  end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/Rumbaugh-312x300.jpg
-  name: Sarah Rumbaugh
-  phone_number: ''
-  place: ''
-  roles:
-  - council member
-  start_date: ''
-  state: ''
-  updated_at: ''
-  website: https://tacoma.gov/profile/council-member-sarah-rumbaugh/
+  website: https://tacoma.gov/profile/council-member-john-hines/
