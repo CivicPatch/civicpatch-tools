@@ -25,7 +25,9 @@ on:
         required: true
 
 jobs:
-  intake:
+  payload_intake:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
