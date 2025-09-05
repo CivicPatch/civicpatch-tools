@@ -124,6 +124,9 @@ async def github_intake(
     api_key = authorization.strip()
     server_detail = get_server_detail_by_active_api_key(db_cursor, DATABASE_HASH_KEY, api_key)
 
+    if not server_detail:
+        raise HTTPException(status_code=401, detail="Invalid or inactive API key")
+
     if not server_detail["user_email"]:
         raise HTTPException(status_code=401, detail="No user email associated with the provided API key. Do you have an active API key & user email?")
     

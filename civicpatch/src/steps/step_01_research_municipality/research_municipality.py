@@ -19,6 +19,13 @@ def research_municipality(context: PipelineContext):
     people = response.get("people", [])
     government_type = response.get("government_type", "mayor_council")
 
+    # TODO: move this to conifg
+    if government_type not in ["mayor_council", "mayor_commission", "select_board", "alderman"]:
+        if government_type == "council_manager":
+            government_type = "mayor_council"
+        else:
+            raise ValueError(f"Unsupported government type: {government_type}")
+
     government_types = config_utils.get_government_types() 
     role_configs = government_types[government_type].get("roles", [])
     elected_officials = people_utils.filter_people_by_roles(role_configs, people)

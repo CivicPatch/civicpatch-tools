@@ -72,6 +72,7 @@ Meet Tacoma City Council | City of Tacoma
 
 
 
+
  
 
 
@@ -225,6 +226,7 @@ Menu
 * [Committees](https://tacoma.gov/government/departments/city-council/#committees)
 * [District Map](https://tacoma.gov/government/departments/city-council/#district-map)
 * [News](https://tacoma.gov/government/departments/city-council/#news)
+* [City Manager's Weekly Report to Council](https://tacoma.gov/government/departments/city-council/#weekly_report)
 * [Contact](https://tacoma.gov/government/departments/city-council/#contact)
 
 As the policy-making body of the City, the City Council serves as the link between the residents of Tacoma and their municipal government. They are responsible for enacting and amending City laws, adopting the Biennial Budget, appointing members to our boards, committees and commissions and providing guidance and direction for actions which affect the quality of life in the City.
@@ -434,6 +436,13 @@ Slide Left
 
 
 Side Right
+
+View the City Manager's Weekly Report to the City Council
+---------------------------------------------------------
+
+Each week, the City Manager sends a report to the Mayor and City Council sharing updates, news, and information. The report includes items of interest, crime reports from the Tacoma Police Department, constituent intake reports, weekly meeting schedules, and more.
+
+[Read the Report](https://cms.tacoma.gov/CMO/CityManagersWeeklyReporttotheCityCouncil.pdf)
 
 Contact
 -------

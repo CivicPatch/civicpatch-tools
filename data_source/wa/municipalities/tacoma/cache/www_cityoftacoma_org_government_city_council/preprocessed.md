@@ -86,4 +86,6 @@ Today, Tacoma’s City Council held a special meeting where we had the responsib
 
 [### A Statement From Mayor Victoria Woodards on the Closure of the Washington State Minority Business Development Agency Business Center](https://tacoma.gov/news/a-statement-from-mayor-victoria-woodards-on-the-closure-of-the-washington-state-minority-business-development-agency-business-center/)
 
+Each week, the City Manager sends a report to the Mayor and City Council sharing updates, news, and information. The report includes items of interest, crime reports from the Tacoma Police Department, constituent intake reports, weekly meeting schedules, and more.
+
 [(253) 591-5100](tel:253-591-5100)
