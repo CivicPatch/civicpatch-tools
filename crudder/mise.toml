@@ -1,3 +1,7 @@
+# Deployment environment variables
+[env]
+_.file = ".deployment.env"
+
 [tasks.generate-url]
 run = "docker compose run --rm crudder poetry run python src/scripts/one-off-generate-file-url.py request_payload_wa_5367000_00808807-84e7-437e-a017-7ece3013da9a.zip"
 

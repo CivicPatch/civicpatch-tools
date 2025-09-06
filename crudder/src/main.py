@@ -21,9 +21,10 @@ from jose import jwt  # pip install python-jose[cryptography]
 # to GitHub Actions.
 # Ref: https://github.com/tomasvotava/fastapi-sso/blob/master/docs/how-to-guides/use-with-fastapi-security.md
 
+INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8001")
 GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID")
 GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
-GITHUB_CALLBACK_URL = os.getenv("GITHUB_CALLBACK_URL", "http://127.0.0.1:8000/auth/github/callback")
+GITHUB_CALLBACK_URL = os.getenv("GITHUB_CALLBACK_URL", f"{INSTANCE_URL}/auth/github/callback")
 APPROVED_GITHUB_PROVIDER_USER_IDS = os.getenv("APPROVED_GITHUB_PROVIDER_USER_IDS", "").split(",")
 MAINTAINER_EMAIL = os.getenv("MAINTAINER_EMAIL")
 APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT")

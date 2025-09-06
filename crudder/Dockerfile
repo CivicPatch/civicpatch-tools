@@ -27,7 +27,6 @@ COPY ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 RUN poetry install --no-root
 
 COPY ./${PROJECT_NAME} /app
-COPY ./utils /app/utils
 
 RUN useradd -m -s /bin/bash civicpatch_user
 RUN chown -R civicpatch_user:civicpatch_user /app
@@ -43,6 +42,8 @@ RUN chown -R civicpatch_user:civicpatch_user /venv
 
 USER civicpatch_user
 
+EXPOSE 8001
+
 # CMD ["tail", "-f", "/dev/null"]
 CMD ["fastapi", "dev", "src/main.py", "--port", "8001", "--host", "0.0.0.0"]
 
@@ -54,5 +55,7 @@ ENV APP_ENVIRONMENT=production
 WORKDIR /app
 
 USER civicpatch_user
-# # Keep the container running
+
+EXPOSE 80
+
 CMD ["fastapi", "run", "src/main.py", "--port", "80", "--host", "0.0.0.0"]

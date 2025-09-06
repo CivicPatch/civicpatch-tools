@@ -6,7 +6,7 @@ __pycache__/
 database.db
 
 .envrc
-.env
+*.env
 todo.md
 .bundle/
 .yardoc
