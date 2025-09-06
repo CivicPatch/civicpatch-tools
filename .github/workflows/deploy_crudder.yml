@@ -1,0 +1,32 @@
+name: Deploy Crudder
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment (e.g., production, staging)'
+        required: true
+        default: 'production'
+
+permissions:
+  packages: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build and deploy crudder service to production
+        env:
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_USERNAME: ${{ github.actor }}
+          REMOTELAB_WORKFLOW_TOKEN: ${{ secrets.CRUDDER_REMOTELAB_WORKFLOW_TOKEN }}
+        run:
+          ./crudder/scripts/build_and_deploy.py
