@@ -34,7 +34,7 @@ RUN poetry run playwright install-deps
 RUN poetry run playwright install chromium
 
 COPY ./${PROJECT_NAME} /app
-COPY ./utils /app/utils
+# COPY ./utils /app/utils
 
 RUN poetry run post-install
 
