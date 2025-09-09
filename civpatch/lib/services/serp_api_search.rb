@@ -5,7 +5,7 @@ module Services
     ENDPOINT = "https://serpapi.com/search"
 
     def self.set_keys
-      @api_key = ENV["SERP_API_TOKEN"]
+      @api_key = ENV["SERP_API_SEARCH_TOKEN"]
     end
 
     def self.municipal_search(municipality_context, query_keywords, _or_terms_list)

@@ -30,6 +30,16 @@ curl -X POST http://localhost:8000/api/pipeline \
   -H "Content-Type: application/json" \
   -d '{
     "state": "wa",
-    "geoid": "5370000"
+    "geoid": "5374060"
+  }'
+"""
+
+[tasks.scrape]
+run = """
+curl -X POST http://localhost:80/api/pipeline \
+  -H "Content-Type: application/json" \
+  -d '{
+    "state": "wa",
+    "geoid": "5374060"
   }'
 """

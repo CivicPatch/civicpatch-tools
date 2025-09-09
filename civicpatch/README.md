@@ -56,22 +56,44 @@ Add a .env file with the following variables:
 BRAVE_SEARCH_TOKEN=
 GOOGLE_SEARCH_TOKEN=
 GOOGLE_SEARCH_ENGINE_ID=
-SERP_SEARCH_TOKEN=
+SERP_API_SEARCH_TOKEN=
 
 GOOGLE_GEMINI_TOKEN=
 OPENAI_TOKEN=
+TOGETHER_AI_TOKEN=
+
+CRUDDER_URL="https://crudder.civicpatch.org"
+CRUDDER_SHARED_TOKEN=ABCDEF12345
 ```
 
 Optional environment variables:
 
 - GOOGLE_SHEETS_TOKEN and GOOGLE_SHEETS_ID are used to log
-  calculated (worst case-ish) operating costs of running each scrape job.
+  calculated operating costs of running each scrape job.
 
 ```dotenv
 GOOGLE_SHEETS_TOKEN=
 GOOGLE_SHEETS_ID=
 ```
 
+### CRUDDER_SHARED_TOKEN
+1. Go to crudder.civicpatch.org and generate an API token.
+2. Email the repo maintainer about your new account. Provide the following details:
+  - provider
+  - provider_user_id
+  - user_email
+3. Set up your CivicPatch Server URL. This is a public URL your server can be reached by.
+
+  3.a. Example Setup (local):
+    - Download [tailscale](https://tailscale.com/download)
+      and follow setup instructions.
+    - From the "civicpatch" directory, run `docker compose up`
+    - Run `tailscale funnel 80`
+    - Verify you can reach this page:
+      https://example.example-name.ts.net/docs
+    - Update `CivicPatch Server URL` to `https://fedora.dropbear-minnow.ts.net`
+    - Generate the API key. This is your `CRUDDER_SHARED_TOKEN`
+    - Update your environment variables and restart your server.
 ## TODOS
 
 - [ ] 
