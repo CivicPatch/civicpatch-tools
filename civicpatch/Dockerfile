@@ -1,4 +1,4 @@
-FROM python:3.11-bullseye AS image-base 
+FROM python:3.11-slim AS image-base 
 ENV PROJECT_NAME="civicpatch"
 
 # Install system dependencies

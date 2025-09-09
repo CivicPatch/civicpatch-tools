@@ -5,9 +5,12 @@ services:
     build:
       context: ..
       dockerfile: civicpatch/Dockerfile
-      target: production
+      target: development
+    restart: unless-stopped
     ports:
-      - "80:80"
+      - "8000:8000"
     volumes:
+      # - ../utils:/app/utils:ro  # Mount shared library
       - ../data:/app/data
       - ../data_source:/app/data_source
+      - .:/app

@@ -1,0 +1,1481 @@
+{
+    "links": [
+        {
+            "url": "https://www.cityofvancouver.us/departments/mayor-city-council/",
+            "status": "done",
+            "folder_name": "www_cityofvancouver_us_departments_mayor-city-council_",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/",
+            "status": "done",
+            "folder_name": "www_cityofvancouver_us_",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/government/mayor-and-city-council/meetings-agendas-minutes/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/events/state-of-the-city/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/departments/city-attorney/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/government/mayor-and-city-council/meetings/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/wp-content/uploads/2023/05/cvtv_policy_and_procedures_april_2023.pdf",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/government/mayor-and-city-council/contact-city-council/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/government/mayor-and-city-council/public-comment/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/city-managers-office/open-government-training/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/government/mayor-and-city-council/city-governance/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/government/calendar/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/government/department-directory/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/public-memorial-for-former-mayor-royce-pollard/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/wp-content/uploads/2023/07/100-40_council_social_media_policy.pdf",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/vancouver-celebrates-progress-made-and-community-involvement-at-2025-state-of-the-city-address/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/wp-content/uploads/2025/01/2024-City-of-Vancouver-Charter.pdf",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/vancouvers-state-of-the-city-and-council-community-forum/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/wp-content/uploads/2023/05/2022_salary_review_ord_m-4376.pdf",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/wp-content/uploads/2024/06/whatisaneighborhood_associationflyer08.pdf",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/city-council-approves-resolution-authorizing-development-agreement-for-waterfront-gateway-project/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/wp-content/uploads/2023/07/100-32_council_meetings.pdf",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofvancouver.us/government/city-charter/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        }
+    ],
+    "progress": {
+        "required_data": 7,
+        "current_data": 7
+    },
+    "names": {
+        "Anne McEnerny-Ogle": [
+            "Anne McEnerny-Ogle"
+        ],
+        "Kim Harless": [
+            "Kim D. Harless",
+            "Kim Harless"
+        ],
+        "Erik Paulsen": [
+            "Erik Paulsen"
+        ],
+        "Diana Perez": [
+            "Diana H. Perez",
+            "Diana Perez"
+        ],
+        "Bart Hansen": [
+            "Bart Hansen"
+        ],
+        "Sarah Fox": [
+            "Sarah Fox",
+            "Sarah J. Fox"
+        ],
+        "Ty Stober": [
+            "Ty Stober"
+        ]
+    },
+    "steps": {
+        "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "Anne McEnerny-Ogle",
+                    "roles": [
+                        "Mayor",
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Kim D. Harless",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Erik Paulsen",
+                    "roles": [
+                        "Council Member",
+                        "Mayor Pro Tem"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Diana H. Perez",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Bart Hansen",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Sarah J. Fox",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Ty Stober",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "Anne McEnerny-Ogle",
+                    "roles": [
+                        "Mayor",
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Kim D. Harless",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Erik Paulsen",
+                    "roles": [
+                        "Council Member",
+                        "Mayor Pro Tem"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Diana H. Perez",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Bart Hansen",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Sarah J. Fox",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Ty Stober",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                }
+            ],
+            "notes": "Vancouver, WA operates under a council-manager form of government. The City Council consists of seven members, including the Mayor, all elected at large for four-year terms. One Councilmember is appointed biennially to serve as Mayor Pro Tempore. [3, 5]"
+        },
+        "SEARCH_LINKS": {
+            "search_link_pointer": 1,
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "https://www.cityofvancouver.us/departments/mayor-city-council/",
+                        "https://www.cityofvancouver.us/",
+                        "https://www.cityofvancouver.us/government/mayor-and-city-council/meetings-agendas-minutes/",
+                        "https://www.cityofvancouver.us/events/state-of-the-city/",
+                        "https://www.cityofvancouver.us/departments/city-attorney/",
+                        "https://www.cityofvancouver.us/government/mayor-and-city-council/meetings/",
+                        "https://www.cityofvancouver.us/wp-content/uploads/2023/05/cvtv_policy_and_procedures_april_2023.pdf",
+                        "https://www.cityofvancouver.us/government/mayor-and-city-council/contact-city-council/",
+                        "https://www.cityofvancouver.us/government/mayor-and-city-council/public-comment/",
+                        "https://www.cityofvancouver.us/city-managers-office/open-government-training/",
+                        "https://www.cityofvancouver.us/government/mayor-and-city-council/city-governance/",
+                        "https://www.cityofvancouver.us/government/calendar/",
+                        "https://www.cityofvancouver.us/government/department-directory/",
+                        "https://www.cityofvancouver.us/public-memorial-for-former-mayor-royce-pollard/",
+                        "https://www.cityofvancouver.us/wp-content/uploads/2023/07/100-40_council_social_media_policy.pdf",
+                        "https://www.cityofvancouver.us/vancouver-celebrates-progress-made-and-community-involvement-at-2025-state-of-the-city-address/",
+                        "https://www.cityofvancouver.us/wp-content/uploads/2025/01/2024-City-of-Vancouver-Charter.pdf",
+                        "https://www.cityofvancouver.us/vancouvers-state-of-the-city-and-council-community-forum/",
+                        "https://www.cityofvancouver.us/wp-content/uploads/2023/05/2022_salary_review_ord_m-4376.pdf",
+                        "https://www.cityofvancouver.us/wp-content/uploads/2024/06/whatisaneighborhood_associationflyer08.pdf",
+                        "https://www.cityofvancouver.us/city-council-approves-resolution-authorizing-development-agreement-for-waterfront-gateway-project/",
+                        "https://www.cityofvancouver.us/wp-content/uploads/2023/07/100-32_council_meetings.pdf",
+                        "https://www.cityofvancouver.us/government/city-charter/"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {
+            "elapsed_times": [
+                69.41159105300903,
+                72.09212875366211
+            ],
+            "total_elapsed_time_seconds": 141.50371980667114,
+            "average_elapsed_time_seconds": 70.75185990333557
+        },
+        "PROCESS_PAGE_CONTENT": {
+            "records_by_source": {
+                "google_gemini": {
+                    "Bart Hansen": [
+                        {
+                            "name": "Bart Hansen",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Kim Harless": [
+                        {
+                            "name": "Kim D. Harless",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Diana Perez": [
+                        {
+                            "name": "Diana H. Perez",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Anne McEnerny-Ogle": [
+                        {
+                            "name": "Anne McEnerny-Ogle",
+                            "image": null,
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Ty Stober": [
+                        {
+                            "name": "Ty Stober",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Sarah Fox": [
+                        {
+                            "name": "Sarah J. Fox",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Erik Paulsen": [
+                        {
+                            "name": "Erik Paulsen",
+                            "image": null,
+                            "roles": [
+                                "mayor pro tempore"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ]
+                },
+                "openai": {
+                    "Anne McEnerny-Ogle": [
+                        {
+                            "name": "Anne McEnerny-Ogle",
+                            "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": "360-487-8629",
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Erik Paulsen": [
+                        {
+                            "name": "Erik Paulsen",
+                            "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                            "roles": [
+                                "Mayor Pro Tem"
+                            ],
+                            "divisions": [],
+                            "phone_number": "360-487-8629",
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Kim Harless": [
+                        {
+                            "name": "Kim D. Harless",
+                            "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [],
+                            "phone_number": "360-487-8629",
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Diana Perez": [
+                        {
+                            "name": "Diana H. Perez",
+                            "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [],
+                            "phone_number": "360-487-8629",
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Bart Hansen": [
+                        {
+                            "name": "Bart Hansen",
+                            "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [],
+                            "phone_number": "360-487-8629",
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Sarah Fox": [
+                        {
+                            "name": "Sarah J. Fox",
+                            "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [],
+                            "phone_number": "360-487-8629",
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ],
+                    "Ty Stober": [
+                        {
+                            "name": "Ty Stober",
+                            "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [],
+                            "phone_number": "360-487-8629",
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        }
+                    ]
+                },
+                "together_ai": {
+                    "Anne McEnerny-Ogle": [
+                        {
+                            "name": "Anne McEnerny-Ogle",
+                            "image": null,
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "mayor_council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us/government/mayor/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        },
+                        {
+                            "name": "Anne McEnerny-Ogle",
+                            "image": null,
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://cityofvancouver.us/government/mayor-city-council/",
+                            "start_date": "2021",
+                            "end_date": "",
+                            "data_source": "https://www.cityofvancouver.us/"
+                        }
+                    ],
+                    "Kim Harless": [
+                        {
+                            "name": "Kim D. Harless",
+                            "image": null,
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us/government/city-council/kim-d-harless/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        },
+                        {
+                            "name": "Kim D. Harless",
+                            "image": null,
+                            "roles": [
+                                "city council"
+                            ],
+                            "divisions": [
+                                "ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofvancouver.us/"
+                        }
+                    ],
+                    "Diana Perez": [
+                        {
+                            "name": "Diana H. Perez",
+                            "image": null,
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [
+                                "ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us/government/city-council/diana-h-perez/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        },
+                        {
+                            "name": "Diana H. Perez",
+                            "image": null,
+                            "roles": [
+                                "city council"
+                            ],
+                            "divisions": [
+                                "ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofvancouver.us/"
+                        }
+                    ],
+                    "Bart Hansen": [
+                        {
+                            "name": "Bart Hansen",
+                            "image": null,
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us/government/city-council/bart-hansen/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        },
+                        {
+                            "name": "Bart Hansen",
+                            "image": null,
+                            "roles": [
+                                "city council"
+                            ],
+                            "divisions": [
+                                "ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofvancouver.us/"
+                        }
+                    ],
+                    "Ty Stober": [
+                        {
+                            "name": "Ty Stober",
+                            "image": null,
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [
+                                "district"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us/government/city-council/ty-stober/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        },
+                        {
+                            "name": "Ty Stober",
+                            "image": null,
+                            "roles": [
+                                "city council"
+                            ],
+                            "divisions": [
+                                "ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofvancouver.us/"
+                        }
+                    ],
+                    "Sarah Fox": [
+                        {
+                            "name": "Sarah J. Fox",
+                            "image": null,
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [
+                                "district"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.cityofvancouver.us/government/city-council/sarah-j-fox/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        },
+                        {
+                            "name": "Sarah J. Fox",
+                            "image": null,
+                            "roles": [
+                                "city council"
+                            ],
+                            "divisions": [
+                                "ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofvancouver.us/"
+                        }
+                    ],
+                    "Erik Paulsen": [
+                        {
+                            "name": "Erik Paulsen",
+                            "image": null,
+                            "roles": [
+                                "Mayor Pro Tem"
+                            ],
+                            "divisions": [
+                                "mayor_council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        },
+                        {
+                            "name": "Erik Paulsen",
+                            "image": null,
+                            "roles": [
+                                "city council"
+                            ],
+                            "divisions": [
+                                "ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofvancouver.us/"
+                        }
+                    ]
+                }
+            }
+        },
+        "MERGE_RECORDS_WITHIN_SOURCE": {
+            "people_by_source": {
+                "google_gemini": [
+                    {
+                        "name": "Bart Hansen",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kim Harless",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Diana Perez",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Anne McEnerny-Ogle",
+                        "image": "",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Ty Stober",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Sarah Fox",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Erik Paulsen",
+                        "image": "",
+                        "roles": [
+                            "mayor pro tempore"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "openai": [
+                    {
+                        "name": "Anne McEnerny-Ogle",
+                        "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "360-487-8629",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Erik Paulsen",
+                        "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                        "roles": [
+                            "mayor pro tempore"
+                        ],
+                        "divisions": [],
+                        "phone_number": "360-487-8629",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kim Harless",
+                        "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "360-487-8629",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Diana Perez",
+                        "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "360-487-8629",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Bart Hansen",
+                        "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "360-487-8629",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Sarah Fox",
+                        "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "360-487-8629",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Ty Stober",
+                        "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "360-487-8629",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "together_ai": [
+                    {
+                        "name": "Anne McEnerny-Ogle",
+                        "image": "",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [
+                            "mayor_council",
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us/government/mayor/",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/",
+                            "https://www.cityofvancouver.us/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kim Harless",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large",
+                            "ward"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us/government/city-council/kim-d-harless/",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/",
+                            "https://www.cityofvancouver.us/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Diana Perez",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "ward"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us/government/city-council/diana-h-perez/",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/",
+                            "https://www.cityofvancouver.us/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Bart Hansen",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large",
+                            "ward"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us/government/city-council/bart-hansen/",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/",
+                            "https://www.cityofvancouver.us/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Ty Stober",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district",
+                            "ward"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us/government/city-council/ty-stober/",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/",
+                            "https://www.cityofvancouver.us/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Sarah Fox",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district",
+                            "ward"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.cityofvancouver.us/government/city-council/sarah-j-fox/",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/",
+                            "https://www.cityofvancouver.us/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Erik Paulsen",
+                        "image": "",
+                        "roles": [
+                            "mayor pro tempore",
+                            "council member"
+                        ],
+                        "divisions": [
+                            "mayor_council",
+                            "ward"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofvancouver.us/departments/mayor-city-council/",
+                            "https://www.cityofvancouver.us/"
+                        ],
+                        "updated_at": ""
+                    }
+                ]
+            }
+        },
+        "MERGE_RECORDS_ACROSS_SOURCES": {
+            "people": [
+                {
+                    "name": "Diana Perez",
+                    "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                    "roles": [
+                        "council member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "360-487-8629",
+                    "email": "",
+                    "website": "https://www.cityofvancouver.us",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.cityofvancouver.us/",
+                        "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                    ],
+                    "updated_at": ""
+                },
+                {
+                    "name": "Anne McEnerny-Ogle",
+                    "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                    "roles": [
+                        "mayor"
+                    ],
+                    "divisions": [],
+                    "phone_number": "360-487-8629",
+                    "email": "",
+                    "website": "https://www.cityofvancouver.us",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.cityofvancouver.us/",
+                        "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                    ],
+                    "updated_at": ""
+                },
+                {
+                    "name": "Bart Hansen",
+                    "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                    "roles": [
+                        "council member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "360-487-8629",
+                    "email": "",
+                    "website": "https://www.cityofvancouver.us",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.cityofvancouver.us/",
+                        "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                    ],
+                    "updated_at": ""
+                },
+                {
+                    "name": "Sarah Fox",
+                    "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                    "roles": [
+                        "council member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "360-487-8629",
+                    "email": "",
+                    "website": "https://www.cityofvancouver.us",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.cityofvancouver.us/",
+                        "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                    ],
+                    "updated_at": ""
+                },
+                {
+                    "name": "Ty Stober",
+                    "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                    "roles": [
+                        "council member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "360-487-8629",
+                    "email": "",
+                    "website": "https://www.cityofvancouver.us",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.cityofvancouver.us/",
+                        "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                    ],
+                    "updated_at": ""
+                },
+                {
+                    "name": "Kim Harless",
+                    "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                    "roles": [
+                        "council member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "360-487-8629",
+                    "email": "",
+                    "website": "https://www.cityofvancouver.us",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.cityofvancouver.us/",
+                        "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                    ],
+                    "updated_at": ""
+                },
+                {
+                    "name": "Erik Paulsen",
+                    "image": "https://www.cityofvancouver.us/wp-content/uploads/2025/05/council-portrait-podiums-1024x576.jpg",
+                    "roles": [
+                        "mayor pro tempore"
+                    ],
+                    "divisions": [],
+                    "phone_number": "360-487-8629",
+                    "email": "",
+                    "website": "https://www.cityofvancouver.us",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.cityofvancouver.us/",
+                        "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                    ],
+                    "updated_at": ""
+                }
+            ],
+            "agreement_score": 83.6734693877551,
+            "disagreements": [
+                {
+                    "source": "together_ai",
+                    "person_name": "Diana Perez",
+                    "field": "divisions",
+                    "value": "ward"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Anne McEnerny-Ogle",
+                    "field": "divisions",
+                    "value": "mayor_council, at-large"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Bart Hansen",
+                    "field": "divisions",
+                    "value": "at-large, ward"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Sarah Fox",
+                    "field": "divisions",
+                    "value": "district, ward"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Ty Stober",
+                    "field": "divisions",
+                    "value": "district, ward"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Kim Harless",
+                    "field": "divisions",
+                    "value": "at-large, ward"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Erik Paulsen",
+                    "field": "roles",
+                    "value": "mayor pro tempore, council member"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Erik Paulsen",
+                    "field": "divisions",
+                    "value": "mayor_council, ward"
+                }
+            ],
+            "missing_people": []
+        },
+        "CLEANUP": {},
+        "RETRY": {},
+        "DONE": {},
+        "MAYBE_SEND_TO_GITHUB": {
+            "status": "completed",
+            "response_status_code": 200,
+            "response_text": "{\"filename\":\"request_46b9756b-f331-48f6-a07d-baff4c8efa7e_wa_5374060.zip\",\"status\":\"uploaded\",\"url\":\"https://c9ae2b352766fe3e6f7dbee61bcd4c7c.r2.cloudflarestorage.com/crudder/request_46b9756b-f331-48f6-a07d-baff4c8efa7e_wa_5374060.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=83c1bf330c0ac3dc3e457dc295867d5f%2F20250908%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250908T235141Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=9d779cb506cd8dab4691c26509c94cd602e8d4e1523735dd7e0c0829b93b0466\"}"
+        }
+    },
+    "request_id": "46b9756b-f331-48f6-a07d-baff4c8efa7e",
+    "state": "wa",
+    "geoid": "5374060",
+    "pipeline_duration_seconds": 212.1123378276825
+}
