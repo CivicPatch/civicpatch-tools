@@ -31,3 +31,7 @@ scratch.html
 cost_images.csv
 cost_llms.csv
 cost_search_engine.csv
+
+*.png
+*.jpg
+*.zip
