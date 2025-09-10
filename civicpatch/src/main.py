@@ -1,13 +1,28 @@
 import asyncio
 from fastapi import FastAPI, HTTPException, Depends, Request, BackgroundTasks
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from typing import List, Optional
 from utils.pipeline_utils import get_municipalities_to_scrape
 from pipeline import Pipeline, PipelineStatus
 from auth.token_handler import verify_github_action_data_query
 import uuid
+import os
 
 app = FastAPI()
+templates = Jinja2Templates(directory="src/templates")
+
+REQUIRED_ENV_VARS = [
+    "BRAVE_SEARCH_TOKEN",
+    "GOOGLE_SEARCH_TOKEN",
+    "GOOGLE_SEARCH_ENGINE_ID",
+    "SERP_API_SEARCH_TOKEN",
+    "GOOGLE_GEMINI_TOKEN",
+    "OPENAI_TOKEN",
+    "TOGETHER_AI_TOKEN",
+    "CRUDDER_SHARED_TOKEN",
+    "CRUDDER_URL",
+]
 
 class SearchRequest(BaseModel):
     state: str
@@ -19,18 +34,21 @@ class PipelineRequest(BaseModel):
     geoid: str
 
 # Internal usage only
-@app.post("/api/search")
-async def search_endpoint(request: SearchRequest):
-    """Search for municipalities to scrape"""
+@app.get("/api/search")
+async def search_endpoint(
+    state: str,
+    num: int = 0,
+    geoids_to_ignore: Optional[List[str]] = None
+):
     geoids = get_municipalities_to_scrape(
-        request.state.lower(), 
-        request.num, 
-        request.geoids_to_ignore
+        state.lower(), 
+        num, 
+        geoids_to_ignore
     )
     if len(geoids) == 0:
         raise HTTPException(
             status_code=404,
-            detail=f"No municipalities found for state {request.state}"
+            detail=f"No municipalities found for state {state}"
         )
     return {"geoids": geoids}
 
@@ -49,6 +67,11 @@ async def pipeline_endpoint(request: PipelineRequest, background_tasks: Backgrou
             status_code=500,
             detail=str(e)
         )
+
+@app.get("/")
+async def index(request: Request):
+    missing = [var for var in REQUIRED_ENV_VARS if not os.getenv(var)]
+    return templates.TemplateResponse("index.html", {"request": request, "missing_env": missing})
 
 # TODO
 # @app.get("/api/pipeline/{request_id}")
