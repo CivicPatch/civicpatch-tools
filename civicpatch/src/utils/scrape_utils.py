@@ -30,7 +30,13 @@ async def scrape(website_url, options=None):
 
         await page.goto(website_url)
 
-        await flatten_shadow_root(page) 
+        # Check if the page is HTML using document.contentType
+        content_type = await page.evaluate("document.contentType")
+        if content_type.lower() != "text/html":
+            await browser.close()
+            return None
+
+        await flatten_shadow_root(page)
         await html_relative_to_absolute_urls(page)
 
         if options and options.get('image_directory'):
@@ -39,7 +45,6 @@ async def scrape(website_url, options=None):
 
         content = await page.content()
         await browser.close()
-
         return content
 
 async def flatten_shadow_root(page: Page):
@@ -81,7 +86,7 @@ async def html_relative_to_absolute_urls(page: Page):
         page (Page): The Playwright page object.
     """
     base_element = await page.query_selector("base")
-    base_href = base_element.get_attribute("href") if base_element else None
+    base_href = await base_element.get_attribute("href") if base_element else None
     if base_href:
         from urllib.parse import urljoin
         base_url = urljoin(page.url, base_href)

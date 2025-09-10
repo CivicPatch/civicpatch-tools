@@ -142,6 +142,12 @@ class Pipeline:
 
             elif self.state == PipelineStatus.SCRAPE_PAGE:
                 page_to_scrape = self.get_next_link(LinkStatus.PENDING)
+
+                if not page_to_scrape:
+                    print("No pending links left to scrape.")
+                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+                    continue
+
                 result = await scrape_page(self.context, page_to_scrape)
                 self.context.update(result)
 
