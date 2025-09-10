@@ -18,7 +18,7 @@ def municipality_officials_prompt(government_type, people_hint):
             hint_str = "Here are the list of known target people (may be missing or include a few extra): " + ", ".join(hint_names) + "."
 
     prompt = f"""
-Extract municipality officials from the markdown text. {hint_str}
+Extract municipality officials, if found, from the markdown text. {hint_str}
 
 Government type: '{government_type}'
 Divisions: {divisions_str}

@@ -1,8 +1,11 @@
+MAX_RETRIES = 3
+
 from utils.scrape_utils import scrape
 from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
 from utils.array_utils import interleave_arrays
 from utils.data_utils import get_municipality_context, MunicipalityContext
 from utils.config_utils import search_keywords
+from utils.request_utils import with_retry
 from .utils import search, SearchEngineNames
 
 def search_links(context: PipelineContext):
@@ -26,12 +29,24 @@ def search_links(context: PipelineContext):
     if not search_engine:
         return {} # TODO set failure
 
-    for keyword_term in keyword_term_groups:
-        print(f"Searching for keyword term: {keyword_term}")
-        urls_for_term = municipality_search(municipality_context, search_engine, keyword_term)
-        urls_found.append(urls_for_term)
+    def search_all_keywords():
+        urls_found = []
+        for keyword_term in keyword_term_groups:
+            print(f"Searching for keyword term: {keyword_term}")
+            urls_for_term = municipality_search(municipality_context, search_engine, keyword_term)
+            urls_found.append(urls_for_term)
+        return urls_found
 
-    interleaved_urls = interleave_arrays(urls_found)
+    try:
+        urls_found = with_retry(MAX_RETRIES, search_all_keywords)
+        status_value = "completed"
+        error_message = None
+    except Exception as e:
+        urls_found = []
+        status_value = "error"
+        error_message = str(e)
+
+    interleaved_urls = interleave_arrays(urls_found) if status_value == "completed" else []
 
     updated_links = context["links"][:]
     for url in interleaved_urls:
@@ -39,8 +54,7 @@ def search_links(context: PipelineContext):
         if not any(link["url"] == url for link in context["links"]):
             updated_links.append(Link(url=url, status=LinkStatus.PENDING.value))
 
-
-    return {
+    result = {
         "links": [link.model_dump() for link in updated_links],
         "steps": {
             **context["steps"],
@@ -50,13 +64,15 @@ def search_links(context: PipelineContext):
                     **context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_engines"],
                     search_engine: {
                         "links": interleaved_urls,
-                        "status": "completed"
+                        "status": status_value
                     }
                 }
             }
         },
-        
     }
+    if status_value == "error":
+        result["error"] = error_message
+    return result
 
 def municipality_search(municipality_context: MunicipalityContext, search_engine, keyword_term: str):
     """
