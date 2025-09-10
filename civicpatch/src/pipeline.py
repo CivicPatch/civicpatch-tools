@@ -195,9 +195,12 @@ class Pipeline:
                 result = maybe_send_to_github(self.context)
 
                 self.context.update(result)
-                self.state = PipelineStatus.DONE
+                self.state = PipelineStatus.CLEANUP
+            elif self.state == PipelineStatus.CLEANUP:
+                result = cleanup(self.context)
 
-            # TODO: cleanup step
+                self.context.update(result)
+                self.state = PipelineStatus.DONE 
 
             else:
                 print("Pipeline logic not yet implemented.")
