@@ -22,6 +22,9 @@ run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s -vv t
 #[tasks.run-server]
 #run = "docker compose run civicpatch poetry run fastapi run src/main.py --host 0.0.0.0 --port ${FASTAPI_PORT}"
 
+[tasks.dev]
+run = "docker compose -f docker-compose.development.yml up"
+
 
 # Container must be up (docker compose up)
 [tasks.manual]
@@ -30,16 +33,11 @@ curl -X POST http://localhost:8000/api/pipeline \
   -H "Content-Type: application/json" \
   -d '{
     "state": "wa",
-    "geoid": "5374060"
+    "geoid": "5307835"
   }'
 """
 
-[tasks.scrape]
+[tasks.get_municipalities]
 run = """
-curl -X POST http://localhost:80/api/pipeline \
-  -H "Content-Type: application/json" \
-  -d '{
-    "state": "wa",
-    "geoid": "5374060"
-  }'
+curl -X GET "http://localhost:8000/api/search?state=wa&num=10"
 """

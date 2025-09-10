@@ -1,0 +1,15 @@
+{% if missing_env %}
+<div id="env-warning" style="color: red; font-weight: bold;">
+  Please set up your <code>.env</code> file in the <code>civicpatch/</code> folder.<br>
+  The following environment variables are missing:
+  <ul>
+    {% for var in missing_env %}
+      <li>{{ var }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% else %}
+<div id="env-success" style="color: green; font-weight: bold;">
+  Your environment is all set up!
+</div>
+{% endif %}

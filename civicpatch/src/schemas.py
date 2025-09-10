@@ -6,7 +6,7 @@ class SearchEngineStatus(Enum):
     NOT_STARTED = "not_started"
     PROCESSING = "processing"
     DONE = "done"
-    FAILED = "failed"
+    ERROR = "error"
 
 class SearchEngineState(BaseModel):
     status: str # SearchEngineStatus value 
@@ -21,7 +21,7 @@ class LinkStatus(Enum):
     PREPROCESSED = "preprocessed"
     PREPROCESSED_NO_CONTENT = "preprocessed_no_content"
     DONE = "done"
-    FAILED = "failed"
+    ERROR = "error"
 
 class Link(BaseModel):
     url: str
