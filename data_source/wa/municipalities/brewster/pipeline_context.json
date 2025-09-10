@@ -1,0 +1,1112 @@
+{
+    "links": [
+        {
+            "url": "https://www.cityofbrewsterwashington.org/",
+            "status": "done",
+            "folder_name": "www_cityofbrewsterwashington_org_",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofbrewsterwashington.org/departments/municipal_court.php",
+            "status": "done",
+            "folder_name": "www_cityofbrewsterwashington_org_departments_municipal_court_php",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php",
+            "status": "done",
+            "folder_name": "www_cityofbrewsterwashington_org_news_detail_t10_r11_php",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php",
+            "status": "done",
+            "folder_name": "www_cityofbrewsterwashington_org_government_employment_opportunities_php",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofbrewsterwashington.org/community/local_church.php",
+            "status": "done",
+            "folder_name": "www_cityofbrewsterwashington_org_community_local_church_php",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php",
+            "status": "done",
+            "folder_name": "www_cityofbrewsterwashington_org_departments_public_works_columbia_cove_rv_park_php",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php",
+            "status": "done",
+            "folder_name": "www_cityofbrewsterwashington_org_news_detail_t10_r12_php",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofbrewsterwashington.org/Documents/Government/Employment%20Opportunities/Engineering%20RFQ%20City%20Of%20Brewster%202025.pdf",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        }
+    ],
+    "progress": {
+        "required_data": 6,
+        "current_data": 0
+    },
+    "names": {
+        "Art Smyth": [
+            "Art Smyth"
+        ],
+        "John Housden": [
+            "John Housden"
+        ],
+        "Don Childers": [
+            "Don Childers"
+        ],
+        "Glenn Farrington": [
+            "Glenn Farrington"
+        ],
+        "Pedro De la Cerda": [
+            "Pedro De la Cerda"
+        ],
+        "Franco Martinez-Tinoco": [
+            "Franco Martinez-Tinoco"
+        ],
+        "Alexander Thomason": [
+            "Alexander H S Thomason",
+            "Alexander Thomason"
+        ],
+        "Juana Escobar": [
+            "Juana Escobar"
+        ]
+    },
+    "steps": {
+        "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "Art Smyth",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "John Housden",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Don Childers",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Glenn Farrington",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Pedro De la Cerda",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Franco Martinez-Tinoco",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "Art Smyth",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "John Housden",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Don Childers",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Glenn Farrington",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Pedro De la Cerda",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Franco Martinez-Tinoco",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                }
+            ],
+            "notes": "Brewster, WA operates under a mayor-council form of government with an independently elected Mayor and five elected Council Members. [10, 12] Art Smyth is the current Mayor. [3, 7] Franco Martinez-Tinoco was appointed to the city council on April 17, 2024, replacing Jan May. [5] Other council members identified from a December 2023 meeting include John Housden, Don Childers, Glenn Farrington, and Pedro De la Cerda. [11] No specific ward or district divisions were found for the council members."
+        },
+        "SEARCH_LINKS": {
+            "search_link_pointer": 1,
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "https://www.cityofbrewsterwashington.org/",
+                        "https://www.cityofbrewsterwashington.org/departments/municipal_court.php",
+                        "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php",
+                        "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php",
+                        "https://www.cityofbrewsterwashington.org/community/local_church.php",
+                        "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php",
+                        "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php",
+                        "https://www.cityofbrewsterwashington.org/Documents/Government/Employment%20Opportunities/Engineering%20RFQ%20City%20Of%20Brewster%202025.pdf"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {
+            "elapsed_times": [
+                23.520913124084473,
+                14.162220239639282,
+                12.312394142150879,
+                12.203506469726562,
+                12.932978391647339,
+                20.77784538269043,
+                53.06580591201782
+            ],
+            "total_elapsed_time_seconds": 148.9756636619568,
+            "average_elapsed_time_seconds": 21.282237665993826
+        },
+        "PROCESS_PAGE_CONTENT": {
+            "records_by_source": {
+                "google_gemini": {},
+                "openai": {},
+                "together_ai": {
+                    "Art Smyth": [
+                        {
+                            "name": "Art Smyth",
+                            "image": null,
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "mayor_council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/"
+                        },
+                        {
+                            "name": "Art Smyth",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "mayor",
+                                "council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php"
+                        },
+                        {
+                            "name": "Art Smyth",
+                            "image": null,
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php"
+                        },
+                        {
+                            "name": "Art Smyth",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/community/local_church.php"
+                        },
+                        {
+                            "name": "Art Smyth",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "position"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php"
+                        },
+                        {
+                            "name": "Art Smyth",
+                            "image": null,
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        }
+                    ],
+                    "John Housden": [
+                        {
+                            "name": "John Housden",
+                            "image": null,
+                            "roles": [
+                                "council"
+                            ],
+                            "divisions": [
+                                "mayor_council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/"
+                        },
+                        {
+                            "name": "John Housden",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "mayor",
+                                "council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php"
+                        },
+                        {
+                            "name": "John Housden",
+                            "image": null,
+                            "roles": [
+                                "city council"
+                            ],
+                            "divisions": [
+                                "ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php"
+                        },
+                        {
+                            "name": "John Housden",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/community/local_church.php"
+                        },
+                        {
+                            "name": "John Housden",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "position"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php"
+                        },
+                        {
+                            "name": "John Housden",
+                            "image": null,
+                            "roles": [
+                                "city council member"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        }
+                    ],
+                    "Don Childers": [
+                        {
+                            "name": "Don Childers",
+                            "image": null,
+                            "roles": [
+                                "council"
+                            ],
+                            "divisions": [
+                                "mayor_council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/"
+                        },
+                        {
+                            "name": "Don Childers",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "mayor",
+                                "council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php"
+                        },
+                        {
+                            "name": "Don Childers",
+                            "image": null,
+                            "roles": [
+                                "city council"
+                            ],
+                            "divisions": [
+                                "district"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php"
+                        },
+                        {
+                            "name": "Don Childers",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/community/local_church.php"
+                        },
+                        {
+                            "name": "Don Childers",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "position"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php"
+                        },
+                        {
+                            "name": "Don Childers",
+                            "image": null,
+                            "roles": [
+                                "city council member"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        }
+                    ],
+                    "Glenn Farrington": [
+                        {
+                            "name": "Glenn Farrington",
+                            "image": null,
+                            "roles": [
+                                "council"
+                            ],
+                            "divisions": [
+                                "mayor_council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/"
+                        },
+                        {
+                            "name": "Glenn Farrington",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "mayor",
+                                "council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php"
+                        },
+                        {
+                            "name": "Glenn Farrington",
+                            "image": null,
+                            "roles": [
+                                "city council"
+                            ],
+                            "divisions": [
+                                "position"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php"
+                        },
+                        {
+                            "name": "Glenn Farrington",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/community/local_church.php"
+                        },
+                        {
+                            "name": "Glenn Farrington",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "position"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php"
+                        },
+                        {
+                            "name": "Glenn Farrington",
+                            "image": null,
+                            "roles": [
+                                "city council member"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        }
+                    ],
+                    "Pedro De la Cerda": [
+                        {
+                            "name": "Pedro De la Cerda",
+                            "image": null,
+                            "roles": [
+                                "council"
+                            ],
+                            "divisions": [
+                                "mayor_council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/"
+                        },
+                        {
+                            "name": "Pedro De la Cerda",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "mayor",
+                                "council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php"
+                        },
+                        {
+                            "name": "Pedro De la Cerda",
+                            "image": null,
+                            "roles": [
+                                "city council"
+                            ],
+                            "divisions": [
+                                "seat"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php"
+                        },
+                        {
+                            "name": "Pedro De la Cerda",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/community/local_church.php"
+                        },
+                        {
+                            "name": "Pedro De la Cerda",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "position"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php"
+                        },
+                        {
+                            "name": "Pedro De la Cerda",
+                            "image": null,
+                            "roles": [
+                                "city council member"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        }
+                    ],
+                    "Franco Martinez-Tinoco": [
+                        {
+                            "name": "Franco Martinez-Tinoco",
+                            "image": null,
+                            "roles": [
+                                "council"
+                            ],
+                            "divisions": [
+                                "mayor_council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/"
+                        },
+                        {
+                            "name": "Franco Martinez-Tinoco",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "mayor",
+                                "council"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php"
+                        },
+                        {
+                            "name": "Franco Martinez-Tinoco",
+                            "image": null,
+                            "roles": [
+                                "city council"
+                            ],
+                            "divisions": [
+                                "position"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php"
+                        },
+                        {
+                            "name": "Franco Martinez-Tinoco",
+                            "image": null,
+                            "roles": [
+                                "mayor_council"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/community/local_church.php"
+                        },
+                        {
+                            "name": "Franco Martinez-Tinoco",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "position"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php"
+                        },
+                        {
+                            "name": "Franco Martinez-Tinoco",
+                            "image": null,
+                            "roles": [
+                                "city council member"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        }
+                    ],
+                    "Alexander Thomason": [
+                        {
+                            "name": "Alexander H S Thomason",
+                            "image": null,
+                            "roles": [
+                                "Judge"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofbrewsterwashington.org/departments/municipal_court.php"
+                        }
+                    ],
+                    "Juana Escobar": [
+                        {
+                            "name": "Juana Escobar",
+                            "image": null,
+                            "roles": [
+                                "Court Administrator"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "https://www.cityofbrewsterwashington.org/departments/municipal_court.php"
+                        }
+                    ]
+                }
+            }
+        },
+        "MERGE_RECORDS_WITHIN_SOURCE": {
+            "people_by_source": {
+                "google_gemini": [],
+                "openai": [],
+                "together_ai": [
+                    {
+                        "name": "Art Smyth",
+                        "image": "",
+                        "roles": [
+                            "mayor",
+                            "council member"
+                        ],
+                        "divisions": [
+                            "mayor_council",
+                            "mayor",
+                            "council",
+                            "at-large",
+                            "position"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofbrewsterwashington.org/",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php",
+                            "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php",
+                            "https://www.cityofbrewsterwashington.org/community/local_church.php",
+                            "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "John Housden",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "mayor_council",
+                            "mayor",
+                            "council",
+                            "ward",
+                            "at-large",
+                            "position"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofbrewsterwashington.org/",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php",
+                            "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php",
+                            "https://www.cityofbrewsterwashington.org/community/local_church.php",
+                            "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Don Childers",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "mayor_council",
+                            "mayor",
+                            "council",
+                            "district",
+                            "at-large",
+                            "position"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofbrewsterwashington.org/",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php",
+                            "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php",
+                            "https://www.cityofbrewsterwashington.org/community/local_church.php",
+                            "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Glenn Farrington",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "mayor_council",
+                            "mayor",
+                            "council",
+                            "position",
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofbrewsterwashington.org/",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php",
+                            "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php",
+                            "https://www.cityofbrewsterwashington.org/community/local_church.php",
+                            "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Pedro De la Cerda",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "mayor_council",
+                            "mayor",
+                            "council",
+                            "seat",
+                            "at-large",
+                            "position"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofbrewsterwashington.org/",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php",
+                            "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php",
+                            "https://www.cityofbrewsterwashington.org/community/local_church.php",
+                            "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Franco Martinez-Tinoco",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "mayor_council",
+                            "mayor",
+                            "council",
+                            "position",
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.cityofbrewsterwashington.org/",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R11.php",
+                            "https://www.cityofbrewsterwashington.org/government/employment_opportunities.php",
+                            "https://www.cityofbrewsterwashington.org/community/local_church.php",
+                            "https://www.cityofbrewsterwashington.org/departments/public_works/columbia_cove_rv_park.php",
+                            "https://www.cityofbrewsterwashington.org/news_detail_T10_R12.php"
+                        ],
+                        "updated_at": ""
+                    }
+                ]
+            }
+        },
+        "MERGE_RECORDS_ACROSS_SOURCES": {
+            "people": [],
+            "agreement_score": 100.0,
+            "disagreements": [],
+            "missing_people": [
+                {
+                    "source": "google_gemini",
+                    "person_name": "Glenn Farrington"
+                },
+                {
+                    "source": "openai",
+                    "person_name": "Glenn Farrington"
+                },
+                {
+                    "source": "google_gemini",
+                    "person_name": "Art Smyth"
+                },
+                {
+                    "source": "openai",
+                    "person_name": "Art Smyth"
+                },
+                {
+                    "source": "google_gemini",
+                    "person_name": "John Housden"
+                },
+                {
+                    "source": "openai",
+                    "person_name": "John Housden"
+                },
+                {
+                    "source": "google_gemini",
+                    "person_name": "Don Childers"
+                },
+                {
+                    "source": "openai",
+                    "person_name": "Don Childers"
+                },
+                {
+                    "source": "google_gemini",
+                    "person_name": "Pedro De la Cerda"
+                },
+                {
+                    "source": "openai",
+                    "person_name": "Pedro De la Cerda"
+                },
+                {
+                    "source": "google_gemini",
+                    "person_name": "Franco Martinez-Tinoco"
+                },
+                {
+                    "source": "openai",
+                    "person_name": "Franco Martinez-Tinoco"
+                }
+            ]
+        },
+        "CLEANUP": {},
+        "RETRY": {},
+        "DONE": {}
+    },
+    "request_id": "6c576092-df45-4b80-89a6-6cba6dece32e",
+    "state": "wa",
+    "geoid": "5307835"
+}
