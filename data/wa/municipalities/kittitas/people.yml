@@ -1,0 +1,143 @@
+- name: Michelle Geiger
+  image: ''
+  roles: []
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: http://www.cityofkittitas.com/government.html
+  start_date: ''
+  end_date: ''
+  state: ''
+  place: ''
+  cdn_image: ''
+  data_sources:
+  - http://www.cityofkittitas.com/community.html
+  updated_at: '2025-09-11T18:10:24+00:00'
+- name: Joe Scoleri
+  image: ''
+  roles:
+  - council member
+  divisions:
+  - position 5
+  phone_number: ''
+  email: ''
+  website: http://www.cityofkittitas.com/council.html
+  start_date: '2027'
+  end_date: '2027'
+  state: ''
+  place: ''
+  cdn_image: ''
+  data_sources:
+  - http://www.cityofkittitas.com/council.html
+  - http://www.cityofkittitas.com/staff_directory.html
+  updated_at: '2025-09-11T18:10:24+00:00'
+- name: Jerry Lael
+  image: ''
+  roles:
+  - council member
+  divisions:
+  - position 3
+  phone_number: ''
+  email: jerry.lael@cityofkittitas.com
+  website: http://www.cityofkittitas.com/council.html
+  start_date: '2027'
+  end_date: '2027'
+  state: ''
+  place: ''
+  cdn_image: ''
+  data_sources:
+  - http://www.cityofkittitas.com/council.html
+  - http://www.cityofkittitas.com/staff_directory.html
+  updated_at: '2025-09-11T18:10:24+00:00'
+- name: Hannah Woodiwiss
+  image: ''
+  roles:
+  - council member
+  divisions:
+  - position 2
+  phone_number: ''
+  email: hannah.woodiwiss@cityofkittitas.com
+  website: http://www.cityofkittitas.com/council.html
+  start_date: '2025'
+  end_date: '2025'
+  state: ''
+  place: ''
+  cdn_image: ''
+  data_sources:
+  - http://www.cityofkittitas.com/council.html
+  - http://www.cityofkittitas.com/staff_directory.html
+  updated_at: '2025-09-11T18:10:24+00:00'
+- name: Richard Hink
+  image: ''
+  roles:
+  - mayor
+  divisions: []
+  phone_number: (509) 968-0220 office (509) 929-3292 cell
+  email: richard.hink@cityofkittitas.com
+  website: http://www.cityofkittitas.com/council.html
+  start_date: ''
+  end_date: ''
+  state: ''
+  place: ''
+  cdn_image: ''
+  data_sources:
+  - http://www.cityofkittitas.com/staff_directory.html
+  updated_at: '2025-09-11T18:10:24+00:00'
+- name: Brandy Harris
+  image: ''
+  roles: []
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: mailto:Brandy.Harris@cityofkittitas.com
+  start_date: '2019-01-01'
+  end_date: '2024-12-31'
+  state: ''
+  place: ''
+  cdn_image: ''
+  data_sources:
+  - http://www.cityofkittitas.com/mayors_corner.html
+  - http://www.cityofkittitas.com/
+  - http://www.cityofkittitas.com/government.html
+  - http://www.cityofkittitas.com/comprehensive_survey.html
+  - http://www.cityofkittitas.com/minutes.html
+  - http://www.cityofkittitas.com/staff_directory.html
+  - http://www.cityofkittitas.com/faqs.html
+  - http://www.cityofkittitas.com/employment_police_officer.html
+  updated_at: '2025-09-11T18:10:24+00:00'
+- name: Tyrul McGuffin
+  image: ''
+  roles:
+  - council member
+  divisions:
+  - position 4
+  phone_number: ''
+  email: tyrul.mcguffin@cityofkittitas.com
+  website: http://www.cityofkittitas.com/council.html
+  start_date: '2027'
+  end_date: '2027'
+  state: ''
+  place: ''
+  cdn_image: ''
+  data_sources:
+  - http://www.cityofkittitas.com/council.html
+  - http://www.cityofkittitas.com/staff_directory.html
+  updated_at: '2025-09-11T18:10:24+00:00'
+- name: Sean Crabb
+  image: ''
+  roles:
+  - council member
+  divisions:
+  - position 1
+  phone_number: ''
+  email: sean.crabb@cityofkittitas.com
+  website: http://www.cityofkittitas.com/council.html
+  start_date: '2025'
+  end_date: '2025'
+  state: ''
+  place: ''
+  cdn_image: ''
+  data_sources:
+  - http://www.cityofkittitas.com/council.html
+  - http://www.cityofkittitas.com/staff_directory.html
+  updated_at: '2025-09-11T18:10:24+00:00'
