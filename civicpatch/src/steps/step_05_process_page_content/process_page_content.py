@@ -191,12 +191,14 @@ def calculate_progress(
     
     # Gather count of each length
     current_progress = 0
-    counts = collections.Counter(lengths)
-    for length, count in sorted(counts.items(), reverse = True):
-        if count >= 2: # At least two sources have the same count
-            current_progress = length
-            break
-
+    # Find the largest value that appears at least twice
+    sorted_lengths = sorted(lengths, reverse=True)
+    if len(sorted_lengths) >= 2:
+        current_progress = sorted_lengths[1]
+    elif sorted_lengths:
+        current_progress = sorted_lengths[0]
+    else:
+        current_progress = 0
     progress["current_data"] = current_progress
     return progress
 

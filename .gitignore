@@ -35,3 +35,4 @@ cost_search_engine.csv
 *.png
 *.jpg
 *.zip
+data_source/**/images/*

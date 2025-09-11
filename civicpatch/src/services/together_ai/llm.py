@@ -48,10 +48,10 @@ MODELS_BY_TYPE = {
         #"output_cost": 0.06 / 1000000,
         #"token_limit": 4096,  # Actual token limit is 4096, leave buffer for output tokens
         # PASSES with flying colors
-        # "model": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
-        # "input_cost": 0.10 / 1000000,
-        # "output_cost": 0.10 / 1000000,
-        # "token_limit": 8192,
+        "model": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
+        "input_cost": 0.10 / 1000000,
+        "output_cost": 0.10 / 1000000,
+        "token_limit": 8192,
         # FAILS -- need to RETRY!
         #"model": "openai/gpt-oss-120b",
         #"input_cost": 0.15 / 1000000,
@@ -98,9 +98,9 @@ MODELS_BY_TYPE = {
         # "input_cost": 0.20 / 1000000,
         # "output_cost": 0.20 / 1000000
         # ???
-        "model": "google/gemma-3n-E4B-it",
-        "input_cost": 0.02 / 1000000,
-        "output_cost": 0.04 / 1000000
+        # "model": "google/gemma-3n-E4B-it",
+        # "input_cost": 0.02 / 1000000,
+        # "output_cost": 0.04 / 1000000
         # FAILS
             # Takes too long, more for batch jobs
             # Did not stick around to get result

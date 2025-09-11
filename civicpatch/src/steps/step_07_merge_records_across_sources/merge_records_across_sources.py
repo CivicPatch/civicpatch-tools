@@ -24,6 +24,7 @@ def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
 
     # Merge people with same canonical name across sources
     merged_people: List[Dict] = []
+    num_sources = len(people_by_source)
     for canonical_name in canonical_names:
         # Collect all Person objects grouped by source for this canonical name
         grouped_people_by_source = {
@@ -39,8 +40,12 @@ def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
         missing_sources = [
             source for source, people in grouped_people_by_source.items() if not people
         ]
+
+        fields = ["roles", "divisions", "phone_number", "email", "website", "start_date", "end_date"]
+        missing_person_multiplier = len(fields)  # Or set to a fixed value like 5
         for source in missing_sources:
             missing_people.append(MissingPerson(source=source, person_name=canonical_name))
+            total_disagreement_score += missing_person_multiplier
 
         # Skip disagreement calculation if the person is missing from any source
         if missing_sources:
@@ -73,7 +78,8 @@ def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
         merged_people.append(merged_person.model_dump())
 
     # Calculate agreement score
-    max_possible_disagreement = len(canonical_names) * len(["roles", "divisions", "phone_number", "email", "website", "start_date", "end_date"])
+    fields = ["roles", "divisions", "phone_number", "email", "website", "start_date", "end_date"]
+    max_possible_disagreement = num_sources * len(canonical_names) * len(fields)
     agreement_score = 100 * (1 - (total_disagreement_score / max_possible_disagreement)) if max_possible_disagreement > 0 else 100.0
 
     return {
