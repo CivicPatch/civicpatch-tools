@@ -8,6 +8,7 @@ from utils.data_utils import MunicipalityContext
 
 from steps.step_02_search_links.crawl import crawl
 
+# The order here defines the order of search attempts
 SEARCH_SERVICES = {
     "google": google_search,
     "serpapi": serp_search,

@@ -172,9 +172,11 @@ class Pipeline:
             elif self.state == PipelineStatus.PROCESS_PAGE_CONTENT:
                 result, processed_count, process_max_pages = self.process_page_content_step(process_config)
                 self.context.update(result)
+                
+                context_progress = self.context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value].get("progress", {})
 
-                print("Current data:", result["progress"]["current_data"])
-                print("Required data:", result["progress"]["required_data"])
+                print("Current data:", context_progress.get("current_data", 0))
+                print("Required data:", context_progress.get("required_data", 0))
 
                 next_state = self.get_next_state_for_process_page_content(processed_count, process_max_pages)
                 self.state = next_state
@@ -192,14 +194,14 @@ class Pipeline:
                 self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
             elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
-                result = maybe_send_to_github(self.context)
+                # result = maybe_send_to_github(self.context)
 
-                self.context.update(result)
+                # self.context.update(result)
                 self.state = PipelineStatus.CLEANUP
             elif self.state == PipelineStatus.CLEANUP:
-                result = cleanup(self.context)
+                # result = cleanup(self.context)
 
-                self.context.update(result)
+                # self.context.update(result)
                 self.state = PipelineStatus.DONE 
 
             else:
@@ -225,14 +227,14 @@ class Pipeline:
         process_max_pages = process_config.get("max_pages", 15)
         processed_count = len(links_processed)
 
-        if not preprocessed_links:
+        if len(preprocessed_links) == 0:
             print("No preprocessed links left to process.")
             return {}, processed_count, process_max_pages
 
 
-        page_to_process = preprocessed_links[0] if preprocessed_links and processed_count < process_max_pages else None
+        page_to_process = preprocessed_links[0] if processed_count < process_max_pages else None
         if not page_to_process:
-            print("Max pages reached or no preprocessed links left to process.")
+            print("Max pages reached.")
             return {}, processed_count, process_max_pages
 
         updated_context = process_page_content(self.context, page_to_process)
