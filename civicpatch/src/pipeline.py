@@ -173,7 +173,7 @@ class Pipeline:
                 result, processed_count, process_max_pages = self.process_page_content_step(process_config)
                 self.context.update(result)
                 
-                context_progress = self.context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value].get("progress", {})
+                context_progress = self.context["progress"]
 
                 print("Current data:", context_progress.get("current_data", 0))
                 print("Required data:", context_progress.get("required_data", 0))
