@@ -1,6 +1,7 @@
 from typing import List, Dict, TypedDict, Any
 from schemas import Person, PipelineStatus, PipelineContext, Disagreement, MissingPerson
 from collections import Counter
+from datetime import datetime, timezone
 
 def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
     """
@@ -134,7 +135,7 @@ def merge_people_across_sources(canonical_name: str, people_by_source: Dict[str,
         start_date=start_date_counter.most_common(1)[0][0] if start_date_counter else "",
         end_date=end_date_counter.most_common(1)[0][0] if end_date_counter else "",
         data_sources=data_sources,
-        updated_at=""
+        updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )
 
 

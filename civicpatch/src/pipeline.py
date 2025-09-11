@@ -274,5 +274,5 @@ class Pipeline:
         os.makedirs(data_municipality_path, exist_ok=True)
 
         with open(people_file_path, "w") as f:
-            yaml.dump([person for person in people], f, default_flow_style=False)
+            yaml.dump([person for person in people], f, default_flow_style=False, sort_keys=False)
    
