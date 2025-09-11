@@ -1,46 +1,38 @@
-import pytest
+import os
+import difflib
 from steps.step_04_preprocess_page_content.filter_content import filter_content
-from bs4 import BeautifulSoup
+from markdownify import markdownify as md
 
-def get_divisions_from_html(html):
-    soup = BeautifulSoup(html, "html.parser")
-    return [
-        el.get_text() or ""
-        for el in soup.find_all()
-        if el.get_text() and (
-            "ward" in el.get_text() or
-            "at-large" in el.get_text() or
-            "district" in el.get_text() or
-            "citywide" in el.get_text()
-        )
-    ]
+def read_fixture(filename, subfolder="with_table"):
+        fixture_dir = os.path.join(os.path.dirname(__file__), "fixtures", subfolder)
+        with open(os.path.join(fixture_dir, filename), "r", encoding="utf-8") as f:
+            return f.read().strip()
 
-def test_filter_content_preserves_division_ward():
-    html = "<div>Jane Doe represents ward 5.</div><div>Unrelated text.</div>"
-    filtered = filter_content(html)
-    divisions = get_divisions_from_html(filtered)
-    assert any("ward" in d for d in divisions)
-
-def test_filter_content_preserves_division_at_large():
-    html = "<div>John Smith is an at-large council member.</div>"
-    filtered = filter_content(html)
-    divisions = get_divisions_from_html(filtered)
-    assert any("at-large" in d for d in divisions)
-
-def test_filter_content_preserves_division_alias():
-    html = "<div>He serves citywide.</div>"
-    filtered = filter_content(html)
-    divisions = get_divisions_from_html(filtered)
-    assert any("citywide" in d for d in divisions) or any("at-large" in d for d in divisions)
-
-def test_filter_content_removes_irrelevant():
-    html = "<div>Unrelated text.</div>"
-    filtered = filter_content(html)
-    soup = BeautifulSoup(filtered, "html.parser")
-    # Should not contain any division keywords
-    text = soup.get_text() or ""
-    # Defensive: ensure text is a string
-    assert isinstance(text, str)
-    assert not any(
-        kw in text for kw in ["ward", "at-large", "district", "citywide"]
+def write_diff_and_output(expected, actual, output_path):
+    diff = difflib.unified_diff(
+        expected,
+        actual,
+        fromfile='expected',
+        tofile='actual',
+        lineterm=''
     )
+    for line in diff:
+        print(line)
+    print("```")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(actual))
+    print(f"Actual preprocessed output written to {output_path}")
+
+def test_filter_content_with_real_data():
+    original = read_fixture("original.html")
+    expected = read_fixture("preprocessed.md")
+    assert original, "Original fixture is missing or empty"
+    result_md = md(filter_content(original).strip()).strip()
+    expected_md = expected.strip()
+    result_lines = result_md.splitlines()
+    expected_lines = expected_md.splitlines()
+    if result_lines != expected_lines:
+        fixture_dir = os.path.join(os.path.dirname(__file__), "fixtures", "with_table")
+        output_path = os.path.join(fixture_dir, "actual_preprocessed.md")
+        write_diff_and_output(expected_lines, result_lines, output_path)
+    assert result_lines == expected_lines

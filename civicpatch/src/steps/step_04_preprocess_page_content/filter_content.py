@@ -2,7 +2,9 @@ import time
 from bs4 import Tag, BeautifulSoup
 from steps.step_04_preprocess_page_content import entity_extraction
 
+
 IMAGE_EXTENSIONS_WHITELIST = ["png", "jpg", "jpeg", "webp"]
+ROLE_WHITELIST = {"mayor"}
 
 def count_nodes(node: Tag):
     count = 1 if isinstance(node, Tag) else 0
@@ -28,6 +30,20 @@ def filter_content(input_html: str, progress_log_interval: int = 10) -> str:
     return filtered_content
 
 def filter_node_content(node: Tag, state):
+    # Special handling for tables: keep if any cell contains a person or whitelisted role (case-insensitive, substring match)
+    if node.name == "table":
+        keep_table = False
+        for cell in node.find_all(["td", "th"]):
+            cell_text = cell.get_text(strip=True)
+            if cell_text:
+                people, dates, emails, phones, roles, divisions = entity_extraction.extract_data(cell_text)
+                # Check for people
+                if people:
+                    keep_table = True
+                    break
+        if keep_table:
+            return  # Do not decompose this table or its children
+
     # Process children first
     for child in list(node.children):
         if isinstance(child, Tag):

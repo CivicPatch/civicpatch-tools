@@ -17,6 +17,9 @@ on:
       state:
         description: 'State' 
         required: true
+      municipal_name:
+        description: 'Municipal Name'
+        required: true
       geoid:
         description: 'Geographic ID'
         required: true
@@ -67,7 +70,7 @@ jobs:
           git config --global user.email "civicpatch-tools@civicpatch.org"
           git checkout -B ${{ steps.extract_branch.outputs.branch_name }}
           git add .
-          git commit -m "Data intake for ${{ github.event.inputs.state }} - ${{ github.event.inputs.geoid }} by ${{ github.event.inputs.user_email }}"
+          git commit -m "Add municipal officials for ${{ github.event.inputs.state }} - ${{ github.event.inputs.geoid }} by ${{ github.event.inputs.user_email }}"
           git push -u origin ${{ steps.extract_branch.outputs.branch_name }} 
 
           echo ${{ github.actor }}
