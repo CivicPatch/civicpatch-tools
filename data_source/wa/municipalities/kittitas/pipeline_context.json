@@ -1,0 +1,1142 @@
+{
+    "links": [
+        {
+            "url": "mailto:Brandy.Harris@cityofkittitas.com",
+            "status": "error",
+            "folder_name": "mailto_brandy_harris@cityofkittitas_com",
+            "is_profile_page": true
+        },
+        {
+            "url": "http://www.cityofkittitas.com/staff_directory.html",
+            "status": "done",
+            "folder_name": "www_cityofkittitas_com_staff_directory_html",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/council.html",
+            "status": "done",
+            "folder_name": "www_cityofkittitas_com_council_html",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/",
+            "status": "done",
+            "folder_name": "www_cityofkittitas_com_",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/minutes.html",
+            "status": "done",
+            "folder_name": "www_cityofkittitas_com_minutes_html",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/docs/minutes/2008/051308.pdf",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/employment_police_officer.html",
+            "status": "done",
+            "folder_name": "www_cityofkittitas_com_employment_police_officer_html",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/community.html",
+            "status": "done",
+            "folder_name": "www_cityofkittitas_com_community_html",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/mayors_corner.html",
+            "status": "done",
+            "folder_name": "www_cityofkittitas_com_mayors_corner_html",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/docs/minutes/2008/012208.pdf",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/government.html",
+            "status": "done",
+            "folder_name": "www_cityofkittitas_com_government_html",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/comprehensive_survey.html",
+            "status": "done",
+            "folder_name": "www_cityofkittitas_com_comprehensive_survey_html",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/faqs.html",
+            "status": "done",
+            "folder_name": "www_cityofkittitas_com_faqs_html",
+            "is_profile_page": false
+        },
+        {
+            "url": "http://www.cityofkittitas.com/public_works.html",
+            "status": "preprocessed",
+            "folder_name": "www_cityofkittitas_com_public_works_html",
+            "is_profile_page": false
+        }
+    ],
+    "progress": {
+        "required_data": 5,
+        "current_data": 3
+    },
+    "names": {
+        "Richard Hink": [
+            "Richard Hink",
+            "Richard Hink Jr",
+            "Richard Hink Jr."
+        ],
+        "Sean Crabb": [
+            "Sean Crabb"
+        ],
+        "Brandy Harris": [
+            "Brandy Harris"
+        ],
+        "Michelle Geiger": [
+            "Michelle Geiger"
+        ],
+        "Jerry Lael": [
+            "Jerry Lael"
+        ],
+        "Hannah Woodiwiss": [
+            "Hannah Woodiwiss"
+        ],
+        "Tyrul McGuffin": [
+            "Tyrul McGuffin"
+        ],
+        "Joe Scoleri": [
+            "Joe Scoleri"
+        ]
+    },
+    "steps": {
+        "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "Richard Hink Jr.",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Sean Crabb",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "Richard Hink Jr.",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Sean Crabb",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                }
+            ],
+            "notes": "The City of Kittitas operates under a mayor-council government. Richard Hink Jr. serves as the Mayor. Sean Crabb has been identified as a Council Member and Vice-Chair of the Kittitas County Conference of Governments. A complete and current roster of all City Council members was not directly available through the provided search results from the official city website or other reliable sources. Therefore, the list of council members may be incomplete."
+        },
+        "SEARCH_LINKS": {
+            "search_link_pointer": 1,
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "http://www.cityofkittitas.com/staff_directory.html",
+                        "http://www.cityofkittitas.com/council.html",
+                        "http://www.cityofkittitas.com/",
+                        "http://www.cityofkittitas.com/minutes.html",
+                        "http://www.cityofkittitas.com/docs/minutes/2008/051308.pdf",
+                        "http://www.cityofkittitas.com/employment_police_officer.html",
+                        "http://www.cityofkittitas.com/community.html",
+                        "http://www.cityofkittitas.com/mayors_corner.html",
+                        "http://www.cityofkittitas.com/docs/minutes/2008/012208.pdf",
+                        "http://www.cityofkittitas.com/government.html",
+                        "http://www.cityofkittitas.com/comprehensive_survey.html",
+                        "http://www.cityofkittitas.com/faqs.html",
+                        "http://www.cityofkittitas.com/public_works.html"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {
+            "elapsed_times": [
+                2.9366109371185303,
+                2.9684946537017822,
+                5.188614368438721,
+                3.122194528579712,
+                11.703653812408447,
+                3.4405369758605957,
+                3.888338327407837,
+                3.0973048210144043,
+                4.399803638458252,
+                5.386518239974976,
+                6.28899621963501
+            ],
+            "total_elapsed_time_seconds": 52.42106652259827,
+            "average_elapsed_time_seconds": 4.765551502054388
+        },
+        "PROCESS_PAGE_CONTENT": {
+            "records_by_source": {
+                "google_gemini": {
+                    "Richard Hink": [
+                        {
+                            "name": "Richard Hink Jr",
+                            "image": null,
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": "(509) 968-0220 office (509) 929-3292 cell",
+                            "email": "richard.hink@cityofkittitas.com",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                        }
+                    ],
+                    "Sean Crabb": [
+                        {
+                            "name": "Sean Crabb",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Position 1"
+                            ],
+                            "phone_number": null,
+                            "email": "sean.crabb@cityofkittitas.com",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                        },
+                        {
+                            "name": "Sean Crabb",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Position 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": "2025",
+                            "data_source": "http://www.cityofkittitas.com/council.html"
+                        }
+                    ],
+                    "Hannah Woodiwiss": [
+                        {
+                            "name": "Hannah Woodiwiss",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Position 2"
+                            ],
+                            "phone_number": null,
+                            "email": "hannah.woodiwiss@cityofkittitas.com",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                        },
+                        {
+                            "name": "Hannah Woodiwiss",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Position 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": "2025",
+                            "data_source": "http://www.cityofkittitas.com/council.html"
+                        }
+                    ],
+                    "Jerry Lael": [
+                        {
+                            "name": "Jerry Lael",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Position 3"
+                            ],
+                            "phone_number": null,
+                            "email": "jerry.lael@cityofkittitas.com",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                        },
+                        {
+                            "name": "Jerry Lael",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Position 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": "2027",
+                            "data_source": "http://www.cityofkittitas.com/council.html"
+                        }
+                    ],
+                    "Tyrul McGuffin": [
+                        {
+                            "name": "Tyrul McGuffin",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Position 4"
+                            ],
+                            "phone_number": null,
+                            "email": "tyrul.mcguffin@cityofkittitas.com",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                        },
+                        {
+                            "name": "Tyrul McGuffin",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Position 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": "2027",
+                            "data_source": "http://www.cityofkittitas.com/council.html"
+                        }
+                    ],
+                    "Joe Scoleri": [
+                        {
+                            "name": "Joe Scoleri",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Position 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                        },
+                        {
+                            "name": "Joe Scoleri",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Position 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": "2027",
+                            "data_source": "http://www.cityofkittitas.com/council.html"
+                        }
+                    ]
+                },
+                "openai": {
+                    "Richard Hink": [
+                        {
+                            "name": "Richard Hink Jr",
+                            "image": null,
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": "(509) 968-0220",
+                            "email": "richard.hink@cityofkittitas.com",
+                            "website": "http://www.cityofkittitas.com/index.html",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                        }
+                    ],
+                    "Sean Crabb": [
+                        {
+                            "name": "Sean Crabb",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Position 1"
+                            ],
+                            "phone_number": null,
+                            "email": "sean.crabb@cityofkittitas.com",
+                            "website": "http://www.cityofkittitas.com/government.html",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                        },
+                        {
+                            "name": "Sean Crabb",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Position 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "http://www.cityofkittitas.com/index.html",
+                            "start_date": null,
+                            "end_date": "2025",
+                            "data_source": "http://www.cityofkittitas.com/council.html"
+                        }
+                    ],
+                    "Jerry Lael": [
+                        {
+                            "name": "Jerry Lael",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Position 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "http://www.cityofkittitas.com/index.html",
+                            "start_date": null,
+                            "end_date": "2027",
+                            "data_source": "http://www.cityofkittitas.com/council.html"
+                        }
+                    ]
+                },
+                "together_ai": {
+                    "Richard Hink": [
+                        {
+                            "name": "Richard Hink Jr.",
+                            "image": null,
+                            "roles": [
+                                "City Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "http://www.cityofkittitas.com/index.html",
+                            "start_date": "2024-2027",
+                            "end_date": "2027",
+                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                        },
+                        {
+                            "name": "Richard Hink Jr.",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "http://www.cityofkittitas.com/employment_police_officer.html"
+                        },
+                        {
+                            "name": "Richard Hink Jr.",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "http://www.cityofkittitas.com/government.html"
+                        },
+                        {
+                            "name": "Richard Hink Jr.",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": null,
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "http://www.cityofkittitas.com/comprehensive_survey.html"
+                        },
+                        {
+                            "name": "Richard Hink Jr.",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": null,
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "http://www.cityofkittitas.com/faqs.html"
+                        }
+                    ],
+                    "Sean Crabb": [
+                        {
+                            "name": "Sean Crabb",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "Position 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "http://www.cityofkittitas.com/index.html",
+                            "start_date": "2024-2027",
+                            "end_date": "2027",
+                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                        },
+                        {
+                            "name": "Sean Crabb",
+                            "image": null,
+                            "roles": [
+                                "Council Members"
+                            ],
+                            "divisions": [
+                                "Position 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": "2025",
+                            "end_date": null,
+                            "data_source": "http://www.cityofkittitas.com/council.html"
+                        },
+                        {
+                            "name": "Sean Crabb",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "http://www.cityofkittitas.com/employment_police_officer.html"
+                        },
+                        {
+                            "name": "Sean Crabb",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "http://www.cityofkittitas.com/government.html"
+                        },
+                        {
+                            "name": "Sean Crabb",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": null,
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "http://www.cityofkittitas.com/comprehensive_survey.html"
+                        },
+                        {
+                            "name": "Sean Crabb",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": "",
+                            "email": "",
+                            "website": null,
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "http://www.cityofkittitas.com/faqs.html"
+                        }
+                    ],
+                    "Brandy Harris": [
+                        {
+                            "name": "Brandy Harris",
+                            "image": null,
+                            "roles": [
+                                "City Official"
+                            ],
+                            "divisions": [
+                                "Front Office"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "mailto:Brandy.Harris@cityofkittitas.com",
+                            "start_date": "1883",
+                            "end_date": "2024-2027",
+                            "data_source": "http://www.cityofkittitas.com/"
+                        },
+                        {
+                            "name": "Brandy Harris",
+                            "image": null,
+                            "roles": [
+                                "City Administrator"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "mailto:Brandy.Harris@cityofkittitas.com",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "http://www.cityofkittitas.com/minutes.html"
+                        },
+                        {
+                            "name": "Brandy Harris",
+                            "image": null,
+                            "roles": [
+                                "Contact Us"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "mailto:Brandy.Harris@cityofkittitas.com",
+                            "start_date": "",
+                            "end_date": "",
+                            "data_source": "http://www.cityofkittitas.com/mayors_corner.html"
+                        }
+                    ],
+                    "Michelle Geiger": [
+                        {
+                            "name": "Michelle Geiger",
+                            "image": null,
+                            "roles": [
+                                "Building Inspector"
+                            ],
+                            "divisions": [
+                                "Safe Build, LLC"
+                            ],
+                            "phone_number": "",
+                            "email": "Brandy.Harris@cityofkittitas.com",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "http://www.cityofkittitas.com/community.html"
+                        }
+                    ]
+                }
+            }
+        },
+        "MERGE_RECORDS_WITHIN_SOURCE": {
+            "people_by_source": {
+                "google_gemini": [
+                    {
+                        "name": "Richard Hink",
+                        "image": "",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "(509) 968-0220 office (509) 929-3292 cell",
+                        "email": "richard.hink@cityofkittitas.com",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "http://www.cityofkittitas.com/staff_directory.html"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Sean Crabb",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "position 1"
+                        ],
+                        "phone_number": "",
+                        "email": "sean.crabb@cityofkittitas.com",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "2025",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "http://www.cityofkittitas.com/staff_directory.html",
+                            "http://www.cityofkittitas.com/council.html"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Hannah Woodiwiss",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "position 2"
+                        ],
+                        "phone_number": "",
+                        "email": "hannah.woodiwiss@cityofkittitas.com",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "2025",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "http://www.cityofkittitas.com/staff_directory.html",
+                            "http://www.cityofkittitas.com/council.html"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jerry Lael",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "position 3"
+                        ],
+                        "phone_number": "",
+                        "email": "jerry.lael@cityofkittitas.com",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "http://www.cityofkittitas.com/staff_directory.html",
+                            "http://www.cityofkittitas.com/council.html"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Tyrul McGuffin",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "position 4"
+                        ],
+                        "phone_number": "",
+                        "email": "tyrul.mcguffin@cityofkittitas.com",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "http://www.cityofkittitas.com/staff_directory.html",
+                            "http://www.cityofkittitas.com/council.html"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Joe Scoleri",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "position 5"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "http://www.cityofkittitas.com/staff_directory.html",
+                            "http://www.cityofkittitas.com/council.html"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "openai": [
+                    {
+                        "name": "Richard Hink",
+                        "image": "",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "(509) 968-0220",
+                        "email": "richard.hink@cityofkittitas.com",
+                        "website": "http://www.cityofkittitas.com/index.html",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "http://www.cityofkittitas.com/staff_directory.html"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Sean Crabb",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "position 1"
+                        ],
+                        "phone_number": "",
+                        "email": "sean.crabb@cityofkittitas.com",
+                        "website": "http://www.cityofkittitas.com/government.html",
+                        "start_date": "",
+                        "end_date": "2025",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "http://www.cityofkittitas.com/staff_directory.html",
+                            "http://www.cityofkittitas.com/council.html"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jerry Lael",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "position 3"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "http://www.cityofkittitas.com/index.html",
+                        "start_date": "",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "http://www.cityofkittitas.com/council.html"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "together_ai": [
+                    {
+                        "name": "Sean Crabb",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "position 1"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "http://www.cityofkittitas.com/index.html",
+                        "start_date": "2024-2027",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "cdn_image": "",
+                        "data_sources": [
+                            "http://www.cityofkittitas.com/staff_directory.html",
+                            "http://www.cityofkittitas.com/council.html",
+                            "http://www.cityofkittitas.com/employment_police_officer.html",
+                            "http://www.cityofkittitas.com/government.html",
+                            "http://www.cityofkittitas.com/comprehensive_survey.html",
+                            "http://www.cityofkittitas.com/faqs.html"
+                        ],
+                        "updated_at": ""
+                    }
+                ]
+            }
+        },
+        "MERGE_RECORDS_ACROSS_SOURCES": {
+            "people": [
+                {
+                    "name": "Tyrul McGuffin",
+                    "image": "",
+                    "roles": [],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "tyrul.mcguffin@cityofkittitas.com",
+                    "website": "",
+                    "start_date": "",
+                    "end_date": "2027",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "http://www.cityofkittitas.com/staff_directory.html",
+                        "http://www.cityofkittitas.com/council.html"
+                    ],
+                    "updated_at": "2025-09-11T17:23:59+00:00"
+                },
+                {
+                    "name": "Jerry Lael",
+                    "image": "",
+                    "roles": [
+                        "council member"
+                    ],
+                    "divisions": [
+                        "position 3"
+                    ],
+                    "phone_number": "",
+                    "email": "jerry.lael@cityofkittitas.com",
+                    "website": "http://www.cityofkittitas.com/index.html",
+                    "start_date": "",
+                    "end_date": "2027",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "http://www.cityofkittitas.com/staff_directory.html",
+                        "http://www.cityofkittitas.com/council.html"
+                    ],
+                    "updated_at": "2025-09-11T17:23:59+00:00"
+                },
+                {
+                    "name": "Sean Crabb",
+                    "image": "",
+                    "roles": [
+                        "council member"
+                    ],
+                    "divisions": [
+                        "position 1"
+                    ],
+                    "phone_number": "",
+                    "email": "sean.crabb@cityofkittitas.com",
+                    "website": "http://www.cityofkittitas.com/government.html",
+                    "start_date": "2024-2027",
+                    "end_date": "2025",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "http://www.cityofkittitas.com/staff_directory.html",
+                        "http://www.cityofkittitas.com/employment_police_officer.html",
+                        "http://www.cityofkittitas.com/government.html",
+                        "http://www.cityofkittitas.com/comprehensive_survey.html",
+                        "http://www.cityofkittitas.com/council.html",
+                        "http://www.cityofkittitas.com/faqs.html"
+                    ],
+                    "updated_at": "2025-09-11T17:23:59+00:00"
+                },
+                {
+                    "name": "Richard Hink",
+                    "image": "",
+                    "roles": [
+                        "mayor"
+                    ],
+                    "divisions": [],
+                    "phone_number": "(509) 968-0220 office (509) 929-3292 cell",
+                    "email": "richard.hink@cityofkittitas.com",
+                    "website": "http://www.cityofkittitas.com/index.html",
+                    "start_date": "",
+                    "end_date": "",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "http://www.cityofkittitas.com/staff_directory.html"
+                    ],
+                    "updated_at": "2025-09-11T17:23:59+00:00"
+                },
+                {
+                    "name": "Joe Scoleri",
+                    "image": "",
+                    "roles": [],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "",
+                    "start_date": "",
+                    "end_date": "2027",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "http://www.cityofkittitas.com/staff_directory.html",
+                        "http://www.cityofkittitas.com/council.html"
+                    ],
+                    "updated_at": "2025-09-11T17:23:59+00:00"
+                },
+                {
+                    "name": "Hannah Woodiwiss",
+                    "image": "",
+                    "roles": [],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "hannah.woodiwiss@cityofkittitas.com",
+                    "website": "",
+                    "start_date": "",
+                    "end_date": "2025",
+                    "state": "",
+                    "place": "",
+                    "cdn_image": "",
+                    "data_sources": [
+                        "http://www.cityofkittitas.com/staff_directory.html",
+                        "http://www.cityofkittitas.com/council.html"
+                    ],
+                    "updated_at": "2025-09-11T17:23:59+00:00"
+                }
+            ],
+            "agreement_score": 49.20634920634921,
+            "disagreements": [
+                {
+                    "source": "google_gemini",
+                    "person_name": "Tyrul McGuffin",
+                    "field": "roles",
+                    "value": "council member"
+                },
+                {
+                    "source": "google_gemini",
+                    "person_name": "Tyrul McGuffin",
+                    "field": "divisions",
+                    "value": "position 4"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Sean Crabb",
+                    "field": "end_date",
+                    "value": "2027"
+                },
+                {
+                    "source": "openai",
+                    "person_name": "Richard Hink",
+                    "field": "phone_number",
+                    "value": "(509) 968-0220"
+                },
+                {
+                    "source": "google_gemini",
+                    "person_name": "Joe Scoleri",
+                    "field": "roles",
+                    "value": "council member"
+                },
+                {
+                    "source": "google_gemini",
+                    "person_name": "Joe Scoleri",
+                    "field": "divisions",
+                    "value": "position 5"
+                },
+                {
+                    "source": "google_gemini",
+                    "person_name": "Hannah Woodiwiss",
+                    "field": "roles",
+                    "value": "council member"
+                },
+                {
+                    "source": "google_gemini",
+                    "person_name": "Hannah Woodiwiss",
+                    "field": "divisions",
+                    "value": "position 2"
+                }
+            ],
+            "missing_people": [
+                {
+                    "source": "openai",
+                    "person_name": "Tyrul McGuffin"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Tyrul McGuffin"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Jerry Lael"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Richard Hink"
+                },
+                {
+                    "source": "openai",
+                    "person_name": "Joe Scoleri"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Joe Scoleri"
+                },
+                {
+                    "source": "openai",
+                    "person_name": "Hannah Woodiwiss"
+                },
+                {
+                    "source": "together_ai",
+                    "person_name": "Hannah Woodiwiss"
+                }
+            ]
+        },
+        "CLEANUP": {},
+        "RETRY": {},
+        "DONE": {}
+    },
+    "request_id": "2806b974-f0c9-4d61-bd46-6fa6a56573c3",
+    "state": "wa",
+    "geoid": "5336045"
+}

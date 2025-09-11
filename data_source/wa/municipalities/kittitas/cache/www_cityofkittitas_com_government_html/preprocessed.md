@@ -1,0 +1,23 @@
+[City of Kittitas](http://www.cityofkittitas.com/index.html)
+============================================================
+
+* [![home](http://www.cityofkittitas.com/images/home.jpg)](http://www.cityofkittitas.com/index.html)
+* [![Contact Us](http://www.cityofkittitas.com/images/contact.jpg)](mailto:Brandy.Harris@cityofkittitas.com)
+
+![](http://www.cityofkittitas.com/images/logo_wht.png)
+![](http://www.cityofkittitas.com/images/logo_wht.png)
+
+* [![Government](http://www.cityofkittitas.com/images/government.jpg)](http://www.cityofkittitas.com/government.html)
+* [![Departments](http://www.cityofkittitas.com/images/departments.jpg)](http://www.cityofkittitas.com/departments.html)
+* [![Online Bill Payment](http://www.cityofkittitas.com/images/online_bill_pay.jpg)](http://www.cityofkittitas.com/payment.html)
+* [![Events Calendar](http://www.cityofkittitas.com/images/events.jpg)](http://www.cityofkittitas.com/events.html)
+
+
+
+View information about the city council.
+[![](http://www.cityofkittitas.com/images/menu_list.png) City Council](http://www.cityofkittitas.com/council.html)
+
+View the city of Kittitas's municipal code.
+[![](http://www.cityofkittitas.com/images/menu_list.png) Municipal Code](http://www.cityofkittitas.com/code.html)
+
+![](http://www.cityofkittitas.com/images/City%20of%20Kittias%20Seal.png)
