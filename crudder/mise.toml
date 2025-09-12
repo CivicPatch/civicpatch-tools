@@ -3,7 +3,46 @@
 _.file = ".deployment.env"
 
 [tasks.generate-url]
-run = "docker compose run --rm crudder poetry run python src/scripts/one-off-generate-file-url.py request_payload_wa_5367000_00808807-84e7-437e-a017-7ece3013da9a.zip"
+run = "docker compose run --rm crudder poetry run python src/scripts/one-off-generate-file-url.py request_fa6157f0-c3bf-4432-b3b3-f7c8c8b2905e_wa_5336045.zip"
 
 [tasks.trigger-github]
 run = "docker compose run --rm crudder poetry run pytest -vv -s tests/test_github_service.py"
+
+[tasks.process-zip]
+run = "docker compose run --rm crudder poetry run pytest -vv -s tests/test_cloudflare.py"
+
+# New task to test R2 credentials
+[tasks.test-r2]
+description = "Test Cloudflare R2 credentials by uploading a small test file"
+run = """
+docker compose run --rm crudder poetry run python -c '
+import boto3, os
+from botocore.client import Config
+from io import BytesIO
+
+client = boto3.client("s3",
+    endpoint_url=os.environ["STORAGE_ENDPOINT"],
+    aws_access_key_id=os.environ["STORAGE_ACCESS_KEY_ID"],
+    aws_secret_access_key=os.environ["STORAGE_SECRET_ACCESS_KEY"],
+    region_name="auto",
+    config=Config(signature_version="s3v4", s3={"addressing_style": "virtual"})
+)
+
+# Create file-like object
+test_data = BytesIO(b"test content")
+
+try:
+    client.upload_fileobj(
+        test_data,
+        "crudder",
+        "test.txt"
+    )
+    print("✓ Successfully uploaded test file")
+    # client.delete_object(Bucket="civicpatch", Key="test.txt")
+    print("✓ Successfully cleaned up test file")
+except Exception as e:
+    print(f"✗ Error: {str(e)}")
+finally:
+    test_data.close()
+'
+"""

@@ -1,7 +1,7 @@
 services:
   civicpatch:
     extends:
-      file: civicpatch/docker-compose.yml
+      file: civicpatch/docker-compose.development.yml
       service: civicpatch
     networks:
       - civicpatch_network
