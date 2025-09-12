@@ -1,15 +1,17 @@
 import os
 import requests
 import zipfile
-from schemas import PipelineStatus
+from schemas import PipelineContext, PipelineStatus, MunicipalityContext
 
 from utils.data_path_utils import get_data_municipality_path, get_data_source_municipality_path
-from schemas import PipelineContext
+from utils.data_utils import get_municipality_context
 
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
 
 def maybe_send_to_github(context: PipelineContext):
   print(f"Step 5: {PipelineStatus.MAYBE_SEND_TO_GITHUB.value}")
+
+  municipality_context: MunicipalityContext = get_municipality_context(context["state"], context["geoid"])
   # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
   # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
   CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
@@ -38,10 +40,23 @@ def maybe_send_to_github(context: PipelineContext):
     }
   
     files = {
-      'file': (os.path.basename(zip_file_path), open(zip_file_path, 'rb'), 'application/zip')
+        'file': (os.path.basename(zip_file_path), open(zip_file_path, 'rb'), 'application/zip')
     }
 
-    response = requests.post(CRUDDER_UPLOAD_URL, headers=headers, files=files)
+    # Add metadata in the request body
+    data = {
+        'state': context["state"],
+        'geoid': context["geoid"],
+        'municipality_name': municipality_context.municipality_entry.name,
+        'request_id': context["request_id"],
+    } 
+
+    response = requests.post(
+        CRUDDER_UPLOAD_URL, 
+        headers=headers, 
+        files=files,
+        data=data
+    )
 
     return {
       "steps": {
