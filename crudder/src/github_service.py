@@ -1,10 +1,13 @@
 import requests
 
 def trigger_github_data_intake_workflow(
-        github_workflow_token, user_email: str, 
+        github_workflow_token, 
+        user_email: str, 
         server_url: str, 
         request_id: str, 
-        state: str, geoid: str, 
+        state: str, 
+        geoid: str,
+        municipality_name: str,
         zip_file_url: str):
     # Trigger GitHub Actions workflow to pull data from the given URL
     # For example, you might use the GitHub API to dispatch a workflow event
@@ -22,6 +25,7 @@ def trigger_github_data_intake_workflow(
             "request_id": request_id,
             "state": state,
             "geoid": geoid,
+            "municipality_name": municipality_name,
             "zip_file_url": zip_file_url
         }
     }

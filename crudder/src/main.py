@@ -117,7 +117,11 @@ async def home(request: Request):
 @app.post("/api/github_intake")
 async def github_intake(
     file: UploadFile = File(...),
-    authorization: str = Header(None)
+    authorization: str = Header(None),
+    state: str = Form(...),
+    geoid: str = Form(...),
+    municipality_name: str = Form(...),
+    request_id: str = Form(...)
 ):
     if not authorization:
         raise HTTPException(status_code=401, detail="Missing Authorization header")
@@ -140,6 +144,10 @@ async def github_intake(
     if file.content_type not in ["application/zip", "application/x-zip-compressed"]:
         raise HTTPException(status_code=400, detail="Invalid content type for zip file")
     
+    # Now you have access to the parameters
+    print(f"Processing intake for {municipality_name} ({state}, {geoid})")
+    
+    # Upload file
     presigned_url = upload_file_to_storage(
         STORAGE_ENDPOINT,
         STORAGE_ACCESS_KEY_ID,
@@ -149,21 +157,29 @@ async def github_intake(
         file
     )
 
-    request_id = file.filename.split("_")[1]
-    state = file.filename.split("_")[2]
-    geoid = file.filename.split("_")[-1].replace(".zip", "")
-    print(f"Uploaded file for request_id: {request_id}, presigned_url: {presigned_url}")
-
-    # Send to github actions workflow
+    # Use the parameters in your workflow trigger
     trigger_github_data_intake_workflow(
         GITHUB_WORKFLOW_TOKEN, 
         server_detail["user_email"], 
         server_detail["server_url"], 
-        request_id, 
-        state, geoid,
-        presigned_url)
+        request_id,
+        state, 
+        geoid,
+        municipality_name,
+        presigned_url
+    )
 
-    return {"filename": file.filename, "status": "uploaded", "url": presigned_url}
+    return {
+        "filename": file.filename, 
+        "status": "uploaded", 
+        "url": presigned_url,
+        "metadata": {
+            "state": state,
+            "geoid": geoid,
+            "municipality_name": municipality_name,
+            "request_id": request_id
+        }
+    }
 
 @app.get("/api_keys", response_class=HTMLResponse, include_in_schema=False)
 async def api_keys_page(request: Request):
