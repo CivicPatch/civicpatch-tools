@@ -16,16 +16,16 @@ def upload_file_to_storage(storage_endpoint, storage_access_key_id, storage_secr
     # Upload file
     storage_client.upload_fileobj(
         file.file,  # UploadFile exposes a file-like object
-        "crudder",
-        file.filename
+        bucket_name,
+        file_name,
     )
 
     # Generate a pre-signed URL valid for 1 day (86400 seconds)
     presigned_url = storage_client.generate_presigned_url(
         ClientMethod='get_object',
         Params={
-            'Bucket': "crudder",
-            'Key': file.filename
+            'Bucket': bucket_name,
+            'Key': filename
         },
         ExpiresIn=EXPIRATION_ONE_DAY_IN_SECONDS
     )

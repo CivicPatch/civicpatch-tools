@@ -6,7 +6,7 @@ from typing import List, Dict, Any
 # from langchain.text_splitter import MarkdownHeaderTextSplitter
 from utils.request_utils import with_retry
 from utils.log_utils import log_llm_cost
-from utils.data_utils import MunicipalityContext
+from schemas import MunicipalityContext
 
 PROMPT_TOKENS=600
 OUTPUT_BUFFER=1500

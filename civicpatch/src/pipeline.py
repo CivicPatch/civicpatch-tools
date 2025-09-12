@@ -194,9 +194,9 @@ class Pipeline:
                 self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
             elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
-                # result = maybe_send_to_github(self.context)
+                #result = maybe_send_to_github(self.context)
 
-                # self.context.update(result)
+                #self.context.update(result)
                 self.state = PipelineStatus.CLEANUP
             elif self.state == PipelineStatus.CLEANUP:
                 # result = cleanup(self.context)

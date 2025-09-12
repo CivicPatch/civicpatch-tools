@@ -1,20 +1,7 @@
 import os
 import utils.path_utils
 import json
-from typing import List, TypedDict, Optional
-
-class MunicipalityEntry(TypedDict):
-    name: str
-    geoid: str
-    website: Optional[str] = None
-    counties: List[str] = None
-    type: str
-    government_type: str
-
-class MunicipalityContext(TypedDict):
-    state: str
-    geoid: str
-    municipality_entry: MunicipalityEntry
+from schemas import MunicipalityContext
 
 def get_municipality_context(state: str, geoid: str) -> MunicipalityContext:
     """
@@ -38,12 +25,12 @@ def get_municipality_context(state: str, geoid: str) -> MunicipalityContext:
                 municipality_entry = municipality
                 break
 
-    municipality_context: MunicipalityContext = {
-        "state": state,
-        "geoid": geoid,
-        "municipality_entry": municipality_entry,
-    }
-    
+    municipality_context = MunicipalityContext(
+        state=state,
+        geoid=geoid,
+        municipality_entry=municipality_entry,
+    )
+
     return municipality_context
 
 
@@ -52,9 +39,9 @@ def get_municipality_folder_name(state, geoid):
     Returns the folder name for the municipality based on state and GEOID.
     """
     municipality_context = get_municipality_context(state, geoid)
-    municipality_name = municipality_context["municipality_entry"]["name"].replace(" ", "_").lower()
-    
-    if len(municipality_context["municipality_entry"]["counties"]) > 1:
+    municipality_name = municipality_context.municipality_entry.name.replace(" ", "_").lower()
+
+    if len(municipality_context.municipality_entry.counties) > 1:
         # If there are multiple counties, append the geoid to the folder name
         return f"{municipality_name}_{geoid}"
     

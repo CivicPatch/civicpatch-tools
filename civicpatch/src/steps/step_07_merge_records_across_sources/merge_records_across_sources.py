@@ -1,7 +1,9 @@
 from typing import List, Dict, TypedDict, Any
-from schemas import Person, PipelineStatus, PipelineContext, Disagreement, MissingPerson
+from utils import config_utils, data_utils
+from schemas import Person, PipelineStatus, PipelineContext, MissingPerson, FieldComparison
 from collections import Counter
 from datetime import datetime, timezone
+from difflib import SequenceMatcher
 
 def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
     """
@@ -10,22 +12,39 @@ def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
     """
     # Get people_by_source from previous step
     people_by_source: Dict[str, List[Dict]] = context["steps"][PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value]["people_by_source"]
+
+    state = context["state"]
+    geoid = context["geoid"]
+
+    municipality_context = data_utils.get_municipality_context(state, geoid)
+
+    counties = municipality_context.municipality_entry.counties
+    place = municipality_context.municipality_entry.name
+
+    # Filter people_by_source to only include target roles
+    government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
+
+    target_roles = config_utils.get_roles_by_government_type(government_type)
+    for source, people in people_by_source.items():
+        filtered_people = people_with_target_roles(
+            [Person.model_validate(person) for person in people],
+            target_roles
+        )
+        people_by_source[source] = [person.model_dump() for person in filtered_people]
     
     # Aggregate all unique names across sources
-    canonical_names = set(
-        Person.model_validate(person).name
-        for people in people_by_source.values() 
-        for person in people
-    )
+    canonical_names = set(context.get("names", []))
 
     # Initialize disagreements, missing_people lists, and disagreement score
-    disagreements: List[Disagreement] = []
     missing_people: List[MissingPerson] = []
     total_disagreement_score = 0
 
     # Merge people with same canonical name across sources
     merged_people: List[Dict] = []
     num_sources = len(people_by_source)
+
+    fields = ["roles", "divisions", "phone_number", "email", "website", "start_date", "end_date"]
+    
     for canonical_name in canonical_names:
         # Collect all Person objects grouped by source for this canonical name
         grouped_people_by_source = {
@@ -37,49 +56,37 @@ def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
             for source, people in people_by_source.items()
         }
         
-        # Identify missing people
+        # Only process if person appears in at least 2 sources
+        sources_with_person = [source for source, people in grouped_people_by_source.items() if people]
+        if len(sources_with_person) < 2:
+            continue
+
+        # Now identify missing sources (only for people that appear in 2+ sources)
         missing_sources = [
             source for source, people in grouped_people_by_source.items() if not people
         ]
-
-        fields = ["roles", "divisions", "phone_number", "email", "website", "start_date", "end_date"]
-        missing_person_multiplier = len(fields)  # Or set to a fixed value like 5
+        
         for source in missing_sources:
             missing_people.append(MissingPerson(source=source, person_name=canonical_name))
-            total_disagreement_score += missing_person_multiplier
-
-        # Skip disagreement calculation if the person is missing from any source
-        if missing_sources:
-            continue
 
         # Merge Person objects into a single Person object
         merged_person = merge_people_across_sources(canonical_name, grouped_people_by_source)
+        merged_person.state = state
+        merged_person.place = place
+        merged_person.counties = counties
 
         # Identify disagreements during merging
-        for source, people in grouped_people_by_source.items():
-            for person in people:
-                for field in ["roles", "divisions", "phone_number", "email", "start_date", "end_date"]:
-                    merged_value = getattr(merged_person, field)
-                    source_value = getattr(person, field, None)
-                    if source_value and source_value != merged_value:
-                        # Convert list fields (roles, divisions) to comma-separated strings for Disagreement
-                        if isinstance(source_value, list):
-                            source_value = ", ".join(source_value)
-                        if isinstance(merged_value, list):
-                            merged_value = ", ".join(merged_value)
-                        if source_value != merged_value:  # Only add disagreement if values truly differ
-                            disagreements.append(Disagreement(
-                                source=source,
-                                person_name=canonical_name,
-                                field=field,
-                                value=source_value
-                            ))
-                            total_disagreement_score += 1  # Increment disagreement score
+        comparisons = collect_field_comparisons(
+            canonical_name,
+            merged_person,
+            grouped_people_by_source,
+            fields
+        )
+        total_disagreement_score += sum(c.disagreement_score for c in comparisons)
 
         merged_people.append(merged_person.model_dump())
 
     # Calculate agreement score
-    fields = ["roles", "divisions", "phone_number", "email", "website", "start_date", "end_date"]
     max_possible_disagreement = num_sources * len(canonical_names) * len(fields)
     agreement_score = 100 * (1 - (total_disagreement_score / max_possible_disagreement)) if max_possible_disagreement > 0 else 100.0
 
@@ -87,14 +94,146 @@ def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
         "steps": {
             **context["steps"],
             PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value: {
-                "people": merged_people,
+                "people": sort_people(merged_people, government_type),
                 "agreement_score": agreement_score,
-                "disagreements": [disagreement.model_dump() for disagreement in disagreements],
+                "disagreements": [
+                    {
+                        "field": c.field,
+                        "person_name": c.person_name,
+                        "merged_value": c.merged_value,
+                        "source_values": c.source_values,
+                        "disagreement_score": c.disagreement_score
+                    }
+                    for c in comparisons
+                ],
                 "missing_people": [missing_person.model_dump() for missing_person in missing_people]
             }
         }
     }
 
+def values_match(value1, value2):
+    """Helper to compare values case-insensitively, handling both strings and lists."""
+    if isinstance(value1, list) and isinstance(value2, list):
+        # Convert lists to sets of lowercase strings for comparison
+        set1 = {str(item).lower() for item in value1}
+        set2 = {str(item).lower() for item in value2}
+        return bool(set1 & set2)  # Return True if any items match
+    elif isinstance(value1, str) and isinstance(value2, str):
+        # Compare strings case-insensitively
+        return value1.lower() == value2.lower()
+    else:
+        return value1 == value2
+
+def collect_field_comparisons(
+    canonical_name: str,
+    merged_person: Person,
+    grouped_people_by_source: Dict[str, List[Person]],
+    fields: List[str]
+) -> List[FieldComparison]:
+    """
+    Compare each source's value against the final merged value.
+    """
+    comparisons = []
+    
+    for field in fields:
+        merged_value = getattr(merged_person, field)
+        
+        # Collect values from each source
+        source_values = {}
+        has_disagreement = False
+        
+        for source, people in grouped_people_by_source.items():
+            if not people:
+                source_values[source] = "(missing)"
+                has_disagreement = True
+                continue
+            
+            source_value = getattr(people[0], field)
+            if isinstance(source_value, list):
+                source_values[source] = ", ".join(source_value) if source_value else "(empty)"
+            else:
+                source_values[source] = source_value if source_value else "(empty)"
+            
+            # Compare original values before string conversion
+            if source_value and not values_match(source_value, merged_value):
+                has_disagreement = True
+        
+        if has_disagreement:
+            # Convert merged_value to string format for output
+            merged_str = ", ".join(merged_value) if isinstance(merged_value, list) else merged_value
+            comparisons.append(FieldComparison(
+                field=field,
+                person_name=canonical_name,
+                merged_value=merged_str or "(empty)",
+                source_values=source_values,
+                disagreement_score=calculate_disagreement_score(field, merged_str, source_values)
+            ))
+    
+    return comparisons
+
+def calculate_disagreement_score(field_name: str, merged_value: str, source_values: Dict[str, str]) -> float:
+    """
+    Calculate disagreement score based on field type and values.
+    For lists (roles, divisions): if any items match, score is 0
+    For strings: calculate based on string similarity
+    """
+    # Skip empty or missing values
+    valid_values = [v for v in source_values.values() if v not in ["(empty)", "(missing)"]]
+    if not valid_values:
+        return 0.0
+
+    # Handle list fields (roles, divisions)
+    if field_name in ["roles", "divisions"]:
+        # If any items match across sources, no disagreement
+        value_sets = [set(v.lower().split(", ")) for v in valid_values]
+        merged_set = set(merged_value.lower().split(", "))
+        
+        # Check for any intersection between sets
+        for value_set in value_sets:
+            if value_set & merged_set:  # If there's any overlap
+                return 0.0
+        return 1.0  # Complete disagreement
+
+    # Handle string fields
+    else:
+        # Calculate string similarity scores
+        similarities = []
+        for source_value in valid_values:
+            ratio = SequenceMatcher(None, 
+                                  merged_value.lower(), 
+                                  source_value.lower()).ratio()
+            similarities.append(ratio)
+        
+        # Average the dissimilarity (1 - similarity)
+        avg_dissimilarity = 1 - (sum(similarities) / len(similarities))
+        return round(avg_dissimilarity, 2)  # Round to 2 decimal places
+
+def get_role_priority(government_type: str) -> Dict[str, int]:
+    """
+    Returns a mapping from role name (lowercase) to its priority/order in the config.
+    Aliases are ignored; only main role names are used.
+    """
+    role_configs = config_utils.get_role_configs_by_government_type(government_type)
+    priority = {}
+    for idx, role_entry in enumerate(role_configs):
+        role_name = role_entry["role"].lower()
+        priority[role_name] = idx
+    return priority
+
+def sort_people(people: List[Person], government_type: str) -> List[Person]:
+    """
+    Sort people by role priority (from config), then division, then name.
+    """
+    role_priority = get_role_priority(government_type)
+
+    def sort_key(person: Person):
+        # Find the highest priority among person's roles
+        priorities = [role_priority.get(role.lower(), 9999) for role in person["roles"]]
+        min_priority = min(priorities) if priorities else 9999
+        first_division = person["divisions"][0] if person["divisions"] else ""
+        return (min_priority, first_division, person["name"])
+
+    return sorted(people, key=sort_key)
 
 def merge_people_across_sources(canonical_name: str, people_by_source: Dict[str, List[Person]]) -> Person:
     """
@@ -125,8 +264,8 @@ def merge_people_across_sources(canonical_name: str, people_by_source: Dict[str,
 
     return Person(
         name=canonical_name,
-        roles=roles,
-        divisions=divisions,
+        roles=[format_role(role) for role in roles],
+        divisions=[format_division(div) for div in divisions],
         image=image_counter.most_common(1)[0][0] if image_counter else "",
         cdn_image="",
         email=email_counter.most_common(1)[0][0] if email_counter else "",
@@ -138,6 +277,17 @@ def merge_people_across_sources(canonical_name: str, people_by_source: Dict[str,
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )
 
+def format_role(role: str) -> str:
+    """
+    Format a role string to have each word capitalized.
+    """
+    return " ".join(word.capitalize() for word in role.split())
+
+def format_division(division: str) -> str:
+    """
+    Format a division string to have each word capitalized.
+    """
+    return " ".join(word.capitalize() for word in division.split())
 
 def calculate_agreement_score(people_by_source: Dict[str, List[Person]]) -> float:
     """
@@ -179,3 +329,13 @@ def calculate_agreement_score(people_by_source: Dict[str, List[Person]]) -> floa
 
     agreement_score = 100 * (1 - (total_disagreement / max_possible_disagreement))
     return max(0.0, min(100.0, agreement_score))
+
+def people_with_target_roles(people: List[Person], target_roles: List[str]) -> List[Person]:
+    """
+    Return a list of people who have any of the target roles.
+    """
+    target_roles_lower = {role.lower() for role in target_roles}
+    return [
+        person for person in people
+        if any(role.lower() in target_roles_lower for role in person.roles)
+    ]

@@ -1,8 +1,8 @@
-from utils.data_utils import MunicipalityContext, get_municipality_context
 from schemas import PipelineContext, PipelineStatus
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 import utils.config_utils as config_utils
+import utils.data_utils as data_utils 
 import utils.people_utils as people_utils
 
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
@@ -13,7 +13,7 @@ def research_municipality(context: PipelineContext):
     """
     print(f"Step 1: {PipelineStatus.RESEARCH_MUNICIPALITY.value}")
 
-    municipality_context = get_municipality_context(context["state"], context["geoid"])
+    municipality_context = data_utils.get_municipality_context(context["state"], context["geoid"])
     prompt = google_gemini_prompt.research_municipality_prompt(municipality_context)
     response = google_gemini_llm.run_prompt(municipality_context, prompt, with_search=True)
     people = response.get("people", [])

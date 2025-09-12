@@ -1,5 +1,5 @@
 from datetime import datetime
-from utils.data_utils import MunicipalityContext
+from schemas import MunicipalityContext
 import utils.config_utils as config_utils
 
 def research_municipality_prompt(municipality_context: MunicipalityContext):
@@ -14,9 +14,9 @@ def research_municipality_prompt(municipality_context: MunicipalityContext):
         A string containing the prompt.
     """
 
-    municipality_name = municipality_context["municipality_entry"]["name"]
-    state = municipality_context["state"]
-    website = municipality_context["municipality_entry"]["website"]
+    municipality_name = municipality_context.municipality_entry.name
+    state = municipality_context.state
+    website = municipality_context.municipality_entry.website
     government_type_keys = "- " + "\n- ".join(list(config_utils.get_government_types().keys()))
 
     return f"""

@@ -5,7 +5,7 @@ import json
 # from google import Gemini
 from utils.request_utils import with_retry
 from utils.log_utils import log_llm_cost
-from utils.data_utils import MunicipalityContext
+from schemas import MunicipalityContext
 
 BASE_URI = "https://generativelanguage.googleapis.com/v1beta/models"
 DEFAULT_TIMEOUT = 180  # seconds

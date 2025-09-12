@@ -75,6 +75,7 @@ government_types:
         - city hall
         - council
       elected officials:
+        - directory
         - elected officials
         - city administration
         - index
@@ -181,11 +182,13 @@ government_types:
         - councilmembers
         - counsel member
         - city council
+        - town council
         - board of trustees
         - council districts
         - city hall
         - council
       elected officials:
+        - directory
         - elected officials
         - city administration
         - index

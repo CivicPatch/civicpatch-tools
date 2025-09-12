@@ -21,10 +21,16 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
 
     output_md = md(output_html)
 
-    preprocessed_html  = filter_content(output_html)
+    government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
+    preprocessed_html  = filter_content(output_html, government_type=government_type)
     preprocessed_md = md(preprocessed_html)
+
+    preprocessed_html_file_path = os.path.join(cache_path, page_to_preprocess["folder_name"], "preprocessed.html")
     original_output_md_file_path = os.path.join(cache_path, page_to_preprocess["folder_name"], "original.md")
     output_md_file_path = os.path.join(cache_path, page_to_preprocess["folder_name"], "preprocessed.md")
+
+    with open(preprocessed_html_file_path, "w", encoding="utf-8") as f:
+        f.write(preprocessed_html)
     
     with open(original_output_md_file_path, "w", encoding="utf-8") as f:
         f.write(output_md)

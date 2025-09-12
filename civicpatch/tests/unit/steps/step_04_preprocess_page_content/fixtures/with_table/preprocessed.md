@@ -11,7 +11,10 @@
 * [![Online Bill Payment](http://www.cityofkittitas.com/images/online_bill_pay.jpg)](http://www.cityofkittitas.com/payment.html)
 * [![Events Calendar](http://www.cityofkittitas.com/images/events.jpg)](http://www.cityofkittitas.com/events.html)
 
+* [City Council](http://www.cityofkittitas.com/council.html)
 
+From the Mayor's Desk
+---------------------
 
 | Title | Name | Email | Phone |
 | --- | --- | --- | --- |
@@ -34,3 +37,7 @@
 | **Water and Waste Water Department** |  |  |  |
 | Lead | Jason Williams |  | Plant  (509) 968-0225  (509) 885-6920 |
 | Operator | Rick Hunter |  | Plant  (509) 968-0225  (509) 929-1294 |
+
+* [City Council](http://www.cityofkittitas.com/council.html)
+
+Copyright © 2019 |

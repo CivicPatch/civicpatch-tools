@@ -121,3 +121,32 @@ def get_role_alias_map(government_type: str) -> Dict[str, str]:
         for alias in entry.get("aliases", []):
             alias_map[alias.lower()] = canonical
     return alias_map
+
+def get_context_keywords(government_type: str) -> List[str]:
+    """
+    Combines all search keywords (including roles and divisions and their aliases)
+    into a single list.
+    """
+    government_types = get_government_types()
+    keywords = set()
+    # Add all keys and values under search_keywords
+    search_keywords = government_types.get(government_type, {}).get('search_keywords', {})
+    for key, values in search_keywords.items():
+        keywords.add(key)
+        keywords.update(values)
+
+    # Add all roles and their aliases
+    role_configs = government_types.get(government_type, {}).get('roles', [])
+    for role in role_configs:
+        keywords.add(role['role'])
+        for alias in role.get('aliases', []):
+            keywords.add(alias)
+
+    # Add all divisions and their aliases
+    divisions_config = get_divisions()
+    for canonical, entry in divisions_config.items():
+        keywords.add(canonical)
+        for alias in entry.get('aliases', []):
+            keywords.add(alias)
+
+    return list(keywords)

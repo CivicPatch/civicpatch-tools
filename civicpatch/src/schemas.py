@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, TypeAlias, Any, Callable, Union
+from typing import Dict, List, Optional, TypeAlias, Any, Callable, Union, NamedTuple
 from pydantic import BaseModel
 from enum import Enum
 
@@ -43,6 +43,19 @@ class PipelineStatus(Enum):
     RETRY = "RETRY"
     DONE = "DONE"
 
+class MunicipalityEntry(BaseModel):
+    name: str
+    geoid: str
+    website: Optional[str] = None
+    counties: List[str] = None
+    type: str
+    government_type: str
+
+class MunicipalityContext(BaseModel):
+    state: str
+    geoid: str
+    municipality_entry: MunicipalityEntry
+
 class RawLLMPerson(BaseModel):
     name: str
     image: Optional[str] = None
@@ -66,6 +79,7 @@ class PeopleArrayLLMResponseSchema(BaseModel):
 class Person(RawLLMPerson):
     state: str = ""
     place: str = ""
+    counties: List[str] = []
     cdn_image: str
     data_sources: List[str] # List of source URLs where information was found
     updated_at: str
@@ -80,11 +94,12 @@ class ProcessPageContentStep(BaseModel):
 class MergeRecordsWithinSourceStep(BaseModel):
     people_by_source: Dict[str, List[Person]] # LLM Names to list of Person records
 
-class Disagreement(BaseModel):
-    source: str
-    person_name: str
+class FieldComparison(NamedTuple):
     field: str
-    value: str
+    person_name: str
+    merged_value: str
+    source_values: Dict[str, str]
+    disagreement_score: float
 
 class MissingPerson(BaseModel):
     source: str
@@ -93,7 +108,7 @@ class MissingPerson(BaseModel):
 class MergeRecordsAcrossSourcesStep(BaseModel):
     people: List[Person]
     agreement_score: float
-    disagreements: List[Disagreement] = []  # List of disagreements found during merging
+    disagreements: List[FieldComparison] = []  # List of disagreements found during merging
     missing_people: List[MissingPerson] = []  # List of people missing from some sources
 
 class PipelineContext(BaseModel):
