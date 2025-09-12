@@ -6,16 +6,18 @@ from fastapi import FastAPI, Request, Security, HTTPException, Depends, Form, He
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.security import APIKeyCookie 
+from fastapi.security import APIKeyCookie, APIKeyHeader 
 from fastapi_sso.sso.github import GithubSSO
 from fastapi_sso.sso.base import OpenID
 import sqlite3
 import boto3
 from database import maybe_init_db, maybe_insert_user, create_api_key, get_api_keys_for_user, revoke_api_key, get_user_details, get_server_detail_by_active_api_key
-from storage_service import upload_file_to_storage
+from storage_service import upload_file_to_storage, process_zip_file
 from github_service import trigger_github_data_intake_workflow
 
 from jose import jwt  # pip install python-jose[cryptography]
+import os
+from pathlib import Path
 
 # Only purpose is to manage users, their API keys, and move data from 3rd party servers
 # to GitHub Actions.
@@ -114,10 +116,14 @@ async def home(request: Request):
         }
     )
 
-@app.post("/api/github_intake")
+api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
+
+@app.post("/api/github_intake", 
+    summary="Upload zip file containing municipal data",
+    description="Accepts a zip file containing municipal data and processes it")
 async def github_intake(
-    file: UploadFile = File(...),
-    authorization: str = Header(None),
+    file: UploadFile,
+    authorization: str = Security(api_key_header),  # Changed this line
     state: str = Form(...),
     geoid: str = Form(...),
     municipality_name: str = Form(...),
@@ -147,32 +153,43 @@ async def github_intake(
     # Now you have access to the parameters
     print(f"Processing intake for {municipality_name} ({state}, {geoid})")
     
-    # Upload file
-    presigned_url = upload_file_to_storage(
+    # Process the zip file and upload images
+    zip_url = await process_zip_file(
         STORAGE_ENDPOINT,
         STORAGE_ACCESS_KEY_ID,
         STORAGE_SECRET_ACCESS_KEY,
-        file.filename,
-        "crudder",
         file
     )
 
+    # todo 
+    
+    # # Upload original zip file
+    # zip_url = upload_file_to_storage(
+    #     STORAGE_ENDPOINT,
+    #     STORAGE_ACCESS_KEY_ID,
+    #     STORAGE_SECRET_ACCESS_KEY,
+    #     file.filename,
+    #     "crudder",
+    #     file
+    # )
+
     # Use the parameters in your workflow trigger
-    trigger_github_data_intake_workflow(
-        GITHUB_WORKFLOW_TOKEN, 
-        server_detail["user_email"], 
-        server_detail["server_url"], 
-        request_id,
-        state, 
-        geoid,
-        municipality_name,
-        presigned_url
-    )
+    #trigger_github_data_intake_workflow(
+    #    GITHUB_WORKFLOW_TOKEN, 
+    #    server_detail["user_email"], 
+    #    server_detail["server_url"], 
+    #    request_id,
+    #    state, 
+    #    geoid,
+    #    municipality_name,
+    #    zip_url
+    #)
 
     return {
         "filename": file.filename, 
         "status": "uploaded", 
-        "url": presigned_url,
+        "zip_url": zip_url,
+        #"uploaded_images": uploaded_image_urls,
         "metadata": {
             "state": state,
             "geoid": geoid,
