@@ -1,5 +1,4 @@
 from datetime import datetime
-from utils.data_utils import MunicipalityContext
 import utils.config_utils as config_utils
 
 def municipality_officials_prompt(government_type, people_hint):

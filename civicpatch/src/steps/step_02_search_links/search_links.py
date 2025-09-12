@@ -82,7 +82,7 @@ def municipality_search(municipality_context: MunicipalityContext, search_engine
     urls = []
 
     # Construct the search query
-    keyword_with_type = f"{municipality_context['municipality_entry']['type']} {query_keywords}"
+    keyword_with_type = f"{municipality_context.municipality_entry.type} {query_keywords}"
 
     # Perform the search
     results = search(

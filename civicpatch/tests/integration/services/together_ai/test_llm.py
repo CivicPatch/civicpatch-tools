@@ -5,8 +5,7 @@ import json
 import utils.llm_utils as llm_utils
 from services.together_ai.llm import run_prompt
 from services.together_ai.prompts import municipality_officials_prompt
-from utils.data_utils import MunicipalityContext
-from schemas import PeopleArrayLLMResponseSchema
+from schemas import PeopleArrayLLMResponseSchema, MunicipalityContext
 
 def test_run_prompt_integration():
     """Integration test for run_prompt using actual environment variables and API."""
@@ -26,12 +25,12 @@ def test_run_prompt_integration():
     with open(expected_path, "r") as file:
         expected_result = json.load(file)
 
-    municipality_context: MunicipalityContext = {
-        "state": "wa",
-        "municipality_entry": {
+    municipality_context: MunicipalityContext = MunicipalityContext(
+        state="wa",
+        municipality_entry={
             "name": "Spokane",
         }
-    }
+    )
 
     people_hint = [
                 {

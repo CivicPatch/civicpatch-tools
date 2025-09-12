@@ -4,7 +4,7 @@ import instructor
 # from openai import OpenAI
 from utils.request_utils import with_retry
 from utils.log_utils import log_llm_cost
-from utils.data_utils import MunicipalityContext
+from schemas import MunicipalityContext
 
 MODEL = "openai/gpt-4.1-mini"
 MAX_RETRIES = 5
