@@ -13,7 +13,7 @@ def test_pipeline_step():
     pipeline.set_state(pipeline_status)
 
     # Update pipeline_context_path with request_id
-    pipeline_context_path = get_pipeline_context_file_path("test_request_id", state, geoid)
+    pipeline_context_path = get_pipeline_context_file_path(state, geoid)
 
     with open(pipeline_context_path, "r") as f:
         context = json.load(f)

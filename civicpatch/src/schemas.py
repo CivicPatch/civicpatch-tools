@@ -114,6 +114,7 @@ class MergeRecordsAcrossSourcesStep(BaseModel):
 class PipelineContext(BaseModel):
     state: str
     geoid: str
+    request_id: str
     search_engines: Dict[str, SearchEngineState]
     links: List[Link]  # TODO: move to SEARCH_LINKS
     names: Dict[str, List[str]]  # Canonical names to names found while scraping

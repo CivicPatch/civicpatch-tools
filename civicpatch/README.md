@@ -24,11 +24,16 @@ Roles and divisions are standardized via the rules listed under [./config](./con
 
 ## Setup
 
-1. Set up [environment variables](#environment-setup) # TODO setup
-2. Run `mise install`
-  This will install python & poetry, but these are used for
-  typehinting (ex: with vs code). Actual development and scripts
-  should run inside docker
+### Windows
+
+### MacOS/Linux
+
+1. Download [docker]()
+2. Set up the necessary environment variables under a new `civicpatch/.env` file.
+   See [.env.example] for the necessary variables.
+   You may need further instructions/permissions to continue.
+3. Under the `civicpatch/` directory, run `docker compose up`. This will take a while if it's the first time.
+3. You're done. Open up a browser at `http://localhost:8000`
 
 ### Commands
 

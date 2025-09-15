@@ -2647,8 +2647,15 @@
         "GENERATE_REPORT": {},
         "SEND_TO_GITHUB": {},
         "RETRY": {},
-        "DONE": {}
+        "DONE": {},
+        "MAYBE_SEND_TO_GITHUB": {
+            "status": "failed",
+            "response_status_code": 500,
+            "response_text": "Internal Server Error"
+        }
     },
     "state": "wa",
-    "geoid": "5363000"
+    "request_id": "test_request_id",
+    "geoid": "5363000",
+    "pipeline_duration_seconds": 2.7232446670532227
 }
