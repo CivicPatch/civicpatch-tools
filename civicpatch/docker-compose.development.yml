@@ -1,5 +1,6 @@
 services:
   civicpatch:
+    container_name: civicpatch
     env_file: .env
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
     build:

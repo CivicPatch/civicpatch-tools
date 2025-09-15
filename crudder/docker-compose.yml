@@ -1,5 +1,6 @@
 services:
   crudder:
+    container_name: crudder
     env_file: .env
     build:
       context: ..

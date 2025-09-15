@@ -13,6 +13,8 @@ run = "docker compose run --rm civicpatch poetry run pytest -s tests/unit"
 run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s tests/integration"
 [tasks.container]
 run = "docker compose run --rm civicpatch"
+[tasks.containsh]
+run = "docker compose exec civicpatch bash"
 [tasks.inttest]
 run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s -vv tests/integration/services/together_ai/test_llm.py"
 # [tasks.manual]
@@ -31,7 +33,7 @@ curl -X POST http://localhost:8000/api/pipeline \
   -H "Content-Type: application/json" \
   -d '{
     "state": "wa",
-    "geoid": "5336045"
+    "geoid": "5363000"
   }'
 """
 
