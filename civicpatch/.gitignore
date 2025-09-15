@@ -1,2 +1,10 @@
 __pycache__/
 .env
+
+crudder_data/*
+!crudder_data/README.md
+
+*.png
+*.jpg
+*.zip
+data_source/**/images/*

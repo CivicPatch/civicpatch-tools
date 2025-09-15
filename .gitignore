@@ -1,13 +1,11 @@
-crudder_data/*
-!crudder_data/README.md
-
 __pycache__/
+.env
+*.env
 
 database.db
+*.db
 
 .envrc
-*.env
-todo.md
 .bundle/
 .yardoc
 _yardoc/
@@ -21,18 +19,3 @@ vendor/
 output/
 tmp/
 .venv
-
-todo.md
-chat.txt
-costs.csv
-people.csv
-scratch.json
-scratch.html
-cost_images.csv
-cost_llms.csv
-cost_search_engine.csv
-
-*.png
-*.jpg
-*.zip
-data_source/**/images/*

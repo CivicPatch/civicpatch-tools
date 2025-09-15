@@ -1,9 +1,11 @@
 import time
-from bs4 import Tag, BeautifulSoup
+from bs4 import Tag, BeautifulSoup, NavigableString
 from steps.step_04_preprocess_page_content import entity_extraction
 
 IMAGE_EXTENSIONS_WHITELIST = ["png", "jpg", "jpeg", "webp"]
-ROLE_WHITELIST = {"mayor"}
+BLACKLISTED_CLASSES = [ # Warning -- these need to be carefully curated
+    "language" # Google Translate
+]
 
 def count_nodes(node: Tag):
     count = 1 if isinstance(node, Tag) else 0
@@ -25,77 +27,64 @@ def filter_content(input_html: str, government_type, progress_log_interval: int 
 
     if not soup.find_all():  # No tags left in the tree
         return ""
-    filtered_content = str(soup)
+    filtered_content = soup.prettify()
     return filtered_content
 
 def filter_node_content(node: Tag, state, government_type):
-    # Special handling for tables: keep if any cell contains a person or whitelisted keyword (case-insensitive, substring match)
-    if node.name == "table":
-        keep_table = False
-        for cell in node.find_all(["td", "th"]):
-            cell_text = cell.get_text(strip=True)
-            if cell_text:
-                people, dates, emails, phones, keywords = entity_extraction.extract_data(cell_text, government_type)
-                if people or keywords:
-                    keep_table = True
-                    break
-        if keep_table:
-            return  # Do not decompose this table or its children
-
-    # Recursively process children
-    for child in node.children:
-        if isinstance(child, Tag):
+    # Recursively process children first
+    for child in list(node.children):  # Use list() to avoid modifying the iterator during traversal
+        if isinstance(child, Tag):  # Ensure the child is a Tag (not a string or comment)
             filter_node_content(child, state, government_type)
 
-    # Check direct relevance
-    found_people = []
-    found_dates = []
-    found_emails = []
-    found_phones = []
-    found_keywords = []
-    found_websites = []
-    found_images = []
-
-    if node.name == "img":
-        src_clean = node.get("src", "").split("?")[0].lower()
-        if src_clean.endswith(tuple(IMAGE_EXTENSIONS_WHITELIST)):
-            found_images.append(node["src"])
-    elif node.name == "a" and node.get("href", "").startswith("http"):
-        link_text = node.get_text().strip()
-        if link_text:
-            link_people, _, _, _, keywords = entity_extraction.extract_data(link_text, government_type)
-            if link_people:
-                found_websites.append(node["href"])
-                found_people.extend(link_people)
-            found_keywords.extend(keywords)
-    else:
-    # elif node.string:
-        text_content = node.get_text(strip=True)
-        if text_content:
-            people, dates, emails, phones, keywords = entity_extraction.extract_data(text_content, government_type)
-            found_people.extend(people)
-            found_dates.extend(dates)
-            found_emails.extend(emails)
-            found_phones.extend(phones)
-            found_keywords.extend(keywords)
-
-    is_directly_relevant = any([
-        found_people, found_dates, found_emails, found_phones, found_keywords, found_websites, found_images
-    ])
-
-    has_relevant_children = any(isinstance(child, Tag) for child in node.children)
-    if node.name in {"document", "html", "body"}:
-        return
-
-    if not is_directly_relevant and not has_relevant_children:
-        node.decompose()
-
-    # --- Progress logging ---
+    # Process the parent node after all its children
     state["processed"] += 1
     now = time.time()
     if now - state["last_progress_time"] >= state["progress_log_interval"]:
         percent = int(100 * state["processed"] / state["total"])
         print(f"-> Progress: {percent}% ({state['processed']}/{state['total']})")
         state["last_progress_time"] = now
-    # ------------------------
+
+    # Example logic for processing the parent node
+    if node.name == "table":
+        table_text = " ".join(cell.get_text(strip=True) for cell in node.find_all(["td", "th"]))
+        if table_text.strip():
+            people, dates, emails, phones, keywords = entity_extraction.extract_data(table_text, government_type)
+            if any([people, keywords]):  # Keep the table only if it contains relevant content
+                return
+        node.decompose()  # Remove irrelevant tables
+        return
+
+    if node.name == "img":
+        src_clean = node.get("src", "").split("?")[0].lower()
+        if src_clean.endswith(tuple(IMAGE_EXTENSIONS_WHITELIST)):
+            return  # Keep whitelisted images
+        node.decompose()  # Remove non-whitelisted images
+        return
+
+    if node.name == "a" and node.get("href", "").startswith("http"):
+        link_text = node.get_text(strip=True)
+        if link_text:
+            link_people, _, _, _, keywords = entity_extraction.extract_data(link_text, government_type)
+            if link_people or keywords:  # Keep the link only if it has relevant people or keywords
+                return
+        node.decompose()  # Remove irrelevant links
+        return
+    
+    if node:
+        text_content = str(node.string).strip()
+        if text_content:
+            text_people, _, _, _, text_keywords = entity_extraction.extract_data(text_content, government_type)
+            if text_people or text_keywords:
+                return  # Keep nodes with relevant text content
+
+    # Remove all other nodes
+    if node.parent:
+        for child in list(node.children):
+            if isinstance(child, NavigableString):  # Check if the child is direct text
+                child.extract()  # Remove the direct text content
+
+        # Unwrap the node, keeping only child nodes
+        node.unwrap()
+    else:
+        print(f"Skipping unwrap for node: {node.name}, as it has no parent")
 
