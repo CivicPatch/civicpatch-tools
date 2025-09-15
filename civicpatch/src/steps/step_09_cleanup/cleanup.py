@@ -14,8 +14,6 @@ def cleanup(context: PipelineContext):
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
-    print("What is under", context)
-
     people_data = context["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value]["people"]
     people = [Person.parse_obj(person) for person in people_data]
 
@@ -37,7 +35,6 @@ def cleanup_cache(cache_dir: str, people_list: List[Person]):
             pages_to_keep.add(person.website)
 
     pages_to_keep = set(url_utils.format_url_to_folder(url) for url in pages_to_keep)
-    print(f"Pages to keep: {pages_to_keep}")
 
     for folder in os.listdir(cache_dir):
         folder_path = os.path.join(cache_dir, folder)

@@ -154,42 +154,31 @@ async def github_intake(
     print(f"Processing intake for {municipality_name} ({state}, {geoid})")
     
     # Process the zip file and upload images
-    zip_url = await process_zip_file(
+    zip_results = await process_zip_file(
         STORAGE_ENDPOINT,
         STORAGE_ACCESS_KEY_ID,
         STORAGE_SECRET_ACCESS_KEY,
         file
     )
 
-    # todo 
-    
-    # # Upload original zip file
-    # zip_url = upload_file_to_storage(
-    #     STORAGE_ENDPOINT,
-    #     STORAGE_ACCESS_KEY_ID,
-    #     STORAGE_SECRET_ACCESS_KEY,
-    #     file.filename,
-    #     "crudder",
-    #     file
-    # )
+    zip_url = zip_results["zip_url"]
 
     # Use the parameters in your workflow trigger
-    #trigger_github_data_intake_workflow(
-    #    GITHUB_WORKFLOW_TOKEN, 
-    #    server_detail["user_email"], 
-    #    server_detail["server_url"], 
-    #    request_id,
-    #    state, 
-    #    geoid,
-    #    municipality_name,
-    #    zip_url
-    #)
+    trigger_github_data_intake_workflow(
+        GITHUB_WORKFLOW_TOKEN, 
+        server_detail["user_email"], 
+        server_detail["server_url"], 
+        request_id,
+        state, 
+        geoid,
+        municipality_name,
+        zip_url
+    )
 
     return {
         "filename": file.filename, 
         "status": "uploaded", 
         "zip_url": zip_url,
-        #"uploaded_images": uploaded_image_urls,
         "metadata": {
             "state": state,
             "geoid": geoid,
