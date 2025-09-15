@@ -61,6 +61,16 @@ class Pipeline:
         self.state = pipeline_state
         self.context: PipelineContext = context
 
+    def set_state(self, state: PipelineStatus):
+        """
+        Set the pipeline to start at a specific state.
+        """
+        if state in PipelineStatus:
+            self.state = state
+            print(f"Pipeline state set to: {state}")
+        else:
+            raise ValueError(f"Invalid pipeline state: {state}")
+
     def save_context(self, state, geoid):
         """
         Save the current pipeline context to a file for persistence.
@@ -72,16 +82,26 @@ class Pipeline:
     def load_context(self, request_id: str, state: str, geoid: str) -> PipelineContext:
         """
         Always create a new pipeline context and overwrite any existing file.
-        """
+        """  
+        # Ensure the directory exists
+        context_file_path = data_path_utils.get_pipeline_context_file_path(state, geoid)
+        os.makedirs(os.path.dirname(context_file_path), exist_ok=True)
+
+        if os.path.exists(context_file_path):
+            with open(context_file_path, "r") as f:
+                existing_context = json.load(f)
+                existing_request_id = existing_context["request_id"]
+
+                if request_id == existing_request_id:
+                    print("Found existing request id, loading existing context")
+                    return existing_context
+
         context: PipelineContext = {
-            **DEFAULT_STATE,
             "request_id": request_id,
             "state": state,
             "geoid": geoid
         }
 
-        context_file_path = data_path_utils.get_pipeline_context_file_path(state, geoid)
-        os.makedirs(os.path.dirname(context_file_path), exist_ok=True)
         with open(context_file_path, "w") as f:
             json.dump(context, f, indent=4)
         print("New pipeline context created and saved.")
@@ -121,7 +141,11 @@ class Pipeline:
 
         while self.state != PipelineStatus.DONE:
             if self.state == PipelineStatus.INIT:
-                result = prepare_pipeline(self.context)
+                context: PipelineContext = {
+                    **self.context,
+                    **DEFAULT_STATE,
+                }
+                result = prepare_pipeline(context)
                 self.context.update(result)
                 self.state = PipelineStatus.RESEARCH_MUNICIPALITY
 
@@ -199,9 +223,9 @@ class Pipeline:
                 #self.context.update(result)
                 self.state = PipelineStatus.CLEANUP
             elif self.state == PipelineStatus.CLEANUP:
-                # result = cleanup(self.context)
+                result = cleanup(self.context)
 
-                # self.context.update(result)
+                self.context.update(result)
                 self.state = PipelineStatus.DONE 
 
             else:
@@ -275,4 +299,3 @@ class Pipeline:
 
         with open(people_file_path, "w") as f:
             yaml.dump([person for person in people], f, default_flow_style=False, sort_keys=False)
-   

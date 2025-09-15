@@ -1,8 +1,11 @@
 import os
 import shutil
+import json
+from typing import List
 
 from utils.data_path_utils import get_data_source_municipality_path
-from schemas import PipelineContext, PipelineStatus
+from schemas import PipelineContext, PipelineStatus, Person
+import utils.url_utils as url_utils
 
 def cleanup(context: PipelineContext):
     # Remove files under data_source/cache and data_source/images
@@ -11,9 +14,68 @@ def cleanup(context: PipelineContext):
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
+    print("What is under", context)
+
+    people_data = context["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value]["people"]
+    people = [Person.parse_obj(person) for person in people_data]
+
     if os.path.exists(cache_dir):
-        shutil.rmtree(cache_dir)
+        cleanup_cache(cache_dir, people)
     if os.path.exists(images_dir):
-        shutil.rmtree(images_dir)
+        cleanup_images(images_dir, people)
+
+    return {}
+
+def cleanup_cache(cache_dir: str, people_list: List[Person]):
+    # Clear out any page urls are not under sources or website urls
+    pages_to_keep = set()
+
+    for person in people_list:
+        for source in person.data_sources:
+            pages_to_keep.add(source)
+        if person.website:
+            pages_to_keep.add(person.website)
+
+    pages_to_keep = set(url_utils.format_url_to_folder(url) for url in pages_to_keep)
+    print(f"Pages to keep: {pages_to_keep}")
+
+    for folder in os.listdir(cache_dir):
+        folder_path = os.path.join(cache_dir, folder)
+        if os.path.isdir(folder_path):
+            if folder not in pages_to_keep:
+                shutil.rmtree(folder_path)
+
+def cleanup_images(images_dir: str, people_list: List[Person]):
+    # Clear out any images that are not under image
+    images_to_keep = set()
+    image_map_file_path = os.path.join(images_dir, "image_map.json")
+    image_map_data = {}
+
+    with open(image_map_file_path, "r") as f:
+        image_map_data = json.load(f)
+
+    for person in people_list:
+        if person.image is None:
+            continue
+
+        if person.image in image_map_data:
+            images_to_keep.add(image_map_data[person.image])
+
+    images_found = set()
+    for image_file in os.listdir(images_dir):
+        # Skip image_map.json
+        if image_file == "image_map.json":
+            continue
+
+        image_file_path = os.path.join(images_dir, image_file)
+        if os.path.isfile(image_file_path):
+            if image_file not in images_to_keep:
+                os.remove(image_file_path)
+            else:
+                images_found.add(image_file)
+
+    missing_images = images_to_keep - images_found
+    if len(missing_images) > 0:
+        print("Missing images that were expected to be found:", missing_images)
 
     return {}
