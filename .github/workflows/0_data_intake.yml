@@ -17,8 +17,8 @@ on:
       state:
         description: 'State' 
         required: true
-      municipal_name:
-        description: 'Municipal Name'
+      municipality_name:
+        description: 'Municipality Name'
         required: true
       geoid:
         description: 'Geographic ID'
@@ -76,7 +76,7 @@ jobs:
           echo ${{ github.actor }}
           
           gh pr create \
-            --title "Data intake for ${{ github.event.inputs.state }} - ${{ github.event.inputs.geoid }} by ${{ github.event.inputs.user_email }}" \
+            --title "Data intake for ${{ github.event.inputs.state }} - ${{ github.event.inputs.municipality_name }} by ${{ github.event.inputs.user_email }}" \
             --body "Automated data intake for request ID: ${{ github.event.inputs.request_id }}. Please review the data before merging." \
             --base main
 
