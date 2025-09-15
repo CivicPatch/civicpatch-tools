@@ -1,10 +1,27 @@
 from schemas import PipelineContext, PipelineStatus
 from pipeline import Pipeline
+from utils.data_path_utils import get_pipeline_context_file_path
+import os
+import json
 
 def test_pipeline_step():
+    state = "wa"
+    geoid = "5363000"  # Seattle
+    pipeline_status = PipelineStatus.MAYBE_SEND_TO_GITHUB
+
     pipeline = Pipeline()
-    pipeline.set_state(PipelineStatus.CLEANUP)
-    pipeline.run("test_request_id", "wa", "5363000") 
+    pipeline.set_state(pipeline_status)
+
+    # Update pipeline_context_path with request_id
+    pipeline_context_path = get_pipeline_context_file_path("test_request_id", state, geoid)
+
+    with open(pipeline_context_path, "r") as f:
+        context = json.load(f)
+        context["request_id"] = "test_request_id"
+    with open(pipeline_context_path, "w") as f:
+        json.dump(context, f, indent=2)
+
+    pipeline.run("test_request_id", state, geoid) 
 
 if __name__ == "__main__":
     test_pipeline_step()

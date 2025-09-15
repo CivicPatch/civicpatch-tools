@@ -1,4 +1,5 @@
 import os
+import shutil
 import boto3
 import zipfile
 import tempfile
@@ -15,7 +16,8 @@ def upload_file_to_storage(
     storage_secret_access_key: str,
     file_name: str,
     bucket_name: str,
-    file: BinaryIO
+    file: BinaryIO,
+    with_presigned_url: bool = False
 ) -> str:
     """
     Upload a file to S3-compatible storage.
@@ -33,9 +35,6 @@ def upload_file_to_storage(
     )
     
     try:
-        # Debug print
-        print(f"Uploading to bucket: {bucket_name}, key: {file_name}")
-        
         # Reset file pointer
         file.seek(0)
         
@@ -46,18 +45,23 @@ def upload_file_to_storage(
             file_name
         )
 
-        # Generate presigned URL
-        presigned_url = storage_client.generate_presigned_url(
-            ClientMethod='get_object',
-            Params={
-                'Bucket': bucket_name,
-                'Key': file_name
-            },
-            ExpiresIn=EXPIRATION_ONE_DAY_IN_SECONDS    
-        )
+        if with_presigned_url:
+            # Generate presigned URL
+            presigned_url = storage_client.generate_presigned_url(
+                ClientMethod='get_object',
+                Params={
+                    'Bucket': bucket_name,
+                    'Key': file_name
+                },
+                ExpiresIn=EXPIRATION_ONE_DAY_IN_SECONDS    
+            )
         
-        print(f"Successfully uploaded and generated URL for {file_name}")
-        return presigned_url
+            print(f"Successfully uploaded and generated URL for {file_name}")
+            return presigned_url
+        else: # Return the object URL
+            object_url = f"{storage_endpoint}/{bucket_name}/{file_name}"
+            print(f"Successfully uploaded {file_name} to {object_url}")
+            return object_url
         
     except Exception as e:
         print(f"Error during upload: {str(e)}")
@@ -69,7 +73,9 @@ async def process_zip_file(
     storage_secret_access_key: str,
     upload_file: UploadFile
 ) -> dict:
-    """Process a zip file: extract and upload image contents to storage."""
+    """Process a zip file: extract, remove images, re-zip, and upload to Cloudflare R2."""
+    uploaded_urls = []
+    zip_url = ""
     
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_zip_path = os.path.join(temp_dir, upload_file.filename)
@@ -86,11 +92,6 @@ async def process_zip_file(
 
             # Open and process zip file
             with zipfile.ZipFile(temp_zip_path, 'r') as zip_ref:
-                # Check for images directory
-                has_images = any('images' in name.lower() for name in zip_ref.namelist())
-                if not has_images:
-                    return {"uploaded_urls": [], "zip_url": ""}
-                    
                 # Extract and process files
                 zip_ref.extractall(temp_dir)
                 
@@ -106,17 +107,53 @@ async def process_zip_file(
                             storage_secret_access_key
                         )
                         uploaded_urls.extend(urls)
-                        
+                
+                        # Remove everything under the images directory
+                        shutil.rmtree(images_dir)
+
         except zipfile.BadZipFile:
             raise ValueError("Corrupted zip file")
         except Exception as e:
             raise IOError(f"Failed to process zip file: {str(e)}")
         finally:
             await upload_file.close()
+    
+        # Re-zip contents, now without images
+        zip_file_name = f"processed_{upload_file.filename}"
+        zip_file_path = os.path.join(temp_dir, zip_file_name)
 
-    print("uploaded url")
+        try:
+            with zipfile.ZipFile(zip_file_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                for root, dirs, files in os.walk(temp_dir):
+                    for file in files:
+                        file_path = os.path.join(root, file)
+                        # Exclude the new zip file itself
+                        if file_path == zip_file_path:
+                            continue
+                        # Preserve directory structure
+                        zipf.write(file_path, arcname=os.path.relpath(file_path, temp_dir))
+                
+        except Exception as e:
+            raise IOError(f"Failed to create zip file: {str(e)}")
+
+        # Upload the re-zipped file to Cloudflare R2
+        try:
+            with open(zip_file_path, 'rb') as zip_file:
+                zip_url = upload_file_to_storage(
+                    storage_endpoint,
+                    storage_access_key_id,
+                    storage_secret_access_key,
+                    zip_file_name,
+                    "crudder",
+                    zip_file,
+                    with_presigned_url=True
+                )
+        except Exception as e:
+            raise IOError(f"Failed to upload re-zipped file to Cloudflare R2: {str(e)}")
+
     print(uploaded_urls)
-    return {"uploaded_urls": uploaded_urls, "zip_url": ""}
+    print(f"Re-zipping completed: {zip_file_path}")
+    return {"uploaded_urls": uploaded_urls, "zip_url": zip_url}
 
 async def process_images_directory(
     images_dir: str,

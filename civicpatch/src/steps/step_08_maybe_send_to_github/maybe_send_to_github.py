@@ -69,7 +69,7 @@ def maybe_send_to_github(context: PipelineContext):
       }
     }
   except Exception as e:
-    print(f"Error sending to GitHub: {e}")
+    print(f"Error sending to Crudder: {e}")
     return {
       "steps": {
         **context["steps"],

@@ -27,4 +27,4 @@ def prepare_pipeline(context: PipelineContext):
         shutil.rmtree(images_path)
     os.makedirs(images_path, exist_ok=True)  # Recreate the folder
 
-    return {}
+    return context
