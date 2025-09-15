@@ -215,19 +215,19 @@ class Pipeline:
                 self.save_data(result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value]["people"])
                 
                 self.context.update(result)
-                self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
-
-            elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
-                #result = maybe_send_to_github(self.context)
-
-                #self.context.update(result)
                 self.state = PipelineStatus.CLEANUP
+
             elif self.state == PipelineStatus.CLEANUP:
                 result = cleanup(self.context)
 
                 self.context.update(result)
-                self.state = PipelineStatus.DONE 
+                self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
+            elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
+                result = maybe_send_to_github(self.context)
+
+                self.context.update(result)
+                self.state = PipelineStatus.DONE
             else:
                 print("Pipeline logic not yet implemented.")
                 self.state = PipelineStatus.DONE
