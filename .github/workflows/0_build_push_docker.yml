@@ -39,8 +39,8 @@ jobs:
           file: civicpatch/Dockerfile
           push: true
           tags: |
-            ghcr.io/civicpatch-tools/civicpatch:latest
-            ghcr.io/civicpatch-tools/civicpatch:${{ steps.date.outputs.DATE_TAG }}
+            ghcr.io/CivicPatch/civicpatch:latest
+            ghcr.io/CivicPatch/civicpatch:${{ steps.date.outputs.DATE_TAG }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

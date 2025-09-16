@@ -1,12 +1,8 @@
 FROM ubuntu:noble AS image-base 
 ENV PROJECT_NAME="civicpatch"
 
-ENV #PYTHONUNBUFFERED=1 \
-    #POETRY_HOME="/opt/poetry" \
-    ## POETRY_VIRTUALENVS_CREATE=false \
-    ## VIRTUAL_ENV="/venv" \
+ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app/src \
-    ## Set compatible path for both root & non-root users
     PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 
 # Mise setup
@@ -33,14 +29,6 @@ RUN curl https://mise.run | sh
 RUN mise use python@3.11
 RUN mise use poetry@2.1.3
 
-# Add Poetry and virtual env to PATH
-# ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"
-
-# Install Poetry
-# RUN curl -sSL https://install.python-poetry.org | python3 -
-
-# Prepare virtual env
-# RUN python -m venv $VIRTUAL_ENV
 
 WORKDIR /app
 
@@ -70,8 +58,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-
-# RUN chown -R civicpatch_user:civicpatch_user /venv
 
 USER civicpatch_user
 EXPOSE 8000
