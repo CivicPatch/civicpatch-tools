@@ -81,18 +81,14 @@ async def process_zip_file(
         temp_zip_path = os.path.join(temp_dir, upload_file.filename)
         
         try:
-            # Read content and save to temp file
             content = await upload_file.read()
             with open(temp_zip_path, 'wb') as temp_file:
                 temp_file.write(content)
             
-            # Verify zip file is valid before processing
             if not zipfile.is_zipfile(temp_zip_path):
                 raise ValueError("Invalid zip file format")
 
-            # Open and process zip file
             with zipfile.ZipFile(temp_zip_path, 'r') as zip_ref:
-                # Extract and process files
                 zip_ref.extractall(temp_dir)
                 
                 # Walk through extracted contents
@@ -128,7 +124,7 @@ async def process_zip_file(
                     for file in files:
                         file_path = os.path.join(root, file)
                         # Exclude the new zip file itself
-                        if file_path == zip_file_path:
+                        if file_path in [zip_file_path, temp_zip_path]:
                             continue
                         # Preserve directory structure
                         zipf.write(file_path, arcname=os.path.relpath(file_path, temp_dir))
