@@ -30,7 +30,7 @@ jobs:
 
       - name: Get Current Date
         id: date
-        run: echo "DATE_TAG=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+        run: echo "::set-output name=DATE_TAG::$(date +'%Y-%m-%d')"
 
       - name: Build and push
         uses: docker/build-push-action@v6
@@ -43,15 +43,4 @@ jobs:
             civicpatch-tools/civicpatch:${{ steps.date.outputs.DATE_TAG }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      #- name: Set up Python
-      #  uses: actions/setup-python@v5
-      #  with:
-      #    python-version: '3.11'
-
-      #- name: Build and push civpatch image
-      #  env:
-      #    DOCKER_USERNAME: ${{ github.actor }}
-      #    DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-      #  run: python .github/scripts/build_push_docker.py
 
