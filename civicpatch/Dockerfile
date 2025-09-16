@@ -1,5 +1,21 @@
-FROM python:3.11-slim AS image-base 
+FROM ubuntu:noble AS image-base 
 ENV PROJECT_NAME="civicpatch"
+
+ENV #PYTHONUNBUFFERED=1 \
+    #POETRY_HOME="/opt/poetry" \
+    ## POETRY_VIRTUALENVS_CREATE=false \
+    ## VIRTUAL_ENV="/venv" \
+    PYTHONPATH=/app/src \
+    ## Set compatible path for both root & non-root users
+    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+
+# Mise setup
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+ENV MISE_DATA_DIR="/mise"
+ENV MISE_CONFIG_DIR="/mise"
+ENV MISE_CACHE_DIR="/mise/cache"
+ENV MISE_INSTALL_PATH="/usr/local/bin/mise"
+ENV PATH="/mise/shims:$PATH"
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -7,25 +23,24 @@ RUN apt-get update && apt-get install -y \
     xvfb \
     x11-utils \
     git \
+    # For mise
+    ca-certificates build-essential \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-ENV PYTHONUNBUFFERED=1 \
-    POETRY_HOME="/opt/poetry" \
-    POETRY_VIRTUALENVS_CREATE=false \
-    VIRTUAL_ENV="/venv" \
-    PYTHONPATH=/app/src \
-    # Set compatible path for both root & non-root users
-    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+RUN curl https://mise.run | sh
+
+RUN mise use python@3.11
+RUN mise use poetry@2.1.3
 
 # Add Poetry and virtual env to PATH
-ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"
+# ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"
 
 # Install Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
+# RUN curl -sSL https://install.python-poetry.org | python3 -
 
 # Prepare virtual env
-RUN python -m venv $VIRTUAL_ENV
+# RUN python -m venv $VIRTUAL_ENV
 
 WORKDIR /app
 
@@ -56,7 +71,7 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-RUN chown -R civicpatch_user:civicpatch_user /venv
+# RUN chown -R civicpatch_user:civicpatch_user /venv
 
 USER civicpatch_user
 EXPOSE 8000
