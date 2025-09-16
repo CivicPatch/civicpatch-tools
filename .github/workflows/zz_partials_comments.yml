@@ -1,0 +1,107 @@
+name: zz. Update Comments
+
+on:
+  workflow_call:
+    inputs:
+      pr_number:
+        description: 'The number of the PR to comment on'
+        required: true
+        type: number
+      head_sha:
+        description: 'The SHA of the head commit of the PR'
+        required: true
+        type: string
+      head_ref:
+        description: 'The head ref (branch name) of the PR'
+        required: true
+        type: string
+      state:
+        description: 'The state abbreviation (e.g., wa, ca) relevant to the PR'
+        required: true
+        type: string
+      geoid: # To be replaced with jurisdiction_id!
+        description: 'The GEOID relevant to the PR'
+        required: true
+        type: string
+
+    secrets:
+      GH_APP_BOT_PIPELINE_APP_ID:
+        required: true
+      GH_APP_BOT_PIPELINE_PRIVATE_KEY:
+        required: true
+      GH_APP_BOT_APPROVE_APP_ID:
+        required: true
+      GH_APP_BOT_APPROVE_PRIVATE_KEY:
+        required: true
+
+permissions:
+  contents: read # For checkout
+  pull-requests: write # For commenting and approving
+
+jobs:
+  update-comments:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.head_sha }} # Checkout the specific commit
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up mise
+        uses: jdx/mise-action@v2
+        with:
+          version: 'latest'
+          cache: true
+          working_directory: ./civicpatch
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull Prebuilt Docker Image
+        run: docker pull ghcr.io/civicpatch-tools/civicpatch:latest
+
+      - name: Generate GitHub App Pipeline Token
+        id: generate-pipeline-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
+          private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
+
+      - name: Generate GitHub App Approve Token
+        id: generate-approve-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GH_APP_BOT_APPROVE_APP_ID }}
+          private-key: ${{ secrets.GH_APP_BOT_APPROVE_PRIVATE_KEY }}
+
+      - name: Print the branch name
+        run: echo "The branch name is ${{ inputs.head_ref }}"
+      
+      - name: Create/Update Data Comment
+        env:
+          GITHUB_USERNAME: civic-patch-pipeline-bot
+          GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
+        run: |
+          PR_NUMBER=${{ inputs.pr_number }}
+          echo "TBD: Create or update data comment for PR #$PR_NUMBER"
+          mise generate-data-comment
+
+      - name: Create Approval/Disapproval Comment
+        env:
+          GITHUB_USERNAME: civic-patch-approve-bot
+          GITHUB_TOKEN: ${{ steps.generate-approve-token.outputs.token }}
+        run: |
+          PR_NUMBER=${{ inputs.pr_number }}
+          echo "TBD: Create or update approval/disapproval comment for PR #$PR_NUMBER"
+          mise generate-data-review-comment
