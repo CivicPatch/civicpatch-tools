@@ -1,5 +1,5 @@
 {
-    "request_id": "18da8db7-e3c8-4a48-ac92-64af5e4ff7ce",
+    "request_id": "test_request_id",
     "state": "wa",
     "geoid": "5363000",
     "links": [
@@ -2988,8 +2988,9 @@
         "DONE": {},
         "MAYBE_SEND_TO_GITHUB": {
             "status": "failed",
-            "error": "HTTPConnectionPool(host='crudder', port=8001): Max retries exceeded with url: /api/github_intake (Caused by NameResolutionError(\"<urllib3.connection.HTTPConnection object at 0x7ff71b518e50>: Failed to resolve 'crudder' ([Errno -3] Temporary failure in name resolution)\"))"
+            "response_status_code": 500,
+            "response_text": "Internal Server Error"
         }
     },
-    "pipeline_duration_seconds": 747.5808115005493
+    "pipeline_duration_seconds": 1.3347291946411133
 }

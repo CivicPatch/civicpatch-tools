@@ -31,7 +31,7 @@ def trigger_github_data_intake_workflow(
     }
     
     response = requests.post(
-        "https://api.github.com/repos/CivicPatch/civicpatch-tools/actions/workflows/0_data_intake.yml/dispatches",
+        "https://api.github.com/repos/CivicPatch/civicpatch-tools/actions/workflows/1_data_intake.yml/dispatches",
         headers=headers,
         json=data
     )
