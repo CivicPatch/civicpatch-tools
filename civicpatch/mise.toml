@@ -45,7 +45,7 @@ curl -X GET "http://localhost:8000/api/search?state=wa&num=10"
 
 [tasks.scratch]
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_filter_content.py"
-run = "docker compose -f ../docker-compose.yml run --rm civicpatch poetry run python src/scripts/test_pipeline_step.py"
+run = "docker compose -f ./docker-compose.development.yml run --rm civicpatch poetry run python src/scripts/test_pipeline_step.py"
 
 # GITHUB ACTIONS
 [tasks.generate-data-comment]
