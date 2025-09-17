@@ -32,7 +32,7 @@ jobs:
 
       - name: Get Current Date
         id: date
-        run: echo "::set-output name=DATE_TAG::$(date +'%Y-%m-%d')"
+        run: echo "date-tag=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       # Really not that slim; it is 2GB
       # TODO: make it smaller
@@ -44,7 +44,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/civicpatch/civicpatch-slim:latest
-            ghcr.io/civicpatch/civicpatch-slim:${{ steps.date.outputs.DATE_TAG }}
+            ghcr.io/civicpatch/civicpatch-slim:${{ steps.date.outputs.date-tag }}
           target: image-base
           cache-from: type=gha
           cache-to: type=gha,mode=max

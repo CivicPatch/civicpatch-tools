@@ -35,17 +35,17 @@ jobs:
 
       - name: Get Current Date
         id: date
-        run: echo "::set-output name=DATE_TAG::$(date +'%Y-%m-%d')"      
+        run: echo "date-tag=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       - name: Build and push (crudder)
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: civicpatch/Dockerfile
+          file: crudder/Dockerfile
           push: true
           tags: |
             ghcr.io/civicpatch/crudder:latest
-            ghcr.io/civicpatch/crudder:${{ steps.date.outputs.DATE_TAG }}
+            ghcr.io/civicpatch/crudder:${{ steps.date.outputs.date-tag }}
 
       - name: Deploy Crudder to production
         env:
