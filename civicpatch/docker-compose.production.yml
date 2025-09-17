@@ -5,6 +5,7 @@ services:
     build:
       context: ..
       dockerfile: civicpatch/Dockerfile
+      target: production
     ports:
       - "8000:8000"
     volumes:

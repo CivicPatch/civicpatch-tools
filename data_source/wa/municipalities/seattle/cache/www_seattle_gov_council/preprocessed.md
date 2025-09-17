@@ -1,115 +1,154 @@
-* [Office of Inspector General](https://www.seattle.gov/oig)
+Seattle City Council - Council | seattle.gov
 
-Google Translate may not accurately translate all content. .For general City questions, please call [206-684-2489](tel:206-684-2489). Tell us your requested language in English, and we can connect you with an interpreter.
+Council, Mayor, Court, Law, Finance
 
-Es posible que Google Translate no traduzca con precisión todo el contenido. .Si necesita ayuda en otro idioma, díganos en inglés nombre del idioma que necesita y lo conectaremos con un intérprete: [206-684-2489](tel:206-684-2489)
+[City Council](https://www.seattle.gov/council)
+[Mayor's Office](https://www.seattle.gov/mayor)
+[City Council Topics](https://www.seattle.gov/council/topics)
+[Office of Inspector General](https://www.seattle.gov/oig)
+Akhri afeef
+Itti gaafatamummaa ofirraa ittisuu dubbisaa
+[Find Your District and Councilmembers](https://www.seattle.gov/council/members/find-your-district-and-councilmembers "Main Menu Mobile - Councilmembers Find Your District and Councilmembers")
+[Rob Saka
 
-Google 翻譯可能無法準確翻譯所有內容。。如果您需要翻譯，請用英語説出您所需要的語言，我們將爲你連接口譯員: [206-684-2489](tel:206-684-2489)
+Rob Saka](https://www.seattle.gov/council/members/rob-saka "Main Menu Mobile - Councilmembers Rob Saka")
+[About Councilmember Rob Saka](https://www.seattle.gov/council/members/rob-saka/about-rob "Main Menu Mobile - Rob Saka About Councilmember Rob Saka")
+[Councilmember Rob Saka's Staff](https://www.seattle.gov/council/members/rob-saka/staff "Main Menu Mobile - Rob Saka Councilmember Rob Saka's Staff")
+[Mark Solomon
 
-Google 翻译可能无法准确翻译所有内容。。如果您需要翻译，请用英语说出您所需要的语言，我们将为你连接口译员: [206-684-2489](tel:206-684-2489)
+Mark Solomon](https://www.seattle.gov/council/members/mark-solomon "Main Menu Mobile - Councilmembers Mark Solomon")
+[About Councilmember Mark Solomon](https://www.seattle.gov/council/members/mark-solomon/about-mark "Main Menu Mobile - Mark Solomon About Councilmember Mark Solomon")
+[Councilmember Mark Solomon's Staff](https://www.seattle.gov/council/members/mark-solomon/staff "Main Menu Mobile - Mark Solomon Councilmember Mark Solomon's Staff")
+[Joy Hollingsworth
 
-Google Dịch có thể không dịch chính xác tất cả nội dung. .Nếu quý vị cần hỗ trợ về ngôn ngữ, xin vui lòng cho chúng tôi biết ngôn ngữ quý vị cần hỗ trợ bằng tiếng Anh (ví dụ “Vietnamese”), chúng tôi sẽ kết nối quý vị với một thông dịch viên: [206-684-2489](tel:206-684-2489)
+Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth "Main Menu Mobile - Councilmembers Joy Hollingsworth")
+[About Councilmember Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth/about-joy "Main Menu Mobile - Joy Hollingsworth About Councilmember Joy Hollingsworth")
+[Councilmember Joy Hollingsworth's Staff](https://www.seattle.gov/council/members/joy-hollingsworth/staff "Main Menu Mobile - Joy Hollingsworth Councilmember Joy Hollingsworth's Staff")
+[Maritza Rivera
 
-Google Translate не может точно перевести весь контент. .Если вам нужна языковая помощь, сообщите нам на английском, какой язык вам нужен, и мы свяжем вас с переводчиком: [206-684-2489](tel:206-684-2489)
+Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera "Main Menu Mobile - Councilmembers Maritza Rivera")
+[About Councilmember Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera/about-maritza "Main Menu Mobile - Maritza Rivera About Councilmember Maritza Rivera")
+[Councilmember Maritza Rivera's Staff](https://www.seattle.gov/council/members/maritza-rivera/staff "Main Menu Mobile - Maritza Rivera Councilmember Maritza Rivera's Staff")
+[Debora Juarez
 
-Google Translate ayaan si sax ah u turjumi karin dhammaan waxyaabaha ku jira. Akhri afeef.Haddii aad u baahan tahay caawimaad luqadeed, fadlan noogu sheeg Ingiriisiga luqadda aad u baahan tahay, ka dib waxaan kugu xiri doonnaa turjubaan: [206-684-2489](tel:206-684-2489)
+Debora Juarez](https://www.seattle.gov/council/members/debora-juarez "Main Menu Mobile - Councilmembers Debora Juarez")
+[About Councilmember Debora Juarez](https://www.seattle.gov/council/members/debora-juarez/about-debora "Main Menu Mobile - Debora Juarez About Councilmember Debora Juarez")
+[Councilmember Debora Juarez's Staff](https://www.seattle.gov/council/members/debora-juarez/staff "Main Menu Mobile - Debora Juarez Councilmember Debora Juarez's Staff")
+[Dan Strauss
 
-የጉግል ትርጉም ሁሉንም ይዘቶች በትክክል መተርጎም ላይችል ይችላል። ፡፡ኣስተርጓሚ ካስፈለግዎ የሚፈልጉትን ቋንቋ በእንግልዝኛ ይንገሩን፣ ከኣስተርጓሚ እናገናኝዎታለን። [206-684-2489](tel:206-684-2489)
+Dan Strauss](https://www.seattle.gov/council/members/dan-strauss "Main Menu Mobile - Councilmembers Dan Strauss")
+[About Councilmember Dan Strauss](https://www.seattle.gov/council/members/dan-strauss/about-dan "Main Menu Mobile - Dan Strauss About Councilmember Dan Strauss")
+[Councilmember Dan Strauss' Staff](https://www.seattle.gov/council/members/dan-strauss/staff "Main Menu Mobile - Dan Strauss Councilmember Dan Strauss' Staff")
+[Bob Kettle
 
-구글은 정확하게 모든 내용을 번역하지 않을 수 있습니다 번역. .언어지원이 필요한 경우, 필요한 언어를 영어로 말씀해 주시면 통역사와 연결해 드리겠습니다: [206-684-2489](tel:206-684-2489)
+Bob Kettle](https://www.seattle.gov/council/members/bob-kettle "Main Menu Mobile - Councilmembers Bob Kettle")
+[About Councilmember Robert Kettle](https://www.seattle.gov/council/members/bob-kettle/about-robert "Main Menu Mobile - Bob Kettle About Councilmember Robert Kettle")
+[Councilmember Robert Kettle's Staff](https://www.seattle.gov/council/members/bob-kettle/staff "Main Menu Mobile - Bob Kettle Councilmember Robert Kettle's Staff")
+[Alexis Mercedes Rinck
 
-Maaaring hindi tumpak na isalin ng Google Translate ang lahat ng nilalaman. .Para sa mga pangkalahatang katanungan sa Lungsod, mangyaring tawagan ang [206-684-2489](tel:206-684-2489). Sabihin sa amin ang hiniling mong wika sa Ingles, at maikokonekta ka namin sa isang interpreter.
+Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Main Menu Mobile - Councilmembers Alexis Mercedes Rinck")
+[About Councilmember Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck/about-alexis "Main Menu Mobile - Alexis Mercedes Rinck About Councilmember Alexis Mercedes Rinck")
+[Councilmember Alexis Mercedes Rinck's Staff](https://www.seattle.gov/council/members/alexis-mercedes-rinck/staff "Main Menu Mobile - Alexis Mercedes Rinck Councilmember Alexis Mercedes Rinck's Staff")
+[Sara Nelson
 
-Google Translate อาจแปลเนื้อหาทั้งหมดไม่ถูกต้อง สำหรับคำถามทั่วไปเกี่ยวกับเมืองโปรดโทร [206-684-2489](tel:206-684-2489) บอกภาษาที่คุณต้องการเป็นภาษาอังกฤษและเราสามารถติดต่อคุณกับล่ามได้
+Sara Nelson](https://www.seattle.gov/council/members/sara-nelson "Main Menu Mobile - Councilmembers Sara Nelson")
+[About Councilmember Sara Nelson](https://www.seattle.gov/council/members/sara-nelson/about-sara "Main Menu Mobile - Sara Nelson About Councilmember Sara Nelson")
+[Councilmember Sara Nelson's Staff](https://www.seattle.gov/council/members/sara-nelson/staff "Main Menu Mobile - Sara Nelson Councilmember Sara Nelson's Staff")
+[Seattle City Council](https://www.seattle.gov/council)
 
-Google 翻訳は、すべてのコンテンツを正確に翻訳するとは限りません. 。市の一般的な質問については[206-684-2489](tel:206-684-2489)に電話してください。ご希望の言語を英語で教えていただければ、通訳をご案内いたします。
+Find your Seattle City Council district and the Councilmembers who represent you
+[Rob Saka](https://www.seattle.gov/council/members/rob-saka)
 
-កម្មវិធីបកប្រែហ្គូហ្គោលមិនអាចបកប្រែមាតិកាទាំងអស់បានត្រឹមត្រូវទេ។ សម្រាប់សំណួរទូទៅរបស់ទីក្រុងសូមទូរស័ព្ទមក [206-684-2489](tel:206-684-2489) ។ ប្រាប់យើងពីភាសាដែលអ្នកស្នើសុំជាភាសាអង់គ្លេសហើយយើងអាចភ្ជាប់អ្នកជាមួយអ្នកបកប្រែភាសា។
+District 1 (West Seattle, South Park, Georgetown, and Pioneer Square)
+[Mark Solomon](https://www.seattle.gov/council/members/mark-solomon)
 
-Google Translate ອາດຈະບໍ່ແປເນື້ອຫາທັງ ໝົດ ຢ່າງຖືກຕ້ອງ. .ສຳ ລັບ ຄຳ ຖາມທົ່ວໄປຂອງເມືອງ, ກະລຸນາໂທຫາ [206-684-2489](tel:206-684-2489). ບອກພວກເຮົາເປັນພາສາອັງກິດທີ່ທ່ານຮ້ອງຂໍ, ແລະພວກເຮົາສາມາດເຊື່ອມຕໍ່ທ່ານກັບນາຍແປພາສາ.
+District 2 (South Seattle, Yesler Terrace to Rainier Beach)
+[Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth)
 
-Перекладач Google може не точно перекласти весь вміст. .За загальними запитаннями про місто, будь ласка, телефонуйте [206-684-2489](tel:206-684-2489). Розкажіть нам про вашу мову англійською мовою, і ми можемо зв’язати вас із перекладачем.
+District 3 (Central Seattle)
+[Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera)
 
-Google Traduction peut ne pas traduire correctement tout le contenu. .Pour des questions générales sur la ville, veuillez appeler le [206-684-2489](tel:206-684-2489). Dites-nous votre langue souhaitée en anglais, et nous pourrons vous mettre en contact avec un interprète.
+District 4 (Northeast Seattle)
+[Debora Juarez](https://www.seattle.gov/council/members/debora-juarez)
 
-قد لا تترجم خدمة "ترجمة Google" كل المحتوى بدقة. .للأسئلة العامة حول المدينة ، يرجى الاتصال [206-684-2489](tel:206-684-2489). أخبرنا بلغتك المطلوبة باللغة الإنجليزية ، ويمكننا توصيلك بمترجم فوري.
+District 5 (North Seattle)
+[Dan Strauss](https://www.seattle.gov/council/members/dan-strauss)
 
-हो सकता है कि Google अनुवाद सभी सामग्री का सटीक अनुवाद न करे. .सामान्य शहर के प्रश्नों के लिए, कृपया कॉल करें [206-684-2489](tel:206-684-2489)। हमें अंग्रेजी में अपनी अनुरोधित भाषा बताएं, और हम आपको एक दुभाषिया से जोड़ सकते हैं।
+District 6 (Northwest Seattle)
+[Bob Kettle](https://www.seattle.gov/council/members/bob-kettle)
 
-Google Translate qabiyyee hunda sirritti hiikuu dhiisuu danda'a. Itti gaafatamummaa ofirraa ittisuu dubbisaa.Gaaffii waliigalaa Magaalaa yoo qabaattan bilbilaa [206-684-2489](tel:206-684-2489). Afaan Ingiliffaan isin gaafattan nuuf himaa, nama afaan hiiku waliin isin wal qunnamsiisuu dandeenya.
+District 7 (Downtown to Magnolia, including Queen Anne, Uptown, Westlake, Interbay, Eastlake, South Lake Union, and Belltown)
+[Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck)
 
-ਹੋ ਸਕਦਾ ਹੈ ਕਿ Google ਅਨੁਵਾਦ ਸਾਰੀ ਸਮੱਗਰੀ ਦਾ ਸਹੀ ਅਨੁਵਾਦ ਨਾ ਕਰੇ। .ਸਿਟੀ ਦੇ ਆਮ ਸਵਾਲਾਂ ਲਈ, ਕਿਰਪਾ ਕਰਕੇ ਕਾਲ ਕਰੋ [206-684-2489](tel:206-684-2489)। ਸਾਨੂੰ ਆਪਣੀ ਬੇਨਤੀ ਕੀਤੀ ਭਾਸ਼ਾ ਅੰਗਰੇਜ਼ੀ ਵਿੱਚ ਦੱਸੋ, ਅਤੇ ਅਸੀਂ ਤੁਹਾਨੂੰ ਦੁਭਾਸ਼ੀਏ ਨਾਲ ਜੋੜ ਸਕਦੇ ਹਾਂ।
+Position 8 (Citywide, Representing All of Seattle)
+[Sara Nelson](https://www.seattle.gov/council/members/sara-nelson)
 
-Google Translate ንኹሉ ትሕዝቶ ብትኽክል ከይትርጉሞ ይኽእል እዩ። ።ንሓፈሻዊ ሕቶታት ከተማ ክትድውሉ ትኽእሉ ኢኹም። [206-684-2489](tel:206-684-2489)። ዝሓተትኩሞ ቋንቋ ብእንግሊዝኛ ንገሩና፡ ምስ ተርጓሚ ከነራኽበኩም ንኽእል ኢና።
+Council President, Position 9 (Citywide, Representing All of Seattle)
 
+View information about Seattle City Council committees and meeting agendas
 
+Watch all the Seattle Channel programming of regularly scheduled City Council Meetings
 
-* + - [Rob SakaRob Saka](https://www.seattle.gov/council/saka "Main Menu Mobile - Meet the Council Rob Saka")
-      * [About Councilmember Rob Saka](https://www.seattle.gov/council/meet-the-council/rob-saka/about-rob "Main Menu Mobile - Rob Saka About Councilmember Rob Saka")
-      * [Councilmember Rob Saka's Staff](https://www.seattle.gov/council/meet-the-council/rob-saka/staff "Main Menu Mobile - Rob Saka Councilmember Rob Saka's Staff")
-    - [Mark SolomonMark Solomon](https://www.seattle.gov/council/solomon "Main Menu Mobile - Meet the Council Mark Solomon")
-      * [Councilmember Mark Solomon's Staff](https://www.seattle.gov/council/meet-the-council/mark-solomon/staff "Main Menu Mobile - Mark Solomon Councilmember Mark Solomon's Staff")
-      * [About Councilmember Mark Solomon](https://www.seattle.gov/council/meet-the-council/mark-solomon/about-mark "Main Menu Mobile - Mark Solomon About Councilmember Mark Solomon")
-    - [Joy HollingsworthJoy Hollingsworth](https://www.seattle.gov/council/hollingsworth "Main Menu Mobile - Meet the Council Joy Hollingsworth")
-      * [About Councilmember Joy Hollingsworth](https://www.seattle.gov/council/meet-the-council/joy-hollingsworth/about-joy "Main Menu Mobile - Joy Hollingsworth About Councilmember Joy Hollingsworth")
-      * [Councilmember Joy Hollingsworth's Staff](https://www.seattle.gov/council/meet-the-council/joy-hollingsworth/staff "Main Menu Mobile - Joy Hollingsworth Councilmember Joy Hollingsworth's Staff")
-    - [Maritza RiveraMaritza Rivera](https://www.seattle.gov/council/rivera "Main Menu Mobile - Meet the Council Maritza Rivera")
-      * [About Councilmember Maritza Rivera](https://www.seattle.gov/council/meet-the-council/maritza-rivera/about-maritza "Main Menu Mobile - Maritza Rivera About Councilmember Maritza Rivera")
-      * [Councilmember Maritza Rivera's Staff](https://www.seattle.gov/council/meet-the-council/maritza-rivera/staff "Main Menu Mobile - Maritza Rivera Councilmember Maritza Rivera's Staff")
-    - [Debora JuarezDebora Juarez](https://www.seattle.gov/council/meet-the-council/debora-juarez "Main Menu Mobile - Meet the Council Debora Juarez")
-      * [About Councilmember Debora Juarez](https://www.seattle.gov/council/meet-the-council/debora-juarez/about-debora "Main Menu Mobile - Debora Juarez About Councilmember Debora Juarez")
-    - [Dan StraussDan Strauss](https://www.seattle.gov/council/strauss "Main Menu Mobile - Meet the Council Dan Strauss")
-      * [About Councilmember Dan Strauss](https://www.seattle.gov/council/meet-the-council/dan-strauss/about-dan "Main Menu Mobile - Dan Strauss About Councilmember Dan Strauss")
-      * [Councilmember Dan Strauss' Staff](https://www.seattle.gov/council/meet-the-council/dan-strauss/staff "Main Menu Mobile - Dan Strauss Councilmember Dan Strauss' Staff")
-    - [Robert KettleRobert Kettle](https://www.seattle.gov/council/kettle "Main Menu Mobile - Meet the Council Robert Kettle")
-      * [About Councilmember Robert Kettle](https://www.seattle.gov/council/meet-the-council/robert-kettle/about-robert "Main Menu Mobile - Robert Kettle About Councilmember Robert Kettle")
-      * [Councilmember Robert Kettle's Staff](https://www.seattle.gov/council/meet-the-council/robert-kettle/staff "Main Menu Mobile - Robert Kettle Councilmember Robert Kettle's Staff")
-    - [Alexis Mercedes RinckAlexis Mercedes Rinck](https://www.seattle.gov/council/rinck "Main Menu Mobile - Meet the Council Alexis Mercedes Rinck")
-      * [About Councilmember Alexis Mercedes Rinck](https://www.seattle.gov/council/meet-the-council/alexis-mercedes-rinck/about-alexis "Main Menu Mobile - Alexis Mercedes Rinck About Councilmember Alexis Mercedes Rinck")
-      * [Councilmember Alexis Mercedes Rinck's Staff](https://www.seattle.gov/council/meet-the-council/alexis-mercedes-rinck/staff "Main Menu Mobile - Alexis Mercedes Rinck Councilmember Alexis Mercedes Rinck's Staff")
-    - [Sara NelsonSara Nelson](https://www.seattle.gov/council/meet-the-council/sara-nelson "Main Menu Mobile - Meet the Council Sara Nelson")
-      * [About Councilmember Sara Nelson](https://www.seattle.gov/council/meet-the-council/sara-nelson/about-sara "Main Menu Mobile - Sara Nelson About Councilmember Sara Nelson")
-      * [Councilmember Sara Nelson's Staff](https://www.seattle.gov/council/meet-the-council/sara-nelson/staff "Main Menu Mobile - Sara Nelson Councilmember Sara Nelson's Staff")
+Sign up to make public comment for items appear on Seattle City Council agendas
 
-[### 2026 Families, Education, Preschool, and Promise Levy Renewal](https://www.seattle.gov/council/issues/families-education-preschool-and-promise-(fepp)-levy "2026 Families, Education, Preschool, and Promise Levy Renewal")
+View City Council visitor logs updated in real time
 
-[### 2025-26 Budget Adoption](https://www.seattle.gov/council/issues/2025-26-budget-adoption "2025-26 Budget Adoption")
+Get high resolution photo downloads in the Seattle City Council press kit
+[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/PublicSafety/Public-Safety_310x160.png "police officers smiling on a sunny day")
 
-[7 days ago
+The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
+[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
+[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
 
-### Council approves Business & Occupation (B&O) Tax rebalancing proposal for November ballot](https://council.seattle.gov/2025/08/04/council-approves-business-occupation-bo-tax-rebalancing-proposal-for-november-ballot/ "undefined News Releases")
+Rob Saka](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
+[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
 
-[### Sara Nelson](https://www.seattle.gov/council/meet-the-council/sara-nelson)
+Mark Solomon](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
+[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
 
-[### Alexis Mercedes Rinck](https://www.seattle.gov/council/rinck)
+Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
+[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
 
-[### Robert Kettle](https://www.seattle.gov/council/kettle)
+Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
+[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
 
-[### Dan Strauss](https://www.seattle.gov/council/strauss)
+Debora Juarez](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
+[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
 
-[### Debora Juarez](https://www.seattle.gov/council/meet-the-council/debora-juarez)
+Dan Strauss](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
+[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
 
-[### Maritza Rivera](https://www.seattle.gov/council/rivera)
+Bob Kettle](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
+[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
 
-[### Joy Hollingsworth](https://www.seattle.gov/council/hollingsworth)
+Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
+[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
 
-[### Mark Solomon](https://www.seattle.gov/council/solomon)
+Sara Nelson](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
 
-[### Rob Saka](https://www.seattle.gov/council/saka)
+[Agenda: Approval of the Minutes; President's Report; 2025 Budget Process Preview; Signing of Letters and Proclamations; Preview of City Council Actions, Council and Regional Committees; Adjournment.[...]](https://www.seattlechannel.org/video.asp?ID=2012561 "Council Briefing 9/15/25")
 
-[Council President Sara Nelson and Mayor Bruce Harrell Announce Proposals to Ease Small Business Permitting](https://council.seattle.gov/2025/08/01/council-president-sara-nelson-and-mayor-bruce-harrell-announce-proposals-to-ease-small-business-permitting/)
+[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
 
-7/29
+Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
 
-7/28
+Amended legislation includes added data and privacy safeguards SEATTLE – Today the City Council voted 7-2 in favor of two crime prevention bills which authorize the installation of cameras in three new public places (Capitol Hill, the Stadium [...]
 
-[### City Council Special Meeting 8/11/2025](https://www.seattlechannel.org/video.asp?ID=2022568 "City Council Special Meeting 8/11/2025")
+[Public Safety Chair Kettle and Council President Nelson on protecting Seattle from federal public safety threats](https://council.seattle.gov/2025/09/02/public-safety-chair-kettle-and-council-president-nelson-on-protecting-seattle-from-federal-public-safety-threats-2/)
 
-[### Finance, Native Communities and Tribal Governments Committee 8/6/2025](https://www.seattlechannel.org/video.asp?ID=2742527 "Finance, Native Communities and Tribal Governments Committee 8/6/2025")
+Councilmember Bob Kettle (District 7), Chair of the Public Safety Committee, and Council President Sara Nelson (Position 9) released the following statements in response to unprecedented actions by the federal government involving ICE [...]
 
-[### Transportation Committee 8/5/2025](https://www.seattlechannel.org/video.asp?ID=2132529 "Transportation Committee 8/5/2025")
+City Council
+------------
 
-PO Box 34025, Seattle, WA , 98124-4025
-[(206) 684-8888](tel: +1 (206) 684-8888)
-Listen Line: [(206) 684-8566](tel: +1 (206) 684-8566)
-[(206) 684-8587](fax: +1 (206) 684-8587)
+[Seattle City Council Facebook](http://www.facebook.com/seattlecouncil)
+[Seattle City Council Twitter](http://twitter.com/SeattleCouncil)
+[Seattle City Council Instagram](https://www.instagram.com/theseattlecouncil/)
+[Seattle City Council Bluesky](https://bsky.app/profile/council.seattle.gov)
+
+Citywide Information
+--------------------
+
+[Find Your District and Councilmembers](https://www.seattle.gov/council/members/find-your-district-and-councilmembers)
+
+The Seattle City Council establishes City policy through enactment of ordinances (laws) and adoption of resolutions. The City Council also approves and adopts the City's budget. The nine Council members and their legislative assistants are part of the City of Seattle Legislative Department.

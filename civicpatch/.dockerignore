@@ -1,0 +1,27 @@
+# Ignore Python cache files
+.pytest_cache
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# Ignore Git files
+.git/
+.gitignore
+
+# Ignore Docker-related files
+Dockerfile
+.dockerignore
+
+# Ignore IDE/editor config files
+.vscode/
+
+# Ignore Playwright cache
+.mcache/
+.cache/
+ms-playwright/
+
+# Ignore build artifacts
+build/
+dist/
+*.egg-info/
