@@ -9,7 +9,7 @@ SERVICE = "crudder"  # The main service to build and push
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 IMAGE_PREFIX = "civicpatch"  # e.g. your Docker Hub username or your private registry
-REGISTRY = "ghcr.io"
+REGISTRY = "code.wizards.cafe"
 
 DOCKER_USERNAME = "witch"
 DOCKER_PASSWORD = os.getenv("DOCKER_PASSWORD")  # Prefer using access tokens if possible
