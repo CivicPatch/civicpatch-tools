@@ -2,7 +2,7 @@ services:
   civicpatch:
     env_file: .env
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
-    image: ghcr.io/civicpatch-tools/civicpatch:latest
+    image: ghcr.io/civicpatch/civicpatch:latest
     ports:
       - "8000:8000"
     volumes:

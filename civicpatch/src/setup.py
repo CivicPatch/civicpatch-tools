@@ -1,13 +1,8 @@
-import subprocess
-
 def post_install():
     """
     Runs Playwright browser installation after Poetry install.
     """
     try:
-        subprocess.run(["poetry", "run", "playwright", "install-deps"], check=True)
-        subprocess.run(["poetry", "run", "playwright", "install", "chromium"], check=True)
-
         import spacy
         spacy.cli.download("en_core_web_trf")
         print("Playwright and spaCy models installed successfully.")

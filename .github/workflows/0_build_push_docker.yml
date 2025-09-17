@@ -32,7 +32,23 @@ jobs:
         id: date
         run: echo "::set-output name=DATE_TAG::$(date +'%Y-%m-%d')"
 
-      - name: Build and push
+      # Really not that slim; it is 2GB
+      # TODO: make it smaller
+      - name: Build and push (slim)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: civicpatch/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/civicpatch/civicpatch-slim:latest
+            ghcr.io/civicpatch/civicpatch-slim:${{ steps.date.outputs.DATE_TAG }}
+          target: image-base
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # MASSIVE image; 8GB+ 
+      - name: Build and push (production)
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -41,6 +57,6 @@ jobs:
           tags: |
             ghcr.io/civicpatch/civicpatch:latest
             ghcr.io/civicpatch/civicpatch:${{ steps.date.outputs.DATE_TAG }}
+          target: production
           cache-from: type=gha
           cache-to: type=gha,mode=max
-

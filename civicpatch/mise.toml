@@ -1,6 +1,7 @@
 [tools] # Note: this is just for typehinting, development should happen in docker
-python = "3.11" 
+python = "3.12"
 poetry = "2.1.3"
+dive = "0.13.1"
 
 [env]
 _.file = ".env"
@@ -51,7 +52,7 @@ run = "docker compose -f ../docker-compose.yml run --rm civicpatch poetry run py
 run = """
 echo "Generating data comment..."
 docker compose -f docker-compose.yml run --rm civicpatch poetry run \
-  python src/scripts/generate_data_comment.py --pr-number 123 --state wa --geoid 456
+  python src/scripts/generate_data_comment.py /app/data/wa/municipalities/spokane/people.yml
 """
 
 [tasks.generate-data-review-comment]

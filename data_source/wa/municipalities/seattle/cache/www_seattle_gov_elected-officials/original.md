@@ -20,8 +20,6 @@ A lock () or https:// means you've safely connected to the .gov website. Only sh
 
 Seattle
 
-![Google Translate logo]()
-
 English Choose a language arrow
 
 * English
@@ -46,7 +44,7 @@ English Choose a language arrow
 * ਪੰਜਾਬੀ
 * عربى
 
-![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](https://www.seattle.gov/#)
+[Select Language​▼](https://www.seattle.gov/#)
 
 SearchPay or ApplyMain Navigation MenuMenu
 
@@ -72,7 +70,7 @@ Close menu for City AdministrationCloseBack toCity Administration
 
 * [All Get Involved](https://www.seattle.gov/get-involved)
 * [Boards and Commissions](https://www.seattle.gov/boards-and-commissions)
-* [Council Meeting Calendar and Agendas](https://www.seattle.gov/council/committees)
+* [Council Meeting Calendar and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas)
 * [Have a Say in City Projects (Your Voice, Your Choice)](https://www.seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/yvyc-program)
 * [How Seattle's Government Works](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/seattles-form-of-government)
 * [Seattle Channel TV](https://www.seattlechannel.org/)
@@ -89,7 +87,7 @@ Close menu for City AdministrationCloseBack toCity Administration
 
 ### Issues and Initiatives
 
-* [City Council Issues](https://www.seattle.gov/council/issues)
+* [City Council Topics](https://www.seattle.gov/council/topics)
 * [Digital Equity](https://www.seattle.gov/tech/reports-and-data/about-digital-equity)
 * [Environment and Sustainability](https://www.seattle.gov/environment)
 * [Free College Tuition](https://www.seattle.gov/education/fepp-levy/the-seattle-promise)
@@ -133,11 +131,9 @@ Close menu for Public SafetyCloseBack toPublic Safety
 * [Earthquake Safety](https://www.seattle.gov/earthquake)
 * [Flooding Safety](https://www.seattle.gov/flood-safety)
 * [Plan for an Emergency](https://www.seattle.gov/emergency-management/prepare/prepare-yourself)
-* [Regional Hazards](https://www.seattle.gov/emergency-management/hazards)
-* [Regional Emergency Plans](https://www.seattle.gov/emergency-management/plans)
+* [Regional Hazards](https://www.seattle.gov/emergency-management/disaster-impacts/all-hazards)
 * [Seattle 9-1-1/CARE](https://www.seattle.gov/care)
 * [Smoke and Wildfires](https://www.seattle.gov/wildfire-smoke-safety)
-* [Subscribe to Emergency Alerts](https://www.seattle.gov/alert)
 * [Summer Heat Safety](https://www.seattle.gov/heat-safety)
 * [Winter Storms](https://www.seattle.gov/winter-weather)
 
@@ -328,7 +324,7 @@ Close menu for Explore the CityCloseBack toExplore the City
 * [Free Passes to Local Museums](https://www.spl.org/programs-and-services/arts-and-culture/museum-pass)
 * [Historic Districts](https://www.seattle.gov/neighborhoods/historic-preservation/historic-districts)
 * [Libraries](https://www.spl.org/hours-and-locations)
-* [Public Art in Your Neighborhood](https://www.seattle.gov/arts/experience/maps-and-apps)
+* [Public Art Around the City](https://www.seattle.gov/arts/programs/public-art/civic-art-collection)
 * [Seattle Center](http://www.seattlecenter.com/)
 * [Tree Walks](https://www.seattle.gov/trees/get-involved/tree-walks)
 * [Walking Map](https://www.seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/walking-map)
@@ -554,7 +550,7 @@ Close menu for City AdministrationClose
 ### [Get Involved with the City](https://www.seattle.gov/get-involved)
 
 * [Boards and Commissions](https://www.seattle.gov/boards-and-commissions)
-* [Council Meeting Calendar and Agendas](https://www.seattle.gov/council/committees)
+* [Council Meeting Calendar and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas)
 * [Have a Say in City Projects (Your Voice, Your Choice)](https://www.seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/yvyc-program)
 * [How Seattle's Government Works](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/seattles-form-of-government)
 * [Seattle Channel TV](https://www.seattlechannel.org/)
@@ -571,7 +567,7 @@ Close menu for City AdministrationClose
 
 ### Issues and Initiatives
 
-* [City Council Issues](https://www.seattle.gov/council/issues)
+* [City Council Topics](https://www.seattle.gov/council/topics)
 * [Digital Equity](https://www.seattle.gov/tech/reports-and-data/about-digital-equity)
 * [Environment and Sustainability](https://www.seattle.gov/environment)
 * [Free College Tuition](https://www.seattle.gov/education/fepp-levy/the-seattle-promise)
@@ -618,11 +614,9 @@ Close menu for Public SafetyClose
 * [Earthquake Safety](https://www.seattle.gov/earthquake)
 * [Flooding Safety](https://www.seattle.gov/flood-safety)
 * [Plan for an Emergency](https://www.seattle.gov/emergency-management/prepare/prepare-yourself)
-* [Regional Hazards](https://www.seattle.gov/emergency-management/hazards)
-* [Regional Emergency Plans](https://www.seattle.gov/emergency-management/plans)
+* [Regional Hazards](https://www.seattle.gov/emergency-management/disaster-impacts/all-hazards)
 * [Seattle 9-1-1/CARE](https://www.seattle.gov/care)
 * [Smoke and Wildfires](https://www.seattle.gov/wildfire-smoke-safety)
-* [Subscribe to Emergency Alerts](https://www.seattle.gov/alert)
 * [Summer Heat Safety](https://www.seattle.gov/heat-safety)
 * [Winter Storms](https://www.seattle.gov/winter-weather)
 
@@ -814,7 +808,7 @@ Close menu for Explore the CityClose
 * [Free Passes to Local Museums](https://www.spl.org/programs-and-services/arts-and-culture/museum-pass)
 * [Historic Districts](https://www.seattle.gov/neighborhoods/historic-preservation/historic-districts)
 * [Libraries](https://www.spl.org/hours-and-locations)
-* [Public Art in Your Neighborhood](https://www.seattle.gov/arts/experience/maps-and-apps)
+* [Public Art Around the City](https://www.seattle.gov/arts/programs/public-art/civic-art-collection)
 * [Seattle Center](http://www.seattlecenter.com/)
 * [Tree Walks](https://www.seattle.gov/trees/get-involved/tree-walks)
 * [Walking Map](https://www.seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/walking-map)
@@ -914,65 +908,65 @@ Council Members (Legislative)
 Rob Saka
 
 Councilmember  
- District 1](https://www.seattle.gov/council/saka "Rob Saka")
+ District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
 
 [![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
 
 Mark Solomon
 
 Councilmember  
- District 2](https://www.seattle.gov/council/solomon "Mark Solomon")
+ District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
 
 [![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
 
 Joy Hollingsworth
 
 Councilmember  
- District 3](https://www.seattle.gov/council/hollingsworth "Joy Hollingsworth")
+ District 3](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
 
 [![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
 
 Maritza Rivera
 
 Councilmember  
- District 4](https://www.seattle.gov/council/rivera "Maritza Rivera")
+ District 4](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
 
 [![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
 
 Debora Juarez
 
 Councilmember  
- District 5](https://www.seattle.gov/council/meet-the-council/debora-juarez "Debora Juarez")
+ District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
 
 [![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
 
 Dan Strauss
 
 Councilmember  
- District 6](https://www.seattle.gov/council/strauss "Dan Strauss")
+ District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
 
 [![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
 
 Bob Kettle
 
 Councilmember  
- District 7](https://www.seattle.gov/council/kettle "Bob Kettle")
+ District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
 
 [![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
 
 Alexis Mercedes Rinck
 
 Councilmember  
- Position 8](https://www.seattle.gov/council/rinck "Alexis Mercedes Rinck")
+ Position 8](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
 
 [![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
 
 Sara Nelson
 
 Council President  
- Position 9](https://www.seattle.gov/council/meet-the-council/sara-nelson "Sara Nelson")
+ Position 9](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
 
-[Meet the Council Go to link](https://www.seattle.gov/council/meet-the-council "Meet the Council")
+[Meet the Council Go to link](https://www.seattle.gov/council/members "Meet the Council")
 
 Law
 ---
@@ -1171,7 +1165,6 @@ Policies
 
 
 
-![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)
 
 Original text
 
