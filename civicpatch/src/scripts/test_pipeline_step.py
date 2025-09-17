@@ -10,7 +10,7 @@ def test_pipeline_step():
     pipeline_status = PipelineStatus.MAYBE_SEND_TO_GITHUB
     # Note: need to generate a unique request id
     # if you are testing PR creation
-    request_id = "c3bcb6d3-a391-49b2-9f60-b51d5df69bea"
+    request_id = "32faccde-b0d8-4f02-bff4-854295f72edd"
 
     pipeline = Pipeline()
     pipeline.set_state(pipeline_status)

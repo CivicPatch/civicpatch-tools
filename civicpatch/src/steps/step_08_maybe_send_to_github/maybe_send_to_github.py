@@ -3,6 +3,7 @@ import requests
 import zipfile
 from schemas import PipelineContext, PipelineStatus, MunicipalityContext
 
+from utils.request_utils import with_retry
 from utils.data_path_utils import get_data_municipality_path, get_data_source_municipality_path
 from utils.data_utils import get_municipality_context
 
@@ -51,11 +52,14 @@ def maybe_send_to_github(context: PipelineContext):
         'request_id': context["request_id"],
     } 
 
-    response = requests.post(
-        CRUDDER_UPLOAD_URL, 
-        headers=headers, 
-        files=files,
-        data=data
+    response = with_retry(
+        max_retries=5, 
+        func=lambda: requests.post(
+            CRUDDER_UPLOAD_URL, 
+            headers=headers, 
+            files=files,
+            data=data
+        )
     )
 
     return {

@@ -3,6 +3,7 @@ set -e
 export DISPLAY=:99
 
 [ -f /tmp/.X99-lock ] && rm -f /tmp/.X99-lock
+
 # Wait for Xvfb to be ready
 Xvfb :99 -screen 0 1024x768x24  &
 

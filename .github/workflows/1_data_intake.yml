@@ -74,6 +74,8 @@ jobs:
           SERVER_URL: ${{ github.event.inputs.server_url }}
           USER_EMAIL: ${{ github.event.inputs.user_email }}
         run: |
+          git config --global user.name "$GITHUB_USERNAME"
+          git config --global user.email "civicpatch-tools@civicpatch.org"
           git checkout -B ${{ steps.extract_branch.outputs.branch_name }}
           git add .
           git commit -m "Add municipal officials for ${{ github.event.inputs.state }} - ${{ github.event.inputs.geoid }} by ${{ github.event.inputs.user_email }}"
