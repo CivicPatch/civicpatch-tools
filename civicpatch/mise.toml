@@ -2,21 +2,17 @@
 _.file = ".env"
 [tasks.pipeline]
 # TODO
-run = "docker compose run --rm civicpatch xvfb-run -a poetry run python main.py pipeline --state"
+run = "docker compose run --rm civicpatch poetry run python main.py pipeline --state"
 [tasks.unit]
 run = "docker compose run --rm civicpatch poetry run pytest -s tests/unit"
 [tasks.integration]
-run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s tests/integration"
+run = "docker compose run --rm civicpatch poetry run pytest -s tests/integration"
 [tasks.container]
 run = "docker compose run --rm civicpatch"
 [tasks.containsh]
 run = "docker compose exec civicpatch bash"
 [tasks.inttest]
 run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s -vv tests/integration/services/together_ai/test_llm.py"
-# [tasks.manual]
-# run = "docker compose run --rm civicpatch poetry run python -m main pipeline --state wa --geoid 5367000"
-#[tasks.run-server]
-#run = "docker compose run civicpatch poetry run fastapi run src/main.py --host 0.0.0.0 --port ${FASTAPI_PORT}"
 
 [tasks.dev]
 run = "docker compose -f docker-compose.development.yml up"
@@ -29,7 +25,7 @@ curl -X POST http://localhost:8000/api/pipeline \
   -H "Content-Type: application/json" \
   -d '{
     "state": "wa",
-    "geoid": "5363000"
+    "geoid": "5353545"
   }'
 """
 

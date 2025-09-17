@@ -1,0 +1,1405 @@
+{
+    "request_id": "21f2d869-27c0-45c4-9fbc-9d41a775385f",
+    "state": "wa",
+    "geoid": "5353545",
+    "links": [
+        {
+            "url": "https://www.pasco-wa.gov/122/City-Council",
+            "status": "done",
+            "folder_name": "www_pasco-wa_gov_122_city-council",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/Directory.aspx?DID=4",
+            "status": "done",
+            "folder_name": "www_pasco-wa_gov_directory_aspx?did=4",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/439/City-Offices-Filing",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/988/Contact-the-City-Council",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/923/City-Council-Redistricting",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/27/Government",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/Calendar.aspx",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/FormCenter",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/123/City-Council-Districts",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/formcenter/City-Manager-7/Contact-Mayor-David-Milne-83",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/868/City-Council-Agendas-Packets",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/832/City-Council-2024-2025-Goals",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/facebook",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/Directory.aspx",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/1552/City-Programming-Council-Video",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/419/Get-Involved",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/1236/Assistant-City-Manager",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.pasco-wa.gov/8/How-Do-I",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        }
+    ],
+    "progress": {
+        "required_data": 6,
+        "current_data": 6
+    },
+    "names": {
+        "David Milne": [
+            "David Milne"
+        ],
+        "Charles Grimm": [
+            "Charles Grimm"
+        ],
+        "Blanche Barajas": [
+            "Blanche Barajas"
+        ],
+        "Leo Perales": [
+            "Leo Perales"
+        ],
+        "Melissa Blasdel": [
+            "Melissa Blasdel"
+        ],
+        "Peter Harpster": [
+            "Peter Harpster"
+        ],
+        "Joe Cotta": [
+            "Joe Cotta"
+        ]
+    },
+    "steps": {
+        "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "David Milne",
+                    "roles": [
+                        "Mayor",
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 5"
+                    ]
+                },
+                {
+                    "name": "Charles Grimm",
+                    "roles": [
+                        "Mayor Pro-Tem",
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 2"
+                    ]
+                },
+                {
+                    "name": "Blanche Barajas",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 1"
+                    ]
+                },
+                {
+                    "name": "Leo Perales",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 3"
+                    ]
+                },
+                {
+                    "name": "Melissa Blasdel",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 6"
+                    ]
+                },
+                {
+                    "name": "Peter Harpster",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At Large"
+                    ]
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "David Milne",
+                    "roles": [
+                        "Mayor",
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 5"
+                    ]
+                },
+                {
+                    "name": "Charles Grimm",
+                    "roles": [
+                        "Mayor Pro-Tem",
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 2"
+                    ]
+                },
+                {
+                    "name": "Blanche Barajas",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 1"
+                    ]
+                },
+                {
+                    "name": "Leo Perales",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 3"
+                    ]
+                },
+                {
+                    "name": "Melissa Blasdel",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 6"
+                    ]
+                },
+                {
+                    "name": "Peter Harpster",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At Large"
+                    ]
+                }
+            ],
+            "notes": "The City of Pasco operates under a Council-Manager system. Mayor David Milne and Mayor Pro-Tem Charles Grimm were appointed by the City Council on August 19, 2025, following the resignation of former Mayor Pete Serrano. The District 4 Council Member position is currently vacant as of September 17, 2025, with applications having closed on September 2, 2025, and interviews scheduled for September 15, 2025. An appointment for District 4 is pending or has recently occurred but is not reflected in the provided search results."
+        },
+        "SEARCH_LINKS": {
+            "search_link_pointer": 1,
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "https://www.pasco-wa.gov/122/City-Council",
+                        "https://www.pasco-wa.gov/Directory.aspx?DID=4",
+                        "https://www.pasco-wa.gov/439/City-Offices-Filing",
+                        "https://www.pasco-wa.gov/",
+                        "https://www.pasco-wa.gov/988/Contact-the-City-Council",
+                        "https://www.pasco-wa.gov/923/City-Council-Redistricting",
+                        "https://www.pasco-wa.gov/27/Government",
+                        "https://www.pasco-wa.gov/Calendar.aspx",
+                        "https://www.pasco-wa.gov/FormCenter",
+                        "https://www.pasco-wa.gov/123/City-Council-Districts",
+                        "https://www.pasco-wa.gov/formcenter/City-Manager-7/Contact-Mayor-David-Milne-83",
+                        "https://www.pasco-wa.gov/868/City-Council-Agendas-Packets",
+                        "https://www.pasco-wa.gov/832/City-Council-2024-2025-Goals",
+                        "https://www.pasco-wa.gov/facebook",
+                        "https://www.pasco-wa.gov/Directory.aspx",
+                        "https://www.pasco-wa.gov/1552/City-Programming-Council-Video",
+                        "https://www.pasco-wa.gov/419/Get-Involved",
+                        "https://www.pasco-wa.gov/1236/Assistant-City-Manager",
+                        "https://www.pasco-wa.gov/8/How-Do-I"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {
+            "elapsed_times": [
+                58.258421182632446,
+                73.7060649394989
+            ],
+            "total_elapsed_time_seconds": 131.96448612213135,
+            "average_elapsed_time_seconds": 65.98224306106567
+        },
+        "PROCESS_PAGE_CONTENT": {
+            "records_by_source": {
+                "google_gemini": {
+                    "David Milne": [
+                        {
+                            "name": "David Milne",
+                            "image": null,
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ],
+                    "Charles Grimm": [
+                        {
+                            "name": "Charles Grimm",
+                            "image": null,
+                            "roles": [
+                                "mayor pro tempore"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ],
+                    "Blanche Barajas": [
+                        {
+                            "name": "Blanche Barajas",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ],
+                    "Leo Perales": [
+                        {
+                            "name": "Leo Perales",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ],
+                    "Joe Cotta": [
+                        {
+                            "name": "Joe Cotta",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ],
+                    "Melissa Blasdel": [
+                        {
+                            "name": "Melissa Blasdel",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ],
+                    "Peter Harpster": [
+                        {
+                            "name": "Peter Harpster",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "At Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ]
+                },
+                "openai": {
+                    "David Milne": [
+                        {
+                            "name": "David Milne",
+                            "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ],
+                    "Charles Grimm": [
+                        {
+                            "name": "Charles Grimm",
+                            "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-EVK2C7",
+                            "roles": [
+                                "Mayor Pro Tem"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-EVK2C7",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ],
+                    "Blanche Barajas": [
+                        {
+                            "name": "Blanche Barajas",
+                            "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-SBQHCS",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-SBQHCS",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ],
+                    "Leo Perales": [
+                        {
+                            "name": "Leo Perales",
+                            "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-pnBy7S",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-pnBy7S",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ],
+                    "Melissa Blasdel": [
+                        {
+                            "name": "Melissa Blasdel",
+                            "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ],
+                    "Peter Harpster": [
+                        {
+                            "name": "Peter Harpster",
+                            "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-htB0hN",
+                            "roles": [
+                                "Council Member At-Large"
+                            ],
+                            "divisions": [
+                                "At Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-htB0hN",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        }
+                    ]
+                },
+                "together_ai": {
+                    "David Milne": [
+                        {
+                            "name": "David Milne",
+                            "image": null,
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        },
+                        {
+                            "name": "David Milne",
+                            "image": null,
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        }
+                    ],
+                    "Blanche Barajas": [
+                        {
+                            "name": "Blanche Barajas",
+                            "image": null,
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        },
+                        {
+                            "name": "Blanche Barajas",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "district"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        }
+                    ],
+                    "Charles Grimm": [
+                        {
+                            "name": "Charles Grimm",
+                            "image": null,
+                            "roles": [
+                                "Mayor Pro-Tem"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        },
+                        {
+                            "name": "Charles Grimm",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        }
+                    ],
+                    "Leo Perales": [
+                        {
+                            "name": "Leo Perales",
+                            "image": null,
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        },
+                        {
+                            "name": "Leo Perales",
+                            "image": null,
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "position"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        }
+                    ],
+                    "Melissa Blasdel": [
+                        {
+                            "name": "Melissa Blasdel",
+                            "image": null,
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [
+                                "District 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        },
+                        {
+                            "name": "Melissa Blasdel",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "seat"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        }
+                    ],
+                    "Peter Harpster": [
+                        {
+                            "name": "Peter Harpster",
+                            "image": null,
+                            "roles": [
+                                "Councilmember"
+                            ],
+                            "divisions": [
+                                "At Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                        },
+                        {
+                            "name": "Peter Harpster",
+                            "image": null,
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        }
+                    ]
+                }
+            }
+        },
+        "MERGE_RECORDS_WITHIN_SOURCE": {
+            "people_by_source": {
+                "google_gemini": [
+                    {
+                        "name": "David Milne",
+                        "image": "",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [
+                            "district 5"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Charles Grimm",
+                        "image": "",
+                        "roles": [
+                            "mayor pro tempore"
+                        ],
+                        "divisions": [
+                            "district 2"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Blanche Barajas",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Leo Perales",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 3"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Joe Cotta",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 4"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Melissa Blasdel",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 6"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Peter Harpster",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "openai": [
+                    {
+                        "name": "David Milne",
+                        "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [
+                            "district 5"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Charles Grimm",
+                        "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-EVK2C7",
+                        "roles": [
+                            "mayor pro tempore"
+                        ],
+                        "divisions": [
+                            "district 2"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-EVK2C7",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Blanche Barajas",
+                        "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-SBQHCS",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 5"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-SBQHCS",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Leo Perales",
+                        "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-pnBy7S",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 3"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-pnBy7S",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Melissa Blasdel",
+                        "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 6"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Peter Harpster",
+                        "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-htB0hN",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-htB0hN",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "together_ai": [
+                    {
+                        "name": "David Milne",
+                        "image": "",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [
+                            "district 5",
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council",
+                            "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Blanche Barajas",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 2",
+                            "district"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council",
+                            "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Charles Grimm",
+                        "image": "",
+                        "roles": [
+                            "mayor pro tempore",
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 2",
+                            "ward"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council",
+                            "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Leo Perales",
+                        "image": "",
+                        "roles": [
+                            "council member",
+                            "mayor"
+                        ],
+                        "divisions": [
+                            "district 3",
+                            "position"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council",
+                            "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Melissa Blasdel",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "district 6",
+                            "seat"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council",
+                            "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Peter Harpster",
+                        "image": "",
+                        "roles": [
+                            "council member",
+                            "mayor"
+                        ],
+                        "divisions": [
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.pasco-wa.gov/122/City-Council",
+                            "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                        ],
+                        "updated_at": ""
+                    }
+                ]
+            }
+        },
+        "MERGE_RECORDS_ACROSS_SOURCES": {
+            "people": [
+                {
+                    "name": "David Milne",
+                    "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": [
+                        "District 5"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
+                    "start_date": "",
+                    "end_date": "",
+                    "state": "wa",
+                    "place": "Pasco",
+                    "counties": [
+                        "Franklin"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.pasco-wa.gov/122/City-Council",
+                        "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                    ],
+                    "updated_at": "2025-09-17T23:23:12+00:00"
+                },
+                {
+                    "name": "Charles Grimm",
+                    "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-EVK2C7",
+                    "roles": [
+                        "Mayor Pro Tempore"
+                    ],
+                    "divisions": [
+                        "District 2"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-EVK2C7",
+                    "start_date": "",
+                    "end_date": "",
+                    "state": "wa",
+                    "place": "Pasco",
+                    "counties": [
+                        "Franklin"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.pasco-wa.gov/122/City-Council",
+                        "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                    ],
+                    "updated_at": "2025-09-17T23:23:12+00:00"
+                },
+                {
+                    "name": "Blanche Barajas",
+                    "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-SBQHCS",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-SBQHCS",
+                    "start_date": "",
+                    "end_date": "",
+                    "state": "wa",
+                    "place": "Pasco",
+                    "counties": [
+                        "Franklin"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.pasco-wa.gov/122/City-Council",
+                        "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                    ],
+                    "updated_at": "2025-09-17T23:23:12+00:00"
+                },
+                {
+                    "name": "Peter Harpster",
+                    "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-htB0hN",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-large"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-htB0hN",
+                    "start_date": "",
+                    "end_date": "",
+                    "state": "wa",
+                    "place": "Pasco",
+                    "counties": [
+                        "Franklin"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.pasco-wa.gov/122/City-Council",
+                        "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                    ],
+                    "updated_at": "2025-09-17T23:23:12+00:00"
+                },
+                {
+                    "name": "Leo Perales",
+                    "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-pnBy7S",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 3"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-pnBy7S",
+                    "start_date": "",
+                    "end_date": "",
+                    "state": "wa",
+                    "place": "Pasco",
+                    "counties": [
+                        "Franklin"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.pasco-wa.gov/122/City-Council",
+                        "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                    ],
+                    "updated_at": "2025-09-17T23:23:12+00:00"
+                },
+                {
+                    "name": "Melissa Blasdel",
+                    "image": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 6"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
+                    "start_date": "",
+                    "end_date": "",
+                    "state": "wa",
+                    "place": "Pasco",
+                    "counties": [
+                        "Franklin"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.pasco-wa.gov/122/City-Council",
+                        "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                    ],
+                    "updated_at": "2025-09-17T23:23:12+00:00"
+                }
+            ],
+            "agreement_score": 97.97278911564626,
+            "disagreements": [
+                {
+                    "field": "website",
+                    "person_name": "Melissa Blasdel",
+                    "merged_value": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
+                    "source_values": {
+                        "google_gemini": "(empty)",
+                        "openai": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
+                        "together_ai": "https://www.pasco-wa.gov/868/City-Council-Agendas"
+                    },
+                    "disagreement_score": 0.38
+                }
+            ],
+            "missing_people": []
+        },
+        "CLEANUP": {},
+        "RETRY": {},
+        "DONE": {},
+        "MAYBE_SEND_TO_GITHUB": {
+            "status": "completed",
+            "response_status_code": 200,
+            "response_text": "{\"filename\":\"request_21f2d869-27c0-45c4-9fbc-9d41a775385f_wa_5353545.zip\",\"status\":\"uploaded\",\"zip_url\":\"https://crudder.c9ae2b352766fe3e6f7dbee61bcd4c7c.r2.cloudflarestorage.com/processed_request_21f2d869-27c0-45c4-9fbc-9d41a775385f_wa_5353545.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=83c1bf330c0ac3dc3e457dc295867d5f%2F20250917%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250917T232313Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=cf0e07df1ef0ec2ba07a7fce46084a813cda0baa11a9e6c88f7d62471c8e19cc\",\"metadata\":{\"state\":\"wa\",\"geoid\":\"5353545\",\"municipality_name\":\"Pasco\",\"request_id\":\"21f2d869-27c0-45c4-9fbc-9d41a775385f\"}}"
+        }
+    },
+    "pipeline_duration_seconds": 191.54738092422485
+}
