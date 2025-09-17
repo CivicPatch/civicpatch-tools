@@ -1,3 +1,4 @@
+import os
 import yaml
 import sys
 from typing import List
@@ -32,16 +33,19 @@ def load_people_from_yaml(filepath: str) -> List[Person]:
     """
     with open(filepath, "r") as file:
         data = yaml.safe_load(file)
-        return [Person(**person_data) for person_data in data["people"]]
+        return [Person(**person_data) for person_data in data]
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python generate_data_comment.py <path_to_yaml_file>")
+        print("Usage: python generate_data_comment.py <municipality_path>")
         sys.exit(1)
     
-    yaml_filepath = sys.argv[1]
+    municipality_path = sys.argv[1]
     try:
-        people = load_people_from_yaml(yaml_filepath)
+        # It should be defined in the dockerfile
+        PYTHONPATH = os.getenv("PYTHONPATH", "/app/src")
+        people_path = os.path.join(PYTHONPATH, "..", "data", municipality_path, "people.yml")
+        people = load_people_from_yaml(people_path)
         markdown_table = generate_data_comment(people)
         print(markdown_table)
     except Exception as e:

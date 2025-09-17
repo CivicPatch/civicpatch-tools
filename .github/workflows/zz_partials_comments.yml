@@ -15,12 +15,8 @@ on:
         description: 'The head ref (branch name) of the PR'
         required: true
         type: string
-      state:
-        description: 'The state abbreviation (e.g., wa, ca) relevant to the PR'
-        required: true
-        type: string
-      geoid: # To be replaced with jurisdiction_id!
-        description: 'The GEOID relevant to the PR'
+      municipality_path:
+        description: 'The path to the municipality (e.g. wa/municipalities/seattle)'
         required: true
         type: string
 
@@ -69,7 +65,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull Prebuilt Docker Image
-        run: docker pull ghcr.io/civicpatch-tools/civicpatch:latest
+        run: docker pull ghcr.io/civicpatch/civicpatch-slim:latest
 
       - name: Generate GitHub App Pipeline Token
         id: generate-pipeline-token
@@ -95,13 +91,14 @@ jobs:
         run: |
           PR_NUMBER=${{ inputs.pr_number }}
           echo "TBD: Create or update data comment for PR #$PR_NUMBER"
-          mise generate-data-comment
+          COMMENT=$(mise generate-data-comment --pr_number $PR_NUMBER --municipality_path ${{ inputs.municipality_path }} )
+          gh pr comment $PR_NUMBER --edit-last --create-if-none --body "$COMMENT"
 
-      - name: Create Approval/Disapproval Comment
-        env:
-          GITHUB_USERNAME: civic-patch-approve-bot
-          GITHUB_TOKEN: ${{ steps.generate-approve-token.outputs.token }}
-        run: |
-          PR_NUMBER=${{ inputs.pr_number }}
-          echo "TBD: Create or update approval/disapproval comment for PR #$PR_NUMBER"
-          mise generate-data-review-comment
+      #- name: Create Approval/Disapproval Comment
+      #  env:
+      #    GITHUB_USERNAME: civic-patch-approve-bot
+      #    GITHUB_TOKEN: ${{ steps.generate-approve-token.outputs.token }}
+      #  run: |
+      #    PR_NUMBER=${{ inputs.pr_number }}
+      #    echo "TBD: Create or update approval/disapproval comment for PR #$PR_NUMBER"
+      #    OUTPUT=$(mise generate-data-review-comment --pr-number $PR_NUMBER

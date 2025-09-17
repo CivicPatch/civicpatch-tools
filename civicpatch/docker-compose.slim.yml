@@ -2,15 +2,11 @@ services:
   civicpatch-slim:
     env_file: .env
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
-    build:
-      context: ..
-      dockerfile: civicpatch/Dockerfile
-      target: image-base 
+    image: ghcr.io/civicpatch/civicpatch-slim:latest
     restart: unless-stopped
     ports:
       - "8000:8000"
     volumes:
-      # - ../utils:/app/utils:ro  # Mount shared library
       - ../data:/app/data
       - ../data_source:/app/data_source
       - .:/app
