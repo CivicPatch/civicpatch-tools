@@ -50,14 +50,14 @@ run = "docker compose -f ../docker-compose.yml run --rm civicpatch poetry run py
 # GITHUB ACTIONS
 [tasks.generate-data-comment]
 run = """
-echo "Generating data comment..."
-docker compose -f docker-compose.yml run --rm civicpatch poetry run \
-  python src/scripts/generate_data_comment.py /app/data/wa/municipalities/spokane/people.yml
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+  python src/scripts/generate_data_comment.py {{ option(name="municipality-path") }} 
 """
 
 [tasks.generate-data-review-comment]
+# Ex: /app/data/wa/municipalities/spokane/people.yml
 run = """
 echo "Generating data review comment..."
-docker compose -f docker-compose.yml run --rm civicpatch poetry run \
-  python src/scripts/generate_data_review_comment.py --pr-number 123 --state wa --geoid 456
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+  python src/scripts/generate_data_review_comment.py {{ option(name="file") }}
 """

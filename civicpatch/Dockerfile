@@ -1,4 +1,4 @@
-FROM python:3.12-slim-trixie AS image-base 
+FROM python:3.12.11-slim-trixie AS image-base 
 # Supported playwright os
 # https://playwright.dev/docs/intro
 ENV PROJECT_NAME="civicpatch"
@@ -43,6 +43,8 @@ RUN poetry run playwright install --with-deps chromium
 
 RUN useradd -m -s /bin/bash civicpatch_user && chown -R civicpatch_user:civicpatch_user /app
 USER civicpatch_user
+
+ENV PATH="/home/civicpatch_user/.local/bin:$PATH"
 
 RUN pip config set global.no-cache-dir true
 COPY ${PROJECT_NAME}/src/setup.py /app/src/setup.py
