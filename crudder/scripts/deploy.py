@@ -2,25 +2,16 @@
 import subprocess
 import sys
 import os
-from datetime import date
 import json
 
-SERVICE = "crudder"  # The main service to build and push
-BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-
-IMAGE_PREFIX = "civicpatch"  # e.g. your Docker Hub username or your private registry
-REGISTRY = "code.wizards.cafe"
-
-DOCKER_USERNAME = "witch"
-DOCKER_PASSWORD = os.getenv("DOCKER_PASSWORD")  # Prefer using access tokens if possible
-BUILD_CONTEXT = os.path.join(BASE_DIR, "..")  # The build context is outside the crudder project
+SERVICE = "crudder"  # The main service to push
 
 # Make call to gitea api for workflow dispatch
 GITEA_API_URL = 'https://code.wizards.cafe/api/v1'
-GITEA_TOKEN = os.getenv('CRUDDER_REMOTELAB_WORKFLOW_TOKEN')
+GITEA_TOKEN = os.getenv('REMOTELAB_WORKFLOW_TOKEN')
 REPO_OWNER = 'witch'
 REPO_NAME = 'remotelab'
-WORKFLOW_FILE = 'deploy-crudder.yml'
+WORKFLOW_FILE = f'deploy-{SERVICE}.yml'
 
 def run(command, cwd=None, input=None):
     print(f"$ {' '.join(command)}")
@@ -28,35 +19,6 @@ def run(command, cwd=None, input=None):
     if result.returncode != 0:
         print(f"❌ Command failed: {' '.join(command)}")
         sys.exit(result.returncode)
-
-def docker_login():
-    if not DOCKER_USERNAME or not DOCKER_PASSWORD:
-        print("❌ DOCKER_USERNAME or DOCKER_PASSWORD env vars not set.")
-        sys.exit(1)
-    print(f"🔐 Logging into {REGISTRY} as {DOCKER_USERNAME}")
-    run(["docker", "login", REGISTRY, "-u", DOCKER_USERNAME, "--password-stdin"], input=DOCKER_PASSWORD)
-
-def build_and_push():
-    today_tag = date.today().isoformat()  # e.g., '2025-06-26'
-    base_image = f"{REGISTRY}/{IMAGE_PREFIX}/{SERVICE}"
-    latest_tag = f"{base_image}:latest"
-    date_tag = f"{base_image}:{today_tag}"
-
-    dockerfile_path = os.path.join(BASE_DIR, "Dockerfile")  # go one level up from scripts/
-
-    print(f"🔨 Building {SERVICE} with tags: latest, {today_tag}")
-    print(f"Dockerfile: {dockerfile_path}")
-    run([
-        "docker", "build",
-        "-t", latest_tag,
-        "-t", date_tag,
-        "-f", dockerfile_path,  # Specify the Dockerfile explicitly
-        BUILD_CONTEXT  # Pass the build context as the last argument
-    ])
-
-    print(f"🚀 Pushing tags for {SERVICE}")
-    run(["docker", "push", latest_tag])
-    run(["docker", "push", date_tag])
 
 def gitea_deploy():
     headers = {
@@ -102,8 +64,6 @@ def gitea_deploy():
         sys.exit(1)
 
 def main():
-    docker_login()
-    build_and_push()
     gitea_deploy()
 
 if __name__ == "__main__":
