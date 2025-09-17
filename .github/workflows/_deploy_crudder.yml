@@ -1,15 +1,12 @@
 name: Deploy Crudder
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'crudder/**'
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Deployment environment (e.g., production, staging)'
-        required: true
-        default: 'production'
-
-permissions:
-  packages: write
 
 jobs:
   deploy:
@@ -25,8 +22,7 @@ jobs:
 
       - name: Build and deploy crudder service to production
         env:
-          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKER_PASSWORD: ${{ secrets.CRUDDER_DOCKER_DEPLOY_TOKEN }}
           REMOTELAB_WORKFLOW_TOKEN: ${{ secrets.CRUDDER_REMOTELAB_WORKFLOW_TOKEN }}
         run:
           ./crudder/scripts/build_and_deploy.py

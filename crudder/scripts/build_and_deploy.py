@@ -11,7 +11,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 IMAGE_PREFIX = "civicpatch"  # e.g. your Docker Hub username or your private registry
 REGISTRY = "ghcr.io"
 
-DOCKER_USERNAME = os.getenv("DOCKER_USERNAME")
+DOCKER_USERNAME = "witch"
 DOCKER_PASSWORD = os.getenv("DOCKER_PASSWORD")  # Prefer using access tokens if possible
 BUILD_CONTEXT = os.path.join(BASE_DIR, "..")  # The build context is outside the crudder project
 
