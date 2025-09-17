@@ -1,4 +1,4 @@
-FROM python:3.11-bullseye AS image-base 
+FROM python:3.12.11-slim-trixie AS image-base 
 ENV PROJECT_NAME="crudder"
 
 # Install system dependencies
