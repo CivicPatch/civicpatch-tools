@@ -1,5 +1,5 @@
 {
-    "request_id": "test_request_id",
+    "request_id": "c3bcb6d3-a391-49b2-9f60-b51d5df69bea",
     "state": "wa",
     "geoid": "5363000",
     "links": [
@@ -2987,10 +2987,10 @@
         "RETRY": {},
         "DONE": {},
         "MAYBE_SEND_TO_GITHUB": {
-            "status": "failed",
-            "response_status_code": 500,
-            "response_text": "Internal Server Error"
+            "status": "completed",
+            "response_status_code": 200,
+            "response_text": "{\"filename\":\"request_c3bcb6d3-a391-49b2-9f60-b51d5df69bea_wa_5363000.zip\",\"status\":\"uploaded\",\"zip_url\":\"https://crudder.c9ae2b352766fe3e6f7dbee61bcd4c7c.r2.cloudflarestorage.com/processed_request_c3bcb6d3-a391-49b2-9f60-b51d5df69bea_wa_5363000.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=83c1bf330c0ac3dc3e457dc295867d5f%2F20250917%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250917T231735Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=294606aea1a21d942919b1e1775a64f9dff92bd800595be62d57d79351e4f930\",\"metadata\":{\"state\":\"wa\",\"geoid\":\"5363000\",\"municipality_name\":\"Seattle\",\"request_id\":\"c3bcb6d3-a391-49b2-9f60-b51d5df69bea\"}}"
         }
     },
-    "pipeline_duration_seconds": 2.9147510528564453
+    "pipeline_duration_seconds": 1.79453706741333
 }

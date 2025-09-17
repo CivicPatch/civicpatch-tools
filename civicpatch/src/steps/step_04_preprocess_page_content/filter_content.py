@@ -85,6 +85,4 @@ def filter_node_content(node: Tag, state, government_type):
 
         # Unwrap the node, keeping only child nodes
         node.unwrap()
-    else:
-        print(f"Skipping unwrap for node: {node.name}, as it has no parent")
 

@@ -45,6 +45,13 @@ jobs:
         run: |
           curl -L "${{ github.event.inputs.zip_file_url }}" -o /tmp/payload.zip
 
+      - name: Generate GitHub Pipeline Token
+        id: generate-pipeline-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
+          private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
+
       - name: Unzip data into root project directory
         run: |
           unzip -o /tmp/payload.zip -d .
@@ -62,12 +69,11 @@ jobs:
 
       - name: Create a PR
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: civic-patch-pipeline-bot
+          GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
           SERVER_URL: ${{ github.event.inputs.server_url }}
           USER_EMAIL: ${{ github.event.inputs.user_email }}
         run: |
-          git config --global user.name "civicpatch-pipeline-bot"
-          git config --global user.email "civicpatch-tools@civicpatch.org"
           git checkout -B ${{ steps.extract_branch.outputs.branch_name }}
           git add .
           git commit -m "Add municipal officials for ${{ github.event.inputs.state }} - ${{ github.event.inputs.geoid }} by ${{ github.event.inputs.user_email }}"
