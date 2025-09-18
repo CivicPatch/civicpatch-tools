@@ -45,6 +45,9 @@ def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
 
     fields = ["roles", "divisions", "phone_number", "email", "website", "start_date", "end_date"]
     
+    # Initialize disagreements as a dictionary keyed by person
+    disagreements_by_person: Dict[str, List[FieldComparison]] = {}
+    
     for canonical_name in canonical_names:
         # Collect all Person objects grouped by source for this canonical name
         grouped_people_by_source = {
@@ -67,7 +70,7 @@ def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
         ]
         
         for source in missing_sources:
-            missing_people.append(MissingPerson(source=source, person_name=canonical_name))
+            missing_people.append(MissingPerson(name=canonical_name, missing_from_sources=missing_sources, found_in_sources=sources_with_person))
 
         # Merge Person objects into a single Person object
         merged_person = merge_people_across_sources(canonical_name, grouped_people_by_source)
@@ -76,13 +79,17 @@ def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
         merged_person.counties = counties
 
         # Identify disagreements during merging
-        comparisons = collect_field_comparisons(
+        person_comparisons = collect_field_comparisons(
             canonical_name,
             merged_person,
             grouped_people_by_source,
             fields
         )
-        total_disagreement_score += sum(c.disagreement_score for c in comparisons)
+        
+        # If there are any disagreements for this person, add them to the dictionary
+        if person_comparisons:
+            disagreements_by_person[canonical_name] = person_comparisons
+            total_disagreement_score += sum(c.disagreement_score for c in person_comparisons)
 
         merged_people.append(merged_person.model_dump())
 
@@ -90,23 +97,31 @@ def merge_records_across_sources(context: PipelineContext) -> Dict[str, Any]:
     max_possible_disagreement = num_sources * len(canonical_names) * len(fields)
     agreement_score = 100 * (1 - (total_disagreement_score / max_possible_disagreement)) if max_possible_disagreement > 0 else 100.0
 
+    validation_issues = []
+
+    if agreement_score < 80:
+        validation_issues.append(f"Low agreement score: {agreement_score:.2f}")
+
     return {
         "steps": {
             **context["steps"],
             PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value: {
                 "people": sort_people(merged_people, government_type),
                 "agreement_score": agreement_score,
-                "disagreements": [
-                    {
-                        "field": c.field,
-                        "person_name": c.person_name,
-                        "merged_value": c.merged_value,
-                        "source_values": c.source_values,
-                        "disagreement_score": c.disagreement_score
-                    }
-                    for c in comparisons
-                ],
-                "missing_people": [missing_person.model_dump() for missing_person in missing_people]
+                "disagreements": {
+                    person_name: [
+                        {
+                            "field": c.field,
+                            "merged_value": c.merged_value,
+                            "source_values": c.source_values,
+                            "disagreement_score": c.disagreement_score
+                        }
+                        for c in comparisons
+                    ]
+                    for person_name, comparisons in disagreements_by_person.items()
+                },
+                "missing_people": [missing_person.model_dump() for missing_person in missing_people],
+                "validation_issues": validation_issues
             }
         }
     }
