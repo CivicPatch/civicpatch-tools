@@ -1,4 +1,7 @@
 {
+    "request_id": "d9ca1ee0-cb46-4741-8e43-ba1e6308cad4",
+    "state": "wa",
+    "geoid": "5370000",
     "links": [
         {
             "url": "https://www.cityoftacoma.org/government/city_council",
@@ -8,8 +11,8 @@
         },
         {
             "url": "https://www.cityoftacoma.org/",
-            "status": "pending",
-            "folder_name": "",
+            "status": "done",
+            "folder_name": "www_cityoftacoma_org_",
             "is_profile_page": false
         },
         {
@@ -37,19 +40,7 @@
             "is_profile_page": false
         },
         {
-            "url": "https://www.cityoftacoma.org/climateactionplan",
-            "status": "pending",
-            "folder_name": "",
-            "is_profile_page": false
-        },
-        {
             "url": "https://www.cityoftacoma.org/government/committees_boards_commissions",
-            "status": "pending",
-            "folder_name": "",
-            "is_profile_page": false
-        },
-        {
-            "url": "https://www.cityoftacoma.org/in_the_news/council_member_jamika_scott_regarding_police_chief_s_announcement",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
@@ -61,19 +52,13 @@
             "is_profile_page": false
         },
         {
-            "url": "https://cms.cityoftacoma.org/cityclerk/files/documents/CityCouncilRulesOfProcedure.pdf",
+            "url": "https://www.cityoftacoma.org/in_the_news/statement_by_council_member_jamika_scott_in_support_of_president_joe_biden_s_demand_for_an_immediate_ceasefire_in_gaza",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
         },
         {
-            "url": "https://www.cityoftacoma.org/government/committees_boards_commissions/citizen_commission_on_elected_salaries",
-            "status": "pending",
-            "folder_name": "",
-            "is_profile_page": false
-        },
-        {
-            "url": "https://www.cityoftacoma.org/government/city_departments/CityAttorney",
+            "url": "https://www.cityoftacoma.org/climateactionplan",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
@@ -85,7 +70,7 @@
             "is_profile_page": false
         },
         {
-            "url": "https://www.cityoftacoma.org/in_the_news/council_member_joe_bushnell_on_passage_of_resolution_41474",
+            "url": "https://cms.cityoftacoma.org/cityclerk/files/documents/CityCouncilRulesOfProcedure.pdf",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
@@ -97,7 +82,31 @@
             "is_profile_page": false
         },
         {
+            "url": "https://www.cityoftacoma.org/in_the_news/council_member_joe_bushnell_on_passage_of_resolution_41474",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityoftacoma.org/government/committees_boards_commissions/citizen_commission_on_elected_salaries",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
             "url": "https://www.cityoftacoma.org/position8",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityoftacoma.org/claims",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://cityoftacoma.org/position7",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
@@ -109,13 +118,7 @@
             "is_profile_page": false
         },
         {
-            "url": "https://www.cityoftacoma.org/position6",
-            "status": "pending",
-            "folder_name": "",
-            "is_profile_page": false
-        },
-        {
-            "url": "https://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=197735",
+            "url": "https://www.cityoftacoma.org/government/city_departments/City_Managers_Office",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
@@ -141,9 +144,8 @@
         "Sandesh Sadalge": [
             "Sandesh Sadalge"
         ],
-        "Chanjolee Bushnell": [
-            "Chanjolee \"Joe\" Bushnell",
-            "Chanjolee Bushnell"
+        "Joe Bushnell": [
+            "Joe Bushnell"
         ],
         "Kiara Daniels": [
             "Kiara Daniels"
@@ -154,8 +156,12 @@
         "Kristina Walker": [
             "Kristina Walker"
         ],
-        "Joe Bushnell": [
-            "Joe Bushnell"
+        "Hyun Kim": [
+            "Hyun Kim"
+        ],
+        "Chanjolee Bushnell": [
+            "Chanjolee \"Joe\" Bushnell",
+            "Chanjolee Bushnell"
         ]
     },
     "steps": {
@@ -176,7 +182,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 1"
+                        "District 1"
                     ]
                 },
                 {
@@ -185,7 +191,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 2"
+                        "District 2"
                     ]
                 },
                 {
@@ -194,7 +200,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 3"
+                        "District 3"
                     ]
                 },
                 {
@@ -203,7 +209,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 4"
+                        "District 4"
                     ]
                 },
                 {
@@ -212,7 +218,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 5"
+                        "District 5"
                     ]
                 },
                 {
@@ -221,7 +227,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 6 (At-Large)"
+                        "At-Large"
                     ]
                 },
                 {
@@ -230,7 +236,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 7 (At-Large)"
+                        "At-Large"
                     ]
                 },
                 {
@@ -239,7 +245,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 8 (At-Large)"
+                        "At-Large"
                     ]
                 }
             ],
@@ -257,7 +263,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 1"
+                        "District 1"
                     ]
                 },
                 {
@@ -266,7 +272,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 2"
+                        "District 2"
                     ]
                 },
                 {
@@ -275,7 +281,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 3"
+                        "District 3"
                     ]
                 },
                 {
@@ -284,7 +290,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 4"
+                        "District 4"
                     ]
                 },
                 {
@@ -293,7 +299,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 5"
+                        "District 5"
                     ]
                 },
                 {
@@ -302,7 +308,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 6 (At-Large)"
+                        "At-Large"
                     ]
                 },
                 {
@@ -311,7 +317,7 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 7 (At-Large)"
+                        "At-Large"
                     ]
                 },
                 {
@@ -320,11 +326,11 @@
                         "Council Member"
                     ],
                     "divisions": [
-                        "Position 8 (At-Large)"
+                        "At-Large"
                     ]
                 }
             ],
-            "notes": "Tacoma, WA operates under a Council-Manager form of government, which includes a Mayor and eight City Council members. The City Council consists of five district-based positions and three at-large positions. The listed officials are current as of August 2024. [3, 8, 11, 12, 14]"
+            "notes": "Tacoma operates under a Council-Manager form of government, which includes an elected Mayor and eight Council Members. The City Council consists of five Councilmanic districts and three at-large positions. The Mayor is also an elected official. The 'Position' numbers from search results were interpreted to correspond to the district and at-large structure, with Positions 1-5 assumed to be district-based and Positions 6-8 as at-large, consistent with Olgy Diaz being identified as an at-large member in Position 7."
         },
         "SEARCH_LINKS": {
             "search_link_pointer": 1,
@@ -337,20 +343,20 @@
                         "https://www.cityoftacoma.org/ips",
                         "https://www.cityoftacoma.org/government",
                         "https://www.cityoftacoma.org/councilagendas",
-                        "https://www.cityoftacoma.org/climateactionplan",
                         "https://www.cityoftacoma.org/government/committees_boards_commissions",
-                        "https://www.cityoftacoma.org/in_the_news/council_member_jamika_scott_regarding_police_chief_s_announcement",
                         "https://www.cityoftacoma.org/government/mayor",
-                        "https://cms.cityoftacoma.org/cityclerk/files/documents/CityCouncilRulesOfProcedure.pdf",
-                        "https://www.cityoftacoma.org/government/committees_boards_commissions/citizen_commission_on_elected_salaries",
-                        "https://www.cityoftacoma.org/government/city_departments/CityAttorney",
+                        "https://www.cityoftacoma.org/in_the_news/statement_by_council_member_jamika_scott_in_support_of_president_joe_biden_s_demand_for_an_immediate_ceasefire_in_gaza",
+                        "https://www.cityoftacoma.org/climateactionplan",
                         "https://www.cityoftacoma.org/government/committees_boards_commissions/mayor_s_youth_commission",
-                        "https://www.cityoftacoma.org/in_the_news/council_member_joe_bushnell_on_passage_of_resolution_41474",
+                        "https://cms.cityoftacoma.org/cityclerk/files/documents/CityCouncilRulesOfProcedure.pdf",
                         "https://www.cityoftacoma.org/government/committees_boards_commissions/Board_of_Ethics",
+                        "https://www.cityoftacoma.org/in_the_news/council_member_joe_bushnell_on_passage_of_resolution_41474",
+                        "https://www.cityoftacoma.org/government/committees_boards_commissions/citizen_commission_on_elected_salaries",
                         "https://www.cityoftacoma.org/position8",
+                        "https://www.cityoftacoma.org/claims",
+                        "https://cityoftacoma.org/position7",
                         "https://www.cityoftacoma.org/government/committees_boards_commissions/joint_municipal_action_committee",
-                        "https://www.cityoftacoma.org/position6",
-                        "https://www.cityoftacoma.org/cms/One.aspx?portalId=169&pageId=197735"
+                        "https://www.cityoftacoma.org/government/city_departments/City_Managers_Office"
                     ],
                     "status": "completed"
                 },
@@ -368,10 +374,11 @@
         "SCRAPE_PAGE": {},
         "PREPROCESS_PAGE_CONTENT": {
             "elapsed_times": [
-                169.87987422943115
+                73.2413878440857,
+                75.18768119812012
             ],
-            "total_elapsed_time_seconds": 169.87987422943115,
-            "average_elapsed_time_seconds": 169.87987422943115
+            "total_elapsed_time_seconds": 148.4290690422058,
+            "average_elapsed_time_seconds": 74.2145345211029
         },
         "PROCESS_PAGE_CONTENT": {
             "records_by_source": {
@@ -384,12 +391,26 @@
                                 "Mayor"
                             ],
                             "divisions": [],
-                            "phone_number": "(253) 591-5100",
+                            "phone_number": null,
                             "email": null,
                             "website": null,
                             "start_date": "2018",
                             "end_date": null,
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
+                        },
+                        {
+                            "name": "Victoria Woodards",
+                            "image": "https://tacoma.gov/wp-content/uploads/2024/11/Mayor-Woodards-Portrait-1-312x300.jpg",
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/mayor/",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityoftacoma.org/"
                         }
                     ],
                     "John Hines": [
@@ -397,12 +418,12 @@
                             "name": "John Hines",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Hines-1-1-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "council member"
                             ],
                             "divisions": [
                                 "Position 1"
                             ],
-                            "phone_number": "(253) 591-5100",
+                            "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-john-hines/",
                             "start_date": null,
@@ -415,12 +436,12 @@
                             "name": "Sarah Rumbaugh",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Rumbaugh-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "council member"
                             ],
                             "divisions": [
                                 "Position 2"
                             ],
-                            "phone_number": "(253) 591-5100",
+                            "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-sarah-rumbaugh/",
                             "start_date": null,
@@ -433,12 +454,12 @@
                             "name": "Jamika Scott",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "council member"
                             ],
                             "divisions": [
                                 "Position 3"
                             ],
-                            "phone_number": "(253) 591-5100",
+                            "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-jamika-scott/",
                             "start_date": null,
@@ -451,12 +472,12 @@
                             "name": "Sandesh Sadalge",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Sadalge-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "council member"
                             ],
                             "divisions": [
                                 "Position 4"
                             ],
-                            "phone_number": "(253) 591-5100",
+                            "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-sandesh-sadalge/",
                             "start_date": null,
@@ -464,17 +485,17 @@
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
                         }
                     ],
-                    "Joe Bushnell": [
+                    "Chanjolee Bushnell": [
                         {
-                            "name": "Joe Bushnell",
+                            "name": "Chanjolee \"Joe\" Bushnell",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Bushnell-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "council member"
                             ],
                             "divisions": [
                                 "Position 5"
                             ],
-                            "phone_number": "(253) 591-5100",
+                            "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/",
                             "start_date": null,
@@ -487,13 +508,10 @@
                             "name": "Kiara Daniels",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Daniels-1-312x300.jpg",
                             "roles": [
-                                "Deputy Mayor",
-                                "Council Member"
+                                "Deputy Mayor"
                             ],
-                            "divisions": [
-                                "at-large"
-                            ],
-                            "phone_number": "(253) 591-5100",
+                            "divisions": [],
+                            "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-kiara-daniels/",
                             "start_date": null,
@@ -506,12 +524,12 @@
                             "name": "Olgy Diaz",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/Diaz-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "council member"
                             ],
                             "divisions": [
                                 "Position 7"
                             ],
-                            "phone_number": "(253) 591-5100",
+                            "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-olgy-diaz/",
                             "start_date": null,
@@ -524,12 +542,12 @@
                             "name": "Kristina Walker",
                             "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-312x300.jpg",
                             "roles": [
-                                "Council Member"
+                                "council member"
                             ],
                             "divisions": [
                                 "Position 8"
                             ],
-                            "phone_number": "(253) 591-5100",
+                            "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-kristina-walker/",
                             "start_date": null,
@@ -547,12 +565,26 @@
                                 "Mayor"
                             ],
                             "divisions": [],
-                            "phone_number": "(253) 591-5100",
+                            "phone_number": null,
                             "email": null,
-                            "website": null,
+                            "website": "https://tacoma.gov/government/departments/mayor/",
                             "start_date": "2018",
                             "end_date": null,
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
+                        },
+                        {
+                            "name": "Victoria Woodards",
+                            "image": "https://tacoma.gov/wp-content/uploads/2024/11/Mayor-Woodards-Portrait-1-312x300.jpg",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/mayor/",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.cityoftacoma.org/"
                         }
                     ],
                     "John Hines": [
@@ -707,14 +739,31 @@
                                 "Mayor"
                             ],
                             "divisions": [
-                                "at-large"
+                                "Ward 1"
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://tacoma.gov/profile/mayor-victoria-woodards/",
+                            "website": "https://tacoma.gov/government/departments/mayor/",
                             "start_date": "2018",
-                            "end_date": "",
+                            "end_date": "2024",
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
+                        },
+                        {
+                            "name": "Victoria Woodards",
+                            "image": null,
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "Ward 1",
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/mayor/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityoftacoma.org/"
                         }
                     ],
                     "John Hines": [
@@ -722,17 +771,34 @@
                             "name": "John Hines",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Position 1"
                             ],
                             "divisions": [
-                                "position 1"
+                                "Ward 2"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-john-hines/",
-                            "start_date": "",
-                            "end_date": "",
+                            "start_date": "2024",
+                            "end_date": "2027",
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
+                        },
+                        {
+                            "name": "John Hines",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 1",
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/city-council/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityoftacoma.org/"
                         }
                     ],
                     "Sarah Rumbaugh": [
@@ -740,17 +806,34 @@
                             "name": "Sarah Rumbaugh",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Position 2"
                             ],
                             "divisions": [
-                                "position 2"
+                                "Ward 3"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-sarah-rumbaugh/",
-                            "start_date": "",
-                            "end_date": "",
+                            "start_date": "2024",
+                            "end_date": "2027",
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
+                        },
+                        {
+                            "name": "Sarah Rumbaugh",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 1",
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/city-council/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityoftacoma.org/"
                         }
                     ],
                     "Jamika Scott": [
@@ -758,17 +841,34 @@
                             "name": "Jamika Scott",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Position 3"
                             ],
                             "divisions": [
-                                "position 3"
+                                "Ward 4"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-jamika-scott/",
-                            "start_date": "",
-                            "end_date": "",
+                            "start_date": "2024",
+                            "end_date": "2027",
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
+                        },
+                        {
+                            "name": "Jamika Scott",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 1",
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/city-council/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityoftacoma.org/"
                         }
                     ],
                     "Sandesh Sadalge": [
@@ -776,35 +876,69 @@
                             "name": "Sandesh Sadalge",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Position 4"
                             ],
                             "divisions": [
-                                "position 4"
+                                "Ward 5"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-sandesh-sadalge/",
-                            "start_date": "",
-                            "end_date": "",
+                            "start_date": "2024",
+                            "end_date": "2027",
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
-                        }
-                    ],
-                    "Chanjolee Bushnell": [
+                        },
                         {
-                            "name": "Chanjolee \"Joe\" Bushnell",
+                            "name": "Sandesh Sadalge",
                             "image": null,
                             "roles": [
                                 "Council Member"
                             ],
                             "divisions": [
-                                "position 5"
+                                "Ward 1",
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/city-council/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityoftacoma.org/"
+                        }
+                    ],
+                    "Joe Bushnell": [
+                        {
+                            "name": "Joe Bushnell",
+                            "image": null,
+                            "roles": [
+                                "Position 5"
+                            ],
+                            "divisions": [
+                                "Ward 6"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/",
-                            "start_date": "",
-                            "end_date": "",
+                            "start_date": "2024",
+                            "end_date": "2027",
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
+                        },
+                        {
+                            "name": "Joe Bushnell",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 1",
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/city-council/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityoftacoma.org/"
                         }
                     ],
                     "Kiara Daniels": [
@@ -815,14 +949,31 @@
                                 "Deputy Mayor"
                             ],
                             "divisions": [
-                                "at-large"
+                                "Ward 7"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-kiara-daniels/",
-                            "start_date": "",
-                            "end_date": "",
+                            "start_date": "2024",
+                            "end_date": "2027",
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
+                        },
+                        {
+                            "name": "Kiara Daniels",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 1",
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/city-council/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityoftacoma.org/"
                         }
                     ],
                     "Olgy Diaz": [
@@ -830,17 +981,34 @@
                             "name": "Olgy Diaz",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Position 7"
                             ],
                             "divisions": [
-                                "position 7"
+                                "Ward 8"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-olgy-diaz/",
-                            "start_date": "",
-                            "end_date": "",
+                            "start_date": "2024",
+                            "end_date": "2027",
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
+                        },
+                        {
+                            "name": "Olgy Diaz",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 1",
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/city-council/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityoftacoma.org/"
                         }
                     ],
                     "Kristina Walker": [
@@ -848,17 +1016,53 @@
                             "name": "Kristina Walker",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Position 8"
                             ],
                             "divisions": [
-                                "position 8"
+                                "Ward 9"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://tacoma.gov/profile/council-member-kristina-walker/",
-                            "start_date": "",
-                            "end_date": "",
+                            "start_date": "2024",
+                            "end_date": "2027",
                             "data_source": "https://www.cityoftacoma.org/government/city_council"
+                        },
+                        {
+                            "name": "Kristina Walker",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 1",
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/city-council/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityoftacoma.org/"
+                        }
+                    ],
+                    "Hyun Kim": [
+                        {
+                            "name": "Hyun Kim",
+                            "image": null,
+                            "roles": [
+                                "City Manager"
+                            ],
+                            "divisions": [
+                                "Ward 1",
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://tacoma.gov/government/departments/city-managers-office/",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.cityoftacoma.org/"
                         }
                     ]
                 }
@@ -874,17 +1078,19 @@
                             "mayor"
                         ],
                         "divisions": [],
-                        "phone_number": "(253) 591-5100",
+                        "phone_number": "",
                         "email": "",
-                        "website": "",
+                        "website": "https://tacoma.gov/government/departments/mayor/",
                         "start_date": "2018",
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
-                            "https://www.cityoftacoma.org/government/city_council"
+                            "https://www.cityoftacoma.org/government/city_council",
+                            "https://www.cityoftacoma.org/"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -896,17 +1102,18 @@
                         "divisions": [
                             "position 1"
                         ],
-                        "phone_number": "(253) 591-5100",
+                        "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-john-hines/",
                         "start_date": "",
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -918,17 +1125,18 @@
                         "divisions": [
                             "position 2"
                         ],
-                        "phone_number": "(253) 591-5100",
+                        "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-sarah-rumbaugh/",
                         "start_date": "",
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -940,17 +1148,18 @@
                         "divisions": [
                             "position 3"
                         ],
-                        "phone_number": "(253) 591-5100",
+                        "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-jamika-scott/",
                         "start_date": "",
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -962,21 +1171,22 @@
                         "divisions": [
                             "position 4"
                         ],
-                        "phone_number": "(253) 591-5100",
+                        "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-sandesh-sadalge/",
                         "start_date": "",
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
-                        "name": "Joe Bushnell",
+                        "name": "Chanjolee Bushnell",
                         "image": "https://tacoma.gov/wp-content/uploads/2024/11/Bushnell-312x300.jpg",
                         "roles": [
                             "council member"
@@ -984,40 +1194,39 @@
                         "divisions": [
                             "position 5"
                         ],
-                        "phone_number": "(253) 591-5100",
+                        "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/",
                         "start_date": "",
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
                         "name": "Kiara Daniels",
                         "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Daniels-1-312x300.jpg",
                         "roles": [
-                            "deputy mayor",
-                            "council member"
+                            "deputy mayor"
                         ],
-                        "divisions": [
-                            "at-large"
-                        ],
-                        "phone_number": "(253) 591-5100",
+                        "divisions": [],
+                        "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-kiara-daniels/",
                         "start_date": "",
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1029,17 +1238,18 @@
                         "divisions": [
                             "position 7"
                         ],
-                        "phone_number": "(253) 591-5100",
+                        "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-olgy-diaz/",
                         "start_date": "",
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1051,17 +1261,18 @@
                         "divisions": [
                             "position 8"
                         ],
-                        "phone_number": "(253) 591-5100",
+                        "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-kristina-walker/",
                         "start_date": "",
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     }
                 ],
@@ -1073,17 +1284,19 @@
                             "mayor"
                         ],
                         "divisions": [],
-                        "phone_number": "(253) 591-5100",
+                        "phone_number": "",
                         "email": "",
-                        "website": "",
+                        "website": "https://tacoma.gov/government/departments/mayor/",
                         "start_date": "2018",
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
-                            "https://www.cityoftacoma.org/government/city_council"
+                            "https://www.cityoftacoma.org/government/city_council",
+                            "https://www.cityoftacoma.org/"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1102,10 +1315,11 @@
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1124,10 +1338,11 @@
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1146,10 +1361,11 @@
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1168,10 +1384,11 @@
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1190,10 +1407,11 @@
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1210,10 +1428,11 @@
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1232,10 +1451,11 @@
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1254,10 +1474,11 @@
                         "end_date": "",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     }
                 ],
@@ -1269,19 +1490,22 @@
                             "mayor"
                         ],
                         "divisions": [
-                            "at-large"
+                            "ward 1",
+                            "district 2"
                         ],
                         "phone_number": "",
                         "email": "",
-                        "website": "https://tacoma.gov/profile/mayor-victoria-woodards/",
+                        "website": "https://tacoma.gov/government/departments/mayor/",
                         "start_date": "2018",
-                        "end_date": "",
+                        "end_date": "2024",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
-                            "https://www.cityoftacoma.org/government/city_council"
+                            "https://www.cityoftacoma.org/government/city_council",
+                            "https://www.cityoftacoma.org/"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1291,19 +1515,23 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 1"
+                            "ward 2",
+                            "ward 1",
+                            "district 2"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-john-hines/",
-                        "start_date": "",
-                        "end_date": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
-                            "https://www.cityoftacoma.org/government/city_council"
+                            "https://www.cityoftacoma.org/government/city_council",
+                            "https://www.cityoftacoma.org/"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1313,19 +1541,23 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 2"
+                            "ward 3",
+                            "ward 1",
+                            "district 2"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-sarah-rumbaugh/",
-                        "start_date": "",
-                        "end_date": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
-                            "https://www.cityoftacoma.org/government/city_council"
+                            "https://www.cityoftacoma.org/government/city_council",
+                            "https://www.cityoftacoma.org/"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1335,19 +1567,23 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 3"
+                            "ward 4",
+                            "ward 1",
+                            "district 2"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-jamika-scott/",
-                        "start_date": "",
-                        "end_date": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
-                            "https://www.cityoftacoma.org/government/city_council"
+                            "https://www.cityoftacoma.org/government/city_council",
+                            "https://www.cityoftacoma.org/"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1357,63 +1593,76 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 4"
+                            "ward 5",
+                            "ward 1",
+                            "district 2"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-sandesh-sadalge/",
-                        "start_date": "",
-                        "end_date": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
-                            "https://www.cityoftacoma.org/government/city_council"
+                            "https://www.cityoftacoma.org/government/city_council",
+                            "https://www.cityoftacoma.org/"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
-                        "name": "Chanjolee Bushnell",
+                        "name": "Joe Bushnell",
                         "image": "",
                         "roles": [
                             "council member"
                         ],
                         "divisions": [
-                            "position 5"
+                            "ward 6",
+                            "ward 1",
+                            "district 2"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/",
-                        "start_date": "",
-                        "end_date": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
-                            "https://www.cityoftacoma.org/government/city_council"
+                            "https://www.cityoftacoma.org/government/city_council",
+                            "https://www.cityoftacoma.org/"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
                         "name": "Kiara Daniels",
                         "image": "",
                         "roles": [
-                            "deputy mayor"
+                            "deputy mayor",
+                            "council member"
                         ],
                         "divisions": [
-                            "at-large"
+                            "ward 7",
+                            "ward 1",
+                            "district 2"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-kiara-daniels/",
-                        "start_date": "",
-                        "end_date": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
-                            "https://www.cityoftacoma.org/government/city_council"
+                            "https://www.cityoftacoma.org/government/city_council",
+                            "https://www.cityoftacoma.org/"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1423,19 +1672,23 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 7"
+                            "ward 8",
+                            "ward 1",
+                            "district 2"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-olgy-diaz/",
-                        "start_date": "",
-                        "end_date": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
-                            "https://www.cityoftacoma.org/government/city_council"
+                            "https://www.cityoftacoma.org/government/city_council",
+                            "https://www.cityoftacoma.org/"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1445,19 +1698,23 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 8"
+                            "ward 9",
+                            "ward 1",
+                            "district 2"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://tacoma.gov/profile/council-member-kristina-walker/",
-                        "start_date": "",
-                        "end_date": "",
+                        "start_date": "2024",
+                        "end_date": "2027",
                         "state": "",
                         "place": "",
-                        "cdn_image": "",
+                        "counties": [],
                         "data_sources": [
-                            "https://www.cityoftacoma.org/government/city_council"
+                            "https://www.cityoftacoma.org/government/city_council",
+                            "https://www.cityoftacoma.org/"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     }
                 ]
@@ -1466,221 +1723,422 @@
         "MERGE_RECORDS_ACROSS_SOURCES": {
             "people": [
                 {
-                    "name": "Sarah Rumbaugh",
-                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Rumbaugh-312x300.jpg",
+                    "name": "Victoria Woodards",
+                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Mayor-Woodards-Portrait-1-400x385.jpg",
                     "roles": [
-                        "council member"
+                        "Mayor"
                     ],
-                    "divisions": [
-                        "position 2"
-                    ],
-                    "phone_number": "(253) 591-5100",
+                    "divisions": [],
+                    "phone_number": "",
                     "email": "",
-                    "website": "https://tacoma.gov/profile/council-member-sarah-rumbaugh/",
-                    "start_date": "",
-                    "end_date": "",
-                    "state": "",
-                    "place": "",
-                    "cdn_image": "",
+                    "website": "https://tacoma.gov/government/departments/mayor/",
+                    "start_date": "2018",
+                    "end_date": "2024",
+                    "state": "wa",
+                    "place": "Tacoma",
+                    "counties": [
+                        "Pierce"
+                    ],
                     "data_sources": [
+                        "https://www.cityoftacoma.org/",
                         "https://www.cityoftacoma.org/government/city_council"
                     ],
-                    "updated_at": ""
+                    "cdn_image": "",
+                    "updated_at": "2025-09-18T23:36:52+00:00"
                 },
                 {
                     "name": "Kiara Daniels",
                     "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Daniels-1-312x300.jpg",
                     "roles": [
-                        "deputy mayor"
-                    ],
-                    "divisions": [
-                        "at-large"
-                    ],
-                    "phone_number": "(253) 591-5100",
-                    "email": "",
-                    "website": "https://tacoma.gov/profile/council-member-kiara-daniels/",
-                    "start_date": "",
-                    "end_date": "",
-                    "state": "",
-                    "place": "",
-                    "cdn_image": "",
-                    "data_sources": [
-                        "https://www.cityoftacoma.org/government/city_council"
-                    ],
-                    "updated_at": ""
-                },
-                {
-                    "name": "Sandesh Sadalge",
-                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Sadalge-312x300.jpg",
-                    "roles": [
-                        "council member"
-                    ],
-                    "divisions": [
-                        "position 4"
-                    ],
-                    "phone_number": "(253) 591-5100",
-                    "email": "",
-                    "website": "https://tacoma.gov/profile/council-member-sandesh-sadalge/",
-                    "start_date": "",
-                    "end_date": "",
-                    "state": "",
-                    "place": "",
-                    "cdn_image": "",
-                    "data_sources": [
-                        "https://www.cityoftacoma.org/government/city_council"
-                    ],
-                    "updated_at": ""
-                },
-                {
-                    "name": "Olgy Diaz",
-                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Diaz-312x300.jpg",
-                    "roles": [
-                        "council member"
-                    ],
-                    "divisions": [
-                        "position 7"
-                    ],
-                    "phone_number": "(253) 591-5100",
-                    "email": "",
-                    "website": "https://tacoma.gov/profile/council-member-olgy-diaz/",
-                    "start_date": "",
-                    "end_date": "",
-                    "state": "",
-                    "place": "",
-                    "cdn_image": "",
-                    "data_sources": [
-                        "https://www.cityoftacoma.org/government/city_council"
-                    ],
-                    "updated_at": ""
-                },
-                {
-                    "name": "Jamika Scott",
-                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-312x300.jpg",
-                    "roles": [
-                        "council member"
-                    ],
-                    "divisions": [
-                        "position 3"
-                    ],
-                    "phone_number": "(253) 591-5100",
-                    "email": "",
-                    "website": "https://tacoma.gov/profile/council-member-jamika-scott/",
-                    "start_date": "",
-                    "end_date": "",
-                    "state": "",
-                    "place": "",
-                    "cdn_image": "",
-                    "data_sources": [
-                        "https://www.cityoftacoma.org/government/city_council"
-                    ],
-                    "updated_at": ""
-                },
-                {
-                    "name": "Kristina Walker",
-                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-312x300.jpg",
-                    "roles": [
-                        "council member"
-                    ],
-                    "divisions": [
-                        "position 8"
-                    ],
-                    "phone_number": "(253) 591-5100",
-                    "email": "",
-                    "website": "https://tacoma.gov/profile/council-member-kristina-walker/",
-                    "start_date": "",
-                    "end_date": "",
-                    "state": "",
-                    "place": "",
-                    "cdn_image": "",
-                    "data_sources": [
-                        "https://www.cityoftacoma.org/government/city_council"
-                    ],
-                    "updated_at": ""
-                },
-                {
-                    "name": "Victoria Woodards",
-                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Mayor-Woodards-Portrait-1-400x385.jpg",
-                    "roles": [
-                        "mayor"
+                        "Deputy Mayor"
                     ],
                     "divisions": [],
-                    "phone_number": "(253) 591-5100",
+                    "phone_number": "",
                     "email": "",
-                    "website": "https://tacoma.gov/profile/mayor-victoria-woodards/",
-                    "start_date": "2018",
-                    "end_date": "",
-                    "state": "",
-                    "place": "",
-                    "cdn_image": "",
+                    "website": "https://tacoma.gov/profile/council-member-kiara-daniels/",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Tacoma",
+                    "counties": [
+                        "Pierce"
+                    ],
                     "data_sources": [
+                        "https://www.cityoftacoma.org/",
                         "https://www.cityoftacoma.org/government/city_council"
                     ],
-                    "updated_at": ""
+                    "cdn_image": "",
+                    "updated_at": "2025-09-18T23:36:52+00:00"
                 },
                 {
                     "name": "John Hines",
                     "image": "https://tacoma.gov/wp-content/uploads/2024/11/Hines-1-1-312x300.jpg",
                     "roles": [
-                        "council member"
+                        "Council Member"
                     ],
                     "divisions": [
-                        "position 1"
+                        "Position 1"
                     ],
-                    "phone_number": "(253) 591-5100",
+                    "phone_number": "",
                     "email": "",
                     "website": "https://tacoma.gov/profile/council-member-john-hines/",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Tacoma",
+                    "counties": [
+                        "Pierce"
+                    ],
+                    "data_sources": [
+                        "https://www.cityoftacoma.org/",
+                        "https://www.cityoftacoma.org/government/city_council"
+                    ],
+                    "cdn_image": "",
+                    "updated_at": "2025-09-18T23:36:52+00:00"
+                },
+                {
+                    "name": "Sarah Rumbaugh",
+                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Rumbaugh-312x300.jpg",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Position 2"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://tacoma.gov/profile/council-member-sarah-rumbaugh/",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Tacoma",
+                    "counties": [
+                        "Pierce"
+                    ],
+                    "data_sources": [
+                        "https://www.cityoftacoma.org/",
+                        "https://www.cityoftacoma.org/government/city_council"
+                    ],
+                    "cdn_image": "",
+                    "updated_at": "2025-09-18T23:36:52+00:00"
+                },
+                {
+                    "name": "Jamika Scott",
+                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-312x300.jpg",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Position 3"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://tacoma.gov/profile/council-member-jamika-scott/",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Tacoma",
+                    "counties": [
+                        "Pierce"
+                    ],
+                    "data_sources": [
+                        "https://www.cityoftacoma.org/",
+                        "https://www.cityoftacoma.org/government/city_council"
+                    ],
+                    "cdn_image": "",
+                    "updated_at": "2025-09-18T23:36:52+00:00"
+                },
+                {
+                    "name": "Sandesh Sadalge",
+                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Sadalge-312x300.jpg",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Position 4"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://tacoma.gov/profile/council-member-sandesh-sadalge/",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Tacoma",
+                    "counties": [
+                        "Pierce"
+                    ],
+                    "data_sources": [
+                        "https://www.cityoftacoma.org/",
+                        "https://www.cityoftacoma.org/government/city_council"
+                    ],
+                    "cdn_image": "",
+                    "updated_at": "2025-09-18T23:36:52+00:00"
+                },
+                {
+                    "name": "Chanjolee Bushnell",
+                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Bushnell-312x300.jpg",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Position 5"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/",
                     "start_date": "",
                     "end_date": "",
-                    "state": "",
-                    "place": "",
-                    "cdn_image": "",
+                    "state": "wa",
+                    "place": "Tacoma",
+                    "counties": [
+                        "Pierce"
+                    ],
                     "data_sources": [
                         "https://www.cityoftacoma.org/government/city_council"
                     ],
-                    "updated_at": ""
-                }
-            ],
-            "agreement_score": 97.14285714285714,
-            "disagreements": [
-                {
-                    "source": "google_gemini",
-                    "person_name": "Kiara Daniels",
-                    "field": "roles",
-                    "value": "deputy mayor, council member"
+                    "cdn_image": "",
+                    "updated_at": "2025-09-18T23:36:52+00:00"
                 },
                 {
-                    "source": "together_ai",
-                    "person_name": "Victoria Woodards",
-                    "field": "divisions",
-                    "value": "at-large"
+                    "name": "Olgy Diaz",
+                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/Diaz-312x300.jpg",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Position 7"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://tacoma.gov/profile/council-member-olgy-diaz/",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Tacoma",
+                    "counties": [
+                        "Pierce"
+                    ],
+                    "data_sources": [
+                        "https://www.cityoftacoma.org/",
+                        "https://www.cityoftacoma.org/government/city_council"
+                    ],
+                    "cdn_image": "",
+                    "updated_at": "2025-09-18T23:36:52+00:00"
+                },
+                {
+                    "name": "Kristina Walker",
+                    "image": "https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-312x300.jpg",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Position 8"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://tacoma.gov/profile/council-member-kristina-walker/",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Tacoma",
+                    "counties": [
+                        "Pierce"
+                    ],
+                    "data_sources": [
+                        "https://www.cityoftacoma.org/",
+                        "https://www.cityoftacoma.org/government/city_council"
+                    ],
+                    "cdn_image": "",
+                    "updated_at": "2025-09-18T23:36:52+00:00"
                 }
             ],
+            "agreement_score": 99.13419913419914,
+            "disagreements": {
+                "Chanjolee Bushnell": [
+                    {
+                        "field": "roles",
+                        "merged_value": "Council Member",
+                        "source_values": {
+                            "google_gemini": "council member",
+                            "openai": "council member",
+                            "together_ai": "(missing)"
+                        },
+                        "disagreement_score": 0.0
+                    },
+                    {
+                        "field": "divisions",
+                        "merged_value": "Position 5",
+                        "source_values": {
+                            "google_gemini": "position 5",
+                            "openai": "position 5",
+                            "together_ai": "(missing)"
+                        },
+                        "disagreement_score": 0.0
+                    },
+                    {
+                        "field": "phone_number",
+                        "merged_value": "(empty)",
+                        "source_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "(missing)"
+                        },
+                        "disagreement_score": 0.0
+                    },
+                    {
+                        "field": "email",
+                        "merged_value": "(empty)",
+                        "source_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "(missing)"
+                        },
+                        "disagreement_score": 0.0
+                    },
+                    {
+                        "field": "website",
+                        "merged_value": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/",
+                        "source_values": {
+                            "google_gemini": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/",
+                            "openai": "https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/",
+                            "together_ai": "(missing)"
+                        },
+                        "disagreement_score": 0.0
+                    },
+                    {
+                        "field": "start_date",
+                        "merged_value": "(empty)",
+                        "source_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "(missing)"
+                        },
+                        "disagreement_score": 0.0
+                    },
+                    {
+                        "field": "end_date",
+                        "merged_value": "(empty)",
+                        "source_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "(missing)"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Victoria Woodards": [
+                    {
+                        "field": "divisions",
+                        "merged_value": "(empty)",
+                        "source_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "ward 1, district 2"
+                        },
+                        "disagreement_score": 1.0
+                    }
+                ],
+                "Kristina Walker": [
+                    {
+                        "field": "divisions",
+                        "merged_value": "Position 8",
+                        "source_values": {
+                            "google_gemini": "position 8",
+                            "openai": "position 8",
+                            "together_ai": "ward 9, ward 1, district 2"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Sarah Rumbaugh": [
+                    {
+                        "field": "divisions",
+                        "merged_value": "Position 2",
+                        "source_values": {
+                            "google_gemini": "position 2",
+                            "openai": "position 2",
+                            "together_ai": "ward 3, ward 1, district 2"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Kiara Daniels": [
+                    {
+                        "field": "divisions",
+                        "merged_value": "(empty)",
+                        "source_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "ward 7, ward 1, district 2"
+                        },
+                        "disagreement_score": 1.0
+                    }
+                ],
+                "Jamika Scott": [
+                    {
+                        "field": "divisions",
+                        "merged_value": "Position 3",
+                        "source_values": {
+                            "google_gemini": "position 3",
+                            "openai": "position 3",
+                            "together_ai": "ward 4, ward 1, district 2"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Sandesh Sadalge": [
+                    {
+                        "field": "divisions",
+                        "merged_value": "Position 4",
+                        "source_values": {
+                            "google_gemini": "position 4",
+                            "openai": "position 4",
+                            "together_ai": "ward 5, ward 1, district 2"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "John Hines": [
+                    {
+                        "field": "divisions",
+                        "merged_value": "Position 1",
+                        "source_values": {
+                            "google_gemini": "position 1",
+                            "openai": "position 1",
+                            "together_ai": "ward 2, ward 1, district 2"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Olgy Diaz": [
+                    {
+                        "field": "divisions",
+                        "merged_value": "Position 7",
+                        "source_values": {
+                            "google_gemini": "position 7",
+                            "openai": "position 7",
+                            "together_ai": "ward 8, ward 1, district 2"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ]
+            },
             "missing_people": [
                 {
-                    "source": "google_gemini",
-                    "person_name": "Chanjolee Bushnell"
-                },
-                {
-                    "source": "openai",
-                    "person_name": "Joe Bushnell"
-                },
-                {
-                    "source": "together_ai",
-                    "person_name": "Joe Bushnell"
+                    "name": "Chanjolee Bushnell",
+                    "missing_from_sources": [
+                        "together_ai"
+                    ],
+                    "found_in_sources": [
+                        "google_gemini",
+                        "openai"
+                    ]
                 }
-            ]
+            ],
+            "validation_issues": []
         },
         "CLEANUP": {},
         "RETRY": {},
-        "DONE": {},
-        "MAYBE_SEND_TO_GITHUB": {
-            "status": "completed",
-            "response_status_code": 200,
-            "response_text": "{\"filename\":\"request_a49534ad-af34-4fcc-a15e-c9b1bb7ecbbc_wa_5370000.zip\",\"status\":\"uploaded\",\"url\":\"https://c9ae2b352766fe3e6f7dbee61bcd4c7c.r2.cloudflarestorage.com/crudder/request_a49534ad-af34-4fcc-a15e-c9b1bb7ecbbc_wa_5370000.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=83c1bf330c0ac3dc3e457dc295867d5f%2F20250905%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250905T172932Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=299042e0085104c7b7e49bc89bb0ac91dfc1e61e7dbc1ba881a37f4dbe846193\"}"
-        }
-    },
-    "request_id": "a49534ad-af34-4fcc-a15e-c9b1bb7ecbbc",
-    "state": "wa",
-    "geoid": "5370000",
-    "pipeline_duration_seconds": 251.87180304527283
+        "DONE": {}
+    }
 }
