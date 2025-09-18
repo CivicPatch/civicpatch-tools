@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 2 # Only run workflow if latest commit is solely a config.yml change
@@ -43,7 +43,7 @@ jobs:
             echo "People file path: $PEOPLE_FILE_PATH"
             echo "Municipality path: $MUNICIPALITY_PATH"
 
-            echo "municipality_path=$MUNICIPALITY_PATH" >> $GITHUB_OUTPUT
+            echo "municipality-path=$MUNICIPALITY_PATH" >> $GITHUB_OUTPUT
             echo "should-continue=true" >> $GITHUB_OUTPUT
           else
             echo "Either multiple files were changed or no people.yml was modified, skipping"
