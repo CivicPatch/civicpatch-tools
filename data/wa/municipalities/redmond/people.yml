@@ -1,0 +1,160 @@
+- name: Angela Birney
+  image: ''
+  roles:
+  - Mayor
+  divisions: []
+  phone_number: ''
+  email: mayor@redmond.gov
+  website: https://www.redmond.gov/284/Office-of-the-Mayor
+  start_date: '2024'
+  end_date: '2027'
+  state: wa
+  place: Redmond
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.redmond.gov/284/Office-of-the-Mayor
+  - https://www.redmond.gov/1193/City-Council
+  - https://www.redmond.gov/
+  updated_at: '2025-09-18T00:17:01+00:00'
+- name: Angie Nuevacamina
+  image: ''
+  roles:
+  - Council Member
+  divisions: []
+  phone_number: ''
+  email: anuevacamina@redmond.gov
+  website: https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council
+  start_date: '2024'
+  end_date: '2027'
+  state: wa
+  place: Redmond
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.redmond.gov/189/City-Council
+  - https://www.redmond.gov/1193/City-Council
+  - https://www.redmond.gov/
+  updated_at: '2025-09-18T00:17:01+00:00'
+- name: Jeralee Anderson
+  image: ''
+  roles:
+  - Council Member
+  divisions: []
+  phone_number: ''
+  email: janderson@redmond.gov
+  website: https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council
+  start_date: '2024'
+  end_date: '2027'
+  state: wa
+  place: Redmond
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.redmond.gov/189/City-Council
+  - https://www.redmond.gov/1193/City-Council
+  - https://www.redmond.gov/
+  updated_at: '2025-09-18T00:17:01+00:00'
+- name: Jessica Forsythe
+  image: ''
+  roles:
+  - Council Member
+  divisions: []
+  phone_number: ''
+  email: jforsythe@redmond.gov
+  website: https://www.redmond.gov/CivicAlerts.aspx?AID=2238
+  start_date: '2024'
+  end_date: '2027'
+  state: wa
+  place: Redmond
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.redmond.gov/189/City-Council
+  - https://www.redmond.gov/1193/City-Council
+  - https://www.redmond.gov/
+  updated_at: '2025-09-18T00:17:01+00:00'
+- name: Melissa Stuart
+  image: ''
+  roles:
+  - Council Member
+  divisions: []
+  phone_number: ''
+  email: mstuart@redmond.gov
+  website: https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council
+  start_date: '2024'
+  end_date: '2027'
+  state: wa
+  place: Redmond
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.redmond.gov/189/City-Council
+  - https://www.redmond.gov/1193/City-Council
+  - https://www.redmond.gov/
+  updated_at: '2025-09-18T00:17:01+00:00'
+- name: Osman Salahuddin
+  image: ''
+  roles:
+  - Council Member
+  divisions: []
+  phone_number: ''
+  email: osalahuddin@redmond.gov
+  website: https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council
+  start_date: '2024'
+  end_date: '2027'
+  state: wa
+  place: Redmond
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.redmond.gov/189/City-Council
+  - https://www.redmond.gov/1193/City-Council
+  - https://www.redmond.gov/
+  updated_at: '2025-09-18T00:17:01+00:00'
+- name: Steve Fields
+  image: ''
+  roles:
+  - Council Member
+  divisions: []
+  phone_number: ''
+  email: sfields@redmond.gov
+  website: https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council
+  start_date: '2024'
+  end_date: '2027'
+  state: wa
+  place: Redmond
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.redmond.gov/189/City-Council
+  - https://www.redmond.gov/1193/City-Council
+  - https://www.redmond.gov/
+  updated_at: '2025-09-18T00:17:01+00:00'
+- name: Vanessa Kritzer
+  image: ''
+  roles:
+  - Council Member
+  divisions: []
+  phone_number: ''
+  email: vkritzer@redmond.gov
+  website: https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council
+  start_date: '2024'
+  end_date: '2027'
+  state: wa
+  place: Redmond
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.redmond.gov/189/City-Council
+  - https://www.redmond.gov/1193/City-Council
+  - https://www.redmond.gov/
+  updated_at: '2025-09-18T00:17:01+00:00'

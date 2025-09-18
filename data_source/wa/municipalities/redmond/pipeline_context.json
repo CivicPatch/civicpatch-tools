@@ -1,0 +1,1869 @@
+{
+    "request_id": "b56c0f2a-d8c0-41ac-b63e-600b341b3a2a",
+    "state": "wa",
+    "geoid": "5357535",
+    "links": [
+        {
+            "url": "https://www.redmond.gov/284/Office-of-the-Mayor",
+            "status": "done",
+            "folder_name": "www_redmond_gov_284_office-of-the-mayor",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/1193/City-Council",
+            "status": "done",
+            "folder_name": "www_redmond_gov_1193_city-council",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/27/Government",
+            "status": "done",
+            "folder_name": "www_redmond_gov_27_government",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/",
+            "status": "done",
+            "folder_name": "www_redmond_gov_",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/189/City-Council",
+            "status": "done",
+            "folder_name": "www_redmond_gov_189_city-council",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/CivicAlerts.aspx?AID=1757",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/DocumentCenter/View/9076/Public-Meetings-Participation-Guide?bidId=",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/2252/How-to-Get-Involved---Share-Your-Voice",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/CivicAlerts.asp?AID=2276",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/1301/How-Do-I-Participate",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/CivicAlerts.aspx?AID=2031",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/CivicAlerts.asp?AID=2275",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/DocumentCenter/View/35871/ORD3203-PDF?bidId=",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/1304/Addressing-Council",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/987/Budgets",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/Directory.aspx",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.redmond.gov/CivicAlerts.aspx?AID=2164",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        }
+    ],
+    "progress": {
+        "required_data": 8,
+        "current_data": 8
+    },
+    "names": {
+        "Jeralee Anderson": [
+            "Jeralee Anderson"
+        ],
+        "Steve Fields": [
+            "Steve Fields"
+        ],
+        "Jessica Forsythe": [
+            "Jessica Forsythe"
+        ],
+        "Vanessa Kritzer": [
+            "Vanessa Kritzer"
+        ],
+        "Angie Nuevacamina": [
+            "Angie Nuevacamina"
+        ],
+        "Osman Salahuddin": [
+            "Osman Salahuddin"
+        ],
+        "Melissa Stuart": [
+            "Melissa Stuart"
+        ],
+        "Angela Birney": [
+            "Angela Birney"
+        ],
+        "The Mayor": [
+            "The Mayor"
+        ]
+    },
+    "steps": {
+        "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "Angela Birney",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Vanessa Kritzer",
+                    "roles": [
+                        "Council President",
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Jessica Forsythe",
+                    "roles": [
+                        "Council Vice President",
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Jeralee Anderson",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Steve Fields",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Angie Nuevacamina",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Osman Salahuddin",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Melissa Stuart",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "Angela Birney",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Vanessa Kritzer",
+                    "roles": [
+                        "Council President",
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Jessica Forsythe",
+                    "roles": [
+                        "Council Vice President",
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Jeralee Anderson",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Steve Fields",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Angie Nuevacamina",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Osman Salahuddin",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Melissa Stuart",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                }
+            ],
+            "notes": "Redmond, WA operates under a strong Mayor/Council, non-partisan form of government. The Mayor and seven council members are elected at large."
+        },
+        "SEARCH_LINKS": {
+            "search_link_pointer": 1,
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "https://www.redmond.gov/284/Office-of-the-Mayor",
+                        "https://www.redmond.gov/1193/City-Council",
+                        "https://www.redmond.gov/27/Government",
+                        "https://www.redmond.gov/",
+                        "https://www.redmond.gov/189/City-Council",
+                        "https://www.redmond.gov/CivicAlerts.aspx?AID=1757",
+                        "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                        "https://www.redmond.gov/DocumentCenter/View/9076/Public-Meetings-Participation-Guide?bidId=",
+                        "https://www.redmond.gov/2252/How-to-Get-Involved---Share-Your-Voice",
+                        "https://www.redmond.gov/CivicAlerts.asp?AID=2276",
+                        "https://www.redmond.gov/1301/How-Do-I-Participate",
+                        "https://www.redmond.gov/CivicAlerts.aspx?AID=2031",
+                        "https://www.redmond.gov/CivicAlerts.asp?AID=2275",
+                        "https://www.redmond.gov/DocumentCenter/View/35871/ORD3203-PDF?bidId=",
+                        "https://www.redmond.gov/1304/Addressing-Council",
+                        "https://www.redmond.gov/987/Budgets",
+                        "https://www.redmond.gov/Directory.aspx",
+                        "https://www.redmond.gov/CivicAlerts.aspx?AID=2164"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {
+            "elapsed_times": [
+                103.46495079994202,
+                94.95726585388184,
+                162.9046528339386,
+                170.02362895011902,
+                108.1439003944397
+            ],
+            "total_elapsed_time_seconds": 639.4943988323212,
+            "average_elapsed_time_seconds": 127.89887976646423
+        },
+        "PROCESS_PAGE_CONTENT": {
+            "records_by_source": {
+                "google_gemini": {
+                    "Angela Birney": [
+                        {
+                            "name": "Angela Birney",
+                            "image": null,
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "mayor@redmond.gov",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/284/Office-of-the-Mayor"
+                        },
+                        {
+                            "name": "Angela Birney",
+                            "image": null,
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        }
+                    ],
+                    "Jessica Forsythe": [
+                        {
+                            "name": "Jessica Forsythe",
+                            "image": null,
+                            "roles": [
+                                "City Council Vice President"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        },
+                        {
+                            "name": "Jessica Forsythe",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "jforsythe@redmond.gov",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Jeralee Anderson": [
+                        {
+                            "name": "Jeralee Anderson",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "janderson@redmond.gov",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Steve Fields": [
+                        {
+                            "name": "Steve Fields",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "sfields@redmond.gov",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Vanessa Kritzer": [
+                        {
+                            "name": "Vanessa Kritzer",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "vkritzer@redmond.gov",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Angie Nuevacamina": [
+                        {
+                            "name": "Angie Nuevacamina",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "anuevacamina@redmond.gov",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Osman Salahuddin": [
+                        {
+                            "name": "Osman Salahuddin",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "osalahuddin@redmond.gov",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Melissa Stuart": [
+                        {
+                            "name": "Melissa Stuart",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "mstuart@redmond.gov",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ]
+                },
+                "openai": {
+                    "Angela Birney": [
+                        {
+                            "name": "Angela Birney",
+                            "image": null,
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "mayor@redmond.gov",
+                            "website": "https://www.redmond.gov/284/Office-of-the-Mayor",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/284/Office-of-the-Mayor"
+                        },
+                        {
+                            "name": "Angela Birney",
+                            "image": null,
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/284/Office-of-the-Mayor",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        }
+                    ],
+                    "Jessica Forsythe": [
+                        {
+                            "name": "Jessica Forsythe",
+                            "image": null,
+                            "roles": [
+                                "Council Vice President"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/CivicAlerts.aspx?AID=2238",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        },
+                        {
+                            "name": "Jessica Forsythe",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "jforsythe@redmond.gov",
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Jeralee Anderson": [
+                        {
+                            "name": "Jeralee Anderson",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "janderson@redmond.gov",
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Steve Fields": [
+                        {
+                            "name": "Steve Fields",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "sfields@redmond.gov",
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Vanessa Kritzer": [
+                        {
+                            "name": "Vanessa Kritzer",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "vkritzer@redmond.gov",
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Angie Nuevacamina": [
+                        {
+                            "name": "Angie Nuevacamina",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "anuevacamina@redmond.gov",
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Osman Salahuddin": [
+                        {
+                            "name": "Osman Salahuddin",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "osalahuddin@redmond.gov",
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Melissa Stuart": [
+                        {
+                            "name": "Melissa Stuart",
+                            "image": null,
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": "mstuart@redmond.gov",
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ]
+                },
+                "together_ai": {
+                    "Angela Birney": [
+                        {
+                            "name": "Angela Birney",
+                            "image": null,
+                            "roles": [
+                                "Mayor",
+                                "Board Member",
+                                "Vice Chair",
+                                "Committee Member",
+                                "Executive Board Member",
+                                "Governing Board Member",
+                                "Past Board President",
+                                "Alternate",
+                                "Board Member",
+                                "Steering Committee Member",
+                                "Advisory Group Member",
+                                "Committee Member",
+                                "Ad Hoc Bylaws Committee Member"
+                            ],
+                            "divisions": [
+                                "At-Large",
+                                "Ward",
+                                "District",
+                                "Position",
+                                "Seat"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.redmond.gov/284/Office-of-the-Mayor"
+                        },
+                        {
+                            "name": "Angela Birney",
+                            "image": null,
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/189/City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/1193/City-Council"
+                        },
+                        {
+                            "name": "Angela Birney",
+                            "image": null,
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/Office-of-the-Mayor",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        }
+                    ],
+                    "Vanessa Kritzer": [
+                        {
+                            "name": "Vanessa Kritzer",
+                            "image": null,
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/189/City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/1193/City-Council"
+                        },
+                        {
+                            "name": "Vanessa Kritzer",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        },
+                        {
+                            "name": "Vanessa Kritzer",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Jessica Forsythe": [
+                        {
+                            "name": "Jessica Forsythe",
+                            "image": null,
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/189/City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/1193/City-Council"
+                        },
+                        {
+                            "name": "Jessica Forsythe",
+                            "image": null,
+                            "roles": [
+                                "City Council Vice President"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/Directory.aspx?did=33",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        },
+                        {
+                            "name": "Jessica Forsythe",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Jeralee Anderson": [
+                        {
+                            "name": "Jeralee Anderson",
+                            "image": null,
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/189/City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/1193/City-Council"
+                        },
+                        {
+                            "name": "Jeralee Anderson",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        },
+                        {
+                            "name": "Jeralee Anderson",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Steve Fields": [
+                        {
+                            "name": "Steve Fields",
+                            "image": null,
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/189/City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/1193/City-Council"
+                        },
+                        {
+                            "name": "Steve Fields",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        },
+                        {
+                            "name": "Steve Fields",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Angie Nuevacamina": [
+                        {
+                            "name": "Angie Nuevacamina",
+                            "image": null,
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/189/City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/1193/City-Council"
+                        },
+                        {
+                            "name": "Angie Nuevacamina",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        },
+                        {
+                            "name": "Angie Nuevacamina",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Osman Salahuddin": [
+                        {
+                            "name": "Osman Salahuddin",
+                            "image": null,
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/189/City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/1193/City-Council"
+                        },
+                        {
+                            "name": "Osman Salahuddin",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        },
+                        {
+                            "name": "Osman Salahuddin",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "Melissa Stuart": [
+                        {
+                            "name": "Melissa Stuart",
+                            "image": null,
+                            "roles": [
+                                "City Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/189/City-Council",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/1193/City-Council"
+                        },
+                        {
+                            "name": "Melissa Stuart",
+                            "image": null,
+                            "roles": [],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/"
+                        },
+                        {
+                            "name": "Melissa Stuart",
+                            "image": null,
+                            "roles": [
+                                "City Council"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                            "start_date": "2024",
+                            "end_date": "2027",
+                            "data_source": "https://www.redmond.gov/189/City-Council"
+                        }
+                    ],
+                    "The Mayor": [
+                        {
+                            "name": "The Mayor",
+                            "image": null,
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "at-large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.redmond.gov/284/Office-of-the-Mayor",
+                            "start_date": null,
+                            "end_date": null,
+                            "data_source": "https://www.redmond.gov/27/Government"
+                        }
+                    ]
+                }
+            }
+        },
+        "MERGE_RECORDS_WITHIN_SOURCE": {
+            "people_by_source": {
+                "google_gemini": [
+                    {
+                        "name": "Angela Birney",
+                        "image": "",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "mayor@redmond.gov",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/284/Office-of-the-Mayor",
+                            "https://www.redmond.gov/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jessica Forsythe",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "jforsythe@redmond.gov",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/",
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jeralee Anderson",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "janderson@redmond.gov",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Steve Fields",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "sfields@redmond.gov",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Vanessa Kritzer",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "vkritzer@redmond.gov",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Angie Nuevacamina",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "anuevacamina@redmond.gov",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Osman Salahuddin",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "osalahuddin@redmond.gov",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Melissa Stuart",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "mstuart@redmond.gov",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "openai": [
+                    {
+                        "name": "Angela Birney",
+                        "image": "",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "mayor@redmond.gov",
+                        "website": "https://www.redmond.gov/284/Office-of-the-Mayor",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/284/Office-of-the-Mayor",
+                            "https://www.redmond.gov/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jessica Forsythe",
+                        "image": "",
+                        "roles": [
+                            "council vice president",
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "jforsythe@redmond.gov",
+                        "website": "https://www.redmond.gov/CivicAlerts.aspx?AID=2238",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/",
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jeralee Anderson",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "janderson@redmond.gov",
+                        "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Steve Fields",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "sfields@redmond.gov",
+                        "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Vanessa Kritzer",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "vkritzer@redmond.gov",
+                        "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Angie Nuevacamina",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "anuevacamina@redmond.gov",
+                        "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Osman Salahuddin",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "osalahuddin@redmond.gov",
+                        "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Melissa Stuart",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "mstuart@redmond.gov",
+                        "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "together_ai": [
+                    {
+                        "name": "Angela Birney",
+                        "image": "",
+                        "roles": [
+                            "mayor",
+                            "vice chair",
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large",
+                            "ward",
+                            "district",
+                            "position",
+                            "seat"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.redmond.gov",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/284/Office-of-the-Mayor",
+                            "https://www.redmond.gov/1193/City-Council",
+                            "https://www.redmond.gov/"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Vanessa Kritzer",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.redmond.gov/189/City-Council",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/1193/City-Council",
+                            "https://www.redmond.gov/",
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jessica Forsythe",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.redmond.gov/189/City-Council",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/1193/City-Council",
+                            "https://www.redmond.gov/",
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jeralee Anderson",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.redmond.gov/189/City-Council",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/1193/City-Council",
+                            "https://www.redmond.gov/",
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Steve Fields",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.redmond.gov/189/City-Council",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/1193/City-Council",
+                            "https://www.redmond.gov/",
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Angie Nuevacamina",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.redmond.gov/189/City-Council",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/1193/City-Council",
+                            "https://www.redmond.gov/",
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Osman Salahuddin",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.redmond.gov/189/City-Council",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/1193/City-Council",
+                            "https://www.redmond.gov/",
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Melissa Stuart",
+                        "image": "",
+                        "roles": [
+                            "council member"
+                        ],
+                        "divisions": [
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.redmond.gov/189/City-Council",
+                        "start_date": "2024",
+                        "end_date": "2027",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/1193/City-Council",
+                            "https://www.redmond.gov/",
+                            "https://www.redmond.gov/189/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "The Mayor",
+                        "image": "",
+                        "roles": [
+                            "mayor"
+                        ],
+                        "divisions": [
+                            "at-large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.redmond.gov/284/Office-of-the-Mayor",
+                        "start_date": "",
+                        "end_date": "",
+                        "state": "",
+                        "place": "",
+                        "counties": [],
+                        "cdn_image": "",
+                        "data_sources": [
+                            "https://www.redmond.gov/27/Government"
+                        ],
+                        "updated_at": ""
+                    }
+                ]
+            }
+        },
+        "MERGE_RECORDS_ACROSS_SOURCES": {
+            "people": [
+                {
+                    "name": "Angela Birney",
+                    "image": "",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "mayor@redmond.gov",
+                    "website": "https://www.redmond.gov/284/Office-of-the-Mayor",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Redmond",
+                    "counties": [
+                        "King"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.redmond.gov/284/Office-of-the-Mayor",
+                        "https://www.redmond.gov/1193/City-Council",
+                        "https://www.redmond.gov/"
+                    ],
+                    "updated_at": "2025-09-18T00:17:01+00:00"
+                },
+                {
+                    "name": "Angie Nuevacamina",
+                    "image": "",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "anuevacamina@redmond.gov",
+                    "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Redmond",
+                    "counties": [
+                        "King"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.redmond.gov/189/City-Council",
+                        "https://www.redmond.gov/1193/City-Council",
+                        "https://www.redmond.gov/"
+                    ],
+                    "updated_at": "2025-09-18T00:17:01+00:00"
+                },
+                {
+                    "name": "Jeralee Anderson",
+                    "image": "",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "janderson@redmond.gov",
+                    "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Redmond",
+                    "counties": [
+                        "King"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.redmond.gov/189/City-Council",
+                        "https://www.redmond.gov/1193/City-Council",
+                        "https://www.redmond.gov/"
+                    ],
+                    "updated_at": "2025-09-18T00:17:01+00:00"
+                },
+                {
+                    "name": "Jessica Forsythe",
+                    "image": "",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "jforsythe@redmond.gov",
+                    "website": "https://www.redmond.gov/CivicAlerts.aspx?AID=2238",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Redmond",
+                    "counties": [
+                        "King"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.redmond.gov/189/City-Council",
+                        "https://www.redmond.gov/1193/City-Council",
+                        "https://www.redmond.gov/"
+                    ],
+                    "updated_at": "2025-09-18T00:17:01+00:00"
+                },
+                {
+                    "name": "Melissa Stuart",
+                    "image": "",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "mstuart@redmond.gov",
+                    "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Redmond",
+                    "counties": [
+                        "King"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.redmond.gov/189/City-Council",
+                        "https://www.redmond.gov/1193/City-Council",
+                        "https://www.redmond.gov/"
+                    ],
+                    "updated_at": "2025-09-18T00:17:01+00:00"
+                },
+                {
+                    "name": "Osman Salahuddin",
+                    "image": "",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "osalahuddin@redmond.gov",
+                    "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Redmond",
+                    "counties": [
+                        "King"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.redmond.gov/189/City-Council",
+                        "https://www.redmond.gov/1193/City-Council",
+                        "https://www.redmond.gov/"
+                    ],
+                    "updated_at": "2025-09-18T00:17:01+00:00"
+                },
+                {
+                    "name": "Steve Fields",
+                    "image": "",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "sfields@redmond.gov",
+                    "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Redmond",
+                    "counties": [
+                        "King"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.redmond.gov/189/City-Council",
+                        "https://www.redmond.gov/1193/City-Council",
+                        "https://www.redmond.gov/"
+                    ],
+                    "updated_at": "2025-09-18T00:17:01+00:00"
+                },
+                {
+                    "name": "Vanessa Kritzer",
+                    "image": "",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "vkritzer@redmond.gov",
+                    "website": "https://www.redmond.gov/1300/Learn-About-Redmonds-City-Council",
+                    "start_date": "2024",
+                    "end_date": "2027",
+                    "state": "wa",
+                    "place": "Redmond",
+                    "counties": [
+                        "King"
+                    ],
+                    "cdn_image": "",
+                    "data_sources": [
+                        "https://www.redmond.gov/189/City-Council",
+                        "https://www.redmond.gov/1193/City-Council",
+                        "https://www.redmond.gov/"
+                    ],
+                    "updated_at": "2025-09-18T00:17:01+00:00"
+                }
+            ],
+            "agreement_score": 95.16402116402116,
+            "disagreements": [
+                {
+                    "field": "divisions",
+                    "person_name": "Angela Birney",
+                    "merged_value": "(empty)",
+                    "source_values": {
+                        "google_gemini": "(empty)",
+                        "openai": "(empty)",
+                        "together_ai": "at-large, ward, district, position, seat"
+                    },
+                    "disagreement_score": 1.0
+                },
+                {
+                    "field": "website",
+                    "person_name": "Angela Birney",
+                    "merged_value": "https://www.redmond.gov/284/Office-of-the-Mayor",
+                    "source_values": {
+                        "google_gemini": "(empty)",
+                        "openai": "https://www.redmond.gov/284/Office-of-the-Mayor",
+                        "together_ai": "https://www.redmond.gov"
+                    },
+                    "disagreement_score": 0.17
+                }
+            ],
+            "missing_people": []
+        },
+        "CLEANUP": {},
+        "RETRY": {},
+        "DONE": {}
+    }
+}
