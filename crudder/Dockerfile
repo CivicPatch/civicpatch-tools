@@ -16,6 +16,9 @@ ENV PYTHONUNBUFFERED=1 \
 # Add Poetry and virtual env to PATH
 ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"
 
+# Install atlas
+RUN curl -sSL https://atlasgo.sh | sh
+
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
@@ -30,6 +33,8 @@ COPY ./${PROJECT_NAME} /app
 
 RUN useradd -m -s /bin/bash civicpatch_user
 RUN chown -R civicpatch_user:civicpatch_user /app
+
+ENV PATH="/home/civicpatch_user/.local/bin:$PATH"
 
 # DEVELOPMENT IMAGE
 FROM image-base AS development
