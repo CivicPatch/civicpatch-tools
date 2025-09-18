@@ -2,6 +2,11 @@
 [env]
 _.file = ".deployment.env"
 
+[tasks.container]
+run = """
+docker compose run --rm crudder
+"""
+
 [tasks.deploy_crudder]
 run = "python scripts/deploy.py"
 
@@ -48,4 +53,67 @@ except Exception as e:
 finally:
     test_data.close()
 '
+"""
+
+#################################
+## 🚀✨ DATABASE COMMANDS ✨🚀 ##
+#################################
+
+[tasks.gen_schema]
+run = """
+docker compose run --rm crudder \
+    atlas schema inspect --env local > database_operations/schema.sql \
+"""
+
+[tasks.make_baseline]
+run = """
+docker compose run --rm crudder \
+    atlas migrate diff baseline --env local
+"""
+
+[tasks.migrate]
+run = """
+docker compose run --rm crudder \
+    atlas migrate apply --env local
+"""
+
+[tasks.gen_migrate]
+run = """
+docker compose run --rm crudder \
+    atlas migrate diff --env local {{ arg(name="migration_name") }}
+"""
+
+[tasks.edit_migrate]
+run = """
+docker compose run --rm crudder \
+    atlas migrate edit --env local {{ arg(name="migration_name") }}
+"""
+
+[tasks.migrate_verify]
+run = """
+docker compose run --rm crudder \
+    atlas schema diff --env local \
+    --from "file://database_operations/migrations" \
+    --to "sqlite://data/database.db" \
+    --exclude "atlas_schema_revisions"
+"""
+
+[tasks.migrate_status]
+run = """
+docker compose run --rm crudder \
+    atlas migrate status --env local
+"""
+
+
+[tasks.plan_migrate_down]
+run = """
+docker compose run --rm crudder \
+    atlas migrate down --env local \
+    --dry-run
+"""
+
+[tasks.confirm_migrate_down]
+run = """
+docker compose run --rm crudder \
+    atlas migrate down --env local
 """
