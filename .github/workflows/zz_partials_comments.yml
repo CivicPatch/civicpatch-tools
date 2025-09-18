@@ -62,7 +62,7 @@ jobs:
           version: '2025.9.6'
           cache: true
           log_level: debug
-          working_directory: civicpatch
+          working_directory: civicpatch # Doesn't seem to work?
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull Prebuilt Docker Image
@@ -91,7 +91,7 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
         run: |
           PR_NUMBER=${{ inputs.pr_number }}
-          echo "TBD: Create or update data comment for PR #$PR_NUMBER"
+          cd civicpatch
           COMMENT=$(mise generate-data-comment --municipality-path ${{ inputs.municipality_path }} )
           gh pr comment $PR_NUMBER --edit-last --create-if-none --body "$COMMENT"
 
