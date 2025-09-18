@@ -92,6 +92,7 @@ jobs:
         run: |
           PR_NUMBER=${{ inputs.pr_number }}
           cd civicpatch
+
           COMMENT=$(mise generate-data-comment --municipality-path ${{ inputs.municipality_path }} )
           gh pr comment $PR_NUMBER --edit-last --create-if-none --body "$COMMENT"
 
@@ -102,6 +103,7 @@ jobs:
         run: |
           PR_NUMBER=${{ inputs.pr_number }}
           COMMENT=$(mise generate-review-comment --municipality-path ${{ inputs.municipality_path }} )
+          cd civicpatch
 
           if [ -n "$REJECTED_REASONS" ]; then
             gh pr review $PR_NUMBER --request-changes -b "$COMMENT"
