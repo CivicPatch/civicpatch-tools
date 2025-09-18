@@ -6,11 +6,11 @@ import json
 
 def test_pipeline_step():
     state = "wa"
-    geoid = "5363000"  # Seattle
+    geoid = "5353545"  # Pasco
     pipeline_status = PipelineStatus.MAYBE_SEND_TO_GITHUB
     # Note: need to generate a unique request id
     # if you are testing PR creation
-    request_id = "32faccde-b0d8-4f02-bff4-854295f72edd"
+    request_id = "32faccde-b0d8-4f02-bff4-TEST"
 
     pipeline = Pipeline()
     pipeline.set_state(pipeline_status)
