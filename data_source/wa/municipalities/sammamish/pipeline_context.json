@@ -1,0 +1,2144 @@
+{
+  "request_id": "32faccde-b0d8-4f02-bff4-LLLLLL",
+  "state": "wa",
+  "geoid": "5361115",
+  "links": [
+    {
+      "url": "https://www.sammamish.us/government/city-council/",
+      "status": "done",
+      "folder_name": "www_sammamish_us_government_city-council_",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/",
+      "status": "done",
+      "folder_name": "www_sammamish_us_",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+      "status": "done",
+      "folder_name": "www_sammamish_us_news_events_events_2025-city-council-meetings_june-3-2025-city-council-meeting_",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/",
+      "status": "done",
+      "folder_name": "www_sammamish_us_news_council-selects-mayor-deputy-mayor_",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/government/community-development/long-range-planning/docket-requests/docket-request-faq-s/",
+      "status": "done",
+      "folder_name": "www_sammamish_us_government_community-development_long-range-planning_docket-requests_docket-request-faq-s_",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/our-community/candidate-resources/",
+      "status": "done",
+      "folder_name": "www_sammamish_us_our-community_candidate-resources_",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/news/council-events/",
+      "status": "done",
+      "folder_name": "www_sammamish_us_news_council-events_",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/news/",
+      "status": "done",
+      "folder_name": "www_sammamish_us_news_",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/news/events/2024-city-council-meetings/",
+      "status": "done",
+      "folder_name": "www_sammamish_us_news_events_2024-city-council-meetings_",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/our-community/diversity-equity-inclusion-and-belonging/",
+      "status": "done",
+      "folder_name": "www_sammamish_us_our-community_diversity-equity-inclusion-and-belonging_",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/government/city-manager/",
+      "status": "preprocessed",
+      "folder_name": "www_sammamish_us_government_city-manager_",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/government/commissions/youth-board/",
+      "status": "pending",
+      "folder_name": "",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/media/ntkmgm4q/sam_news_dec-2024_final.pdf",
+      "status": "pending",
+      "folder_name": "",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/media/we1k3x5n/sam_news_feb2025_final-web.pdf",
+      "status": "pending",
+      "folder_name": "",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/media/ybce4xwl/amended-council-rules-of-procedure-9-3-24.pdf?preview=88453",
+      "status": "pending",
+      "folder_name": "",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/news/events/events/coffee-with-council/coffee-with-council-march-1-2025/",
+      "status": "pending",
+      "folder_name": "",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/news/city-wins-award-for-comprehensive-plan/",
+      "status": "pending",
+      "folder_name": "",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/news/2024-legal-notices/",
+      "status": "pending",
+      "folder_name": "",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/government/clerk/",
+      "status": "pending",
+      "folder_name": "",
+      "is_profile_page": false
+    },
+    {
+      "url": "https://www.sammamish.us/government/contact-info/",
+      "status": "pending",
+      "folder_name": "",
+      "is_profile_page": false
+    }
+  ],
+  "progress": {
+    "required_data": 7,
+    "current_data": 2
+  },
+  "names": {
+    "Karen Howe": [
+      "Karen Howe"
+    ],
+    "Amy Lam": [
+      "Amy Lam"
+    ],
+    "Kali Clark": [
+      "Kali Clark"
+    ],
+    "Roisin O'Farrell": [
+      "Roisin O'Farrell"
+    ],
+    "Sid Gupta": [
+      "Sid Gupta"
+    ],
+    "Kent Treen": [
+      "Kent Treen"
+    ],
+    "Pam Stuart": [
+      "Pam Stuart"
+    ]
+  },
+  "steps": {
+    "INIT": {},
+    "RESEARCH_MUNICIPALITY": {
+      "government_type": "mayor_council",
+      "people": [
+        {
+          "name": "Karen Howe",
+          "roles": [
+            "Mayor",
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Amy Lam",
+          "roles": [
+            "Deputy Mayor",
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Kali Clark",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Roisin O'Farrell",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Sid Gupta",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Kent Treen",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Pam Stuart",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": []
+        }
+      ],
+      "elected_officials": [
+        {
+          "name": "Karen Howe",
+          "roles": [
+            "Mayor",
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Amy Lam",
+          "roles": [
+            "Deputy Mayor",
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Kali Clark",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Roisin O'Farrell",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Sid Gupta",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Kent Treen",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": []
+        },
+        {
+          "name": "Pam Stuart",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": []
+        }
+      ],
+      "notes": "Sammamish, WA operates under a Council-Manager form of government. The City Council consists of seven members elected at-large for staggered four-year terms. The Mayor and Deputy Mayor are selected by the Council from among its members and serve ceremonial roles with equal voting power to other council members."
+    },
+    "SEARCH_LINKS": {
+      "search_link_pointer": 1,
+      "search_engines": {
+        "google": {
+          "links": [
+            "https://www.sammamish.us/government/city-council/",
+            "https://www.sammamish.us/",
+            "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+            "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/",
+            "https://www.sammamish.us/government/community-development/long-range-planning/docket-requests/docket-request-faq-s/",
+            "https://www.sammamish.us/our-community/candidate-resources/",
+            "https://www.sammamish.us/news/council-events/",
+            "https://www.sammamish.us/news/",
+            "https://www.sammamish.us/news/events/2024-city-council-meetings/",
+            "https://www.sammamish.us/our-community/diversity-equity-inclusion-and-belonging/",
+            "https://www.sammamish.us/government/city-manager/",
+            "https://www.sammamish.us/government/commissions/youth-board/",
+            "https://www.sammamish.us/media/ntkmgm4q/sam_news_dec-2024_final.pdf",
+            "https://www.sammamish.us/media/we1k3x5n/sam_news_feb2025_final-web.pdf",
+            "https://www.sammamish.us/media/ybce4xwl/amended-council-rules-of-procedure-9-3-24.pdf?preview=88453",
+            "https://www.sammamish.us/news/events/events/coffee-with-council/coffee-with-council-march-1-2025/",
+            "https://www.sammamish.us/news/city-wins-award-for-comprehensive-plan/",
+            "https://www.sammamish.us/news/2024-legal-notices/",
+            "https://www.sammamish.us/government/clerk/",
+            "https://www.sammamish.us/government/contact-info/"
+          ],
+          "status": "completed"
+        },
+        "brave": {
+          "status": "not_started"
+        },
+        "serp": {
+          "status": "not_started"
+        },
+        "crawl": {
+          "status": "not_started"
+        }
+      }
+    },
+    "SCRAPE_PAGE": {},
+    "PREPROCESS_PAGE_CONTENT": {
+      "elapsed_times": [
+        25.64497685432434,
+        18.21816349029541,
+        22.770479917526245,
+        14.755358934402466,
+        18.269785165786743,
+        28.805392742156982,
+        18.237842082977295,
+        25.79357671737671,
+        23.28384494781494,
+        30.16511631011963,
+        22.293534517288208
+      ],
+      "total_elapsed_time_seconds": 248.23807168006897,
+      "average_elapsed_time_seconds": 22.567097425460815
+    },
+    "PROCESS_PAGE_CONTENT": {
+      "records_by_source": {
+        "google_gemini": {
+          "Karen Howe": [
+            {
+              "name": "Karen Howe",
+              "image": "https://www.sammamish.us/media/2aubxm3g/howe_2455.jpg?width=165&height=206",
+              "roles": [
+                "mayor"
+              ],
+              "divisions": [
+                "Position 7"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2025-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "Mayor"
+              ],
+              "divisions": [],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "council member"
+              ],
+              "divisions": [
+                "Council Position #7",
+                "at-large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/our-community/candidate-resources/"
+            }
+          ],
+          "Amy Lam": [
+            {
+              "name": "Amy Lam",
+              "image": "https://www.sammamish.us/media/vzjhrkxq/lam_2450.jpg?width=165&height=209",
+              "roles": [
+                "deputy mayor"
+              ],
+              "divisions": [
+                "Position 1"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2025-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Amy Lam",
+              "image": null,
+              "roles": [
+                "Deputy Mayor"
+              ],
+              "divisions": [],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/"
+            },
+            {
+              "name": "Amy Lam",
+              "image": null,
+              "roles": [
+                "council member"
+              ],
+              "divisions": [
+                "Council Position #1",
+                "at-large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/our-community/candidate-resources/"
+            }
+          ],
+          "Kali Clark": [
+            {
+              "name": "Kali Clark",
+              "image": "https://www.sammamish.us/media/mtabakgo/clark_2481.jpg?mode=crop&width=165&height=206",
+              "roles": [
+                "council member"
+              ],
+              "divisions": [
+                "Position 5"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2025-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Kali Clark",
+              "image": null,
+              "roles": [
+                "Council Member"
+              ],
+              "divisions": [],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/"
+            },
+            {
+              "name": "Kali Clark",
+              "image": null,
+              "roles": [
+                "council member"
+              ],
+              "divisions": [
+                "Council Position #5",
+                "at-large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/our-community/candidate-resources/"
+            }
+          ],
+          "Roisin O'Farrell": [
+            {
+              "name": "Roisin O'Farrell",
+              "image": "https://www.sammamish.us/media/j03bc5ul/ofarrell_2442.jpg?width=165&height=206",
+              "roles": [
+                "council member"
+              ],
+              "divisions": [
+                "Position 2"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2027-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            }
+          ],
+          "Sid Gupta": [
+            {
+              "name": "Sid Gupta",
+              "image": "https://www.sammamish.us/media/c5xcbyru/sid-gupta-photo-from-jjshotme_0027.jpg?mode=max&width=165&height=206",
+              "roles": [
+                "council member"
+              ],
+              "divisions": [
+                "Position 3"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2025-11-25",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Sid Gupta",
+              "image": null,
+              "roles": [
+                "council member"
+              ],
+              "divisions": [
+                "Council Position #3",
+                "at-large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/our-community/candidate-resources/"
+            }
+          ],
+          "Kent Treen": [
+            {
+              "name": "Kent Treen",
+              "image": "https://www.sammamish.us/media/2ihfj1ou/treen_2475.jpg?width=165&height=206",
+              "roles": [
+                "council member"
+              ],
+              "divisions": [
+                "Position 4"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2027-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            }
+          ],
+          "Pam Stuart": [
+            {
+              "name": "Pam Stuart",
+              "image": "https://www.sammamish.us/media/ymve2png/jjshotme-165x215px_pamelastuart-1.jpg?width=165&height=206",
+              "roles": [
+                "council member"
+              ],
+              "divisions": [
+                "Position 6"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2027-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            }
+          ]
+        },
+        "openai": {
+          "Karen Howe": [
+            {
+              "name": "Karen Howe",
+              "image": "https://www.sammamish.us/media/2aubxm3g/howe_2455.jpg?width=165&height=206",
+              "roles": [
+                "Mayor",
+                "Councilmember, Position 7"
+              ],
+              "divisions": [
+                "Position 7"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2025-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": "https://www.sammamish.us/media/guid/lcc-Howe.jpg",
+              "roles": [
+                "Mayor"
+              ],
+              "divisions": [],
+              "phone_number": "425-295-0589",
+              "email": "karen.howe@sammamish.us",
+              "website": "https://www.sammamish.us/government/city-council/mayor",
+              "start_date": "2024-11",
+              "end_date": "2028-11",
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": "https://www.sammamish.us/media/gdtdlwob/new-mayor.png",
+              "roles": [
+                "Mayor"
+              ],
+              "divisions": [],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": "2025-01-07",
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "Council Member, Position 7"
+              ],
+              "divisions": [
+                "At-Large",
+                "Position 7"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/our-community/candidate-resources/"
+            }
+          ],
+          "Amy Lam": [
+            {
+              "name": "Amy Lam",
+              "image": "https://www.sammamish.us/media/vzjhrkxq/lam_2450.jpg?width=165&height=209",
+              "roles": [
+                "Deputy Mayor",
+                "Councilmember, Position 1"
+              ],
+              "divisions": [
+                "Position 1"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2025-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Amy Lam",
+              "image": "https://www.sammamish.us/media/guid/lcc-Lam.jpg",
+              "roles": [
+                "Council Member At-Large"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": "425-295-0589",
+              "email": "amy.lam@sammamish.us",
+              "website": "https://www.sammamish.us/government/city-council/amy-lam",
+              "start_date": "2024-11",
+              "end_date": "2028-11",
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            },
+            {
+              "name": "Amy Lam",
+              "image": null,
+              "roles": [
+                "Deputy Mayor"
+              ],
+              "divisions": [],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": "2025-01-07",
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/"
+            },
+            {
+              "name": "Amy Lam",
+              "image": null,
+              "roles": [
+                "Council Member, Position 1"
+              ],
+              "divisions": [
+                "At-Large",
+                "Position 1"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/our-community/candidate-resources/"
+            }
+          ],
+          "Kali Clark": [
+            {
+              "name": "Kali Clark",
+              "image": "https://www.sammamish.us/media/mtabakgo/clark_2481.jpg?mode=crop&width=165&height=206",
+              "roles": [
+                "Councilmember, Position 5"
+              ],
+              "divisions": [
+                "Position 5"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2025-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Kali Clark",
+              "image": "https://www.sammamish.us/media/guid/lcc-Clark.jpg",
+              "roles": [
+                "Council Member District 5"
+              ],
+              "divisions": [
+                "District 5"
+              ],
+              "phone_number": "425-295-0589",
+              "email": "kali.clark@sammamish.us",
+              "website": "https://www.sammamish.us/government/city-council/kali-clark",
+              "start_date": "2024-11",
+              "end_date": "2028-11",
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            },
+            {
+              "name": "Kali Clark",
+              "image": null,
+              "roles": [
+                "Council Member, Position 5"
+              ],
+              "divisions": [
+                "At-Large",
+                "Position 5"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/our-community/candidate-resources/"
+            }
+          ],
+          "Roisin O'Farrell": [
+            {
+              "name": "Roisin O'Farrell",
+              "image": "https://www.sammamish.us/media/j03bc5ul/ofarrell_2442.jpg?width=165&height=206",
+              "roles": [
+                "Councilmember, Position 2"
+              ],
+              "divisions": [
+                "Position 2"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2027-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Roisin O'Farrell",
+              "image": "https://www.sammamish.us/media/guid/lcc-Ofarrell.jpg",
+              "roles": [
+                "Council Member District 3"
+              ],
+              "divisions": [
+                "District 3"
+              ],
+              "phone_number": "425-295-0589",
+              "email": "roisin.ofarrell@sammamish.us",
+              "website": "https://www.sammamish.us/government/city-council/roisin-ofarrell",
+              "start_date": "2024-11",
+              "end_date": "2028-11",
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            }
+          ],
+          "Sid Gupta": [
+            {
+              "name": "Sid Gupta",
+              "image": "https://www.sammamish.us/media/c5xcbyru/sid-gupta-photo-from-jjshotme_0027.jpg?mode=max&width=165&height=206",
+              "roles": [
+                "Councilmember, Position 3"
+              ],
+              "divisions": [
+                "Position 3"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2025-11-25",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Sid Gupta",
+              "image": "https://www.sammamish.us/media/guid/lcc-Gupta.jpg",
+              "roles": [
+                "Council Member District 1"
+              ],
+              "divisions": [
+                "District 1"
+              ],
+              "phone_number": "425-295-0589",
+              "email": "sid.gupta@sammamish.us",
+              "website": "https://www.sammamish.us/government/city-council/sid-gupta",
+              "start_date": "2024-11",
+              "end_date": "2028-11",
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            },
+            {
+              "name": "Sid Gupta",
+              "image": null,
+              "roles": [
+                "Council Member, Position 3"
+              ],
+              "divisions": [
+                "At-Large",
+                "Position 3"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/our-community/candidate-resources/"
+            }
+          ],
+          "Kent Treen": [
+            {
+              "name": "Kent Treen",
+              "image": "https://www.sammamish.us/media/2ihfj1ou/treen_2475.jpg?width=165&height=206",
+              "roles": [
+                "Councilmember, Position 4"
+              ],
+              "divisions": [
+                "Position 4"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2027-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Kent Treen",
+              "image": "https://www.sammamish.us/media/guid/lcc-Treen.jpg",
+              "roles": [
+                "Council Member District 4"
+              ],
+              "divisions": [
+                "District 4"
+              ],
+              "phone_number": "425-295-0589",
+              "email": "kent.treen@sammamish.us",
+              "website": "https://www.sammamish.us/government/city-council/kent-treen",
+              "start_date": "2024-11",
+              "end_date": "2028-11",
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            }
+          ],
+          "Pam Stuart": [
+            {
+              "name": "Pam Stuart",
+              "image": "https://www.sammamish.us/media/ymve2png/jjshotme-165x215px_pamelastuart-1.jpg?width=165&height=206",
+              "roles": [
+                "Councilmember, Position 6",
+                "Chair"
+              ],
+              "divisions": [
+                "Position 6"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": "2027-12-31",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Pam Stuart",
+              "image": "https://www.sammamish.us/media/guid/lcc-Stuart.jpg",
+              "roles": [
+                "Council Member District 2"
+              ],
+              "divisions": [
+                "District 2"
+              ],
+              "phone_number": "425-295-0589",
+              "email": "pam.stuart@sammamish.us",
+              "website": "https://www.sammamish.us/government/city-council/pam-stuart",
+              "start_date": "2024-11",
+              "end_date": "2028-11",
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            }
+          ]
+        },
+        "together_ai": {
+          "Karen Howe": [
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "Mayor"
+              ],
+              "divisions": [
+                "Position 7"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": "2024",
+              "end_date": "2025",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "Mayor"
+              ],
+              "divisions": [
+                "at-large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "City Council"
+              ],
+              "divisions": [
+                "at-large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/government/community-development/long-range-planning/docket-requests/docket-request-faq-s/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "at-large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/council-events/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "at-large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            },
+            {
+              "name": "Karen Howe",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "at-large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/our-community/diversity-equity-inclusion-and-belonging/"
+            }
+          ],
+          "Amy Lam": [
+            {
+              "name": "Amy Lam",
+              "image": null,
+              "roles": [
+                "Deputy Mayor"
+              ],
+              "divisions": [
+                "Position 1"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": "2024",
+              "end_date": "2025",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Amy Lam",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            },
+            {
+              "name": "Amy Lam",
+              "image": null,
+              "roles": [
+                "Council Position #1"
+              ],
+              "divisions": [
+                "at-large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": "https://www.sammamish.us/government/city-council/",
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/our-community/candidate-resources/"
+            },
+            {
+              "name": "Amy Lam",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            }
+          ],
+          "Kali Clark": [
+            {
+              "name": "Kali Clark",
+              "image": null,
+              "roles": [
+                "Councilmember"
+              ],
+              "divisions": [
+                "Position 5"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": "2024",
+              "end_date": "2025",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Kali Clark",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            },
+            {
+              "name": "Kali Clark",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            }
+          ],
+          "Roisin O'Farrell": [
+            {
+              "name": "Roisin O'Farrell",
+              "image": null,
+              "roles": [
+                "Councilmember"
+              ],
+              "divisions": [
+                "Position 2"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": "2024",
+              "end_date": "2027",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Roisin O'Farrell",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            },
+            {
+              "name": "Roisin O'Farrell",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            }
+          ],
+          "Sid Gupta": [
+            {
+              "name": "Sid Gupta",
+              "image": null,
+              "roles": [
+                "Councilmember"
+              ],
+              "divisions": [
+                "Position 3"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": "2024",
+              "end_date": "2025",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Sid Gupta",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            },
+            {
+              "name": "Sid Gupta",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            }
+          ],
+          "Kent Treen": [
+            {
+              "name": "Kent Treen",
+              "image": null,
+              "roles": [
+                "Councilmember"
+              ],
+              "divisions": [
+                "Position 4"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": "2024",
+              "end_date": "2027",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Kent Treen",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            },
+            {
+              "name": "Kent Treen",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            }
+          ],
+          "Pam Stuart": [
+            {
+              "name": "Pam Stuart",
+              "image": null,
+              "roles": [
+                "Councilmember"
+              ],
+              "divisions": [
+                "Position 6"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": "2024",
+              "end_date": "2027",
+              "data_source": "https://www.sammamish.us/government/city-council/"
+            },
+            {
+              "name": "Pam Stuart",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            },
+            {
+              "name": "Pam Stuart",
+              "image": null,
+              "roles": [
+                "City Council Member"
+              ],
+              "divisions": [
+                "At-Large"
+              ],
+              "phone_number": null,
+              "email": null,
+              "website": null,
+              "start_date": null,
+              "end_date": null,
+              "data_source": "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            }
+          ]
+        }
+      }
+    },
+    "MERGE_RECORDS_WITHIN_SOURCE": {
+      "people_by_source": {
+        "google_gemini": [
+          {
+            "name": "Karen Howe",
+            "image": "https://www.sammamish.us/media/2aubxm3g/howe_2455.jpg?width=165&height=206",
+            "roles": [
+              "mayor",
+              "council member"
+            ],
+            "divisions": [
+              "position 7",
+              "position #7",
+              "at-large"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "",
+            "end_date": "2025-12-31",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/",
+              "https://www.sammamish.us/our-community/candidate-resources/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Amy Lam",
+            "image": "https://www.sammamish.us/media/vzjhrkxq/lam_2450.jpg?width=165&height=209",
+            "roles": [
+              "deputy mayor",
+              "council member"
+            ],
+            "divisions": [
+              "position 1",
+              "position #1",
+              "at-large"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "",
+            "end_date": "2025-12-31",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/",
+              "https://www.sammamish.us/our-community/candidate-resources/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Kali Clark",
+            "image": "https://www.sammamish.us/media/mtabakgo/clark_2481.jpg?mode=crop&width=165&height=206",
+            "roles": [
+              "council member"
+            ],
+            "divisions": [
+              "position 5",
+              "position #5",
+              "at-large"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "",
+            "end_date": "2025-12-31",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/",
+              "https://www.sammamish.us/our-community/candidate-resources/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Roisin O'Farrell",
+            "image": "https://www.sammamish.us/media/j03bc5ul/ofarrell_2442.jpg?width=165&height=206",
+            "roles": [
+              "council member"
+            ],
+            "divisions": [
+              "position 2"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "",
+            "end_date": "2027-12-31",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Sid Gupta",
+            "image": "https://www.sammamish.us/media/c5xcbyru/sid-gupta-photo-from-jjshotme_0027.jpg?mode=max&width=165&height=206",
+            "roles": [
+              "council member"
+            ],
+            "divisions": [
+              "position 3",
+              "position #3",
+              "at-large"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "",
+            "end_date": "2025-11-25",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/our-community/candidate-resources/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Kent Treen",
+            "image": "https://www.sammamish.us/media/2ihfj1ou/treen_2475.jpg?width=165&height=206",
+            "roles": [
+              "council member"
+            ],
+            "divisions": [
+              "position 4"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "",
+            "end_date": "2027-12-31",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Pam Stuart",
+            "image": "https://www.sammamish.us/media/ymve2png/jjshotme-165x215px_pamelastuart-1.jpg?width=165&height=206",
+            "roles": [
+              "council member"
+            ],
+            "divisions": [
+              "position 6"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "",
+            "end_date": "2027-12-31",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/"
+            ],
+            "updated_at": ""
+          }
+        ],
+        "openai": [
+          {
+            "name": "Karen Howe",
+            "image": "https://www.sammamish.us/media/2aubxm3g/howe_2455.jpg?width=165&height=206",
+            "roles": [
+              "mayor"
+            ],
+            "divisions": [
+              "position 7",
+              "at-large"
+            ],
+            "phone_number": "425-295-0589",
+            "email": "karen.howe@sammamish.us",
+            "website": "https://www.sammamish.us/government/city-council/",
+            "start_date": "2024-11",
+            "end_date": "2025-12-31",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+              "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/",
+              "https://www.sammamish.us/our-community/candidate-resources/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Amy Lam",
+            "image": "https://www.sammamish.us/media/vzjhrkxq/lam_2450.jpg?width=165&height=209",
+            "roles": [
+              "deputy mayor",
+              "council member"
+            ],
+            "divisions": [
+              "position 1",
+              "at-large"
+            ],
+            "phone_number": "425-295-0589",
+            "email": "amy.lam@sammamish.us",
+            "website": "https://www.sammamish.us/government/city-council/",
+            "start_date": "2024-11",
+            "end_date": "2025-12-31",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+              "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/",
+              "https://www.sammamish.us/our-community/candidate-resources/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Pam Stuart",
+            "image": "https://www.sammamish.us/media/ymve2png/jjshotme-165x215px_pamelastuart-1.jpg?width=165&height=206",
+            "roles": [
+              "chair"
+            ],
+            "divisions": [
+              "position 6",
+              "district 2"
+            ],
+            "phone_number": "425-295-0589",
+            "email": "pam.stuart@sammamish.us",
+            "website": "https://www.sammamish.us/government/city-council/pam-stuart",
+            "start_date": "2024-11",
+            "end_date": "2027-12-31",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+            ],
+            "updated_at": ""
+          }
+        ],
+        "together_ai": [
+          {
+            "name": "Karen Howe",
+            "image": "",
+            "roles": [
+              "mayor",
+              "council member"
+            ],
+            "divisions": [
+              "position 7",
+              "at-large"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "https://www.sammamish.us/government/city-council/",
+            "start_date": "2024",
+            "end_date": "2025",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/",
+              "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+              "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/",
+              "https://www.sammamish.us/government/community-development/long-range-planning/docket-requests/docket-request-faq-s/",
+              "https://www.sammamish.us/news/council-events/",
+              "https://www.sammamish.us/news/",
+              "https://www.sammamish.us/news/events/2024-city-council-meetings/",
+              "https://www.sammamish.us/our-community/diversity-equity-inclusion-and-belonging/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Amy Lam",
+            "image": "",
+            "roles": [
+              "deputy mayor",
+              "council member"
+            ],
+            "divisions": [
+              "position 1",
+              "at-large"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "https://www.sammamish.us/government/city-council/",
+            "start_date": "2024",
+            "end_date": "2025",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+              "https://www.sammamish.us/our-community/candidate-resources/",
+              "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Kali Clark",
+            "image": "",
+            "roles": [
+              "council member"
+            ],
+            "divisions": [
+              "position 5",
+              "at-large"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "2024",
+            "end_date": "2025",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+              "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Roisin O'Farrell",
+            "image": "",
+            "roles": [
+              "council member"
+            ],
+            "divisions": [
+              "position 2",
+              "at-large"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "2024",
+            "end_date": "2027",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+              "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Sid Gupta",
+            "image": "",
+            "roles": [
+              "council member"
+            ],
+            "divisions": [
+              "position 3",
+              "at-large"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "2024",
+            "end_date": "2025",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+              "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Kent Treen",
+            "image": "",
+            "roles": [
+              "council member"
+            ],
+            "divisions": [
+              "position 4",
+              "at-large"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "2024",
+            "end_date": "2027",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+              "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            ],
+            "updated_at": ""
+          },
+          {
+            "name": "Pam Stuart",
+            "image": "",
+            "roles": [
+              "council member"
+            ],
+            "divisions": [
+              "position 6",
+              "at-large"
+            ],
+            "phone_number": "",
+            "email": "",
+            "website": "",
+            "start_date": "2024",
+            "end_date": "2027",
+            "state": "",
+            "place": "",
+            "counties": [],
+            "cdn_image": "",
+            "data_sources": [
+              "https://www.sammamish.us/government/city-council/",
+              "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+              "https://www.sammamish.us/news/events/2024-city-council-meetings/"
+            ],
+            "updated_at": ""
+          }
+        ]
+      }
+    },
+    "MERGE_RECORDS_ACROSS_SOURCES": {
+      "people": [
+        {
+          "name": "Karen Howe",
+          "image": "https://www.sammamish.us/media/2aubxm3g/howe_2455.jpg?width=165&height=206",
+          "roles": [
+            "Mayor",
+            "Council Member"
+          ],
+          "divisions": [
+            "Position 7",
+            "At-large"
+          ],
+          "phone_number": "425-295-0589",
+          "email": "karen.howe@sammamish.us",
+          "website": "https://www.sammamish.us/government/city-council/",
+          "start_date": "2024-11",
+          "end_date": "2025-12-31",
+          "state": "wa",
+          "place": "Sammamish",
+          "counties": [
+            "King"
+          ],
+          "cdn_image": "",
+          "data_sources": [
+            "https://www.sammamish.us/our-community/candidate-resources/",
+            "https://www.sammamish.us/",
+            "https://www.sammamish.us/news/",
+            "https://www.sammamish.us/government/city-council/",
+            "https://www.sammamish.us/news/events/2024-city-council-meetings/",
+            "https://www.sammamish.us/our-community/diversity-equity-inclusion-and-belonging/",
+            "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+            "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/",
+            "https://www.sammamish.us/news/council-events/",
+            "https://www.sammamish.us/government/community-development/long-range-planning/docket-requests/docket-request-faq-s/"
+          ],
+          "updated_at": "2025-09-18T16:38:47+00:00"
+        },
+        {
+          "name": "Amy Lam",
+          "image": "https://www.sammamish.us/media/vzjhrkxq/lam_2450.jpg?width=165&height=209",
+          "roles": [
+            "Deputy Mayor",
+            "Council Member"
+          ],
+          "divisions": [
+            "Position 1",
+            "At-large"
+          ],
+          "phone_number": "425-295-0589",
+          "email": "amy.lam@sammamish.us",
+          "website": "https://www.sammamish.us/government/city-council/",
+          "start_date": "2024-11",
+          "end_date": "2025-12-31",
+          "state": "wa",
+          "place": "Sammamish",
+          "counties": [
+            "King"
+          ],
+          "cdn_image": "",
+          "data_sources": [
+            "https://www.sammamish.us/our-community/candidate-resources/",
+            "https://www.sammamish.us/government/city-council/",
+            "https://www.sammamish.us/news/events/2024-city-council-meetings/",
+            "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+            "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/"
+          ],
+          "updated_at": "2025-09-18T16:38:47+00:00"
+        },
+        {
+          "name": "Roisin O'Farrell",
+          "image": "https://www.sammamish.us/media/j03bc5ul/ofarrell_2442.jpg?width=165&height=206",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": [
+            "Position 2"
+          ],
+          "phone_number": "",
+          "email": "",
+          "website": "",
+          "start_date": "2024",
+          "end_date": "2027-12-31",
+          "state": "wa",
+          "place": "Sammamish",
+          "counties": [
+            "King"
+          ],
+          "cdn_image": "",
+          "data_sources": [
+            "https://www.sammamish.us/government/city-council/",
+            "https://www.sammamish.us/news/events/2024-city-council-meetings/",
+            "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+          ],
+          "updated_at": "2025-09-18T16:38:47+00:00"
+        },
+        {
+          "name": "Sid Gupta",
+          "image": "https://www.sammamish.us/media/c5xcbyru/sid-gupta-photo-from-jjshotme_0027.jpg?mode=max&width=165&height=206",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": [
+            "Position 3",
+            "At-large"
+          ],
+          "phone_number": "",
+          "email": "",
+          "website": "",
+          "start_date": "2024",
+          "end_date": "2025-11-25",
+          "state": "wa",
+          "place": "Sammamish",
+          "counties": [
+            "King"
+          ],
+          "cdn_image": "",
+          "data_sources": [
+            "https://www.sammamish.us/government/city-council/",
+            "https://www.sammamish.us/news/events/2024-city-council-meetings/",
+            "https://www.sammamish.us/our-community/candidate-resources/",
+            "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+          ],
+          "updated_at": "2025-09-18T16:38:47+00:00"
+        },
+        {
+          "name": "Kent Treen",
+          "image": "https://www.sammamish.us/media/2ihfj1ou/treen_2475.jpg?width=165&height=206",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": [
+            "Position 4"
+          ],
+          "phone_number": "",
+          "email": "",
+          "website": "",
+          "start_date": "2024",
+          "end_date": "2027-12-31",
+          "state": "wa",
+          "place": "Sammamish",
+          "counties": [
+            "King"
+          ],
+          "cdn_image": "",
+          "data_sources": [
+            "https://www.sammamish.us/government/city-council/",
+            "https://www.sammamish.us/news/events/2024-city-council-meetings/",
+            "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+          ],
+          "updated_at": "2025-09-18T16:38:47+00:00"
+        },
+        {
+          "name": "Kali Clark",
+          "image": "https://www.sammamish.us/media/mtabakgo/clark_2481.jpg?mode=crop&width=165&height=206",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": [
+            "Position 5",
+            "At-large"
+          ],
+          "phone_number": "",
+          "email": "",
+          "website": "",
+          "start_date": "2024",
+          "end_date": "2025-12-31",
+          "state": "wa",
+          "place": "Sammamish",
+          "counties": [
+            "King"
+          ],
+          "cdn_image": "",
+          "data_sources": [
+            "https://www.sammamish.us/our-community/candidate-resources/",
+            "https://www.sammamish.us/government/city-council/",
+            "https://www.sammamish.us/news/events/2024-city-council-meetings/",
+            "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/",
+            "https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/"
+          ],
+          "updated_at": "2025-09-18T16:38:47+00:00"
+        },
+        {
+          "name": "Pam Stuart",
+          "image": "https://www.sammamish.us/media/ymve2png/jjshotme-165x215px_pamelastuart-1.jpg?width=165&height=206",
+          "roles": [
+            "Council Member"
+          ],
+          "divisions": [
+            "Position 6"
+          ],
+          "phone_number": "425-295-0589",
+          "email": "pam.stuart@sammamish.us",
+          "website": "https://www.sammamish.us/government/city-council/pam-stuart",
+          "start_date": "2024-11",
+          "end_date": "2027-12-31",
+          "state": "wa",
+          "place": "Sammamish",
+          "counties": [
+            "King"
+          ],
+          "cdn_image": "",
+          "data_sources": [
+            "https://www.sammamish.us/government/city-council/",
+            "https://www.sammamish.us/news/events/2024-city-council-meetings/",
+            "https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/"
+          ],
+          "updated_at": "2025-09-18T16:38:47+00:00"
+        }
+      ],
+      "agreement_score": 98.85714285714286,
+      "disagreements": [
+        {
+          "field": "roles",
+          "person_name": "Kent Treen",
+          "merged_value": "Council Member",
+          "source_values": {
+            "google_gemini": "council member",
+            "openai": "(missing)",
+            "together_ai": "council member"
+          },
+          "disagreement_score": 0.0
+        },
+        {
+          "field": "divisions",
+          "person_name": "Kent Treen",
+          "merged_value": "Position 4",
+          "source_values": {
+            "google_gemini": "position 4",
+            "openai": "(missing)",
+            "together_ai": "position 4, at-large"
+          },
+          "disagreement_score": 0.0
+        },
+        {
+          "field": "phone_number",
+          "person_name": "Kent Treen",
+          "merged_value": "(empty)",
+          "source_values": {
+            "google_gemini": "(empty)",
+            "openai": "(missing)",
+            "together_ai": "(empty)"
+          },
+          "disagreement_score": 0.0
+        },
+        {
+          "field": "email",
+          "person_name": "Kent Treen",
+          "merged_value": "(empty)",
+          "source_values": {
+            "google_gemini": "(empty)",
+            "openai": "(missing)",
+            "together_ai": "(empty)"
+          },
+          "disagreement_score": 0.0
+        },
+        {
+          "field": "website",
+          "person_name": "Kent Treen",
+          "merged_value": "(empty)",
+          "source_values": {
+            "google_gemini": "(empty)",
+            "openai": "(missing)",
+            "together_ai": "(empty)"
+          },
+          "disagreement_score": 0.0
+        },
+        {
+          "field": "start_date",
+          "person_name": "Kent Treen",
+          "merged_value": "2024",
+          "source_values": {
+            "google_gemini": "(empty)",
+            "openai": "(missing)",
+            "together_ai": "2024"
+          },
+          "disagreement_score": 0.0
+        },
+        {
+          "field": "end_date",
+          "person_name": "Kent Treen",
+          "merged_value": "2027-12-31",
+          "source_values": {
+            "google_gemini": "2027-12-31",
+            "openai": "(missing)",
+            "together_ai": "2027"
+          },
+          "disagreement_score": 0.21
+        }
+      ],
+      "missing_people": [
+        {
+          "source": "openai",
+          "person_name": "Kali Clark"
+        },
+        {
+          "source": "openai",
+          "person_name": "Roisin O'Farrell"
+        },
+        {
+          "source": "openai",
+          "person_name": "Sid Gupta"
+        },
+        {
+          "source": "openai",
+          "person_name": "Kent Treen"
+        }
+      ]
+    },
+    "CLEANUP": {},
+    "RETRY": {},
+    "DONE": {},
+    "MAYBE_SEND_TO_GITHUB": {
+      "status": "completed",
+      "response_status_code": 200,
+      "response_text": "{\"filename\":\"request_32faccde-b0d8-4f02-bff4-KKKKKKK_wa_5361115.zip\",\"status\":\"uploaded\",\"zip_url\":\"https://crudder.c9ae2b352766fe3e6f7dbee61bcd4c7c.r2.cloudflarestorage.com/processed_request_32faccde-b0d8-4f02-bff4-KKKKKKK_wa_5361115.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=83c1bf330c0ac3dc3e457dc295867d5f%2F20250918%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250918T180822Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=e5ca42b1a2382293274566d5e1d1baacd656f3c77e672bc77eaea7fbcc34b27e\",\"metadata\":{\"state\":\"wa\",\"geoid\":\"5361115\",\"municipality_name\":\"Sammamish\",\"request_id\":\"32faccde-b0d8-4f02-bff4-KKKKKKK\"}}"
+    }
+  },
+  "pipeline_duration_seconds": 4.052062511444092
+}
