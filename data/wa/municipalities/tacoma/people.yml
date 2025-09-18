@@ -1,152 +1,178 @@
-- cdn_image: ''
-  data_sources:
-  - https://www.cityoftacoma.org/government/city_council
-  divisions:
-  - position 5
-  email: ''
-  end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/Bushnell-312x300.jpg
-  name: Chanjolee Bushnell
-  phone_number: ''
-  place: ''
-  roles:
-  - council member
-  start_date: ''
-  state: ''
-  updated_at: ''
-  website: https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/
-- cdn_image: ''
-  data_sources:
-  - https://www.cityoftacoma.org/government/city_council
-  divisions:
-  - position 7
-  email: ''
-  end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/Diaz-312x300.jpg
-  name: Olgy Diaz
-  phone_number: ''
-  place: ''
-  roles:
-  - council member
-  start_date: ''
-  state: ''
-  updated_at: ''
-  website: https://tacoma.gov/profile/council-member-olgy-diaz/
-- cdn_image: ''
-  data_sources:
-  - https://www.cityoftacoma.org/government/city_council
-  divisions:
-  - position 4
-  email: ''
-  end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/Sadalge-312x300.jpg
-  name: Sandesh Sadalge
-  phone_number: ''
-  place: ''
-  roles:
-  - council member
-  start_date: ''
-  state: ''
-  updated_at: ''
-  website: https://tacoma.gov/profile/council-member-sandesh-sadalge/
-- cdn_image: ''
-  data_sources:
-  - https://www.cityoftacoma.org/government/city_council
-  divisions:
-  - position 1
-  email: ''
-  end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/Hines-1-1-312x300.jpg
-  name: John Hines
-  phone_number: ''
-  place: ''
-  roles:
-  - council member
-  start_date: ''
-  state: ''
-  updated_at: ''
-  website: https://tacoma.gov/profile/council-member-john-hines/
-- cdn_image: ''
-  data_sources:
-  - https://www.cityoftacoma.org/government/city_council
-  divisions: []
-  email: ''
-  end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/CM-Daniels-1-312x300.jpg
-  name: Kiara Daniels
-  phone_number: ''
-  place: ''
-  roles:
-  - deputy mayor
-  - council member
-  start_date: ''
-  state: ''
-  updated_at: ''
-  website: https://tacoma.gov/profile/council-member-kiara-daniels/
-- cdn_image: ''
-  data_sources:
-  - https://www.cityoftacoma.org/government/city_council
-  divisions: []
-  email: ''
-  end_date: ''
+- name: Victoria Woodards
   image: https://tacoma.gov/wp-content/uploads/2024/11/Mayor-Woodards-Portrait-1-400x385.jpg
-  name: Victoria Woodards
-  phone_number: (253) 591-5100
-  place: ''
   roles:
-  - mayor
+  - Mayor
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: https://tacoma.gov/government/departments/mayor/
   start_date: '2018'
-  state: ''
-  updated_at: ''
-  website: https://tacoma.gov/profile/mayor-victoria-woodards/
-- cdn_image: ''
+  end_date: '2024'
+  state: wa
+  place: Tacoma
+  counties:
+  - Pierce
   data_sources:
   - https://www.cityoftacoma.org/government/city_council
-  divisions:
-  - position 3
-  email: ''
-  end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-312x300.jpg
-  name: Jamika Scott
-  phone_number: ''
-  place: ''
+  - https://www.cityoftacoma.org/
+  cdn_image: ''
+  updated_at: '2025-09-18T23:22:52+00:00'
+- name: Kiara Daniels
+  image: https://tacoma.gov/wp-content/uploads/2024/11/CM-Daniels-1-312x300.jpg
   roles:
-  - council member
-  start_date: ''
-  state: ''
-  updated_at: ''
-  website: https://tacoma.gov/profile/council-member-jamika-scott/
-- cdn_image: ''
-  data_sources:
-  - https://www.cityoftacoma.org/government/city_council
-  divisions:
-  - position 8
-  email: ''
-  end_date: ''
-  image: https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-312x300.jpg
-  name: Kristina Walker
+  - Deputy Mayor
+  - Council Member
+  divisions: []
   phone_number: ''
-  place: ''
-  roles:
-  - council member
-  start_date: ''
-  state: ''
-  updated_at: ''
-  website: https://tacoma.gov/profile/council-member-kristina-walker/
-- cdn_image: ''
+  email: ''
+  website: https://tacoma.gov/profile/council-member-kiara-daniels/
+  start_date: 2024-2027
+  end_date: 2024-2027
+  state: wa
+  place: Tacoma
+  counties:
+  - Pierce
   data_sources:
   - https://www.cityoftacoma.org/government/city_council
-  divisions:
-  - position 2
+  - https://www.cityoftacoma.org/
+  cdn_image: ''
+  updated_at: '2025-09-18T23:22:52+00:00'
+- name: Joe Bushnell
+  image: https://tacoma.gov/wp-content/uploads/2024/11/Bushnell-312x300.jpg
+  roles:
+  - Council Member
+  divisions: []
+  phone_number: ''
   email: ''
-  end_date: ''
+  website: https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/
+  start_date: 2024-2027
+  end_date: 2024-2027
+  state: wa
+  place: Tacoma
+  counties:
+  - Pierce
+  data_sources:
+  - https://www.cityoftacoma.org/government/city_council
+  - https://www.cityoftacoma.org/
+  cdn_image: ''
+  updated_at: '2025-09-18T23:22:52+00:00'
+- name: John Hines
+  image: https://tacoma.gov/wp-content/uploads/2024/11/Hines-1-1-312x300.jpg
+  roles:
+  - Council Member
+  divisions:
+  - Position 1
+  phone_number: ''
+  email: ''
+  website: https://tacoma.gov/profile/council-member-john-hines/
+  start_date: 2024-2027
+  end_date: 2024-2027
+  state: wa
+  place: Tacoma
+  counties:
+  - Pierce
+  data_sources:
+  - https://www.cityoftacoma.org/government/city_council
+  - https://www.cityoftacoma.org/
+  cdn_image: ''
+  updated_at: '2025-09-18T23:22:52+00:00'
+- name: Sarah Rumbaugh
   image: https://tacoma.gov/wp-content/uploads/2024/11/Rumbaugh-312x300.jpg
-  name: Sarah Rumbaugh
-  phone_number: ''
-  place: ''
   roles:
-  - council member
-  start_date: ''
-  state: ''
-  updated_at: ''
+  - Council Member
+  divisions:
+  - Position 2
+  phone_number: ''
+  email: ''
   website: https://tacoma.gov/profile/council-member-sarah-rumbaugh/
+  start_date: 2024-2027
+  end_date: 2024-2027
+  state: wa
+  place: Tacoma
+  counties:
+  - Pierce
+  data_sources:
+  - https://www.cityoftacoma.org/government/city_council
+  - https://www.cityoftacoma.org/
+  cdn_image: ''
+  updated_at: '2025-09-18T23:22:52+00:00'
+- name: Jamika Scott
+  image: https://tacoma.gov/wp-content/uploads/2024/11/Scott-2-312x300.jpg
+  roles:
+  - Council Member
+  divisions:
+  - Position 3
+  phone_number: ''
+  email: ''
+  website: https://tacoma.gov/profile/council-member-jamika-scott/
+  start_date: 2024-2027
+  end_date: 2024-2027
+  state: wa
+  place: Tacoma
+  counties:
+  - Pierce
+  data_sources:
+  - https://www.cityoftacoma.org/government/city_council
+  - https://www.cityoftacoma.org/
+  cdn_image: ''
+  updated_at: '2025-09-18T23:22:52+00:00'
+- name: Sandesh Sadalge
+  image: https://tacoma.gov/wp-content/uploads/2024/11/Sadalge-312x300.jpg
+  roles:
+  - Council Member
+  divisions:
+  - Position 4
+  phone_number: ''
+  email: ''
+  website: https://tacoma.gov/profile/council-member-sandesh-sadalge/
+  start_date: 2024-2027
+  end_date: 2024-2027
+  state: wa
+  place: Tacoma
+  counties:
+  - Pierce
+  data_sources:
+  - https://www.cityoftacoma.org/government/city_council
+  - https://www.cityoftacoma.org/
+  cdn_image: ''
+  updated_at: '2025-09-18T23:22:52+00:00'
+- name: Olgy Diaz
+  image: https://tacoma.gov/wp-content/uploads/2024/11/Diaz-312x300.jpg
+  roles:
+  - Council Member
+  divisions:
+  - Position 7
+  phone_number: ''
+  email: ''
+  website: https://tacoma.gov/profile/council-member-olgy-diaz/
+  start_date: 2024-2027
+  end_date: 2024-2027
+  state: wa
+  place: Tacoma
+  counties:
+  - Pierce
+  data_sources:
+  - https://www.cityoftacoma.org/government/city_council
+  - https://www.cityoftacoma.org/
+  cdn_image: ''
+  updated_at: '2025-09-18T23:22:52+00:00'
+- name: Kristina Walker
+  image: https://tacoma.gov/wp-content/uploads/2024/11/CM-Walker-1-312x300.jpg
+  roles:
+  - Council Member
+  divisions:
+  - Position 8
+  phone_number: ''
+  email: ''
+  website: https://tacoma.gov/profile/council-member-kristina-walker/
+  start_date: 2024-2027
+  end_date: 2024-2027
+  state: wa
+  place: Tacoma
+  counties:
+  - Pierce
+  data_sources:
+  - https://www.cityoftacoma.org/government/city_council
+  - https://www.cityoftacoma.org/
+  cdn_image: ''
+  updated_at: '2025-09-18T23:22:52+00:00'
