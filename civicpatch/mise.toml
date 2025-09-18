@@ -25,7 +25,7 @@ curl -X POST http://localhost:8000/api/pipeline \
   -H "Content-Type: application/json" \
   -d '{
     "state": "wa",
-    "geoid": "5361115"
+    "geoid": "5370000"
   }'
 """
 
@@ -38,17 +38,29 @@ curl -X GET "http://localhost:8000/api/search?state=wa&num=10"
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_filter_content.py"
 run = "docker compose -f ./docker-compose.development.yml run --rm civicpatch poetry run python src/scripts/test_pipeline_step.py"
 
-# GITHUB ACTIONS
+
+
+
+###############################################
+## 🚀✨ GITHUB ACTIONS TASKS ✨🚀 ##
+###############################################
+
 [tasks.generate-data-comment]
 run = """
 docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
   python src/scripts/generate_data_comment.py {{ option(name="municipality-path") }} 
 """
 
-[tasks.generate-data-review-comment]
+[tasks.generate-review-comment]
 # Ex: /app/data/wa/municipalities/spokane/people.yml
 run = """
 echo "Generating data review comment..."
 docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
-  python src/scripts/generate_data_review_comment.py {{ option(name="file") }}
+  python src/scripts/generate_review_comment.py {{ option(name="municipality-path") }}
+"""
+
+[tasks.get-data-review-rejected-reasons]
+run = """
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+  python src/scripts/get_data_review_rejected_reasons.py {{ option(name="municipality-path") }}
 """

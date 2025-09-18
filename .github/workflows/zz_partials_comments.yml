@@ -95,11 +95,17 @@ jobs:
           COMMENT=$(mise generate-data-comment --municipality-path ${{ inputs.municipality_path }} )
           gh pr comment $PR_NUMBER --edit-last --create-if-none --body "$COMMENT"
 
-      #- name: Create Approval/Disapproval Comment
-      #  env:
-      #    GITHUB_USERNAME: civic-patch-approve-bot
-      #    GITHUB_TOKEN: ${{ steps.generate-approve-token.outputs.token }}
-      #  run: |
-      #    PR_NUMBER=${{ inputs.pr_number }}
-      #    echo "TBD: Create or update approval/disapproval comment for PR #$PR_NUMBER"
-      #    OUTPUT=$(mise generate-data-review-comment --pr-number $PR_NUMBER
+      - name: Create Approval/Disapproval Comment
+        env:
+          GITHUB_USERNAME: civic-patch-approve-bot
+          GITHUB_TOKEN: ${{ steps.generate-approve-token.outputs.token }}
+        run: |
+          PR_NUMBER=${{ inputs.pr_number }}
+          COMMENT=$(mise generate-review-comment --municipality-path ${{ inputs.municipality_path }} )
+
+          if [ -n "$REJECTED_REASONS" ]; then
+            gh pr review $PR_NUMBER --request-changes -b "$COMMENT"
+          else
+            gh pr review $PR_NUMBER --approve -b "$COMMENT"
+          fi
+          

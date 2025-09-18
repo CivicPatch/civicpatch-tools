@@ -9,6 +9,7 @@ class SearchEngineStatus(Enum):
     ERROR = "error"
 
 class SearchEngineState(BaseModel):
+    links: List[str]
     status: str # SearchEngineStatus value 
 
 class ProgressState(BaseModel):
@@ -80,13 +81,17 @@ class Person(RawLLMPerson):
     state: str = ""
     place: str = ""
     counties: List[str] = []
-    cdn_image: str
     data_sources: List[str] # List of source URLs where information was found
+    cdn_image: str
     updated_at: str
 
 OtherNamesByCanonicalName: TypeAlias = Dict[str, List[str]] # Canonical name to other names found while scraping
 PeopleByName: TypeAlias = Dict[str, List[LLMPerson]]
 RecordsBySource: TypeAlias = Dict[str, PeopleByName]
+
+class SearchLinksStep(BaseModel):
+    search_engines: Dict[str, SearchEngineState]  # e.g., "google": SearchEngineState
+    links: List[Link]
 
 class ProcessPageContentStep(BaseModel):
     records_by_source: RecordsBySource
@@ -94,73 +99,41 @@ class ProcessPageContentStep(BaseModel):
 class MergeRecordsWithinSourceStep(BaseModel):
     people_by_source: Dict[str, List[Person]] # LLM Names to list of Person records
 
-class FieldComparison(NamedTuple):
+class FieldComparison(BaseModel):
     field: str
-    person_name: str
     merged_value: str
     source_values: Dict[str, str]
     disagreement_score: float
 
-class MissingPerson(BaseModel):
-    source: str
+class PersonDisagreements(BaseModel):
     person_name: str
+    disagreements: List[FieldComparison]
+
+class MissingPerson(BaseModel):
+    name: str
+    missing_from_sources: List[str]  # List of source names where this person was not found
+    found_in_sources: List[str]  # List of source names where this person was found
 
 class MergeRecordsAcrossSourcesStep(BaseModel):
     people: List[Person]
     agreement_score: float
-    disagreements: List[FieldComparison] = []  # List of disagreements found during merging
-    missing_people: List[MissingPerson] = []  # List of people missing from some sources
+    disagreements: Dict[str, List[FieldComparison]] = {}
+    missing_people: List[MissingPerson] = []  # Now properly typed with MissingPerson class
+    validation_issues: List[str] = []
 
 class PipelineContext(BaseModel):
     state: str
     geoid: str
     request_id: str
-    search_engines: Dict[str, SearchEngineState]
     links: List[Link]  # TODO: move to SEARCH_LINKS
     names: Dict[str, List[str]]  # Canonical names to names found while scraping
     steps: Dict[str, Union[
+        SearchLinksStep,
         MergeRecordsWithinSourceStep,
         MergeRecordsAcrossSourcesStep,
         Any  # Add other step types as needed
     ]]
-    data: Dict[str, Union[
-        ProcessPageContentStep,
-        MergeRecordsWithinSourceStep,
-        MergeRecordsAcrossSourcesStep,
-        Any
-    ]]
     progress: ProgressState
-
-def pydantic_to_dict(obj):
-    """
-    Recursively convert arbitrarily nested Pydantic models, lists, and dicts to plain dicts/lists.
-    """
-    if isinstance(obj, list):
-        return [pydantic_to_dict(item) for item in obj]
-    elif isinstance(obj, dict):
-        return {k: pydantic_to_dict(v) for k, v in obj.items()}
-    elif hasattr(obj, "model_dump"):  # Pydantic v2
-        return obj.model_dump()
-    else:
-        return obj
-    
-def dict_to_pydantic(data: Any, constructor: Callable) -> Any:
-    """
-    Recursively convert arbitrarily nested dicts/lists to Pydantic models using the provided constructor.
-    - data: The input data (dict, list, or primitive)
-    - constructor: The Pydantic model class or a function to construct the object at this level
-    """
-    if isinstance(data, list):
-        return [dict_to_pydantic(item, constructor) for item in data]
-    elif isinstance(data, dict):
-        try:
-            # Try to construct a model at this level
-            return constructor.model_validate(data)
-        except Exception:
-            # If it fails, try to recursively apply to values (for nested dicts)
-            return {k: dict_to_pydantic(v, constructor) for k, v in data.items()}
-    else:
-        return data
 
 # PeopleByNameDict: TypeAlias = Dict[str, ProcessedLLMPeople]
 # ProcessedDataDict: TypeAlias = Dict[str, PeopleByNameDict]
