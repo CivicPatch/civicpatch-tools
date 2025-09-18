@@ -61,7 +61,8 @@ jobs:
         with:
           version: '2025.9.6'
           cache: true
-          working_directory: ./civicpatch
+          log_level: debug
+          working_directory: civicpatch
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull Prebuilt Docker Image
