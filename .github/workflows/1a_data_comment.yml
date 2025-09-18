@@ -37,7 +37,7 @@ jobs:
 
           if [[ $(echo "$PEOPLE_FILES" | wc -l) -eq 1 ]]; then
             PEOPLE_FILE_PATH=$(echo "$PEOPLE_FILES" | head -n 1)
-            MUNICIPALITY_PATH=$(echo "$PEOPLE_FILE_PATH" | sed -E 's|^.*/data/||; s|/people.yml$||')
+            MUNICIPALITY_PATH=$(echo "$PEOPLE_FILE_PATH" | sed -E 's|.*data/||; s|/people.yml$||')
 
             echo "single people.yml file was changed, continuing"
             echo "People file path: $PEOPLE_FILE_PATH"
