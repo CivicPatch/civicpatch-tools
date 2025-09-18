@@ -1,0 +1,165 @@
+- name: Karen Howe
+  image: https://www.sammamish.us/media/2aubxm3g/howe_2455.jpg?width=165&height=206
+  roles:
+  - Mayor
+  - Council Member
+  divisions:
+  - Position 7
+  - At-large
+  phone_number: 425-295-0589
+  email: karen.howe@sammamish.us
+  website: https://www.sammamish.us/government/city-council/
+  start_date: 2024-11
+  end_date: '2025-12-31'
+  state: wa
+  place: Sammamish
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.sammamish.us/our-community/candidate-resources/
+  - https://www.sammamish.us/
+  - https://www.sammamish.us/news/
+  - https://www.sammamish.us/government/city-council/
+  - https://www.sammamish.us/news/events/2024-city-council-meetings/
+  - https://www.sammamish.us/our-community/diversity-equity-inclusion-and-belonging/
+  - https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/
+  - https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/
+  - https://www.sammamish.us/news/council-events/
+  - https://www.sammamish.us/government/community-development/long-range-planning/docket-requests/docket-request-faq-s/
+  updated_at: '2025-09-18T16:38:47+00:00'
+- name: Amy Lam
+  image: https://www.sammamish.us/media/vzjhrkxq/lam_2450.jpg?width=165&height=209
+  roles:
+  - Deputy Mayor
+  - Council Member
+  divisions:
+  - Position 1
+  - At-large
+  phone_number: 425-295-0589
+  email: amy.lam@sammamish.us
+  website: https://www.sammamish.us/government/city-council/
+  start_date: 2024-11
+  end_date: '2025-12-31'
+  state: wa
+  place: Sammamish
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.sammamish.us/our-community/candidate-resources/
+  - https://www.sammamish.us/government/city-council/
+  - https://www.sammamish.us/news/events/2024-city-council-meetings/
+  - https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/
+  - https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/
+  updated_at: '2025-09-18T16:38:47+00:00'
+- name: Roisin O'Farrell
+  image: https://www.sammamish.us/media/j03bc5ul/ofarrell_2442.jpg?width=165&height=206
+  roles:
+  - Council Member
+  divisions:
+  - Position 2
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: '2024'
+  end_date: '2027-12-31'
+  state: wa
+  place: Sammamish
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.sammamish.us/government/city-council/
+  - https://www.sammamish.us/news/events/2024-city-council-meetings/
+  - https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/
+  updated_at: '2025-09-18T16:38:47+00:00'
+- name: Sid Gupta
+  image: https://www.sammamish.us/media/c5xcbyru/sid-gupta-photo-from-jjshotme_0027.jpg?mode=max&width=165&height=206
+  roles:
+  - Council Member
+  divisions:
+  - Position 3
+  - At-large
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: '2024'
+  end_date: '2025-11-25'
+  state: wa
+  place: Sammamish
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.sammamish.us/government/city-council/
+  - https://www.sammamish.us/news/events/2024-city-council-meetings/
+  - https://www.sammamish.us/our-community/candidate-resources/
+  - https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/
+  updated_at: '2025-09-18T16:38:47+00:00'
+- name: Kent Treen
+  image: https://www.sammamish.us/media/2ihfj1ou/treen_2475.jpg?width=165&height=206
+  roles:
+  - Council Member
+  divisions:
+  - Position 4
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: '2024'
+  end_date: '2027-12-31'
+  state: wa
+  place: Sammamish
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.sammamish.us/government/city-council/
+  - https://www.sammamish.us/news/events/2024-city-council-meetings/
+  - https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/
+  updated_at: '2025-09-18T16:38:47+00:00'
+- name: Kali Clark
+  image: https://www.sammamish.us/media/mtabakgo/clark_2481.jpg?mode=crop&width=165&height=206
+  roles:
+  - Council Member
+  divisions:
+  - Position 5
+  - At-large
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: '2024'
+  end_date: '2025-12-31'
+  state: wa
+  place: Sammamish
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.sammamish.us/our-community/candidate-resources/
+  - https://www.sammamish.us/government/city-council/
+  - https://www.sammamish.us/news/events/2024-city-council-meetings/
+  - https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/
+  - https://www.sammamish.us/news/council-selects-mayor-deputy-mayor/
+  updated_at: '2025-09-18T16:38:47+00:00'
+- name: Pam Stuart
+  image: https://www.sammamish.us/media/ymve2png/jjshotme-165x215px_pamelastuart-1.jpg?width=165&height=206
+  roles:
+  - Council Member
+  divisions:
+  - Position 6
+  phone_number: 425-295-0589
+  email: pam.stuart@sammamish.us
+  website: https://www.sammamish.us/government/city-council/pam-stuart
+  start_date: 2024-11
+  end_date: '2027-12-31'
+  state: wa
+  place: Sammamish
+  counties:
+  - King
+  cdn_image: ''
+  data_sources:
+  - https://www.sammamish.us/government/city-council/
+  - https://www.sammamish.us/news/events/2024-city-council-meetings/
+  - https://www.sammamish.us/news/events/events/2025-city-council-meetings/june-3-2025-city-council-meeting/
+  updated_at: '2025-09-18T16:38:47+00:00'
