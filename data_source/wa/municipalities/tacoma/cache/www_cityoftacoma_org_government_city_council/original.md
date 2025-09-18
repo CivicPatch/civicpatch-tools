@@ -72,7 +72,6 @@ Meet Tacoma City Council | City of Tacoma
 
 
 
-
  
 
 
@@ -358,6 +357,8 @@ City Council Committees
 [Economic Development](https://tacoma.gov/government/departments/city-council/city-council-committees/#economic-development-committee)
 [Government Performance and Finance](https://tacoma.gov/government/departments/city-council/city-council-committees/#government-performance-and-finance-committee)
 [Infrastructure, Planning, and Sustainability](https://tacoma.gov/government/departments/city-council/city-council-committees/#infrastructure-planning-and-sustainability-committee)
+[Operational Strategy and Administrative Committee](https://tacoma.gov/government/departments/city-council/city-council-committees/#operational-strategy-and-administrative-committee)
+[Transportation Benefit District Board](https://tacoma.gov/government/departments/city-council/transportation-benefits-district/)
 
 District Map
 ------------
@@ -366,6 +367,46 @@ Latest News
 -----------
 
 [View All](https://tacoma.gov/tacoma-newsroom/news-list/)
+
+[Sep
+
+16
+
+### Mayor Victoria Woodards to Deliver Final State of the City Address on October 2
+
+Mayor Victoria Woodards will deliver her final State of the City Address – Grit, Growth, and Gratitude – on October…](https://tacoma.gov/news/mayor-victoria-woodards-to-deliver-final-state-of-the-city-address-on-october-2/)
+
+[Sep
+
+15
+
+### Applicants Sought for the Tacoma Arts Commission and the Tacoma Creates Advisory Board
+
+The Tacoma City Council is currently seeking applicants to fill seven open positions on the Tacoma Arts Commission and one…](https://tacoma.gov/news/applicants-sought-for-the-tacoma-arts-commission-and-the-tacoma-creates-advisory-board/)
+
+[Sep
+
+15
+
+### Applicants Sought for the Landmarks Preservation Commission
+
+The Tacoma City Council is looking for qualified applicants, who are residents of the City, to fill the following positions…](https://tacoma.gov/news/applicants-sought-for-the-landmarks-preservation-commission/)
+
+[Sep
+
+09
+
+### City Council Unanimously Approves Funding for Immigrant Detainee Support
+
+Tonight, the City Council unanimously adopted Resolution 41757, allocating $20,000 from the Council Contingency Fund to Advocates for Immigrants…](https://tacoma.gov/news/city-council-unanimously-approves-funding-for-immigrant-detainee-support/)
+
+[Sep
+
+05
+
+### Applicants Sought for the Community’s Police Advisory Committee
+
+The Tacoma City Council is currently seeking applicants to fill six positions on the Community’s Police Advisory Committee (CPAC) to…](https://tacoma.gov/news/applicants-sought-for-the-communitys-police-advisory-committee/)
 
 [Aug
 
@@ -391,46 +432,6 @@ Tonight, the City Council unanimously adopted Resolution 41740, authorizing an e
 
 Today, Tacoma’s City Council held a special meeting where we had the responsibility to either adopt Initiative 2 as written…](https://tacoma.gov/news/statement-from-mayor-victoria-woodards-on-initiative-2/)
 
-[Jul
-
-30
-
-### City of Tacoma’s Initial Response to the Initiative 2 Ballot Petition
-
-During recent City Council Study Sessions and Meetings, Initiative 2, also known as the “Worker’s Bill of Rights,” was discussed.](https://tacoma.gov/news/city-of-tacomas-initial-response-to-the-initiative-2-ballot-petition/)
-
-[Jul
-
-24
-
-### Statement from City Council Member Joe Bushnell on the Upcoming Closure of Tacoma’s Pacific Fred Meyer Store
-
-“I want to express my disappointment regarding the news of the upcoming closure of our local Pacific Fred Meyer store.](https://tacoma.gov/news/statement-from-city-council-member-joe-bushnell-on-the-upcoming-closure-of-tacomas-pacific-fred-meyer-store/)
-
-[Jul
-
-01
-
-### City of Tacoma Unveils New Pride Crosswalk, A Vibrant Symbol of Inclusivity and Community Pride
-
-City of Tacoma kicked off Pride Month today with the celebratory unveiling of a new, permanent Pride-themed crosswalk on Broadway,…](https://tacoma.gov/news/city-of-tacoma-unveils-new-pride-crosswalk-a-vibrant-symbol-of-inclusivity-and-community-pride/)
-
-[Jun
-
-10
-
-### City Council Advances Efforts to Address Community Concerns and Rising Costs from Animal Overpopulation
-
-The Tacoma City Council voted on June 10 to adopt a set of code updates to better position the City…](https://tacoma.gov/news/city-council-advances-efforts-to-address-community-concerns-and-rising-costs-from-animal-overpopulation/)
-
-[Jun
-
-10
-
-### A Statement From Mayor Victoria Woodards on the Closure of the Washington State Minority Business Development Agency Business Center
-
-“I am deeply troubled by the closure of the Washington State Minority Business Development Agency Business Center located in Tacoma,…](https://tacoma.gov/news/a-statement-from-mayor-victoria-woodards-on-the-closure-of-the-washington-state-minority-business-development-agency-business-center/)
-
 Slide Left
 
 
@@ -442,7 +443,7 @@ View the City Manager's Weekly Report to the City Council
 
 Each week, the City Manager sends a report to the Mayor and City Council sharing updates, news, and information. The report includes items of interest, crime reports from the Tacoma Police Department, constituent intake reports, weekly meeting schedules, and more.
 
-[Read the Report](https://cms.tacoma.gov/CMO/CityManagersWeeklyReporttotheCityCouncil.pdf)
+[Read the Report](https://cms.tacoma.gov/cmo/citymanagersweeklyreporttothecitycouncil.pdf)
 
 Contact
 -------
