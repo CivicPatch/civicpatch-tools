@@ -21,5 +21,9 @@ To see the entire set of data, check the [open-data](https://github.com/CivicPat
   You will need this to run anything here. Tested on OSX, should work on Linux, might work
   on Windows but you may need to do extra tweaking with user permissions.
 - [mise](https://mise.jdx.dev/getting-started.html).
-  Under each project there will be mise.toml files that should make development easier (test scripts,
-  starting projects, etc)
+  Under each project there will be mise.toml files that should make development easier (test scripts, starting projects, etc).
+
+### Steps
+1. Run `mise install` to set up your environment.
+2. Run `pre-commit install` to set up gitleaks.
+3. Go into individual projects (civicpatch, mainly) for further setup steps

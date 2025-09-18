@@ -91,7 +91,7 @@ jobs:
         run: |
           PR_NUMBER=${{ inputs.pr_number }}
           echo "TBD: Create or update data comment for PR #$PR_NUMBER"
-          COMMENT=$(mise generate-data-comment --pr_number $PR_NUMBER --municipality_path ${{ inputs.municipality_path }} )
+          COMMENT=$(mise generate-data-comment --municipality-path ${{ inputs.municipality_path }} )
           gh pr comment $PR_NUMBER --edit-last --create-if-none --body "$COMMENT"
 
       #- name: Create Approval/Disapproval Comment
