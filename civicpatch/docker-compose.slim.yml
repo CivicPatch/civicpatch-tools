@@ -1,6 +1,5 @@
 services:
   civicpatch-slim:
-    env_file: .env
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
     image: ghcr.io/civicpatch/civicpatch-slim:latest
     restart: unless-stopped
