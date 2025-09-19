@@ -63,7 +63,7 @@ namespace :github_pipeline do
     context = Core::ContextManager.get_context(state, geoid)
 
     merged_people = Core::PeopleManager.get_people(state, geoid)
-    comparison = Resolvers::PeopleResolver.compare_people_across_sources(context)
+    comparison = Resolvers::PeopleResolver.compare_people_across_llms(context)
 
     missing_divisions = missing_divisions(merged_people)
 

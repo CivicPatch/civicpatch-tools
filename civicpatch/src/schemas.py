@@ -37,8 +37,8 @@ class PipelineStatus(Enum):
     SCRAPE_PAGE = "SCRAPE_PAGE"
     PREPROCESS_PAGE_CONTENT = "PREPROCESS_PAGE_CONTENT"
     PROCESS_PAGE_CONTENT = "PROCESS_PAGE_CONTENT"
-    MERGE_RECORDS_WITHIN_SOURCE = "MERGE_RECORDS_WITHIN_SOURCE"
-    MERGE_RECORDS_ACROSS_SOURCES = "MERGE_RECORDS_ACROSS_SOURCES"
+    MERGE_RECORDS_WITHIN_LLM = "MERGE_RECORDS_WITHIN_LLM"
+    MERGE_RECORDS_ACROSS_LLMS = "MERGE_RECORDS_ACROSS_LLMS"
     MAYBE_SEND_TO_GITHUB = "MAYBE_SEND_TO_GITHUB"
     CLEANUP = "CLEANUP"
     RETRY = "RETRY"
@@ -71,7 +71,7 @@ class RawLLMPerson(BaseModel):
 class LLMPerson(RawLLMPerson):
     data_source: str
     # todo: image
-    # data_sources: List[str] # List of URLs where information was founda
+    # sources: List[str] # List of URLs where information was founda
 
 class PeopleArrayLLMResponseSchema(BaseModel):
     people: List[RawLLMPerson]
@@ -81,7 +81,7 @@ class Person(RawLLMPerson):
     state: str = ""
     place: str = ""
     counties: List[str] = []
-    data_sources: List[str] # List of source URLs where information was found
+    sources: List[str] # List of source URLs where information was found
     cdn_image: str
     updated_at: str
 
@@ -94,10 +94,10 @@ class SearchLinksStep(BaseModel):
     links: List[Link]
 
 class ProcessPageContentStep(BaseModel):
-    records_by_source: RecordsBySource
+    records_by_llm: RecordsBySource
 
-class MergeRecordsWithinSourceStep(BaseModel):
-    people_by_source: Dict[str, List[Person]] # LLM Names to list of Person records
+class MergeRecordsWithinLLMStep(BaseModel):
+    people_by_llm: Dict[str, List[Person]] # LLM Names to list of Person records
 
 class FieldComparison(BaseModel):
     field: str
@@ -114,7 +114,7 @@ class MissingPerson(BaseModel):
     missing_from_sources: List[str]  # List of source names where this person was not found
     found_in_sources: List[str]  # List of source names where this person was found
 
-class MergeRecordsAcrossSourcesStep(BaseModel):
+class MergeRecordsAcrossLLMsStep(BaseModel):
     people: List[Person]
     agreement_score: float
     disagreements: Dict[str, List[FieldComparison]] = {}
@@ -129,8 +129,8 @@ class PipelineContext(BaseModel):
     names: Dict[str, List[str]]  # Canonical names to names found while scraping
     steps: Dict[str, Union[
         SearchLinksStep,
-        MergeRecordsWithinSourceStep,
-        MergeRecordsAcrossSourcesStep,
+        MergeRecordsWithinLLMStep,
+        MergeRecordsAcrossLLMsStep,
         Any  # Add other step types as needed
     ]]
     progress: ProgressState

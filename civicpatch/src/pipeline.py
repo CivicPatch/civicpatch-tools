@@ -15,8 +15,8 @@ from steps.step_02_search_links.utils import SearchEngineNames
 from steps.step_03_scrape_page.scrape_page import scrape_page
 from steps.step_04_preprocess_page_content.preprocess_page_content import preprocess_page_content
 from steps.step_05_process_page_content.process_page_content import process_page_content
-from steps.step_06_merge_records_within_source.merge_records_within_source import merge_records_within_source
-from steps.step_07_merge_records_across_sources.merge_records_across_sources import merge_records_across_sources
+from steps.step_06_merge_records_within_llm.merge_records_within_llm import merge_records_within_llm
+from steps.step_07_merge_records_across_llms.merge_records_across_llms import merge_records_across_llms
 from steps.step_08_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
 from steps.step_09_cleanup.cleanup import cleanup
 
@@ -42,14 +42,14 @@ DEFAULT_STATE: PipelineContext = {
         PipelineStatus.SCRAPE_PAGE.value: {},
         PipelineStatus.PREPROCESS_PAGE_CONTENT.value: {},
         PipelineStatus.PROCESS_PAGE_CONTENT.value: { # Lists of people by names
-            "records_by_source": {
+            "records_by_llm": {
                 "google_gemini": {},
                 "openai": {},
                 "together_ai": {},
             },
         },
-        PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value: {},
-        PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value: {},
+        PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value: {},
+        PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value: {},
         PipelineStatus.CLEANUP.value: {},
         PipelineStatus.RETRY.value: {},
         PipelineStatus.DONE.value: {},
@@ -158,7 +158,7 @@ class Pipeline:
                 search_link_pointer = self.context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_link_pointer"]
                 if search_link_pointer >= len(SearchEngineNames):
                     print("All search engines have been processed.")
-                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
                 else:
                     result = search_links(self.context)
                     self.context.update(result)
@@ -169,7 +169,7 @@ class Pipeline:
 
                 if not page_to_scrape:
                     print("No pending links left to scrape.")
-                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
                     continue
 
                 result = await scrape_page(self.context, page_to_scrape)
@@ -205,15 +205,15 @@ class Pipeline:
                 next_state = self.get_next_state_for_process_page_content(processed_count, process_max_pages)
                 self.state = next_state
 
-            elif self.state == PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE:
-                result = merge_records_within_source(self.context)
+            elif self.state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM:
+                result = merge_records_within_llm(self.context)
                 self.context.update(result)
-                self.state = PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES
+                self.state = PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
 
-            elif self.state == PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES:
-                result = merge_records_across_sources(self.context)
-                self.save_data(result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value]["people"])
-                
+            elif self.state == PipelineStatus.MERGE_RECORDS_ACROSS_LLMS:
+                result = merge_records_across_llms(self.context)
+                self.save_data(result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value]["people"])
+
                 self.context.update(result)
                 self.state = PipelineStatus.CLEANUP
 
@@ -276,11 +276,11 @@ class Pipeline:
 
         if self.context["progress"]["current_data"] >= self.context["progress"]["required_data"]:
             print("Enough data processed, moving to report generation...")
-            return PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+            return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
         if processed_count >= max_pages:
             print(f"Max pages ({max_pages}) reached, moving to next step...")
-            return PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE
+            return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
         print("Not enough data processed yet, collecting more data...")
         return PipelineStatus.SCRAPE_PAGE

@@ -1,5 +1,5 @@
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityofvancouver.us/
   - https://www.cityofvancouver.us/departments/mayor-city-council/
   divisions: []
@@ -16,7 +16,7 @@
   updated_at: ''
   website: https://www.cityofvancouver.us
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityofvancouver.us/
   - https://www.cityofvancouver.us/departments/mayor-city-council/
   divisions: []
@@ -33,7 +33,7 @@
   updated_at: ''
   website: https://www.cityofvancouver.us
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityofvancouver.us/
   - https://www.cityofvancouver.us/departments/mayor-city-council/
   divisions: []
@@ -50,7 +50,7 @@
   updated_at: ''
   website: https://www.cityofvancouver.us
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityofvancouver.us/
   - https://www.cityofvancouver.us/departments/mayor-city-council/
   divisions: []
@@ -67,7 +67,7 @@
   updated_at: ''
   website: https://www.cityofvancouver.us
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityofvancouver.us/
   - https://www.cityofvancouver.us/departments/mayor-city-council/
   divisions: []
@@ -84,7 +84,7 @@
   updated_at: ''
   website: https://www.cityofvancouver.us
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityofvancouver.us/
   - https://www.cityofvancouver.us/departments/mayor-city-council/
   divisions: []
@@ -101,7 +101,7 @@
   updated_at: ''
   website: https://www.cityofvancouver.us
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityofvancouver.us/
   - https://www.cityofvancouver.us/departments/mayor-city-council/
   divisions: []

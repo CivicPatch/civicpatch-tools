@@ -1,7 +1,7 @@
 import pytest
 from schemas import LLMPerson, LLMDataPoint, Person, PipelineStatus
-from steps.step_06_merge_records_within_source.merge_records_within_source import (
-    merge_field, merge_roles, merge_divisions, merge_llm_people_to_person, merge_records_within_source
+from steps.step_06_merge_records_within_llm.merge_records_within_llm import (
+    merge_field, merge_roles, merge_divisions, merge_llm_people_to_person, merge_records_within_llm
 )
 from utils.config_utils import get_role_alias_map, get_division_alias_map
 
@@ -95,10 +95,10 @@ def test_merge_llm_people_to_person():
     assert result_dict["phone_number"] == "555-1234"
     assert result_dict["email"] == "eve@city.org"
 
-def test_merge_records_within_source():
+def test_merge_records_within_llm():
     """Test the complete merge process within each source with normalized roles and divisions"""
     # Setup test data
-    records_by_source = {
+    records_by_llm = {
         "google_gemini": {
             "Alice Johnson": [
                 make_llm_person("Alice Johnson", roles=["Council Member", "Mayor"], divisions=["Ward 1", "Ward 2"], phone="123"),
@@ -114,26 +114,26 @@ def test_merge_records_within_source():
                 "government_type": "mayor_council"
             },
             PipelineStatus.PROCESS_PAGE_CONTENT.value: {
-                "records_by_source": records_by_source
+                "records_by_llm": records_by_llm
             }
         },
         "government_type": "mayor_council"
     }
 
     # Run the merge step
-    result = merge_records_within_source(context)
+    result = merge_records_within_llm(context)
 
     # Assert structure
     assert "steps" in result
-    merged_step = result["steps"][PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value]
-    assert "people_by_source" in merged_step
+    merged_step = result["steps"][PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value]
+    assert "people_by_llm" in merged_step
 
     # Check results
-    people_by_source = merged_step["people_by_source"]
-    assert len(people_by_source["google_gemini"]) == 1
+    people_by_llm = merged_step["people_by_llm"]
+    assert len(people_by_llm["google_gemini"]) == 1
 
     # Check merged record
-    alice = people_by_source["google_gemini"][0]
+    alice = people_by_llm["google_gemini"][0]
     role_alias_map = get_role_alias_map("mayor_council")
     division_alias_map = get_division_alias_map()
     normalized_roles = {role_alias_map.get(role.lower(), role) for role in ["Council Member", "Mayor", "Treasurer"]}

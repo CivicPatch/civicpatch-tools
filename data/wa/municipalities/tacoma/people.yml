@@ -1,5 +1,5 @@
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions:
   - position 5
@@ -16,7 +16,7 @@
   updated_at: ''
   website: https://tacoma.gov/profile/council-member-chanjolee-joe-bushnell/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions:
   - position 7
@@ -33,7 +33,7 @@
   updated_at: ''
   website: https://tacoma.gov/profile/council-member-olgy-diaz/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions:
   - position 4
@@ -50,7 +50,7 @@
   updated_at: ''
   website: https://tacoma.gov/profile/council-member-sandesh-sadalge/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions:
   - position 1
@@ -67,7 +67,7 @@
   updated_at: ''
   website: https://tacoma.gov/profile/council-member-john-hines/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions: []
   email: ''
@@ -84,7 +84,7 @@
   updated_at: ''
   website: https://tacoma.gov/profile/council-member-kiara-daniels/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions: []
   email: ''
@@ -100,7 +100,7 @@
   updated_at: ''
   website: https://tacoma.gov/profile/mayor-victoria-woodards/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions:
   - position 3
@@ -117,7 +117,7 @@
   updated_at: ''
   website: https://tacoma.gov/profile/council-member-jamika-scott/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions:
   - position 8
@@ -134,7 +134,7 @@
   updated_at: ''
   website: https://tacoma.gov/profile/council-member-kristina-walker/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://www.cityoftacoma.org/government/city_council
   divisions:
   - position 2

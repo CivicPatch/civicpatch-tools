@@ -166,7 +166,7 @@ namespace :pipeline do
   def aggregate_sources(context, sources: [])
     government_type = context[:government_type]
     state = context[:state]
-    merged_people = Resolvers::PeopleResolver.merge_people_across_sources(context)
+    merged_people = Resolvers::PeopleResolver.merge_people_across_llms(context)
     people = process_images(context, merged_people) if Services::Spaces.enabled?
 
     people = people.map { |person| Core::PersonManager::Utils.sort_keys(government_type, person) }

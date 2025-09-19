@@ -80,14 +80,14 @@ def process_page_content(
         updated_processed_data = ProcessPageContentStep.model_validate(updated_processed_data)
 
     names: Dict[str, List[str]] = context["names"]
-    updated_names, updated_records_by_source = update_records_by_source(
-        names, updated_processed_data.records_by_source, responses
+    updated_names, updated_records_by_llm = update_records_by_llm(
+        names, updated_processed_data.records_by_llm, responses
     )
-    updated_processed_data.records_by_source = updated_records_by_source
+    updated_processed_data.records_by_llm = updated_records_by_llm
 
     roles = config_utils.get_all_roles_by_government_type(government_type)
     updated_progress = calculate_progress(
-        context["progress"].copy(), updated_processed_data.records_by_source, roles
+        context["progress"].copy(), updated_processed_data.records_by_llm, roles
     )
 
     updated_links = []
@@ -98,7 +98,7 @@ def process_page_content(
         else:
             updated_links.append(link)
 
-    updated_links = update_website_links(updated_links, updated_processed_data.records_by_source)
+    updated_links = update_website_links(updated_links, updated_processed_data.records_by_llm)
 
     return {
         "links": updated_links,
@@ -110,25 +110,25 @@ def process_page_content(
         }
     }
 
-def update_records_by_source(
+def update_records_by_llm(
     names: OtherNamesByCanonicalName,
-    records_by_source: RecordsBySource,  # map of llm name to Dict[str, List[LLMPerson]]
+    records_by_llm: RecordsBySource,  # map of llm name to Dict[str, List[LLMPerson]]
     current_responses: Dict[str, List[LLMPerson]]  # map of llm name to List[LLMPerson]
 ) -> Tuple[OtherNamesByCanonicalName, RecordsBySource]:
     """
     Update the data with the new responses.
     """
     updated_names = copy.deepcopy(names) if names else {}  # Handle empty names
-    updated_records_by_source = copy.deepcopy(records_by_source)
+    updated_records_by_llm = copy.deepcopy(records_by_llm)
     
     for llm_name, llm_people_list in current_responses.items():
-        people_by_name = updated_records_by_source.get(llm_name, {})  # Handle missing LLM data
+        people_by_name = updated_records_by_llm.get(llm_name, {})  # Handle missing LLM data
         updated_names, updated_people_by_name = merge_utils.group_people_by_name(
             updated_names, people_by_name, llm_people_list
         )
-        updated_records_by_source[llm_name] = updated_people_by_name
+        updated_records_by_llm[llm_name] = updated_people_by_name
 
-    return updated_names, updated_records_by_source
+    return updated_names, updated_records_by_llm
 
 def process_with_llms(
     data_source_url: str,
@@ -167,7 +167,7 @@ def process_with_llms(
 
 def calculate_progress(
     progress: Dict[str, Any],
-    updated_records_by_source: RecordsBySource,
+    updated_records_by_llm: RecordsBySource,
     roles: List[str]
 ) -> Dict[str, Any]: # Return progress and names of people with contact data
     """
@@ -176,7 +176,7 @@ def calculate_progress(
     # min_length = float('inf')
     lengths = []
 
-    for _, people_by_name in updated_records_by_source.items():
+    for _, people_by_name in updated_records_by_llm.items():
         filtered = [
             p for p in people_by_name.values()
             if has_role_and_contact_info(roles, p)
@@ -184,7 +184,7 @@ def calculate_progress(
         lengths.append(len(filtered))
         # min_length = min(min_length, len(filtered))
 
-    for source, people_by_name in updated_records_by_source.items():
+    for source, people_by_name in updated_records_by_llm.items():
         filtered = [
             p for p in people_by_name.values()
             if has_role_and_contact_info(roles, p)
@@ -222,12 +222,12 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     )
     return has_contact and has_role
 
-def update_website_links(existing_links: List[Link], records_by_source: RecordsBySource) -> List[Link]:
+def update_website_links(existing_links: List[Link], records_by_llm: RecordsBySource) -> List[Link]:
     """
     Update the links with websites found in the processed data.
     """
     updated_links = copy.deepcopy(existing_links)
-    found_websites = extract_websites_from_processed_data(records_by_source)
+    found_websites = extract_websites_from_processed_data(records_by_llm)
 
     for website in found_websites:
         existing_link = next((link for link in updated_links if link["url"] == website), None)
@@ -248,12 +248,12 @@ def update_website_links(existing_links: List[Link], records_by_source: RecordsB
 
     return updated_links
 
-def extract_websites_from_processed_data(records_by_source: RecordsBySource) -> List[str]:
+def extract_websites_from_processed_data(records_by_llm: RecordsBySource) -> List[str]:
     """
     Extract website links from the processed data.
     """
     found_websites = []
-    for people_by_name in records_by_source.values():
+    for people_by_name in records_by_llm.values():
         for person_list in people_by_name.values():  # Directly iterate over lists of LLMPerson
 
             for person_record in person_list:

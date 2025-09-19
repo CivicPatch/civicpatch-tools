@@ -5,16 +5,16 @@ from schemas import (
 from collections import Counter
 import utils.config_utils as config_utils
 
-def merge_records_within_source(context: PipelineContext):
+def merge_records_within_llm(context: PipelineContext):
     """
-    Merge records within each source to produce a unified list of Person objects for each source.
+    Merge records within each llm to produce a unified list of Person objects.
     """
 
-    records_by_source: RecordsBySource = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]["records_by_source"]
-    people_by_source: Dict[str, List[Person]] = {}
+    records_by_llm: RecordsBySource = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]["records_by_llm"]
+    people_by_llm: Dict[str, List[Person]] = {}
     government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
 
-    for source, people_by_name in records_by_source.items():
+    for source, people_by_name in records_by_llm.items():
         merged_people: List[Person] = []
 
         for canonical_name, llm_people_list in people_by_name.items():
@@ -25,13 +25,13 @@ def merge_records_within_source(context: PipelineContext):
             if merged_person["roles"]:
                 merged_people.append(merged_person)
 
-        people_by_source[source] = merged_people
+        people_by_llm[source] = merged_people
 
     return {
         "steps": {
             **context["steps"],
-            PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value: {
-                "people_by_source": people_by_source
+            PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value: {
+                "people_by_llm": people_by_llm
             }
         }
     }
@@ -57,7 +57,7 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     website = merge_field(records, "website")
     start_date = merge_field(records, "start_date")
     end_date = merge_field(records, "end_date")
-    data_sources = [r.data_source for r in records if r.data_source]
+    sources = [r.data_source for r in records if r.data_source]
 
     return Person(
         name=canonical_name,
@@ -70,7 +70,7 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
         website=website,
         start_date=start_date,
         end_date=end_date,
-        data_sources=data_sources,
+        sources=sources,
         updated_at="",  # Placeholder for updated_at
     )
 

@@ -14,7 +14,7 @@
   counties:
   - Franklin
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.pasco-wa.gov/122/City-Council
   - https://www.pasco-wa.gov/Directory.aspx?DID=4
   updated_at: '2025-09-17T23:23:12+00:00'
@@ -34,7 +34,7 @@
   counties:
   - Franklin
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.pasco-wa.gov/122/City-Council
   - https://www.pasco-wa.gov/Directory.aspx?DID=4
   updated_at: '2025-09-17T23:23:12+00:00'
@@ -53,7 +53,7 @@
   counties:
   - Franklin
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.pasco-wa.gov/122/City-Council
   - https://www.pasco-wa.gov/Directory.aspx?DID=4
   updated_at: '2025-09-17T23:23:12+00:00'
@@ -73,7 +73,7 @@
   counties:
   - Franklin
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.pasco-wa.gov/122/City-Council
   - https://www.pasco-wa.gov/Directory.aspx?DID=4
   updated_at: '2025-09-17T23:23:12+00:00'
@@ -93,7 +93,7 @@
   counties:
   - Franklin
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.pasco-wa.gov/122/City-Council
   - https://www.pasco-wa.gov/Directory.aspx?DID=4
   updated_at: '2025-09-17T23:23:12+00:00'
@@ -113,7 +113,7 @@
   counties:
   - Franklin
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.pasco-wa.gov/122/City-Council
   - https://www.pasco-wa.gov/Directory.aspx?DID=4
   updated_at: '2025-09-17T23:23:12+00:00'
