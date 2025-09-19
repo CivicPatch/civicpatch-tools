@@ -1,5 +1,5 @@
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://my.spokanecity.org/
   - https://my.spokanecity.org/directory/officials/elected/
   - https://my.spokanecity.org/citycouncil/members/
@@ -18,7 +18,7 @@
   updated_at: ''
   website: https://my.spokanecity.org/citycouncil/members/zack-zappone/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://my.spokanecity.org/
   - https://my.spokanecity.org/directory/officials/elected/
   - https://my.spokanecity.org/citycouncil/members/
@@ -37,7 +37,7 @@
   updated_at: ''
   website: https://my.spokanecity.org/citycouncil/members/michael-cathcart/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://my.spokanecity.org/
   - https://my.spokanecity.org/directory/officials/elected/
   - https://my.spokanecity.org/citycouncil/members/
@@ -56,7 +56,7 @@
   updated_at: ''
   website: https://my.spokanecity.org/citycouncil/members/shelby-lambdin/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://my.spokanecity.org/
   - https://my.spokanecity.org/directory/officials/elected/
   - https://my.spokanecity.org/citycouncil/members/
@@ -75,7 +75,7 @@
   updated_at: ''
   website: https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://my.spokanecity.org/
   - https://my.spokanecity.org/directory/officials/elected/
   - https://my.spokanecity.org/citycouncil/members/
@@ -94,7 +94,7 @@
   updated_at: ''
   website: https://my.spokanecity.org/citycouncil/members/jonathan-bingle/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://my.spokanecity.org/
   - https://my.spokanecity.org/directory/officials/elected/
   - https://my.spokanecity.org/citycouncil/members/
@@ -114,7 +114,7 @@
   updated_at: ''
   website: https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://my.spokanecity.org/
   - https://my.spokanecity.org/directory/officials/elected/
   - https://my.spokanecity.org/citycouncil/members/
@@ -133,7 +133,7 @@
   updated_at: ''
   website: https://my.spokanecity.org/citycouncil/members/paul-dillon/
 - cdn_image: ''
-  data_sources:
+  sources:
   - https://my.spokanecity.org/
   - https://my.spokanecity.org/directory/officials/elected/
   divisions: []

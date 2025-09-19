@@ -50,7 +50,7 @@ module Resolvers
       sources
     end
 
-    def self.compare_people_across_sources(context) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
+    def self.compare_people_across_llms(context) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity,Metrics/MethodLength,Metrics/PerceivedComplexity
       sources = resolve_sources(context)
       people_config = context[:people]
       fields = %w[roles divisions email phone_number website start_date end_date] # Fields to compare
@@ -121,7 +121,7 @@ module Resolvers
       }
     end
 
-    def self.merge_people_across_sources(context) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
+    def self.merge_people_across_llms(context) # rubocop:disable Metrics/AbcSize,Metrics/CyclomaticComplexity
       sources = resolve_sources(context)
       people_config = context[:people]
 

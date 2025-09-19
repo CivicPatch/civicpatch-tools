@@ -13,7 +13,7 @@
   counties:
   - King
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.seattle.gov/elected-officials
   updated_at: '2025-09-16T23:21:54+00:00'
 - name: Sara Nelson
@@ -34,7 +34,7 @@
   counties:
   - King
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.seattle.gov/council
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
@@ -55,7 +55,7 @@
   counties:
   - King
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.seattle.gov/council
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
@@ -76,7 +76,7 @@
   counties:
   - King
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.seattle.gov/council
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
@@ -97,7 +97,7 @@
   counties:
   - King
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.seattle.gov/council
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
@@ -118,7 +118,7 @@
   counties:
   - King
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.seattle.gov/council
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
@@ -139,7 +139,7 @@
   counties:
   - King
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.seattle.gov/council
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
@@ -160,7 +160,7 @@
   counties:
   - King
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.seattle.gov/council
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
@@ -181,7 +181,7 @@
   counties:
   - King
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.seattle.gov/council
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials
@@ -203,7 +203,7 @@
   counties:
   - King
   cdn_image: ''
-  data_sources:
+  sources:
   - https://www.seattle.gov/council
   - https://seattle.gov/council/meet-the-council
   - https://www.seattle.gov/elected-officials

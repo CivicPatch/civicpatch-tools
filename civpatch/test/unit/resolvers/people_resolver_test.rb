@@ -12,7 +12,7 @@ module Resolvers
       }
     end
 
-    def test_merge_people_across_sources_merges_fields
+    def test_merge_people_across_llms_merges_fields
       # Stub resolve_sources to return two sources with overlapping people
       Resolvers::PeopleResolver.stub :resolve_sources, [
         {
@@ -32,7 +32,7 @@ module Resolvers
       ] do
         # Stub select_best_value to always pick the first value for simplicity
         Resolvers::PeopleResolver.stub :select_best_value, ->(field, values) { values.first[:value] } do
-          merged = Resolvers::PeopleResolver.merge_people_across_sources(@context)
+          merged = Resolvers::PeopleResolver.merge_people_across_llms(@context)
           assert_equal 1, merged.size
           jane = merged.first
           assert_equal "Jane Doe", jane["name"]
@@ -43,7 +43,7 @@ module Resolvers
       end
     end
 
-    def test_merge_people_across_sources_skips_unique_people
+    def test_merge_people_across_llms_skips_unique_people
       Resolvers::PeopleResolver.stub :resolve_sources, [
         {
           source_name: "openai",
@@ -53,7 +53,7 @@ module Resolvers
           ]
         }
       ] do
-        merged = Resolvers::PeopleResolver.merge_people_across_sources(@context)
+        merged = Resolvers::PeopleResolver.merge_people_across_llms(@context)
         assert_empty merged
       end
     end

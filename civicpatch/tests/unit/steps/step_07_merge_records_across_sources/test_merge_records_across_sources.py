@@ -1,13 +1,14 @@
+from civicpatch.src.steps.step_07_merge_records_across_llms.merge_records_across_llms import merge_people_across_llms
 import pytest
 from schemas import Person, Disagreement, MissingPerson, PipelineStatus, PipelineContext
-from steps.step_07_merge_records_across_sources.merge_records_across_sources import (
-    merge_records_across_sources, merge_people_across_sources, calculate_agreement_score
+from steps.step_07_merge_records_across_llms import (
+    merge_records_across_llms
 )
 
-def test_merge_records_across_sources():
+def test_merge_records_across_llms():
     """Test merging records across different sources"""
     # Setup test data - simulate output from previous step
-    people_by_source = {
+    people_by_llm = {
         "google_gemini": [
             {
                 "name": "Alice Johnson",
@@ -20,7 +21,7 @@ def test_merge_records_across_sources():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["source a"],
+                "sources": ["source a"],
                 "updated_at": ""
             }
         ],
@@ -36,7 +37,7 @@ def test_merge_records_across_sources():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["source a"],
+                "sources": ["source a"],
                 "updated_at": ""
             }
         ]
@@ -45,17 +46,17 @@ def test_merge_records_across_sources():
     # Create pipeline context
     context = {
         "steps": {
-            PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value: {
-                "people_by_source": people_by_source
+            PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value: {
+                "people_by_llm": people_by_llm
             }
         }
     }
 
     # Run the merge step
-    result = merge_records_across_sources(context)
+    result = merge_records_across_llms(context)
 
     # Assert structure
-    merged_step = result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value]
+    merged_step = result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value]
     assert "people" in merged_step
     assert "agreement_score" in merged_step
     assert "disagreements" in merged_step
@@ -71,7 +72,7 @@ def test_merge_records_across_sources():
     assert merged_person["divisions"] == ["Ward 1"]
     assert merged_person["phone_number"] == "123"
     assert merged_person["email"] == "alice@example.com"
-    assert set(merged_person["data_sources"]) == {"source a"}
+    assert set(merged_person["sources"]) == {"source a"}
     
     # Check agreement score - should be high since most fields match
     assert merged_step["agreement_score"] >= 80.0
@@ -82,9 +83,9 @@ def test_merge_records_across_sources():
     assert len(merged_step["missing_people"]) == 0
 
 
-def test_merge_people_across_sources_with_conflicts():
+def test_merge_people_across_llms_with_conflicts():
     """Test merging people with conflicting information grouped by source"""
-    people_by_source = {
+    people_by_llm = {
         "google_gemini": [
             Person.model_validate({
                 "name": "Bob Smith",
@@ -97,7 +98,7 @@ def test_merge_people_across_sources_with_conflicts():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["source a"],
+                "sources": ["source a"],
                 "updated_at": ""
             })
         ],
@@ -113,14 +114,14 @@ def test_merge_people_across_sources_with_conflicts():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["source b"],
+                "sources": ["source b"],
                 "updated_at": ""
             })
         ]
     }
 
     # Test merging
-    merged = merge_people_across_sources("Bob Smith", people_by_source)
+    merged = merge_people_across_llms("Bob Smith", people_by_llm)
 
     # Assertions
     assert merged.name == "Bob Smith"
@@ -128,12 +129,12 @@ def test_merge_people_across_sources_with_conflicts():
     assert merged.divisions == ["District 1"]  # Only division that appears in both sources
     assert merged.phone_number == "555-0123"  # Same in both sources
     assert merged.email == "bob@city.gov"  # Take most common or first
-    assert set(merged.data_sources) == {"source a", "source b"}
+    assert set(merged.sources) == {"source a", "source b"}
 
 
-def test_merge_people_across_sources_with_correct_sources():
+def test_merge_people_across_llms_with_correct_sources():
     """Test merging people with correct sources field"""
-    people_by_source = {
+    people_by_llm = {
         "google_gemini": [
             Person.model_validate({
                 "name": "Bob Smith",
@@ -146,7 +147,7 @@ def test_merge_people_across_sources_with_correct_sources():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["Source A", "Source B"],  # Correct sources from the Person object
+                "sources": ["Source A", "Source B"],  # Correct sources from the Person object
                 "updated_at": ""
             })
         ],
@@ -162,14 +163,14 @@ def test_merge_people_across_sources_with_correct_sources():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["Source C"],  # Correct sources from the Person object
+                "sources": ["Source C"],  # Correct sources from the Person object
                 "updated_at": ""
             })
         ]
     }
 
     # Test merging
-    merged = merge_people_across_sources("Bob Smith", people_by_source)
+    merged = merge_people_across_llms("Bob Smith", people_by_llm)
 
     # Assertions
     assert merged.name == "Bob Smith"
@@ -177,12 +178,12 @@ def test_merge_people_across_sources_with_correct_sources():
     assert merged.divisions == ["District 1"]  # Only division that appears in more than one source
     assert merged.phone_number == "555-0123"  # Same in both sources
     assert merged.email == "bob@city.gov"  # Take most common or first
-    assert set(merged.data_sources) == {"Source A", "Source B", "Source C"}  # Sources should come from the individual Person objects
+    assert set(merged.sources) == {"Source A", "Source B", "Source C"}  # Sources should come from the individual Person objects
 
 
-def test_merge_people_across_sources_with_correct_data_sources():
-    """Test merging people with correct data_sources field"""
-    people_by_source = {
+def test_merge_people_across_llms_with_correct_sources():
+    """Test merging people with correct sources field"""
+    people_by_llm = {
         "google_gemini": [
             Person.model_validate({
                 "name": "Bob Smith",
@@ -195,7 +196,7 @@ def test_merge_people_across_sources_with_correct_data_sources():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["Source A", "Source B"],  # Updated field name
+                "sources": ["Source A", "Source B"],  # Updated field name
                 "updated_at": ""
             })
         ],
@@ -211,14 +212,14 @@ def test_merge_people_across_sources_with_correct_data_sources():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["Source C"],  # Updated field name
+                "sources": ["Source C"],  # Updated field name
                 "updated_at": ""
             })
         ]
     }
 
     # Test merging
-    merged = merge_people_across_sources("Bob Smith", people_by_source)
+    merged = merge_people_across_llms("Bob Smith", people_by_llm)
 
     # Assertions
     assert merged.name == "Bob Smith"
@@ -226,12 +227,12 @@ def test_merge_people_across_sources_with_correct_data_sources():
     assert merged.divisions == ["District 1"]  # Only division that appears in more than one source
     assert merged.phone_number == "555-0123"  # Same in both sources
     assert merged.email == "bob@city.gov"  # Take most common or first
-    assert set(merged.data_sources) == {"Source A", "Source B", "Source C"}  # Updated field name
+    assert set(merged.sources) == {"Source A", "Source B", "Source C"}  # Updated field name
 
 
 def test_disagreements_and_missing_people():
     """Test disagreements and missing people detection"""
-    people_by_source = {
+    people_by_llm = {
         "google_gemini": [
             Person.model_validate({
                 "name": "Charlie Brown",
@@ -244,7 +245,7 @@ def test_disagreements_and_missing_people():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["google_gemini"],
+                "sources": ["google_gemini"],
                 "updated_at": ""
             })
         ],
@@ -254,17 +255,17 @@ def test_disagreements_and_missing_people():
     # Create pipeline context
     context = {
         "steps": {
-            PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value: {
-                "people_by_source": people_by_source
+            PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value: {
+                "people_by_llm": people_by_llm
             }
         }
     }
 
     # Run the merge step
-    result = merge_records_across_sources(context)
+    result = merge_records_across_llms(context)
 
     # Assert structure
-    merged_step = result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value]
+    merged_step = result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value]
     assert "disagreements" in merged_step
     assert "missing_people" in merged_step
 
@@ -284,7 +285,7 @@ def test_disagreements_and_missing_people():
 
 def test_disagreements_detection():
     """Test detection of disagreements across sources"""
-    people_by_source = {
+    people_by_llm = {
         "google_gemini": [
             Person.model_validate({
                 "name": "Jane Doe",
@@ -297,7 +298,7 @@ def test_disagreements_detection():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["source a"],
+                "sources": ["source a"],
                 "updated_at": ""
             })
         ],
@@ -313,7 +314,7 @@ def test_disagreements_detection():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["source b"],
+                "sources": ["source b"],
                 "updated_at": ""
             })
         ]
@@ -321,17 +322,17 @@ def test_disagreements_detection():
 
     context = {
         "steps": {
-            PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value: {
-                "people_by_source": people_by_source
+            PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value: {
+                "people_by_llm": people_by_llm
             }
         }
     }
 
     # Run the merge step
-    result = merge_records_across_sources(context)
+    result = merge_records_across_llms(context)
 
     # Assert structure
-    merged_step = result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value]
+    merged_step = result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value]
     assert "disagreements" in merged_step
 
     # Check disagreements
@@ -343,7 +344,7 @@ def test_disagreements_detection():
 
 def test_missing_people_detection():
     """Test detection of missing people across sources"""
-    people_by_source = {
+    people_by_llm = {
         "google_gemini": [
             Person.model_validate({
                 "name": "John Smith",
@@ -356,7 +357,7 @@ def test_missing_people_detection():
                 "end_date": "",
                 "image": "",
                 "cdn_image": "",
-                "data_sources": ["source a"],
+                "sources": ["source a"],
                 "updated_at": ""
             })
         ],
@@ -366,17 +367,17 @@ def test_missing_people_detection():
     # Create pipeline context
     context = {
         "steps": {
-            PipelineStatus.MERGE_RECORDS_WITHIN_SOURCE.value: {
-                "people_by_source": people_by_source
+            PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value: {
+                "people_by_llm": people_by_llm
             }
         }
     }
 
     # Run the merge step
-    result = merge_records_across_sources(context)
+    result = merge_records_across_llms(context)
 
     # Assert structure
-    merged_step = result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value]
+    merged_step = result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value]
     assert "missing_people" in merged_step
 
     # Check missing people

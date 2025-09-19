@@ -437,7 +437,7 @@
             "average_elapsed_time_seconds": 202.50074458122253
         },
         "PROCESS_PAGE_CONTENT": {
-            "records_by_source": {
+            "records_by_llm": {
                 "google_gemini": {
                     "Rob Saka": [
                         {
@@ -1915,8 +1915,8 @@
                 }
             }
         },
-        "MERGE_RECORDS_WITHIN_SOURCE": {
-            "people_by_source": {
+        "MERGE_RECORDS_WITHIN_LLM": {
+            "people_by_llm": {
                 "google_gemini": [
                     {
                         "name": "Rob Saka",
@@ -1936,7 +1936,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -1961,7 +1961,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -1987,7 +1987,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2012,7 +2012,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2037,7 +2037,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2062,7 +2062,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2088,7 +2088,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2114,7 +2114,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2141,7 +2141,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2164,7 +2164,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/elected-officials"
                         ],
                         "updated_at": ""
@@ -2189,7 +2189,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2214,7 +2214,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2239,7 +2239,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2264,7 +2264,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2289,7 +2289,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2314,7 +2314,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2339,7 +2339,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://www.seattle.gov/elected-officials"
                         ],
@@ -2364,7 +2364,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2391,7 +2391,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2416,7 +2416,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://seattle.gov/council/meet-the-council"
                         ],
                         "updated_at": ""
@@ -2437,7 +2437,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/elected-officials"
                         ],
                         "updated_at": ""
@@ -2463,7 +2463,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2488,7 +2488,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2513,7 +2513,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2538,7 +2538,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2563,7 +2563,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2588,7 +2588,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2613,7 +2613,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2638,7 +2638,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2664,7 +2664,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/council",
                             "https://seattle.gov/council/meet-the-council",
                             "https://www.seattle.gov/elected-officials"
@@ -2687,7 +2687,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.seattle.gov/elected-officials"
                         ],
                         "updated_at": ""
@@ -2695,7 +2695,7 @@
                 ]
             }
         },
-        "MERGE_RECORDS_ACROSS_SOURCES": {
+        "MERGE_RECORDS_ACROSS_LLMS": {
             "people": [
                 {
                     "name": "Bruce Harrell",
@@ -2715,7 +2715,7 @@
                         "King"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.seattle.gov/elected-officials"
                     ],
                     "updated_at": "2025-09-16T23:21:54+00:00"
@@ -2742,7 +2742,7 @@
                         "King"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.seattle.gov/council",
                         "https://seattle.gov/council/meet-the-council",
                         "https://www.seattle.gov/elected-officials"
@@ -2769,7 +2769,7 @@
                         "King"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.seattle.gov/council",
                         "https://seattle.gov/council/meet-the-council",
                         "https://www.seattle.gov/elected-officials"
@@ -2796,7 +2796,7 @@
                         "King"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.seattle.gov/council",
                         "https://seattle.gov/council/meet-the-council",
                         "https://www.seattle.gov/elected-officials"
@@ -2823,7 +2823,7 @@
                         "King"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.seattle.gov/council",
                         "https://seattle.gov/council/meet-the-council",
                         "https://www.seattle.gov/elected-officials"
@@ -2850,7 +2850,7 @@
                         "King"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.seattle.gov/council",
                         "https://seattle.gov/council/meet-the-council",
                         "https://www.seattle.gov/elected-officials"
@@ -2877,7 +2877,7 @@
                         "King"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.seattle.gov/council",
                         "https://seattle.gov/council/meet-the-council",
                         "https://www.seattle.gov/elected-officials"
@@ -2904,7 +2904,7 @@
                         "King"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.seattle.gov/council",
                         "https://seattle.gov/council/meet-the-council",
                         "https://www.seattle.gov/elected-officials"
@@ -2931,7 +2931,7 @@
                         "King"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.seattle.gov/council",
                         "https://seattle.gov/council/meet-the-council",
                         "https://www.seattle.gov/elected-officials"
@@ -2959,7 +2959,7 @@
                         "King"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.seattle.gov/council",
                         "https://seattle.gov/council/meet-the-council",
                         "https://www.seattle.gov/elected-officials"

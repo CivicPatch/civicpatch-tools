@@ -4,18 +4,18 @@ import yaml
 import sys
 from collections import Counter
 from typing import List
-from schemas import PipelineContext, Person, MergeRecordsAcrossSourcesStep
+from schemas import PipelineContext, Person, MergeRecordsAcrossLLMsStep
 
 def generate_review_comment(pipeline_context: PipelineContext, people: List[Person]) -> str:
-    # Get data from MERGE_RECORDS_ACROSS_SOURCES step
-    merge_step: MergeRecordsAcrossSourcesStep = pipeline_context.steps.get("MERGE_RECORDS_ACROSS_SOURCES", {})
+    # Get data from MERGE_RECORDS_ACROSS_LLMS step
+    merge_step: MergeRecordsAcrossLLMsStep = pipeline_context.steps.get("MERGE_RECORDS_ACROSS_LLMS", {})
     agreement_score = merge_step.agreement_score
     disagreements_by_person = merge_step.disagreements  # Now a Dict[str, List[FieldComparison]]
     validation_issues = merge_step.validation_issues
     missing_people = merge_step.missing_people
 
     # Collect all unique data sources from people.yml
-    all_data_sources = {source for person in people for source in person.data_sources}
+    all_sources = {source for person in people for source in person.sources}
 
     has_validation_issues = len(validation_issues) > 0
 
@@ -44,7 +44,7 @@ def generate_review_comment(pipeline_context: PipelineContext, people: List[Pers
 
     # Data Sources section
     markdown.append("### Data Sources\n")
-    for source in sorted(all_data_sources):
+    for source in sorted(all_sources):
         markdown.append(f"- {source}")
     markdown.append("\n---\n")
 

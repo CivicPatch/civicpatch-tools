@@ -299,7 +299,7 @@
             "average_elapsed_time_seconds": 20.367233991622925
         },
         "PROCESS_PAGE_CONTENT": {
-            "records_by_source": {
+            "records_by_llm": {
                 "google_gemini": {
                     "Betsy Wilkerson": [
                         {
@@ -1160,8 +1160,8 @@
                 }
             }
         },
-        "MERGE_RECORDS_WITHIN_SOURCE": {
-            "people_by_source": {
+        "MERGE_RECORDS_WITHIN_LLM": {
+            "people_by_llm": {
                 "google_gemini": [
                     {
                         "name": "Betsy Wilkerson",
@@ -1181,7 +1181,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1204,7 +1204,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1227,7 +1227,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1250,7 +1250,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1273,7 +1273,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1296,7 +1296,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1319,7 +1319,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1340,7 +1340,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
                         "updated_at": ""
@@ -1365,7 +1365,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1388,7 +1388,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1411,7 +1411,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1434,7 +1434,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1457,7 +1457,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1480,7 +1480,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1503,7 +1503,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1524,7 +1524,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
                         "updated_at": ""
@@ -1546,7 +1546,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/",
                             "https://my.spokanecity.org/directory/officials/elected/"
                         ],
@@ -1570,7 +1570,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/",
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
@@ -1594,7 +1594,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/",
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
@@ -1618,7 +1618,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/",
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
@@ -1642,7 +1642,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/",
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
@@ -1666,7 +1666,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/",
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
@@ -1690,7 +1690,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/",
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
@@ -1714,7 +1714,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://my.spokanecity.org/",
                             "https://my.spokanecity.org/citycouncil/members/",
                             "https://my.spokanecity.org/directory/officials/elected/"
@@ -1724,7 +1724,7 @@
                 ]
             }
         },
-        "MERGE_RECORDS_ACROSS_SOURCES": {
+        "MERGE_RECORDS_ACROSS_LLMS": {
             "people": [
                 {
                     "name": "Zack Zappone",
@@ -1743,7 +1743,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://my.spokanecity.org/",
                         "https://my.spokanecity.org/directory/officials/elected/",
                         "https://my.spokanecity.org/citycouncil/members/"
@@ -1767,7 +1767,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://my.spokanecity.org/",
                         "https://my.spokanecity.org/directory/officials/elected/",
                         "https://my.spokanecity.org/citycouncil/members/"
@@ -1791,7 +1791,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://my.spokanecity.org/",
                         "https://my.spokanecity.org/directory/officials/elected/",
                         "https://my.spokanecity.org/citycouncil/members/"
@@ -1815,7 +1815,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://my.spokanecity.org/",
                         "https://my.spokanecity.org/directory/officials/elected/",
                         "https://my.spokanecity.org/citycouncil/members/"
@@ -1839,7 +1839,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://my.spokanecity.org/",
                         "https://my.spokanecity.org/directory/officials/elected/",
                         "https://my.spokanecity.org/citycouncil/members/"
@@ -1864,7 +1864,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://my.spokanecity.org/",
                         "https://my.spokanecity.org/directory/officials/elected/",
                         "https://my.spokanecity.org/citycouncil/members/"
@@ -1888,7 +1888,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://my.spokanecity.org/",
                         "https://my.spokanecity.org/directory/officials/elected/",
                         "https://my.spokanecity.org/citycouncil/members/"
@@ -1910,7 +1910,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://my.spokanecity.org/",
                         "https://my.spokanecity.org/directory/officials/elected/"
                     ],

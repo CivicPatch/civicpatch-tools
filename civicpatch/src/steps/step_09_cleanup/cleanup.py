@@ -14,7 +14,7 @@ def cleanup(context: PipelineContext):
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
-    people_data = context["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_SOURCES.value]["people"]
+    people_data = context["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value]["people"]
     people = [Person.parse_obj(person) for person in people_data]
 
     if os.path.exists(cache_dir):
@@ -29,7 +29,7 @@ def cleanup_cache(cache_dir: str, people_list: List[Person]):
     pages_to_keep = set()
 
     for person in people_list:
-        for source in person.data_sources:
+        for source in person.sources:
             pages_to_keep.add(source)
         if person.website:
             pages_to_keep.add(person.website)

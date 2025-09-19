@@ -116,7 +116,7 @@ def test_process_page_content_basic(
                 "elected_officials": [{"name": "Alice Johnson"}]
             },
             PipelineStatus.PROCESS_PAGE_CONTENT.value: ProcessPageContentStep(
-                records_by_source={
+                records_by_llm={
                     "google_gemini": {
                         "Alice Johnson": [
                             make_llm_person("Alice Johnson", roles=["council member"], phone="123")

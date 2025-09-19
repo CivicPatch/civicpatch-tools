@@ -315,7 +315,7 @@
             "average_elapsed_time_seconds": 65.98224306106567
         },
         "PROCESS_PAGE_CONTENT": {
-            "records_by_source": {
+            "records_by_llm": {
                 "google_gemini": {
                     "David Milne": [
                         {
@@ -760,8 +760,8 @@
                 }
             }
         },
-        "MERGE_RECORDS_WITHIN_SOURCE": {
-            "people_by_source": {
+        "MERGE_RECORDS_WITHIN_LLM": {
+            "people_by_llm": {
                 "google_gemini": [
                     {
                         "name": "David Milne",
@@ -781,7 +781,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -804,7 +804,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -825,7 +825,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -848,7 +848,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -871,7 +871,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -894,7 +894,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -917,7 +917,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -942,7 +942,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -965,7 +965,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -988,7 +988,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -1011,7 +1011,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -1034,7 +1034,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -1057,7 +1057,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council"
                         ],
                         "updated_at": ""
@@ -1083,7 +1083,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council",
                             "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         ],
@@ -1108,7 +1108,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council",
                             "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         ],
@@ -1134,7 +1134,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council",
                             "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         ],
@@ -1160,7 +1160,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council",
                             "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         ],
@@ -1185,7 +1185,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council",
                             "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         ],
@@ -1210,7 +1210,7 @@
                         "place": "",
                         "counties": [],
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.pasco-wa.gov/122/City-Council",
                             "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         ],
@@ -1219,7 +1219,7 @@
                 ]
             }
         },
-        "MERGE_RECORDS_ACROSS_SOURCES": {
+        "MERGE_RECORDS_ACROSS_LLMS": {
             "people": [
                 {
                     "name": "David Milne",
@@ -1241,7 +1241,7 @@
                         "Franklin"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.pasco-wa.gov/122/City-Council",
                         "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                     ],
@@ -1267,7 +1267,7 @@
                         "Franklin"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.pasco-wa.gov/122/City-Council",
                         "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                     ],
@@ -1291,7 +1291,7 @@
                         "Franklin"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.pasco-wa.gov/122/City-Council",
                         "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                     ],
@@ -1317,7 +1317,7 @@
                         "Franklin"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.pasco-wa.gov/122/City-Council",
                         "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                     ],
@@ -1343,7 +1343,7 @@
                         "Franklin"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.pasco-wa.gov/122/City-Council",
                         "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                     ],
@@ -1369,7 +1369,7 @@
                         "Franklin"
                     ],
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.pasco-wa.gov/122/City-Council",
                         "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                     ],

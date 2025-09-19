@@ -374,7 +374,7 @@
             "average_elapsed_time_seconds": 169.87987422943115
         },
         "PROCESS_PAGE_CONTENT": {
-            "records_by_source": {
+            "records_by_llm": {
                 "google_gemini": {
                     "Victoria Woodards": [
                         {
@@ -864,8 +864,8 @@
                 }
             }
         },
-        "MERGE_RECORDS_WITHIN_SOURCE": {
-            "people_by_source": {
+        "MERGE_RECORDS_WITHIN_LLM": {
+            "people_by_llm": {
                 "google_gemini": [
                     {
                         "name": "Victoria Woodards",
@@ -882,7 +882,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -904,7 +904,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -926,7 +926,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -948,7 +948,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -970,7 +970,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -992,7 +992,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1015,7 +1015,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1037,7 +1037,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1059,7 +1059,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1081,7 +1081,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1103,7 +1103,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1125,7 +1125,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1147,7 +1147,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1169,7 +1169,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1191,7 +1191,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1211,7 +1211,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1233,7 +1233,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1255,7 +1255,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1279,7 +1279,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1301,7 +1301,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1323,7 +1323,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1345,7 +1345,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1367,7 +1367,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1389,7 +1389,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1411,7 +1411,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1433,7 +1433,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1455,7 +1455,7 @@
                         "state": "",
                         "place": "",
                         "cdn_image": "",
-                        "data_sources": [
+                        "sources": [
                             "https://www.cityoftacoma.org/government/city_council"
                         ],
                         "updated_at": ""
@@ -1463,7 +1463,7 @@
                 ]
             }
         },
-        "MERGE_RECORDS_ACROSS_SOURCES": {
+        "MERGE_RECORDS_ACROSS_LLMS": {
             "people": [
                 {
                     "name": "Sarah Rumbaugh",
@@ -1482,7 +1482,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.cityoftacoma.org/government/city_council"
                     ],
                     "updated_at": ""
@@ -1504,7 +1504,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.cityoftacoma.org/government/city_council"
                     ],
                     "updated_at": ""
@@ -1526,7 +1526,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.cityoftacoma.org/government/city_council"
                     ],
                     "updated_at": ""
@@ -1548,7 +1548,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.cityoftacoma.org/government/city_council"
                     ],
                     "updated_at": ""
@@ -1570,7 +1570,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.cityoftacoma.org/government/city_council"
                     ],
                     "updated_at": ""
@@ -1592,7 +1592,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.cityoftacoma.org/government/city_council"
                     ],
                     "updated_at": ""
@@ -1612,7 +1612,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.cityoftacoma.org/government/city_council"
                     ],
                     "updated_at": ""
@@ -1634,7 +1634,7 @@
                     "state": "",
                     "place": "",
                     "cdn_image": "",
-                    "data_sources": [
+                    "sources": [
                         "https://www.cityoftacoma.org/government/city_council"
                     ],
                     "updated_at": ""
