@@ -454,7 +454,7 @@
                             "website": "https://www.seattle.gov/council/members/rob-saka",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Rob Saka",
@@ -470,7 +470,7 @@
                             "website": "https://seattle.gov/council/members/rob-saka",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Rob Saka",
@@ -484,7 +484,7 @@
                             "website": "https://www.seattle.gov/council/members/rob-saka",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Mark Solomon": [
@@ -502,7 +502,7 @@
                             "website": "https://www.seattle.gov/council/members/mark-solomon",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Mark Solomon",
@@ -518,7 +518,7 @@
                             "website": "https://seattle.gov/council/members/mark-solomon",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Mark Solomon",
@@ -532,7 +532,7 @@
                             "website": "https://www.seattle.gov/council/members/mark-solomon",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Joy Hollingsworth": [
@@ -551,7 +551,7 @@
                             "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Joy Hollingsworth",
@@ -567,7 +567,7 @@
                             "website": "https://seattle.gov/council/members/joy-hollingsworth",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Joy Hollingsworth",
@@ -581,7 +581,7 @@
                             "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Maritza Rivera": [
@@ -599,7 +599,7 @@
                             "website": "https://www.seattle.gov/council/members/maritza-rivera",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Maritza Rivera",
@@ -615,7 +615,7 @@
                             "website": "https://seattle.gov/council/members/maritza-rivera",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Maritza Rivera",
@@ -629,7 +629,7 @@
                             "website": "https://www.seattle.gov/council/members/maritza-rivera",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Debora Juarez": [
@@ -647,7 +647,7 @@
                             "website": "https://www.seattle.gov/council/members/debora-juarez",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Debora Juarez",
@@ -663,7 +663,7 @@
                             "website": "https://seattle.gov/council/members/debora-juarez",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Debora Juarez",
@@ -677,7 +677,7 @@
                             "website": "https://www.seattle.gov/council/members/debora-juarez",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Dan Strauss": [
@@ -695,7 +695,7 @@
                             "website": "https://www.seattle.gov/council/members/dan-strauss",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Dan Strauss",
@@ -711,7 +711,7 @@
                             "website": "https://seattle.gov/council/members/dan-strauss",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Dan Strauss",
@@ -725,7 +725,7 @@
                             "website": "https://www.seattle.gov/council/members/dan-strauss",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Bob Kettle": [
@@ -744,7 +744,7 @@
                             "website": "https://www.seattle.gov/council/members/bob-kettle",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Bob Kettle",
@@ -760,7 +760,7 @@
                             "website": "https://seattle.gov/council/members/bob-kettle",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Bob Kettle",
@@ -774,7 +774,7 @@
                             "website": "https://www.seattle.gov/council/members/bob-kettle",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Alexis Rinck": [
@@ -793,7 +793,7 @@
                             "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Alexis Mercedes Rinck",
@@ -809,7 +809,7 @@
                             "website": "https://seattle.gov/council/members/alexis-mercedes-rinck",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Alexis Mercedes Rinck",
@@ -823,7 +823,7 @@
                             "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Sara Nelson": [
@@ -843,7 +843,7 @@
                             "website": "https://www.seattle.gov/council/members/sara-nelson",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Sara Nelson",
@@ -860,7 +860,7 @@
                             "website": "https://seattle.gov/council/members/sara-nelson",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Sara Nelson",
@@ -874,7 +874,7 @@
                             "website": "https://www.seattle.gov/council/members/sara-nelson",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Bruce Harrell": [
@@ -890,7 +890,7 @@
                             "website": "https://www.seattle.gov/mayor",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ]
                 },
@@ -910,7 +910,7 @@
                             "website": "https://www.seattle.gov/council/members/rob-saka",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Rob Saka",
@@ -926,7 +926,7 @@
                             "website": "https://seattle.gov/council/members/rob-saka",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Rob Saka",
@@ -940,7 +940,7 @@
                             "website": "https://www.seattle.gov/council/members/rob-saka",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Mark Solomon": [
@@ -958,7 +958,7 @@
                             "website": "https://www.seattle.gov/council/members/mark-solomon",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Mark Solomon",
@@ -974,7 +974,7 @@
                             "website": "https://seattle.gov/council/members/mark-solomon",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Mark Solomon",
@@ -988,7 +988,7 @@
                             "website": "https://www.seattle.gov/council/members/mark-solomon",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Joy Hollingsworth": [
@@ -1007,7 +1007,7 @@
                             "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Joy Hollingsworth",
@@ -1023,7 +1023,7 @@
                             "website": "https://seattle.gov/council/members/joy-hollingsworth",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Joy Hollingsworth",
@@ -1037,7 +1037,7 @@
                             "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Maritza Rivera": [
@@ -1055,7 +1055,7 @@
                             "website": "https://www.seattle.gov/council/members/maritza-rivera",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Maritza Rivera",
@@ -1071,7 +1071,7 @@
                             "website": "https://seattle.gov/council/members/maritza-rivera",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Maritza Rivera",
@@ -1085,7 +1085,7 @@
                             "website": "https://www.seattle.gov/council/members/maritza-rivera",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Debora Juarez": [
@@ -1103,7 +1103,7 @@
                             "website": "https://www.seattle.gov/council/members/debora-juarez",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Debora Juarez",
@@ -1119,7 +1119,7 @@
                             "website": "https://seattle.gov/council/members/debora-juarez",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Debora Juarez",
@@ -1133,7 +1133,7 @@
                             "website": "https://www.seattle.gov/council/members/debora-juarez",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Dan Strauss": [
@@ -1151,7 +1151,7 @@
                             "website": "https://www.seattle.gov/council/members/dan-strauss",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Dan Strauss",
@@ -1167,7 +1167,7 @@
                             "website": "https://seattle.gov/council/members/dan-strauss",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Dan Strauss",
@@ -1181,7 +1181,7 @@
                             "website": "https://www.seattle.gov/council/members/dan-strauss",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Bob Kettle": [
@@ -1200,7 +1200,7 @@
                             "website": "https://www.seattle.gov/council/members/bob-kettle",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Bob Kettle",
@@ -1214,7 +1214,7 @@
                             "website": "https://www.seattle.gov/council/members/bob-kettle",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Alexis Rinck": [
@@ -1233,7 +1233,7 @@
                             "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Alexis Mercedes Rinck",
@@ -1249,7 +1249,7 @@
                             "website": "https://seattle.gov/council/members/alexis-mercedes-rinck",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Alexis Mercedes Rinck",
@@ -1263,7 +1263,7 @@
                             "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Sara Nelson": [
@@ -1283,7 +1283,7 @@
                             "website": "https://www.seattle.gov/council/members/sara-nelson",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Sara Nelson",
@@ -1299,7 +1299,7 @@
                             "website": "https://seattle.gov/council/members/sara-nelson",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Sara Nelson",
@@ -1313,7 +1313,7 @@
                             "website": "https://www.seattle.gov/council/members/sara-nelson",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Robert Kettle": [
@@ -1331,7 +1331,7 @@
                             "website": "https://seattle.gov/council/members/bob-kettle",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         }
                     ],
                     "Bruce Harrell": [
@@ -1347,7 +1347,7 @@
                             "website": "https://www.seattle.gov/mayor",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ]
                 },
@@ -1367,7 +1367,7 @@
                             "website": "https://www.seattle.gov/council/members/rob-saka",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Rob Saka",
@@ -1383,7 +1383,7 @@
                             "website": "https://seattle.gov/council/members/rob-saka",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Rob Saka",
@@ -1397,7 +1397,7 @@
                             "website": "https://www.seattle.gov/council/members/rob-saka",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Mark Solomon": [
@@ -1415,7 +1415,7 @@
                             "website": "https://www.seattle.gov/council/members/mark-solomon",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Mark Solomon",
@@ -1431,7 +1431,7 @@
                             "website": "https://seattle.gov/council/members/mark-solomon",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Mark Solomon",
@@ -1445,7 +1445,7 @@
                             "website": "https://www.seattle.gov/council/members/mark-solomon",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Joy Hollingsworth": [
@@ -1463,7 +1463,7 @@
                             "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Joy Hollingsworth",
@@ -1479,7 +1479,7 @@
                             "website": "https://seattle.gov/council/members/joy-hollingsworth",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Joy Hollingsworth",
@@ -1493,7 +1493,7 @@
                             "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Maritza Rivera": [
@@ -1511,7 +1511,7 @@
                             "website": "https://www.seattle.gov/council/members/maritza-rivera",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Maritza Rivera",
@@ -1527,7 +1527,7 @@
                             "website": "https://seattle.gov/council/members/maritza-rivera",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Maritza Rivera",
@@ -1541,7 +1541,7 @@
                             "website": "https://www.seattle.gov/council/members/maritza-rivera",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Debora Juarez": [
@@ -1559,7 +1559,7 @@
                             "website": "https://www.seattle.gov/council/members/debora-juarez",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Debora Juarez",
@@ -1575,7 +1575,7 @@
                             "website": "https://seattle.gov/council/members/debora-juarez",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Debora Juarez",
@@ -1589,7 +1589,7 @@
                             "website": "https://www.seattle.gov/council/members/debora-juarez",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Dan Strauss": [
@@ -1607,7 +1607,7 @@
                             "website": "https://www.seattle.gov/council/members/dan-strauss",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Dan Strauss",
@@ -1623,7 +1623,7 @@
                             "website": "https://seattle.gov/council/members/dan-strauss",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Dan Strauss",
@@ -1637,7 +1637,7 @@
                             "website": "https://www.seattle.gov/council/members/dan-strauss",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Bob Kettle": [
@@ -1655,7 +1655,7 @@
                             "website": "https://www.seattle.gov/council/members/bob-kettle",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Bob Kettle",
@@ -1671,7 +1671,7 @@
                             "website": "https://seattle.gov/council/members/bob-kettle",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Bob Kettle",
@@ -1685,7 +1685,7 @@
                             "website": "https://www.seattle.gov/council/members/bob-kettle",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Alexis Rinck": [
@@ -1703,7 +1703,7 @@
                             "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Alexis Mercedes Rinck",
@@ -1719,7 +1719,7 @@
                             "website": "https://seattle.gov/council/members/alexis-mercedes-rinck",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Alexis Mercedes Rinck",
@@ -1733,7 +1733,7 @@
                             "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Sara Nelson": [
@@ -1751,7 +1751,7 @@
                             "website": "https://www.seattle.gov/council/members/sara-nelson",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Sara Nelson",
@@ -1767,7 +1767,7 @@
                             "website": "https://seattle.gov/council/members/sara-nelson",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://seattle.gov/council/meet-the-council"
                         },
                         {
                             "name": "Sara Nelson",
@@ -1781,7 +1781,7 @@
                             "website": "https://www.seattle.gov/council/members/sara-nelson",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Bruce Harrell": [
@@ -1797,7 +1797,7 @@
                             "website": "https://www.seattle.gov/mayor",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Ann Davison": [
@@ -1813,7 +1813,7 @@
                             "website": "https://www.seattle.gov/cityattorney",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Anita Crawford-Willis": [
@@ -1829,7 +1829,7 @@
                             "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-anita-crawford-willis",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Damon Shadid": [
@@ -1845,7 +1845,7 @@
                             "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-damon-shadid",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Andrea Chin": [
@@ -1861,7 +1861,7 @@
                             "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-andrea-chin",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Willie Gregory": [
@@ -1877,7 +1877,7 @@
                             "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-willie-gregory",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Catherine McDowall": [
@@ -1893,7 +1893,7 @@
                             "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-catherine-mcdowall",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Pooja Vaddadi": [
@@ -1909,7 +1909,7 @@
                             "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-pooja-vaddadi",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ]
                 }
@@ -2973,7 +2973,7 @@
                     "field": "divisions",
                     "person_name": "Sara Nelson",
                     "merged_value": "Position 9, At-large",
-                    "source_values": {
+                    "llm_values": {
                         "google_gemini": "position 9, at-large",
                         "openai": "position 9, at-large",
                         "together_ai": "position 9 (Citywide, Representing All of Seattle)"

@@ -53,8 +53,8 @@ def generate_review_comment(pipeline_context: PipelineContext, people: List[Pers
         markdown.append("### Missing People\n")
         for person in missing_people:
             markdown.append(f"#### {person.name}")
-            markdown.append(f"- Missing from: {', '.join(person.missing_from_sources)}")
-            markdown.append(f"- Found in: {', '.join(person.found_in_sources)}")
+            markdown.append(f"- Missing from: {', '.join(person.missing_from_llms)}")
+            markdown.append(f"- Found in: {', '.join(person.found_in_llms)}")
             markdown.append("")
         markdown.append("---\n")
 
@@ -70,16 +70,16 @@ def generate_review_comment(pipeline_context: PipelineContext, people: List[Pers
             for disagreement in person_disagreements:
                 field = disagreement.field
                 score = disagreement.disagreement_score
-                source_values = disagreement.source_values
+                llm_values = disagreement.llm_values
                 final_value = disagreement.merged_value or "_No consensus_"
                 
                 # Get all unique values to determine which ones differ
-                unique_values = set(source_values.values())
+                unique_values = set(llm_values.values())
                 
                 # If a value is unique (doesn't match others), it should be bold
-                gemini_value = source_values.get("google_gemini", "")
-                openai_value = source_values.get("openai", "")
-                together_value = source_values.get("together_ai", "")
+                gemini_value = llm_values.get("google_gemini", "")
+                openai_value = llm_values.get("openai", "")
+                together_value = llm_values.get("together_ai", "")
                 
                 # Bold values that don't match the final value
                 if len(unique_values) > 1:

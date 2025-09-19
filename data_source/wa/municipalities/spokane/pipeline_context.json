@@ -316,7 +316,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Betsy Wilkerson",
@@ -330,7 +330,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Jonathan Bingle": [
@@ -348,7 +348,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
                             "start_date": "2022",
                             "end_date": "2025",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Jonathan Bingle",
@@ -364,7 +364,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Michael Cathcart": [
@@ -382,7 +382,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Michael Cathcart",
@@ -398,7 +398,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Paul Dillon": [
@@ -416,7 +416,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Paul Dillon",
@@ -432,7 +432,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Shelby Lambdin": [
@@ -450,7 +450,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/shelby-lambdin/",
                             "start_date": "2025-08",
                             "end_date": "2025-11",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Shelby Lambdin",
@@ -466,7 +466,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Zack Zappone": [
@@ -484,7 +484,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
                             "start_date": "2022",
                             "end_date": "2025",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Zack Zappone",
@@ -500,7 +500,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Kitty Klitzke": [
@@ -518,7 +518,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Kitty Klitzke",
@@ -534,7 +534,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Lisa Brown": [
@@ -550,7 +550,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ]
                 },
@@ -570,7 +570,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Betsy Wilkerson",
@@ -584,7 +584,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Jonathan Bingle": [
@@ -602,7 +602,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
                             "start_date": "2022",
                             "end_date": "2025",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Jonathan Bingle",
@@ -618,7 +618,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Michael Cathcart": [
@@ -636,7 +636,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Michael Cathcart",
@@ -652,7 +652,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Paul Dillon": [
@@ -670,7 +670,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Paul Dillon",
@@ -686,7 +686,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Shelby Lambdin": [
@@ -704,7 +704,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/shelby-lambdin/",
                             "start_date": "2025-08",
                             "end_date": "2025-11",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Shelby Lambdin",
@@ -720,7 +720,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Zack Zappone": [
@@ -738,7 +738,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
                             "start_date": "2022",
                             "end_date": "2025",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Zack Zappone",
@@ -754,7 +754,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Kitty Klitzke": [
@@ -772,7 +772,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Kitty Klitzke",
@@ -788,7 +788,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Lisa Brown": [
@@ -804,7 +804,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ]
                 },
@@ -820,7 +820,7 @@
                             "website": null,
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://my.spokanecity.org/"
+                            "source": "https://my.spokanecity.org/"
                         },
                         {
                             "name": "Lisa Brown",
@@ -834,7 +834,7 @@
                             "website": "https://www.spokanecity.org/mayor",
                             "start_date": "2024-2027",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Betsy Wilkerson": [
@@ -848,7 +848,7 @@
                             "website": null,
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://my.spokanecity.org/"
+                            "source": "https://my.spokanecity.org/"
                         },
                         {
                             "name": "Betsy Wilkerson",
@@ -864,7 +864,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/betsy-wilkerson/",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Betsy Wilkerson",
@@ -878,7 +878,7 @@
                             "website": "https://www.spokanecity.org/council",
                             "start_date": "2024-2027",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Jonathan Bingle": [
@@ -892,7 +892,7 @@
                             "website": null,
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://my.spokanecity.org/"
+                            "source": "https://my.spokanecity.org/"
                         },
                         {
                             "name": "Jonathan Bingle",
@@ -908,7 +908,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/jonathan-bingle/",
                             "start_date": "2022-2025",
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Jonathan Bingle",
@@ -924,7 +924,7 @@
                             "website": "https://www.spokanecity.org/council",
                             "start_date": "2024-2027",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Michael Cathcart": [
@@ -938,7 +938,7 @@
                             "website": null,
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://my.spokanecity.org/"
+                            "source": "https://my.spokanecity.org/"
                         },
                         {
                             "name": "Michael Cathcart",
@@ -954,7 +954,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/michael-cathcart/",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Michael Cathcart",
@@ -970,7 +970,7 @@
                             "website": "https://www.spokanecity.org/council",
                             "start_date": "2024-2027",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Paul Dillon": [
@@ -984,7 +984,7 @@
                             "website": null,
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://my.spokanecity.org/"
+                            "source": "https://my.spokanecity.org/"
                         },
                         {
                             "name": "Paul Dillon",
@@ -1000,7 +1000,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/paul-dillon/",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Paul Dillon",
@@ -1016,7 +1016,7 @@
                             "website": "https://www.spokanecity.org/council",
                             "start_date": "2024-2027",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Shelby Lambdin": [
@@ -1030,7 +1030,7 @@
                             "website": null,
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://my.spokanecity.org/"
+                            "source": "https://my.spokanecity.org/"
                         },
                         {
                             "name": "Shelby Lambdin",
@@ -1046,7 +1046,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/shelby-lambdin/",
                             "start_date": "August 2025-November 2025",
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Shelby Lambdin",
@@ -1062,7 +1062,7 @@
                             "website": "https://www.spokanecity.org/council",
                             "start_date": "2024-2027",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Zack Zappone": [
@@ -1076,7 +1076,7 @@
                             "website": null,
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://my.spokanecity.org/"
+                            "source": "https://my.spokanecity.org/"
                         },
                         {
                             "name": "Zack Zappone",
@@ -1092,7 +1092,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/zack-zappone/",
                             "start_date": "2022-2025",
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Zack Zappone",
@@ -1108,7 +1108,7 @@
                             "website": "https://www.spokanecity.org/council",
                             "start_date": "2024-2027",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ],
                     "Kitty Klitzke": [
@@ -1122,7 +1122,7 @@
                             "website": null,
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://my.spokanecity.org/"
+                            "source": "https://my.spokanecity.org/"
                         },
                         {
                             "name": "Kitty Klitzke",
@@ -1138,7 +1138,7 @@
                             "website": "https://my.spokanecity.org/citycouncil/members/Kitty%20Klitzke/",
                             "start_date": "2024-2027",
                             "end_date": null,
-                            "data_source": "https://my.spokanecity.org/citycouncil/members/"
+                            "source": "https://my.spokanecity.org/citycouncil/members/"
                         },
                         {
                             "name": "Kitty Klitzke",
@@ -1154,7 +1154,7 @@
                             "website": "https://www.spokanecity.org/council",
                             "start_date": "2024-2027",
                             "end_date": "2027",
-                            "data_source": "https://my.spokanecity.org/directory/officials/elected/"
+                            "source": "https://my.spokanecity.org/directory/officials/elected/"
                         }
                     ]
                 }

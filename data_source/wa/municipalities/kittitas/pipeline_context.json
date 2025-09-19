@@ -239,7 +239,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Sean Crabb": [
@@ -257,7 +257,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         },
                         {
                             "name": "Sean Crabb",
@@ -273,7 +273,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": "2025",
-                            "data_source": "http://www.cityofkittitas.com/council.html"
+                            "source": "http://www.cityofkittitas.com/council.html"
                         }
                     ],
                     "Hannah Woodiwiss": [
@@ -291,7 +291,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         },
                         {
                             "name": "Hannah Woodiwiss",
@@ -307,7 +307,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": "2025",
-                            "data_source": "http://www.cityofkittitas.com/council.html"
+                            "source": "http://www.cityofkittitas.com/council.html"
                         }
                     ],
                     "Jerry Lael": [
@@ -325,7 +325,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         },
                         {
                             "name": "Jerry Lael",
@@ -341,7 +341,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": "2027",
-                            "data_source": "http://www.cityofkittitas.com/council.html"
+                            "source": "http://www.cityofkittitas.com/council.html"
                         }
                     ],
                     "Tyrul McGuffin": [
@@ -359,7 +359,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         },
                         {
                             "name": "Tyrul McGuffin",
@@ -375,7 +375,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": "2027",
-                            "data_source": "http://www.cityofkittitas.com/council.html"
+                            "source": "http://www.cityofkittitas.com/council.html"
                         }
                     ],
                     "Joe Scoleri": [
@@ -393,7 +393,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         },
                         {
                             "name": "Joe Scoleri",
@@ -409,7 +409,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": "2027",
-                            "data_source": "http://www.cityofkittitas.com/council.html"
+                            "source": "http://www.cityofkittitas.com/council.html"
                         }
                     ]
                 },
@@ -427,7 +427,7 @@
                             "website": "http://www.cityofkittitas.com/index.html",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Sean Crabb": [
@@ -445,7 +445,7 @@
                             "website": "http://www.cityofkittitas.com/government.html",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         },
                         {
                             "name": "Sean Crabb",
@@ -461,7 +461,7 @@
                             "website": "http://www.cityofkittitas.com/government.html",
                             "start_date": null,
                             "end_date": "2025",
-                            "data_source": "http://www.cityofkittitas.com/council.html"
+                            "source": "http://www.cityofkittitas.com/council.html"
                         }
                     ]
                 },
@@ -481,7 +481,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Sean Crabb": [
@@ -499,7 +499,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         },
                         {
                             "name": "Sean Crabb",
@@ -515,7 +515,7 @@
                             "website": "",
                             "start_date": "2024",
                             "end_date": "2025",
-                            "data_source": "http://www.cityofkittitas.com/council.html"
+                            "source": "http://www.cityofkittitas.com/council.html"
                         }
                     ],
                     "Christa Stream": [
@@ -531,7 +531,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Brandy Harris": [
@@ -547,7 +547,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         },
                         {
                             "name": "Brandy Harris",
@@ -561,7 +561,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/"
+                            "source": "http://www.cityofkittitas.com/"
                         },
                         {
                             "name": "Brandy Harris",
@@ -575,7 +575,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/minutes.html"
+                            "source": "http://www.cityofkittitas.com/minutes.html"
                         },
                         {
                             "name": "Brandy Harris",
@@ -589,7 +589,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/employment_police_officer.html"
+                            "source": "http://www.cityofkittitas.com/employment_police_officer.html"
                         },
                         {
                             "name": "Brandy Harris",
@@ -603,7 +603,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/mayors_corner.html"
+                            "source": "http://www.cityofkittitas.com/mayors_corner.html"
                         },
                         {
                             "name": "Brandy Harris",
@@ -617,7 +617,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/government.html"
+                            "source": "http://www.cityofkittitas.com/government.html"
                         },
                         {
                             "name": "Brandy Harris",
@@ -631,7 +631,7 @@
                             "website": "",
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "http://www.cityofkittitas.com/comprehensive_survey.html"
+                            "source": "http://www.cityofkittitas.com/comprehensive_survey.html"
                         },
                         {
                             "name": "Brandy Harris",
@@ -645,7 +645,7 @@
                             "website": "",
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "http://www.cityofkittitas.com/faqs.html"
+                            "source": "http://www.cityofkittitas.com/faqs.html"
                         }
                     ],
                     "David Hinchliff": [
@@ -661,7 +661,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Ryan Baker": [
@@ -679,7 +679,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Braden Bare": [
@@ -697,7 +697,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Skyler Bilyeu": [
@@ -715,7 +715,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Jason Williams": [
@@ -733,7 +733,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Rick Hunter": [
@@ -751,7 +751,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Hannah Woodiwiss": [
@@ -769,7 +769,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Jerry Lael": [
@@ -787,7 +787,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Tyrul McGuffin": [
@@ -805,7 +805,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Joe Scoleri": [
@@ -823,7 +823,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Scarlett Young": [
@@ -839,7 +839,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/staff_directory.html"
+                            "source": "http://www.cityofkittitas.com/staff_directory.html"
                         }
                     ],
                     "Michelle Geiger": [
@@ -855,7 +855,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "http://www.cityofkittitas.com/community.html"
+                            "source": "http://www.cityofkittitas.com/community.html"
                         }
                     ]
                 }

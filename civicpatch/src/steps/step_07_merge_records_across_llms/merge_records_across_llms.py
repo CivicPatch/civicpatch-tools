@@ -70,7 +70,7 @@ def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
         ]
         
         for source in missing_sources:
-            missing_people.append(MissingPerson(name=canonical_name, missing_from_sources=missing_sources, found_in_sources=sources_with_person))
+            missing_people.append(MissingPerson(name=canonical_name, missing_from_llms=missing_sources, found_in_llms=sources_with_person))
 
         # Merge Person objects into a single Person object
         merged_person = merge_people_across_llms(canonical_name, grouped_people_by_llm)
@@ -113,7 +113,7 @@ def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
                         {
                             "field": c.field,
                             "merged_value": c.merged_value,
-                            "source_values": c.source_values,
+                            "llm_values": c.llm_values,
                             "disagreement_score": c.disagreement_score
                         }
                         for c in comparisons
@@ -180,7 +180,7 @@ def collect_field_comparisons(
                 field=field,
                 person_name=canonical_name,
                 merged_value=merged_str or "(empty)",
-                source_values=llm_values,
+                llm_values=llm_values,
                 disagreement_score=calculate_disagreement_score(field, merged_str, llm_values)
             ))
     
