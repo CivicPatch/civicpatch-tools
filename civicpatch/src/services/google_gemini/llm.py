@@ -24,6 +24,7 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, response_schem
     """
     Run a prompt against Google Gemini's API
     """
+    print("gemini prompt: ", prompt)
     api_key = os.getenv("GOOGLE_GEMINI_TOKEN")
     if not api_key:
         raise ValueError("GOOGLE_GEMINI_TOKEN is not set in environment variables.")

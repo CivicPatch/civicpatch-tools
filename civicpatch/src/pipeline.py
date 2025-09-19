@@ -218,15 +218,15 @@ class Pipeline:
                 self.state = PipelineStatus.CLEANUP
 
             elif self.state == PipelineStatus.CLEANUP:
-                result = cleanup(self.context)
+                #result = cleanup(self.context)
 
-                self.context.update(result)
+                #self.context.update(result)
                 self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
             elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
-                result = maybe_send_to_github(self.context)
+                #result = maybe_send_to_github(self.context)
 
-                self.context.update(result)
+                #self.context.update(result)
                 self.state = PipelineStatus.DONE
             else:
                 print("Pipeline logic not yet implemented.")
@@ -271,7 +271,7 @@ class Pipeline:
         """
         next_pending_link = self.get_next_link(LinkStatus.PENDING)
         if next_pending_link and next_pending_link["is_profile_page"] == True:
-            print("More pending links to scrape, continuing scraping...", next_pending_link)
+            print("More pending links to scrape, continuing to scrape...", next_pending_link)
             return PipelineStatus.SCRAPE_PAGE
 
         if self.context["progress"]["current_data"] >= self.context["progress"]["required_data"]:

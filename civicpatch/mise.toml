@@ -54,7 +54,6 @@ docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
 [tasks.generate-review-comment]
 # Ex: /app/data/wa/municipalities/spokane/people.yml
 run = """
-echo "Generating data review comment..."
 docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
   python src/scripts/generate_review_comment.py {{ option(name="municipality-path") }}
 """

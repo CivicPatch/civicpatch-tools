@@ -98,7 +98,7 @@ def process_page_content(
         else:
             updated_links.append(link)
 
-    updated_links = update_website_links(roles, updated_links, updated_processed_data.records_by_source)
+    updated_links = update_website_links(updated_links, updated_processed_data.records_by_source)
 
     return {
         "links": updated_links,
@@ -156,6 +156,8 @@ def process_with_llms(
         for p in people:
             p = p.model_dump() 
             p["data_source"] = data_source_url  # Add data source URL
+            if p["website"]:
+                p["website"] = url_utils.format_url(p["website"])
             processed_person = LLMPerson.model_validate(p)
             processed_people.append(processed_person)
             
@@ -220,12 +222,12 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     )
     return has_contact and has_role
 
-def update_website_links(roles, existing_links: List[Link], records_by_source: RecordsBySource) -> List[Link]:
+def update_website_links(existing_links: List[Link], records_by_source: RecordsBySource) -> List[Link]:
     """
     Update the links with websites found in the processed data.
     """
     updated_links = copy.deepcopy(existing_links)
-    found_websites = extract_websites_from_processed_data(roles, records_by_source)
+    found_websites = extract_websites_from_processed_data(records_by_source)
 
     for website in found_websites:
         existing_link = next((link for link in updated_links if link["url"] == website), None)
@@ -246,15 +248,13 @@ def update_website_links(roles, existing_links: List[Link], records_by_source: R
 
     return updated_links
 
-def extract_websites_from_processed_data(roles: List[str], records_by_source: RecordsBySource) -> List[str]:
+def extract_websites_from_processed_data(records_by_source: RecordsBySource) -> List[str]:
     """
     Extract website links from the processed data.
     """
     found_websites = []
     for people_by_name in records_by_source.values():
         for person_list in people_by_name.values():  # Directly iterate over lists of LLMPerson
-            #if has_role_and_contact_info(roles, person_list):
-            #    continue
 
             for person_record in person_list:
                 website = person_record.website if person_record.website else None
@@ -263,7 +263,5 @@ def extract_websites_from_processed_data(roles: List[str], records_by_source: Re
                     # Check if website domain is in ignore list
                     domain = url_utils.extract_domain(website)
                     if domain and not any(ignore in domain for ignore in IGNORE_WEBSITES):
-                        continue
-
-                    found_websites.append(website)
+                        found_websites.append(website)
     return found_websites

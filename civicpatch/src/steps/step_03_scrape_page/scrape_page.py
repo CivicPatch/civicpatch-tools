@@ -14,7 +14,7 @@ async def scrape_page(context: PipelineContext, link_to_scrape: Link):
         image_directory = data_path_utils.get_images_path(context["state"], context["geoid"])
         html_content = await scrape_utils.scrape(link_to_scrape["url"], { "image_directory": image_directory })
 
-        if not html_content:
+        if html_content is None:
             raise ValueError("No HTML content retrieved")
 
         # Save html_content to file under data_source
@@ -49,6 +49,7 @@ async def scrape_page(context: PipelineContext, link_to_scrape: Link):
                 updated_links.append({**link, "status": LinkStatus.ERROR.value})
             else:
                 updated_links.append(link)
+
         return {
             "links": updated_links
         }

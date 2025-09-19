@@ -9,6 +9,7 @@ IMAGE_EXT_BLACKLIST = [".svg", ".gif"]
 
 class ScrapeOptions(TypedDict):
     image_dir: str  # Directory to save images
+    scraped_urls: list[str] # List of URLs that have already been scraped
 
 class ImageError(Exception):
     pass
@@ -28,14 +29,25 @@ async def scrape(website_url, options=None):
         context = await browser.new_context()
         page = await context.new_page()
 
-        await page.goto(website_url)
+        for wait_until in ["networkidle", "domcontentloaded"]:
+            try:
+                await page.goto(website_url, wait_until=wait_until)
+                break
+            except Exception as e:
+                print(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
+
+        # Check if, after redirect, we have already scraped this URL
+        if options and options.get('scraped_urls') and page.url in options.get('scraped_urls'):
+            print("Already scraped url: {website_url}, redirected to: {page.url}")
+            await browser.close()
+            raise ValueError("Already scraped this URL after redirect")
 
         # Check if the page is HTML using document.contentType
         content_type = await page.evaluate("document.contentType")
         if content_type.lower() != "text/html":
             await browser.close()
-            return None
-
+            raise ValueError(f"Content type is not text/html: {content_type}")
+    
         await flatten_shadow_root(page)
         await html_relative_to_absolute_urls(page)
 

@@ -38,7 +38,7 @@ You are an expert data extractor focused on accuracy.
 
 Target Person (if applicable): {person_name}
 Target roles: {', '.join(roles)}
-Target divisions: {', '.join(division_names)}
+Target divisions: ward, district
 Current Date: {current_date}
 
 Return a JSON object.
@@ -49,11 +49,9 @@ Output Field Definitions & Structure:
 - roles: (Array of strings) Active municipal roles.
          Identify their official job title or specific position.
          This can be a wide variety of municipal roles (e.g., "Mayor", "City Manager", "Selectman",
-         "Alderman", "Council Member At-Large", "Board Member, Position 2", "Council Member, Seat 5").
-         Focus on capturing the most complete and meaningful description of
-         their individual position as it appears in the text, regardless of the specific title.
-- divisions: (Array of strings) Specific division/district/ward and name/number,
-          only if specified (e.g., "Ward 1", "District 2", "Position 3", "Seat Blue").
+         "Alderman", "Council Member").
+- divisions: (Array of strings) Specific district/ward and name/number,
+          only if specified (e.g., "Ward 1", "District 2").
 - phone_number: (String or null) Formatted phone number
 - email: (String or null) Email address (email@example.com)
 - website: (String or null) Website URL (http(s)://...)
@@ -73,9 +71,6 @@ Extraction Guidelines:
 
 - Divisions:
   - Extract divisions if explicitly mentioned and relevant to the person's role.
-  - Examples:
-    - "Citywide Position 7" → Extract as "Citywide" and "Position 7."
-    - "At-Large Position 2" → Extract as "At-Large" and "Position 2."
   - Do not infer divisions if they are not explicitly stated.
 
 - General Guidelines:

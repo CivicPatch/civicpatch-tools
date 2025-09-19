@@ -48,10 +48,10 @@ MODELS_BY_TYPE = {
         #"output_cost": 0.06 / 1000000,
         #"token_limit": 4096,  # Actual token limit is 4096, leave buffer for output tokens
         # PASSES with flying colors
-        "model": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
-        "input_cost": 0.10 / 1000000,
-        "output_cost": 0.10 / 1000000,
-        "token_limit": 8192,
+        #"model": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
+        #"input_cost": 0.10 / 1000000,
+        #"output_cost": 0.10 / 1000000,
+        #"token_limit": 8192,
         # FAILS -- need to RETRY!
         #"model": "openai/gpt-oss-120b",
         #"input_cost": 0.15 / 1000000,
@@ -82,7 +82,7 @@ MODELS_BY_TYPE = {
         # "input_cost": 0.18 / 1000000,
         # "output_cost": 0.59 / 1000000
         # PASSES
-            # Flying colors
+            # Flying colors -- as of sept 18 -- no longer available
         # "model": "meta-llama/Llama-3-8b-chat-hf",
         # "input_cost": 0.20 / 1000000,
         # "output_cost": 0.20 / 1000000,
@@ -114,6 +114,9 @@ MODELS_BY_TYPE = {
         # "model": "Qwen/Qwen2.5-7B-Instruct-Turbo",
         # "input_cost": 0.30 / 1000000,
         # "output_cost": 0.30 / 1000000
+        "model": "mistralai/Mixtral-8x7B-Instruct-v0.1",
+        "input_cost": 0.60 / 1000000,
+        "output_cost": 0.60 / 1000000
     },
 }
 
@@ -121,6 +124,7 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, content="", re
     """
     Run a prompt against Together AI's API using OpenAI-compatible interface
     """
+    print("together prompt: ", prompt)
     api_key = os.getenv("TOGETHER_AI_TOKEN")
     if not api_key:
         raise ValueError("TOGETHER_AI_TOKEN is not set")
