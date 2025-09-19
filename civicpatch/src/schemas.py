@@ -69,9 +69,7 @@ class RawLLMPerson(BaseModel):
     end_date: Optional[str] = None
 
 class LLMPerson(RawLLMPerson):
-    data_source: str
-    # todo: image
-    # sources: List[str] # List of URLs where information was founda
+    source: str
 
 class PeopleArrayLLMResponseSchema(BaseModel):
     people: List[RawLLMPerson]
@@ -87,14 +85,14 @@ class Person(RawLLMPerson):
 
 OtherNamesByCanonicalName: TypeAlias = Dict[str, List[str]] # Canonical name to other names found while scraping
 PeopleByName: TypeAlias = Dict[str, List[LLMPerson]]
-RecordsBySource: TypeAlias = Dict[str, PeopleByName]
+RecordsByLLM: TypeAlias = Dict[str, PeopleByName]
 
 class SearchLinksStep(BaseModel):
     search_engines: Dict[str, SearchEngineState]  # e.g., "google": SearchEngineState
     links: List[Link]
 
 class ProcessPageContentStep(BaseModel):
-    records_by_llm: RecordsBySource
+    records_by_llm: RecordsByLLM
 
 class MergeRecordsWithinLLMStep(BaseModel):
     people_by_llm: Dict[str, List[Person]] # LLM Names to list of Person records
@@ -102,7 +100,7 @@ class MergeRecordsWithinLLMStep(BaseModel):
 class FieldComparison(BaseModel):
     field: str
     merged_value: str
-    source_values: Dict[str, str]
+    llm_values: Dict[str, str]
     disagreement_score: float
 
 class PersonDisagreements(BaseModel):
@@ -111,8 +109,8 @@ class PersonDisagreements(BaseModel):
 
 class MissingPerson(BaseModel):
     name: str
-    missing_from_sources: List[str]  # List of source names where this person was not found
-    found_in_sources: List[str]  # List of source names where this person was found
+    missing_from_llms: List[str]  # List of source names where this person was not found
+    found_in_llms: List[str]  # List of source names where this person was found
 
 class MergeRecordsAcrossLLMsStep(BaseModel):
     people: List[Person]

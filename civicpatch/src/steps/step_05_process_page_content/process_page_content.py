@@ -9,7 +9,7 @@ from schemas import (
   RawLLMPerson,
   LLMPerson, 
   PeopleArrayLLMResponseSchema, 
-  RecordsBySource,
+  RecordsByLLM,
   ProcessPageContentStep,
   OtherNamesByCanonicalName
 )
@@ -71,9 +71,9 @@ def process_page_content(
         content = f.read()
 
     municipality_context = data_utils.get_municipality_context(context["state"], context["geoid"])
-    data_source_url = page_to_process["url"]
+    source_url = page_to_process["url"]
 
-    responses = process_with_llms(data_source_url, municipality_context, government_type, content, people_hint)
+    responses = process_with_llms(source_url, municipality_context, government_type, content, people_hint)
 
     updated_processed_data: ProcessPageContentStep = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]
     if not isinstance(updated_processed_data, ProcessPageContentStep):
@@ -112,9 +112,9 @@ def process_page_content(
 
 def update_records_by_llm(
     names: OtherNamesByCanonicalName,
-    records_by_llm: RecordsBySource,  # map of llm name to Dict[str, List[LLMPerson]]
+    records_by_llm: RecordsByLLM,  # map of llm name to Dict[str, List[LLMPerson]]
     current_responses: Dict[str, List[LLMPerson]]  # map of llm name to List[LLMPerson]
-) -> Tuple[OtherNamesByCanonicalName, RecordsBySource]:
+) -> Tuple[OtherNamesByCanonicalName, RecordsByLLM]:
     """
     Update the data with the new responses.
     """
@@ -131,7 +131,7 @@ def update_records_by_llm(
     return updated_names, updated_records_by_llm
 
 def process_with_llms(
-    data_source_url: str,
+    source_url: str,
     municipality_context: MunicipalityContext,
     government_type: str,
     content: str,
@@ -155,7 +155,7 @@ def process_with_llms(
         processed_people = []
         for p in people:
             p = p.model_dump() 
-            p["data_source"] = data_source_url  # Add data source URL
+            p["source"] = source_url # Add data source URL
             if p["website"]:
                 p["website"] = url_utils.format_url(p["website"])
             processed_person = LLMPerson.model_validate(p)
@@ -167,7 +167,7 @@ def process_with_llms(
 
 def calculate_progress(
     progress: Dict[str, Any],
-    updated_records_by_llm: RecordsBySource,
+    updated_records_by_llm: RecordsByLLM,
     roles: List[str]
 ) -> Dict[str, Any]: # Return progress and names of people with contact data
     """
@@ -222,7 +222,7 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     )
     return has_contact and has_role
 
-def update_website_links(existing_links: List[Link], records_by_llm: RecordsBySource) -> List[Link]:
+def update_website_links(existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
     """
     Update the links with websites found in the processed data.
     """
@@ -248,7 +248,7 @@ def update_website_links(existing_links: List[Link], records_by_llm: RecordsBySo
 
     return updated_links
 
-def extract_websites_from_processed_data(records_by_llm: RecordsBySource) -> List[str]:
+def extract_websites_from_processed_data(records_by_llm: RecordsByLLM) -> List[str]:
     """
     Extract website links from the processed data.
     """

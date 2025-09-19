@@ -1,6 +1,6 @@
 from typing import Dict, List
 from schemas import (
-    LLMPerson, Person, PipelineStatus, RecordsBySource, PipelineContext
+    LLMPerson, Person, PipelineStatus, RecordsByLLM, PipelineContext
 )
 from collections import Counter
 import utils.config_utils as config_utils
@@ -10,7 +10,7 @@ def merge_records_within_llm(context: PipelineContext):
     Merge records within each llm to produce a unified list of Person objects.
     """
 
-    records_by_llm: RecordsBySource = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]["records_by_llm"]
+    records_by_llm: RecordsByLLM = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]["records_by_llm"]
     people_by_llm: Dict[str, List[Person]] = {}
     government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
 
@@ -57,7 +57,7 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     website = merge_field(records, "website")
     start_date = merge_field(records, "start_date")
     end_date = merge_field(records, "end_date")
-    sources = [r.data_source for r in records if r.data_source]
+    sources = [r.source for r in records if r.source]
 
     return Person(
         name=canonical_name,

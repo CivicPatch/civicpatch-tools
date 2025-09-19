@@ -332,7 +332,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ],
                     "Charles Grimm": [
@@ -350,7 +350,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ],
                     "Blanche Barajas": [
@@ -366,7 +366,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ],
                     "Leo Perales": [
@@ -384,7 +384,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ],
                     "Joe Cotta": [
@@ -402,7 +402,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ],
                     "Melissa Blasdel": [
@@ -420,7 +420,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ],
                     "Peter Harpster": [
@@ -438,7 +438,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ]
                 },
@@ -458,7 +458,7 @@
                             "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ],
                     "Charles Grimm": [
@@ -476,7 +476,7 @@
                             "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-EVK2C7",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ],
                     "Blanche Barajas": [
@@ -494,7 +494,7 @@
                             "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-SBQHCS",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ],
                     "Leo Perales": [
@@ -512,7 +512,7 @@
                             "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-pnBy7S",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ],
                     "Melissa Blasdel": [
@@ -530,7 +530,7 @@
                             "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ],
                     "Peter Harpster": [
@@ -548,7 +548,7 @@
                             "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-htB0hN",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         }
                     ]
                 },
@@ -568,7 +568,7 @@
                             "website": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-8vkvHG",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         },
                         {
                             "name": "David Milne",
@@ -584,7 +584,7 @@
                             "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                            "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         }
                     ],
                     "Blanche Barajas": [
@@ -602,7 +602,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         },
                         {
                             "name": "Blanche Barajas",
@@ -618,7 +618,7 @@
                             "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                            "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         }
                     ],
                     "Charles Grimm": [
@@ -636,7 +636,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         },
                         {
                             "name": "Charles Grimm",
@@ -652,7 +652,7 @@
                             "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                            "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         }
                     ],
                     "Leo Perales": [
@@ -670,7 +670,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         },
                         {
                             "name": "Leo Perales",
@@ -686,7 +686,7 @@
                             "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                            "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         }
                     ],
                     "Melissa Blasdel": [
@@ -704,7 +704,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         },
                         {
                             "name": "Melissa Blasdel",
@@ -720,7 +720,7 @@
                             "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                            "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         }
                     ],
                     "Peter Harpster": [
@@ -738,7 +738,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/122/City-Council"
+                            "source": "https://www.pasco-wa.gov/122/City-Council"
                         },
                         {
                             "name": "Peter Harpster",
@@ -754,7 +754,7 @@
                             "website": "https://www.pasco-wa.gov/868/City-Council-Agendas",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
+                            "source": "https://www.pasco-wa.gov/Directory.aspx?DID=4"
                         }
                     ]
                 }
@@ -1382,7 +1382,7 @@
                     "field": "website",
                     "person_name": "Melissa Blasdel",
                     "merged_value": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
-                    "source_values": {
+                    "llm_values": {
                         "google_gemini": "(empty)",
                         "openai": "https://storymaps.arcgis.com/stories/f60f1947ca884745858550f70441e92c#ref-n-Y7ITXM",
                         "together_ai": "https://www.pasco-wa.gov/868/City-Council-Agendas"

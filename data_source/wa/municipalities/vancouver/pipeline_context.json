@@ -348,7 +348,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Kim Harless": [
@@ -364,7 +364,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Diana Perez": [
@@ -380,7 +380,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Anne McEnerny-Ogle": [
@@ -396,7 +396,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Ty Stober": [
@@ -412,7 +412,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Sarah Fox": [
@@ -428,7 +428,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Erik Paulsen": [
@@ -444,7 +444,7 @@
                             "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ]
                 },
@@ -462,7 +462,7 @@
                             "website": "https://www.cityofvancouver.us",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Erik Paulsen": [
@@ -478,7 +478,7 @@
                             "website": "https://www.cityofvancouver.us",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Kim Harless": [
@@ -494,7 +494,7 @@
                             "website": "https://www.cityofvancouver.us",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Diana Perez": [
@@ -510,7 +510,7 @@
                             "website": "https://www.cityofvancouver.us",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Bart Hansen": [
@@ -526,7 +526,7 @@
                             "website": "https://www.cityofvancouver.us",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Sarah Fox": [
@@ -542,7 +542,7 @@
                             "website": "https://www.cityofvancouver.us",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ],
                     "Ty Stober": [
@@ -558,7 +558,7 @@
                             "website": "https://www.cityofvancouver.us",
                             "start_date": null,
                             "end_date": null,
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         }
                     ]
                 },
@@ -578,7 +578,7 @@
                             "website": "https://www.cityofvancouver.us/government/mayor/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         },
                         {
                             "name": "Anne McEnerny-Ogle",
@@ -594,7 +594,7 @@
                             "website": "https://cityofvancouver.us/government/mayor-city-council/",
                             "start_date": "2021",
                             "end_date": "",
-                            "data_source": "https://www.cityofvancouver.us/"
+                            "source": "https://www.cityofvancouver.us/"
                         }
                     ],
                     "Kim Harless": [
@@ -612,7 +612,7 @@
                             "website": "https://www.cityofvancouver.us/government/city-council/kim-d-harless/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         },
                         {
                             "name": "Kim D. Harless",
@@ -628,7 +628,7 @@
                             "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://www.cityofvancouver.us/"
+                            "source": "https://www.cityofvancouver.us/"
                         }
                     ],
                     "Diana Perez": [
@@ -646,7 +646,7 @@
                             "website": "https://www.cityofvancouver.us/government/city-council/diana-h-perez/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         },
                         {
                             "name": "Diana H. Perez",
@@ -662,7 +662,7 @@
                             "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://www.cityofvancouver.us/"
+                            "source": "https://www.cityofvancouver.us/"
                         }
                     ],
                     "Bart Hansen": [
@@ -680,7 +680,7 @@
                             "website": "https://www.cityofvancouver.us/government/city-council/bart-hansen/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         },
                         {
                             "name": "Bart Hansen",
@@ -696,7 +696,7 @@
                             "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://www.cityofvancouver.us/"
+                            "source": "https://www.cityofvancouver.us/"
                         }
                     ],
                     "Ty Stober": [
@@ -714,7 +714,7 @@
                             "website": "https://www.cityofvancouver.us/government/city-council/ty-stober/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         },
                         {
                             "name": "Ty Stober",
@@ -730,7 +730,7 @@
                             "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://www.cityofvancouver.us/"
+                            "source": "https://www.cityofvancouver.us/"
                         }
                     ],
                     "Sarah Fox": [
@@ -748,7 +748,7 @@
                             "website": "https://www.cityofvancouver.us/government/city-council/sarah-j-fox/",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         },
                         {
                             "name": "Sarah J. Fox",
@@ -764,7 +764,7 @@
                             "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://www.cityofvancouver.us/"
+                            "source": "https://www.cityofvancouver.us/"
                         }
                     ],
                     "Erik Paulsen": [
@@ -782,7 +782,7 @@
                             "website": "",
                             "start_date": "2024",
                             "end_date": "2027",
-                            "data_source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
+                            "source": "https://www.cityofvancouver.us/departments/mayor-city-council/"
                         },
                         {
                             "name": "Erik Paulsen",
@@ -798,7 +798,7 @@
                             "website": "https://cityofvancouver.us/government/mayor-city-council/city-council-members/",
                             "start_date": "",
                             "end_date": "",
-                            "data_source": "https://www.cityofvancouver.us/"
+                            "source": "https://www.cityofvancouver.us/"
                         }
                     ]
                 }
