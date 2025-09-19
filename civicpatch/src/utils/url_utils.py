@@ -4,7 +4,7 @@ def format_url(url: str):
     """
     if not url.startswith("http"):
         url = "https://" + url
-    return url.strip().lower()
+    return url.strip().rstrip("/").lower()
 
 def format_url_to_folder(url: str):
     """

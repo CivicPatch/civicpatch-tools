@@ -90,14 +90,14 @@ def municipality_officials_prompt(government_type, people_hint):
     If not, return an empty JSON array `[]`.
 
     Target Roles: {', '.join(roles)}
-    Target Divisions: {', '.join(division_names)}
+    Target Divisions: ward, district
     Current Date: {current_date}
 
     Return a JSON object with people, each having:
     - name: (String) Full name only (no titles)
     - image: (String or null) URL to profile image (https://...)
     - roles: (Array of strings) Active municipal roles
-    - divisions: (Array of strings) Specific division/district/ward names
+    - divisions: (Array of strings) Specific district/ward names
     - phone_number: (String or null) Formatted phone number
     - email: (String or null) Email address
     - website: (String or null) Website URL (http(s)://)
@@ -109,6 +109,7 @@ def municipality_officials_prompt(government_type, people_hint):
         - Extract roles that match the **target roles** provided (e.g., {', '.join(roles)}).
     - Division extraction:
         - Extract divisions if explicitly mentioned in the text and relevant to the person's role.
+        - Examples: "Ward 1", "District 2"
     - Name extraction:
         - Extract full names ONLY, not titles.
     - Phone number extraction:

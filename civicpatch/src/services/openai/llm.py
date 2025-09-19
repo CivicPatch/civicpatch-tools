@@ -14,6 +14,7 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, response_schem
     """
     Run a prompt against OpenAI's API
     """
+    print("openai prompt: ", prompt)
     api_key = os.getenv("OPENAI_TOKEN")
     if not api_key:
         raise ValueError("OPENAI_TOKEN is not set in environment variables.")

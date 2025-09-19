@@ -5,11 +5,10 @@ def municipality_officials_prompt(government_type, people_hint):
     """
     Generate a prompt to identify municipality officials from the given content.
     """
-    # role_configs = config_utils.get_role_configs_by_government_type(government_type)
-    # roles_list = [role['role'] for role_configs]
-    # roles_str = ", ".join(roles_list)
-    division_names = config_utils.get_divisions()
-    divisions_str = ", ".join(division_names)
+    roles = config_utils.get_roles_by_government_type(government_type)
+    # division_names = config_utils.get_divisions()
+    # divisions_str = ", ".join(division_names)
+
 
     hint_str = ""
     if people_hint:
@@ -22,12 +21,14 @@ Extract municipality officials (ex: mayors and council members, or equivalent po
 from the markdown text. {hint_str}
 
 Government type: '{government_type}'
-Divisions: {divisions_str}
+Target roles: {', '.join(roles)}
+Target divisions: ward, district 
 
 Return JSON array of people with:
 - name: (String) Full name only
 - roles: (Array) Official titles
-- divisions: (Array) Districts/wards. See: divisions above
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
 - image: (String|null) Photo URL (.jpg/.png)
 - website: (String|null) Profile/bio page URL
 - phone_number: (String|null) Contact number
@@ -37,5 +38,6 @@ Return JSON array of people with:
 
 URLs: Include profile/bio pages. Exclude news/events/press.
 Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
 """
     return prompt

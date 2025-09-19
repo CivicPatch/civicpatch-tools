@@ -117,10 +117,8 @@ def main():
         municipality_path = sys.argv[1]
         # It should be defined in the dockerfile
         PYTHONPATH = os.getenv("PYTHONPATH", "/app/src")
-        print("what is", municipality_path)
         pipeline_context_file_path = os.path.join(PYTHONPATH, "..", "data_source", municipality_path, "pipeline_context.json")
         people_file_path = os.path.join(PYTHONPATH, "..", "data", municipality_path, "people.yml")
-        print("pipeline file content", pipeline_context_file_path)
 
         pipeline_context = load_pipeline_context_from_json(pipeline_context_file_path)
         people = load_people_from_yaml(people_file_path)
