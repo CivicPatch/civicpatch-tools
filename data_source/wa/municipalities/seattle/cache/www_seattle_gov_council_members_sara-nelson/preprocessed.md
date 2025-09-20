@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Sara Nelson - Council | seattle.gov
 
 Council, Mayor, Court, Law, Finance
 
@@ -94,50 +94,35 @@ Sign up to make public comment for items appear on Seattle City Council agendas
 View City Council visitor logs updated in real time
 
 Get high resolution photo downloads in the Seattle City Council press kit
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
 
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
+Sara Nelson
+===========
 
-City Council's Budget Basics](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+Council President, Position 9 (Citywide, Representing All of Seattle)
 
-Rob Saka](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+![Councilmember Sara Nelson](https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/nelson_635x250.jpg "Councilmember Sara Nelson")
 
-Mark Solomon](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
+I'm enormously grateful for the honor of serving as your new citywide Councilmember. I ran on a platform of change and a vision of hope. With a different kind of leadership and a commitment to working together, we can make progress on our biggest challenges and also improve the quality of life for all Seattleites. We have a fresh start with new leadership and I'm excited - and humbled - to get to work.
 
-Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
-
-Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
-
-Debora Juarez](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
-
-Dan Strauss](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
-
-Bob Kettle](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
-
-Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
-
-Sara Nelson](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
-
-Council now transitions to budget process while Comp Plan receives additional study before final vote Over the last three days, the Select Committee on the Comprehensive Plan, chaired by Councilmember Joy Hollingsworth (District 3), voted 9-0 to [...]
+- Councilmember Sara Nelson
 
 [Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
+[Public Safety Chair Kettle and Council President Nelson on protecting Seattle from federal public safety threats](https://council.seattle.gov/2025/09/02/public-safety-chair-kettle-and-council-president-nelson-on-protecting-seattle-from-federal-public-safety-threats-2/)
+[Council President Sara Nelson and Mayor Bruce Harrell Announce Proposals to Ease Small Business Permitting](https://council.seattle.gov/2025/08/01/council-president-sara-nelson-and-mayor-bruce-harrell-announce-proposals-to-ease-small-business-permitting/)
+[Sara Nelson - Facebook](https://www.facebook.com/CMSaraNelson/)
+[Sara Nelson Twitter](https://twitter.com/cmsaranelson)
 
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
+[![Jeremy Mohn](https://www.seattle.gov/images//images/Council/Members/Nelson/jeremy-mohn.jpg)
 
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
+Jeremy Mohn
 
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
+Chief of Staff](https://www.seattle.gov/x134235.xml#JeremyMohn "Jeremy Mohn")
+[![Taemin Um](https://www.seattle.gov/images//images/Council/Members/Nelson/taemin-um.jpg)
+
+Taemin Um](https://www.seattle.gov/x134235.xml#TaeminUm "Taemin Um")
+[![Erik Nielsen](https://www.seattle.gov/images//images/Council/Members/Nelson/Erik-Nielsen-SN.jpg)
+
+Erik Nielsen](https://www.seattle.gov/x134235.xml#ErikNielsen "Erik Nielsen")
 
 City Council
 ------------

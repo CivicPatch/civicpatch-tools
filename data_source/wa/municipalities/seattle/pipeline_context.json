@@ -1,8 +1,68 @@
 {
-    "request_id": "32faccde-b0d8-4f02-bff4-854295f72edd",
+    "request_id": "38e4f635-7e52-411c-8c36-4df949034584",
     "state": "wa",
     "geoid": "5363000",
     "links": [
+        {
+            "url": "https://www.seattle.gov/council/members/maritza-rivera",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/council/members/joy-hollingsworth",
+            "status": "pending",
+            "folder_name": "www_seattle_gov_council_members_joy-hollingsworth",
+            "is_profile_page": true
+        },
+        {
+            "url": "https://www.seattle.gov/council/members/mark-solomon",
+            "status": "pending",
+            "folder_name": "www_seattle_gov_council_members_mark-solomon",
+            "is_profile_page": true
+        },
+        {
+            "url": "https://www.seattle.gov/council/members/rob-saka",
+            "status": "pending",
+            "folder_name": "www_seattle_gov_council_members_rob-saka",
+            "is_profile_page": true
+        },
+        {
+            "url": "https://www.seattle.gov/council/members/debora-juarez",
+            "status": "done",
+            "folder_name": "www_seattle_gov_council_members_debora-juarez",
+            "is_profile_page": true
+        },
+        {
+            "url": "https://www.seattle.gov/council/members/dan-strauss",
+            "status": "done",
+            "folder_name": "www_seattle_gov_council_members_dan-strauss",
+            "is_profile_page": true
+        },
+        {
+            "url": "https://www.seattle.gov/council/members/bob-kettle",
+            "status": "done",
+            "folder_name": "www_seattle_gov_council_members_bob-kettle",
+            "is_profile_page": true
+        },
+        {
+            "url": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+            "status": "done",
+            "folder_name": "www_seattle_gov_council_members_alexis-mercedes-rinck",
+            "is_profile_page": true
+        },
+        {
+            "url": "https://www.seattle.gov/mayor",
+            "status": "done",
+            "folder_name": "www_seattle_gov_mayor",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/council/members/sara-nelson",
+            "status": "done",
+            "folder_name": "www_seattle_gov_council_members_sara-nelson",
+            "is_profile_page": true
+        },
         {
             "url": "https://www.seattle.gov/council",
             "status": "done",
@@ -10,15 +70,9 @@
             "is_profile_page": false
         },
         {
-            "url": "https://seattle.gov/council/meet-the-council",
-            "status": "done",
-            "folder_name": "seattle_gov_council_meet-the-council",
-            "is_profile_page": false
-        },
-        {
-            "url": "https://www.seattle.gov/elected-officials",
-            "status": "done",
-            "folder_name": "www_seattle_gov_elected-officials",
+            "url": "https://www.seattle.gov/council/members",
+            "status": "pending",
+            "folder_name": "",
             "is_profile_page": false
         },
         {
@@ -28,7 +82,7 @@
             "is_profile_page": false
         },
         {
-            "url": "https://www.seattle.gov/mayor",
+            "url": "https://www.seattle.gov/elected-officials",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
@@ -52,13 +106,13 @@
             "is_profile_page": false
         },
         {
-            "url": "https://www.seattle.gov/council/meetings/public-comment",
+            "url": "https://seattle.gov/council/meetings/public-comment",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
         },
         {
-            "url": "https://www.seattle.gov/light/",
+            "url": "https://www.seattle.gov/human-resources/working-at-the-city",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
@@ -76,7 +130,7 @@
             "is_profile_page": false
         },
         {
-            "url": "https://www.seattle.gov/human-resources/working-at-the-city",
+            "url": "https://www.seattle.gov/light/",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
@@ -88,25 +142,13 @@
             "is_profile_page": false
         },
         {
-            "url": "https://council.seattle.gov/2024/01/02/new-seattle-city-councilmembers-sworn-in-during-inauguration-city-hall/",
-            "status": "pending",
-            "folder_name": "",
-            "is_profile_page": false
-        },
-        {
-            "url": "https://www.seattle.gov/city-light/outages",
-            "status": "pending",
-            "folder_name": "",
-            "is_profile_page": false
-        },
-        {
-            "url": "https://www.seattle.gov/council/members/maritza-rivera",
-            "status": "pending",
-            "folder_name": "",
-            "is_profile_page": false
-        },
-        {
             "url": "https://www.seattle.gov/cityattorney",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://seattle.gov/council/members/bob-kettle",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
@@ -118,19 +160,25 @@
             "is_profile_page": false
         },
         {
-            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council",
-            "status": "pending",
-            "folder_name": "",
-            "is_profile_page": false
-        },
-        {
-            "url": "https://council.seattle.gov/2025/03/18/councilmembers-call-to-reschedule-stadium-district-rezone-vote-after-receiving-9-new-amendments-yesterday/",
+            "url": "https://council.seattle.gov/2024/01/02/new-seattle-city-councilmembers-sworn-in-during-inauguration-city-hall/",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
         },
         {
             "url": "https://www.seattle.gov/city-budget-office",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/city-light/outages",
             "status": "pending",
             "folder_name": "",
             "is_profile_page": false
@@ -141,8 +189,8 @@
         "current_data": 10
     },
     "names": {
-        "Bruce Harrell": [
-            "Bruce Harrell"
+        "Debora Juarez": [
+            "Debora Juarez"
         ],
         "Rob Saka": [
             "Rob Saka"
@@ -155,9 +203,6 @@
         ],
         "Maritza Rivera": [
             "Maritza Rivera"
-        ],
-        "Debora Juarez": [
-            "Debora Juarez"
         ],
         "Dan Strauss": [
             "Dan Strauss"
@@ -172,29 +217,8 @@
         "Sara Nelson": [
             "Sara Nelson"
         ],
-        "Ann Davison": [
-            "Ann Davison"
-        ],
-        "Anita Crawford-Willis": [
-            "Anita Crawford-Willis"
-        ],
-        "Damon Shadid": [
-            "Damon Shadid"
-        ],
-        "Andrea Chin": [
-            "Andrea Chin"
-        ],
-        "Willie Gregory": [
-            "Willie Gregory"
-        ],
-        "Catherine McDowall": [
-            "Catherine McDowall"
-        ],
-        "Pooja Vaddadi": [
-            "Pooja Vaddadi"
-        ],
-        "Robert Kettle": [
-            "Robert Kettle"
+        "Bruce Harrell": [
+            "Bruce Harrell"
         ]
     },
     "steps": {
@@ -383,7 +407,7 @@
                     ]
                 }
             ],
-            "notes": "Seattle operates under a mayor-council form of government. The Mayor is elected citywide. The City Council has nine members; seven are elected by district, and two are elected at-large (positions)."
+            "notes": "Seattle operates under a Mayor-Council form of government. The Mayor is elected city-wide. The City Council consists of nine members; seven are elected by district, and two are elected at-large (Positions 8 and 9). While the City Attorney and Municipal Judges are also elected officials, their current names were not explicitly found in the provided search results. There was a slight discrepancy in one search result from January 2024 regarding District 5 and District 2 council members, but the seattle.gov sources were prioritized for current officials."
         },
         "SEARCH_LINKS": {
             "search_link_pointer": 1,
@@ -391,27 +415,27 @@
                 "google": {
                     "links": [
                         "https://www.seattle.gov/council",
-                        "https://seattle.gov/council/meet-the-council",
-                        "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/council/members",
                         "https://www.seattle.gov/council/members/find-your-district-and-councilmembers",
-                        "https://www.seattle.gov/mayor",
+                        "https://www.seattle.gov/elected-officials",
                         "https://www.seattle.gov/",
+                        "https://www.seattle.gov/mayor",
                         "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district",
                         "https://harrell.seattle.gov/2024/02/20/mayor-harrell-delivers-2024-state-of-the-city-address-persistent-and-pioneering-progress/",
-                        "https://www.seattle.gov/council/meetings/public-comment",
-                        "https://www.seattle.gov/light/",
+                        "https://seattle.gov/council/meetings/public-comment",
+                        "https://www.seattle.gov/human-resources/working-at-the-city",
                         "https://harrell.seattle.gov/2025/02/18/state-of-the-city-2025-seattle-on-the-rise/",
                         "https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members",
-                        "https://www.seattle.gov/human-resources/working-at-the-city",
+                        "https://www.seattle.gov/light/",
                         "https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/participating-candidates",
-                        "https://council.seattle.gov/2024/01/02/new-seattle-city-councilmembers-sworn-in-during-inauguration-city-hall/",
-                        "https://www.seattle.gov/city-light/outages",
                         "https://www.seattle.gov/council/members/maritza-rivera",
                         "https://www.seattle.gov/cityattorney",
+                        "https://seattle.gov/council/members/bob-kettle",
                         "https://harrell.seattle.gov/2025/02/18/mayor-harrell-delivers-2025-state-of-the-city-address-seattle-on-the-rise/",
+                        "https://council.seattle.gov/2024/01/02/new-seattle-city-councilmembers-sworn-in-during-inauguration-city-hall/",
+                        "https://www.seattle.gov/city-budget-office",
                         "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council",
-                        "https://council.seattle.gov/2025/03/18/councilmembers-call-to-reschedule-stadium-district-rezone-vote-after-receiving-9-new-amendments-yesterday/",
-                        "https://www.seattle.gov/city-budget-office"
+                        "https://www.seattle.gov/city-light/outages"
                     ],
                     "status": "completed"
                 },
@@ -429,12 +453,16 @@
         "SCRAPE_PAGE": {},
         "PREPROCESS_PAGE_CONTENT": {
             "elapsed_times": [
-                177.37932062149048,
-                169.17513608932495,
-                260.9477770328522
+                104.83378553390503,
+                89.2570526599884,
+                85.62955975532532,
+                89.08125066757202,
+                89.63985538482666,
+                97.82350325584412,
+                104.73089385032654
             ],
-            "total_elapsed_time_seconds": 607.5022337436676,
-            "average_elapsed_time_seconds": 202.50074458122253
+            "total_elapsed_time_seconds": 660.9959011077881,
+            "average_elapsed_time_seconds": 94.42798587254116
         },
         "PROCESS_PAGE_CONTENT": {
             "records_by_llm": {
@@ -444,7 +472,7 @@
                             "name": "Rob Saka",
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg",
                             "roles": [
-                                "council member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "District 1"
@@ -458,7 +486,23 @@
                         },
                         {
                             "name": "Rob Saka",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/saka_300.jpg",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/rob-saka",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Rob Saka",
+                            "image": null,
                             "roles": [
                                 "council member"
                             ],
@@ -467,24 +511,58 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/rob-saka",
+                            "website": "https://www.seattle.gov/council/members/rob-saka",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         },
                         {
                             "name": "Rob Saka",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg",
+                            "image": null,
                             "roles": [
-                                "council member"
+                                "Council member"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 1"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/rob-saka",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/bob-kettle"
+                        },
+                        {
+                            "name": "Rob Saka",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/rob-saka",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
+                        },
+                        {
+                            "name": "Rob Saka",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/debora-juarez"
                         }
                     ],
                     "Mark Solomon": [
@@ -492,7 +570,7 @@
                             "name": "Mark Solomon",
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png",
                             "roles": [
-                                "council member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "District 2"
@@ -506,7 +584,23 @@
                         },
                         {
                             "name": "Mark Solomon",
-                            "image": "https://seattle.gov/images//images/Council/Members/Solomon/mark-solomon.jpg",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/mark-solomon",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Mark Solomon",
+                            "image": null,
                             "roles": [
                                 "council member"
                             ],
@@ -515,24 +609,58 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/mark-solomon",
+                            "website": "https://www.seattle.gov/council/members/mark-solomon",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         },
                         {
                             "name": "Mark Solomon",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png",
+                            "image": null,
                             "roles": [
-                                "council member"
+                                "Council member"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 2"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/mark-solomon",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/bob-kettle"
+                        },
+                        {
+                            "name": "Mark Solomon",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/mark-solomon",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
+                        },
+                        {
+                            "name": "Mark Solomon",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/debora-juarez"
                         }
                     ],
                     "Joy Hollingsworth": [
@@ -540,7 +668,7 @@
                             "name": "Joy Hollingsworth",
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
                             "roles": [
-                                "council member",
+                                "Council member",
                                 "Chair"
                             ],
                             "divisions": [
@@ -555,7 +683,23 @@
                         },
                         {
                             "name": "Joy Hollingsworth",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Joy Hollingsworth",
+                            "image": null,
                             "roles": [
                                 "council member"
                             ],
@@ -564,24 +708,58 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/joy-hollingsworth",
+                            "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         },
                         {
                             "name": "Joy Hollingsworth",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
+                            "image": null,
                             "roles": [
-                                "council member"
+                                "Council member"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 3"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/bob-kettle"
+                        },
+                        {
+                            "name": "Joy Hollingsworth",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
+                        },
+                        {
+                            "name": "Joy Hollingsworth",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/debora-juarez"
                         }
                     ],
                     "Maritza Rivera": [
@@ -589,7 +767,7 @@
                             "name": "Maritza Rivera",
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg",
                             "roles": [
-                                "council member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "District 4"
@@ -603,7 +781,23 @@
                         },
                         {
                             "name": "Maritza Rivera",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/rivera_300.jpg",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/maritza-rivera",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Maritza Rivera",
+                            "image": null,
                             "roles": [
                                 "council member"
                             ],
@@ -612,24 +806,58 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/maritza-rivera",
+                            "website": "https://www.seattle.gov/council/members/maritza-rivera",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         },
                         {
                             "name": "Maritza Rivera",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg",
+                            "image": null,
                             "roles": [
-                                "council member"
+                                "Council member"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 4"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/maritza-rivera",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/bob-kettle"
+                        },
+                        {
+                            "name": "Maritza Rivera",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/maritza-rivera",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
+                        },
+                        {
+                            "name": "Maritza Rivera",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/debora-juarez"
                         }
                     ],
                     "Debora Juarez": [
@@ -637,7 +865,7 @@
                             "name": "Debora Juarez",
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg",
                             "roles": [
-                                "council member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "District 5"
@@ -651,7 +879,23 @@
                         },
                         {
                             "name": "Debora Juarez",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/juarez_300.jpg",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/debora-juarez",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Debora Juarez",
+                            "image": null,
                             "roles": [
                                 "council member"
                             ],
@@ -660,24 +904,58 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/debora-juarez",
+                            "website": "https://www.seattle.gov/council/members/debora-juarez",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         },
                         {
                             "name": "Debora Juarez",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg",
+                            "image": null,
                             "roles": [
-                                "council member"
+                                "Council member"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 5"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/debora-juarez",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/bob-kettle"
+                        },
+                        {
+                            "name": "Debora Juarez",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/debora-juarez",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
+                        },
+                        {
+                            "name": "Debora Juarez",
+                            "image": "https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/juarez_635x250.jpg",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": "2025-07-28",
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/debora-juarez"
                         }
                     ],
                     "Dan Strauss": [
@@ -685,7 +963,7 @@
                             "name": "Dan Strauss",
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg",
                             "roles": [
-                                "council member"
+                                "Council member"
                             ],
                             "divisions": [
                                 "District 6"
@@ -699,7 +977,23 @@
                         },
                         {
                             "name": "Dan Strauss",
-                            "image": "https://seattle.gov/images//images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/dan-strauss",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Dan Strauss",
+                            "image": null,
                             "roles": [
                                 "council member"
                             ],
@@ -708,24 +1002,58 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/dan-strauss",
+                            "website": "https://www.seattle.gov/council/members/dan-strauss",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         },
                         {
                             "name": "Dan Strauss",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg",
+                            "image": null,
                             "roles": [
-                                "council member"
+                                "Council member"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 6"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/dan-strauss",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/bob-kettle"
+                        },
+                        {
+                            "name": "Dan Strauss",
+                            "image": "https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/struass_635x250.jpg",
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/dan-strauss",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
+                        },
+                        {
+                            "name": "Dan Strauss",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/debora-juarez"
                         }
                     ],
                     "Bob Kettle": [
@@ -733,8 +1061,7 @@
                             "name": "Bob Kettle",
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
                             "roles": [
-                                "council member",
-                                "Chair"
+                                "Council member"
                             ],
                             "divisions": [
                                 "District 7"
@@ -748,7 +1075,23 @@
                         },
                         {
                             "name": "Bob Kettle",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/kettle_300.jpg",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 7"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/bob-kettle",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Bob Kettle",
+                            "image": null,
                             "roles": [
                                 "council member"
                             ],
@@ -757,30 +1100,97 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/bob-kettle",
+                            "website": "https://www.seattle.gov/council/members/bob-kettle",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         },
                         {
                             "name": "Bob Kettle",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
+                            "image": "https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/kettle_635x250.jpg",
                             "roles": [
-                                "council member"
+                                "Council member",
+                                "Public Safety Chair"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 7"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/bob-kettle",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/bob-kettle"
+                        },
+                        {
+                            "name": "Bob Kettle",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "District 7"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/bob-kettle",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
+                        },
+                        {
+                            "name": "Bob Kettle",
+                            "image": null,
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 7"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/debora-juarez"
                         }
                     ],
                     "Alexis Rinck": [
                         {
                             "name": "Alexis Mercedes Rinck",
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg",
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "Position 8"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council"
+                        },
+                        {
+                            "name": "Alexis Mercedes Rinck",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "Position 8"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Alexis Mercedes Rinck",
+                            "image": "https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/rinck_635x250.jpg",
                             "roles": [
                                 "council member"
                             ],
@@ -793,11 +1203,43 @@
                             "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         },
                         {
                             "name": "Alexis Mercedes Rinck",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/rinck_300.jpg",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "Position 8"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/bob-kettle"
+                        },
+                        {
+                            "name": "Alexis Mercedes Rinck",
+                            "image": null,
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "Position 8"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
+                        },
+                        {
+                            "name": "Alexis Mercedes Rinck",
+                            "image": null,
                             "roles": [
                                 "council member"
                             ],
@@ -806,24 +1248,10 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/alexis-mercedes-rinck",
+                            "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
-                        },
-                        {
-                            "name": "Alexis Mercedes Rinck",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg",
-                            "roles": [
-                                "council member"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/debora-juarez"
                         }
                     ],
                     "Sara Nelson": [
@@ -832,6 +1260,40 @@
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg",
                             "roles": [
                                 "Council President",
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "Position 9"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/sara-nelson",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council"
+                        },
+                        {
+                            "name": "Sara Nelson",
+                            "image": "https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/nelson_635x250.jpg",
+                            "roles": [
+                                "Council President",
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "Position 9"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/sara-nelson",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Sara Nelson",
+                            "image": null,
+                            "roles": [
+                                "council president",
                                 "council member"
                             ],
                             "divisions": [
@@ -843,13 +1305,47 @@
                             "website": "https://www.seattle.gov/council/members/sara-nelson",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/council"
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         },
                         {
                             "name": "Sara Nelson",
-                            "image": "https://seattle.gov/images//images/Council/Members/Nelson/nelson_300x300.jpg",
+                            "image": null,
                             "roles": [
                                 "Council President",
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "Position 9"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/sara-nelson",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/bob-kettle"
+                        },
+                        {
+                            "name": "Sara Nelson",
+                            "image": null,
+                            "roles": [
+                                "Council President",
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "Position 9"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/sara-nelson",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
+                        },
+                        {
+                            "name": "Sara Nelson",
+                            "image": null,
+                            "roles": [
+                                "council president",
                                 "council member"
                             ],
                             "divisions": [
@@ -857,30 +1353,16 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/sara-nelson",
+                            "website": null,
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
-                        },
-                        {
-                            "name": "Sara Nelson",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg",
-                            "roles": [
-                                "council member"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/council/members/sara-nelson",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/debora-juarez"
                         }
                     ],
                     "Bruce Harrell": [
                         {
                             "name": "Bruce Harrell",
-                            "image": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+                            "image": null,
                             "roles": [
                                 "mayor"
                             ],
@@ -890,7 +1372,35 @@
                             "website": "https://www.seattle.gov/mayor",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Bruce Harrell",
+                            "image": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/mayor",
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/mayor"
+                        },
+                        {
+                            "name": "Bruce Harrell",
+                            "image": null,
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         }
                     ]
                 },
@@ -911,36 +1421,6 @@
                             "start_date": null,
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
-                        },
-                        {
-                            "name": "Rob Saka",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/saka_300.jpg",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [
-                                "District 1"
-                            ],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://seattle.gov/council/members/rob-saka",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
-                        },
-                        {
-                            "name": "Rob Saka",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/council/members/rob-saka",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Mark Solomon": [
@@ -959,36 +1439,6 @@
                             "start_date": null,
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
-                        },
-                        {
-                            "name": "Mark Solomon",
-                            "image": "https://seattle.gov/images//images/Council/Members/Solomon/mark-solomon.jpg",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [
-                                "District 2"
-                            ],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://seattle.gov/council/members/mark-solomon",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
-                        },
-                        {
-                            "name": "Mark Solomon",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/council/members/mark-solomon",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Joy Hollingsworth": [
@@ -997,7 +1447,7 @@
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
                             "roles": [
                                 "Council Member",
-                                "Chair, Select Committee on the Comprehensive Plan"
+                                "Chair"
                             ],
                             "divisions": [
                                 "District 3"
@@ -1008,36 +1458,6 @@
                             "start_date": null,
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
-                        },
-                        {
-                            "name": "Joy Hollingsworth",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/hollingsworth_300.jpg",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [
-                                "District 3"
-                            ],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://seattle.gov/council/members/joy-hollingsworth",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
-                        },
-                        {
-                            "name": "Joy Hollingsworth",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Maritza Rivera": [
@@ -1056,36 +1476,6 @@
                             "start_date": null,
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
-                        },
-                        {
-                            "name": "Maritza Rivera",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/rivera_300.jpg",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [
-                                "District 4"
-                            ],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://seattle.gov/council/members/maritza-rivera",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
-                        },
-                        {
-                            "name": "Maritza Rivera",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/council/members/maritza-rivera",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
                         }
                     ],
                     "Debora Juarez": [
@@ -1107,7 +1497,7 @@
                         },
                         {
                             "name": "Debora Juarez",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/juarez_300.jpg",
+                            "image": "https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/juarez_635x250.jpg",
                             "roles": [
                                 "Council Member"
                             ],
@@ -1116,24 +1506,10 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/debora-juarez",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
-                        },
-                        {
-                            "name": "Debora Juarez",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
                             "website": "https://www.seattle.gov/council/members/debora-juarez",
-                            "start_date": null,
+                            "start_date": "2025-07-28",
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/debora-juarez"
                         }
                     ],
                     "Dan Strauss": [
@@ -1155,7 +1531,7 @@
                         },
                         {
                             "name": "Dan Strauss",
-                            "image": "https://seattle.gov/images//images/Council/Members/Strauss/Struass-2022-headshot_square.jpg",
+                            "image": "https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/struass_635x250.jpg",
                             "roles": [
                                 "Council Member"
                             ],
@@ -1164,24 +1540,10 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/dan-strauss",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
-                        },
-                        {
-                            "name": "Dan Strauss",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
                             "website": "https://www.seattle.gov/council/members/dan-strauss",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
                         }
                     ],
                     "Bob Kettle": [
@@ -1189,8 +1551,7 @@
                             "name": "Bob Kettle",
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
                             "roles": [
-                                "Council Member",
-                                "Chair, Public Safety Committee"
+                                "Council Member"
                             ],
                             "divisions": [
                                 "District 7"
@@ -1204,17 +1565,19 @@
                         },
                         {
                             "name": "Bob Kettle",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
+                            "image": "https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/kettle_635x250.jpg",
                             "roles": [
                                 "Council Member"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 7"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/bob-kettle",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/bob-kettle"
                         }
                     ],
                     "Alexis Rinck": [
@@ -1225,8 +1588,7 @@
                                 "Council Member"
                             ],
                             "divisions": [
-                                "Position 8",
-                                "Citywide"
+                                "Position 8"
                             ],
                             "phone_number": null,
                             "email": null,
@@ -1237,57 +1599,25 @@
                         },
                         {
                             "name": "Alexis Mercedes Rinck",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/rinck_300.jpg",
+                            "image": "https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/rinck_635x250.jpg",
                             "roles": [
                                 "Council Member"
                             ],
                             "divisions": [
-                                "Position 8"
+                                "Position 8 (Citywide, Representing All of Seattle)"
                             ],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://seattle.gov/council/members/alexis-mercedes-rinck",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
-                        },
-                        {
-                            "name": "Alexis Mercedes Rinck",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         }
                     ],
                     "Sara Nelson": [
                         {
                             "name": "Sara Nelson",
                             "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg",
-                            "roles": [
-                                "Council President",
-                                "Council Member"
-                            ],
-                            "divisions": [
-                                "Position 9",
-                                "Citywide"
-                            ],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/council/members/sara-nelson",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/council"
-                        },
-                        {
-                            "name": "Sara Nelson",
-                            "image": "https://seattle.gov/images//images/Council/Members/Nelson/nelson_300x300.jpg",
                             "roles": [
                                 "Council President"
                             ],
@@ -1296,48 +1626,33 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/sara-nelson",
+                            "website": "https://www.seattle.gov/council/members/sara-nelson",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council"
                         },
                         {
                             "name": "Sara Nelson",
-                            "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg",
+                            "image": "https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/nelson_635x250.jpg",
                             "roles": [
+                                "Council President",
                                 "Council Member"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "Position 9 (Citywide, Representing All of Seattle)"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/sara-nelson",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
-                        }
-                    ],
-                    "Robert Kettle": [
-                        {
-                            "name": "Robert Kettle",
-                            "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/kettle_300.jpg",
-                            "roles": [
-                                "Council Member"
-                            ],
-                            "divisions": [
-                                "District 7"
-                            ],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://seattle.gov/council/members/bob-kettle",
-                            "start_date": null,
-                            "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
                         }
                     ],
                     "Bruce Harrell": [
                         {
                             "name": "Bruce Harrell",
-                            "image": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+                            "image": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
                             "roles": [
                                 "Mayor"
                             ],
@@ -1347,7 +1662,7 @@
                             "website": "https://www.seattle.gov/mayor",
                             "start_date": null,
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/mayor"
                         }
                     ]
                 },
@@ -1357,15 +1672,15 @@
                             "name": "Rob Saka",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "councilmember"
                             ],
                             "divisions": [
-                                "District 1 (West Seattle, South Park, Georgetown, and Pioneer Square)"
+                                "District 1"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/rob-saka",
-                            "start_date": "2024-2027",
+                            "start_date": "2024",
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
                         },
@@ -1373,31 +1688,33 @@
                             "name": "Rob Saka",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "District 1 (West Seattle, South Park, Georgetown, and Pioneer Square)"
                             ],
                             "divisions": [
-                                "District 1 (West Seattle, South Park, Georgetown, Pioneer Square)"
+                                "District 1"
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/rob-saka",
-                            "start_date": "2024-2027",
+                            "website": "https://www.seattle.gov/council/members/rob-saka",
+                            "start_date": "",
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
                         },
                         {
                             "name": "Rob Saka",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Councilmember"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 1"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/rob-saka",
-                            "start_date": "2024-2027",
+                            "start_date": "2022-01-01",
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
                         }
                     ],
                     "Mark Solomon": [
@@ -1405,15 +1722,15 @@
                             "name": "Mark Solomon",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "councilmember"
                             ],
                             "divisions": [
-                                "District 2 (South Seattle, Yesler Terrace to Rainier Beach)"
+                                "District 2"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/mark-solomon",
-                            "start_date": "2024-2027",
+                            "start_date": "2024",
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
                         },
@@ -1421,31 +1738,33 @@
                             "name": "Mark Solomon",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "District 2 (South Seattle, Yesler Terrace to Rainier Beach)"
                             ],
                             "divisions": [
-                                "District 2 (South Seattle, Yesler Terrace to Rainier Beach)"
+                                "District 2"
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/mark-solomon",
-                            "start_date": "2024-2027",
+                            "website": "https://www.seattle.gov/council/members/mark-solomon",
+                            "start_date": "",
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
                         },
                         {
                             "name": "Mark Solomon",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Councilmember"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 2"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/mark-solomon",
-                            "start_date": "2024-2027",
+                            "start_date": "2022-01-01",
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
                         }
                     ],
                     "Joy Hollingsworth": [
@@ -1453,15 +1772,15 @@
                             "name": "Joy Hollingsworth",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "councilmember"
                             ],
                             "divisions": [
-                                "District 3 (Central Seattle)"
+                                "District 3"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
-                            "start_date": "2024-2027",
+                            "start_date": "2024",
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
                         },
@@ -1469,31 +1788,33 @@
                             "name": "Joy Hollingsworth",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "District 3 (Central Seattle)"
                             ],
                             "divisions": [
-                                "District 3 (Central Seattle)"
+                                "District 3"
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/joy-hollingsworth",
-                            "start_date": "2024-2027",
+                            "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
+                            "start_date": "",
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
                         },
                         {
                             "name": "Joy Hollingsworth",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Councilmember"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 3"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
-                            "start_date": "2024-2027",
+                            "start_date": "2022-01-01",
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
                         }
                     ],
                     "Maritza Rivera": [
@@ -1501,15 +1822,15 @@
                             "name": "Maritza Rivera",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "councilmember"
                             ],
                             "divisions": [
-                                "District 4 (Northeast Seattle)"
+                                "District 4"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/maritza-rivera",
-                            "start_date": "2024-2027",
+                            "start_date": "2024",
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
                         },
@@ -1517,31 +1838,33 @@
                             "name": "Maritza Rivera",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "District 4 (Northeast Seattle)"
                             ],
                             "divisions": [
-                                "District 4 (Northeast Seattle)"
+                                "District 4"
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/maritza-rivera",
-                            "start_date": "2024-2027",
+                            "website": "https://www.seattle.gov/council/members/maritza-rivera",
+                            "start_date": "",
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
                         },
                         {
                             "name": "Maritza Rivera",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Councilmember"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 4"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/maritza-rivera",
-                            "start_date": "2024-2027",
+                            "start_date": "2022-01-01",
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
                         }
                     ],
                     "Debora Juarez": [
@@ -1549,15 +1872,15 @@
                             "name": "Debora Juarez",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "councilmember"
                             ],
                             "divisions": [
-                                "District 5 (North Seattle)"
+                                "District 5"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/debora-juarez",
-                            "start_date": "2024-2027",
+                            "start_date": "2024",
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
                         },
@@ -1565,31 +1888,49 @@
                             "name": "Debora Juarez",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "District 5 (North Seattle)"
                             ],
                             "divisions": [
-                                "District 5 (North Seattle)"
+                                "District 5"
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/debora-juarez",
-                            "start_date": "2024-2027",
+                            "website": "https://www.seattle.gov/council/members/debora-juarez",
+                            "start_date": "",
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
                         },
                         {
                             "name": "Debora Juarez",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Councilmember"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 5"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/debora-juarez",
-                            "start_date": "2024-2027",
+                            "start_date": "2022-01-01",
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
+                        },
+                        {
+                            "name": "Debora Juarez",
+                            "image": null,
+                            "roles": [
+                                "councilmember"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/debora-juarez",
+                            "start_date": "2025",
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/debora-juarez"
                         }
                     ],
                     "Dan Strauss": [
@@ -1597,15 +1938,15 @@
                             "name": "Dan Strauss",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "councilmember"
                             ],
                             "divisions": [
-                                "District 6 (Northwest Seattle)"
+                                "District 6"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/dan-strauss",
-                            "start_date": "2024-2027",
+                            "start_date": "2024",
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
                         },
@@ -1613,31 +1954,33 @@
                             "name": "Dan Strauss",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "District 6 (Northwest Seattle)"
                             ],
                             "divisions": [
-                                "District 6 (Northwest Seattle)"
+                                "District 6"
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/dan-strauss",
-                            "start_date": "2024-2027",
+                            "website": "https://www.seattle.gov/council/members/dan-strauss",
+                            "start_date": "",
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
                         },
                         {
                             "name": "Dan Strauss",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Councilmember"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 6"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/dan-strauss",
-                            "start_date": "2024-2027",
+                            "start_date": "2022-01-01",
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
                         }
                     ],
                     "Bob Kettle": [
@@ -1645,15 +1988,15 @@
                             "name": "Bob Kettle",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "councilmember"
                             ],
                             "divisions": [
-                                "District 7 (Downtown to Magnolia, including Queen Anne, Uptown, Westlake, Interbay, Eastlake, South Lake Union, and Belltown)"
+                                "District 7"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/bob-kettle",
-                            "start_date": "2024-2027",
+                            "start_date": "2024",
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
                         },
@@ -1661,31 +2004,49 @@
                             "name": "Bob Kettle",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "District 7 (Downtown to Magnolia, including Queen Anne, Uptown, Westlake, Interbay, Eastlake, South Lake Union, and Belltown)"
+                            ],
+                            "divisions": [
+                                "District 7"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/bob-kettle",
+                            "start_date": "",
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Bob Kettle",
+                            "image": null,
+                            "roles": [
+                                "council member"
                             ],
                             "divisions": [
                                 "District 7 (Downtown to Magnolia, including Queen Anne, Uptown, Westlake, Interbay, Eastlake, South Lake Union, and Belltown)"
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/bob-kettle",
-                            "start_date": "2024-2027",
-                            "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "website": "https://www.seattle.gov/council/members/bob-kettle",
+                            "start_date": "2022-01-01",
+                            "end_date": "2025-12-31",
+                            "source": "https://www.seattle.gov/council/members/bob-kettle"
                         },
                         {
                             "name": "Bob Kettle",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Councilmember"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 6"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/bob-kettle",
-                            "start_date": "2024-2027",
+                            "start_date": "2022-01-01",
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
                         }
                     ],
                     "Alexis Rinck": [
@@ -1693,15 +2054,15 @@
                             "name": "Alexis Mercedes Rinck",
                             "image": null,
                             "roles": [
-                                "Councilmember"
+                                "councilmember"
                             ],
                             "divisions": [
-                                "Position 8 (Citywide, Representing All of Seattle)"
+                                "District 8"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
-                            "start_date": "2024-2027",
+                            "start_date": "2024",
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
                         },
@@ -1709,6 +2070,22 @@
                             "name": "Alexis Mercedes Rinck",
                             "image": null,
                             "roles": [
+                                "Position 8 (Citywide, Representing All of Seattle)"
+                            ],
+                            "divisions": [
+                                "Citywide"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "start_date": "",
+                            "end_date": null,
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
+                        },
+                        {
+                            "name": "Alexis Mercedes Rinck",
+                            "image": null,
+                            "roles": [
                                 "Councilmember"
                             ],
                             "divisions": [
@@ -1716,24 +2093,26 @@
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/alexis-mercedes-rinck",
-                            "start_date": "2024-2027",
+                            "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "start_date": "2025",
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         },
                         {
                             "name": "Alexis Mercedes Rinck",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Councilmember"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "District 7"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
-                            "start_date": "2024-2027",
+                            "start_date": "2022-01-01",
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
                         }
                     ],
                     "Sara Nelson": [
@@ -1741,15 +2120,15 @@
                             "name": "Sara Nelson",
                             "image": null,
                             "roles": [
-                                "Council President"
+                                "councilmember"
                             ],
                             "divisions": [
-                                "Position 9 (Citywide, Representing All of Seattle)"
+                                "District 9"
                             ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/sara-nelson",
-                            "start_date": "2024-2027",
+                            "start_date": "2024",
                             "end_date": null,
                             "source": "https://www.seattle.gov/council"
                         },
@@ -1757,31 +2136,34 @@
                             "name": "Sara Nelson",
                             "image": null,
                             "roles": [
-                                "Council President"
+                                "Council President",
+                                "Position 9 (Citywide, Representing All of Seattle)"
                             ],
                             "divisions": [
-                                "Position 9 (Citywide, Representing All of Seattle)"
+                                "Citywide"
                             ],
                             "phone_number": null,
                             "email": null,
-                            "website": "https://seattle.gov/council/members/sara-nelson",
-                            "start_date": "2024-2027",
+                            "website": "https://www.seattle.gov/council/members/sara-nelson",
+                            "start_date": "2025",
                             "end_date": null,
-                            "source": "https://seattle.gov/council/meet-the-council"
+                            "source": "https://www.seattle.gov/council/members/sara-nelson"
                         },
                         {
                             "name": "Sara Nelson",
                             "image": null,
                             "roles": [
-                                "Council Member"
+                                "Councilmember"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                "Position 8"
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/council/members/sara-nelson",
-                            "start_date": "2024-2027",
+                            "start_date": "2022-01-01",
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/council/members/dan-strauss"
                         }
                     ],
                     "Bruce Harrell": [
@@ -1789,127 +2171,17 @@
                             "name": "Bruce Harrell",
                             "image": null,
                             "roles": [
-                                "Mayor"
+                                "mayor"
                             ],
-                            "divisions": [],
+                            "divisions": [
+                                ""
+                            ],
                             "phone_number": null,
                             "email": null,
                             "website": "https://www.seattle.gov/mayor",
-                            "start_date": "2024-2027",
+                            "start_date": "2022",
                             "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
-                        }
-                    ],
-                    "Ann Davison": [
-                        {
-                            "name": "Ann Davison",
-                            "image": null,
-                            "roles": [
-                                "City Attorney"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/cityattorney",
-                            "start_date": "2024-2027",
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
-                        }
-                    ],
-                    "Anita Crawford-Willis": [
-                        {
-                            "name": "Anita Crawford-Willis",
-                            "image": null,
-                            "roles": [
-                                "Judge"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-anita-crawford-willis",
-                            "start_date": "2024-2027",
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
-                        }
-                    ],
-                    "Damon Shadid": [
-                        {
-                            "name": "Damon Shadid",
-                            "image": null,
-                            "roles": [
-                                "Judge"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-damon-shadid",
-                            "start_date": "2024-2027",
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
-                        }
-                    ],
-                    "Andrea Chin": [
-                        {
-                            "name": "Andrea Chin",
-                            "image": null,
-                            "roles": [
-                                "Judge"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-andrea-chin",
-                            "start_date": "2024-2027",
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
-                        }
-                    ],
-                    "Willie Gregory": [
-                        {
-                            "name": "Willie Gregory",
-                            "image": null,
-                            "roles": [
-                                "Judge"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-willie-gregory",
-                            "start_date": "2024-2027",
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
-                        }
-                    ],
-                    "Catherine McDowall": [
-                        {
-                            "name": "Catherine McDowall",
-                            "image": null,
-                            "roles": [
-                                "Judge"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-catherine-mcdowall",
-                            "start_date": "2024-2027",
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
-                        }
-                    ],
-                    "Pooja Vaddadi": [
-                        {
-                            "name": "Pooja Vaddadi",
-                            "image": null,
-                            "roles": [
-                                "Judge"
-                            ],
-                            "divisions": [],
-                            "phone_number": null,
-                            "email": null,
-                            "website": "https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-pooja-vaddadi",
-                            "start_date": "2024-2027",
-                            "end_date": null,
-                            "source": "https://www.seattle.gov/elected-officials"
+                            "source": "https://www.seattle.gov/mayor"
                         }
                     ]
                 }
@@ -1925,7 +2197,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 1"
+                            "District 1"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -1935,12 +2207,15 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "https://www.seattle.gov/council/members/bob-kettle",
+                            "https://www.seattle.gov/council/members/dan-strauss",
+                            "https://www.seattle.gov/council/members/debora-juarez"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1950,7 +2225,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 2"
+                            "District 2"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -1960,12 +2235,15 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "https://www.seattle.gov/council/members/bob-kettle",
+                            "https://www.seattle.gov/council/members/dan-strauss",
+                            "https://www.seattle.gov/council/members/debora-juarez"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -1976,7 +2254,7 @@
                             "chair"
                         ],
                         "divisions": [
-                            "district 3"
+                            "District 3"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -1986,12 +2264,15 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "https://www.seattle.gov/council/members/bob-kettle",
+                            "https://www.seattle.gov/council/members/dan-strauss",
+                            "https://www.seattle.gov/council/members/debora-juarez"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2001,7 +2282,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 4"
+                            "District 4"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2011,12 +2292,15 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "https://www.seattle.gov/council/members/bob-kettle",
+                            "https://www.seattle.gov/council/members/dan-strauss",
+                            "https://www.seattle.gov/council/members/debora-juarez"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2026,22 +2310,25 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 5"
+                            "District 5"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/council/members/debora-juarez",
-                        "start_date": "",
+                        "start_date": "2025-07-28",
                         "end_date": "",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "https://www.seattle.gov/council/members/bob-kettle",
+                            "https://www.seattle.gov/council/members/dan-strauss",
+                            "https://www.seattle.gov/council/members/debora-juarez"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2051,7 +2338,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 6"
+                            "District 6"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2061,23 +2348,25 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "https://www.seattle.gov/council/members/bob-kettle",
+                            "https://www.seattle.gov/council/members/dan-strauss",
+                            "https://www.seattle.gov/council/members/debora-juarez"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
                         "name": "Bob Kettle",
                         "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg",
                         "roles": [
-                            "council member",
-                            "chair"
+                            "council member"
                         ],
                         "divisions": [
-                            "district 7"
+                            "District 7"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2087,12 +2376,15 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "https://www.seattle.gov/council/members/bob-kettle",
+                            "https://www.seattle.gov/council/members/dan-strauss",
+                            "https://www.seattle.gov/council/members/debora-juarez"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2102,8 +2394,8 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 8",
-                            "at-large"
+                            "At-Large",
+                            "Position 8"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2113,12 +2405,15 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "https://www.seattle.gov/council/members/bob-kettle",
+                            "https://www.seattle.gov/council/members/dan-strauss",
+                            "https://www.seattle.gov/council/members/debora-juarez"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2129,8 +2424,8 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 9",
-                            "at-large"
+                            "Position 9",
+                            "At-Large"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2140,17 +2435,20 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "https://www.seattle.gov/council/members/bob-kettle",
+                            "https://www.seattle.gov/council/members/dan-strauss",
+                            "https://www.seattle.gov/council/members/debora-juarez"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
                         "name": "Bruce Harrell",
-                        "image": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+                        "image": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
                         "roles": [
                             "mayor"
                         ],
@@ -2163,10 +2461,12 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/mayor",
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     }
                 ],
@@ -2178,7 +2478,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 1"
+                            "District 1"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2188,12 +2488,10 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
-                            "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2203,7 +2501,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 2"
+                            "District 2"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2213,22 +2511,21 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
-                            "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
                         "name": "Joy Hollingsworth",
                         "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
                         "roles": [
-                            "council member"
+                            "council member",
+                            "chair"
                         ],
                         "divisions": [
-                            "district 3"
+                            "District 3"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2238,12 +2535,10 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
-                            "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2253,7 +2548,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 4"
+                            "District 4"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2263,12 +2558,10 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
-                            "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2278,22 +2571,21 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 5"
+                            "District 5"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/council/members/debora-juarez",
-                        "start_date": "",
+                        "start_date": "2025-07-28",
                         "end_date": "",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/debora-juarez"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2303,7 +2595,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 6"
+                            "District 6"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2313,12 +2605,11 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/dan-strauss"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2328,7 +2619,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 7"
+                            "District 7"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2338,11 +2629,11 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/bob-kettle"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2352,8 +2643,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 8",
-                            "at-large"
+                            "Position 8"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2363,12 +2653,11 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2379,8 +2668,7 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 9",
-                            "at-large"
+                            "Position 9"
                         ],
                         "phone_number": "",
                         "email": "",
@@ -2390,40 +2678,16 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson"
                         ],
-                        "updated_at": ""
-                    },
-                    {
-                        "name": "Robert Kettle",
-                        "image": "https://seattle.gov/images//images/Council/Members/SquareHeadshots/kettle_300.jpg",
-                        "roles": [
-                            "council member"
-                        ],
-                        "divisions": [
-                            "district 7"
-                        ],
-                        "phone_number": "",
-                        "email": "",
-                        "website": "https://seattle.gov/council/members/bob-kettle",
-                        "start_date": "",
-                        "end_date": "",
-                        "state": "",
-                        "place": "",
-                        "counties": [],
                         "cdn_image": "",
-                        "sources": [
-                            "https://seattle.gov/council/meet-the-council"
-                        ],
                         "updated_at": ""
                     },
                     {
                         "name": "Bruce Harrell",
-                        "image": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+                        "image": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
                         "roles": [
                             "mayor"
                         ],
@@ -2436,10 +2700,10 @@
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/mayor"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     }
                 ],
@@ -2451,23 +2715,22 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 1 (West Seattle, South Park, Georgetown, and Pioneer Square)",
-                            "district 1 (West Seattle, South Park, Georgetown, Pioneer Square)"
+                            "District 1"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/council/members/rob-saka",
-                        "start_date": "2024-2027",
+                        "start_date": "2024",
                         "end_date": "",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/dan-strauss"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2477,22 +2740,22 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 2 (South Seattle, Yesler Terrace to Rainier Beach)"
+                            "District 2"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/council/members/mark-solomon",
-                        "start_date": "2024-2027",
+                        "start_date": "2024",
                         "end_date": "",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/dan-strauss"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2502,22 +2765,22 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 3 (Central Seattle)"
+                            "District 3"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
-                        "start_date": "2024-2027",
+                        "start_date": "2024",
                         "end_date": "",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/dan-strauss"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2527,22 +2790,22 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 4 (Northeast Seattle)"
+                            "District 4"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/council/members/maritza-rivera",
-                        "start_date": "2024-2027",
+                        "start_date": "2024",
                         "end_date": "",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/dan-strauss"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2552,22 +2815,23 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 5 (North Seattle)"
+                            "District 5"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/council/members/debora-juarez",
-                        "start_date": "2024-2027",
+                        "start_date": "2024",
                         "end_date": "",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/dan-strauss",
+                            "https://www.seattle.gov/council/members/debora-juarez"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2577,22 +2841,22 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 6 (Northwest Seattle)"
+                            "District 6"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/council/members/dan-strauss",
-                        "start_date": "2024-2027",
+                        "start_date": "2024",
                         "end_date": "",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/dan-strauss"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2602,22 +2866,24 @@
                             "council member"
                         ],
                         "divisions": [
-                            "district 7 (Downtown to Magnolia, including Queen Anne, Uptown, Westlake, Interbay, Eastlake, South Lake Union, and Belltown)"
+                            "District 7",
+                            "District 6"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/council/members/bob-kettle",
-                        "start_date": "2024-2027",
-                        "end_date": "",
+                        "start_date": "2022-01-01",
+                        "end_date": "2025-12-31",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/bob-kettle",
+                            "https://www.seattle.gov/council/members/dan-strauss"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2627,48 +2893,54 @@
                             "council member"
                         ],
                         "divisions": [
-                            "position 8 (Citywide, Representing All of Seattle)"
+                            "At-Large",
+                            "Position 8",
+                            "District 8",
+                            "District 7"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
-                        "start_date": "2024-2027",
+                        "start_date": "2024",
                         "end_date": "",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                            "https://www.seattle.gov/council/members/dan-strauss"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
                         "name": "Sara Nelson",
                         "image": "",
                         "roles": [
-                            "council president",
-                            "council member"
+                            "council member",
+                            "council president"
                         ],
                         "divisions": [
-                            "position 9 (Citywide, Representing All of Seattle)"
+                            "District 9",
+                            "Position 8",
+                            "At-Large"
                         ],
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/council/members/sara-nelson",
-                        "start_date": "2024-2027",
+                        "start_date": "2024",
                         "end_date": "",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
                             "https://www.seattle.gov/council",
-                            "https://seattle.gov/council/meet-the-council",
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/council/members/sara-nelson",
+                            "https://www.seattle.gov/council/members/dan-strauss"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     },
                     {
@@ -2681,15 +2953,15 @@
                         "phone_number": "",
                         "email": "",
                         "website": "https://www.seattle.gov/mayor",
-                        "start_date": "2024-2027",
+                        "start_date": "2022",
                         "end_date": "",
                         "state": "",
                         "place": "",
                         "counties": [],
-                        "cdn_image": "",
                         "sources": [
-                            "https://www.seattle.gov/elected-officials"
+                            "https://www.seattle.gov/mayor"
                         ],
+                        "cdn_image": "",
                         "updated_at": ""
                     }
                 ]
@@ -2699,7 +2971,7 @@
             "people": [
                 {
                     "name": "Bruce Harrell",
-                    "image": "https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg",
+                    "image": "https://www.seattle.gov/images/MayorHarrell/Home/headshotwebcrop.jpg",
                     "roles": [
                         "Mayor"
                     ],
@@ -2707,18 +2979,51 @@
                     "phone_number": "",
                     "email": "",
                     "website": "https://www.seattle.gov/mayor",
-                    "start_date": "2024-2027",
+                    "start_date": "2022",
                     "end_date": "",
                     "state": "wa",
                     "place": "Seattle",
                     "counties": [
                         "King"
                     ],
-                    "cdn_image": "",
                     "sources": [
-                        "https://www.seattle.gov/elected-officials"
+                        "https://www.seattle.gov/council/members/sara-nelson",
+                        "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                        "https://www.seattle.gov/mayor"
                     ],
-                    "updated_at": "2025-09-16T23:21:54+00:00"
+                    "cdn_image": "",
+                    "updated_at": "2025-09-20T22:05:21+00:00"
+                },
+                {
+                    "name": "Joy Hollingsworth",
+                    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
+                    "roles": [
+                        "Council Member",
+                        "Chair"
+                    ],
+                    "divisions": [
+                        "District 3"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
+                    "start_date": "2024",
+                    "end_date": "",
+                    "state": "wa",
+                    "place": "Seattle",
+                    "counties": [
+                        "King"
+                    ],
+                    "sources": [
+                        "https://www.seattle.gov/council/members/sara-nelson",
+                        "https://www.seattle.gov/council/members/debora-juarez",
+                        "https://www.seattle.gov/council/members/bob-kettle",
+                        "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                        "https://www.seattle.gov/council",
+                        "https://www.seattle.gov/council/members/dan-strauss"
+                    ],
+                    "cdn_image": "",
+                    "updated_at": "2025-09-20T22:05:21+00:00"
                 },
                 {
                     "name": "Sara Nelson",
@@ -2729,25 +3034,59 @@
                     ],
                     "divisions": [
                         "Position 9",
-                        "At-large"
+                        "At-Large"
                     ],
                     "phone_number": "",
                     "email": "",
                     "website": "https://www.seattle.gov/council/members/sara-nelson",
-                    "start_date": "2024-2027",
+                    "start_date": "2024",
                     "end_date": "",
                     "state": "wa",
                     "place": "Seattle",
                     "counties": [
                         "King"
                     ],
-                    "cdn_image": "",
                     "sources": [
+                        "https://www.seattle.gov/council/members/sara-nelson",
+                        "https://www.seattle.gov/council/members/debora-juarez",
+                        "https://www.seattle.gov/council/members/bob-kettle",
+                        "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                         "https://www.seattle.gov/council",
-                        "https://seattle.gov/council/meet-the-council",
-                        "https://www.seattle.gov/elected-officials"
+                        "https://www.seattle.gov/council/members/dan-strauss"
                     ],
-                    "updated_at": "2025-09-16T23:21:54+00:00"
+                    "cdn_image": "",
+                    "updated_at": "2025-09-20T22:05:21+00:00"
+                },
+                {
+                    "name": "Alexis Rinck",
+                    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large",
+                        "Position 8"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                    "start_date": "2024",
+                    "end_date": "",
+                    "state": "wa",
+                    "place": "Seattle",
+                    "counties": [
+                        "King"
+                    ],
+                    "sources": [
+                        "https://www.seattle.gov/council/members/sara-nelson",
+                        "https://www.seattle.gov/council/members/debora-juarez",
+                        "https://www.seattle.gov/council/members/bob-kettle",
+                        "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
+                        "https://www.seattle.gov/council",
+                        "https://www.seattle.gov/council/members/dan-strauss"
+                    ],
+                    "cdn_image": "",
+                    "updated_at": "2025-09-20T22:05:21+00:00"
                 },
                 {
                     "name": "Rob Saka",
@@ -2761,20 +3100,23 @@
                     "phone_number": "",
                     "email": "",
                     "website": "https://www.seattle.gov/council/members/rob-saka",
-                    "start_date": "2024-2027",
+                    "start_date": "2024",
                     "end_date": "",
                     "state": "wa",
                     "place": "Seattle",
                     "counties": [
                         "King"
                     ],
-                    "cdn_image": "",
                     "sources": [
+                        "https://www.seattle.gov/council/members/sara-nelson",
+                        "https://www.seattle.gov/council/members/debora-juarez",
+                        "https://www.seattle.gov/council/members/bob-kettle",
+                        "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                         "https://www.seattle.gov/council",
-                        "https://seattle.gov/council/meet-the-council",
-                        "https://www.seattle.gov/elected-officials"
+                        "https://www.seattle.gov/council/members/dan-strauss"
                     ],
-                    "updated_at": "2025-09-16T23:21:54+00:00"
+                    "cdn_image": "",
+                    "updated_at": "2025-09-20T22:05:21+00:00"
                 },
                 {
                     "name": "Mark Solomon",
@@ -2788,47 +3130,23 @@
                     "phone_number": "",
                     "email": "",
                     "website": "https://www.seattle.gov/council/members/mark-solomon",
-                    "start_date": "2024-2027",
+                    "start_date": "2024",
                     "end_date": "",
                     "state": "wa",
                     "place": "Seattle",
                     "counties": [
                         "King"
                     ],
-                    "cdn_image": "",
                     "sources": [
+                        "https://www.seattle.gov/council/members/sara-nelson",
+                        "https://www.seattle.gov/council/members/debora-juarez",
+                        "https://www.seattle.gov/council/members/bob-kettle",
+                        "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                         "https://www.seattle.gov/council",
-                        "https://seattle.gov/council/meet-the-council",
-                        "https://www.seattle.gov/elected-officials"
-                    ],
-                    "updated_at": "2025-09-16T23:21:54+00:00"
-                },
-                {
-                    "name": "Joy Hollingsworth",
-                    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg",
-                    "roles": [
-                        "Council Member"
-                    ],
-                    "divisions": [
-                        "District 3"
-                    ],
-                    "phone_number": "",
-                    "email": "",
-                    "website": "https://www.seattle.gov/council/members/joy-hollingsworth",
-                    "start_date": "2024-2027",
-                    "end_date": "",
-                    "state": "wa",
-                    "place": "Seattle",
-                    "counties": [
-                        "King"
+                        "https://www.seattle.gov/council/members/dan-strauss"
                     ],
                     "cdn_image": "",
-                    "sources": [
-                        "https://www.seattle.gov/council",
-                        "https://seattle.gov/council/meet-the-council",
-                        "https://www.seattle.gov/elected-officials"
-                    ],
-                    "updated_at": "2025-09-16T23:21:54+00:00"
+                    "updated_at": "2025-09-20T22:05:21+00:00"
                 },
                 {
                     "name": "Maritza Rivera",
@@ -2842,20 +3160,23 @@
                     "phone_number": "",
                     "email": "",
                     "website": "https://www.seattle.gov/council/members/maritza-rivera",
-                    "start_date": "2024-2027",
+                    "start_date": "2024",
                     "end_date": "",
                     "state": "wa",
                     "place": "Seattle",
                     "counties": [
                         "King"
                     ],
-                    "cdn_image": "",
                     "sources": [
+                        "https://www.seattle.gov/council/members/sara-nelson",
+                        "https://www.seattle.gov/council/members/debora-juarez",
+                        "https://www.seattle.gov/council/members/bob-kettle",
+                        "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                         "https://www.seattle.gov/council",
-                        "https://seattle.gov/council/meet-the-council",
-                        "https://www.seattle.gov/elected-officials"
+                        "https://www.seattle.gov/council/members/dan-strauss"
                     ],
-                    "updated_at": "2025-09-16T23:21:54+00:00"
+                    "cdn_image": "",
+                    "updated_at": "2025-09-20T22:05:21+00:00"
                 },
                 {
                     "name": "Debora Juarez",
@@ -2869,20 +3190,23 @@
                     "phone_number": "",
                     "email": "",
                     "website": "https://www.seattle.gov/council/members/debora-juarez",
-                    "start_date": "2024-2027",
+                    "start_date": "2025-07-28",
                     "end_date": "",
                     "state": "wa",
                     "place": "Seattle",
                     "counties": [
                         "King"
                     ],
-                    "cdn_image": "",
                     "sources": [
+                        "https://www.seattle.gov/council/members/sara-nelson",
+                        "https://www.seattle.gov/council/members/debora-juarez",
+                        "https://www.seattle.gov/council/members/bob-kettle",
+                        "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                         "https://www.seattle.gov/council",
-                        "https://seattle.gov/council/meet-the-council",
-                        "https://www.seattle.gov/elected-officials"
+                        "https://www.seattle.gov/council/members/dan-strauss"
                     ],
-                    "updated_at": "2025-09-16T23:21:54+00:00"
+                    "cdn_image": "",
+                    "updated_at": "2025-09-20T22:05:21+00:00"
                 },
                 {
                     "name": "Dan Strauss",
@@ -2896,20 +3220,23 @@
                     "phone_number": "",
                     "email": "",
                     "website": "https://www.seattle.gov/council/members/dan-strauss",
-                    "start_date": "2024-2027",
+                    "start_date": "2024",
                     "end_date": "",
                     "state": "wa",
                     "place": "Seattle",
                     "counties": [
                         "King"
                     ],
-                    "cdn_image": "",
                     "sources": [
+                        "https://www.seattle.gov/council/members/sara-nelson",
+                        "https://www.seattle.gov/council/members/debora-juarez",
+                        "https://www.seattle.gov/council/members/bob-kettle",
+                        "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                         "https://www.seattle.gov/council",
-                        "https://seattle.gov/council/meet-the-council",
-                        "https://www.seattle.gov/elected-officials"
+                        "https://www.seattle.gov/council/members/dan-strauss"
                     ],
-                    "updated_at": "2025-09-16T23:21:54+00:00"
+                    "cdn_image": "",
+                    "updated_at": "2025-09-20T22:05:21+00:00"
                 },
                 {
                     "name": "Bob Kettle",
@@ -2923,74 +3250,45 @@
                     "phone_number": "",
                     "email": "",
                     "website": "https://www.seattle.gov/council/members/bob-kettle",
-                    "start_date": "2024-2027",
-                    "end_date": "",
+                    "start_date": "2022-01-01",
+                    "end_date": "2025-12-31",
                     "state": "wa",
                     "place": "Seattle",
                     "counties": [
                         "King"
                     ],
-                    "cdn_image": "",
                     "sources": [
+                        "https://www.seattle.gov/council/members/sara-nelson",
+                        "https://www.seattle.gov/council/members/debora-juarez",
+                        "https://www.seattle.gov/council/members/bob-kettle",
+                        "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
                         "https://www.seattle.gov/council",
-                        "https://seattle.gov/council/meet-the-council",
-                        "https://www.seattle.gov/elected-officials"
-                    ],
-                    "updated_at": "2025-09-16T23:21:54+00:00"
-                },
-                {
-                    "name": "Alexis Rinck",
-                    "image": "https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg",
-                    "roles": [
-                        "Council Member"
-                    ],
-                    "divisions": [
-                        "Position 8",
-                        "At-large"
-                    ],
-                    "phone_number": "",
-                    "email": "",
-                    "website": "https://www.seattle.gov/council/members/alexis-mercedes-rinck",
-                    "start_date": "2024-2027",
-                    "end_date": "",
-                    "state": "wa",
-                    "place": "Seattle",
-                    "counties": [
-                        "King"
+                        "https://www.seattle.gov/council/members/dan-strauss"
                     ],
                     "cdn_image": "",
-                    "sources": [
-                        "https://www.seattle.gov/council",
-                        "https://seattle.gov/council/meet-the-council",
-                        "https://www.seattle.gov/elected-officials"
-                    ],
-                    "updated_at": "2025-09-16T23:21:54+00:00"
+                    "updated_at": "2025-09-20T22:05:21+00:00"
                 }
             ],
-            "agreement_score": 100.0,
-            "disagreements": [
-                {
-                    "field": "divisions",
-                    "person_name": "Sara Nelson",
-                    "merged_value": "Position 9, At-large",
-                    "llm_values": {
-                        "google_gemini": "position 9, at-large",
-                        "openai": "position 9, at-large",
-                        "together_ai": "position 9 (Citywide, Representing All of Seattle)"
-                    },
-                    "disagreement_score": 0.0
-                }
-            ],
-            "missing_people": []
+            "agreement_score": 99.90952380952382,
+            "disagreements": {
+                "Debora Juarez": [
+                    {
+                        "field": "start_date",
+                        "merged_value": "2025-07-28",
+                        "llm_values": {
+                            "google_gemini": "2025-07-28",
+                            "openai": "2025-07-28",
+                            "together_ai": "2024"
+                        },
+                        "disagreement_score": 0.19
+                    }
+                ]
+            },
+            "missing_people": [],
+            "validation_issues": []
         },
         "CLEANUP": {},
         "RETRY": {},
-        "DONE": {},
-        "MAYBE_SEND_TO_GITHUB": {
-            "status": "completed",
-            "response_status_code": 200,
-            "response_text": "{\"filename\":\"request_32faccde-b0d8-4f02-bff4-854295f72edd_wa_5363000.zip\",\"status\":\"uploaded\",\"zip_url\":\"https://crudder.c9ae2b352766fe3e6f7dbee61bcd4c7c.r2.cloudflarestorage.com/processed_request_32faccde-b0d8-4f02-bff4-854295f72edd_wa_5363000.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=83c1bf330c0ac3dc3e457dc295867d5f%2F20250917%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250917T234546Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=64debb7b5ffa3b6ccc5ad7eb133b3467acde8be410369bd1a162859b500b8505\",\"metadata\":{\"state\":\"wa\",\"geoid\":\"5363000\",\"municipality_name\":\"Seattle\",\"request_id\":\"32faccde-b0d8-4f02-bff4-854295f72edd\"}}"
-        }
-    },
-    "pipeline_duration_seconds": 7.190258979797363
+        "DONE": {}
+    }
 }

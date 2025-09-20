@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Dan Strauss - Council | seattle.gov
 
 
 
@@ -17,7 +17,7 @@ Website addresses ending in .gov belong to official government organizations in 
 **Secure .gov websites use HTTPS**  
 A lock () or https:// means you've safely connected to the .gov website. Only share sensitive information on official, secure websites.
 
-[Skip to main content](https://www.seattle.gov/council#content)
+[Skip to main content](https://www.seattle.gov/council/members/dan-strauss#content)
 
 Seattle
 
@@ -576,7 +576,6 @@ ContinueCancel
   + [Events](https://www.seattle.gov/event-calendar "Main Menu Mobile - Seattle.gov Events")
 
 [Seattle City Council](https://www.seattle.gov/council)
-=======================================================
 
 [Public Comment](https://www.seattle.gov/council/meetings/public-comment)
 
@@ -632,195 +631,131 @@ ContinueCancel
     Get high resolution photo downloads in the Seattle City Council press kit
 * [Legislation & Research](https://www.seattle.gov/council/legislation-and-research)
 
-Watch Council Meetings
-----------------------
-
-The Seattle Channel's 24/7 stream features live Council meetings and a range of other award-winning programs.
-
-[Watch Council Live](https://www.seattle.gov/council/meetings/watch-council-live "Watch Council Live")
-
-Featured Topics
----------------
-
-Featured Topics
----------------
-
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
-
-Focus on Public Safety
-
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
-
-[![a small group of people looking at a paper document together](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Comprehensive%20Plan_310x160.png "a small group of people looking at a paper document together")
-
-2025 Comprehensive Plan
-
-A roadmap for where and how Seattle will grow and invest in our communities over the next 20 years and beyond.](https://www.seattle.gov/council/topics/2025-comprehensive-plan "2025 Comprehensive Plan")
-
-[![yellow warning icon with a picture of the white house in the background](https://www.seattle.gov/images//images/Council/Issues/ProtectingOurSeattle/Fed-Changes_Protecting-Our-Seattle_310x160.png "yellow warning icon with a picture of the white house in the background")
-
-Protecting our Seattle
-
-Seattle is committed to protecting its people, especially those most impacted by recent federal policy changes.](https://www.seattle.gov/council/topics/federal-changes-protecting-our-seattle "Federal changes: Protecting our Seattle")
-
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
-
-City Council's Budget Basics
-
-Understand the budget process and when and how you can make your voice heard in the process.](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
-
-1/4
-
-Contact all Councilmembers by emailing [council@seattle.gov](mailto:council@seattle.gov "Email council@seattle.gov"). You can also [get email updates](https://www.seattle.gov/council/news-and-media/newsletter-signup "Get Email Updates").
-
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
-
-Councilmembers
---------------
-
-Councilmembers
---------------
-
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
-
-Rob Saka
-
-Councilmember  
- District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
-
-Mark Solomon
-
-Councilmember  
- District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
-
-Joy Hollingsworth
-
-Councilmember  
- District 3](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
-
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
-
-Maritza Rivera
-
-Councilmember  
- District 4](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
-
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
-
-Debora Juarez
-
-Councilmember  
- District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+breadcrumb divider[Home](https://www.seattle.gov/council)
+breadcrumb divider[Councilmembers](https://www.seattle.gov/council/members "Councilmembers")
+breadcrumb end
 
 Dan Strauss
+===========
 
-Councilmember  
- District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
+District 6 (Northwest Seattle)
 
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
+![Councilmember Dan Strauss](https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/struass_635x250.jpg "Councilmember Dan Strauss")
 
-Bob Kettle
+**Welcome!**
 
-Councilmember  
- District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
+I am honored to represent Seattle as your Councilmember for District 6, which includes Magnolia, Ballard, Phinney Ridge, Green Lake, Greenwood, Fremont and many other microneighborhoods.
 
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
+These are the communities where I was born and raised. I look forward to working with you to build our future together: a city that is safe, affordable, and full of opportunity for all. It is time for us to create bold solutions at the scale of the problems we are seeking to address. We live in a world-class City, and you deserve world-class services and amenities.
 
-Alexis Mercedes Rinck
+Please reach out. I want to hear your ideas for our city's future and how your local government can serve you. You can call, email, or, if you're a District 6 resident, you can [sign up for my weekly office hours](https://outlook.office365.com/book/OfficeofCouncilmemberDanStraussOfficeHours@seattle.gov/).
 
-Councilmember  
- Position 8](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
+[Dan's Blog](https://council.seattle.gov/category/councilmember-strauss/ "undefined Blog")
+------------------------------------------------------------------------------------------
 
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
+[Dan's Blog RSS FeedDan's Blog RSS Feed](https://council.seattle.gov/category/councilmember-strauss/feed/ "undefined Blog")
 
-Sara Nelson
+8/11
 
-Council President  
- Position 9](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
+[Take the Comp Plan Survey on District 6 Neighborhood Centers](https://council.seattle.gov/2025/08/11/take-the-comp-plan-survey-on-district-6-neighborhood-centers/)
 
-[See all Councilmembers Go to link](https://www.seattle.gov/council/members "See all Councilmembers")
+7/28
 
-How to Participate
-------------------
+[Councilmember Strauss celebrates appointment of Councilmember Juarez](https://council.seattle.gov/2025/07/28/councilmember-strauss-celebrates-appointment-of-councilmember-juarez/)
 
-How to Participate
-------------------
+6/10
 
-[Attend a council meeting](https://www.seattle.gov/council/meetings "Council Meetings")
+[Councilmember Strauss, advocates rally to save popular environmental education program for Seattle kids](https://council.seattle.gov/2025/06/10/councilmember-strauss-advocates-rally-to-save-popular-environmental-education-program-for-seattle-kids/)
 
-[View our calendar](https://www.seattle.gov/council/calendar "Council Calendar")
 
-[Comment at a public meeting](https://www.seattle.gov/council/meetings/public-comment "Public Comment")
 
-[Tips on giving public comment](https://www.seattle.gov/council/meetings/public-comment-tips "Public Comment Tips")
+Resources
+---------
 
-[Sign up for agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
+* [Request a Meeting](https://outlook.office365.com/book/OfficeofCouncilmemberDanStraussOfficeHours@seattle.gov/ "Request a Meeting")
+* [Newsletter Archivesexternal link](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=d57b26f739 "Newsletter Archives")
+* [Newsletter Sign Upexternal link](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=d57b26f739 "Newsletter Sign Up")
+* [Sign Up for Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
 
-View the Latest News
---------------------
+A vendor contracted by the City of Seattle processes the information you provide in the links above and may use third-party tools to communicate where our privacy policy doesn't apply. We recommend that you check the vendor's privacy policy for details about information collection and use.
 
-[### Select Committee on the Comprehensive Plan 9/19/25
+Contact Us
+----------
 
-Agenda: Call to Order; Approval of the Agenda; Executive Session; CB 120993: relating to major update of Neighborhood Residential zones; Res 32183: relating to One Seattle Plan Comprehensive Plan up[...]](https://www.seattlechannel.org/video.asp?ID=s2162583 " Select Committee on the Comprehensive Plan 9/19/25")
+Phone:[(206) 684-8806](tel: +1 (206) 684-8806)
 
-[### Select Committee on the Comprehensive Plan Session I 9/18/25
+Email:[Dan.Strauss@seattle.gov](mailto:Dan.Strauss@seattle.gov)
 
-Agenda: Call to Order; Approval of the Agenda; CB 120985: relating to the Seattle Comprehensive Plan; CB 120993: relating to major update of Neighborhood Residential zones; Res 32183: relating to On[...]](https://www.seattlechannel.org/video.asp?ID=2162579 " Select Committee on the Comprehensive Plan Session I 9/18/25")
+Fax:[(206) 684-8587](fax: +1 (206) 684-8587)
 
-**[View all Seattle Channel Council videosexternal link](https://www.seattlechannel.org/CityCouncil "Seattle Channel Council videos")**
+Address:
+[Office](https://www.seattle.gov/#tileMailing_sidebarx176741 "Expand the office address for Contact Us")
+ | 
+[Mailing](https://www.seattle.gov/#tileOffice_sidebarx176741 "Expand the mailing address for Contact Us")
 
-[Council Connection Blog](https://council.seattle.gov/category/news-releases/ "undefined Blog")
------------------------------------------------------------------------------------------------
+Close
+**Street Address:**  
+Seattle City Hall  
+600 Fourth Avenue   
+2nd Floor   
+Seattle,
+WA
+98104
 
-[Council Connection Blog RSS FeedCouncil Connection Blog RSS Feed](https://council.seattle.gov/category/news-releases/feed/ "undefined Blog")
+Close
+**Mailing Address:**  
+PO Box 34025  
+Seattle,
+WA
+98124-4025
 
-9/19
+Calendar
+--------
 
-[Amended Comprehensive Plan passes out of committee](https://council.seattle.gov/2025/09/19/amended-comprehensive-plan-passes-out-of-committee/)
+Please update your browser to view the iframe content.
 
-Council now transitions to budget process while Comp Plan receives additional study before final vote Over the last three days, the Select Committee on the Comprehensive Plan, chaired by Councilmember Joy Hollingsworth (District 3), voted 9-0 to [...]
+* [About Dan](https://www.seattle.gov/council/members/dan-strauss/about-dan "About Councilmember Dan Strauss")
+* [Staff](https://www.seattle.gov/council/members/dan-strauss/staff "Councilmember Dan Strauss' Staff")
+* [Committees & Calendar](https://www.seattle.gov/council/members/dan-strauss/committees-and-calendar "Dan's Committees & Calendar")
+No left sidebar
 
-9/16
+Staff
+-----
 
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
+Staff
+-----
 
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
+[![Joel Raphael](https://www.seattle.gov/images//images/Council/Members/Strauss/Joel-Raphael-Headshot.jpg)
 
-9/15
+Joel Raphael
 
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
+District Director](https://www.seattle.gov/x109977.xml#JoelRaphael "Joel Raphael")
 
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
+[![Megan Bartol](https://www.seattle.gov/images//images/Council/Members/Strauss/Megan-Bartol-Headshot.png)
 
-Related Resources
------------------
+Megan Bartol
 
-Related Resources
------------------
+Operations Manager and Deputy District Director](https://www.seattle.gov/x109977.xml#MeganBartol "Megan Bartol")
 
-[Boards and Commissions
+[![Anthony Rodriguez](https://www.seattle.gov/images//images/Council/Members/Strauss/anthony-rodriguez.jpg)
 
-Opportunities to serve on over 70 boards and commissions.](https://www.seattle.gov/boards-and-commissions "Boards and Commissions")
+Anthony Rodriguez
 
-[City Clerk
+Policy Advisor](https://www.seattle.gov/x109977.xml#AnthonyRodriguez "Anthony Rodriguez")
 
-Learn about the City Clerk and get legislation resources.](https://www.seattle.gov/cityclerk "City Clerk")
+[![Jesse Franz](https://www.seattle.gov/images//images/Council/Members/Strauss/jesse_franz.jpg)
 
-[Find It Fix It App
+Jesse Franz
 
-Report non-urgent requests such as clogged storm drains, traffic signal issues, and streetlight outage.](https://www.seattle.gov/customer-service-bureau/find-it-fix-it-mobile-app "Find It Fix It App")
+Policy and Communications Director](https://www.seattle.gov/x109977.xml#JesseFranz "Jesse Franz")
 
-[Get Involved
+[![Cameron Yonan](https://www.seattle.gov/images//images/Council/Members/Strauss/Cameron-Yonan.jpg)
 
-Find ways to volunteer, donate, and have a say on city issues.](https://www.seattle.gov/get-involved "Get Involved")
+Cameron Yonan
 
-1/4
+Legislative Aide](https://www.seattle.gov/x109977.xml#CameronYonan "Cameron Yonan")
+
+[See all staff Go to link](https://www.seattle.gov/council/members/dan-strauss/staff "See all staff")
 
 City Council
 ------------
@@ -875,6 +810,7 @@ Policies
 [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)
 
 [Sitemap](//www.seattle.gov/sitemap)
+
 
 
 
