@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Mark Solomon - Council | seattle.gov
 
 Council, Mayor, Court, Law, Finance
 
@@ -94,49 +94,34 @@ Sign up to make public comment for items appear on Seattle City Council agendas
 View City Council visitor logs updated in real time
 
 Get high resolution photo downloads in the Seattle City Council press kit
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
 
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
+Mark Solomon
+============
 
-City Council's Budget Basics](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+District 2 (South Seattle, Yesler Terrace to Rainier Beach)
 
-Rob Saka](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+![Councilmember Mark Solomon](https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/solomon_635x250.jpg "Councilmember Mark Solomon")
 
-Mark Solomon](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
+Thank you for visiting my District 2 web page. It's my privilege to serve as your representative on the Seattle City Council. I'm dedicated to showing up for my constituents and hearing what you have to say.
 
-Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
+[Councilmember Solomon to Host Anti-Displacement Fair June 14](https://council.seattle.gov/2025/06/03/councilmember-solomon-to-host-anti-displacement-fair-june-14/)
+[Councilmember Solomon to introduce “Wing Luke Year in Seattle” proclamation](https://council.seattle.gov/2025/05/30/councilmember-solomon-to-introduce-wing-luke-year-in-seattle-proclamation/)
+[Seattle City Council appoints Mark Solomon to fill District 2 vacancy](https://council.seattle.gov/2025/01/27/seattle-city-council-appoints-mark-solomon-to-fill-district-2-vacancy/)
 
-Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
+[![Sarah Mayes](https://www.seattle.gov/images//images/Council/Members/Solomon/sarah.mayes.png)
 
-Debora Juarez](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+Sarah Mayes
 
-Dan Strauss](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
+Chief of Staff](https://www.seattle.gov/x162932.xml#SarahMayes "Sarah Mayes")
+[![Murphy Bush](https://www.seattle.gov/images//images/Council/Members/Solomon/murphy-bush-a_165912.png)
 
-Bob Kettle](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
+Murphy Bush](https://www.seattle.gov/x162932.xml#MurphyBush "Murphy Bush")
+[![Thaddaeus Gregory](https://www.seattle.gov/images//images/Council/Members/Solomon/thaddaeus-gregory.png)
 
-Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
+Thaddaeus Gregory](https://www.seattle.gov/x162932.xml#ThaddaeusGregory "Thaddaeus Gregory")
+[![Christine Hendrickson](https://www.seattle.gov/images//images/Council/Members/Solomon/christine-hendrickson.jpg)
 
-Sara Nelson](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
-
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
-
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
-
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
-
-Amended legislation includes added data and privacy safeguards SEATTLE – Today the City Council voted 7-2 in favor of two crime prevention bills which authorize the installation of cameras in three new public places (Capitol Hill, the Stadium [...]
+Christine Hendrickson](https://www.seattle.gov/x162932.xml#ChristineHendrickson "Christine Hendrickson")
 
 City Council
 ------------

@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Rob Saka - Council | seattle.gov
 
 Council, Mayor, Court, Law, Finance
 
@@ -94,49 +94,44 @@ Sign up to make public comment for items appear on Seattle City Council agendas
 View City Council visitor logs updated in real time
 
 Get high resolution photo downloads in the Seattle City Council press kit
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
 
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
+Rob Saka
+========
 
-City Council's Budget Basics](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+District 1 (West Seattle, South Park, Georgetown, and Pioneer Square)
 
-Rob Saka](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+![Councilmember Rob Saka](https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/saka_635x250.jpg "Councilmember Rob Saka")
 
-Mark Solomon](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
+I am honored to have been elected to represent District 1. We are a growing and dynamic area that includes West Seattle, Georgetown, South Park, Sodo, and Pioneer Square. Living in the Delridge neighborhood with my wife and three children, I've seen the changes District 1 has faced in the last few years - both the progress and the struggles. The District has grown to over 100,000 residents and counting and has seen outstanding economic growth.
 
-Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
+But even as we grow bigger and better, we can't forget that common sense and thoughtful deliberation are the heart and soul of legislation that can help us prosper. My legislative priorities include improving public safety, taking action to end homelessness, and building affordable housing. I'm also focusing on critically needed public infrastructure investments like bridge maintenance, road repairs, sidewalks, and potholes. I am committed to addressing the underlying causes that threaten the health of our community and to creating community-based solutions for the problems facing District 1.
 
-Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
+As important as broader issues are, it's also crucial we focus on "the little things" that get overlooked - all the things that make a city a place we call "home." That means a focus on infrastructure and improving public transit, but also maintaining vibrant parks and culture, and cultivating the kind of future in which all of District 1 can be proud.
 
-Debora Juarez](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+[Council appoints Debora Juarez to fill District 5 vacancy](https://council.seattle.gov/2025/07/28/council-appoints-debora-juarez-to-fill-district-5-vacancy/)
+[Mayor Harrell and Councilmember Saka announce collaborative solution for Delridge Way Road Safety](https://council.seattle.gov/2025/06/18/mayor-harrell-and-councilmember-saka-announce-collaborative-solution-for-delridge-way-road-safety/)
+[Transportation Chair Saka bill sets up expansion of Traffic Safety Cameras](https://council.seattle.gov/2025/05/13/transportation-chair-saka-bill-sets-up-expansion-of-traffic-safety-cameras/)
+[Rob Saka - Facebook](https://www.facebook.com/profile.php?id=61554734416460)
+[Rob Saka - Twitter](https://twitter.com/CMRobSaka)
+[Rob Saka - Instagram](https://www.instagram.com/councilmembersaka)
+[Teresa Mosqueda - LinkedIn](https://www.linkedin.com/in/rob-saka-6864642a8/)
 
-Dan Strauss](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
+[![Elaine Ikoma Ko](https://www.seattle.gov/images//images/Council/Members/Saka/elaine-ko.jpg)
 
-Bob Kettle](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
+Elaine Ikoma Ko
 
-Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
+Chief of Staff](https://www.seattle.gov/x153200.xml#ElaineIkomaKo "Elaine Ikoma Ko")
+[![Ian Griswold](https://www.seattle.gov/images//images/Council/Members/Saka/ian-griswold.jpg)
 
-Sara Nelson](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
+Ian Griswold](https://www.seattle.gov/x153200.xml#IanGriswold "Ian Griswold")
+[![Erik Schmidt](https://www.seattle.gov/images//images/Council/Members/Saka/erik-schmidt.jpg)
 
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
+Erik Schmidt
 
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
+District 1 Director](https://www.seattle.gov/x153200.xml#ErikSchmidt "Erik Schmidt")
+[![Logan Duling](https://www.seattle.gov/images//images/Council/Members/Saka/logan-duling.jpg)
 
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
-
-Amended legislation includes added data and privacy safeguards SEATTLE – Today the City Council voted 7-2 in favor of two crime prevention bills which authorize the installation of cameras in three new public places (Capitol Hill, the Stadium [...]
+Logan Duling](https://www.seattle.gov/x153200.xml#LoganDuling "Logan Duling")
 
 City Council
 ------------

@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Bob Kettle - Council | seattle.gov
 
 Council, Mayor, Court, Law, Finance
 
@@ -94,49 +94,36 @@ Sign up to make public comment for items appear on Seattle City Council agendas
 View City Council visitor logs updated in real time
 
 Get high resolution photo downloads in the Seattle City Council press kit
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
 
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
+Bob Kettle
+==========
 
-City Council's Budget Basics](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+District 7 (Downtown to Magnolia, including Queen Anne, Uptown, Westlake, Interbay, Eastlake, South Lake Union, and Belltown)
 
-Rob Saka](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+![Councilmember Bob Kettle](https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/kettle_635x250.jpg "Councilmember Bob Kettle")
 
-Mark Solomon](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
+I am honored to serve as your District 7 Councilmember and to represent the diverse neighborhoods of District 7: Magnolia, Queen Anne, Uptown, Westlake, Interbay, Eastlake, South Lake Union, Belltown, and Downtown.
 
-Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
+I know that Seattle is home to people of every imaginable background, and whether you're a born-and-raised Seattleite or a transplant, I am dedicated to making Seattle a city and a home not just for us, right now, but for generations to come. That means placing a renewed and dedicated focus on our District's and City's public safety, reducing the permissive environment, expanding public health, and securing the future of the Port of Seattle to keep it a working, viable port for the next 100 years - one that can serve Seattle, the region, and the nation.
 
-Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
+My priorities as your Councilmember are to focus on our greatest challenges, right now: public safety, public health, and homelessness. I will strive to have an office that responds to constituents and directly addresses your needs. As stated in my Good Governance Pledge, "I will strive to represent and listen to all of my constituents, and I will prioritize fulfilling my oversight responsibilities over city departments to make sure that they are delivering results. I will work hard to create good policy based on proven evidence-based programs and studies to best meet the needs of the city and the district."
 
-Debora Juarez](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+[Public Safety Chair Kettle and Council President Nelson on protecting Seattle from federal public safety threats](https://council.seattle.gov/2025/09/02/public-safety-chair-kettle-and-council-president-nelson-on-protecting-seattle-from-federal-public-safety-threats-2/)
+[VIDEO: Public Safety Chair Kettle on federal intervention and negative impacts on Seattle communities](https://council.seattle.gov/2025/08/13/video-public-safety-chair-kettle-on-federal-intervention-and-negative-impacts-on-seattle-communities/)
 
-Dan Strauss](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
+[![Steve Smith](https://www.seattle.gov/images//images/Council/Members/Kettle/Steven-Smith.jpg)
 
-Bob Kettle](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
+Steve Smith
 
-Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
+Chief of Staff](https://www.seattle.gov/x153316.xml#SteveSmith "Steve Smith")
+[![Brent Lo](https://www.seattle.gov/images//images/Council/Members/Kettle/Brent-Lo.jpg)
 
-Sara Nelson](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
+Brent Lo](https://www.seattle.gov/x153316.xml#BrentLo "Brent Lo")
+[![Rebecca Duran](https://www.seattle.gov/images//images/Council/Members/Kettle/Rebecca-Duran.jpg)
 
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
+Rebecca Duran
 
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
-
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
-
-Amended legislation includes added data and privacy safeguards SEATTLE – Today the City Council voted 7-2 in favor of two crime prevention bills which authorize the installation of cameras in three new public places (Capitol Hill, the Stadium [...]
+Executive Aide and District Director of Constituent Affairs](https://www.seattle.gov/x153316.xml#RebeccaDuran "Rebecca Duran")
 
 City Council
 ------------

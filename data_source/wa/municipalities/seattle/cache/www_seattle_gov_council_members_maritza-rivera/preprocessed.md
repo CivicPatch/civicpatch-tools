@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Maritza Rivera - Council | seattle.gov
 
 Council, Mayor, Court, Law, Finance
 
@@ -94,49 +94,26 @@ Sign up to make public comment for items appear on Seattle City Council agendas
 View City Council visitor logs updated in real time
 
 Get high resolution photo downloads in the Seattle City Council press kit
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
 
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
+Maritza Rivera
+==============
 
-City Council's Budget Basics](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+District 4 (Northeast Seattle)
 
-Rob Saka](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+![Councilmember Maritza Rivera](https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/rivera_635x250.jpg "Councilmember Maritza Rivera")
 
-Mark Solomon](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
+I'm Maritza Rivera. I represent Seattle's District 4, which includes the neighborhoods Bryant, Laurelhurst, Maple Leaf, Ravenna, Roosevelt, Sand Point, the U District, View Ridge, Wallingford, Wedgwood, and Windermere.
 
-Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
+Public Safety is my number one priority. And while I was campaigning in the District, I learned that it's a priority for the D4 residents as well. I will work to reduce 911 response times, get enough officers on the streets to keep our children and all citizens safe, and create effective public safety alternatives - because we know that every situation does not require a uniformed officer.
 
-Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
+I'm looking forward to working with our neighborhoods and residents to make District 4 the best it can be.
 
-Debora Juarez](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+[Councilmember Rivera statement on proposed B&O exemptions for Fred Hutchinson Cancer Center and Seattle Children’s Hospital](https://council.seattle.gov/2025/08/04/councilmember-rivera-statement-on-proposed-bo-exemptions-for-fred-hutchinson-cancer-center-and-seattle-childrens-hospital/)
+[Councilmember Rivera’s statement in support of Washington Attorney General joining lawsuit against US Dept of Education](https://council.seattle.gov/2025/07/15/councilmember-riveras-statement-in-support-of-washington-attorney-general-joining-lawsuit-against-us-dept-of-education/)
 
-Dan Strauss](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
+[![Wendy Sykes](https://www.seattle.gov/images//images/Council/Members/Rivera/wendy-sykes.jpg)
 
-Bob Kettle](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
-
-Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
-
-Sara Nelson](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
-
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
-
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
-
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
-
-Amended legislation includes added data and privacy safeguards SEATTLE – Today the City Council voted 7-2 in favor of two crime prevention bills which authorize the installation of cameras in three new public places (Capitol Hill, the Stadium [...]
+Wendy Sykes](https://www.seattle.gov/x153304.xml#WendySykes "Wendy Sykes")
 
 City Council
 ------------

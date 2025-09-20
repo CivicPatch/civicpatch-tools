@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Rob Saka - Council | seattle.gov
 
 
 
@@ -17,7 +17,7 @@ Website addresses ending in .gov belong to official government organizations in 
 **Secure .gov websites use HTTPS**  
 A lock () or https:// means you've safely connected to the .gov website. Only share sensitive information on official, secure websites.
 
-[Skip to main content](https://www.seattle.gov/council#content)
+[Skip to main content](https://www.seattle.gov/council/members/rob-saka#content)
 
 Seattle
 
@@ -45,7 +45,7 @@ English Choose a language arrow
 * ਪੰਜਾਬੀ
 * عربى
 
-[Select Language​▼](https://www.seattle.gov/#)
+![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](#)
 
 SearchPay or ApplyMain Navigation MenuMenu
 
@@ -576,7 +576,6 @@ ContinueCancel
   + [Events](https://www.seattle.gov/event-calendar "Main Menu Mobile - Seattle.gov Events")
 
 [Seattle City Council](https://www.seattle.gov/council)
-=======================================================
 
 [Public Comment](https://www.seattle.gov/council/meetings/public-comment)
 
@@ -632,193 +631,138 @@ ContinueCancel
     Get high resolution photo downloads in the Seattle City Council press kit
 * [Legislation & Research](https://www.seattle.gov/council/legislation-and-research)
 
-Watch Council Meetings
-----------------------
-
-The Seattle Channel's 24/7 stream features live Council meetings and a range of other award-winning programs.
-
-[Watch Council Live](https://www.seattle.gov/council/meetings/watch-council-live "Watch Council Live")
-
-Featured Topics
----------------
-
-Featured Topics
----------------
-
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
-
-Focus on Public Safety
-
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
-
-[![a small group of people looking at a paper document together](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Comprehensive%20Plan_310x160.png "a small group of people looking at a paper document together")
-
-2025 Comprehensive Plan
-
-A roadmap for where and how Seattle will grow and invest in our communities over the next 20 years and beyond.](https://www.seattle.gov/council/topics/2025-comprehensive-plan "2025 Comprehensive Plan")
-
-[![yellow warning icon with a picture of the white house in the background](https://www.seattle.gov/images//images/Council/Issues/ProtectingOurSeattle/Fed-Changes_Protecting-Our-Seattle_310x160.png "yellow warning icon with a picture of the white house in the background")
-
-Protecting our Seattle
-
-Seattle is committed to protecting its people, especially those most impacted by recent federal policy changes.](https://www.seattle.gov/council/topics/federal-changes-protecting-our-seattle "Federal changes: Protecting our Seattle")
-
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
-
-City Council's Budget Basics](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
-
-1/4
-
-Contact all Councilmembers by emailing [council@seattle.gov](mailto:council@seattle.gov "Email council@seattle.gov"). You can also [get email updates](https://www.seattle.gov/council/news-and-media/newsletter-signup "Get Email Updates").
-
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
-
-Councilmembers
---------------
-
-Councilmembers
---------------
-
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+breadcrumb divider[Home](https://www.seattle.gov/council)
+breadcrumb divider[Councilmembers](https://www.seattle.gov/council/members "Councilmembers")
+breadcrumb end
 
 Rob Saka
+========
 
-Councilmember  
- District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
+District 1 (West Seattle, South Park, Georgetown, and Pioneer Square)
 
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+![Councilmember Rob Saka](https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/saka_635x250.jpg "Councilmember Rob Saka")
 
-Mark Solomon
+**Welcome!**
 
-Councilmember  
- District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
+I am honored to have been elected to represent District 1. We are a growing and dynamic area that includes West Seattle, Georgetown, South Park, Sodo, and Pioneer Square. Living in the Delridge neighborhood with my wife and three children, I've seen the changes District 1 has faced in the last few years - both the progress and the struggles. The District has grown to over 100,000 residents and counting and has seen outstanding economic growth.
 
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
+But even as we grow bigger and better, we can't forget that common sense and thoughtful deliberation are the heart and soul of legislation that can help us prosper. My legislative priorities include improving public safety, taking action to end homelessness, and building affordable housing. I'm also focusing on critically needed public infrastructure investments like bridge maintenance, road repairs, sidewalks, and potholes. I am committed to addressing the underlying causes that threaten the health of our community and to creating community-based solutions for the problems facing District 1.
 
-Joy Hollingsworth
+As important as broader issues are, it's also crucial we focus on "the little things" that get overlooked - all the things that make a city a place we call "home." That means a focus on infrastructure and improving public transit, but also maintaining vibrant parks and culture, and cultivating the kind of future in which all of District 1 can be proud.
 
-Councilmember  
- District 3](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
+If you'd like to weigh in on what that looks like, I welcome your collaboration. You can contact Team Saka by emailing [Rob.Saka@seattle.gov](mailto:Rob.Saka@seattle.gov) or by calling my office at [(206) 684-8801](tel: +1 (206) 684-8801).
 
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
+[Rob's Blog](https://council.seattle.gov/category/councilmember-saka/ "undefined Blog")
+---------------------------------------------------------------------------------------
 
-Maritza Rivera
+[Rob's Blog RSS FeedRob's Blog RSS Feed](https://council.seattle.gov/category/councilmember-saka/feed/ "undefined Blog")
 
-Councilmember  
- District 4](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
+7/28
 
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
+[Council appoints Debora Juarez to fill District 5 vacancy](https://council.seattle.gov/2025/07/28/council-appoints-debora-juarez-to-fill-district-5-vacancy/)
 
-Debora Juarez
+6/18
 
-Councilmember  
- District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
+[Mayor Harrell and Councilmember Saka announce collaborative solution for Delridge Way Road Safety](https://council.seattle.gov/2025/06/18/mayor-harrell-and-councilmember-saka-announce-collaborative-solution-for-delridge-way-road-safety/)
 
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+5/13
 
-Dan Strauss
+[Transportation Chair Saka bill sets up expansion of Traffic Safety Cameras](https://council.seattle.gov/2025/05/13/transportation-chair-saka-bill-sets-up-expansion-of-traffic-safety-cameras/)
 
-Councilmember  
- District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
 
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
 
-Bob Kettle
+Resources
+---------
 
-Councilmember  
- District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
+* [Request a Meetingexternal link](https://forms.office.com/Pages/ResponsePage.aspx?id=RR7meOtrCUCPmTWdi1T0G4F4Xp8Qwp1Jlw6kY-dCCslUOVM0MEExWTNVT0dJQkU5TExHS0FMNjlHTi4u "Request a Meeting")
+* [Newsletter Archivesexternal link](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=026c7aa0f5 "Newsletter Archives")
+* [Newsletter Sign Upexternal link](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=026c7aa0f5 "Newsletter Sign Up")
+* [Sign Up for Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
 
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
+A vendor contracted by the City of Seattle processes the information you provide in the links above and may use third-party tools to communicate where our privacy policy doesn’t apply. We recommend that you check the vendor’s privacy policy for details about information collection and use.
 
-Alexis Mercedes Rinck
+Contact Us
+----------
 
-Councilmember  
- Position 8](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
+Phone:[(206) 684-8801](tel: +1 (206) 684-8801)
 
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
+Email:[Rob.Saka@seattle.gov](mailto:Rob.Saka@seattle.gov)
 
-Sara Nelson
+Fax:[(206) 684-8587](fax: +1 (206) 684-8587)
 
-Council President  
- Position 9](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
+Address:
+[Office](https://www.seattle.gov/#tileMailing_sidebarx176740 "Expand the office address for Contact Us")
+ | 
+[Mailing](https://www.seattle.gov/#tileOffice_sidebarx176740 "Expand the mailing address for Contact Us")
 
-[See all Councilmembers Go to link](https://www.seattle.gov/council/members "See all Councilmembers")
+### Follow Us
 
-How to Participate
-------------------
+[Rob Saka - Facebook
+external link](https://www.facebook.com/profile.php?id=61554734416460)
+[Rob Saka - Twitter
+external link](https://twitter.com/CMRobSaka)
+[Rob Saka - Instagram
+external link](https://www.instagram.com/councilmembersaka)
+[Teresa Mosqueda - LinkedIn
+external link](https://www.linkedin.com/in/rob-saka-6864642a8/)
 
-How to Participate
-------------------
+Close
+**Street Address:**  
+Seattle City Hall  
+600 Fourth Avenue   
+2nd Floor   
+Seattle,
+WA
+98104
 
-[Attend a council meeting](https://www.seattle.gov/council/meetings "Council Meetings")
+Close
+**Mailing Address:**  
+PO Box 34025  
+Seattle,
+WA
+98124-4025
 
-[View our calendar](https://www.seattle.gov/council/calendar "Council Calendar")
+Calendar
+--------
 
-[Comment at a public meeting](https://www.seattle.gov/council/meetings/public-comment "Public Comment")
+Please update your browser to view the iframe content.
 
-[Tips on giving public comment](https://www.seattle.gov/council/meetings/public-comment-tips "Public Comment Tips")
+* [About Rob](https://www.seattle.gov/council/members/rob-saka/about-rob "About Councilmember Rob Saka")
+* [Staff](https://www.seattle.gov/council/members/rob-saka/staff "Councilmember Rob Saka's Staff")
+* [Committees & Calendar](https://www.seattle.gov/council/members/rob-saka/committees-and-calendar "Rob's Committees & Calendar")
+No left sidebar
 
-[Sign up for agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
+Staff
+-----
 
-View the Latest News
---------------------
+Staff
+-----
 
-[### Select Committee on the Comprehensive Plan Session I 9/18/25
+[![Elaine Ikoma Ko](https://www.seattle.gov/images//images/Council/Members/Saka/elaine-ko.jpg)
 
-Agenda: Call to Order; Approval of the Agenda; CB 120985: relating to the Seattle Comprehensive Plan; CB 120993: relating to major update of Neighborhood Residential zones; Res 32183: relating to On[...]](https://www.seattlechannel.org/video.asp?ID=2162579 " Select Committee on the Comprehensive Plan Session I 9/18/25")
+Elaine Ikoma Ko
 
-[### Select Committee on the Comprehensive Plan Session II 9/18/25
+Chief of Staff](https://www.seattle.gov/x153200.xml#ElaineIkomaKo "Elaine Ikoma Ko")
 
-Agenda: Call to Order; Approval of the Agenda; CB 120993 continued: relating to major update of Neighborhood Residential zones; Adjournment. [Watch session I here](https://seattlechannel.org/mayor-and-council/city-council/select-committee-on-the-comprehensive-plan/?videoid=x180127 "Select Committee on the Comprehensive Plan Session I 9/18/25").](https://www.seattlechannel.org/video.asp?ID=2162580 " Select Committee on the Comprehensive Plan Session II 9/18/25")
+[![Ian Griswold](https://www.seattle.gov/images//images/Council/Members/Saka/ian-griswold.jpg)
 
-**[View all Seattle Channel Council videosexternal link](https://www.seattlechannel.org/CityCouncil "Seattle Channel Council videos")**
+Ian Griswold
 
-[Council Connection Blog](https://council.seattle.gov/category/news-releases/ "undefined Blog")
------------------------------------------------------------------------------------------------
+Legislative Director](https://www.seattle.gov/x153200.xml#IanGriswold "Ian Griswold")
 
-[Council Connection Blog RSS FeedCouncil Connection Blog RSS Feed](https://council.seattle.gov/category/news-releases/feed/ "undefined Blog")
+[![Erik Schmidt](https://www.seattle.gov/images//images/Council/Members/Saka/erik-schmidt.jpg)
 
-9/16
+Erik Schmidt
 
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
+District 1 Director](https://www.seattle.gov/x153200.xml#ErikSchmidt "Erik Schmidt")
 
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
+[![Logan Duling](https://www.seattle.gov/images//images/Council/Members/Saka/logan-duling.jpg)
 
-9/15
+Logan Duling
 
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
+Legislative Assistant](https://www.seattle.gov/x153200.xml#LoganDuling "Logan Duling")
 
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
-
-9/9
-
-[Council approves pair of public safety technology bills](https://council.seattle.gov/2025/09/09/council-approves-pair-of-public-safety-technology-bills/)
-
-Amended legislation includes added data and privacy safeguards SEATTLE – Today the City Council voted 7-2 in favor of two crime prevention bills which authorize the installation of cameras in three new public places (Capitol Hill, the Stadium [...]
-
-Related Resources
------------------
-
-Related Resources
------------------
-
-[Boards and Commissions
-
-Opportunities to serve on over 70 boards and commissions.](https://www.seattle.gov/boards-and-commissions "Boards and Commissions")
-
-[City Clerk
-
-Learn about the City Clerk and get legislation resources.](https://www.seattle.gov/cityclerk "City Clerk")
-
-[Find It Fix It App
-
-Report non-urgent requests such as clogged storm drains, traffic signal issues, and streetlight outage.](https://www.seattle.gov/customer-service-bureau/find-it-fix-it-mobile-app "Find It Fix It App")
-
-[Get Involved
-
-Find ways to volunteer, donate, and have a say on city issues.](https://www.seattle.gov/get-involved "Get Involved")
-
-1/4
+[See all staff Go to link](https://www.seattle.gov/council/members/rob-saka/staff "See all staff")
 
 City Council
 ------------
@@ -916,6 +860,9 @@ Policies
 
 
 
+
+
+![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)
 
 Original text
 

@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Maritza Rivera - Council | seattle.gov
 
 
 
@@ -17,7 +17,7 @@ Website addresses ending in .gov belong to official government organizations in 
 **Secure .gov websites use HTTPS**  
 A lock () or https:// means you've safely connected to the .gov website. Only share sensitive information on official, secure websites.
 
-[Skip to main content](https://www.seattle.gov/council#content)
+[Skip to main content](https://www.seattle.gov/council/members/maritza-rivera#content)
 
 Seattle
 
@@ -576,7 +576,6 @@ ContinueCancel
   + [Events](https://www.seattle.gov/event-calendar "Main Menu Mobile - Seattle.gov Events")
 
 [Seattle City Council](https://www.seattle.gov/council)
-=======================================================
 
 [Public Comment](https://www.seattle.gov/council/meetings/public-comment)
 
@@ -632,193 +631,114 @@ ContinueCancel
     Get high resolution photo downloads in the Seattle City Council press kit
 * [Legislation & Research](https://www.seattle.gov/council/legislation-and-research)
 
-Watch Council Meetings
-----------------------
-
-The Seattle Channel's 24/7 stream features live Council meetings and a range of other award-winning programs.
-
-[Watch Council Live](https://www.seattle.gov/council/meetings/watch-council-live "Watch Council Live")
-
-Featured Topics
----------------
-
-Featured Topics
----------------
-
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
-
-Focus on Public Safety
-
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
-
-[![a small group of people looking at a paper document together](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Comprehensive%20Plan_310x160.png "a small group of people looking at a paper document together")
-
-2025 Comprehensive Plan
-
-A roadmap for where and how Seattle will grow and invest in our communities over the next 20 years and beyond.](https://www.seattle.gov/council/topics/2025-comprehensive-plan "2025 Comprehensive Plan")
-
-[![yellow warning icon with a picture of the white house in the background](https://www.seattle.gov/images//images/Council/Issues/ProtectingOurSeattle/Fed-Changes_Protecting-Our-Seattle_310x160.png "yellow warning icon with a picture of the white house in the background")
-
-Protecting our Seattle
-
-Seattle is committed to protecting its people, especially those most impacted by recent federal policy changes.](https://www.seattle.gov/council/topics/federal-changes-protecting-our-seattle "Federal changes: Protecting our Seattle")
-
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
-
-City Council's Budget Basics](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
-
-1/4
-
-Contact all Councilmembers by emailing [council@seattle.gov](mailto:council@seattle.gov "Email council@seattle.gov"). You can also [get email updates](https://www.seattle.gov/council/news-and-media/newsletter-signup "Get Email Updates").
-
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
-
-Councilmembers
---------------
-
-Councilmembers
---------------
-
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
-
-Rob Saka
-
-Councilmember  
- District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
-
-Mark Solomon
-
-Councilmember  
- District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
-
-Joy Hollingsworth
-
-Councilmember  
- District 3](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
-
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
+breadcrumb divider[Home](https://www.seattle.gov/council)
+breadcrumb divider[Councilmembers](https://www.seattle.gov/council/members "Councilmembers")
+breadcrumb end
 
 Maritza Rivera
+==============
 
-Councilmember  
- District 4](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
+District 4 (Northeast Seattle)
 
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
+![Councilmember Maritza Rivera](https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/rivera_635x250.jpg "Councilmember Maritza Rivera")
 
-Debora Juarez
+Hi,
 
-Councilmember  
- District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
+I'm Maritza Rivera. I represent Seattle's District 4, which includes the neighborhoods Bryant, Laurelhurst, Maple Leaf, Ravenna, Roosevelt, Sand Point, the U District, View Ridge, Wallingford, Wedgwood, and Windermere.
 
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+I am grateful for and humbled by the privilege of representing the citizens and businesses of those communities.
 
-Dan Strauss
+Public Safety is my number one priority. And while I was campaigning in the District, I learned that it's a priority for the D4 residents as well. I will work to reduce 911 response times, get enough officers on the streets to keep our children and all citizens safe, and create effective public safety alternatives - because we know that every situation does not require a uniformed officer.
 
-Councilmember  
- District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
+I am also committed to bringing both accountability and civility back to City Hall. Our city programs should be consistently delivering their intended results, with robust systems in place to measure progress and outcomes. If programs don't deliver - then we must act and make the necessary changes to meet the goals.
 
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
+I will always be ready to listen to - and work with - everyone to restore Seattle to the safe, welcoming and more affordable city that I moved to more than twenty years ago.
 
-Bob Kettle
+I'm looking forward to working with our neighborhoods and residents to make District 4 the best it can be.
 
-Councilmember  
- District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
+You can contact me and my team at [Maritza.Rivera@seattle.gov](mailto:Maritza.Rivera@seattle.gov) or call [(206) 684-8804](tel: +1 (206) 684-8804).
 
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
+[Maritza's Blog](https://council.seattle.gov/category/councilmember-rivera/ "undefined Blog")
+---------------------------------------------------------------------------------------------
 
-Alexis Mercedes Rinck
+[Maritza's Blog RSS FeedMaritza's Blog RSS Feed](https://council.seattle.gov/category/councilmember-rivera/feed/ "undefined Blog")
 
-Councilmember  
- Position 8](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
+8/4
 
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
+[Councilmember Rivera statement on proposed B&O exemptions for Fred Hutchinson Cancer Center and Seattle Children’s Hospital](https://council.seattle.gov/2025/08/04/councilmember-rivera-statement-on-proposed-bo-exemptions-for-fred-hutchinson-cancer-center-and-seattle-childrens-hospital/)
 
-Sara Nelson
+7/15
 
-Council President  
- Position 9](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
+[Councilmember Rivera’s statement in support of Washington Attorney General joining lawsuit against US Dept of Education](https://council.seattle.gov/2025/07/15/councilmember-riveras-statement-in-support-of-washington-attorney-general-joining-lawsuit-against-us-dept-of-education/)
 
-[See all Councilmembers Go to link](https://www.seattle.gov/council/members "See all Councilmembers")
+6/17
 
-How to Participate
-------------------
+[Council approves Families, Education, Preschool, and Promise Levy renewal package for November ballot](https://council.seattle.gov/2025/06/17/council-approves-families-education-preschool-and-promise-levy-renewal-package-for-november-ballot/)
 
-How to Participate
-------------------
 
-[Attend a council meeting](https://www.seattle.gov/council/meetings "Council Meetings")
 
-[View our calendar](https://www.seattle.gov/council/calendar "Council Calendar")
+Resources
+---------
 
-[Comment at a public meeting](https://www.seattle.gov/council/meetings/public-comment "Public Comment")
+* [Newsletter Archivesexternal link](https://us12.campaign-archive.com/home/?u=11a79978ca7225050bfabf7ad&id=307be6bfce "Newsletter Archives")
+* [Newsletter Sign Upexternal link](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=307be6bfce "Newsletter Sign Up")
+* [Sign Up for Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
 
-[Tips on giving public comment](https://www.seattle.gov/council/meetings/public-comment-tips "Public Comment Tips")
+A vendor contracted by the City of Seattle processes the information you provide in the links above and may use third-party tools to communicate where our privacy policy doesn't apply. We recommend that you check the vendor's privacy policy for details about information collection and use.
 
-[Sign up for agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
+Contact Us
+----------
 
-View the Latest News
---------------------
+Phone:[(206) 684-8804](tel: +1 (206) 684-8804)
 
-[### Select Committee on the Comprehensive Plan Session I 9/18/25
+Email:[Maritza.Rivera@seattle.gov](mailto:Maritza.Rivera@seattle.gov)
 
-Agenda: Call to Order; Approval of the Agenda; CB 120985: relating to the Seattle Comprehensive Plan; CB 120993: relating to major update of Neighborhood Residential zones; Res 32183: relating to On[...]](https://www.seattlechannel.org/video.asp?ID=2162579 " Select Committee on the Comprehensive Plan Session I 9/18/25")
+Fax:[(206) 684-8587](fax: +1 (206) 684-8587)
 
-[### Select Committee on the Comprehensive Plan Session II 9/18/25
+Address:
+[Office](https://www.seattle.gov/#tileMailing_sidebarx176738 "Expand the office address for Contact Us")
+ | 
+[Mailing](https://www.seattle.gov/#tileOffice_sidebarx176738 "Expand the mailing address for Contact Us")
 
-Agenda: Call to Order; Approval of the Agenda; CB 120993 continued: relating to major update of Neighborhood Residential zones; Adjournment. [Watch session I here](https://seattlechannel.org/mayor-and-council/city-council/select-committee-on-the-comprehensive-plan/?videoid=x180127 "Select Committee on the Comprehensive Plan Session I 9/18/25").](https://www.seattlechannel.org/video.asp?ID=2162580 " Select Committee on the Comprehensive Plan Session II 9/18/25")
+Close
+**Street Address:**  
+Seattle City Hall  
+600 Fourth Avenue   
+2nd Floor   
+Seattle,
+WA
+98104
 
-**[View all Seattle Channel Council videosexternal link](https://www.seattlechannel.org/CityCouncil "Seattle Channel Council videos")**
+Close
+**Mailing Address:**  
+PO Box 34025  
+Seattle,
+WA
+98124-4025
 
-[Council Connection Blog](https://council.seattle.gov/category/news-releases/ "undefined Blog")
------------------------------------------------------------------------------------------------
+Calendar
+--------
 
-[Council Connection Blog RSS FeedCouncil Connection Blog RSS Feed](https://council.seattle.gov/category/news-releases/feed/ "undefined Blog")
+Please update your browser to view the iframe content.
 
-9/16
+* [About Maritza](https://www.seattle.gov/council/members/maritza-rivera/about-maritza "About Councilmember Maritza Rivera")
+* [Staff](https://www.seattle.gov/council/members/maritza-rivera/staff "Councilmember Maritza Rivera's Staff")
+* [Committees & Calendar](https://www.seattle.gov/council/members/maritza-rivera/committees-and-calendar "Maritza's Committees & Calendar")
+No left sidebar
 
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
+Staff
+-----
 
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
+Staff
+-----
 
-9/15
+[![Wendy Sykes](https://www.seattle.gov/images//images/Council/Members/Rivera/wendy-sykes.jpg)
 
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
+Wendy Sykes
 
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
+Legislative Aide, Operations Lead](https://www.seattle.gov/x153304.xml#WendySykes "Wendy Sykes")
 
-9/9
-
-[Council approves pair of public safety technology bills](https://council.seattle.gov/2025/09/09/council-approves-pair-of-public-safety-technology-bills/)
-
-Amended legislation includes added data and privacy safeguards SEATTLE – Today the City Council voted 7-2 in favor of two crime prevention bills which authorize the installation of cameras in three new public places (Capitol Hill, the Stadium [...]
-
-Related Resources
------------------
-
-Related Resources
------------------
-
-[Boards and Commissions
-
-Opportunities to serve on over 70 boards and commissions.](https://www.seattle.gov/boards-and-commissions "Boards and Commissions")
-
-[City Clerk
-
-Learn about the City Clerk and get legislation resources.](https://www.seattle.gov/cityclerk "City Clerk")
-
-[Find It Fix It App
-
-Report non-urgent requests such as clogged storm drains, traffic signal issues, and streetlight outage.](https://www.seattle.gov/customer-service-bureau/find-it-fix-it-mobile-app "Find It Fix It App")
-
-[Get Involved
-
-Find ways to volunteer, donate, and have a say on city issues.](https://www.seattle.gov/get-involved "Get Involved")
-
-1/4
+[See all staff Go to link](https://www.seattle.gov/council/members/maritza-rivera/staff "See all staff")
 
 City Council
 ------------
@@ -873,6 +793,7 @@ Policies
 [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)
 
 [Sitemap](//www.seattle.gov/sitemap)
+
 
 
 

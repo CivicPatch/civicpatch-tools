@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Debora Juarez - Council | seattle.gov
 
 
 
@@ -17,7 +17,7 @@ Website addresses ending in .gov belong to official government organizations in 
 **Secure .gov websites use HTTPS**  
 A lock () or https:// means you've safely connected to the .gov website. Only share sensitive information on official, secure websites.
 
-[Skip to main content](https://www.seattle.gov/council#content)
+[Skip to main content](https://www.seattle.gov/council/members/debora-juarez#content)
 
 Seattle
 
@@ -45,7 +45,7 @@ English Choose a language arrow
 * ਪੰਜਾਬੀ
 * عربى
 
-[Select Language​▼](https://www.seattle.gov/#)
+![](https://www.google.com/images/cleardot.gif)[Select Language![](https://www.google.com/images/cleardot.gif)​![](https://www.google.com/images/cleardot.gif)▼](#)
 
 SearchPay or ApplyMain Navigation MenuMenu
 
@@ -576,7 +576,6 @@ ContinueCancel
   + [Events](https://www.seattle.gov/event-calendar "Main Menu Mobile - Seattle.gov Events")
 
 [Seattle City Council](https://www.seattle.gov/council)
-=======================================================
 
 [Public Comment](https://www.seattle.gov/council/meetings/public-comment)
 
@@ -632,193 +631,113 @@ ContinueCancel
     Get high resolution photo downloads in the Seattle City Council press kit
 * [Legislation & Research](https://www.seattle.gov/council/legislation-and-research)
 
-Watch Council Meetings
-----------------------
-
-The Seattle Channel's 24/7 stream features live Council meetings and a range of other award-winning programs.
-
-[Watch Council Live](https://www.seattle.gov/council/meetings/watch-council-live "Watch Council Live")
-
-Featured Topics
----------------
-
-Featured Topics
----------------
-
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
-
-Focus on Public Safety
-
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
-
-[![a small group of people looking at a paper document together](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Comprehensive%20Plan_310x160.png "a small group of people looking at a paper document together")
-
-2025 Comprehensive Plan
-
-A roadmap for where and how Seattle will grow and invest in our communities over the next 20 years and beyond.](https://www.seattle.gov/council/topics/2025-comprehensive-plan "2025 Comprehensive Plan")
-
-[![yellow warning icon with a picture of the white house in the background](https://www.seattle.gov/images//images/Council/Issues/ProtectingOurSeattle/Fed-Changes_Protecting-Our-Seattle_310x160.png "yellow warning icon with a picture of the white house in the background")
-
-Protecting our Seattle
-
-Seattle is committed to protecting its people, especially those most impacted by recent federal policy changes.](https://www.seattle.gov/council/topics/federal-changes-protecting-our-seattle "Federal changes: Protecting our Seattle")
-
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
-
-City Council's Budget Basics](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
-
-1/4
-
-Contact all Councilmembers by emailing [council@seattle.gov](mailto:council@seattle.gov "Email council@seattle.gov"). You can also [get email updates](https://www.seattle.gov/council/news-and-media/newsletter-signup "Get Email Updates").
-
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
-
-Councilmembers
---------------
-
-Councilmembers
---------------
-
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
-
-Rob Saka
-
-Councilmember  
- District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
-
-Mark Solomon
-
-Councilmember  
- District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
-
-Joy Hollingsworth
-
-Councilmember  
- District 3](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
-
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
-
-Maritza Rivera
-
-Councilmember  
- District 4](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
-
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
+breadcrumb divider[Home](https://www.seattle.gov/council)
+breadcrumb divider[Councilmembers](https://www.seattle.gov/council/members "Councilmembers")
+breadcrumb end
 
 Debora Juarez
+=============
 
-Councilmember  
- District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
+District 5 (North Seattle)
 
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+![Councilmember Debora Juarez](https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/juarez_635x250.jpg "Councilmember Debora Juarez")
 
-Dan Strauss
+It is a great honor to serve as your District 5 representative on the Seattle City Council.
 
-Councilmember  
- District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
+Please contact me and my office at any time at [Debora.Juarez@seattle.gov](mailto:Debora.Juarez@seattle.gov "Email Debora Juarez").
 
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
+[Debora's Blog](https://council.seattle.gov/category/councilmember-juarez/ "undefined Blog")
+--------------------------------------------------------------------------------------------
 
-Bob Kettle
+[Debora's Blog RSS FeedDebora's Blog RSS Feed](https://council.seattle.gov/category/councilmember-juarez/feed/ "undefined Blog")
 
-Councilmember  
- District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
+7/28
 
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
+[Councilmember Strauss celebrates appointment of Councilmember Juarez](https://council.seattle.gov/2025/07/28/councilmember-strauss-celebrates-appointment-of-councilmember-juarez/)
 
-Alexis Mercedes Rinck
+7/28
 
-Councilmember  
- Position 8](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
+[Council appoints Debora Juarez to fill District 5 vacancy](https://council.seattle.gov/2025/07/28/council-appoints-debora-juarez-to-fill-district-5-vacancy/)
 
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
+2/6
 
-Sara Nelson
+[Seattle City Council President Debora Juarez announces she will not seek re-election](https://council.seattle.gov/2023/02/06/seattle-city-council-president-debora-juarez-announces-she-will-not-seek-re-election/)
 
-Council President  
- Position 9](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
 
-[See all Councilmembers Go to link](https://www.seattle.gov/council/members "See all Councilmembers")
 
-How to Participate
-------------------
+Resources
+---------
 
-How to Participate
-------------------
+* [Newsletter Sign Upexternal link](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=ec10469090 "Newsletter Sign Up")
+* [Sign Up for Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
 
-[Attend a council meeting](https://www.seattle.gov/council/meetings "Council Meetings")
+A vendor contracted by the City of Seattle processes the information you provide in the links above and may use third-party tools to communicate where our privacy policy doesn't apply. We recommend that you check the vendor's privacy policy for details about information collection and use.
 
-[View our calendar](https://www.seattle.gov/council/calendar "Council Calendar")
+Contact Us
+----------
 
-[Comment at a public meeting](https://www.seattle.gov/council/meetings/public-comment "Public Comment")
+Phone:[(206) 684-8805](tel: +1 (206) 684-8805)
 
-[Tips on giving public comment](https://www.seattle.gov/council/meetings/public-comment-tips "Public Comment Tips")
+Email:[Debora.Juarez@seattle.gov](mailto:Debora.Juarez@seattle.gov)
 
-[Sign up for agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
+Fax:[(206) 684-8587](fax: +1 (206) 684-8587)
 
-View the Latest News
---------------------
+Address:
+[Office](https://www.seattle.gov/#tileMailing_sidebarx176737 "Expand the office address for Contact Us")
+ | 
+[Mailing](https://www.seattle.gov/#tileOffice_sidebarx176737 "Expand the mailing address for Contact Us")
 
-[### Select Committee on the Comprehensive Plan Session I 9/18/25
+Close
+**Street Address:**  
+Seattle City Hall  
+600 Fourth Avenue   
+2nd Floor   
+Seattle,
+WA
+98104
 
-Agenda: Call to Order; Approval of the Agenda; CB 120985: relating to the Seattle Comprehensive Plan; CB 120993: relating to major update of Neighborhood Residential zones; Res 32183: relating to On[...]](https://www.seattlechannel.org/video.asp?ID=2162579 " Select Committee on the Comprehensive Plan Session I 9/18/25")
+Close
+**Mailing Address:**  
+PO Box 34025  
+Seattle,
+WA
+98124-4025
 
-[### Select Committee on the Comprehensive Plan Session II 9/18/25
+Calendar
+--------
 
-Agenda: Call to Order; Approval of the Agenda; CB 120993 continued: relating to major update of Neighborhood Residential zones; Adjournment. [Watch session I here](https://seattlechannel.org/mayor-and-council/city-council/select-committee-on-the-comprehensive-plan/?videoid=x180127 "Select Committee on the Comprehensive Plan Session I 9/18/25").](https://www.seattlechannel.org/video.asp?ID=2162580 " Select Committee on the Comprehensive Plan Session II 9/18/25")
+Please update your browser to view the iframe content.
 
-**[View all Seattle Channel Council videosexternal link](https://www.seattlechannel.org/CityCouncil "Seattle Channel Council videos")**
+* [About Debora](https://www.seattle.gov/council/members/debora-juarez/about-debora "About Councilmember Debora Juarez")
+* [Staff](https://www.seattle.gov/council/members/debora-juarez/staff "Councilmember Debora Juarez's Staff")
+* [Committees & Calendar](https://www.seattle.gov/council/members/debora-juarez/committees-and-calendar "Debora's Committees & Calendar")
+No left sidebar
 
-[Council Connection Blog](https://council.seattle.gov/category/news-releases/ "undefined Blog")
------------------------------------------------------------------------------------------------
+Staff
+-----
 
-[Council Connection Blog RSS FeedCouncil Connection Blog RSS Feed](https://council.seattle.gov/category/news-releases/feed/ "undefined Blog")
+Staff
+-----
 
-9/16
+[![Kelly Brown](https://www.seattle.gov/images//images/Council/Members/Juarez/Juarez%20Staff/Kelly-Brown_300.jpg)
 
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
+Kelly Brown
 
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
+Chief of Staff](https://www.seattle.gov/x178476.xml#KellyBrown "Kelly Brown")
 
-9/15
+[![Kimi King](https://www.seattle.gov/images//images/Council/Members/Juarez/Juarez%20Staff/Kimi-King_300.jpg)
 
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
+Kimi King
 
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
+Director of External Affairs & Media](https://www.seattle.gov/x178476.xml#KimiKing "Kimi King")
 
-9/9
+[![Paul Menefee](https://www.seattle.gov/images//images/Council/Members/Juarez/Juarez%20Staff/Paul-Menefee_300.jpg)
 
-[Council approves pair of public safety technology bills](https://council.seattle.gov/2025/09/09/council-approves-pair-of-public-safety-technology-bills/)
+Paul Menefee
 
-Amended legislation includes added data and privacy safeguards SEATTLE – Today the City Council voted 7-2 in favor of two crime prevention bills which authorize the installation of cameras in three new public places (Capitol Hill, the Stadium [...]
+Policy Director](https://www.seattle.gov/x178476.xml#PaulMenefee "Paul Menefee")
 
-Related Resources
------------------
-
-Related Resources
------------------
-
-[Boards and Commissions
-
-Opportunities to serve on over 70 boards and commissions.](https://www.seattle.gov/boards-and-commissions "Boards and Commissions")
-
-[City Clerk
-
-Learn about the City Clerk and get legislation resources.](https://www.seattle.gov/cityclerk "City Clerk")
-
-[Find It Fix It App
-
-Report non-urgent requests such as clogged storm drains, traffic signal issues, and streetlight outage.](https://www.seattle.gov/customer-service-bureau/find-it-fix-it-mobile-app "Find It Fix It App")
-
-[Get Involved
-
-Find ways to volunteer, donate, and have a say on city issues.](https://www.seattle.gov/get-involved "Get Involved")
-
-1/4
+[See all staff Go to link](https://www.seattle.gov/council/members/debora-juarez/staff "See all staff")
 
 City Council
 ------------
@@ -916,6 +835,9 @@ Policies
 
 
 
+
+
+![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)
 
 Original text
 
