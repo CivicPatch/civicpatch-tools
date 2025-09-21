@@ -1,4 +1,5 @@
 import os
+import time
 import instructor
 import requests
 import json
@@ -57,7 +58,11 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, response_schem
 
     for model in MODEL_FALLBACKS:
         try:
-            return with_retry(MAX_RETRIES, lambda: execute(model))
+            start_time = time.time()
+            result = with_retry(MAX_RETRIES, lambda: execute(model))
+            end_time = time.time()
+            print(f"gemini {model} LLM call took {end_time - start_time:.2f} seconds")
+            return result   
         except Exception:
             continue
 

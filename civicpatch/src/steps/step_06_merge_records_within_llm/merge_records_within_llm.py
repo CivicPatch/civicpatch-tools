@@ -109,27 +109,14 @@ def merge_roles(records: List[LLMPerson], government_type: str) -> List[str]:
                     unique_roles.append(normalized_role)
     return unique_roles
 
-
 def merge_divisions(records: List[LLMPerson]) -> List[str]:
     """
-    Collect all unique divisions from all records and normalize them using the division alias map.
-    For divisions, retain the suffix and the next word (e.g., "Ward 1").
+    Collect a set of unique divisions from all records.
     """
-    division_alias_map = config_utils.get_division_alias_map()
-    seen = set()
-    unique_divisions = []
+
+    unique_divisions = set()
     for record in records:
         for division in record.divisions:
             if division:
-                normalized_division = None
-                for alias, canonical in division_alias_map.items():
-                    if division.lower().startswith(alias):
-                        suffix = division[len(alias):].strip()
-                        normalized_division = f"{canonical} {suffix}" if suffix else canonical
-                        break
-                if not normalized_division:
-                    normalized_division = division
-                if normalized_division not in seen:
-                    seen.add(normalized_division)
-                    unique_divisions.append(normalized_division)
-    return unique_divisions
+                unique_divisions.add(division)
+    return list(unique_divisions)

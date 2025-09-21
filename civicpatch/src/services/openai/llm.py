@@ -1,6 +1,6 @@
 import os
-import json
 import instructor
+import time
 # from openai import OpenAI
 from utils.request_utils import with_retry
 from utils.log_utils import log_llm_cost
@@ -42,4 +42,8 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, response_schem
 
         return response
 
-    return with_retry(MAX_RETRIES, execute)
+    start_time = time.time()
+    result = with_retry(MAX_RETRIES, execute)
+    end_time = time.time()
+    print(f"openai LLM call took {end_time - start_time:.2f} seconds")
+    return result

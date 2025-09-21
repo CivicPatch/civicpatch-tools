@@ -194,13 +194,14 @@ class Pipeline:
                     self.state = PipelineStatus.SCRAPE_PAGE
 
             elif self.state == PipelineStatus.PROCESS_PAGE_CONTENT:
-                result, processed_count, process_max_pages = self.process_page_content_step(process_config)
+                result, processed_count = self.process_page_content_step()
                 self.context.update(result)
                 
                 context_progress = self.context["progress"]
 
                 print("Current data:", context_progress.get("current_data", 0))
                 print("Required data:", context_progress.get("required_data", 0))
+                process_max_pages = process_config.get("max_pages", 15)
 
                 next_state = self.get_next_state_for_process_page_content(processed_count, process_max_pages)
                 self.state = next_state
@@ -241,29 +242,24 @@ class Pipeline:
         self.save_context(state, geoid)
         print(f"Pipeline completed successfully in {pipeline_duration:.2f} seconds.")
 
-    def process_page_content_step(self, process_config):
+    def process_page_content_step(self):
         """
         Handle the PROCESS_PAGE_CONTENT pipeline step.
         Returns the updated context and the next state.
         """
         preprocessed_links = self.get_links(LinkStatus.PREPROCESSED)
         links_processed = self.get_links(LinkStatus.DONE)
-        process_max_pages = process_config.get("max_pages", 15)
         processed_count = len(links_processed)
 
         if len(preprocessed_links) == 0:
             print("No preprocessed links left to process.")
-            return {}, processed_count, process_max_pages
+            return {}, processed_count 
 
-
-        page_to_process = preprocessed_links[0] if processed_count < process_max_pages else None
-        if not page_to_process:
-            print("Max pages reached.")
-            return {}, processed_count, process_max_pages
+        page_to_process = preprocessed_links[0] 
 
         updated_context = process_page_content(self.context, page_to_process)
 
-        return updated_context, processed_count, process_max_pages
+        return updated_context, processed_count
 
     def get_next_state_for_process_page_content(self, processed_count: int, max_pages: int) -> PipelineStatus:
         """
@@ -274,12 +270,14 @@ class Pipeline:
             print("More pending links to scrape, continuing to scrape...", next_pending_link)
             return PipelineStatus.SCRAPE_PAGE
 
-        if self.context["progress"]["current_data"] >= self.context["progress"]["required_data"]:
+        required_data = self.context["progress"]["required_data"]
+        if self.context["progress"]["current_data"] >= required_data:
             print("Enough data processed, moving to report generation...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
-        if processed_count >= max_pages:
-            print(f"Max pages ({max_pages}) reached, moving to next step...")
+        max_pages_with_required_data = max_pages + required_data # Each person might have a profile page
+        if processed_count >= max_pages_with_required_data:
+            print(f"Max pages ({max_pages_with_required_data}) reached, moving to next step...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
         print("Not enough data processed yet, collecting more data...")
