@@ -1,6 +1,6 @@
 import pytest
 from steps.step_05_process_page_content.merge_utils import normalize_name, find_canonical_name, update_name_map, append_to_people_by_name, group_people_by_name
-from schemas import LLMPerson, PeopleByName, OtherNamesByCanonicalName, LLMDataPoint
+from schemas import LLMPerson, LLMDataPoint
 
 
 def test_normalize_name():

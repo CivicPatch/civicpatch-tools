@@ -149,4 +149,9 @@ def get_context_keywords(government_type: str) -> List[str]:
         for alias in entry.get('aliases', []):
             keywords.add(alias)
 
+    ## Extra keywords for content filtering
+    extra_keywords = ["title", "email", "phone", "contact", "address",
+                      "start date", "elected at", "end date", "term expires"]
+    keywords.update(extra_keywords)
+
     return list(keywords)

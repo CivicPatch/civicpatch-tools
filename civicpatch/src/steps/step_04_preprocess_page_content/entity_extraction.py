@@ -3,10 +3,18 @@ import re
 from spacy.matcher import PhraseMatcher
 import utils.config_utils as config_utils
 
-nlp = spacy.load("en_core_web_trf")
-
-# Cache for keyword matchers per government_type
+# Other global variables
+_nlp = None
 _keyword_matchers = {}
+
+def get_nlp():
+    """Lazy load the SpaCy model with only needed components."""
+    global _nlp
+    if _nlp is None:
+        # Use smaller model and disable unnecessary components
+        _nlp = spacy.load("en_core_web_sm", 
+                         disable=["lemmatizer", "textcat", "attribute_ruler"])
+    return _nlp
 
 def extract_keywords(doc, government_type):
     """
@@ -22,6 +30,7 @@ def setup_keyword_entities(government_type):
     """
     Setup function to initialize the keyword matcher for the given government type.
     """
+    nlp = get_nlp()
     matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
     if government_type:
         context_keywords = config_utils.get_context_keywords(government_type)
@@ -46,6 +55,7 @@ def extract_with_context(pattern, text):
 # Check if the node contains relevant data
 def extract_data(text, government_type):
     """Extract relevant data from the given text."""
+    nlp = get_nlp()
     doc = nlp(text)
     found_people = []
     found_dates = []

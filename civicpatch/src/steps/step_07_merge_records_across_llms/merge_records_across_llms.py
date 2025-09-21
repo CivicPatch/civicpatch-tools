@@ -5,9 +5,11 @@ from collections import Counter
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
 
+MINIMUM_AGREEMENT_SCORE = 80
+
 def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
     """
-    Merge records across all sources to produce a unified list of Person objects.
+    Merge records across all llms to produce a unified list of Person objects.
     Uses people_by_llm from the previous step (MERGE_RECORDS_WITHIN_LLM).
     """
     # Get people_by_llm from previous step
@@ -99,8 +101,8 @@ def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
 
     validation_issues = []
 
-    if agreement_score < 80:
-        validation_issues.append(f"Low agreement score: {agreement_score:.2f}")
+    if agreement_score < MINIMUM_AGREEMENT_SCORE:
+        validation_issues.append(f"Low agreement score: {agreement_score:.2f}. Minimum expected is {MINIMUM_AGREEMENT_SCORE}.")
 
     return {
         "steps": {

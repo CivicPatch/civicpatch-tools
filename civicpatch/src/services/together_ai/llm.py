@@ -1,5 +1,5 @@
 import os
-import json
+import time
 import instructor
 import openai
 from typing import List, Dict, Any
@@ -167,4 +167,8 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, content="", re
 
         return response
 
-    return with_retry(MAX_RETRIES, execute)
+    start_time = time.time()
+    result = with_retry(MAX_RETRIES, execute)
+    end_time = time.time()
+    print(f"together_ai LLM call took {end_time - start_time:.2f} seconds")
+    return result

@@ -1,5 +1,0 @@
-services:
-  scripts:
-    build:
-      context: ./civicpatch
-      target: image-base

@@ -19,7 +19,7 @@ def municipality_officials_prompt(government_type, people_hint):
     elif maybe_target_people:
         person_name = ""
         target_text = (
-            f"any of the main governing body of a municipality."
+            f"any of the main governing body of a municipality. "
             f"Here is a list of known target people (may be missing or include extra): {', '.join(maybe_target_people)}"
         )
     else:

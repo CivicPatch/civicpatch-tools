@@ -28,20 +28,27 @@ def assert_markdown_equal(actual_html, expected_md, government_type, subfolder="
         print(f"Actual preprocessed output written to {output_path}")
     assert actual_lines == expected_lines
 
-#def test_filter_content_with_real_data():
-#    original = read_fixture("original.html")
-#    expected = read_fixture("preprocessed.md")
-#    assert original, "Original fixture is missing or empty"
-#    assert_markdown_equal(original, expected, government_type="mayor_council")
-#
-#def test_filter_content_with_keywords():
-#    original = read_fixture("original.html", subfolder="with_keywords")
-#    expected = read_fixture("preprocessed.md", subfolder="with_keywords")
-#    assert original, "Keyword test fixture is missing or empty"
-#    assert_markdown_equal(original, expected, "mayor_council", subfolder="with_keywords")
+ #def test_filter_content_with_real_data():
+ #    original = read_fixture("original.html")
+ #    expected = read_fixture("preprocessed.md")
+ #    assert original, "Original fixture is missing or empty"
+ #    assert_markdown_equal(original, expected, government_type="mayor_council")
 
-def test_filter_content_with_big_page():
-    original = read_fixture("original.html", subfolder="big_page")
-    expected = read_fixture("preprocessed.md", subfolder="big_page")
-    assert original, "Big page test fixture is missing or empty"
-    assert_markdown_equal(original, expected, "mayor_council", subfolder="big_page")
+def test_filter_content_with_seattle():
+    original = read_fixture("original.html", subfolder="seattle_council")
+    expected = read_fixture("preprocessed.md", subfolder="seattle_council")
+    assert original, "Keyword test fixture is missing or empty"
+    assert_markdown_equal(original, expected, "mayor_council", subfolder="seattle_council")
+
+
+#def test_filter_content_with_big_page():
+#    original = read_fixture("original.html", subfolder="big_page")
+#    expected = read_fixture("preprocessed.md", subfolder="big_page")
+#    assert original, "Big page test fixture is missing or empty"
+#    assert_markdown_equal(original, expected, "mayor_council", subfolder="big_page")
+
+# def test_filter_content_with_table():
+#     original = read_fixture("original.html", subfolder="with_table")
+#     expected = read_fixture("preprocessed.md", subfolder="with_table")
+#     assert original, "Table test fixture is missing or empty"
+#     assert_markdown_equal(original, expected, "mayor_council", subfolder="with_table")
