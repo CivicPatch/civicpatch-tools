@@ -1,5 +1,5 @@
 import os
-import uuid
+import hashlib
 import json
 from playwright.async_api import async_playwright, Page
 from typing import TypedDict
@@ -13,6 +13,10 @@ class ScrapeOptions(TypedDict):
 
 class ImageError(Exception):
     pass
+
+def hash_string(s: str) -> str:
+    """Returns a SHA256 hash of the input string."""
+    return hashlib.sha256(s.encode('utf-8')).hexdigest()[:12]
 
 async def scrape(website_url, options=None):
     """
@@ -131,7 +135,7 @@ async def html_relative_to_absolute_urls(page: Page):
 async def download_images(page: Page, image_dir: str):
     """
     Captures screenshots of images from the current page using Playwright,
-    renames them to UUIDs, and saves a mapping of original URLs to UUIDs in a JSON file.
+    renames them with hashed strings, and saves a mapping of original URLs to hashed strings in a JSON file.
 
     Args:
         page (Page): The Playwright page object.
@@ -154,8 +158,8 @@ async def download_images(page: Page, image_dir: str):
             if any(src.endswith(ext) for ext in IMAGE_EXT_BLACKLIST):
                 raise ImageError("Image is under blacklisted")
 
-            image_uuid = str(uuid.uuid4())
-            file_name = f"{image_uuid}.png"
+            image_hash = hash_string(src)
+            file_name = f"{image_hash}.png"
             file_path = os.path.join(image_dir, file_name)
 
             await img.screenshot(path=file_path)
