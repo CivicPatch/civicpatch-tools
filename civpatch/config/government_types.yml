@@ -32,6 +32,7 @@ divisions:
 #  * position no 8 -> ["position 8"]
 government_types:
   mayor_commission:
+    head_of_government: mayor
     roles:
       - role: mayor
       - role: mayor pro tempore
@@ -84,6 +85,7 @@ government_types:
         - meet
         - about
   mayor_council:
+    head_of_government: mayor
     aliases:
       - council_manager
     roles:

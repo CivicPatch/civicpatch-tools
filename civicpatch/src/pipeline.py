@@ -201,6 +201,8 @@ class Pipeline:
 
                 print("Current data:", context_progress.get("current_data", 0))
                 print("Required data:", context_progress.get("required_data", 0))
+                print("Has target role:", context_progress.get("has_target_role", False))
+
                 process_max_pages = process_config.get("max_pages", 15)
 
                 next_state = self.get_next_state_for_process_page_content(processed_count, process_max_pages)
@@ -271,7 +273,10 @@ class Pipeline:
             return PipelineStatus.SCRAPE_PAGE
 
         required_data = self.context["progress"]["required_data"]
-        if self.context["progress"]["current_data"] >= required_data:
+        current_data = self.context["progress"]["current_data"]
+        has_target_role = self.context["progress"].get("has_target_role", False)
+
+        if current_data >= required_data and has_target_role:
             print("Enough data processed, moving to report generation...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 

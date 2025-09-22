@@ -51,18 +51,22 @@ def get_images_path(state, geoid):
 
     return images_path
 
+def get_municipality_path(state, geoid):
+    municipality_name = utils.data_utils.get_municipality_folder_name(state, geoid)
+    return os.path.join(state, "municipalities", municipality_name)
+
 def get_data_municipality_path(state, geoid):
     """
     Returns the absolute path to the municipalities directory for a given state and GEOID.
     """
     data_path = utils.path_utils.get_data_path()
-    municipality_name = utils.data_utils.get_municipality_folder_name(state, geoid)
-    return os.path.join(data_path, state, "municipalities", municipality_name)
+    municipality_path = get_municipality_path(state, geoid)
+    return os.path.join(data_path, municipality_path)
 
 def get_data_source_municipality_path(state, geoid):
     """
     Returns the absolute path to the municipalities directory for a given state and GEOID.
     """
     data_source_path = utils.path_utils.get_data_source_path()
-    municipality_name = utils.data_utils.get_municipality_folder_name(state, geoid)
-    return os.path.join(data_source_path, state, "municipalities", municipality_name)
+    municipality_path = get_municipality_path(state, geoid)
+    return os.path.join(data_source_path, municipality_path)

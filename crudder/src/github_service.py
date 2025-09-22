@@ -7,6 +7,7 @@ def trigger_github_data_intake_workflow(
         request_id: str, 
         state: str, 
         geoid: str,
+        municipality_path: str,
         municipality_name: str,
         zip_file_url: str):
     # Trigger GitHub Actions workflow to pull data from the given URL
@@ -25,6 +26,7 @@ def trigger_github_data_intake_workflow(
             "request_id": request_id,
             "state": state,
             "geoid": geoid,
+            "municipality_path": municipality_path,
             "municipality_name": municipality_name,
             "zip_file_url": zip_file_url
         }

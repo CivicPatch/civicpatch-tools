@@ -84,8 +84,10 @@ def process_page_content(
     updated_processed_data.records_by_llm = updated_records_by_llm
 
     roles = config_utils.get_all_roles_by_government_type(government_type)
+    target_role = config_utils.get_head_of_government_role(government_type)
+    
     updated_progress = calculate_progress(
-        context["progress"].copy(), updated_processed_data.records_by_llm, roles
+        context["progress"].copy(), updated_processed_data.records_by_llm, target_role, roles
     )
 
     updated_links = []
@@ -166,29 +168,35 @@ def process_with_llms(
 def calculate_progress(
     progress: Dict[str, Any],
     updated_records_by_llm: RecordsByLLM,
+    target_role: str,
     roles: List[str]
-) -> Dict[str, Any]: # Return progress and names of people with contact data
+) -> Dict[str, Any]:
     """
     Update the progress based on the processed data.
     """
-    # min_length = float('inf')
     lengths = []
+    target_role_found_with_an_llm = []
 
-    for _, people_by_name in updated_records_by_llm.items():
+    for llm, people_by_name in updated_records_by_llm.items():
         filtered = [
             p for p in people_by_name.values()
             if has_role_and_contact_info(roles, p)
         ]
         lengths.append(len(filtered))
-        # min_length = min(min_length, len(filtered))
+        print(f"{llm}: {len(filtered)} people with roles and contact info")
 
-    for source, people_by_name in updated_records_by_llm.items():
-        filtered = [
-            p for p in people_by_name.values()
-            if has_role_and_contact_info(roles, p)
+        # Flatten the nested roles structure and check for target role
+        all_roles = [
+            role.strip().lower()
+            for person_records in filtered
+            for person in person_records
+            for role in person.roles
         ]
-        print(f"{source}: {len(filtered)} people with roles and contact info")
-    
+        
+        has_target_role = target_role is None or target_role.lower() in all_roles
+        if has_target_role:
+            target_role_found_with_an_llm.append(llm)
+
     # Gather count of each length
     current_progress = 0
     # Find the largest value that appears at least twice
@@ -200,6 +208,7 @@ def calculate_progress(
     else:
         current_progress = 0
     progress["current_data"] = current_progress
+    progress["has_target_role"] = len(target_role_found_with_an_llm) > 1
     return progress
 
 def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> bool:

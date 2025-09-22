@@ -2,6 +2,7 @@ import os
 import io
 import datetime
 from typing import Annotated
+from civicpatch.src.scripts.upload_images_to_cdn import upload_file_to_storage
 from fastapi import FastAPI, Request, Security, HTTPException, Depends, Form, Header, File, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -17,7 +18,6 @@ from github_service import trigger_github_data_intake_workflow
 
 from jose import jwt  # pip install python-jose[cryptography]
 import os
-from pathlib import Path
 
 # Only purpose is to manage users, their API keys, and move data from 3rd party servers
 # to GitHub Actions.
@@ -126,6 +126,7 @@ async def github_intake(
     authorization: str = Security(api_key_header),  # Changed this line
     state: str = Form(...),
     geoid: str = Form(...),
+    municipality_path: str = Form(...),
     municipality_name: str = Form(...),
     request_id: str = Form(...)
 ):
@@ -153,15 +154,14 @@ async def github_intake(
     # Now you have access to the parameters
     print(f"Processing intake for {municipality_name} ({state}, {geoid})")
     
-    # Process the zip file and upload images
-    zip_results = await process_zip_file(
+    zip_url = await upload_file_to_storage(
         STORAGE_ENDPOINT,
         STORAGE_ACCESS_KEY_ID,
         STORAGE_SECRET_ACCESS_KEY,
-        file
+        "crudder",
+        file,
+        with_presigned_url=True
     )
-
-    zip_url = zip_results["zip_url"]
 
     # Use the parameters in your workflow trigger
     trigger_github_data_intake_workflow(
@@ -171,6 +171,7 @@ async def github_intake(
         request_id,
         state, 
         geoid,
+        municipality_path,
         municipality_name,
         zip_url
     )

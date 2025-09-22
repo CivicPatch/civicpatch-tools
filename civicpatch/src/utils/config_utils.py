@@ -64,6 +64,19 @@ def get_all_roles_by_government_type(government_type: str) -> List[str]:
         roles.extend(role.get('aliases', []))
     return roles
 
+def get_head_of_government_role(government_type: str) -> str:
+    """
+    Returns the head of government role for a specific government type from the configuration file.
+    
+    Args:
+        government_type: The type of government (e.g., "mayor_council", "commission").
+    
+    Returns:
+        The head of government role associated with the specified government type.
+    """
+    government_types = get_government_types()
+    return government_types.get(government_type, {}).get('head_of_government', '')
+
 def get_role_configs_by_government_type(government_type: str) -> List[Dict[str, List[str]]]:
     """
     Returns a list of role configurations associated with a specific government type from the configuration file.

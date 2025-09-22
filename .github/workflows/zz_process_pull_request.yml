@@ -19,6 +19,11 @@ on:
         description: 'The path to the municipality (e.g. wa/municipalities/seattle)'
         required: true
         type: string
+      upload_images:
+        description: 'Whether to upload images to CDN'
+        required: false 
+        type: boolean
+        default: false
 
     secrets:
       GH_APP_BOT_PIPELINE_APP_ID:
@@ -29,6 +34,12 @@ on:
         required: true
       GH_APP_BOT_APPROVE_PRIVATE_KEY:
         required: true
+      STORAGE_ENDPOINT:
+        required: false
+      STORAGE_ACCESS_KEY:
+        required: false
+      STORAGE_SECRET_ACCESS_KEY:
+        required: false
 
 permissions:
   contents: read # For checkout
@@ -110,4 +121,34 @@ jobs:
           else
             gh pr review $PR_NUMBER --approve -b "$COMMENT"
           fi
-          
+      
+      - name: Upload images to CDN
+        if: ${{ inputs.upload_images == true }} 
+        env:
+          STORAGE_ENDPOINT: ${{ secrets.STORAGE_ENDPOINT }}
+          STORAGE_ACCESS_KEY: ${{ secrets.STORAGE_ACCESS_KEY }}
+          STORAGE_SECRET_ACCESS_KEY: ${{ secrets.STORAGE_SECRET_ACCESS_KEY }}
+        run: |
+          cd civicpatch
+          mise upload-images-to-cdn --municipality-path "${{ inputs.municipality_path }}"
+          # Remove local images after upload
+          rm -rf data_source/${{ inputs.municipality_path }}/images 
+      - name: Commit image updates
+        if: ${{ inputs.upload_images == true }} 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        run: |
+        
+          cd civicpatch
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+
+          # Configure git
+          git config --global user.name "civic-patch-pipeline-bot"
+          git config --global user.email "civicpatch-tools@civicpatch.org"
+
+          # Commit changes if any images were updated
+          if [ -n "$(git status --porcelain)" ]; then
+            git add .
+            git commit -m "Upload images to CDN for ${{ inputs.municipality_path }}"
+            git push
+          fi
