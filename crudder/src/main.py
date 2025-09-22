@@ -1,8 +1,6 @@
 import os
 import io
 import datetime
-from typing import Annotated
-from civicpatch.src.scripts.upload_images_to_cdn import upload_file_to_storage
 from fastapi import FastAPI, Request, Security, HTTPException, Depends, Form, Header, File, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -11,9 +9,8 @@ from fastapi.security import APIKeyCookie, APIKeyHeader
 from fastapi_sso.sso.github import GithubSSO
 from fastapi_sso.sso.base import OpenID
 import sqlite3
-import boto3
 from database import maybe_init_db, maybe_insert_user, create_api_key, get_api_keys_for_user, revoke_api_key, get_user_details, get_server_detail_by_active_api_key
-from storage_service import process_zip_file
+from storage_service import upload_file_to_storage
 from github_service import trigger_github_data_intake_workflow
 
 from jose import jwt  # pip install python-jose[cryptography]

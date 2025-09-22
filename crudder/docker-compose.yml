@@ -1,6 +1,6 @@
 services:
   crudder:
-    container_name: crudder
+    container_name: crudder_app
     env_file: .env
     build:
       context: ..
@@ -10,5 +10,4 @@ services:
     ports:
       - "8001:8001"
     volumes:
-      - ../shared:/app/shared:ro  # Mount shared library
       - .:/app
