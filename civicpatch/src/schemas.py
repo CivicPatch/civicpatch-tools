@@ -16,6 +16,7 @@ class SearchEngineState(BaseModel):
 class ProgressState(BaseModel):
     required_data: int
     current_data: int
+    has_target_role: bool
 
 class LinkStatus(Enum):
     PENDING = "pending"
@@ -60,7 +61,6 @@ class MunicipalityContext(BaseModel):
 
 class RawLLMPerson(BaseModel):
     name: str
-    image: Optional[str] = None
     roles: List[str]
     divisions: List[str]
     phone_number: Optional[str] = None
@@ -68,6 +68,7 @@ class RawLLMPerson(BaseModel):
     website: Optional[str] = None
     start_date: Optional[str] = None
     end_date: Optional[str] = None
+    image: Optional[str] = None
 
 class LLMPerson(RawLLMPerson):
     source: str
@@ -77,11 +78,11 @@ class PeopleArrayLLMResponseSchema(BaseModel):
     thought: str
 
 class Person(RawLLMPerson):
+    cdn_image: str
     state: str = ""
     place: str = ""
     counties: List[str] = []
     sources: List[str] # List of source URLs where information was found
-    cdn_image: str
     updated_at: str
 
     @field_validator('divisions')

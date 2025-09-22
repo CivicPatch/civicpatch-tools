@@ -17,6 +17,9 @@ on:
       state:
         description: 'State' 
         required: true
+      municipality_path:
+        description: 'Municipality Path (e.g. <state>/municipalities/<municipality_name>)'
+        required: true
       municipality_name:
         description: 'Municipality Name'
         required: true
@@ -28,11 +31,16 @@ on:
         required: true
 
 jobs:
-  payload_intake:
+  data-intake:
     permissions:
       contents: write
       pull-requests: write
     runs-on: ubuntu-latest
+    outputs:
+      pr_number: ${{ steps.create-pr.outputs.pr_number }}
+      head_sha: ${{ steps.create-pr.outputs.head_sha }}
+      head_ref: ${{ steps.extract_branch.outputs.branch_name }}
+      municipality_path: ${{ steps.create-pr.outputs.municipality-path }}
     steps:
       - uses: actions/checkout@v5
 
@@ -68,6 +76,7 @@ jobs:
           echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
 
       - name: Create a PR
+        id: create-pr
         env:
           GITHUB_USERNAME: civic-patch-pipeline-bot
           GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
@@ -82,11 +91,37 @@ jobs:
           git push -u origin ${{ steps.extract_branch.outputs.branch_name }} 
 
           echo ${{ github.actor }}
-          
-          gh pr create \
+
+          head_sha=$(git rev-parse HEAD)
+          echo "head_sha=$head_sha" >> $GITHUB_OUTPUT
+
+          github_pull_request_url=$(gh pr create \
             --title "Data intake for ${{ github.event.inputs.state }} - ${{ github.event.inputs.municipality_name }} by ${{ github.event.inputs.user_email }}" \
             --body "Automated data intake for request ID: ${{ github.event.inputs.request_id }}. Please review the data before merging." \
             --base main
+          )
+          github_pr_number=$(basename "$github_pull_request_url")
+          echo "pr_number=$github_pr_number" >> $GITHUB_OUTPUT
+  
+  process-pull-request:
+    needs: data-intake
+    permissions:
+      contents: write
+      pull-requests: write
+    uses: ./.github/workflows/zz_process_pull_request.yml
+    with:
+      pr_number: ${{ needs.data-intake.outputs.pr_number }}
+      head_sha: ${{ needs.data-intake.outputs.head_sha }}
+      head_ref: ${{ needs.data-intake.outputs.head_ref }}
+      municipality_path: ${{ github.event.inputs.municipality_path }}
+      upload_images: true
+    secrets:
+      GH_APP_BOT_PIPELINE_APP_ID: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
+      GH_APP_BOT_PIPELINE_PRIVATE_KEY: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
+      GH_APP_BOT_APPROVE_APP_ID: ${{ secrets.GH_APP_BOT_APPROVE_APP_ID }}
+      GH_APP_BOT_APPROVE_PRIVATE_KEY: ${{ secrets.GH_APP_BOT_APPROVE_PRIVATE_KEY }}
+      STORAGE_ENDPOINT: ${{ secrets.STORAGE_ENDPOINT }}
+      STORAGE_ACCESS_KEY: ${{ secrets.STORAGE_ACCESS_KEY }}
+      STORAGE_SECRET_ACCESS_KEY: ${{ secrets.STORAGE_SECRET_ACCESS_KEY }}
 
-      # TODO: run script to generate people table
-      # TOOD: run script to generate disagreements table
+

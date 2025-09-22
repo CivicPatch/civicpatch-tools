@@ -25,6 +25,7 @@ dependencies = [
     "together (>=1.5.25,<2.0.0)",
     "uvicorn (>=0.35.0,<0.36.0)",
     "fastapi[standard] (>=0.116.1,<0.117.0)",
+    "boto3 (>=1.40.35,<2.0.0)",
 ]
 [tool.poetry]
 packages = [

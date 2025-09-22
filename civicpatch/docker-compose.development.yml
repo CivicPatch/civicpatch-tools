@@ -9,6 +9,7 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"
+    user: "${UID}:${GID}"
     volumes:
       # - ../utils:/app/utils:ro  # Mount shared library
       - ../data:/app/data

@@ -34,20 +34,20 @@ WORKDIR /app
 
 # COPY ./utils /app/utils
 
-COPY ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
+RUN useradd -m -s /bin/bash civicpatch_user 
+COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 RUN poetry install --no-root
 
 FROM image-base AS post-install
 
 RUN poetry run playwright install --with-deps chromium
 
-RUN useradd -m -s /bin/bash civicpatch_user && chown -R civicpatch_user:civicpatch_user /app
 USER civicpatch_user
 
 ENV PATH="/home/civicpatch_user/.local/bin:$PATH"
 
 RUN pip config set global.no-cache-dir true
-COPY ${PROJECT_NAME}/src/setup.py /app/src/setup.py
+COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/setup.py /app/src/setup.py
 RUN poetry run post-install
 
 #https://github.com/microsoft/playwright-python/issues/2572
@@ -74,9 +74,9 @@ FROM post-install AS production
 
 WORKDIR /app
 
-COPY ./${PROJECT_NAME} /app
-COPY ./data /app/data
-COPY ./data_source /app/data_source
+COPY --chown=civicpatch_user:civicpatch_user ./${PROJECT_NAME} /app
+COPY --chown=civicpatch_user:civicpatch_user ./data /app/data
+COPY --chown=civicpatch_user:civicpatch_user ./data_source /app/data_source
 
 USER civicpatch_user
 EXPOSE 8000

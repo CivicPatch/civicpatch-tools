@@ -4,7 +4,7 @@ import zipfile
 from schemas import PipelineContext, PipelineStatus, MunicipalityContext
 
 from utils.request_utils import with_retry
-from utils.data_path_utils import get_data_municipality_path, get_data_source_municipality_path
+from utils.data_path_utils import get_data_municipality_path, get_data_source_municipality_path, get_municipality_path
 from utils.data_utils import get_municipality_context
 
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
@@ -44,10 +44,13 @@ def maybe_send_to_github(context: PipelineContext):
         'file': (os.path.basename(zip_file_path), open(zip_file_path, 'rb'), 'application/zip')
     }
 
+    municipality_path = get_municipality_path(context["state"], context["geoid"])
+
     # Add metadata in the request body
     data = {
         'state': context["state"],
         'geoid': context["geoid"],
+        "municipality_path": municipality_path,
         'municipality_name': municipality_context.municipality_entry.name,
         'request_id': context["request_id"],
     } 
