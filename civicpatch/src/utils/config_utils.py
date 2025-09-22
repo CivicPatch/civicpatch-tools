@@ -164,7 +164,8 @@ def get_context_keywords(government_type: str) -> List[str]:
 
     ## Extra keywords for content filtering
     extra_keywords = ["title", "email", "phone", "contact", "address",
-                      "start date", "elected at", "end date", "term expires"]
+                      "start date", "elected at", "end date", "term expires",
+                      "current term"]
     keywords.update(extra_keywords)
 
     return list(keywords)

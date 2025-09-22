@@ -98,7 +98,7 @@ def process_page_content(
         else:
             updated_links.append(link)
 
-    updated_links = update_website_links(updated_links, updated_processed_data.records_by_llm)
+    updated_links = update_website_links(roles, updated_links, updated_processed_data.records_by_llm)
 
     return {
         "links": updated_links,
@@ -229,12 +229,12 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     )
     return has_contact and has_role
 
-def update_website_links(existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
+def update_website_links(roles, existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
     """
     Update the links with websites found in the processed data.
     """
     updated_links = copy.deepcopy(existing_links)
-    found_websites = extract_websites_from_processed_data(records_by_llm)
+    found_websites = extract_websites_from_processed_data(roles, records_by_llm)
 
     for website in found_websites:
         existing_link = next((link for link in updated_links if link["url"] == website), None)
@@ -255,13 +255,20 @@ def update_website_links(existing_links: List[Link], records_by_llm: RecordsByLL
 
     return updated_links
 
-def extract_websites_from_processed_data(records_by_llm: RecordsByLLM) -> List[str]:
+def extract_websites_from_processed_data(roles: List[str], records_by_llm: RecordsByLLM) -> List[str]:
     """
     Extract website links from the processed data.
     """
     found_websites = []
     for people_by_name in records_by_llm.values():
         for person_list in people_by_name.values():  # Directly iterate over lists of LLMPerson
+            # If person already has a role and contact info,
+            # ignore adding more websites for the person
+            if has_role_and_contact_info(
+                roles, person_list
+            ):
+                print("Skipping adding websites for person with role and contact info")
+                continue
 
             for person_record in person_list:
                 website = person_record.website if person_record.website else None
