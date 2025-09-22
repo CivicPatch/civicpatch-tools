@@ -1,4 +1,5 @@
-Elected Officials | seattle.gov
+Working at the City - Human Resources | seattle.gov
+
 
 
 
@@ -172,148 +173,102 @@ Google Translate ንኹሉ ትሕዝቶ ብትኽክል ከይትርጉሞ ይ�
 Continue
 Cancel
 
+At the City of Seattle, public service is more than a job; it’s an opportunity to shape the future and improve the lives of the people who call our city home. Whether you're just starting out or bringing years of experience, meaningful opportunities await you here!
+With over 1,100 job titles across 40 departments, offices, and commissions, we offer diverse career paths where your skills and passions can thrive. From maintaining public spaces and ensuring public safety, to designing digital solutions, engineering infrastructure, working in skilled trades, or developing community programs, your work supports a city that puts people first.
+Also, when you serve Seattle, you're making more than a local impact; you're helping to set a national and global example of inclusive, innovative, transparent, and community-driven government.
+Come join nearly 12,000 dedicated employees who enjoy competitive pay, excellent benefits, generous leave, and most importantly, the pride of serving one of the most vibrant cities in the country!
+Here’s a general idea of what you can expect from the hiring process. Please note that hiring processes can vary by department and role.
+
+After you apply, a member of our HR team will review all applications to identify candidates whose qualifications and experience most closely align with the role. Only those who meet the minimum qualifications (listed in the job posting) can move forward to the Subject Matter Expert (SME) review stage.
+
+Next, a group of subject matter experts will review applications that have moved to this step. The panel reviews how closely applicant skills align with the job advertisement. This group will recommend candidates to be interviewed.
+
+After the above review steps, you may be invited to interview via phone, video, or in person. Some interviews are one-on-one, and others may include a panel. Depending on the process, there may be multiple interviews.
+
+After interviews are completed, the top candidate will receive a contingent verbal offer, followed by a written offer. This is a great opportunity to ask any questions and ensure the role is the right fit for you. Once the offer is accepted, we’ll begin pre-employment steps such as background checks and other required verifications.
+Before your first day, your City department’s HR team will guide you through onboarding tasks to ensure a smooth start. When you arrive, your team will be ready to welcome you and help you settle into your role with the City of Seattle.
+We invite you to explore a career in public service, where you can shape Seattle's future while growing personally and professionally. Together, we’re building a city that works for everyone!
+
+To apply for a City of Seattle job, you’ll need to complete an online application. If you don’t have internet access, you can:
+
+* Ask a family member or friend if you can use their computer.
+
+2. Do I need an email address to apply?
+---------------------------------------
+
+Yes, you’ll need an email address to complete your application and receive important updates. You can create a free email account through services like Gmail, Outlook, or Yahoo (note: the City does not endorse any specific provider).
+
+No. Applications must be submitted online through our job portal. A resume alone does not replace any part of the required application. If you need an accommodation, please contact the department listed in the job advertisement.
+
+Visit our
+Job Opportunities
+page to browse current openings by category, department, or job title. New roles are added regularly.
+
+Click on the
+Job Alerts link
+on the Job Opportunities page. Follow the instructions to receive email notifications for specific jobs that interest you. These alerts are active for one year.
+
+Some positions are posted continuously because they’re needed year-round or have extended hiring timelines. These postings may be reviewed and filled on a rolling basis, so we encourage you to apply as soon as possible.
+
+No. If you need to update information on your application, please submit a new application before the application deadline. Our team will review the most recent application submitted for that job advertisement. If you cannot resubmit an application for any reason, please contact the department listed in the job advertisement.
+
+8. Who can I contact if I need help with my application?
+--------------------------------------------------------
+
+If the job posting lists a recruiter, they are your best point of contact. For general questions, contact the Job Information Center (JIC) at:
+
+* **Email**
+  :
+
+* **Phone**
+  :
+
+9. I need an accommodation during the hiring process. Who can I contact?
+------------------------------------------------------------------------
+
+We’re committed to ensuring an inclusive, accessible hiring process for all applicants. If you need a reasonable accommodation, please contact the recruiter or department listed in the job posting. If you need additional assistance, you can contact the Job Information Center at
+[careers@seattle.gov](mailto:careers@seattle.gov "Careers Email")
+.
+
+If you meet the minimum qualifications listed in the posting, we encourage you to apply! Some listed qualifications may be “desired” rather than the required minimum qualifications. We value diverse experiences and perspectives — and recognize that skills can be developed in many ways.
+Yes! The City of Seattle offers many entry-level roles, temporary roles,
+internships
+, seasonal positions,
+apprenticeships
+, and trainee programs. These are great ways to begin a public service career and grow over time.
 
 
-* + Elected Officials
-    - Elected Officials Page Cards
-      * Council Members (Legislative)
-        + [Rob Saka](https://www.seattle.gov/x152133.xml "Main Menu Mobile - Council Members (Legislative) Rob Saka")
-        + [Mark Solomon](https://www.seattle.gov/x152136.xml "Main Menu Mobile - Council Members (Legislative) Mark Solomon")
-        + [Joy Hollingsworth](https://www.seattle.gov/x152139.xml "Main Menu Mobile - Council Members (Legislative) Joy Hollingsworth")
-        + [Debora Juarez](https://www.seattle.gov/x178555.xml "Main Menu Mobile - Council Members (Legislative) Debora Juarez")
-        + [Dan Strauss](https://www.seattle.gov/x152140.xml "Main Menu Mobile - Council Members (Legislative) Dan Strauss")
-        + [Bob Kettle](https://www.seattle.gov/x152134.xml "Main Menu Mobile - Council Members (Legislative) Bob Kettle")
-        + [Sara Nelson](https://www.seattle.gov/x152137.xml "Main Menu Mobile - Council Members (Legislative) Sara Nelson")
-      * Law
-        + [Ann Davison](https://www.seattle.gov/x152142.xml "Main Menu Mobile - Law Ann Davison")
-  + Events
-    - [Seattle Citywide Event Calendar Policy and Disclaimer](https://www.seattle.gov/event-calendar/policy-and-disclaimer "Main Menu Mobile - Events Seattle Citywide Event Calendar Policy and Disclaimer")
-    - [Help with Citywide Event Calendar](https://www.seattle.gov/event-calendar/help "Main Menu Mobile - Events Help with Citywide Event Calendar")
-    - [Public Outreach and Engagement Event Calendar](https://www.seattle.gov/event-calendar/public-outreach-and-engagement-calendar "Main Menu Mobile - Events Public Outreach and Engagement Event Calendar")
-
-
-
-* [City Council Topics](https://www.seattle.gov/council/topics)
-
-Know your rights with programs for immigrants and refugees.
-
-* [Animal Shelter](https://www.seattle.gov/animal-shelter)
-
-* [Victim Assistance](https://www.seattle.gov/cityattorney/crime-victim-assistance)
-
-Search for your lost pet or research adopting a new one.
-Find options for receiving and paying your utility bills.
-
-* [Teen Jobs and Leadership Programs with Seattle Parks (14-24)](https://www.seattle.gov/parks/learning-and-childcare/teen-programs/job-readiness-opportunities-for-teens)
-
-Get data for your research needs at the Open Data Portal.
-
-* [Historic Districts](https://www.seattle.gov/neighborhoods/historic-preservation/historic-districts)
-
-View public funding opportunities for community artists.
-
-* Zoning Map
-
-* [Pay for Parking by Phone](https://www.paybyphone.com/locations/seattle)
-
-Learn about parking options, tips, and payment methods.
-
-[![Mayor](https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg)
-
-Bruce Harrell
-
-Mayor](https://www.seattle.gov/mayor "Mayor Home Page")
-
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
-
-Rob Saka
-
-Councilmember
-District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
-
-Mark Solomon
-
-Councilmember
-District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-
-Joy HollingsworthCouncilmemberDistrict 3
-Maritza RiveraCouncilmemberDistrict 4
-
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
-
-Debora Juarez
-
-Councilmember
-District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
-
-Dan Strauss
-
-Councilmember
-District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
-
-Bob Kettle
-
-Councilmember
-District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-
-Alexis Mercedes RinckCouncilmemberPosition 8
-Sara NelsonCouncil PresidentPosition 9
-
-Meet the Council
-
-Ann DavisonCity Attorney
-
-[![Anita Crawford-Willis](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAnitaCrawford-Willis_circle.jpg)
-
-Anita Crawford-Willis
-
-Presiding Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-anita-crawford-willis "Anita Crawford-Willis")
-
-Damon ShadidAssistant Presiding Judge
-
-[![Faye Chess](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeFayeRChess_circle.jpg)
-
-Faye Chess
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-faye-chess "Faye Chess")
-
-[![Andrea Chin](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAndreaChin_circle.jpg)
-
-Andrea Chin
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-andrea-chin "Andrea Chin")
-
-[![Willie Gregory](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeWillieGregory_circle.jpg)
-
-Willie Gregory
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-willie-gregory "Willie Gregory")
-
-Catherine McDowallJudge
-Pooja VaddadiJudge
-Seattle Municipal CourtGeneral Information
 
 Contact Us
 ----------
 
-Customer Service Bureau
+Seattle Department of Human Resources
+700 5th Avenue, Suite 5400
+Seattle, WA 98124
+Email:
+[Careers@Seattle.gov](mailto:Careers@Seattle.gov)
 Phone:
-(206) 684-2489
+(206) 684-7999
+Search Jobs
 
+* [Contact Us](https://www.seattle.gov/human-resources/about-us/contact-us)
+
+Kimberly Loving, Director
 Address:
-City Hall, 600 Fourth Ave. Seattle, WA 98104
-
-City Hall, 600 Fourth Ave.Seattle, WA 98104
-Customer Service Centers
+700 5th Ave, Suite 5500, Seattle, WA , 98124
+Mailing Address:
+PO Box 34028, Seattle, WA, 98124-4028
+Phone:
+(206) 684-7999
+Fax:
+(206) 684-4157
+Email:
+[SHR\_Info@seattle.gov](mailto:SHR_Info@seattle.gov)
 
 Citywide Information
 --------------------
+
+The Human Resources Department provides human resource services, tools, and expert assistance to departments, policy makers, employees, and the public so that the City of Seattle's diverse work force is deployed, supported, and managed fairly to accomplish the City's business goals.
 
 About Our Digital Properties
 Privacy Policy
@@ -321,7 +276,6 @@ Privacy Policy
 
 [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)
 Sitemap
-
 
 Original text
 

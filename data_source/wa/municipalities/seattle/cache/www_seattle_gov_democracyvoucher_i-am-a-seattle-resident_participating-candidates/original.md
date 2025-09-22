@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Participating Candidates - DemocracyVoucher | seattle.gov
 
 
 
@@ -17,7 +17,7 @@ Website addresses ending in .gov belong to official government organizations in 
 **Secure .gov websites use HTTPS**  
 A lock () or https:// means you've safely connected to the .gov website. Only share sensitive information on official, secure websites.
 
-[Skip to main content](https://www.seattle.gov/council#content)
+[Skip to main content](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/participating-candidates#content)
 
 Seattle
 
@@ -493,351 +493,237 @@ ContinueCancel
 * Close Close
 * Main Menu+ Back to
     Main MenuBack to Main Menu
-  + [Council](https://www.seattle.gov/council)
-  + [Public Comment](https://www.seattle.gov/council/meetings/public-comment "Main Menu Mobile - Home Public Comment")
-  + [Calendar](https://www.seattle.gov/council/calendar "Main Menu Mobile - Home Calendar")
-  + [CouncilmembersCouncilmembers](https://www.seattle.gov/council/members "Main Menu Mobile - Home Councilmembers")
-    - [Find Your District and Councilmembers](https://www.seattle.gov/council/members/find-your-district-and-councilmembers "Main Menu Mobile - Councilmembers Find Your District and Councilmembers")
-    - [Rob SakaRob Saka](https://www.seattle.gov/council/members/rob-saka "Main Menu Mobile - Councilmembers Rob Saka")
-      * [About Councilmember Rob Saka](https://www.seattle.gov/council/members/rob-saka/about-rob "Main Menu Mobile - Rob Saka About Councilmember Rob Saka")
-      * [Councilmember Rob Saka's Staff](https://www.seattle.gov/council/members/rob-saka/staff "Main Menu Mobile - Rob Saka Councilmember Rob Saka's Staff")
-      * [Rob's Committees & Calendar](https://www.seattle.gov/council/members/rob-saka/committees-and-calendar "Main Menu Mobile - Rob Saka Rob's Committees & Calendar")
-    - [Mark SolomonMark Solomon](https://www.seattle.gov/council/members/mark-solomon "Main Menu Mobile - Councilmembers Mark Solomon")
-      * [About Councilmember Mark Solomon](https://www.seattle.gov/council/members/mark-solomon/about-mark "Main Menu Mobile - Mark Solomon About Councilmember Mark Solomon")
-      * [Councilmember Mark Solomon's Staff](https://www.seattle.gov/council/members/mark-solomon/staff "Main Menu Mobile - Mark Solomon Councilmember Mark Solomon's Staff")
-      * [Mark's Committees & Calendar](https://www.seattle.gov/council/members/mark-solomon/committees-and-calendar "Main Menu Mobile - Mark Solomon Mark's Committees & Calendar")
-    - [Joy HollingsworthJoy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth "Main Menu Mobile - Councilmembers Joy Hollingsworth")
-      * [About Councilmember Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth/about-joy "Main Menu Mobile - Joy Hollingsworth About Councilmember Joy Hollingsworth")
-      * [Councilmember Joy Hollingsworth's Staff](https://www.seattle.gov/council/members/joy-hollingsworth/staff "Main Menu Mobile - Joy Hollingsworth Councilmember Joy Hollingsworth's Staff")
-      * [Joy's Committees & Calendar](https://www.seattle.gov/council/members/joy-hollingsworth/committees-and-calendar "Main Menu Mobile - Joy Hollingsworth Joy's Committees & Calendar")
-    - [Maritza RiveraMaritza Rivera](https://www.seattle.gov/council/members/maritza-rivera "Main Menu Mobile - Councilmembers Maritza Rivera")
-      * [About Councilmember Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera/about-maritza "Main Menu Mobile - Maritza Rivera About Councilmember Maritza Rivera")
-      * [Councilmember Maritza Rivera's Staff](https://www.seattle.gov/council/members/maritza-rivera/staff "Main Menu Mobile - Maritza Rivera Councilmember Maritza Rivera's Staff")
-      * [Maritza's Committees & Calendar](https://www.seattle.gov/council/members/maritza-rivera/committees-and-calendar "Main Menu Mobile - Maritza Rivera Maritza's Committees & Calendar")
-    - [Debora JuarezDebora Juarez](https://www.seattle.gov/council/members/debora-juarez "Main Menu Mobile - Councilmembers Debora Juarez")
-      * [About Councilmember Debora Juarez](https://www.seattle.gov/council/members/debora-juarez/about-debora "Main Menu Mobile - Debora Juarez About Councilmember Debora Juarez")
-      * [Councilmember Debora Juarez's Staff](https://www.seattle.gov/council/members/debora-juarez/staff "Main Menu Mobile - Debora Juarez Councilmember Debora Juarez's Staff")
-      * [Debora's Committees & Calendar](https://www.seattle.gov/council/members/debora-juarez/committees-and-calendar "Main Menu Mobile - Debora Juarez Debora's Committees & Calendar")
-    - [Dan StraussDan Strauss](https://www.seattle.gov/council/members/dan-strauss "Main Menu Mobile - Councilmembers Dan Strauss")
-      * [About Councilmember Dan Strauss](https://www.seattle.gov/council/members/dan-strauss/about-dan "Main Menu Mobile - Dan Strauss About Councilmember Dan Strauss")
-      * [Councilmember Dan Strauss' Staff](https://www.seattle.gov/council/members/dan-strauss/staff "Main Menu Mobile - Dan Strauss Councilmember Dan Strauss' Staff")
-      * [Dan's Committees & Calendar](https://www.seattle.gov/council/members/dan-strauss/committees-and-calendar "Main Menu Mobile - Dan Strauss Dan's Committees & Calendar")
-    - [Bob KettleBob Kettle](https://www.seattle.gov/council/members/bob-kettle "Main Menu Mobile - Councilmembers Bob Kettle")
-      * [About Councilmember Robert Kettle](https://www.seattle.gov/council/members/bob-kettle/about-robert "Main Menu Mobile - Bob Kettle About Councilmember Robert Kettle")
-      * [Councilmember Robert Kettle's Staff](https://www.seattle.gov/council/members/bob-kettle/staff "Main Menu Mobile - Bob Kettle Councilmember Robert Kettle's Staff")
-      * [Robert's Committees & Calendar](https://www.seattle.gov/council/members/bob-kettle/committees-and-calendar "Main Menu Mobile - Bob Kettle Robert's Committees & Calendar")
-      * [Good Governance Pledge](https://www.seattle.gov/council/members/bob-kettle/good-governance-pledge "Main Menu Mobile - Bob Kettle Good Governance Pledge")
-    - [Alexis Mercedes RinckAlexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Main Menu Mobile - Councilmembers Alexis Mercedes Rinck")
-      * [About Councilmember Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck/about-alexis "Main Menu Mobile - Alexis Mercedes Rinck About Councilmember Alexis Mercedes Rinck")
-      * [Councilmember Alexis Mercedes Rinck's Staff](https://www.seattle.gov/council/members/alexis-mercedes-rinck/staff "Main Menu Mobile - Alexis Mercedes Rinck Councilmember Alexis Mercedes Rinck's Staff")
-      * [Alexis' Committees & Calendar](https://www.seattle.gov/council/members/alexis-mercedes-rinck/committees-and-calendar "Main Menu Mobile - Alexis Mercedes Rinck Alexis' Committees & Calendar")
-      * [Protecting our community from changes at the federal level](https://www.seattle.gov/council/members/alexis-mercedes-rinck/federal-changes-and-city-protections "Main Menu Mobile - Alexis Mercedes Rinck Protecting our community from changes at the federal level")
-    - [Sara NelsonSara Nelson](https://www.seattle.gov/council/members/sara-nelson "Main Menu Mobile - Councilmembers Sara Nelson")
-      * [About Councilmember Sara Nelson](https://www.seattle.gov/council/members/sara-nelson/about-sara "Main Menu Mobile - Sara Nelson About Councilmember Sara Nelson")
-      * [Councilmember Sara Nelson's Staff](https://www.seattle.gov/council/members/sara-nelson/staff "Main Menu Mobile - Sara Nelson Councilmember Sara Nelson's Staff")
-      * [Sara's Committees & Calendar](https://www.seattle.gov/council/members/sara-nelson/committees-and-calendar "Main Menu Mobile - Sara Nelson Sara's Committees & Calendar")
-      * [Drug Possession and Public Use Legislation](https://www.seattle.gov/council/members/sara-nelson/drug-possession-and-public-use-legislation "Main Menu Mobile - Sara Nelson Drug Possession and Public Use Legislation")
-      * [Seattle Film Commission](https://www.seattle.gov/council/members/sara-nelson/seattle-film-commission "Main Menu Mobile - Sara Nelson Seattle Film Commission")
-      * [Helping Small Businesses](https://www.seattle.gov/council/members/sara-nelson/helping-small-businesses "Main Menu Mobile - Sara Nelson Helping Small Businesses")
-  + [Council MeetingsCouncil Meetings](https://www.seattle.gov/council/meetings "Main Menu Mobile - Home Council Meetings")
-    - [Watch Council Live](https://www.seattle.gov/council/meetings/watch-council-live "Main Menu Mobile - Council Meetings Watch Council Live")
-    - [Committees and AgendasCommittees and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas "Main Menu Mobile - Council Meetings Committees and Agendas")
-      * [Sign Up for Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Main Menu Mobile - Committees and Agendas Sign Up for Agendas")
-      * [Council Central Staff](https://www.seattle.gov/council/meetings/committees-and-agendas/council-central-staff "Main Menu Mobile - Committees and Agendas Council Central Staff")
-      * [CommitteesCommittees](https://www.seattle.gov/x60873.xml "Main Menu Mobile - Committees and Agendas Committees")
-        + [Select Committee on the Families, Education, Preschool, and Promise (FEPP) Levy](https://www.seattle.gov/council/meetings/committees-and-agendas/fepp-levy "Main Menu Mobile - Committees Select Committee on the Families, Education, Preschool, and Promise (FEPP) Levy")
-        + [Select Committee on Federal Administration and Policy Changes](https://www.seattle.gov/council/meetings/committees-and-agendas/select-committee-on-federal-administration-and-policy-changes "Main Menu Mobile - Committees Select Committee on Federal Administration and Policy Changes")
-        + [Select Committee on the Comprehensive Plan](https://www.seattle.gov/council/meetings/committees-and-agendas/select-committee-on-the-comprehensive-plan "Main Menu Mobile - Committees Select Committee on the Comprehensive Plan")
-        + [Finance, Native Communities & Tribal Governments](https://www.seattle.gov/council/meetings/committees-and-agendas/finance-native-communities-and-tribal-governments "Main Menu Mobile - Committees Finance, Native Communities & Tribal Governments")
-        + [Governance, Accountability & Economic Development](https://www.seattle.gov/council/meetings/committees-and-agendas/governance-accountability-and-economic-development "Main Menu Mobile - Committees Governance, Accountability & Economic Development")
-        + [Housing & Human Services](https://www.seattle.gov/council/committees/housing-and-human-services "Main Menu Mobile - Committees Housing & Human Services")
-        + [Land Use](https://www.seattle.gov/council/meetings/committees-and-agendas/land-use "Main Menu Mobile - Committees Land Use")
-        + [Libraries, Education & Neighborhoods](https://www.seattle.gov/council/meetings/committees-and-agendas/libraries-education-and-neighborhoods "Main Menu Mobile - Committees Libraries, Education & Neighborhoods")
-        + [Parks, Public Utilities & Technology](https://www.seattle.gov/council/meetings/committees-and-agendas/parks-public-utilities-and-technology "Main Menu Mobile - Committees Parks, Public Utilities & Technology")
-        + [Public Safety](https://www.seattle.gov/council/meetings/committees-and-agendas/public-safety "Main Menu Mobile - Committees Public Safety")
-        + [Sustainability, City Light, Arts & Culture](https://www.seattle.gov/council/meetings/committees-and-agendas/sustainability-city-light-arts-and-culture "Main Menu Mobile - Committees Sustainability, City Light, Arts & Culture")
-        + [Transportation](https://www.seattle.gov/council/meetings/committees-and-agendas/transportation "Main Menu Mobile - Committees Transportation")
-        + [Select Labor Committee for 2024-25](https://www.seattle.gov/council/meetings/committees-and-agendas/select-labor-committee-for-2024-25 "Main Menu Mobile - Committees Select Labor Committee for 2024-25")
-        + [2025 Select Budget Committee](https://www.seattle.gov/council/meetings/committees-and-agendas/2025-select-budget-committee "Main Menu Mobile - Committees 2025 Select Budget Committee")
-    - [Public Comment](https://www.seattle.gov/council/meetings/public-comment "Main Menu Mobile - Council Meetings Public Comment")
-    - [Tips on Giving Public Comment](https://www.seattle.gov/council/meetings/public-comment-tips "Main Menu Mobile - Council Meetings Tips on Giving Public Comment")
-    - [Visiting City Hall](https://www.seattle.gov/council/meetings/visiting-city-hall "Main Menu Mobile - Council Meetings Visiting City Hall")
-    - [Visitor Sign-in Sheets](https://www.seattle.gov/council/meetings/visitor-sign-in-sheets "Main Menu Mobile - Council Meetings Visitor Sign-in Sheets")
-  + [TopicsTopics](https://www.seattle.gov/council/topics "Main Menu Mobile - Home Topics")
-    - [Budget Glossary of Terms](https://www.seattle.gov/council/topics/glossary-of-terms "Main Menu Mobile - Topics Budget Glossary of Terms")
-  + [News & MediaNews & Media](https://www.seattle.gov/council/news-and-media "Main Menu Mobile - Home News & Media")
-    - [Press Kit](https://www.seattle.gov/council/news-and-media/press-kit "Main Menu Mobile - News & Media Press Kit")
-    - [Newsletter Signup](https://www.seattle.gov/council/news-and-media/newsletter-signup "Main Menu Mobile - News & Media Newsletter Signup")
-  + [Legislation & Research](https://www.seattle.gov/council/legislation-and-research "Main Menu Mobile - Home Legislation & Research")
-  + [Calendar](https://www.seattle.gov/council/calendar "Main Menu Mobile - Home Calendar")
+  + [DemocracyVoucher](https://www.seattle.gov/democracyvoucher)
+  + [About the ProgramAbout the Program](https://www.seattle.gov/democracyvoucher/about-the-program "Main Menu Mobile - Home About the Program")
+    - ["Honest Elections Seattle" Initiative (I-122)](https://www.seattle.gov/democracyvoucher/about-the-program/honest-elections-seattle-initiative "Main Menu Mobile - About the Program ")
+    - [Contact Us](https://www.seattle.gov/democracyvoucher/about-the-program/contact-us "Main Menu Mobile - About the Program Contact Us")
+  + [Information for Seattle ResidentsInformation for Seattle Residents](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident "Main Menu Mobile - Home Information for Seattle Residents")
+    - [Participating Candidates](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/participating-candidates "Main Menu Mobile - Information for Seattle Residents Participating Candidates")
+    - [Candidate Introductions](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/candidate-introductions "Main Menu Mobile - Information for Seattle Residents Candidate Introductions")
+    - [Apply for Democracy Vouchers](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/apply-now "Main Menu Mobile - Information for Seattle Residents Apply for Democracy Vouchers")
+    - [Where can I return my Democracy Vouchers?](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/return-democracy-vouchers "Main Menu Mobile - Information for Seattle Residents Where can I return my Democracy Vouchers?")
+  + [Information for CandidatesInformation for Candidates](https://www.seattle.gov/democracyvoucher/i-am-a-candidate "Main Menu Mobile - Home Information for Candidates")
+    - [Candidate Timeline](https://www.seattle.gov/democracyvoucher/i-am-a-candidate/candidate-timeline "Main Menu Mobile - Information for Candidates Candidate Timeline")
+    - [Campaign and Candidate Resources](https://www.seattle.gov/democracyvoucher/i-am-a-candidate/candidate-and-campaign-resources "Main Menu Mobile - Information for Candidates Campaign and Candidate Resources")
+    - [Candidate FAQs](https://www.seattle.gov/democracyvoucher/i-am-a-candidate/candidate-faqs "Main Menu Mobile - Information for Candidates Candidate FAQs")
+  + [Information for OrganizationsInformation for Organizations](https://www.seattle.gov/democracyvoucher/info-for-organizations "Main Menu Mobile - Home Information for Organizations")
+    - [Request Outreach](https://www.seattle.gov/democracyvoucher/info-for-organizations/outreach-requests "Main Menu Mobile - Information for Organizations Request Outreach")
+    - [Democracy Voucher Outreach Fund](https://www.seattle.gov/democracyvoucher/info-for-organizations/democracy-voucher-outreach-fund "Main Menu Mobile - Information for Organizations Democracy Voucher Outreach Fund")
+  + [Language Resources](https://www.seattle.gov/democracyvoucher/language-resources "Main Menu Mobile - Home Language Resources")
+  + [Program DataProgram Data](https://www.seattle.gov/democracyvoucher/program-data "Main Menu Mobile - Home Program Data")
+    - [Past Participating Candidates](https://www.seattle.gov/democracyvoucher/program-data/past-participating-candidates- "Main Menu Mobile - Program Data Past Participating Candidates ")
+    - [Internal Program Reports](https://www.seattle.gov/democracyvoucher/program-data/internal-program-reports- "Main Menu Mobile - Program Data Internal Program Reports")
+    - [External ReportsExternal Reports](https://www.seattle.gov/democracyvoucher/program-data/external-reports "Main Menu Mobile - Program Data External Reports")
+      * [Participation by District](https://www.seattle.gov/democracyvoucher/program-data/external-reports/participation-by-district "Main Menu Mobile - External Reports Participation by District")
+    - [Distributed Voucher Funds and Program Data](https://www.seattle.gov/democracyvoucher/program-data/distributed-voucher-funds-and-program-data "Main Menu Mobile - Program Data Distributed Voucher Funds and Program Data")
+  + [Online Portal](https://www.seattle.gov/democracyvoucher/online-portal "Main Menu Mobile - Home Online Portal")
   + [Elected Officials](https://www.seattle.gov/elected-officials "Main Menu Mobile - Seattle.gov Elected Officials")
   + [Departments](https://www.seattle.gov/departments "Main Menu Mobile - Seattle.gov Departments")
   + [News.Seattle.Gov](https://news.seattle.gov "Main Menu Mobile - Seattle.gov News.Seattle.Gov")
   + [Events](https://www.seattle.gov/event-calendar "Main Menu Mobile - Seattle.gov Events")
 
-[Seattle City Council](https://www.seattle.gov/council)
-=======================================================
+[Democracy Voucher Program](https://www.seattle.gov/democracyvoucher)
 
-[Public Comment](https://www.seattle.gov/council/meetings/public-comment)
 
-[Calendar](https://www.seattle.gov/council/calendar)
 
+* [About the Program](https://www.seattle.gov/democracyvoucher/about-the-program)
+* [I am a Seattle Resident](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident)
+* [I am a Candidate](https://www.seattle.gov/democracyvoucher/i-am-a-candidate)
+* [Info for Organizations](https://www.seattle.gov/democracyvoucher/info-for-organizations)
+* [Resources](https://www.seattle.gov/democracyvoucher/language-resources)
+* [Program Data](https://www.seattle.gov/democracyvoucher/program-data)
 
+breadcrumb divider[Home](https://www.seattle.gov/democracyvoucher)
+breadcrumb divider[Information for Seattle Residents](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident "Information for Seattle Residents")
+breadcrumb end
 
-* [Councilmembers](https://www.seattle.gov/council/members)
+Participating Candidates
+========================
 
-  Toggle children of Councilmembers
-  See overviews, staff info, links, and other details about Seattle City Councilmembers+ [Find Your Councilmembers](https://www.seattle.gov/council/members/find-your-district-and-councilmembers)
-    Find your Seattle City Council district and the Councilmembers who represent you
-  + [Rob Saka](https://www.seattle.gov/council/members/rob-saka)
-    District 1 (West Seattle, South Park, Georgetown, and Pioneer Square)
-  + [Mark Solomon](https://www.seattle.gov/council/members/mark-solomon)
-    District 2 (South Seattle, Yesler Terrace to Rainier Beach)
-  + [Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth)
-    District 3 (Central Seattle)
-  + [Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera)
-    District 4 (Northeast Seattle)
-  + [Debora Juarez](https://www.seattle.gov/council/members/debora-juarez)
-    District 5 (North Seattle)
-  + [Dan Strauss](https://www.seattle.gov/council/members/dan-strauss)
-    District 6 (Northwest Seattle)
-  + [Bob Kettle](https://www.seattle.gov/council/members/bob-kettle)
-    District 7 (Downtown to Magnolia, including Queen Anne, Uptown, Westlake, Interbay, Eastlake, South Lake Union, and Belltown)
-  + [Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck)
-    Position 8 (Citywide, Representing All of Seattle)
-  + [Sara Nelson](https://www.seattle.gov/council/members/sara-nelson)
-    Council President, Position 9 (Citywide, Representing All of Seattle)
-* [Council Meetings](https://www.seattle.gov/council/meetings)
+The Democracy Voucher Program is optional for candidates. Find the list of participating Democracy Voucher Program candidates running in the 2025 City of Seattle election listed below. For a complete list of all candidates, visit the [SEEC Campaigns website.](https://web6.seattle.gov/ethics/elections/campaigns.aspx?cycle=2025&type=home&IDNum=0&leftmenu=collapsed)
 
-  Toggle children of Council Meetings
-  View information about Seattle City Council committees and meeting agendas+ [Watch Council Meetings](https://www.seattle.gov/council/meetings/watch-council-live)
-    Watch all the Seattle Channel programming of regularly scheduled City Council Meetings
-  + [Committees and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas)
-    Find schedules and agendas for the standing and select committees of the council
-  + [Comment at a Public Meeting](https://www.seattle.gov/council/meetings/public-comment)
-    Sign up to make public comment for items appear on Seattle City Council agendas
-  + [Public Comment Tips](https://www.seattle.gov/council/meetings/public-comment-tips)
-    Learn about recommendations for effective written and verbal communication with Councilmembers
-  + [Visitor Sign In Sheets](https://www.seattle.gov/council/meetings/visitor-sign-in-sheets)
-    View City Council visitor logs updated in real time
-  + [Visiting City Hall](https://www.seattle.gov/council/meetings/visiting-city-hall)
-    Get contact information and directions to City Hall
-* [Topics](https://www.seattle.gov/council/topics)
-* [News & Media](https://www.seattle.gov/council/news-and-media)
+Positions eligible for Democracy Voucher funding in 2025 include Mayor, City Attorney, and City Council Positions 2, 8, and 9.
 
-  Toggle children of News & Media
-  Read the latest Council new releases and updates+ [Newsletter Signup](https://www.seattle.gov/council/news-and-media/newsletter-signup)
-    Sign up for multiple Seattle City Councilmembers' newsletters
-  + [Press Kit](https://www.seattle.gov/council/news-and-media/press-kit)
-    Get high resolution photo downloads in the Seattle City Council press kit
-* [Legislation & Research](https://www.seattle.gov/council/legislation-and-research)
+**City of Seattle elected offices are nonpartisan.**
 
-Watch Council Meetings
-----------------------
+Candidates are invited to submit a voluntary 200-word introduction and photo. Read them [here.](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/candidate-introductions)
 
-The Seattle Channel's 24/7 stream features live Council meetings and a range of other award-winning programs.
+**General Election Candidates**
+-------------------------------
 
-[Watch Council Live](https://www.seattle.gov/council/meetings/watch-council-live "Watch Council Live")
+### **Mayor**
 
-Featured Topics
----------------
+|  |  |  |
+| --- | --- | --- |
+| **Candidate** | **Campaign Name** | **Campaign Status** |
+| Bruce Harrell | [Bruce for Seattleexternal link](https://www.bruceforseattle.com/) | **Accepting Democracy Vouchers for the General Election.** |
+| Katie Wilson | [Wilson for Seattleexternal link](https://www.wilsonforseattle.com) | **Accepting Democracy Vouchers for the General Election.** |
 
-Featured Topics
----------------
+### **City Attorney**
 
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
+|  |  |  |
+| --- | --- | --- |
+| **Candidate** | **Campaign Name** | **Campaign Status** |
+| Ann Davison | [Neighbors for Annexternal link](https://neighborsforann.com/) | **Accepting Democracy Vouchers for the General Election.** |
+| Erika Evans | [Elect Erika Evansexternal link](https://electerikaevans.com/) | **Accepting Democracy Vouchers for the General Election.** |
 
-Focus on Public Safety
+### **City Council Position 2**
 
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
+|  |  |  |
+| --- | --- | --- |
+| **Candidate** | **Campaign Name** | **Campaign Status** |
+| Eddie Lin | [Eddie for Seattleexternal link](https://www.linforseattle.com/) | **Accepting Democracy Vouchers for the General Election.** |
+| Adonis Ducksworth | [Adonis for Seattleexternal link](https://adonisforseattle.com) | **Accepting Democracy Vouchers for the General Election.** |
 
-[![a small group of people looking at a paper document together](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Comprehensive%20Plan_310x160.png "a small group of people looking at a paper document together")
+### **City Council Position 8**
 
-2025 Comprehensive Plan
+|  |  |  |
+| --- | --- | --- |
+| **Candidate** | **Campaign Name** | **Campaign Status** |
+| Alexis Mercedes Rinck | [Alexis for Seattleexternal link](https://www.alexisforseattle.com/) | **Accepting Democracy Vouchers for the General Election.** |
+| Rachael Savage | [Friends of Rachael Savage City Councilexternal link](https://www.savagecitizens.com/) | **Accepting Democracy Vouchers for the General Election.** |
 
-A roadmap for where and how Seattle will grow and invest in our communities over the next 20 years and beyond.](https://www.seattle.gov/council/topics/2025-comprehensive-plan "2025 Comprehensive Plan")
+### **City Council Position 9**
 
-[![yellow warning icon with a picture of the white house in the background](https://www.seattle.gov/images//images/Council/Issues/ProtectingOurSeattle/Fed-Changes_Protecting-Our-Seattle_310x160.png "yellow warning icon with a picture of the white house in the background")
+|  |  |  |
+| --- | --- | --- |
+| **Candidate** | **Campaign Name** | **Campaign Status** |
+| Dionne Foster | [Dionne for Seattleexternal link](https://dionnefoster.com/) | **Accepting Democracy Vouchers for the General Election.** |
 
-Protecting our Seattle
+**Primary Election Candidates**
+-------------------------------
 
-Seattle is committed to protecting its people, especially those most impacted by recent federal policy changes.](https://www.seattle.gov/council/topics/federal-changes-protecting-our-seattle "Federal changes: Protecting our Seattle")
+Primary election candidates can no longer redeem Democracy Vouchers.
 
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
+**Mayor**
 
-City Council's Budget Basics
+Ry Armstrong
 
-Understand the budget process and when and how you can make your voice heard in the process.](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
+Joe Mallahan
 
-1/4
+Joy Molloy
 
-Contact all Councilmembers by emailing [council@seattle.gov](mailto:council@seattle.gov "Email council@seattle.gov"). You can also [get email updates](https://www.seattle.gov/council/news-and-media/newsletter-signup "Get Email Updates").
+Thaddeus Whelan
 
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
+Isaiah Willoughby
 
-Councilmembers
---------------
+Clinton Bliss
 
-Councilmembers
---------------
+**City Attorney**
 
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+Rory O'Sullivan
 
-Rob Saka
+Nathan Rouse
 
-Councilmember  
- District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
+**District 2**
 
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+Jamie Fackler
 
-Mark Solomon
+Jeanie Chunn
 
-Councilmember  
- District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
+**City Council Position 8**
 
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
+Cooper Hall
 
-Joy Hollingsworth
 
-Councilmember  
- District 3](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
 
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
+The Seattle Ethics and Elections Commission (SEEC) administers the Democracy Voucher Program. As a nonpartisan and independent commission, the SEEC also administers and enforces the following codes for the City of Seattle.
 
-Maritza Rivera
+* [Ethics](//www.seattle.gov/ethics/etpub/et_home.htm)
+* [Elections](http://web6.seattle.gov/ethics/elections/home.aspx)
+* [Lobbying](https://web6.seattle.gov/ethics/lobbying/LobbyHome.aspx "https://web6.seattle.gov/ethics/lobbying/LobbyHome.aspx")
+* [Whistleblower](//www.seattle.gov/whistleblower)
 
-Councilmember  
- District 4](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
+View a translated page in:
+--------------------------
 
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
+* [Amharic / አማርኛ](https://www.seattle.gov/democracyvoucher/amharic)
+* [Arabic / عربى](https://www.seattle.gov/democracyvoucher/arabic--%D8%B9%D8%B1%D8%A8%D9%89-)
+* [Cambodian / Khmer / ខ្មែរ](https://www.seattle.gov/democracyvoucher/cambodian)
+* [Chinese (Traditional)/ 繁體中文](https://www.seattle.gov/democracyvoucher/chinese-traditional)
+* [Chinese (Simplified)/ 简体中文](https://www.seattle.gov/democracyvoucher/chinese-simplified)
+* [English](https://www.seattle.gov/democracyvoucher/english)
+* [Filipino / Tagalog](https://www.seattle.gov/democracyvoucher/filipino)
+* [French / Français](https://www.seattle.gov/democracyvoucher/french)
+* [Hindi / हिंदी](https://www.seattle.gov/democracyvoucher/hindi)
+* [Japanese / 日本人](https://www.seattle.gov/democracyvoucher/japanese)
+* [Korean / 한국어](https://www.seattle.gov/democracyvoucher/korean)
+* [Lao / ພາສາລາວ](https://www.seattle.gov/democracyvoucher/lao)
+* [Oromo / Oromiffa](https://www.seattle.gov/democracyvoucher/oromo)
+* [Russian / русский язык](https://www.seattle.gov/democracyvoucher/russian)
+* [Somali / af Soomaali](https://www.seattle.gov/democracyvoucher/somali)
+* [Spanish / Español](https://www.seattle.gov/democracyvoucher/spanish)
+* [Thai / ภาษาไทย](https://www.seattle.gov/democracyvoucher/thai)
+* [Tigrinya/ ትግርኛ](https://www.seattle.gov/democracyvoucher/tigrigna)
+* [Ukrainian / Українська](https://www.seattle.gov/democracyvoucher/ukrainian)
+* [Vietnamese / Tiếng Việt](https://www.seattle.gov/democracyvoucher/vietnamese)
 
-Debora Juarez
+Democracy Voucher Program
+-------------------------
 
-Councilmember  
- District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
+General Questions and Inquiries
 
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+Phone:[(206) 727-8855](tel: +1 (206) 727-8855)
 
-Dan Strauss
+Email:[democracyvoucher@seattle.gov](mailto:democracyvoucher@seattle.gov)
 
-Councilmember  
- District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
-
-Bob Kettle
-
-Councilmember  
- District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
-
-Alexis Mercedes Rinck
-
-Councilmember  
- Position 8](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
-
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
-
-Sara Nelson
-
-Council President  
- Position 9](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
-
-[See all Councilmembers Go to link](https://www.seattle.gov/council/members "See all Councilmembers")
-
-How to Participate
-------------------
-
-How to Participate
-------------------
-
-[Attend a council meeting](https://www.seattle.gov/council/meetings "Council Meetings")
-
-[View our calendar](https://www.seattle.gov/council/calendar "Council Calendar")
-
-[Comment at a public meeting](https://www.seattle.gov/council/meetings/public-comment "Public Comment")
-
-[Tips on giving public comment](https://www.seattle.gov/council/meetings/public-comment-tips "Public Comment Tips")
-
-[Sign up for agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
-
-View the Latest News
---------------------
-
-[### Select Committee on the Comprehensive Plan 9/19/25
-
-Agenda: Call to Order; Approval of the Agenda; Executive Session; CB 120993: relating to major update of Neighborhood Residential zones; Res 32183: relating to One Seattle Plan Comprehensive Plan up[...]](https://www.seattlechannel.org/video.asp?ID=s2162583 " Select Committee on the Comprehensive Plan 9/19/25")
-
-[### Select Committee on the Comprehensive Plan Session I 9/18/25
-
-Agenda: Call to Order; Approval of the Agenda; CB 120985: relating to the Seattle Comprehensive Plan; CB 120993: relating to major update of Neighborhood Residential zones; Res 32183: relating to On[...]](https://www.seattlechannel.org/video.asp?ID=2162579 " Select Committee on the Comprehensive Plan Session I 9/18/25")
-
-**[View all Seattle Channel Council videosexternal link](https://www.seattlechannel.org/CityCouncil "Seattle Channel Council videos")**
-
-[Council Connection Blog](https://council.seattle.gov/category/news-releases/ "undefined Blog")
------------------------------------------------------------------------------------------------
-
-[Council Connection Blog RSS FeedCouncil Connection Blog RSS Feed](https://council.seattle.gov/category/news-releases/feed/ "undefined Blog")
-
-9/19
-
-[Amended Comprehensive Plan passes out of committee](https://council.seattle.gov/2025/09/19/amended-comprehensive-plan-passes-out-of-committee/)
-
-Council now transitions to budget process while Comp Plan receives additional study before final vote Over the last three days, the Select Committee on the Comprehensive Plan, chaired by Councilmember Joy Hollingsworth (District 3), voted 9-0 to [...]
-
-9/16
-
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
-
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
-
-9/15
-
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
-
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
-
-Related Resources
------------------
-
-Related Resources
------------------
-
-[Boards and Commissions
-
-Opportunities to serve on over 70 boards and commissions.](https://www.seattle.gov/boards-and-commissions "Boards and Commissions")
-
-[City Clerk
-
-Learn about the City Clerk and get legislation resources.](https://www.seattle.gov/cityclerk "City Clerk")
-
-[Find It Fix It App
-
-Report non-urgent requests such as clogged storm drains, traffic signal issues, and streetlight outage.](https://www.seattle.gov/customer-service-bureau/find-it-fix-it-mobile-app "Find It Fix It App")
-
-[Get Involved
-
-Find ways to volunteer, donate, and have a say on city issues.](https://www.seattle.gov/get-involved "Get Involved")
-
-1/4
-
-City Council
-------------
+Fax:FAX: [(206) 684-8590](fax: +1 (206) 684-8590)
 
 Address:
-[600 4th Ave. 2nd Floor, Seattle, WA, 98104](https://www.google.com/maps/place/600 4th Ave. 2nd Floor, Seattle, WA, 98104)  
-Mailing Address:
-PO Box 34025, Seattle, WA , 98124-4025  
-Phone: [(206) 684-8888](tel: +1 (206) 684-8888)  
-Phone Alt: Listen Line: [(206) 684-8566](tel: +1 (206) 684-8566)  
-Fax: [(206) 684-8587](fax: +1 (206) 684-8587)  
-[Meet the Council](https://www.seattle.gov/council/members)
+[Office](https://www.seattle.gov/#tileMailing_sidebarx66590 "Expand the office address for Democracy Voucher Program")
+ | 
+[Mailing](https://www.seattle.gov/#tileOffice_sidebarx66590 "Expand the mailing address for Democracy Voucher Program")
 
-[Seattle City Council Facebook](http://www.facebook.com/seattlecouncil)
-[Seattle City Council Twitter](http://twitter.com/SeattleCouncil)
-[Seattle City Council Instagram](https://www.instagram.com/theseattlecouncil/)
-[Seattle City Council Bluesky](https://bsky.app/profile/council.seattle.gov)
+### Follow Us
+
+[Democracy Voucher Facebook Page
+external link](https://www.facebook.com/democracyvoucher)
+[Instagram
+external link](https://www.instagram.com/democracyvoucherprogram/)
+
+Close
+**Street Address:**  
+Seattle Municipal Tower  
+700 5th Ave   
+Suite 4010   
+Seattle,
+WA
+98104
+
+Close
+**Mailing Address:**  
+PO Box 35196  
+Seattle,
+WA
+98124-5196
+
+* [Contact Us](https://www.seattle.gov/democracyvoucher/about-the-program/contact-us)
+
+* [Participating Candidates](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/participating-candidates "Participating Candidates")
+* [Candidate Introductions](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/candidate-introductions "Candidate Introductions")
+* [Apply Now](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/apply-now "Apply for Democracy Vouchers")
+* [Return Democracy Vouchers](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/return-democracy-vouchers "Where can I return my Democracy Vouchers?")
+No left sidebar
+
+Democracy Voucher Program
+-------------------------
+
+Address:
+[700 5th Ave, Suite 4010, Seattle, WA, 98104](https://www.google.com/maps/place/700 5th Ave, Suite 4010, Seattle, WA, 98104)  
+Mailing Address:
+PO Box 35196, Seattle, WA, 98124-5196  
+Phone: [(206) 727-8855](tel: +1 (206) 727-8855)  
+Fax: FAX: [(206) 684-8590](fax: +1 (206) 684-8590)  
+Email: [democracyvoucher@seattle.gov](mailto:democracyvoucher@seattle.gov)
+
+[Democracy Voucher Facebook Page](https://www.facebook.com/democracyvoucher)
+[Instagram](https://www.instagram.com/democracyvoucherprogram/)
+
+Newsletter Updates
+
+[Subscribe external link](https://public.govdelivery.com/accounts/WASEATTLE/subscriber/topics?qsp=WASEATTLE_23 "Subscribe to Newsletter")
+
+Sign up for the latest updates from Democracy Voucher Program
 
 Citywide Information
 --------------------
@@ -855,13 +741,10 @@ Citywide Information
 
 ### Popular Pages
 
-1. [Councilmembers](https://www.seattle.gov/council/members)
-2. [Watch Council Meetings Live](https://www.seattle.gov/council/meetings/watch-council-live)
-3. [Committees and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas)
-4. [Find Your District and Councilmembers](https://www.seattle.gov/council/members/find-your-district-and-councilmembers)
-5. [View a Calendar of Upcoming Meetings](https://www.seattle.gov/council/calendar)
-
-The Seattle City Council establishes City policy through enactment of ordinances (laws) and adoption of resolutions. The City Council also approves and adopts the City's budget. The nine Council members and their legislative assistants are part of the City of Seattle Legislative Department.
+1. [About the Democracy Voucher Program](https://www.seattle.gov/democracyvoucher/about-the-program)
+2. [Participating Candidates](https://www.seattle.gov/democracyvoucher/i-am-a-seattle-resident/participating-candidates)
+3. [Information for Candidates](https://www.seattle.gov/democracyvoucher/i-am-a-candidate)
+4. [Candidate Timeline](https://www.seattle.gov/democracyvoucher/i-am-a-candidate/candidate-timeline)
 
 Policies
 --------

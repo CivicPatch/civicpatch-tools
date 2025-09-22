@@ -1,4 +1,5 @@
-Elected Officials | seattle.gov
+Seattle City Council Members - CityArchives | seattle.gov
+
 
 
 
@@ -174,146 +175,85 @@ Cancel
 
 
 
-* + Elected Officials
-    - Elected Officials Page Cards
-      * Council Members (Legislative)
-        + [Rob Saka](https://www.seattle.gov/x152133.xml "Main Menu Mobile - Council Members (Legislative) Rob Saka")
-        + [Mark Solomon](https://www.seattle.gov/x152136.xml "Main Menu Mobile - Council Members (Legislative) Mark Solomon")
-        + [Joy Hollingsworth](https://www.seattle.gov/x152139.xml "Main Menu Mobile - Council Members (Legislative) Joy Hollingsworth")
-        + [Debora Juarez](https://www.seattle.gov/x178555.xml "Main Menu Mobile - Council Members (Legislative) Debora Juarez")
-        + [Dan Strauss](https://www.seattle.gov/x152140.xml "Main Menu Mobile - Council Members (Legislative) Dan Strauss")
-        + [Bob Kettle](https://www.seattle.gov/x152134.xml "Main Menu Mobile - Council Members (Legislative) Bob Kettle")
-        + [Sara Nelson](https://www.seattle.gov/x152137.xml "Main Menu Mobile - Council Members (Legislative) Sara Nelson")
-      * Law
-        + [Ann Davison](https://www.seattle.gov/x152142.xml "Main Menu Mobile - Law Ann Davison")
-  + Events
-    - [Seattle Citywide Event Calendar Policy and Disclaimer](https://www.seattle.gov/event-calendar/policy-and-disclaimer "Main Menu Mobile - Events Seattle Citywide Event Calendar Policy and Disclaimer")
-    - [Help with Citywide Event Calendar](https://www.seattle.gov/event-calendar/help "Main Menu Mobile - Events Help with Citywide Event Calendar")
-    - [Public Outreach and Engagement Event Calendar](https://www.seattle.gov/event-calendar/public-outreach-and-engagement-calendar "Main Menu Mobile - Events Public Outreach and Engagement Event Calendar")
+* + Exhibits & Education
+    - Digital Document Libraries
+      * [Seattle City Councilmember Sam Smith](https://www.seattle.gov/cityarchives/exhibits-and-education/digital-document-libraries/city-councilman-sam-smith "Main Menu Mobile - Digital Document Libraries Seattle City Councilmember Sam Smith")
+  + Search Collections
+    - [Resources by Council District
+
+      Resources by Council District](https://www.seattle.gov/cityarchives/search-collections/resources-by-council-district "Main Menu Mobile - Search Collections Resources by Council District")
+      * [Guide to SMA Resources for Council District 1](https://www.seattle.gov/cityarchives/search-collections/resources-by-council-district/guide-to-council-district-1 "Main Menu Mobile - Resources by Council District Guide to SMA Resources for Council District 1")
+      * [Guide to SMA Resources for Council District 2](https://www.seattle.gov/cityarchives/search-collections/resources-by-council-district/guide-to-council-district-2 "Main Menu Mobile - Resources by Council District Guide to SMA Resources for Council District 2")
+      * [Guide to SMA Resources for Council District 3](https://www.seattle.gov/cityarchives/search-collections/resources-by-council-district/guide-to-council-district-3 "Main Menu Mobile - Resources by Council District Guide to SMA Resources for Council District 3")
+      * [Guide to SMA Resources for Council District 4](https://www.seattle.gov/cityarchives/search-collections/resources-by-council-district/guide-to-council-district-4 "Main Menu Mobile - Resources by Council District Guide to SMA Resources for Council District 4")
+      * [Guide to SMA Resources for Council District 5](https://www.seattle.gov/cityarchives/search-collections/resources-by-council-district/guide-to-council-district-5 "Main Menu Mobile - Resources by Council District Guide to SMA Resources for Council District 5")
+      * [Guide to SMA Resources for Council District 6](https://www.seattle.gov/cityarchives/search-collections/resources-by-council-district/guide-to-council-district-6 "Main Menu Mobile - Resources by Council District Guide to SMA Resources for Council District 6")
+      * [Guide to SMA Resources for Council District 7](https://www.seattle.gov/cityarchives/search-collections/resources-by-council-district/guide-to-council-district-7 "Main Menu Mobile - Resources by Council District Guide to SMA Resources for Council District 7")
+    - [Don Sherwood Park History Sheets](https://www.seattle.gov/cityarchives/search-collections/don-sherwood-park-history-sheets "Main Menu Mobile - Search Collections Don Sherwood Park History Sheets")
+  + Facts About Seattle
+    - City Officials
+      * [Seattle City Council Members
+
+        Seattle City Council Members](https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members "Main Menu Mobile - City Officials Seattle City Council Members")
+        + [City Council Alphabetical Listing](https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members/city-council-alphabetical-listing "Main Menu Mobile - Seattle City Council Members City Council Alphabetical Listing")
+
+**Photo Credit:**
+City Council Inspection Tour on Kinnear Park Lawn, 1900. Item 7304, Water Department Photographic Negatives (Record Series 8200-13)
+
+Seattle City Council Members
+============================
+
+The City Council is the legislative authority for the City and makes all of its laws, subject to the initiative and referendum powers of the people as established by City Charter. In addition, the City Council has the authority to amend and approve the City's budget. Any candidate for City Council must be a citizen of the United States, a qualified elector of the State of Washington, and a registered voter of the City of Seattle at the time of filing his/her declaration of candidacy.
+Seattle was first incorporated as a town by an act of the Territorial Legislature on January 14, 1865. The act was repealed January 18, 1867, after most of the town's leading citizens petitioned for its dissolution. During its first tenure as an incorporated entity, Seattle was governed by a Board of Trustees. Seattle was again incorporated, this time as a City, on December 2, 1869.
+
+1869-1882
+The Common Council under the First City Charter
+
+1884-1890
+The Ward System is Established
+1890-1896
+First Home Rule Charter and the Bicameral City Council
+1896-1910
+The 1896 Charter and Return to a Unicameral City Council
+1910-1946
+End of the Ward System and Start of Non-Partisan Elections
+1946-2015
+A New Charter and Creation of Four-Year Terms
+2016-present
+District Elections Begin
+
+* City Officials
+  + [City Council Members](https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members "Seattle City Council Members")
 
 
+    Toggle children of Seattle City Council Members
 
-* [City Council Topics](https://www.seattle.gov/council/topics)
+    - [City Council Alphabetical Listing](https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members/city-council-alphabetical-listing "City Council Alphabetical Listing")
+    - [City Council 2016-Present](https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members/city-council-2016-present "2016-Present")
+    - [City Council 1946-2015](https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members/city-council-1946-2015 "1946-2015")
+    - [City Council 1910-1946](https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members/city-council-1910-1946 "1910-1946")
+    - [City Council 1896-1910](https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members/city-council-1896-1910 "1896-1910")
+    - [City Council 1890-1896](https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members/city-council-1890-1896 "1890-1896")
+    - [City Council 1884-1890](https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members/city-council-1884-1890 "1884-1890")
+    - [City Council 1869-1882](https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members/city-council-1869-1882 "1869-1882")
+* [Quick City Info](https://www.seattle.gov/cityarchives/seattle-facts/quick-city-info "Quick Information")
+No left sidebar
 
-Know your rights with programs for immigrants and refugees.
-
-* [Animal Shelter](https://www.seattle.gov/animal-shelter)
-
-* [Victim Assistance](https://www.seattle.gov/cityattorney/crime-victim-assistance)
-
-Search for your lost pet or research adopting a new one.
-Find options for receiving and paying your utility bills.
-
-* [Teen Jobs and Leadership Programs with Seattle Parks (14-24)](https://www.seattle.gov/parks/learning-and-childcare/teen-programs/job-readiness-opportunities-for-teens)
-
-Get data for your research needs at the Open Data Portal.
-
-* [Historic Districts](https://www.seattle.gov/neighborhoods/historic-preservation/historic-districts)
-
-View public funding opportunities for community artists.
-
-* Zoning Map
-
-* [Pay for Parking by Phone](https://www.paybyphone.com/locations/seattle)
-
-Learn about parking options, tips, and payment methods.
-
-[![Mayor](https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg)
-
-Bruce Harrell
-
-Mayor](https://www.seattle.gov/mayor "Mayor Home Page")
-
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
-
-Rob Saka
-
-Councilmember
-District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
-
-Mark Solomon
-
-Councilmember
-District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-
-Joy HollingsworthCouncilmemberDistrict 3
-Maritza RiveraCouncilmemberDistrict 4
-
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
-
-Debora Juarez
-
-Councilmember
-District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
-
-Dan Strauss
-
-Councilmember
-District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
-
-Bob Kettle
-
-Councilmember
-District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-
-Alexis Mercedes RinckCouncilmemberPosition 8
-Sara NelsonCouncil PresidentPosition 9
-
-Meet the Council
-
-Ann DavisonCity Attorney
-
-[![Anita Crawford-Willis](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAnitaCrawford-Willis_circle.jpg)
-
-Anita Crawford-Willis
-
-Presiding Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-anita-crawford-willis "Anita Crawford-Willis")
-
-Damon ShadidAssistant Presiding Judge
-
-[![Faye Chess](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeFayeRChess_circle.jpg)
-
-Faye Chess
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-faye-chess "Faye Chess")
-
-[![Andrea Chin](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAndreaChin_circle.jpg)
-
-Andrea Chin
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-andrea-chin "Andrea Chin")
-
-[![Willie Gregory](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeWillieGregory_circle.jpg)
-
-Willie Gregory
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-willie-gregory "Willie Gregory")
-
-Catherine McDowallJudge
-Pooja VaddadiJudge
-Seattle Municipal CourtGeneral Information
-
-Contact Us
-----------
-
-Customer Service Bureau
-Phone:
-(206) 684-2489
+Sarah Shipley, Interim City Archivist
 
 Address:
-City Hall, 600 Fourth Ave. Seattle, WA 98104
-
-City Hall, 600 Fourth Ave.Seattle, WA 98104
-Customer Service Centers
+600 Fourth Avenue, Third Floor, Seattle, WA, 98104
+Mailing Address:
+PO Box 94728, Seattle, WA, 98124-4728
+Phone:
+(206) 684-8353
+Email:
+[archives@seattle.gov](mailto:archives@seattle.gov)
 
 Citywide Information
 --------------------
+
+The Office of the City Clerk maintains the City's official records, provides support for the City Council, and manages the City's historical records through the Seattle Municipal Archives. The Clerk's Office provides information services to the public and to City staff.
 
 About Our Digital Properties
 Privacy Policy
@@ -321,7 +261,6 @@ Privacy Policy
 
 [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)
 Sitemap
-
 
 Original text
 

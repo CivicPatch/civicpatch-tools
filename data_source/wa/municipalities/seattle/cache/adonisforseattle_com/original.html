@@ -1,0 +1,1262 @@
+<!DOCTYPE html><html lang="en-US" class="fontawesome-i2svg-active fontawesome-i2svg-complete"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+<script type="text/javascript">
+/* <![CDATA[ */
+var gform;gform||(document.addEventListener("gform_main_scripts_loaded",function(){gform.scriptsLoaded=!0}),document.addEventListener("gform/theme/scripts_loaded",function(){gform.themeScriptsLoaded=!0}),window.addEventListener("DOMContentLoaded",function(){gform.domLoaded=!0}),gform={domLoaded:!1,scriptsLoaded:!1,themeScriptsLoaded:!1,isFormEditor:()=>"function"==typeof InitializeEditor,callIfLoaded:function(o){return!(!gform.domLoaded||!gform.scriptsLoaded||!gform.themeScriptsLoaded&&!gform.isFormEditor()||(gform.isFormEditor()&&console.warn("The use of gform.initializeOnLoaded() is deprecated in the form editor context and will be removed in Gravity Forms 3.1."),o(),0))},initializeOnLoaded:function(o){gform.callIfLoaded(o)||(document.addEventListener("gform_main_scripts_loaded",()=>{gform.scriptsLoaded=!0,gform.callIfLoaded(o)}),document.addEventListener("gform/theme/scripts_loaded",()=>{gform.themeScriptsLoaded=!0,gform.callIfLoaded(o)}),window.addEventListener("DOMContentLoaded",()=>{gform.domLoaded=!0,gform.callIfLoaded(o)}))},hooks:{action:{},filter:{}},addAction:function(o,r,e,t){gform.addHook("action",o,r,e,t)},addFilter:function(o,r,e,t){gform.addHook("filter",o,r,e,t)},doAction:function(o){gform.doHook("action",o,arguments)},applyFilters:function(o){return gform.doHook("filter",o,arguments)},removeAction:function(o,r){gform.removeHook("action",o,r)},removeFilter:function(o,r,e){gform.removeHook("filter",o,r,e)},addHook:function(o,r,e,t,n){null==gform.hooks[o][r]&&(gform.hooks[o][r]=[]);var d=gform.hooks[o][r];null==n&&(n=r+"_"+d.length),gform.hooks[o][r].push({tag:n,callable:e,priority:t=null==t?10:t})},doHook:function(r,o,e){var t;if(e=Array.prototype.slice.call(e,1),null!=gform.hooks[r][o]&&((o=gform.hooks[r][o]).sort(function(o,r){return o.priority-r.priority}),o.forEach(function(o){"function"!=typeof(t=o.callable)&&(t=window[t]),"action"==r?t.apply(null,e):e[0]=t.apply(null,e)})),"filter"==r)return e[0]},removeHook:function(o,r,t,n){var e;null!=gform.hooks[o][r]&&(e=(e=gform.hooks[o][r]).filter(function(o,r,e){return!!(null!=n&&n!=o.tag||null!=t&&t!=o.priority)}),gform.hooks[o][r]=e)}});
+/* ]]> */
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <style type="text/css">svg:not(:root).svg-inline--fa {
+  overflow: visible;
+}
+
+.svg-inline--fa {
+  display: inline-block;
+  font-size: inherit;
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+.svg-inline--fa.fa-lg {
+  vertical-align: -0.225em;
+}
+.svg-inline--fa.fa-w-1 {
+  width: 0.0625em;
+}
+.svg-inline--fa.fa-w-2 {
+  width: 0.125em;
+}
+.svg-inline--fa.fa-w-3 {
+  width: 0.1875em;
+}
+.svg-inline--fa.fa-w-4 {
+  width: 0.25em;
+}
+.svg-inline--fa.fa-w-5 {
+  width: 0.3125em;
+}
+.svg-inline--fa.fa-w-6 {
+  width: 0.375em;
+}
+.svg-inline--fa.fa-w-7 {
+  width: 0.4375em;
+}
+.svg-inline--fa.fa-w-8 {
+  width: 0.5em;
+}
+.svg-inline--fa.fa-w-9 {
+  width: 0.5625em;
+}
+.svg-inline--fa.fa-w-10 {
+  width: 0.625em;
+}
+.svg-inline--fa.fa-w-11 {
+  width: 0.6875em;
+}
+.svg-inline--fa.fa-w-12 {
+  width: 0.75em;
+}
+.svg-inline--fa.fa-w-13 {
+  width: 0.8125em;
+}
+.svg-inline--fa.fa-w-14 {
+  width: 0.875em;
+}
+.svg-inline--fa.fa-w-15 {
+  width: 0.9375em;
+}
+.svg-inline--fa.fa-w-16 {
+  width: 1em;
+}
+.svg-inline--fa.fa-w-17 {
+  width: 1.0625em;
+}
+.svg-inline--fa.fa-w-18 {
+  width: 1.125em;
+}
+.svg-inline--fa.fa-w-19 {
+  width: 1.1875em;
+}
+.svg-inline--fa.fa-w-20 {
+  width: 1.25em;
+}
+.svg-inline--fa.fa-pull-left {
+  margin-right: 0.3em;
+  width: auto;
+}
+.svg-inline--fa.fa-pull-right {
+  margin-left: 0.3em;
+  width: auto;
+}
+.svg-inline--fa.fa-border {
+  height: 1.5em;
+}
+.svg-inline--fa.fa-li {
+  width: 2em;
+}
+.svg-inline--fa.fa-fw {
+  width: 1.25em;
+}
+
+.fa-layers svg.svg-inline--fa {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.fa-layers {
+  display: inline-block;
+  height: 1em;
+  position: relative;
+  text-align: center;
+  vertical-align: -0.125em;
+  width: 1em;
+}
+.fa-layers svg.svg-inline--fa {
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+}
+
+.fa-layers-counter, .fa-layers-text {
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+}
+
+.fa-layers-text {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transform-origin: center center;
+          transform-origin: center center;
+}
+
+.fa-layers-counter {
+  background-color: #ff253a;
+  border-radius: 1em;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #fff;
+  height: 1.5em;
+  line-height: 1;
+  max-width: 5em;
+  min-width: 1.5em;
+  overflow: hidden;
+  padding: 0.25em;
+  right: 0;
+  text-overflow: ellipsis;
+  top: 0;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: top right;
+          transform-origin: top right;
+}
+
+.fa-layers-bottom-right {
+  bottom: 0;
+  right: 0;
+  top: auto;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: bottom right;
+          transform-origin: bottom right;
+}
+
+.fa-layers-bottom-left {
+  bottom: 0;
+  left: 0;
+  right: auto;
+  top: auto;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
+}
+
+.fa-layers-top-right {
+  right: 0;
+  top: 0;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: top right;
+          transform-origin: top right;
+}
+
+.fa-layers-top-left {
+  left: 0;
+  right: auto;
+  top: 0;
+  -webkit-transform: scale(0.25);
+          transform: scale(0.25);
+  -webkit-transform-origin: top left;
+          transform-origin: top left;
+}
+
+.fa-lg {
+  font-size: 1.3333333333em;
+  line-height: 0.75em;
+  vertical-align: -0.0667em;
+}
+
+.fa-xs {
+  font-size: 0.75em;
+}
+
+.fa-sm {
+  font-size: 0.875em;
+}
+
+.fa-1x {
+  font-size: 1em;
+}
+
+.fa-2x {
+  font-size: 2em;
+}
+
+.fa-3x {
+  font-size: 3em;
+}
+
+.fa-4x {
+  font-size: 4em;
+}
+
+.fa-5x {
+  font-size: 5em;
+}
+
+.fa-6x {
+  font-size: 6em;
+}
+
+.fa-7x {
+  font-size: 7em;
+}
+
+.fa-8x {
+  font-size: 8em;
+}
+
+.fa-9x {
+  font-size: 9em;
+}
+
+.fa-10x {
+  font-size: 10em;
+}
+
+.fa-fw {
+  text-align: center;
+  width: 1.25em;
+}
+
+.fa-ul {
+  list-style-type: none;
+  margin-left: 2.5em;
+  padding-left: 0;
+}
+.fa-ul > li {
+  position: relative;
+}
+
+.fa-li {
+  left: -2em;
+  position: absolute;
+  text-align: center;
+  width: 2em;
+  line-height: inherit;
+}
+
+.fa-border {
+  border: solid 0.08em #eee;
+  border-radius: 0.1em;
+  padding: 0.2em 0.25em 0.15em;
+}
+
+.fa-pull-left {
+  float: left;
+}
+
+.fa-pull-right {
+  float: right;
+}
+
+.fa.fa-pull-left,
+.fas.fa-pull-left,
+.far.fa-pull-left,
+.fal.fa-pull-left,
+.fab.fa-pull-left {
+  margin-right: 0.3em;
+}
+.fa.fa-pull-right,
+.fas.fa-pull-right,
+.far.fa-pull-right,
+.fal.fa-pull-right,
+.fab.fa-pull-right {
+  margin-left: 0.3em;
+}
+
+.fa-spin {
+  -webkit-animation: fa-spin 2s infinite linear;
+          animation: fa-spin 2s infinite linear;
+}
+
+.fa-pulse {
+  -webkit-animation: fa-spin 1s infinite steps(8);
+          animation: fa-spin 1s infinite steps(8);
+}
+
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+.fa-rotate-90 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+
+.fa-rotate-180 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+}
+
+.fa-rotate-270 {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+}
+
+.fa-flip-horizontal {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
+  -webkit-transform: scale(-1, 1);
+          transform: scale(-1, 1);
+}
+
+.fa-flip-vertical {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+  -webkit-transform: scale(1, -1);
+          transform: scale(1, -1);
+}
+
+.fa-flip-both, .fa-flip-horizontal.fa-flip-vertical {
+  -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+  -webkit-transform: scale(-1, -1);
+          transform: scale(-1, -1);
+}
+
+:root .fa-rotate-90,
+:root .fa-rotate-180,
+:root .fa-rotate-270,
+:root .fa-flip-horizontal,
+:root .fa-flip-vertical,
+:root .fa-flip-both {
+  -webkit-filter: none;
+          filter: none;
+}
+
+.fa-stack {
+  display: inline-block;
+  height: 2em;
+  position: relative;
+  width: 2.5em;
+}
+
+.fa-stack-1x,
+.fa-stack-2x {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.svg-inline--fa.fa-stack-1x {
+  height: 1em;
+  width: 1.25em;
+}
+.svg-inline--fa.fa-stack-2x {
+  height: 2em;
+  width: 2.5em;
+}
+
+.fa-inverse {
+  color: #fff;
+}
+
+.sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.sr-only-focusable:active, .sr-only-focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+.svg-inline--fa .fa-primary {
+  fill: var(--fa-primary-color, currentColor);
+  opacity: 1;
+  opacity: var(--fa-primary-opacity, 1);
+}
+
+.svg-inline--fa .fa-secondary {
+  fill: var(--fa-secondary-color, currentColor);
+  opacity: 0.4;
+  opacity: var(--fa-secondary-opacity, 0.4);
+}
+
+.svg-inline--fa.fa-swap-opacity .fa-primary {
+  opacity: 0.4;
+  opacity: var(--fa-secondary-opacity, 0.4);
+}
+
+.svg-inline--fa.fa-swap-opacity .fa-secondary {
+  opacity: 1;
+  opacity: var(--fa-primary-opacity, 1);
+}
+
+.svg-inline--fa mask .fa-primary,
+.svg-inline--fa mask .fa-secondary {
+  fill: black;
+}
+
+.fad.fa-inverse {
+  color: #fff;
+}</style><link rel="stylesheet" href="https://use.typekit.net/vlr2eus.css">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	
+	<!-- This site is optimized with the Yoast SEO plugin v25.7 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Home - Adonis for Seattle</title>
+	<link rel="canonical" href="https://adonisforseattle.com/">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Home - Adonis for Seattle">
+	<meta property="og:url" content="https://adonisforseattle.com/">
+	<meta property="og:site_name" content="Adonis for Seattle">
+	<meta property="article:modified_time" content="2025-08-23T01:14:07+00:00">
+	<meta property="og:image" content="https://adonisforseattle.com/wp-content/uploads/2025/02/adonis-banner.jpg">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="675">
+	<meta property="og:image:type" content="image/jpeg">
+	<meta name="twitter:card" content="summary_large_image">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://adonisforseattle.com/","url":"https://adonisforseattle.com/","name":"Home - Adonis for Seattle","isPartOf":{"@id":"https://adonisforseattle.com/#website"},"about":{"@id":"https://adonisforseattle.com/#organization"},"datePublished":"2025-02-19T05:52:43+00:00","dateModified":"2025-08-23T01:14:07+00:00","breadcrumb":{"@id":"https://adonisforseattle.com/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://adonisforseattle.com/"]}]},{"@type":"BreadcrumbList","@id":"https://adonisforseattle.com/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"}]},{"@type":"WebSite","@id":"https://adonisforseattle.com/#website","url":"https://adonisforseattle.com/","name":"Adonis Duckworth for Seattle City Council D2","description":"","publisher":{"@id":"https://adonisforseattle.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://adonisforseattle.com/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://adonisforseattle.com/#organization","name":"Adonis for Seattle","url":"https://adonisforseattle.com/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://adonisforseattle.com/#/schema/logo/image/","url":"https://adonisforseattle.com/wp-content/uploads/2025/02/adonis-org-logo.jpg","contentUrl":"https://adonisforseattle.com/wp-content/uploads/2025/02/adonis-org-logo.jpg","width":696,"height":696,"caption":"Adonis for Seattle"},"image":{"@id":"https://adonisforseattle.com/#/schema/logo/image/"}}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel="dns-prefetch" href="//stats.wp.com">
+<script type="text/javascript">
+/* <![CDATA[ */
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/adonisforseattle.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.8.2"}};
+/*! This file is auto-generated */
+!function(s,n){var o,i,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),a=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===a[t]})}function u(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);for(var n=e.getImageData(16,16,1,1),a=0;a<n.data.length;a++)if(0!==n.data[a])return!1;return!0}function f(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\udedf")}return!1}function g(e,t,n,a){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):s.createElement("canvas"),o=r.getContext("2d",{willReadFrequently:!0}),i=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(function(e){i[e]=t(o,e,n,a)}),i}function t(e){var t=s.createElement("script");t.src=e,t.defer=!0,s.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",i=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){s.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+g.toString()+"("+[JSON.stringify(i),f.toString(),p.toString(),u.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"}),r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=function(e){c(n=e.data),r.terminate(),t(n)})}catch(e){}c(n=g(i,f,p,u))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
+/* ]]> */
+</script>
+<style id="wp-emoji-styles-inline-css" type="text/css">
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<link rel="stylesheet" id="wp-block-library-css" href="https://adonisforseattle.com/wp-includes/css/dist/block-library/style.min.css?ver=6.8.2" type="text/css" media="all">
+<style id="global-styles-inline-css" type="text/css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(body) { margin: 0; }.wp-site-blocks > .alignleft { float: left; margin-right: 2em; }.wp-site-blocks > .alignright { float: right; margin-left: 2em; }.wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}.is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){margin-left: auto !important;margin-right: auto !important;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}a:where(:not(.wp-element-button)){text-decoration: underline;}:root :where(.wp-element-button, .wp-block-button__link){background-color: #32373c;border-width: 0;color: #fff;font-family: inherit;font-size: inherit;line-height: inherit;padding: calc(0.667em + 2px) calc(1.333em + 2px);text-decoration: none;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel="stylesheet" id="sage/main.css-css" href="https://adonisforseattle.com/wp-content/themes/adonis/dist/styles/main_59cd7974.css" type="text/css" media="all">
+<script type="text/javascript" id="breeze-prefetch-js-extra">
+/* <![CDATA[ */
+var breeze_prefetch = {"local_url":"https:\/\/adonisforseattle.com","ignore_remote_prefetch":"1","ignore_list":["wp-admin","wp-login.php"]};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://adonisforseattle.com/wp-content/plugins/breeze/assets/js/js-front-end/breeze-prefetch-links.min.js?ver=2.2.17" id="breeze-prefetch-js"></script>
+<script type="text/javascript" src="https://adonisforseattle.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="https://adonisforseattle.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" src="https://adonisforseattle.com/wp-content/themes/adonis/dist/../scripts/plyr.min.js" id="sage/plyr.js-js"></script>
+<link rel="https://api.w.org/" href="https://adonisforseattle.com/wp-json/"><link rel="alternate" title="JSON" type="application/json" href="https://adonisforseattle.com/wp-json/wp/v2/pages/132"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://adonisforseattle.com/xmlrpc.php?rsd">
+<meta name="generator" content="WordPress 6.8.2">
+<link rel="shortlink" href="https://adonisforseattle.com/">
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://adonisforseattle.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fadonisforseattle.com%2F">
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://adonisforseattle.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fadonisforseattle.com%2F&amp;format=xml">
+	<style>img#wpstats{display:none}</style>
+		<link rel="icon" href="https://adonisforseattle.com/wp-content/uploads/2025/02/cropped-ad-fav-32x32.png" sizes="32x32">
+<link rel="icon" href="https://adonisforseattle.com/wp-content/uploads/2025/02/cropped-ad-fav-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="https://adonisforseattle.com/wp-content/uploads/2025/02/cropped-ad-fav-180x180.png">
+<meta name="msapplication-TileImage" content="https://adonisforseattle.com/wp-content/uploads/2025/02/cropped-ad-fav-270x270.png">
+<meta class="foundation-mq"></head>
+  <body class="home wp-singular page-template page-template-template-module template-module page page-id-132 wp-theme-adonisresources app-data index-data singular-data page-data page-132-data page-home-data template-module-data front-page-data no-touch">
+        <div class="off-canvas position-top is-transition-overlap is-closed" id="navigationModal" data-off-canvas="" data-content-overlay="false" data-transition="overlap" data-off-canvas-sticky="" data-content-scroll="false" data-auto-focus="false" aria-hidden="true" data-e="kdhlog-e">
+  <div id="mobile-primary-menu" class="grid-container">
+    <div class="grid-x">
+      <div class="menu-padding cell small-12 align-middle">
+        <nav class="nav-primary flex-container">
+                    <ul class="menu vertical align-center align-self-middle flex-child-auto">
+            <li id="menu-item-148" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-148"><a href="https://adonisforseattle.com/about/"><span class="underline">About</span></a></li>
+<li id="menu-item-176" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-176"><a href="https://adonisforseattle.com/priorities/"><span class="underline">Priorities</span></a></li>
+<li id="menu-item-477" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-477"><a href="https://adonisforseattle.com/endorsements/"><span class="underline">Endorsements</span></a></li>
+<li id="menu-item-187" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-187"><a href="https://adonisforseattle.com/news/"><span class="underline">News</span></a></li>
+<li id="menu-item-452" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-452"><a href="https://adonisforseattle.com/volunteer/"><span class="underline">Volunteer</span></a></li>
+
+                                                                                        <li class="menu-item menu-item-util menu-item-type-button menu-item-object-cta" role="menuitem">
+                  <a href="https://adonisforseattle.com/vouchers/" target="_self">Vouchers</a>
+                </li>
+                                                                                                    <li class="menu-item menu-item-donate menu-item-type-button menu-item-object-cta" role="menuitem">
+                  <a href="https://secure.ngpvan.com/r4KJsuKI9Em6ZWO1tyT5nA2" target="_blank">Donate</a>
+                </li>
+                <li>
+                  <ul class="menu align-center">
+                                                                                                                                                                  <li class="menu-item menu-social">
+                          <a title="Email" rel="noopener noreferrer" href="mailto:info@adonisforseattle.com">
+                              <span class="icon-wrapper"><svg class="svg-inline--fa fa-envelope fa-w-16" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <i class="fa fa-envelope"></i> Font Awesome fontawesome.com --></span>
+                          </a>
+                      </li>
+                                                                                                                                                        <li class="menu-item menu-social">
+                            <a title="Instagram" rel="noopener noreferrer" href="https://www.instagram.com/adonisforseattle" target="_blank">
+                                <span class="icon-wrapper"><span class="icon-wrapper"><svg class="svg-inline--fa fa-instagram fa-w-14" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg><!-- <i class="fab fa-instagram"></i> Font Awesome fontawesome.com --></span></span>
+                            </a>
+                        </li>
+                                                                              </ul>
+                </li>
+                      </ul>
+                  </nav>
+      </div>
+    </div>
+  </div>
+</div>
+    <div id="header_fixed" class="page-top grid-x align-justify">
+    <div id="secondary_navigation" class="cell small-12">
+    <div class="top-bar-left">
+      <ul class="dropdown menu align-center" data-dropdown-menu="" role="menubar" data-e="83bhsq-e">
+                  <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-148" role="menuitem"><a href="https://adonisforseattle.com/about/"><span class="underline">About</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-176" role="menuitem"><a href="https://adonisforseattle.com/priorities/"><span class="underline">Priorities</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-477" role="menuitem"><a href="https://adonisforseattle.com/endorsements/"><span class="underline">Endorsements</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-187" role="menuitem"><a href="https://adonisforseattle.com/news/"><span class="underline">News</span></a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-452" role="menuitem"><a href="https://adonisforseattle.com/volunteer/"><span class="underline">Volunteer</span></a></li>
+
+              </ul>
+    </div>
+  </div>
+  <div class="page-top--container">
+    <div id="branding">
+      <a class="brand" href="https://adonisforseattle.com/" rel="home">
+        <picture class="logo">
+          <img src="https://adonisforseattle.com/wp-content/themes/adonis/dist/images/logo_dadda3f6.png" srcset="https://adonisforseattle.com/wp-content/themes/adonis/dist/images/logo@2x_ea15699c.png 2x" alt="Adonis for Seattle">
+        </picture>
+      </a>
+    </div>
+    <div id="primary_navigation" class="cell small-12 medium-auto top-bar">
+      <div class="top-bar-left">
+        <ul class="dropdown menu align-right" data-dropdown-menu="" role="menubar" data-e="8jc0cj-e">
+                                                                                    <li class="menu-item menu-social" role="menuitem">
+                  <a title="Email" rel="noopener noreferrer" href="mailto:info@adonisforseattle.com">
+                      <span class="icon-wrapper"><svg class="svg-inline--fa fa-envelope fa-w-16" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <i class="fa fa-envelope"></i> Font Awesome fontawesome.com --></span>
+                  </a>
+              </li>
+                                                                                             <li class="menu-item menu-social" role="menuitem">
+                  <a title="Instagram" rel="noopener noreferrer" href="https://www.instagram.com/adonisforseattle" target="_blank">
+                      <span class="icon-wrapper"><span class="icon-wrapper"><svg class="svg-inline--fa fa-instagram fa-w-14" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg><!-- <i class="fab fa-instagram"></i> Font Awesome fontawesome.com --></span></span>
+                  </a>
+              </li>
+                                                                                                <li class="menu-item menu-item-util menu-item-type-button menu-item-object-cta" role="menuitem">
+                <a href="https://adonisforseattle.com/vouchers/" target="_self">Vouchers</a>
+              </li>
+                                                                                      <li class="menu-item menu-item-donate menu-item-type-button menu-item-object-cta" role="menuitem">
+                <a href="https://secure.ngpvan.com/r4KJsuKI9Em6ZWO1tyT5nA2" target="_blank">Donate</a>
+              </li>
+                  </ul>
+      </div>
+      <div class="top-bar-right text-right">
+        <button class="hamburger hamburger--squeeze" type="button" aria-label="Menu" aria-controls="navigationModal" data-toggle="navigationModal" aria-expanded="false">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>    <div id="page-wrapper">
+      <div id="background-image"></div>
+      <div id="app">
+        <div class="off-canvas-content" data-off-canvas-content="">
+          <div class="wrap container" role="document">
+            <div class="content">
+              <main class="main">
+                       <div class="module__homeMessage module__1 bg_illustration jarallax" style="background-image: none;">
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x align-center">
+            <div class="cell small-11 medium-11 large-12 module__homeMessage--background">
+                <div class="grid-x align-center">
+                    <div class="cell small-11 medium-11">
+                        <div class="grid-x align-justify align-middle">
+                                                                                                                                                <div class="cell small-12 medium-12 large-5 module__homeMessage--image">
+                                    <img width="1706" height="2560" src="https://adonisforseattle.com/wp-content/uploads/2025/08/adonis-home-3.jpg" class="attachment-full size-full" alt="" decoding="async" fetchpriority="high" srcset="https://adonisforseattle.com/wp-content/uploads/2025/08/adonis-home-3.jpg 1706w, https://adonisforseattle.com/wp-content/uploads/2025/08/adonis-home-3-200x300.jpg 200w, https://adonisforseattle.com/wp-content/uploads/2025/08/adonis-home-3-682x1024.jpg 682w, https://adonisforseattle.com/wp-content/uploads/2025/08/adonis-home-3-768x1152.jpg 768w, https://adonisforseattle.com/wp-content/uploads/2025/08/adonis-home-3-1024x1536.jpg 1024w, https://adonisforseattle.com/wp-content/uploads/2025/08/adonis-home-3-1365x2048.jpg 1365w" sizes="(max-width: 1706px) 100vw, 1706px" data-attachment-id="587" data-permalink="https://adonisforseattle.com/home/adonis-home-3/" data-orig-file="https://adonisforseattle.com/wp-content/uploads/2025/08/adonis-home-3.jpg" data-orig-size="1706,2560" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="adonis-home-3" data-image-description="" data-image-caption="" data-medium-file="https://adonisforseattle.com/wp-content/uploads/2025/08/adonis-home-3-200x300.jpg" data-large-file="https://adonisforseattle.com/wp-content/uploads/2025/08/adonis-home-3-682x1024.jpg">
+                                                                            <div class="module__homeMessage--snipe"><img width="750" height="457" src="https://adonisforseattle.com/wp-content/uploads/2025/07/ducksworth-times-clip.png" class="attachment-full size-full" alt="" decoding="async" srcset="https://adonisforseattle.com/wp-content/uploads/2025/07/ducksworth-times-clip.png 750w, https://adonisforseattle.com/wp-content/uploads/2025/07/ducksworth-times-clip-300x183.png 300w" sizes="(max-width: 750px) 100vw, 750px" data-attachment-id="561" data-permalink="https://adonisforseattle.com/home/ducksworth-times-clip/" data-orig-file="https://adonisforseattle.com/wp-content/uploads/2025/07/ducksworth-times-clip.png" data-orig-size="750,457" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="ducksworth-times-clip" data-image-description="" data-image-caption="" data-medium-file="https://adonisforseattle.com/wp-content/uploads/2025/07/ducksworth-times-clip-300x183.png" data-large-file="https://adonisforseattle.com/wp-content/uploads/2025/07/ducksworth-times-clip.png"></div>
+                                                                    </div>
+                                                        <div class="cell small-12 medium-12 large-offset-1 large-auto">
+                                <h1><strong>Working for you and District 2</strong></h1>
+<p>Addressing our biggest challenges starts with supporting our children and their families with living wages and job opportunities, affordable housing, safe streets and reliable transportation, and healthy and nurturing activities.</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; z-index: -100; clip-path: polygon(0px 0px, 100% 0px, 100% 100%, 0px 100%);"><div style="background-position: 50% 50%; background-size: cover; background-repeat: no-repeat; background-image: url(&quot;https://adonisforseattle.com/wp-content/themes/adonis/dist/images/bg_illustration_b02c5201.png&quot;); position: absolute; top: 0px; left: 0px; width: 1265px; height: 864px; overflow: hidden; pointer-events: none; transform-style: preserve-3d; backface-visibility: hidden; margin-top: -72px; transform: translate3d(0px, 230.273px, 0px);"></div></div></div>
+           <div class="module__columns module__2 module__columns--primary">
+                                <div class="grid-container">
+        <div class="grid-x grid-padding-x align-top align-center">
+                             <div class="cell  small-12 ">
+                    <div class="embed-container"><iframe title="Adonis For Seattle" width="1200" height="675" src="https://www.youtube.com/embed/7IiFGgsRvUo?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe></div>
+                </div>
+                             <div class="cell  small-11 medium-10 large-8 ">
+                    <p><strong>I was raised on Beacon Hill by a single mom</strong> who worked multiple jobs to make ends meet. Things didn’t come easy but with the community’s help, I learned the value of family and perseverance.</p>
+<div class="tiled-gallery type-rectangular" data-original-width="1200" data-carousel-extra="{&quot;blog_id&quot;:1,&quot;permalink&quot;:&quot;https:\/\/adonisforseattle.com\/&quot;,&quot;likes_blog_id&quot;:241946254}" itemscope="" itemtype="http://schema.org/ImageGallery"> <div class="gallery-row" style="width: 800px; height: 318px;" data-original-width="1200" data-original-height="477"> <div class="gallery-group images-1" style="width: 324px; height: 318px;" data-original-width="487" data-original-height="477"> <div class="tiled-gallery-item tiled-gallery-item-large" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject" role="button" tabindex="0" aria-label="Open image in full-screen."> <a href="https://adonisforseattle.com/home/about-4/" border="0" itemprop="url"> <meta itemprop="width" content="483"> <meta itemprop="height" content="473"> <img class="" data-attachment-id="309" data-orig-file="https://adonisforseattle.com/wp-content/uploads/2025/02/ABOUT-4-e1740200716450.jpg" data-orig-size="1125,1100" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1739741620&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="ABOUT 4" data-image-description="" data-medium-file="https://adonisforseattle.com/wp-content/uploads/2025/02/ABOUT-4-e1740200716450-300x293.jpg" data-large-file="https://adonisforseattle.com/wp-content/uploads/2025/02/ABOUT-4-e1740200716450-1024x1001.jpg" src="https://i0.wp.com/adonisforseattle.com/wp-content/uploads/2025/02/ABOUT-4-e1740200716450.jpg?w=483&amp;h=473&amp;ssl=1" srcset="https://adonisforseattle.com/wp-content/uploads/2025/02/ABOUT-4-e1740200716450.jpg 1125w, https://adonisforseattle.com/wp-content/uploads/2025/02/ABOUT-4-e1740200716450-300x293.jpg 300w, https://adonisforseattle.com/wp-content/uploads/2025/02/ABOUT-4-e1740200716450-1024x1001.jpg 1024w, https://adonisforseattle.com/wp-content/uploads/2025/02/ABOUT-4-e1740200716450-768x751.jpg 768w" width="483" height="473" loading="lazy" data-original-width="483" data-original-height="473" itemprop="http://schema.org/image" title="ABOUT 4" alt="ABOUT 4" style="width: 322px; height: 315px;"> </a> </div> </div> <!-- close group --> <div class="gallery-group images-1" style="width: 475px; height: 318px;" data-original-width="713" data-original-height="477"> <div class="tiled-gallery-item tiled-gallery-item-large" itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject" role="button" tabindex="0" aria-label="Open image in full-screen."> <a href="https://adonisforseattle.com/home/family-photo11/" border="0" itemprop="url"> <meta itemprop="width" content="709"> <meta itemprop="height" content="473"> <img class="" data-attachment-id="381" data-orig-file="https://adonisforseattle.com/wp-content/uploads/2025/02/FAMILY-PHOTO11-scaled.jpg" data-orig-size="2560,1707" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;NIKON D610&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1739588985&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;200&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="FAMILY PHOTO1(1)" data-image-description="" data-medium-file="https://adonisforseattle.com/wp-content/uploads/2025/02/FAMILY-PHOTO11-300x200.jpg" data-large-file="https://adonisforseattle.com/wp-content/uploads/2025/02/FAMILY-PHOTO11-1024x683.jpg" src="https://i0.wp.com/adonisforseattle.com/wp-content/uploads/2025/02/FAMILY-PHOTO11-scaled.jpg?w=709&amp;h=473&amp;ssl=1" srcset="https://adonisforseattle.com/wp-content/uploads/2025/02/FAMILY-PHOTO11-scaled.jpg 2560w, https://adonisforseattle.com/wp-content/uploads/2025/02/FAMILY-PHOTO11-300x200.jpg 300w, https://adonisforseattle.com/wp-content/uploads/2025/02/FAMILY-PHOTO11-1024x683.jpg 1024w, https://adonisforseattle.com/wp-content/uploads/2025/02/FAMILY-PHOTO11-768x512.jpg 768w, https://adonisforseattle.com/wp-content/uploads/2025/02/FAMILY-PHOTO11-1536x1024.jpg 1536w, https://adonisforseattle.com/wp-content/uploads/2025/02/FAMILY-PHOTO11-2048x1365.jpg 2048w" width="709" height="473" loading="lazy" data-original-width="709" data-original-height="473" itemprop="http://schema.org/image" title="FAMILY PHOTO1(1)" alt="FAMILY PHOTO1(1)" style="width: 472px; height: 315px;"> </a> </div> </div> <!-- close group --> </div> <!-- close row --> </div>
+<p>I worked my way through college and graduate school where I studied urban studies, public policy, and governance. Now I work for the City of Seattle as an outreach and policy advisor. I am a Protec17 Union member and I live with my wife and two daughters in Rainier Beach.</p>
+<p><strong>I AM THE ONLY CANDIDATE IN THIS RACE WITH PROVEN PUBLIC POLICY EXPERTISE AND THE DEEP-ROOTED COMMUNITY CONNECTIONS THAT CAN DELIVER RESULTS!</strong></p>
+<a target="_self" class="button shortcode expanded hollow white" href="https://adonisforseattle.com/about/">Learn More About Adonis</a>
+                </div>
+                    </div>
+    </div>
+    </div>
+           <div class="module__columns module__3 module__columns--secondary">
+  <div class="grid-container">
+      <div class="grid-x grid-padding-x align-top align-center">
+          <div class="cell  small-12 medium-10 large-10 ">
+              <h2 style="text-align: center">YOUR CONTRIBUTION MATTERS!</h2>
+          </div>
+          <div class="cell  small-11 medium-6 ">
+                                          <a target="_blank" class="button shortcode expanded hollow white" href="https://secure.ngpvan.com/r4KJsuKI9Em6ZWO1tyT5nA2">Donate</a>          </div>
+          <div class="cell  small-11 medium-6 ">
+                                          <a target="_blank" class="button shortcode expanded hollow white" href="https://adonisforseattle.com/vouchers/">DEMOCRACY VOUCHERS</a>          </div>
+      </div>
+  </div>
+</div>           <div class="module__columns module__4 module__columns--white">
+                                <div class="grid-container">
+        <div class="grid-x grid-padding-x align-top align-center">
+                             <div class="cell  small-11 medium-10 large-8 ">
+                    <h1><strong>Our Shared Priorities:</strong><br>
+Kids. Housing. Safety.</h1>
+<p>We all agree that our young people should have better opportunities than turning to the streets. We need more housing working families can afford. We need safer streets and more transportation options. Everyone deserves to feel safe and welcome. And we must protect our civil rights from federal threats.</p>
+<p><strong style="color: #00843b;">LET’S WORK TOGETHER TO MAKE SURE YOUR COMMUNITY’S VOICE IS AT THE TABLE, HEARD, AND A PART OF THE SOLUTION!</strong></p>
+<a target="_self" class="button shortcode expanded hollow primary" href="https://adonisforseattle.com/priorities/">Read the Full Plan</a>
+                </div>
+                    </div>
+    </div>
+    </div>
+           <div class="module__quotes module__5 module__quotes--full">
+        <div class="grid-x">
+        <div class="quote--carousel owl-carousel active-carousel owl-theme owl-loaded owl-drag">
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                     
+                <div class="owl-stage-outer owl-height" style="height: 237.016px;"><div class="owl-stage" style="transform: translate3d(-6325px, 0px, 0px); transition: all; width: 24035px;"><div class="owl-item cloned" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                I’ve had the pleasure of knowing Adonis both personally and professionally for several years—and as a neighbor! His experience working for the City, his background in public policy, and the relationships he’s built throughout the area make him uniquely qualified to represent District 2. But more than that, he’s an active member of our community. I regularly see him at local coffee shops, neighborhood events, and public safety meetings. Now, it’s exciting to see him take the next step and run for city council. I wish him the best of luck, and my neighbors and I will be cheering him on every step of the way! 
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Erin Goodman <span> <em>Rainier Beach Resident</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item cloned" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                I had the pleasure of being a part of the District 2 city council appointment process with Adonis and he impressed me. He showed me that he's a smart, thoughtful, and poised individual who really cares about South Seattle. I'm looking forward to seeing more of this up-and-coming leader during the District 2 city council race. 
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Mark Solomon <span> <em>City of Seattle Councilmember District 2</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item cloned" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                Adonis has a vision for District 2 that has earned my respect. His ideas and solutions will take us from the present to a better future. He understands a Seattle safe for children is a City secure for all. Residents, families and  businesses would benefit from his common sense leadership.
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Dawn Mason <span> <em>Former State Representative</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item cloned" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                I have known Adonis since the late 80’s and as far back as I can remember he's always been a genuine and positive person. He's heavily involved with the Seattle skate community volunteering his time to help kids and adults learn to skate. It's really exciting to see him take this next step on his journey and run for the District 2 city council seat. He will no doubt bring the same character and energy to the race and City Hall once he's elected in November. I'm hyped to see this!
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Marshall Stack Reid <span> <em>Manager, All Together Skatepark Seattle</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item cloned" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                Adonis is the kind of person who shows up—for his friends, his family, and his community. Whether he's helping a new skater drop in for the first time or organizing to make Seattle a better place for all of us, he brings patience, passion, and real care to everything he does. As a dad, a skater, and a longtime community leader, he understands the needs of District 2 firsthand. I have no doubt he’ll bring that same dedication and energy to City Hall. Hyped to see him in this race and even more excited to see him win!
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Kristin Ebeling <span> <em>Executive Director of Skate Like a Girl</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item active" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                We need Adonis' commitment to jobs, affordability, and sustainability on City Council. He will be a strong voice for the smart planning-- and community engagement-- needed to make Seattle a place where we can all live, work, and thrive.
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Ryan Calkins <span> <em>Port Commissioner</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                Adonis will bring important perspectives to Council-from a lifetime living and working in South Seattle. He’s a good listener with a record of bringing diverse voices to the table to shape positive solutions. He deserves our vote.
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Joy Hollingsworth <span> <em>City of Seattle Councilmember District 3</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                We need more leaders on the City Council who understand their neighborhoods, fight for our values, and care about the safety and affordability of our city. Adonis will be that leader for District 2. We share not only a passion for public service, but first jobs delivering newspapers in our neighborhoods! I’m excited to endorse his candidacy, and look forward to working with him on Council.
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Dan Strauss <span> <em>City of Seattle Councilmember District District 6</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                I've known Adonis his entire life and watched him grow up to become a loving father and respected community leader. During his time at SDOT on the 23rd Ave project, he brought together community members, church leaders, and elders to listen to their concerns. This showed me he respects and values voices like ours. I'm really excited to see what's next for Adonis-- and urge you to elect him to the City Council.
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Pastor WIllie C Seals Jr <span> <em>Pastor - The Christ Spirit Church Beacon Hill</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                I’ve had the pleasure of knowing Adonis both personally and professionally for several years—and as a neighbor! His experience working for the City, his background in public policy, and the relationships he’s built throughout the area make him uniquely qualified to represent District 2. But more than that, he’s an active member of our community. I regularly see him at local coffee shops, neighborhood events, and public safety meetings. Now, it’s exciting to see him take the next step and run for city council. I wish him the best of luck, and my neighbors and I will be cheering him on every step of the way! 
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Erin Goodman <span> <em>Rainier Beach Resident</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                I had the pleasure of being a part of the District 2 city council appointment process with Adonis and he impressed me. He showed me that he's a smart, thoughtful, and poised individual who really cares about South Seattle. I'm looking forward to seeing more of this up-and-coming leader during the District 2 city council race. 
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Mark Solomon <span> <em>City of Seattle Councilmember District 2</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                Adonis has a vision for District 2 that has earned my respect. His ideas and solutions will take us from the present to a better future. He understands a Seattle safe for children is a City secure for all. Residents, families and  businesses would benefit from his common sense leadership.
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Dawn Mason <span> <em>Former State Representative</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                I have known Adonis since the late 80’s and as far back as I can remember he's always been a genuine and positive person. He's heavily involved with the Seattle skate community volunteering his time to help kids and adults learn to skate. It's really exciting to see him take this next step on his journey and run for the District 2 city council seat. He will no doubt bring the same character and energy to the race and City Hall once he's elected in November. I'm hyped to see this!
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Marshall Stack Reid <span> <em>Manager, All Together Skatepark Seattle</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                Adonis is the kind of person who shows up—for his friends, his family, and his community. Whether he's helping a new skater drop in for the first time or organizing to make Seattle a better place for all of us, he brings patience, passion, and real care to everything he does. As a dad, a skater, and a longtime community leader, he understands the needs of District 2 firsthand. I have no doubt he’ll bring that same dedication and energy to City Hall. Hyped to see him in this race and even more excited to see him win!
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Kristin Ebeling <span> <em>Executive Director of Skate Like a Girl</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item cloned" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                We need Adonis' commitment to jobs, affordability, and sustainability on City Council. He will be a strong voice for the smart planning-- and community engagement-- needed to make Seattle a place where we can all live, work, and thrive.
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Ryan Calkins <span> <em>Port Commissioner</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item cloned" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                Adonis will bring important perspectives to Council-from a lifetime living and working in South Seattle. He’s a good listener with a record of bringing diverse voices to the table to shape positive solutions. He deserves our vote.
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Joy Hollingsworth <span> <em>City of Seattle Councilmember District 3</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item cloned" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                We need more leaders on the City Council who understand their neighborhoods, fight for our values, and care about the safety and affordability of our city. Adonis will be that leader for District 2. We share not only a passion for public service, but first jobs delivering newspapers in our neighborhoods! I’m excited to endorse his candidacy, and look forward to working with him on Council.
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Dan Strauss <span> <em>City of Seattle Councilmember District District 6</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item cloned" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                I've known Adonis his entire life and watched him grow up to become a loving father and respected community leader. During his time at SDOT on the 23rd Ave project, he brought together community members, church leaders, and elders to listen to their concerns. This showed me he respects and values voices like ours. I'm really excited to see what's next for Adonis-- and urge you to elect him to the City Council.
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Pastor WIllie C Seals Jr <span> <em>Pastor - The Christ Spirit Church Beacon Hill</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div><div class="owl-item cloned" style="width: 1265px;"><div class="quote--carousel--quote">
+                                <blockquote class="grid-container quote--carousel--imageQuote">
+                                        <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10 quote--carousel--quoteblock">
+                                                I’ve had the pleasure of knowing Adonis both personally and professionally for several years—and as a neighbor! His experience working for the City, his background in public policy, and the relationships he’s built throughout the area make him uniquely qualified to represent District 2. But more than that, he’s an active member of our community. I regularly see him at local coffee shops, neighborhood events, and public safety meetings. Now, it’s exciting to see him take the next step and run for city council. I wish him the best of luck, and my neighbors and I will be cheering him on every step of the way! 
+                                            </span>
+                    </span>
+                                                                                <span class="grid-x align-center">
+                        <span class="cell small-10 medium-10   ">
+                                                <footer>
+                                <cite>Erin Goodman <span> <em>Rainier Beach Resident</em></span></cite>
+                            </footer>
+                                            </span>
+                    </span>
+                                                        </blockquote>
+                            </div></div></div></div><div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><svg class="svg-inline--fa fa-arrow-left fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"></path></svg><!-- <i class="fas fa-arrow-left"></i> Font Awesome fontawesome.com --></button><button type="button" role="presentation" class="owl-next"><svg class="svg-inline--fa fa-arrow-right fa-w-14" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"></path></svg><!-- <i class="fas fa-arrow-right"></i> Font Awesome fontawesome.com --></button></div><div class="owl-dots"><button role="button" class="owl-dot active"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button><button role="button" class="owl-dot"><span></span></button></div></div>
+    </div>
+</div>
+           <div class="module__columns module__6 module__columns--white">
+                                <div class="grid-container">
+        <div class="grid-x grid-padding-x align-middle align-center">
+                             <div class="cell  small-11 medium-10 large-6 small-order-2 large-order-1 ">
+                    <p><img loading="lazy" decoding="async" class="aligncenter size-full wp-image-244 rotate--2" src="https://adonisforseattle.com/wp-content/uploads/2025/02/IMG_5295-scaled-e1740123178713.jpg" alt="" width="2423" height="1685" srcset="https://adonisforseattle.com/wp-content/uploads/2025/02/IMG_5295-scaled-e1740123178713.jpg 2423w, https://adonisforseattle.com/wp-content/uploads/2025/02/IMG_5295-scaled-e1740123178713-300x209.jpg 300w, https://adonisforseattle.com/wp-content/uploads/2025/02/IMG_5295-scaled-e1740123178713-1024x712.jpg 1024w, https://adonisforseattle.com/wp-content/uploads/2025/02/IMG_5295-scaled-e1740123178713-768x534.jpg 768w, https://adonisforseattle.com/wp-content/uploads/2025/02/IMG_5295-scaled-e1740123178713-1536x1068.jpg 1536w, https://adonisforseattle.com/wp-content/uploads/2025/02/IMG_5295-scaled-e1740123178713-2048x1424.jpg 2048w" sizes="auto, (max-width: 2423px) 100vw, 2423px"></p>
+                </div>
+                             <div class="cell  small-11 medium-10 large-6 small-order-1 large-order-2 ">
+                    <h1>Join our Campaign!</h1>
+<script type="text/javascript">
+/* <![CDATA[ */
+
+/* ]]&gt; */
+</script>
+
+                <div class="gf_browser_chrome gform_wrapper gravity-theme gform-theme--no-framework" data-form-theme="gravity-theme" data-form-index="0" id="gform_wrapper_1"><div id="gf_1" class="gform_anchor" tabindex="-1"></div><form method="post" enctype="multipart/form-data" target="gform_ajax_frame_1" id="gform_1" action="/#gf_1" data-formid="1" novalidate="">
+                        <div class="gform-body gform_body"><div id="gform_fields_1" class="gform_fields top_label form_sublabel_below description_below validation_below"><fieldset id="field_1_1" class="gfield gfield--type-name gfield--input-type-name gfield_contains_required field_sublabel_below gfield--no-description field_description_below field_validation_below gfield_visibility_visible"><legend class="gfield_label gform-field-label gfield_label_before_complex">Name<span class="gfield_required"><span class="gfield_required gfield_required_text">(Required)</span></span></legend><div class="ginput_complex ginput_container ginput_container--name no_prefix has_first_name no_middle_name has_last_name no_suffix gf_name_has_2 ginput_container_name gform-grid-row" id="input_1_1">
+                            
+                            <span id="input_1_1_3_container" class="name_first gform-grid-col gform-grid-col--size-auto">
+                                                    <input type="text" name="input_1.3" id="input_1_1_3" value="" aria-required="true" style="">
+                                                    <label for="input_1_1_3" class="gform-field-label gform-field-label--type-sub ">First</label>
+                                                </span>
+                            
+                            <span id="input_1_1_6_container" class="name_last gform-grid-col gform-grid-col--size-auto">
+                                                    <input type="text" name="input_1.6" id="input_1_1_6" value="" aria-required="true" style="">
+                                                    <label for="input_1_1_6" class="gform-field-label gform-field-label--type-sub ">Last</label>
+                                                </span>
+                            
+                        </div></fieldset><div id="field_1_3" class="gfield gfield--type-email gfield--input-type-email gfield--width-full gfield_contains_required field_sublabel_below gfield--no-description field_description_below field_validation_below gfield_visibility_visible"><label class="gfield_label gform-field-label" for="input_1_3">Email<span class="gfield_required"><span class="gfield_required gfield_required_text">(Required)</span></span></label><div class="ginput_container ginput_container_email">
+                            <input name="input_3" id="input_1_3" type="email" value="" class="large" aria-required="true" aria-invalid="false" style="">
+                        </div></div></div></div>
+        <div class="gform-footer gform_footer top_label"> <input type="submit" id="gform_submit_button_1" class="gform_button button" onclick="gform.submission.handleButtonClick(this);" data-submission-type="submit" value="Submit" style=""> <input type="hidden" name="gform_ajax" value="form_id=1&amp;title=&amp;description=&amp;tabindex=0&amp;theme=gravity-theme&amp;styles=[]&amp;hash=805805dae19d281829999a74297751b1" style="">
+            <input type="hidden" class="gform_hidden" name="gform_submission_method" data-js="gform_submission_method_1" value="iframe" style="">
+            <input type="hidden" class="gform_hidden" name="gform_theme" data-js="gform_theme_1" id="gform_theme_1" value="gravity-theme" style="">
+            <input type="hidden" class="gform_hidden" name="gform_style_settings" data-js="gform_style_settings_1" id="gform_style_settings_1" value="[]" style="">
+            <input type="hidden" class="gform_hidden" name="is_submit_1" value="1" style="">
+            <input type="hidden" class="gform_hidden" name="gform_submit" value="1" style="">
+            
+            <input type="hidden" class="gform_hidden" name="gform_unique_id" value="" style="">
+            <input type="hidden" class="gform_hidden" name="state_1" value="WyJbXSIsIjFmY2ZjNGVkMGMzZTM1YzgxN2ZiOWI5OTM0NmFiYzE4Il0=" style="">
+            <input type="hidden" autocomplete="off" class="gform_hidden" name="gform_target_page_number_1" id="gform_target_page_number_1" value="0" style="">
+            <input type="hidden" autocomplete="off" class="gform_hidden" name="gform_source_page_number_1" id="gform_source_page_number_1" value="1" style="">
+            <input type="hidden" name="gform_field_values" value="" style="">
+            
+        </div>
+                        </form>
+                        </div>
+		                <iframe style="display:none;width:0px;height:0px;" src="about:blank" name="gform_ajax_frame_1" id="gform_ajax_frame_1" title="This iframe contains the logic required to handle Ajax powered Gravity Forms."></iframe>
+		                <script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {gformInitSpinner( 1, 'https://adonisforseattle.com/wp-content/plugins/gravityforms/images/spinner.svg', true );jQuery('#gform_ajax_frame_1').on('load',function(){var contents = jQuery(this).contents().find('*').html();var is_postback = contents.indexOf('GF_AJAX_POSTBACK') >= 0;if(!is_postback){return;}var form_content = jQuery(this).contents().find('#gform_wrapper_1');var is_confirmation = jQuery(this).contents().find('#gform_confirmation_wrapper_1').length > 0;var is_redirect = contents.indexOf('gformRedirect(){') >= 0;var is_form = form_content.length > 0 && ! is_redirect && ! is_confirmation;var mt = parseInt(jQuery('html').css('margin-top'), 10) + parseInt(jQuery('body').css('margin-top'), 10) + 100;if(is_form){jQuery('#gform_wrapper_1').html(form_content.html());if(form_content.hasClass('gform_validation_error')){jQuery('#gform_wrapper_1').addClass('gform_validation_error');} else {jQuery('#gform_wrapper_1').removeClass('gform_validation_error');}setTimeout( function() { /* delay the scroll by 50 milliseconds to fix a bug in chrome */ jQuery(document).scrollTop(jQuery('#gform_wrapper_1').offset().top - mt); }, 50 );if(window['gformInitDatepicker']) {gformInitDatepicker();}if(window['gformInitPriceFields']) {gformInitPriceFields();}var current_page = jQuery('#gform_source_page_number_1').val();gformInitSpinner( 1, 'https://adonisforseattle.com/wp-content/plugins/gravityforms/images/spinner.svg', true );jQuery(document).trigger('gform_page_loaded', [1, current_page]);window['gf_submitting_1'] = false;}else if(!is_redirect){var confirmation_content = jQuery(this).contents().find('.GF_AJAX_POSTBACK').html();if(!confirmation_content){confirmation_content = contents;}jQuery('#gform_wrapper_1').replaceWith(confirmation_content);jQuery(document).scrollTop(jQuery('#gf_1').offset().top - mt);jQuery(document).trigger('gform_confirmation_loaded', [1]);window['gf_submitting_1'] = false;wp.a11y.speak(jQuery('#gform_confirmation_message_1').text());}else{jQuery('#gform_1').append(contents);if(window['gformRedirect']) {gformRedirect();}}jQuery(document).trigger("gform_pre_post_render", [{ formId: "1", currentPage: "current_page", abort: function() { this.preventDefault(); } }]);        if (event && event.defaultPrevented) {                return;        }        const gformWrapperDiv = document.getElementById( "gform_wrapper_1" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_1";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_1" );        let postRenderFired = false;        function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            gform.core.triggerPostRenderEvents( 1, current_page );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } );} ); 
+/* ]]&gt; */
+</script>
+
+                </div>
+                    </div>
+    </div>
+    </div>
+      
+                </main>
+            </div>
+          </div>
+        </div>
+                <footer class="content-info">
+    <div class="grid-container">
+        <div class="grid-x">
+            <div class="cell small-12 content-info--social">
+                                                                                                <ul class="menu align-center align-middle">
+                                                            <li class="menu-item menu-social">
+                        <a title="Email" rel="noopener noreferrer" href="mailto:info@adonisforseattle.com">
+                            <span class="icon-wrapper"><svg class="svg-inline--fa fa-envelope fa-w-16" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"></path></svg><!-- <i class="fa fa-envelope"></i> Font Awesome fontawesome.com --></span>
+                        </a>
+                    </li>
+                                                                                                                                    <li>
+                            <a class="content-info--social__link" id="instagram_link" title="Instagram" rel="noopener noreferrer" href="https://www.instagram.com/adonisforseattle" target="_blank">
+                                <span class="icon-wrapper"><span class="icon-wrapper"><svg class="svg-inline--fa fa-instagram fa-w-14" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="instagram" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></svg><!-- <i class="fab fa-instagram"></i> Font Awesome fontawesome.com --></span></span>
+                            </a>
+                        </li>
+                                                                            </ul>
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x align-middle align-center">
+            <div class="cell small-12 medium-12 large-6 content-info--disclaimer">
+                <div class="media-object stack-for-small stack-for-medium">
+                    <div class="media-object-section align-self-middle">
+                        <img src="https://adonisforseattle.com/wp-content/themes/adonis/dist/images/logo_dadda3f6.png" srcset="https://adonisforseattle.com/wp-content/themes/adonis/dist/images/logo@2x_ea15699c.png 2x" alt="Adonis for Seattle">
+                    </div>
+                    <div class="media-object-section main-section align-self-middle">
+                        <p>Paid for by<br>
+<strong>Adonis for Seattle</strong><br>
+PO Box 21961 Seattle, WA 98111</p>
+
+                    </div>
+                </div>
+            </div>
+                    </div>
+    </div>
+</footer>      </div>
+    </div>
+    <script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"\/*"},{"not":{"href_matches":["\/wp-*.php","\/wp-admin\/*","\/wp-content\/uploads\/*","\/wp-content\/*","\/wp-content\/plugins\/*","\/wp-content\/themes\/adonis\/resources\/*","\/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+		<div id="jp-carousel-loading-overlay">
+			<div id="jp-carousel-loading-wrapper">
+				<span id="jp-carousel-library-loading">&nbsp;</span>
+			</div>
+		</div>
+		<div class="jp-carousel-overlay" style="display: none;">
+
+		<div class="jp-carousel-container">
+			<!-- The Carousel Swiper -->
+			<div class="jp-carousel-wrap swiper jp-carousel-swiper-container jp-carousel-transitions" itemscope="" itemtype="https://schema.org/ImageGallery">
+				<div class="jp-carousel swiper-wrapper"></div>
+				<div class="jp-swiper-button-prev swiper-button-prev">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskPrev" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="9" height="12">
+							<path d="M16.2072 16.59L11.6496 12L16.2072 7.41L14.8041 6L8.8335 12L14.8041 18L16.2072 16.59Z" fill="white"></path>
+						</mask>
+						<g mask="url(#maskPrev)">
+							<rect x="0.579102" width="23.8823" height="24" fill="#FFFFFF"></rect>
+						</g>
+					</svg>
+				</div>
+				<div class="jp-swiper-button-next swiper-button-next">
+					<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<mask id="maskNext" mask-type="alpha" maskUnits="userSpaceOnUse" x="8" y="6" width="8" height="12">
+							<path d="M8.59814 16.59L13.1557 12L8.59814 7.41L10.0012 6L15.9718 12L10.0012 18L8.59814 16.59Z" fill="white"></path>
+						</mask>
+						<g mask="url(#maskNext)">
+							<rect x="0.34375" width="23.8822" height="24" fill="#FFFFFF"></rect>
+						</g>
+					</svg>
+				</div>
+			</div>
+			<!-- The main close buton -->
+			<div class="jp-carousel-close-hint">
+				<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<mask id="maskClose" mask-type="alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="15" height="14">
+						<path d="M19.3166 6.41L17.9135 5L12.3509 10.59L6.78834 5L5.38525 6.41L10.9478 12L5.38525 17.59L6.78834 19L12.3509 13.41L17.9135 19L19.3166 17.59L13.754 12L19.3166 6.41Z" fill="white"></path>
+					</mask>
+					<g mask="url(#maskClose)">
+						<rect x="0.409668" width="23.8823" height="24" fill="#FFFFFF"></rect>
+					</g>
+				</svg>
+			</div>
+			<!-- Image info, comments and meta -->
+			<div class="jp-carousel-info">
+				<div class="jp-carousel-info-footer">
+					<div class="jp-carousel-pagination-container">
+						<div class="jp-swiper-pagination swiper-pagination"></div>
+						<div class="jp-carousel-pagination"></div>
+					</div>
+					<div class="jp-carousel-photo-title-container">
+						<h2 class="jp-carousel-photo-caption"></h2>
+					</div>
+					<div class="jp-carousel-photo-icons-container">
+						<a href="https://adonisforseattle.com/#" class="jp-carousel-icon-btn jp-carousel-icon-info" aria-label="Toggle photo metadata visibility">
+							<span class="jp-carousel-icon">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="maskInfo" mask-type="alpha" maskUnits="userSpaceOnUse" x="2" y="2" width="21" height="20">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M12.7537 2C7.26076 2 2.80273 6.48 2.80273 12C2.80273 17.52 7.26076 22 12.7537 22C18.2466 22 22.7046 17.52 22.7046 12C22.7046 6.48 18.2466 2 12.7537 2ZM11.7586 7V9H13.7488V7H11.7586ZM11.7586 11V17H13.7488V11H11.7586ZM4.79292 12C4.79292 16.41 8.36531 20 12.7537 20C17.142 20 20.7144 16.41 20.7144 12C20.7144 7.59 17.142 4 12.7537 4C8.36531 4 4.79292 7.59 4.79292 12Z" fill="white"></path>
+									</mask>
+									<g mask="url(#maskInfo)">
+										<rect x="0.8125" width="23.8823" height="24" fill="#FFFFFF"></rect>
+									</g>
+								</svg>
+							</span>
+						</a>
+											</div>
+				</div>
+				<div class="jp-carousel-info-extra">
+					<div class="jp-carousel-info-content-wrapper">
+						<div class="jp-carousel-photo-title-container">
+							<h2 class="jp-carousel-photo-title"></h2>
+						</div>
+						<div class="jp-carousel-comments-wrapper">
+													</div>
+						<div class="jp-carousel-image-meta">
+							<div class="jp-carousel-title-and-caption">
+								<div class="jp-carousel-photo-info">
+									<h3 class="jp-carousel-caption" itemprop="caption description"></h3>
+								</div>
+
+								<div class="jp-carousel-photo-description"></div>
+							</div>
+							<ul class="jp-carousel-image-exif" style="display: none;"></ul>
+							<a class="jp-carousel-image-download" href="https://adonisforseattle.com/#" target="_blank" style="display: none;">
+								<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="3" y="3" width="19" height="18">
+										<path fill-rule="evenodd" clip-rule="evenodd" d="M5.84615 5V19H19.7775V12H21.7677V19C21.7677 20.1 20.8721 21 19.7775 21H5.84615C4.74159 21 3.85596 20.1 3.85596 19V5C3.85596 3.9 4.74159 3 5.84615 3H12.8118V5H5.84615ZM14.802 5V3H21.7677V10H19.7775V6.41L9.99569 16.24L8.59261 14.83L18.3744 5H14.802Z" fill="white"></path>
+									</mask>
+									<g mask="url(#mask0)">
+										<rect x="0.870605" width="23.8823" height="24" fill="#FFFFFF"></rect>
+									</g>
+								</svg>
+								<span class="jp-carousel-download-text"></span>
+							</a>
+							<div class="jp-carousel-image-map" style="display: none;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		</div>
+		<link rel="stylesheet" id="jetpack-swiper-library-css" href="https://adonisforseattle.com/wp-content/plugins/jetpack/_inc/blocks/swiper.css?ver=14.9.1" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack-carousel-css" href="https://adonisforseattle.com/wp-content/plugins/jetpack/modules/carousel/jetpack-carousel.css?ver=14.9.1" type="text/css" media="all">
+<link rel="stylesheet" id="tiled-gallery-css" href="https://adonisforseattle.com/wp-content/plugins/jetpack/modules/tiled-gallery/tiled-gallery/tiled-gallery.css?ver=2023-08-21" type="text/css" media="all">
+<link rel="stylesheet" id="gform_basic-css" href="https://adonisforseattle.com/wp-content/plugins/gravityforms/assets/css/dist/basic.min.css?ver=2.9.18" type="text/css" media="all">
+<link rel="stylesheet" id="gform_theme_components-css" href="https://adonisforseattle.com/wp-content/plugins/gravityforms/assets/css/dist/theme-components.min.css?ver=2.9.18" type="text/css" media="all">
+<link rel="stylesheet" id="gform_theme-css" href="https://adonisforseattle.com/wp-content/plugins/gravityforms/assets/css/dist/theme.min.css?ver=2.9.18" type="text/css" media="all">
+<script type="text/javascript" src="https://adonisforseattle.com/wp-content/themes/adonis/dist/scripts/main_59cd7974.js" id="sage/main.js-js"></script>
+<script type="text/javascript" id="jetpack-stats-js-before">
+/* <![CDATA[ */
+_stq = window._stq || [];
+_stq.push([ "view", JSON.parse("{\"v\":\"ext\",\"blog\":\"241946254\",\"post\":\"132\",\"tz\":\"0\",\"srv\":\"adonisforseattle.com\",\"j\":\"1:14.9.1\"}") ]);
+_stq.push([ "clickTrackerInit", "241946254", "132" ]);
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://stats.wp.com/e-202539.js" id="jetpack-stats-js" defer="defer" data-wp-strategy="defer"></script>
+<script type="text/javascript" id="jetpack-carousel-js-extra">
+/* <![CDATA[ */
+var jetpackSwiperLibraryPath = {"url":"https:\/\/adonisforseattle.com\/wp-content\/plugins\/jetpack\/_inc\/blocks\/swiper.js"};
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"en","ajaxurl":"https:\/\/adonisforseattle.com\/wp-admin\/admin-ajax.php","nonce":"2f0b809596","display_exif":"0","display_comments":"0","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Comment","post_comment":"Post Comment","write_comment":"Write a Comment...","loading_comments":"Loading Comments...","image_label":"Open image in full-screen.","download_original":"View full size <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>","no_comment_text":"Please be sure to submit some text with your comment.","no_comment_email":"Please provide an email address to comment.","no_comment_author":"Please provide your name to comment.","comment_post_error":"Sorry, but there was an error posting your comment. Please try again later.","comment_approved":"Your comment was approved.","comment_unapproved":"Your comment is in moderation.","camera":"Camera","aperture":"Aperture","shutter_speed":"Shutter Speed","focal_length":"Focal Length","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/adonisforseattle.com\/wp-login.php?redirect_to=https%3A%2F%2Fadonisforseattle.com%2F","blog_id":"1","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"]};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://adonisforseattle.com/wp-content/plugins/jetpack/_inc/build/carousel/jetpack-carousel.min.js?ver=14.9.1" id="jetpack-carousel-js"></script>
+<script type="text/javascript" src="https://adonisforseattle.com/wp-content/plugins/jetpack/_inc/build/tiled-gallery/tiled-gallery/tiled-gallery.min.js?ver=14.9.1" id="tiled-gallery-js" defer="defer" data-wp-strategy="defer"></script>
+<script type="text/javascript" src="https://adonisforseattle.com/wp-includes/js/dist/dom-ready.min.js?ver=f77871ff7694fffea381" id="wp-dom-ready-js"></script>
+<script type="text/javascript" src="https://adonisforseattle.com/wp-includes/js/dist/hooks.min.js?ver=4d63a3d491d11ffd8ac6" id="wp-hooks-js"></script>
+<script type="text/javascript" src="https://adonisforseattle.com/wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6" id="wp-i18n-js"></script>
+<script type="text/javascript" id="wp-i18n-js-after">
+/* <![CDATA[ */
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://adonisforseattle.com/wp-includes/js/dist/a11y.min.js?ver=3156534cc54473497e14" id="wp-a11y-js"></script>
+<script type="text/javascript" defer="defer" src="https://adonisforseattle.com/wp-content/plugins/gravityforms/js/jquery.json.min.js?ver=2.9.18" id="gform_json-js"></script>
+<script type="text/javascript" id="gform_gravityforms-js-extra">
+/* <![CDATA[ */
+var gform_i18n = {"datepicker":{"days":{"monday":"Mo","tuesday":"Tu","wednesday":"We","thursday":"Th","friday":"Fr","saturday":"Sa","sunday":"Su"},"months":{"january":"January","february":"February","march":"March","april":"April","may":"May","june":"June","july":"July","august":"August","september":"September","october":"October","november":"November","december":"December"},"firstDay":1,"iconText":"Select date"}};
+var gf_legacy_multi = [];
+var gform_gravityforms = {"strings":{"invalid_file_extension":"This type of file is not allowed. Must be one of the following:","delete_file":"Delete this file","in_progress":"in progress","file_exceeds_limit":"File exceeds size limit","illegal_extension":"This type of file is not allowed.","max_reached":"Maximum number of files reached","unknown_error":"There was a problem while saving the file on the server","currently_uploading":"Please wait for the uploading to complete","cancel":"Cancel","cancel_upload":"Cancel this upload","cancelled":"Cancelled"},"vars":{"images_url":"https:\/\/adonisforseattle.com\/wp-content\/plugins\/gravityforms\/images"}};
+var gf_global = {"gf_currency_config":{"name":"U.S. Dollar","symbol_left":"$","symbol_right":"","symbol_padding":"","thousand_separator":",","decimal_separator":".","decimals":2,"code":"USD"},"base_url":"https:\/\/adonisforseattle.com\/wp-content\/plugins\/gravityforms","number_formats":[],"spinnerUrl":"https:\/\/adonisforseattle.com\/wp-content\/plugins\/gravityforms\/images\/spinner.svg","version_hash":"001b45a3f16b6ee2b2fa2fe4e16a1116","strings":{"newRowAdded":"New row added.","rowRemoved":"Row removed","formSaved":"The form has been saved.  The content contains the link to return and complete the form."}};
+/* ]]> */
+</script>
+<script type="text/javascript" defer="defer" src="https://adonisforseattle.com/wp-content/plugins/gravityforms/js/gravityforms.min.js?ver=2.9.18" id="gform_gravityforms-js"></script>
+<script type="text/javascript" defer="defer" src="https://adonisforseattle.com/wp-content/plugins/gravityforms/assets/js/dist/utils.min.js?ver=380b7a5ec0757c78876bc8a59488f2f3" id="gform_gravityforms_utils-js"></script>
+<script type="text/javascript" defer="defer" src="https://adonisforseattle.com/wp-content/plugins/gravityforms/assets/js/dist/vendor-theme.min.js?ver=21e5a4db1670166692ac5745329bfc80" id="gform_gravityforms_theme_vendors-js"></script>
+<script type="text/javascript" id="gform_gravityforms_theme-js-extra">
+/* <![CDATA[ */
+var gform_theme_config = {"common":{"form":{"honeypot":{"version_hash":"001b45a3f16b6ee2b2fa2fe4e16a1116"},"ajax":{"ajaxurl":"https:\/\/adonisforseattle.com\/wp-admin\/admin-ajax.php","ajax_submission_nonce":"4bb8f6eece","i18n":{"step_announcement":"Step %1$s of %2$s, %3$s","unknown_error":"There was an unknown error processing your request. Please try again."}}}},"hmr_dev":"","public_path":"https:\/\/adonisforseattle.com\/wp-content\/plugins\/gravityforms\/assets\/js\/dist\/","config_nonce":"bed3bd485d"};
+/* ]]> */
+</script>
+<script type="text/javascript" defer="defer" src="https://adonisforseattle.com/wp-content/plugins/gravityforms/assets/js/dist/scripts-theme.min.js?ver=8fa5e6390c795318e567cd2b080e169b" id="gform_gravityforms_theme-js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() { jQuery(document).on('gform_post_render', function(event, formId, currentPage){if(formId == 1) {} } );jQuery(document).on('gform_post_conditional_logic', function(event, formId, fields, isInit){} ) } ); 
+/* ]]> */
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+ gform.initializeOnLoaded( function() {jQuery(document).trigger("gform_pre_post_render", [{ formId: "1", currentPage: "1", abort: function() { this.preventDefault(); } }]);        if (event && event.defaultPrevented) {                return;        }        const gformWrapperDiv = document.getElementById( "gform_wrapper_1" );        if ( gformWrapperDiv ) {            const visibilitySpan = document.createElement( "span" );            visibilitySpan.id = "gform_visibility_test_1";            gformWrapperDiv.insertAdjacentElement( "afterend", visibilitySpan );        }        const visibilityTestDiv = document.getElementById( "gform_visibility_test_1" );        let postRenderFired = false;        function triggerPostRender() {            if ( postRenderFired ) {                return;            }            postRenderFired = true;            gform.core.triggerPostRenderEvents( 1, 1 );            if ( visibilityTestDiv ) {                visibilityTestDiv.parentNode.removeChild( visibilityTestDiv );            }        }        function debounce( func, wait, immediate ) {            var timeout;            return function() {                var context = this, args = arguments;                var later = function() {                    timeout = null;                    if ( !immediate ) func.apply( context, args );                };                var callNow = immediate && !timeout;                clearTimeout( timeout );                timeout = setTimeout( later, wait );                if ( callNow ) func.apply( context, args );            };        }        const debouncedTriggerPostRender = debounce( function() {            triggerPostRender();        }, 200 );        if ( visibilityTestDiv && visibilityTestDiv.offsetParent === null ) {            const observer = new MutationObserver( ( mutations ) => {                mutations.forEach( ( mutation ) => {                    if ( mutation.type === 'attributes' && visibilityTestDiv.offsetParent !== null ) {                        debouncedTriggerPostRender();                        observer.disconnect();                    }                });            });            observer.observe( document.body, {                attributes: true,                childList: false,                subtree: true,                attributeFilter: [ 'style', 'class' ],            });        } else {            triggerPostRender();        }    } ); 
+/* ]]> */
+</script>
+  
+
+
+<p id="a11y-speak-intro-text" class="a11y-speak-intro-text" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" hidden="hidden">Notifications</p><div id="a11y-speak-assertive" class="a11y-speak-region" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" aria-live="assertive" aria-relevant="additions text" aria-atomic="true"></div><div id="a11y-speak-polite" class="a11y-speak-region" style="position: absolute;margin: -1px;padding: 0;height: 1px;width: 1px;overflow: hidden;clip: rect(1px, 1px, 1px, 1px);-webkit-clip-path: inset(50%);clip-path: inset(50%);border: 0;word-wrap: normal !important;" aria-live="polite" aria-relevant="additions text" aria-atomic="true"></div></body></html>

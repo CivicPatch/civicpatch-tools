@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Find Your Council District - CityClerk | seattle.gov
 
 
 
@@ -17,7 +17,7 @@ Website addresses ending in .gov belong to official government organizations in 
 **Secure .gov websites use HTTPS**  
 A lock () or https:// means you've safely connected to the .gov website. Only share sensitive information on official, secure websites.
 
-[Skip to main content](https://www.seattle.gov/council#content)
+[Skip to main content](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district#content)
 
 Seattle
 
@@ -493,351 +493,186 @@ ContinueCancel
 * Close Close
 * Main Menu+ Back to
     Main MenuBack to Main Menu
-  + [Council](https://www.seattle.gov/council)
-  + [Public Comment](https://www.seattle.gov/council/meetings/public-comment "Main Menu Mobile - Home Public Comment")
-  + [Calendar](https://www.seattle.gov/council/calendar "Main Menu Mobile - Home Calendar")
-  + [CouncilmembersCouncilmembers](https://www.seattle.gov/council/members "Main Menu Mobile - Home Councilmembers")
-    - [Find Your District and Councilmembers](https://www.seattle.gov/council/members/find-your-district-and-councilmembers "Main Menu Mobile - Councilmembers Find Your District and Councilmembers")
-    - [Rob SakaRob Saka](https://www.seattle.gov/council/members/rob-saka "Main Menu Mobile - Councilmembers Rob Saka")
-      * [About Councilmember Rob Saka](https://www.seattle.gov/council/members/rob-saka/about-rob "Main Menu Mobile - Rob Saka About Councilmember Rob Saka")
-      * [Councilmember Rob Saka's Staff](https://www.seattle.gov/council/members/rob-saka/staff "Main Menu Mobile - Rob Saka Councilmember Rob Saka's Staff")
-      * [Rob's Committees & Calendar](https://www.seattle.gov/council/members/rob-saka/committees-and-calendar "Main Menu Mobile - Rob Saka Rob's Committees & Calendar")
-    - [Mark SolomonMark Solomon](https://www.seattle.gov/council/members/mark-solomon "Main Menu Mobile - Councilmembers Mark Solomon")
-      * [About Councilmember Mark Solomon](https://www.seattle.gov/council/members/mark-solomon/about-mark "Main Menu Mobile - Mark Solomon About Councilmember Mark Solomon")
-      * [Councilmember Mark Solomon's Staff](https://www.seattle.gov/council/members/mark-solomon/staff "Main Menu Mobile - Mark Solomon Councilmember Mark Solomon's Staff")
-      * [Mark's Committees & Calendar](https://www.seattle.gov/council/members/mark-solomon/committees-and-calendar "Main Menu Mobile - Mark Solomon Mark's Committees & Calendar")
-    - [Joy HollingsworthJoy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth "Main Menu Mobile - Councilmembers Joy Hollingsworth")
-      * [About Councilmember Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth/about-joy "Main Menu Mobile - Joy Hollingsworth About Councilmember Joy Hollingsworth")
-      * [Councilmember Joy Hollingsworth's Staff](https://www.seattle.gov/council/members/joy-hollingsworth/staff "Main Menu Mobile - Joy Hollingsworth Councilmember Joy Hollingsworth's Staff")
-      * [Joy's Committees & Calendar](https://www.seattle.gov/council/members/joy-hollingsworth/committees-and-calendar "Main Menu Mobile - Joy Hollingsworth Joy's Committees & Calendar")
-    - [Maritza RiveraMaritza Rivera](https://www.seattle.gov/council/members/maritza-rivera "Main Menu Mobile - Councilmembers Maritza Rivera")
-      * [About Councilmember Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera/about-maritza "Main Menu Mobile - Maritza Rivera About Councilmember Maritza Rivera")
-      * [Councilmember Maritza Rivera's Staff](https://www.seattle.gov/council/members/maritza-rivera/staff "Main Menu Mobile - Maritza Rivera Councilmember Maritza Rivera's Staff")
-      * [Maritza's Committees & Calendar](https://www.seattle.gov/council/members/maritza-rivera/committees-and-calendar "Main Menu Mobile - Maritza Rivera Maritza's Committees & Calendar")
-    - [Debora JuarezDebora Juarez](https://www.seattle.gov/council/members/debora-juarez "Main Menu Mobile - Councilmembers Debora Juarez")
-      * [About Councilmember Debora Juarez](https://www.seattle.gov/council/members/debora-juarez/about-debora "Main Menu Mobile - Debora Juarez About Councilmember Debora Juarez")
-      * [Councilmember Debora Juarez's Staff](https://www.seattle.gov/council/members/debora-juarez/staff "Main Menu Mobile - Debora Juarez Councilmember Debora Juarez's Staff")
-      * [Debora's Committees & Calendar](https://www.seattle.gov/council/members/debora-juarez/committees-and-calendar "Main Menu Mobile - Debora Juarez Debora's Committees & Calendar")
-    - [Dan StraussDan Strauss](https://www.seattle.gov/council/members/dan-strauss "Main Menu Mobile - Councilmembers Dan Strauss")
-      * [About Councilmember Dan Strauss](https://www.seattle.gov/council/members/dan-strauss/about-dan "Main Menu Mobile - Dan Strauss About Councilmember Dan Strauss")
-      * [Councilmember Dan Strauss' Staff](https://www.seattle.gov/council/members/dan-strauss/staff "Main Menu Mobile - Dan Strauss Councilmember Dan Strauss' Staff")
-      * [Dan's Committees & Calendar](https://www.seattle.gov/council/members/dan-strauss/committees-and-calendar "Main Menu Mobile - Dan Strauss Dan's Committees & Calendar")
-    - [Bob KettleBob Kettle](https://www.seattle.gov/council/members/bob-kettle "Main Menu Mobile - Councilmembers Bob Kettle")
-      * [About Councilmember Robert Kettle](https://www.seattle.gov/council/members/bob-kettle/about-robert "Main Menu Mobile - Bob Kettle About Councilmember Robert Kettle")
-      * [Councilmember Robert Kettle's Staff](https://www.seattle.gov/council/members/bob-kettle/staff "Main Menu Mobile - Bob Kettle Councilmember Robert Kettle's Staff")
-      * [Robert's Committees & Calendar](https://www.seattle.gov/council/members/bob-kettle/committees-and-calendar "Main Menu Mobile - Bob Kettle Robert's Committees & Calendar")
-      * [Good Governance Pledge](https://www.seattle.gov/council/members/bob-kettle/good-governance-pledge "Main Menu Mobile - Bob Kettle Good Governance Pledge")
-    - [Alexis Mercedes RinckAlexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Main Menu Mobile - Councilmembers Alexis Mercedes Rinck")
-      * [About Councilmember Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck/about-alexis "Main Menu Mobile - Alexis Mercedes Rinck About Councilmember Alexis Mercedes Rinck")
-      * [Councilmember Alexis Mercedes Rinck's Staff](https://www.seattle.gov/council/members/alexis-mercedes-rinck/staff "Main Menu Mobile - Alexis Mercedes Rinck Councilmember Alexis Mercedes Rinck's Staff")
-      * [Alexis' Committees & Calendar](https://www.seattle.gov/council/members/alexis-mercedes-rinck/committees-and-calendar "Main Menu Mobile - Alexis Mercedes Rinck Alexis' Committees & Calendar")
-      * [Protecting our community from changes at the federal level](https://www.seattle.gov/council/members/alexis-mercedes-rinck/federal-changes-and-city-protections "Main Menu Mobile - Alexis Mercedes Rinck Protecting our community from changes at the federal level")
-    - [Sara NelsonSara Nelson](https://www.seattle.gov/council/members/sara-nelson "Main Menu Mobile - Councilmembers Sara Nelson")
-      * [About Councilmember Sara Nelson](https://www.seattle.gov/council/members/sara-nelson/about-sara "Main Menu Mobile - Sara Nelson About Councilmember Sara Nelson")
-      * [Councilmember Sara Nelson's Staff](https://www.seattle.gov/council/members/sara-nelson/staff "Main Menu Mobile - Sara Nelson Councilmember Sara Nelson's Staff")
-      * [Sara's Committees & Calendar](https://www.seattle.gov/council/members/sara-nelson/committees-and-calendar "Main Menu Mobile - Sara Nelson Sara's Committees & Calendar")
-      * [Drug Possession and Public Use Legislation](https://www.seattle.gov/council/members/sara-nelson/drug-possession-and-public-use-legislation "Main Menu Mobile - Sara Nelson Drug Possession and Public Use Legislation")
-      * [Seattle Film Commission](https://www.seattle.gov/council/members/sara-nelson/seattle-film-commission "Main Menu Mobile - Sara Nelson Seattle Film Commission")
-      * [Helping Small Businesses](https://www.seattle.gov/council/members/sara-nelson/helping-small-businesses "Main Menu Mobile - Sara Nelson Helping Small Businesses")
-  + [Council MeetingsCouncil Meetings](https://www.seattle.gov/council/meetings "Main Menu Mobile - Home Council Meetings")
-    - [Watch Council Live](https://www.seattle.gov/council/meetings/watch-council-live "Main Menu Mobile - Council Meetings Watch Council Live")
-    - [Committees and AgendasCommittees and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas "Main Menu Mobile - Council Meetings Committees and Agendas")
-      * [Sign Up for Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Main Menu Mobile - Committees and Agendas Sign Up for Agendas")
-      * [Council Central Staff](https://www.seattle.gov/council/meetings/committees-and-agendas/council-central-staff "Main Menu Mobile - Committees and Agendas Council Central Staff")
-      * [CommitteesCommittees](https://www.seattle.gov/x60873.xml "Main Menu Mobile - Committees and Agendas Committees")
-        + [Select Committee on the Families, Education, Preschool, and Promise (FEPP) Levy](https://www.seattle.gov/council/meetings/committees-and-agendas/fepp-levy "Main Menu Mobile - Committees Select Committee on the Families, Education, Preschool, and Promise (FEPP) Levy")
-        + [Select Committee on Federal Administration and Policy Changes](https://www.seattle.gov/council/meetings/committees-and-agendas/select-committee-on-federal-administration-and-policy-changes "Main Menu Mobile - Committees Select Committee on Federal Administration and Policy Changes")
-        + [Select Committee on the Comprehensive Plan](https://www.seattle.gov/council/meetings/committees-and-agendas/select-committee-on-the-comprehensive-plan "Main Menu Mobile - Committees Select Committee on the Comprehensive Plan")
-        + [Finance, Native Communities & Tribal Governments](https://www.seattle.gov/council/meetings/committees-and-agendas/finance-native-communities-and-tribal-governments "Main Menu Mobile - Committees Finance, Native Communities & Tribal Governments")
-        + [Governance, Accountability & Economic Development](https://www.seattle.gov/council/meetings/committees-and-agendas/governance-accountability-and-economic-development "Main Menu Mobile - Committees Governance, Accountability & Economic Development")
-        + [Housing & Human Services](https://www.seattle.gov/council/committees/housing-and-human-services "Main Menu Mobile - Committees Housing & Human Services")
-        + [Land Use](https://www.seattle.gov/council/meetings/committees-and-agendas/land-use "Main Menu Mobile - Committees Land Use")
-        + [Libraries, Education & Neighborhoods](https://www.seattle.gov/council/meetings/committees-and-agendas/libraries-education-and-neighborhoods "Main Menu Mobile - Committees Libraries, Education & Neighborhoods")
-        + [Parks, Public Utilities & Technology](https://www.seattle.gov/council/meetings/committees-and-agendas/parks-public-utilities-and-technology "Main Menu Mobile - Committees Parks, Public Utilities & Technology")
-        + [Public Safety](https://www.seattle.gov/council/meetings/committees-and-agendas/public-safety "Main Menu Mobile - Committees Public Safety")
-        + [Sustainability, City Light, Arts & Culture](https://www.seattle.gov/council/meetings/committees-and-agendas/sustainability-city-light-arts-and-culture "Main Menu Mobile - Committees Sustainability, City Light, Arts & Culture")
-        + [Transportation](https://www.seattle.gov/council/meetings/committees-and-agendas/transportation "Main Menu Mobile - Committees Transportation")
-        + [Select Labor Committee for 2024-25](https://www.seattle.gov/council/meetings/committees-and-agendas/select-labor-committee-for-2024-25 "Main Menu Mobile - Committees Select Labor Committee for 2024-25")
-        + [2025 Select Budget Committee](https://www.seattle.gov/council/meetings/committees-and-agendas/2025-select-budget-committee "Main Menu Mobile - Committees 2025 Select Budget Committee")
-    - [Public Comment](https://www.seattle.gov/council/meetings/public-comment "Main Menu Mobile - Council Meetings Public Comment")
-    - [Tips on Giving Public Comment](https://www.seattle.gov/council/meetings/public-comment-tips "Main Menu Mobile - Council Meetings Tips on Giving Public Comment")
-    - [Visiting City Hall](https://www.seattle.gov/council/meetings/visiting-city-hall "Main Menu Mobile - Council Meetings Visiting City Hall")
-    - [Visitor Sign-in Sheets](https://www.seattle.gov/council/meetings/visitor-sign-in-sheets "Main Menu Mobile - Council Meetings Visitor Sign-in Sheets")
-  + [TopicsTopics](https://www.seattle.gov/council/topics "Main Menu Mobile - Home Topics")
-    - [Budget Glossary of Terms](https://www.seattle.gov/council/topics/glossary-of-terms "Main Menu Mobile - Topics Budget Glossary of Terms")
-  + [News & MediaNews & Media](https://www.seattle.gov/council/news-and-media "Main Menu Mobile - Home News & Media")
-    - [Press Kit](https://www.seattle.gov/council/news-and-media/press-kit "Main Menu Mobile - News & Media Press Kit")
-    - [Newsletter Signup](https://www.seattle.gov/council/news-and-media/newsletter-signup "Main Menu Mobile - News & Media Newsletter Signup")
-  + [Legislation & Research](https://www.seattle.gov/council/legislation-and-research "Main Menu Mobile - Home Legislation & Research")
-  + [Calendar](https://www.seattle.gov/council/calendar "Main Menu Mobile - Home Calendar")
+  + [CityClerk](https://www.seattle.gov/cityclerk)
+  + [City Council AgendasCity Council Agendas](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources "Main Menu Mobile - Home City Council Agendas")
+    - [AgendasAgendas](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas "Main Menu Mobile - City Council Agendas Agendas")
+      * [Current Agendas](https://seattle.legistar.com/Calendar.aspx "Main Menu Mobile - Agendas Current Agendas")
+      * [Public Comment Guide](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/public-comment-guide "Main Menu Mobile - Agendas Public Comment Guide")
+      * [Contact the City Council](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council "Main Menu Mobile - Agendas Contact the City Council")
+      * [Subscribe to Council Agendas](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=57a3b46b20 "Main Menu Mobile - Agendas Subscribe to Council Agendas")
+    - [Legislative ProcessLegislative Process](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process "Main Menu Mobile - City Council Agendas Legislative Process")
+      * [How a Bill Becomes a Law](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process/how-a-bill-becomes-a-law "Main Menu Mobile - Legislative Process How a Bill Becomes a Law")
+      * [How to Read a Bill](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process/how-to-read-a-bill "Main Menu Mobile - Legislative Process How to Read a Bill")
+      * [City Budget Process](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process/city-budget-process "Main Menu Mobile - Legislative Process City Budget Process")
+      * [Legislative Glossary](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process/legislative-glossary "Main Menu Mobile - Legislative Process Legislative Glossary")
+    - [Public Notices](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/public-notices "Main Menu Mobile - City Council Agendas Public Notices")
+    - [Terms of Office for Elected Officials](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials "Main Menu Mobile - City Council Agendas Terms of Office for Elected Officials")
+    - [Seattle's Form of Government](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/seattles-form-of-government "Main Menu Mobile - City Council Agendas Seattle's Form of Government")
+    - [Find Your Council District](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district "Main Menu Mobile - City Council Agendas Find Your Council District")
+  + [Legislation & ResearchLegislation & Research](https://www.seattle.gov/cityclerk/legislation-and-research "Main Menu Mobile - Home Legislation & Research")
+    - [Legislative Research Guide](https://www.seattle.gov/cityclerk/legislation-and-research/legislative-research-guide "Main Menu Mobile - Legislation & Research Legislative Research Guide")
+    - [Research Assistance](https://www.seattle.gov/cityclerk/legislation-and-research/research-assistance "Main Menu Mobile - Legislation & Research Research Assistance")
+    - [Legislative Department Public Records Requests](https://www.seattle.gov/cityclerk/legislation-and-research/request-public-records "Main Menu Mobile - Legislation & Research Legislative Department Public Records Requests")
+    - [Seattle Municipal Code & City CharterSeattle Municipal Code & City Charter](https://www.seattle.gov/cityclerk/legislation-and-research/seattle-municipal-code-and-city-charter "Main Menu Mobile - Legislation & Research Seattle Municipal Code & City Charter")
+      * [Seattle City Charter](https://library.municode.com/wa/seattle/codes/municipal_code?nodeId=THCHSE "Main Menu Mobile - Seattle Municipal Code & City Charter Seattle City Charter")
+      * [Seattle Municipal Code](https://www.municode.com/library/wa/seattle/codes/municipal_code "Main Menu Mobile - Seattle Municipal Code & City Charter Seattle Municipal Code")
+  + [City Clerk ServicesCity Clerk Services](https://www.seattle.gov/cityclerk/city-clerk-services "Main Menu Mobile - Home City Clerk Services")
+    - [Accessibility and Language Access Requests](https://www.seattle.gov/cityclerk/city-clerk-services/accessibility-and-language-access-requests "Main Menu Mobile - City Clerk Services Accessibility and Language Access Requests")
+    - [Boards and Commissions](https://www.seattle.gov/boards-and-commissions "Main Menu Mobile - City Clerk Services Boards and Commissions")
+    - [City Hall Visitor InformationCity Hall Visitor Information](https://www.seattle.gov/cityclerk/city-clerk-services/city-hall-visitor-information "Main Menu Mobile - City Clerk Services City Hall Visitor Information")
+      * [City Hall Public Meeting Locations](https://www.seattle.gov/cityclerk/city-clerk-services/city-hall-visitor-information/city-hall-public-meeting-locations "Main Menu Mobile - City Hall Visitor Information City Hall Public Meeting Locations")
+    - [City of Seattle’s Domestic Partnership Registration Program](https://www.seattle.gov/cityclerk/city-clerk-services/domestic-partnership-registration "Main Menu Mobile - City Clerk Services City of Seattle’s Domestic Partnership Registration Program")
+    - [Office of the City Clerk & Seattle Municipal Archives Fee Schedule](https://www.seattle.gov/cityclerk/city-clerk-services/fees-for-materials-and-services "Main Menu Mobile - City Clerk Services Office of the City Clerk & Seattle Municipal Archives Fee Schedule")
+    - [Initiatives, Referenda, & Charter Amendments GuidesInitiatives, Referenda, & Charter Amendments Guides](https://www.seattle.gov/cityclerk/city-clerk-services/initiative-referendum-and-charter-amendment-guides "Main Menu Mobile - City Clerk Services Initiatives, Referenda, & Charter Amendments Guides")
+      * [Initiative Petition Guide](https://www.seattle.gov/cityclerk/city-clerk-services/initiative-referendum-and-charter-amendment-guides/initiative-petition-guide "Main Menu Mobile - Initiatives, Referenda, & Charter Amendments Guides Initiative Petition Guide")
+      * [Guide for Referendum Process](https://www.seattle.gov/cityclerk/city-clerk-services/initiative-referendum-and-charter-amendment-guides/referendum-guide "Main Menu Mobile - Initiatives, Referenda, & Charter Amendments Guides Guide for Referendum Process")
+      * [City Charter Amendment Petition Guide](https://www.seattle.gov/cityclerk/city-clerk-services/initiative-referendum-and-charter-amendment-guides/city-charter-amendment-petition-guide "Main Menu Mobile - Initiatives, Referenda, & Charter Amendments Guides City Charter Amendment Petition Guide")
+  + [About the Office of the City ClerkAbout the Office of the City Clerk](https://www.seattle.gov/cityclerk/about "Main Menu Mobile - Home About the Office of the City Clerk")
+    - [Contact the City Clerk](https://www.seattle.gov/cityclerk/about/contact-the-office-of-city-clerk "Main Menu Mobile - About the Office of the City Clerk Contact the City Clerk")
+    - [Historical Perspective of the Office of the City Clerk](https://www.seattle.gov/cityclerk/about/historical-perspective "Main Menu Mobile - About the Office of the City Clerk Historical Perspective of the Office of the City Clerk")
+    - [Vision, Mission, and Values](https://www.seattle.gov/cityclerk/about/vision-mission-and-values "Main Menu Mobile - About the Office of the City Clerk Vision, Mission, and Values")
+  + [Council Vacancy](https://www.seattle.gov/cityclerk/council-vacancy "Main Menu Mobile - Home Council Vacancy")
   + [Elected Officials](https://www.seattle.gov/elected-officials "Main Menu Mobile - Seattle.gov Elected Officials")
   + [Departments](https://www.seattle.gov/departments "Main Menu Mobile - Seattle.gov Departments")
   + [News.Seattle.Gov](https://news.seattle.gov "Main Menu Mobile - Seattle.gov News.Seattle.Gov")
   + [Events](https://www.seattle.gov/event-calendar "Main Menu Mobile - Seattle.gov Events")
 
-[Seattle City Council](https://www.seattle.gov/council)
-=======================================================
+I want to search within the following:
 
-[Public Comment](https://www.seattle.gov/council/meetings/public-comment)
+Seattle.GovThis Site Only
 
-[Calendar](https://www.seattle.gov/council/calendar)
+[Office of the City Clerk](https://www.seattle.gov/cityclerk)
 
 
 
-* [Councilmembers](https://www.seattle.gov/council/members)
+* [City Council Agendas](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources)
+* [Legislation & Research](https://www.seattle.gov/cityclerk/legislation-and-research)
+* [City Clerk Services](https://www.seattle.gov/cityclerk/city-clerk-services)
+* [About](https://www.seattle.gov/cityclerk/about)
+* [Seattle Municipal Archives](https://www.seattle.gov/cityarchives)
 
-  Toggle children of Councilmembers
-  See overviews, staff info, links, and other details about Seattle City Councilmembers+ [Find Your Councilmembers](https://www.seattle.gov/council/members/find-your-district-and-councilmembers)
-    Find your Seattle City Council district and the Councilmembers who represent you
-  + [Rob Saka](https://www.seattle.gov/council/members/rob-saka)
-    District 1 (West Seattle, South Park, Georgetown, and Pioneer Square)
-  + [Mark Solomon](https://www.seattle.gov/council/members/mark-solomon)
-    District 2 (South Seattle, Yesler Terrace to Rainier Beach)
-  + [Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth)
-    District 3 (Central Seattle)
-  + [Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera)
-    District 4 (Northeast Seattle)
-  + [Debora Juarez](https://www.seattle.gov/council/members/debora-juarez)
-    District 5 (North Seattle)
-  + [Dan Strauss](https://www.seattle.gov/council/members/dan-strauss)
-    District 6 (Northwest Seattle)
-  + [Bob Kettle](https://www.seattle.gov/council/members/bob-kettle)
-    District 7 (Downtown to Magnolia, including Queen Anne, Uptown, Westlake, Interbay, Eastlake, South Lake Union, and Belltown)
-  + [Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck)
-    Position 8 (Citywide, Representing All of Seattle)
-  + [Sara Nelson](https://www.seattle.gov/council/members/sara-nelson)
-    Council President, Position 9 (Citywide, Representing All of Seattle)
-* [Council Meetings](https://www.seattle.gov/council/meetings)
+breadcrumb divider[Home](https://www.seattle.gov/cityclerk)
+breadcrumb divider[City Council Agendas](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources "City Council Agendas")
+breadcrumb end
 
-  Toggle children of Council Meetings
-  View information about Seattle City Council committees and meeting agendas+ [Watch Council Meetings](https://www.seattle.gov/council/meetings/watch-council-live)
-    Watch all the Seattle Channel programming of regularly scheduled City Council Meetings
-  + [Committees and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas)
-    Find schedules and agendas for the standing and select committees of the council
-  + [Comment at a Public Meeting](https://www.seattle.gov/council/meetings/public-comment)
-    Sign up to make public comment for items appear on Seattle City Council agendas
-  + [Public Comment Tips](https://www.seattle.gov/council/meetings/public-comment-tips)
-    Learn about recommendations for effective written and verbal communication with Councilmembers
-  + [Visitor Sign In Sheets](https://www.seattle.gov/council/meetings/visitor-sign-in-sheets)
-    View City Council visitor logs updated in real time
-  + [Visiting City Hall](https://www.seattle.gov/council/meetings/visiting-city-hall)
-    Get contact information and directions to City Hall
-* [Topics](https://www.seattle.gov/council/topics)
-* [News & Media](https://www.seattle.gov/council/news-and-media)
+Find Your Council District
+==========================
 
-  Toggle children of News & Media
-  Read the latest Council new releases and updates+ [Newsletter Signup](https://www.seattle.gov/council/news-and-media/newsletter-signup)
-    Sign up for multiple Seattle City Councilmembers' newsletters
-  + [Press Kit](https://www.seattle.gov/council/news-and-media/press-kit)
-    Get high resolution photo downloads in the Seattle City Council press kit
-* [Legislation & Research](https://www.seattle.gov/council/legislation-and-research)
+Find your [City Council district](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district#finddistrict) and [City Councilmembers](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district#councilmembers). Find [answers to frequent questions](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district#FAQ) about City Council Districts.
 
-Watch Council Meetings
-----------------------
+Your City Council District
+--------------------------
 
-The Seattle Channel's 24/7 stream features live Council meetings and a range of other award-winning programs.
+Find your City Council district at either of these sites:
 
-[Watch Council Live](https://www.seattle.gov/council/meetings/watch-council-live "Watch Council Live")
+![City of Seattle logo](https://www.seattle.gov/images/Clerk/CityLogo_50x50.jpg)
 
-Featured Topics
----------------
+Use the [City Council's Find Your District and Councilmember](https://www.seattle.gov/council/members/find-your-district-and-councilmembers) search page to find the currently-serving district-based Councilmembers.
 
-Featured Topics
----------------
+![King County logo](https://www.seattle.gov/images/Clerk/KClogo_50x50.jpg)
 
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
+Find your congressional, legislative, county council and city council voting districts at [King County's Find My Districtsexternal link](http://www.kingcounty.gov/depts/elections/elections/maps/find-my-districts.aspx).
 
-Focus on Public Safety
+See the map of districts on the [Department of Neighborhoods' web page](https://seattle.gov/neighborhoods/about-seattle/neighborhoods-and-council-districts).
 
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
+Your City Councilmembers
+------------------------
 
-[![a small group of people looking at a paper document together](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Comprehensive%20Plan_310x160.png "a small group of people looking at a paper document together")
+There are 9 City Councilmembers:
 
-2025 Comprehensive Plan
+* Positions 1 through 7 are elected by, and represent, constituents in their City Council districts.
+* Positions 8 and 9 are at-large. This means they are elected by, and represent, the entire city.
 
-A roadmap for where and how Seattle will grow and invest in our communities over the next 20 years and beyond.](https://www.seattle.gov/council/topics/2025-comprehensive-plan "2025 Comprehensive Plan")
+Find the current councilmembers and their websites on the [City Council web page](https://www.seattle.gov/council).
 
-[![yellow warning icon with a picture of the white house in the background](https://www.seattle.gov/images//images/Council/Issues/ProtectingOurSeattle/Fed-Changes_Protecting-Our-Seattle_310x160.png "yellow warning icon with a picture of the white house in the background")
+Frequently Asked Questions
+--------------------------
 
-Protecting our Seattle
+Q: When did district elections go into effect?
+:   **A:** Voters approved [Charter Amendment 19download](https://clerk.seattle.gov/~CFs/CF_313380.pdf) in the November 5, 2013 General And Special Election. The 2015 election was the first election conducted by district. Candidates seeking election to the seven district seats needed to have been a resident of the district for at least 120 days before they filed their declaration of candidacy.
 
-Seattle is committed to protecting its people, especially those most impacted by recent federal policy changes.](https://www.seattle.gov/council/topics/federal-changes-protecting-our-seattle "Federal changes: Protecting our Seattle")
+Q: What are Councilmembers' terms of office?
+:   **A:** Councilmembers serve four-year terms.  
+      
+    Positions 8 and 9, the at-large positions, are on the same election cycle as the Mayor and City Attorney.  
+      
+    Positions 1 through 7 are elected two years later.  
+      
+    View all elected officials' [terms of office](http://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials).
 
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
+Q: How were Councilmember election cycles established?
+:   **A:** In 2015:
 
-City Council's Budget Basics
+    * All nine Council seats were up for election as the transition to the district system went into place.
+    * The seven district Councilmembers were elected to four-year terms.
+    * The two at-large Councilmembers were elected to two-year terms.
 
-Understand the budget process and when and how you can make your voice heard in the process.](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
+    In 2017:  
 
-1/4
+    * The two at-large Councilmembers were elected to four-year terms.
+    * The at-large Council positions are now on the same election cycle as the Mayor and City Attorney.
 
-Contact all Councilmembers by emailing [council@seattle.gov](mailto:council@seattle.gov "Email council@seattle.gov"). You can also [get email updates](https://www.seattle.gov/council/news-and-media/newsletter-signup "Get Email Updates").
+Q: How were the district boundaries drawn?
+:   **A:** [Charter Amendment 19download](https://clerk.seattle.gov/~CFs/CF_313380.pdf) included the district boundaries in the initiative, which were based on population/census tracts.
 
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
+Q: When will boundaries be redrawn and how?
+:   **A:** As established by the voter-approved changes to the [City Charterexternal link](https://www.municode.com/library/wa/seattle/codes/municipal_code?nodeId=THCH), in the fall of 2021 a five-member [Redistricting Commission](https://wayback.archive-it.org/3241/20240401144424/http:/www.seattle.gov/redistricting) was created to redraw the district boundaries (its members will be appointed by the Mayor and the City Council). The [final districting plan](https://clerk.seattle.gov/search/clerk-files/322489) adopted by the Commission has been placed on file with the City Clerk.
+:   The voter-approved changes to the City Charter require that the redrawing process happen every ten years.
 
-Councilmembers
---------------
 
-Councilmembers
---------------
 
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+How can we help?
+----------------
 
-Rob Saka
+---
 
-Councilmember  
- District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
+[![Question Email](https://www.seattle.gov/images/Clerk/UnknownEmailyKidAfromtheNounProject_50x50.png)Send a question](mailto:cityclerk@seattle.gov)
 
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+---
 
-Mark Solomon
+[![search questions](https://www.seattle.gov/images/Clerk/questionsbyGregorCresnarfromtheNounProject50x50.png)Get research help](https://www.seattle.gov/cityclerk/legislation-and-research/research-assistance)
 
-Councilmember  
- District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
+---
 
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
+[![Accommodations for vision, hearing, mobility, and language](https://www.seattle.gov/images/Clerk/accommodations_260x50.png)](https://www.seattle.gov/cityclerk/city-clerk-services/accessibility-and-language-access-requests)
 
-Joy Hollingsworth
-
-Councilmember  
- District 3](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
-
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
-
-Maritza Rivera
-
-Councilmember  
- District 4](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
-
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
-
-Debora Juarez
-
-Councilmember  
- District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
-
-Dan Strauss
-
-Councilmember  
- District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
-
-Bob Kettle
-
-Councilmember  
- District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
-
-Alexis Mercedes Rinck
-
-Councilmember  
- Position 8](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
-
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
-
-Sara Nelson
-
-Council President  
- Position 9](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
-
-[See all Councilmembers Go to link](https://www.seattle.gov/council/members "See all Councilmembers")
-
-How to Participate
-------------------
-
-How to Participate
-------------------
-
-[Attend a council meeting](https://www.seattle.gov/council/meetings "Council Meetings")
-
-[View our calendar](https://www.seattle.gov/council/calendar "Council Calendar")
-
-[Comment at a public meeting](https://www.seattle.gov/council/meetings/public-comment "Public Comment")
-
-[Tips on giving public comment](https://www.seattle.gov/council/meetings/public-comment-tips "Public Comment Tips")
-
-[Sign up for agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
-
-View the Latest News
---------------------
-
-[### Select Committee on the Comprehensive Plan 9/19/25
-
-Agenda: Call to Order; Approval of the Agenda; Executive Session; CB 120993: relating to major update of Neighborhood Residential zones; Res 32183: relating to One Seattle Plan Comprehensive Plan up[...]](https://www.seattlechannel.org/video.asp?ID=s2162583 " Select Committee on the Comprehensive Plan 9/19/25")
-
-[### Select Committee on the Comprehensive Plan Session I 9/18/25
-
-Agenda: Call to Order; Approval of the Agenda; CB 120985: relating to the Seattle Comprehensive Plan; CB 120993: relating to major update of Neighborhood Residential zones; Res 32183: relating to On[...]](https://www.seattlechannel.org/video.asp?ID=2162579 " Select Committee on the Comprehensive Plan Session I 9/18/25")
-
-**[View all Seattle Channel Council videosexternal link](https://www.seattlechannel.org/CityCouncil "Seattle Channel Council videos")**
-
-[Council Connection Blog](https://council.seattle.gov/category/news-releases/ "undefined Blog")
------------------------------------------------------------------------------------------------
-
-[Council Connection Blog RSS FeedCouncil Connection Blog RSS Feed](https://council.seattle.gov/category/news-releases/feed/ "undefined Blog")
-
-9/19
-
-[Amended Comprehensive Plan passes out of committee](https://council.seattle.gov/2025/09/19/amended-comprehensive-plan-passes-out-of-committee/)
-
-Council now transitions to budget process while Comp Plan receives additional study before final vote Over the last three days, the Select Committee on the Comprehensive Plan, chaired by Councilmember Joy Hollingsworth (District 3), voted 9-0 to [...]
-
-9/16
-
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
-
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
-
-9/15
-
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
-
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
-
-Related Resources
------------------
-
-Related Resources
------------------
-
-[Boards and Commissions
-
-Opportunities to serve on over 70 boards and commissions.](https://www.seattle.gov/boards-and-commissions "Boards and Commissions")
-
-[City Clerk
-
-Learn about the City Clerk and get legislation resources.](https://www.seattle.gov/cityclerk "City Clerk")
-
-[Find It Fix It App
-
-Report non-urgent requests such as clogged storm drains, traffic signal issues, and streetlight outage.](https://www.seattle.gov/customer-service-bureau/find-it-fix-it-mobile-app "Find It Fix It App")
-
-[Get Involved
-
-Find ways to volunteer, donate, and have a say on city issues.](https://www.seattle.gov/get-involved "Get Involved")
-
-1/4
-
-City Council
-------------
-
+[Accessibility Information  
+Request Accommodations](https://www.seattle.gov/cityclerk/city-clerk-services/accessibility-and-language-access-requests)
+
+---
+
+* [City Council Agendas](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas "Agendas")  Toggle children of Agendas
+
+  + [Current Agendas](https://seattle.legistar.com/Calendar.aspx "Current Agendas")
+  + [Public Comment Guide](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/public-comment-guide "Public Comment Guide")
+  + [Contact the City Council](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council "Contact the City Council")
+  + [Subscribe to Council Agendas](https://seattle.us12.list-manage.com/subscribe?u=11a79978ca7225050bfabf7ad&id=57a3b46b20 "Subscribe to Council Agendas")
+* [Legislative Process](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process "Legislative Process")  Toggle children of Legislative Process
+
+  + [How a Bill Becomes a Law](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process/how-a-bill-becomes-a-law "How a Bill Becomes a Law")
+  + [How to Read a Bill](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process/how-to-read-a-bill "How to Read a Bill")
+  + [City Budget Process](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process/city-budget-process "City Budget Process")
+  + [Legislative Glossary](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process/legislative-glossary "Legislative Glossary")
+* [Public Notices](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/public-notices "Public Notices")
+* [Terms of Office for Elected Officials](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials "Terms of Office for Elected Officials")
+* [Seattle's Form of Government](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/seattles-form-of-government "Seattle's Form of Government")
+* [Find Your Council District](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district "Find Your Council District")
+No left sidebar
+
+* [.About Us](https://www.seattle.gov/cityclerk/about)
+* [Council](https://seattle.gov/council)
+* [Office of the Mayor](//www.seattle.gov/mayor)
+
+City Clerk
+----------
+
+Scheereen Dedman, City Clerk  
 Address:
-[600 4th Ave. 2nd Floor, Seattle, WA, 98104](https://www.google.com/maps/place/600 4th Ave. 2nd Floor, Seattle, WA, 98104)  
+[600 4th Ave, 3rd Floor, Seattle, WA, 98104](https://www.google.com/maps/place/600 4th Ave, 3rd Floor, Seattle, WA, 98104)  
 Mailing Address:
-PO Box 34025, Seattle, WA , 98124-4025  
-Phone: [(206) 684-8888](tel: +1 (206) 684-8888)  
-Phone Alt: Listen Line: [(206) 684-8566](tel: +1 (206) 684-8566)  
-Fax: [(206) 684-8587](fax: +1 (206) 684-8587)  
-[Meet the Council](https://www.seattle.gov/council/members)
-
-[Seattle City Council Facebook](http://www.facebook.com/seattlecouncil)
-[Seattle City Council Twitter](http://twitter.com/SeattleCouncil)
-[Seattle City Council Instagram](https://www.instagram.com/theseattlecouncil/)
-[Seattle City Council Bluesky](https://bsky.app/profile/council.seattle.gov)
+PO Box 94728, Seattle, WA, 98124-4728  
+Phone: [(206) 684-8344](tel: +1 (206) 684-8344)  
+Email: [CityClerk@seattle.gov](mailto:CityClerk@seattle.gov)
 
 Citywide Information
 --------------------
@@ -853,15 +688,14 @@ Citywide Information
 * [View the Departments & Agencies List](https://www.seattle.gov/departments)
 * [Boards & Commissions](https://www.seattle.gov/boards-and-commissions)
 
-### Popular Pages
+### Top Requests
 
-1. [Councilmembers](https://www.seattle.gov/council/members)
-2. [Watch Council Meetings Live](https://www.seattle.gov/council/meetings/watch-council-live)
-3. [Committees and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas)
-4. [Find Your District and Councilmembers](https://www.seattle.gov/council/members/find-your-district-and-councilmembers)
-5. [View a Calendar of Upcoming Meetings](https://www.seattle.gov/council/calendar)
+1. [Pay your utility bill](https://myutilities.seattle.gov/eportal/#/)
+2. [City Jobsexternal link](https://www.governmentjobs.com/careers/seattle)
+3. [Adopt a pet](https://www.seattle.gov/animal-shelter/find-an-animal/adopt)
+4. [Get building permits](https://www.seattle.gov/sdci/permits)
 
-The Seattle City Council establishes City policy through enactment of ordinances (laws) and adoption of resolutions. The City Council also approves and adopts the City's budget. The nine Council members and their legislative assistants are part of the City of Seattle Legislative Department.
+The Office of the City Clerk maintains the City's official records, provides support for the City Council, and manages the City's historical records through the Seattle Municipal Archives. The Clerk's Office provides information services to the public and to City staff.
 
 Policies
 --------
@@ -875,7 +709,6 @@ Policies
 [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)
 
 [Sitemap](//www.seattle.gov/sitemap)
-
 
 
 

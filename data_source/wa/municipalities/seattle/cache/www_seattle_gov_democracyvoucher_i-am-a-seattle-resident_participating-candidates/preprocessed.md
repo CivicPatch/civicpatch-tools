@@ -1,4 +1,5 @@
-Elected Officials | seattle.gov
+Participating Candidates - DemocracyVoucher | seattle.gov
+
 
 
 
@@ -174,143 +175,133 @@ Cancel
 
 
 
-* + Elected Officials
-    - Elected Officials Page Cards
-      * Council Members (Legislative)
-        + [Rob Saka](https://www.seattle.gov/x152133.xml "Main Menu Mobile - Council Members (Legislative) Rob Saka")
-        + [Mark Solomon](https://www.seattle.gov/x152136.xml "Main Menu Mobile - Council Members (Legislative) Mark Solomon")
-        + [Joy Hollingsworth](https://www.seattle.gov/x152139.xml "Main Menu Mobile - Council Members (Legislative) Joy Hollingsworth")
-        + [Debora Juarez](https://www.seattle.gov/x178555.xml "Main Menu Mobile - Council Members (Legislative) Debora Juarez")
-        + [Dan Strauss](https://www.seattle.gov/x152140.xml "Main Menu Mobile - Council Members (Legislative) Dan Strauss")
-        + [Bob Kettle](https://www.seattle.gov/x152134.xml "Main Menu Mobile - Council Members (Legislative) Bob Kettle")
-        + [Sara Nelson](https://www.seattle.gov/x152137.xml "Main Menu Mobile - Council Members (Legislative) Sara Nelson")
-      * Law
-        + [Ann Davison](https://www.seattle.gov/x152142.xml "Main Menu Mobile - Law Ann Davison")
-  + Events
-    - [Seattle Citywide Event Calendar Policy and Disclaimer](https://www.seattle.gov/event-calendar/policy-and-disclaimer "Main Menu Mobile - Events Seattle Citywide Event Calendar Policy and Disclaimer")
-    - [Help with Citywide Event Calendar](https://www.seattle.gov/event-calendar/help "Main Menu Mobile - Events Help with Citywide Event Calendar")
-    - [Public Outreach and Engagement Event Calendar](https://www.seattle.gov/event-calendar/public-outreach-and-engagement-calendar "Main Menu Mobile - Events Public Outreach and Engagement Event Calendar")
+* + Program Data
+    - External Reports
+      * [Participation by District](https://www.seattle.gov/democracyvoucher/program-data/external-reports/participation-by-district "Main Menu Mobile - External Reports Participation by District")
+
+The Democracy Voucher Program is optional for candidates. Find the list of participating Democracy Voucher Program candidates running in the 2025 City of Seattle election listed below. For a complete list of all candidates, visit the
+SEEC Campaigns website.
+
+Positions eligible for Democracy Voucher funding in 2025 include Mayor, City Attorney, and City Council Positions 2, 8, and 9.
+
+Candidates are invited to submit a voluntary 200-word introduction and photo. Read them
+here.
+
+### **Mayor**
+
+|  |  |  |
+| --- | --- | --- |
+| **Candidate** | **Campaign Name** | **Campaign Status** |
+| Bruce Harrell | [Bruce for Seattle  external link](https://www.bruceforseattle.com/) | **Accepting Democracy Vouchers for the General Election.** |
+| Katie Wilson | [Wilson for Seattle  external link](https://www.wilsonforseattle.com) | **Accepting Democracy Vouchers for the General Election.** |
+
+|  |  |  |
+| --- | --- | --- |
+| **Candidate** | **Campaign Name** | **Campaign Status** |
+| Ann Davison | [Neighbors for Ann  external link](https://neighborsforann.com/) | **Accepting Democracy Vouchers for the General Election.** |
+| Erika Evans | [Elect Erika Evans  external link](https://electerikaevans.com/) | **Accepting Democracy Vouchers for the General Election.** |
+
+### **City Council Position 2**
+
+|  |  |  |
+| --- | --- | --- |
+| **Candidate** | **Campaign Name** | **Campaign Status** |
+| Eddie Lin | [Eddie for Seattle  external link](https://www.linforseattle.com/) | **Accepting Democracy Vouchers for the General Election.** |
+| Adonis Ducksworth | [Adonis for Seattle  external link](https://adonisforseattle.com) | **Accepting Democracy Vouchers for the General Election.** |
+
+### **City Council Position 8**
+
+|  |  |  |
+| --- | --- | --- |
+| **Candidate** | **Campaign Name** | **Campaign Status** |
+| Alexis Mercedes Rinck | [Alexis for Seattle  external link](https://www.alexisforseattle.com/) | **Accepting Democracy Vouchers for the General Election.** |
+| Rachael Savage | [Friends of Rachael Savage City Council  external link](https://www.savagecitizens.com/) | **Accepting Democracy Vouchers for the General Election.** |
+
+### **City Council Position 9**
+
+|  |  |  |
+| --- | --- | --- |
+| **Candidate** | **Campaign Name** | **Campaign Status** |
+| Dionne Foster | [Dionne for Seattle  external link](https://dionnefoster.com/) | **Accepting Democracy Vouchers for the General Election.** |
+
+Primary election candidates can no longer redeem Democracy Vouchers.
+
+**Mayor**
+
+Ry Armstrong
+
+Joe Mallahan
+
+Joy Molloy
+
+Thaddeus Whelan
+
+Isaiah Willoughby
+
+Clinton Bliss
+
+Rory O'Sullivan
+
+Nathan Rouse
+
+**District 2**
+
+Jamie Fackler
+
+Jeanie Chunn
+
+**City Council Position 8**
+
+Cooper Hall
 
 
 
-* [City Council Topics](https://www.seattle.gov/council/topics)
+The Seattle Ethics and Elections Commission (SEEC) administers the Democracy Voucher Program. As a nonpartisan and independent commission, the SEEC also administers and enforces the following codes for the City of Seattle.
 
-Know your rights with programs for immigrants and refugees.
-
-* [Animal Shelter](https://www.seattle.gov/animal-shelter)
-
-* [Victim Assistance](https://www.seattle.gov/cityattorney/crime-victim-assistance)
-
-Search for your lost pet or research adopting a new one.
-Find options for receiving and paying your utility bills.
-
-* [Teen Jobs and Leadership Programs with Seattle Parks (14-24)](https://www.seattle.gov/parks/learning-and-childcare/teen-programs/job-readiness-opportunities-for-teens)
-
-Get data for your research needs at the Open Data Portal.
-
-* [Historic Districts](https://www.seattle.gov/neighborhoods/historic-preservation/historic-districts)
-
-View public funding opportunities for community artists.
-
-* Zoning Map
-
-* [Pay for Parking by Phone](https://www.paybyphone.com/locations/seattle)
-
-Learn about parking options, tips, and payment methods.
-
-[![Mayor](https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg)
-
-Bruce Harrell
-
-Mayor](https://www.seattle.gov/mayor "Mayor Home Page")
-
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
-
-Rob Saka
-
-Councilmember
-District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
-
-Mark Solomon
-
-Councilmember
-District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-
-Joy HollingsworthCouncilmemberDistrict 3
-Maritza RiveraCouncilmemberDistrict 4
-
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
-
-Debora Juarez
-
-Councilmember
-District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
-
-Dan Strauss
-
-Councilmember
-District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
-
-Bob Kettle
-
-Councilmember
-District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-
-Alexis Mercedes RinckCouncilmemberPosition 8
-Sara NelsonCouncil PresidentPosition 9
-
-Meet the Council
-
-Ann DavisonCity Attorney
-
-[![Anita Crawford-Willis](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAnitaCrawford-Willis_circle.jpg)
-
-Anita Crawford-Willis
-
-Presiding Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-anita-crawford-willis "Anita Crawford-Willis")
-
-Damon ShadidAssistant Presiding Judge
-
-[![Faye Chess](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeFayeRChess_circle.jpg)
-
-Faye Chess
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-faye-chess "Faye Chess")
-
-[![Andrea Chin](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAndreaChin_circle.jpg)
-
-Andrea Chin
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-andrea-chin "Andrea Chin")
-
-[![Willie Gregory](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeWillieGregory_circle.jpg)
-
-Willie Gregory
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-willie-gregory "Willie Gregory")
-
-Catherine McDowallJudge
-Pooja VaddadiJudge
-Seattle Municipal CourtGeneral Information
-
-Contact Us
-----------
-
-Customer Service Bureau
+General Questions and Inquiries
 Phone:
-(206) 684-2489
+(206) 727-8855
+Email:
+[democracyvoucher@seattle.gov](mailto:democracyvoucher@seattle.gov)
+FAX:
+(206) 684-8590
 
 Address:
-City Hall, 600 Fourth Ave. Seattle, WA 98104
+Office
+|
+Mailing
 
-City Hall, 600 Fourth Ave.Seattle, WA 98104
-Customer Service Centers
+**Street Address:**
+Seattle Municipal Tower
+700 5th Ave
+Suite 4010
+Seattle,
+WA
+98104
+
+**Mailing Address:**
+PO Box 35196
+Seattle,
+WA
+98124-5196
+
+* [Contact Us](https://www.seattle.gov/democracyvoucher/about-the-program/contact-us)
+
+Address:
+700 5th Ave, Suite 4010, Seattle, WA, 98104
+Mailing Address:
+PO Box 35196, Seattle, WA, 98124-5196
+Phone:
+(206) 727-8855
+Fax:
+FAX:
+(206) 684-8590
+Email:
+[democracyvoucher@seattle.gov](mailto:democracyvoucher@seattle.gov)
+
+Newsletter Updates
+Subscribe
+Sign up for the latest updates from Democracy Voucher Program
 
 Citywide Information
 --------------------
@@ -321,7 +312,6 @@ Privacy Policy
 
 [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)
 Sitemap
-
 
 Original text
 

@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Seattle.gov Home
 
 
 
@@ -17,7 +17,7 @@ Website addresses ending in .gov belong to official government organizations in 
 **Secure .gov websites use HTTPS**  
 A lock () or https:// means you've safely connected to the .gov website. Only share sensitive information on official, secure websites.
 
-[Skip to main content](https://www.seattle.gov/council#content)
+[Skip to main content](https://www.seattle.gov/#content)
 
 Seattle
 
@@ -47,7 +47,7 @@ English Choose a language arrow
 
 [Select Language​▼](https://www.seattle.gov/#)
 
-SearchPay or ApplyMain Navigation MenuMenu
+SearchPay or Apply
 
 Main Navigation MenuMenu
 
@@ -488,356 +488,572 @@ Google Translate ንኹሉ ትሕዝቶ ብትኽክል ከይትርጉሞ ይ�
 
 ContinueCancel
 
+City Administration
 
+Close menu for City AdministrationClose
 
-* Close Close
-* Main Menu+ Back to
-    Main MenuBack to Main Menu
-  + [Council](https://www.seattle.gov/council)
-  + [Public Comment](https://www.seattle.gov/council/meetings/public-comment "Main Menu Mobile - Home Public Comment")
-  + [Calendar](https://www.seattle.gov/council/calendar "Main Menu Mobile - Home Calendar")
-  + [CouncilmembersCouncilmembers](https://www.seattle.gov/council/members "Main Menu Mobile - Home Councilmembers")
-    - [Find Your District and Councilmembers](https://www.seattle.gov/council/members/find-your-district-and-councilmembers "Main Menu Mobile - Councilmembers Find Your District and Councilmembers")
-    - [Rob SakaRob Saka](https://www.seattle.gov/council/members/rob-saka "Main Menu Mobile - Councilmembers Rob Saka")
-      * [About Councilmember Rob Saka](https://www.seattle.gov/council/members/rob-saka/about-rob "Main Menu Mobile - Rob Saka About Councilmember Rob Saka")
-      * [Councilmember Rob Saka's Staff](https://www.seattle.gov/council/members/rob-saka/staff "Main Menu Mobile - Rob Saka Councilmember Rob Saka's Staff")
-      * [Rob's Committees & Calendar](https://www.seattle.gov/council/members/rob-saka/committees-and-calendar "Main Menu Mobile - Rob Saka Rob's Committees & Calendar")
-    - [Mark SolomonMark Solomon](https://www.seattle.gov/council/members/mark-solomon "Main Menu Mobile - Councilmembers Mark Solomon")
-      * [About Councilmember Mark Solomon](https://www.seattle.gov/council/members/mark-solomon/about-mark "Main Menu Mobile - Mark Solomon About Councilmember Mark Solomon")
-      * [Councilmember Mark Solomon's Staff](https://www.seattle.gov/council/members/mark-solomon/staff "Main Menu Mobile - Mark Solomon Councilmember Mark Solomon's Staff")
-      * [Mark's Committees & Calendar](https://www.seattle.gov/council/members/mark-solomon/committees-and-calendar "Main Menu Mobile - Mark Solomon Mark's Committees & Calendar")
-    - [Joy HollingsworthJoy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth "Main Menu Mobile - Councilmembers Joy Hollingsworth")
-      * [About Councilmember Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth/about-joy "Main Menu Mobile - Joy Hollingsworth About Councilmember Joy Hollingsworth")
-      * [Councilmember Joy Hollingsworth's Staff](https://www.seattle.gov/council/members/joy-hollingsworth/staff "Main Menu Mobile - Joy Hollingsworth Councilmember Joy Hollingsworth's Staff")
-      * [Joy's Committees & Calendar](https://www.seattle.gov/council/members/joy-hollingsworth/committees-and-calendar "Main Menu Mobile - Joy Hollingsworth Joy's Committees & Calendar")
-    - [Maritza RiveraMaritza Rivera](https://www.seattle.gov/council/members/maritza-rivera "Main Menu Mobile - Councilmembers Maritza Rivera")
-      * [About Councilmember Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera/about-maritza "Main Menu Mobile - Maritza Rivera About Councilmember Maritza Rivera")
-      * [Councilmember Maritza Rivera's Staff](https://www.seattle.gov/council/members/maritza-rivera/staff "Main Menu Mobile - Maritza Rivera Councilmember Maritza Rivera's Staff")
-      * [Maritza's Committees & Calendar](https://www.seattle.gov/council/members/maritza-rivera/committees-and-calendar "Main Menu Mobile - Maritza Rivera Maritza's Committees & Calendar")
-    - [Debora JuarezDebora Juarez](https://www.seattle.gov/council/members/debora-juarez "Main Menu Mobile - Councilmembers Debora Juarez")
-      * [About Councilmember Debora Juarez](https://www.seattle.gov/council/members/debora-juarez/about-debora "Main Menu Mobile - Debora Juarez About Councilmember Debora Juarez")
-      * [Councilmember Debora Juarez's Staff](https://www.seattle.gov/council/members/debora-juarez/staff "Main Menu Mobile - Debora Juarez Councilmember Debora Juarez's Staff")
-      * [Debora's Committees & Calendar](https://www.seattle.gov/council/members/debora-juarez/committees-and-calendar "Main Menu Mobile - Debora Juarez Debora's Committees & Calendar")
-    - [Dan StraussDan Strauss](https://www.seattle.gov/council/members/dan-strauss "Main Menu Mobile - Councilmembers Dan Strauss")
-      * [About Councilmember Dan Strauss](https://www.seattle.gov/council/members/dan-strauss/about-dan "Main Menu Mobile - Dan Strauss About Councilmember Dan Strauss")
-      * [Councilmember Dan Strauss' Staff](https://www.seattle.gov/council/members/dan-strauss/staff "Main Menu Mobile - Dan Strauss Councilmember Dan Strauss' Staff")
-      * [Dan's Committees & Calendar](https://www.seattle.gov/council/members/dan-strauss/committees-and-calendar "Main Menu Mobile - Dan Strauss Dan's Committees & Calendar")
-    - [Bob KettleBob Kettle](https://www.seattle.gov/council/members/bob-kettle "Main Menu Mobile - Councilmembers Bob Kettle")
-      * [About Councilmember Robert Kettle](https://www.seattle.gov/council/members/bob-kettle/about-robert "Main Menu Mobile - Bob Kettle About Councilmember Robert Kettle")
-      * [Councilmember Robert Kettle's Staff](https://www.seattle.gov/council/members/bob-kettle/staff "Main Menu Mobile - Bob Kettle Councilmember Robert Kettle's Staff")
-      * [Robert's Committees & Calendar](https://www.seattle.gov/council/members/bob-kettle/committees-and-calendar "Main Menu Mobile - Bob Kettle Robert's Committees & Calendar")
-      * [Good Governance Pledge](https://www.seattle.gov/council/members/bob-kettle/good-governance-pledge "Main Menu Mobile - Bob Kettle Good Governance Pledge")
-    - [Alexis Mercedes RinckAlexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Main Menu Mobile - Councilmembers Alexis Mercedes Rinck")
-      * [About Councilmember Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck/about-alexis "Main Menu Mobile - Alexis Mercedes Rinck About Councilmember Alexis Mercedes Rinck")
-      * [Councilmember Alexis Mercedes Rinck's Staff](https://www.seattle.gov/council/members/alexis-mercedes-rinck/staff "Main Menu Mobile - Alexis Mercedes Rinck Councilmember Alexis Mercedes Rinck's Staff")
-      * [Alexis' Committees & Calendar](https://www.seattle.gov/council/members/alexis-mercedes-rinck/committees-and-calendar "Main Menu Mobile - Alexis Mercedes Rinck Alexis' Committees & Calendar")
-      * [Protecting our community from changes at the federal level](https://www.seattle.gov/council/members/alexis-mercedes-rinck/federal-changes-and-city-protections "Main Menu Mobile - Alexis Mercedes Rinck Protecting our community from changes at the federal level")
-    - [Sara NelsonSara Nelson](https://www.seattle.gov/council/members/sara-nelson "Main Menu Mobile - Councilmembers Sara Nelson")
-      * [About Councilmember Sara Nelson](https://www.seattle.gov/council/members/sara-nelson/about-sara "Main Menu Mobile - Sara Nelson About Councilmember Sara Nelson")
-      * [Councilmember Sara Nelson's Staff](https://www.seattle.gov/council/members/sara-nelson/staff "Main Menu Mobile - Sara Nelson Councilmember Sara Nelson's Staff")
-      * [Sara's Committees & Calendar](https://www.seattle.gov/council/members/sara-nelson/committees-and-calendar "Main Menu Mobile - Sara Nelson Sara's Committees & Calendar")
-      * [Drug Possession and Public Use Legislation](https://www.seattle.gov/council/members/sara-nelson/drug-possession-and-public-use-legislation "Main Menu Mobile - Sara Nelson Drug Possession and Public Use Legislation")
-      * [Seattle Film Commission](https://www.seattle.gov/council/members/sara-nelson/seattle-film-commission "Main Menu Mobile - Sara Nelson Seattle Film Commission")
-      * [Helping Small Businesses](https://www.seattle.gov/council/members/sara-nelson/helping-small-businesses "Main Menu Mobile - Sara Nelson Helping Small Businesses")
-  + [Council MeetingsCouncil Meetings](https://www.seattle.gov/council/meetings "Main Menu Mobile - Home Council Meetings")
-    - [Watch Council Live](https://www.seattle.gov/council/meetings/watch-council-live "Main Menu Mobile - Council Meetings Watch Council Live")
-    - [Committees and AgendasCommittees and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas "Main Menu Mobile - Council Meetings Committees and Agendas")
-      * [Sign Up for Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Main Menu Mobile - Committees and Agendas Sign Up for Agendas")
-      * [Council Central Staff](https://www.seattle.gov/council/meetings/committees-and-agendas/council-central-staff "Main Menu Mobile - Committees and Agendas Council Central Staff")
-      * [CommitteesCommittees](https://www.seattle.gov/x60873.xml "Main Menu Mobile - Committees and Agendas Committees")
-        + [Select Committee on the Families, Education, Preschool, and Promise (FEPP) Levy](https://www.seattle.gov/council/meetings/committees-and-agendas/fepp-levy "Main Menu Mobile - Committees Select Committee on the Families, Education, Preschool, and Promise (FEPP) Levy")
-        + [Select Committee on Federal Administration and Policy Changes](https://www.seattle.gov/council/meetings/committees-and-agendas/select-committee-on-federal-administration-and-policy-changes "Main Menu Mobile - Committees Select Committee on Federal Administration and Policy Changes")
-        + [Select Committee on the Comprehensive Plan](https://www.seattle.gov/council/meetings/committees-and-agendas/select-committee-on-the-comprehensive-plan "Main Menu Mobile - Committees Select Committee on the Comprehensive Plan")
-        + [Finance, Native Communities & Tribal Governments](https://www.seattle.gov/council/meetings/committees-and-agendas/finance-native-communities-and-tribal-governments "Main Menu Mobile - Committees Finance, Native Communities & Tribal Governments")
-        + [Governance, Accountability & Economic Development](https://www.seattle.gov/council/meetings/committees-and-agendas/governance-accountability-and-economic-development "Main Menu Mobile - Committees Governance, Accountability & Economic Development")
-        + [Housing & Human Services](https://www.seattle.gov/council/committees/housing-and-human-services "Main Menu Mobile - Committees Housing & Human Services")
-        + [Land Use](https://www.seattle.gov/council/meetings/committees-and-agendas/land-use "Main Menu Mobile - Committees Land Use")
-        + [Libraries, Education & Neighborhoods](https://www.seattle.gov/council/meetings/committees-and-agendas/libraries-education-and-neighborhoods "Main Menu Mobile - Committees Libraries, Education & Neighborhoods")
-        + [Parks, Public Utilities & Technology](https://www.seattle.gov/council/meetings/committees-and-agendas/parks-public-utilities-and-technology "Main Menu Mobile - Committees Parks, Public Utilities & Technology")
-        + [Public Safety](https://www.seattle.gov/council/meetings/committees-and-agendas/public-safety "Main Menu Mobile - Committees Public Safety")
-        + [Sustainability, City Light, Arts & Culture](https://www.seattle.gov/council/meetings/committees-and-agendas/sustainability-city-light-arts-and-culture "Main Menu Mobile - Committees Sustainability, City Light, Arts & Culture")
-        + [Transportation](https://www.seattle.gov/council/meetings/committees-and-agendas/transportation "Main Menu Mobile - Committees Transportation")
-        + [Select Labor Committee for 2024-25](https://www.seattle.gov/council/meetings/committees-and-agendas/select-labor-committee-for-2024-25 "Main Menu Mobile - Committees Select Labor Committee for 2024-25")
-        + [2025 Select Budget Committee](https://www.seattle.gov/council/meetings/committees-and-agendas/2025-select-budget-committee "Main Menu Mobile - Committees 2025 Select Budget Committee")
-    - [Public Comment](https://www.seattle.gov/council/meetings/public-comment "Main Menu Mobile - Council Meetings Public Comment")
-    - [Tips on Giving Public Comment](https://www.seattle.gov/council/meetings/public-comment-tips "Main Menu Mobile - Council Meetings Tips on Giving Public Comment")
-    - [Visiting City Hall](https://www.seattle.gov/council/meetings/visiting-city-hall "Main Menu Mobile - Council Meetings Visiting City Hall")
-    - [Visitor Sign-in Sheets](https://www.seattle.gov/council/meetings/visitor-sign-in-sheets "Main Menu Mobile - Council Meetings Visitor Sign-in Sheets")
-  + [TopicsTopics](https://www.seattle.gov/council/topics "Main Menu Mobile - Home Topics")
-    - [Budget Glossary of Terms](https://www.seattle.gov/council/topics/glossary-of-terms "Main Menu Mobile - Topics Budget Glossary of Terms")
-  + [News & MediaNews & Media](https://www.seattle.gov/council/news-and-media "Main Menu Mobile - Home News & Media")
-    - [Press Kit](https://www.seattle.gov/council/news-and-media/press-kit "Main Menu Mobile - News & Media Press Kit")
-    - [Newsletter Signup](https://www.seattle.gov/council/news-and-media/newsletter-signup "Main Menu Mobile - News & Media Newsletter Signup")
-  + [Legislation & Research](https://www.seattle.gov/council/legislation-and-research "Main Menu Mobile - Home Legislation & Research")
-  + [Calendar](https://www.seattle.gov/council/calendar "Main Menu Mobile - Home Calendar")
-  + [Elected Officials](https://www.seattle.gov/elected-officials "Main Menu Mobile - Seattle.gov Elected Officials")
-  + [Departments](https://www.seattle.gov/departments "Main Menu Mobile - Seattle.gov Departments")
-  + [News.Seattle.Gov](https://news.seattle.gov "Main Menu Mobile - Seattle.gov News.Seattle.Gov")
-  + [Events](https://www.seattle.gov/event-calendar "Main Menu Mobile - Seattle.gov Events")
-
-[Seattle City Council](https://www.seattle.gov/council)
-=======================================================
-
-[Public Comment](https://www.seattle.gov/council/meetings/public-comment)
-
-[Calendar](https://www.seattle.gov/council/calendar)
-
-
-
-* [Councilmembers](https://www.seattle.gov/council/members)
-
-  Toggle children of Councilmembers
-  See overviews, staff info, links, and other details about Seattle City Councilmembers+ [Find Your Councilmembers](https://www.seattle.gov/council/members/find-your-district-and-councilmembers)
-    Find your Seattle City Council district and the Councilmembers who represent you
-  + [Rob Saka](https://www.seattle.gov/council/members/rob-saka)
-    District 1 (West Seattle, South Park, Georgetown, and Pioneer Square)
-  + [Mark Solomon](https://www.seattle.gov/council/members/mark-solomon)
-    District 2 (South Seattle, Yesler Terrace to Rainier Beach)
-  + [Joy Hollingsworth](https://www.seattle.gov/council/members/joy-hollingsworth)
-    District 3 (Central Seattle)
-  + [Maritza Rivera](https://www.seattle.gov/council/members/maritza-rivera)
-    District 4 (Northeast Seattle)
-  + [Debora Juarez](https://www.seattle.gov/council/members/debora-juarez)
-    District 5 (North Seattle)
-  + [Dan Strauss](https://www.seattle.gov/council/members/dan-strauss)
-    District 6 (Northwest Seattle)
-  + [Bob Kettle](https://www.seattle.gov/council/members/bob-kettle)
-    District 7 (Downtown to Magnolia, including Queen Anne, Uptown, Westlake, Interbay, Eastlake, South Lake Union, and Belltown)
-  + [Alexis Mercedes Rinck](https://www.seattle.gov/council/members/alexis-mercedes-rinck)
-    Position 8 (Citywide, Representing All of Seattle)
-  + [Sara Nelson](https://www.seattle.gov/council/members/sara-nelson)
-    Council President, Position 9 (Citywide, Representing All of Seattle)
-* [Council Meetings](https://www.seattle.gov/council/meetings)
+### [Connect with Elected Officials](https://www.seattle.gov/elected-officials)
 
-  Toggle children of Council Meetings
-  View information about Seattle City Council committees and meeting agendas+ [Watch Council Meetings](https://www.seattle.gov/council/meetings/watch-council-live)
-    Watch all the Seattle Channel programming of regularly scheduled City Council Meetings
-  + [Committees and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas)
-    Find schedules and agendas for the standing and select committees of the council
-  + [Comment at a Public Meeting](https://www.seattle.gov/council/meetings/public-comment)
-    Sign up to make public comment for items appear on Seattle City Council agendas
-  + [Public Comment Tips](https://www.seattle.gov/council/meetings/public-comment-tips)
-    Learn about recommendations for effective written and verbal communication with Councilmembers
-  + [Visitor Sign In Sheets](https://www.seattle.gov/council/meetings/visitor-sign-in-sheets)
-    View City Council visitor logs updated in real time
-  + [Visiting City Hall](https://www.seattle.gov/council/meetings/visiting-city-hall)
-    Get contact information and directions to City Hall
-* [Topics](https://www.seattle.gov/council/topics)
-* [News & Media](https://www.seattle.gov/council/news-and-media)
+* [City Attorney](https://www.seattle.gov/cityattorney)
+* [City Council](https://www.seattle.gov/council)
+* [Mayor's Office](https://www.seattle.gov/mayor)
 
-  Toggle children of News & Media
-  Read the latest Council new releases and updates+ [Newsletter Signup](https://www.seattle.gov/council/news-and-media/newsletter-signup)
-    Sign up for multiple Seattle City Councilmembers' newsletters
-  + [Press Kit](https://www.seattle.gov/council/news-and-media/press-kit)
-    Get high resolution photo downloads in the Seattle City Council press kit
-* [Legislation & Research](https://www.seattle.gov/council/legislation-and-research)
+### Departments and Contacts
 
-Watch Council Meetings
-----------------------
+* [All Departments](https://www.seattle.gov/departments)
+* [Media Contacts](https://www.seattle.gov/media-contacts)
 
-The Seattle Channel's 24/7 stream features live Council meetings and a range of other award-winning programs.
+### [Get Involved with the City](https://www.seattle.gov/get-involved)
 
-[Watch Council Live](https://www.seattle.gov/council/meetings/watch-council-live "Watch Council Live")
+* [Boards and Commissions](https://www.seattle.gov/boards-and-commissions)
+* [Council Meeting Calendar and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas)
+* [Have a Say in City Projects (Your Voice, Your Choice)](https://www.seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/yvyc-program)
+* [How Seattle's Government Works](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/seattles-form-of-government)
+* [Seattle Channel TV](https://www.seattlechannel.org/)
 
-Featured Topics
----------------
+### Finance and Purchasing
 
-Featured Topics
----------------
+* [Auction Vehicles or Equipment](https://www.seattle.gov/fleet-management/vehicle-auction)
+* [Business Taxes and Licenses](https://www.seattle.gov/city-finance/business-taxes-and-licenses)
+* [City Budget](https://www.seattle.gov/city-budget-office)
+* [City Finance](https://www.seattle.gov/city-finance)
+* [City Surplus Equipment](https://www.seattle.gov/warehousing-services)
+* [Purchasing, Contracting Bids and Proposals](https://www.seattle.gov/purchasing-and-contracting)
+* [Real Estate Services](https://www.seattle.gov/real-estate-services)
 
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
+### Issues and Initiatives
 
-Focus on Public Safety
+* [City Council Topics](https://www.seattle.gov/council/topics)
+* [Digital Equity](https://www.seattle.gov/tech/reports-and-data/about-digital-equity)
+* [Environment and Sustainability](https://www.seattle.gov/environment)
+* [Free College Tuition](https://www.seattle.gov/education/fepp-levy/the-seattle-promise)
+* [Homelessness Action Plan](https://experience.arcgis.com/experience/af548fd66fc94e98a5067b299b7d1209/)
+* [Race and Social Justice Initiative](https://www.seattle.gov/rsji)
 
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
+### [Seattle Municipal Court](https://www.seattle.gov/courts)
 
-[![a small group of people looking at a paper document together](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Comprehensive%20Plan_310x160.png "a small group of people looking at a paper document together")
+* [Jury Duty](https://www.seattle.gov/courts/jury)
+* [Pay My Ticket](https://www.seattle.gov/courts/tickets-and-payments/pay-my-ticket)
+* [Marriage Ceremonies](https://www.seattle.gov/courts/programs-and-services/marriage-ceremonies/marriage-ceremony-faqs)
+* [Youth Traffic Court](https://www.seattle.gov/courts/programs-and-services/specialized-courts/seattle-youth-traffic-court)
 
-2025 Comprehensive Plan
+### Voting
 
-A roadmap for where and how Seattle will grow and invest in our communities over the next 20 years and beyond.](https://www.seattle.gov/council/topics/2025-comprehensive-plan "2025 Comprehensive Plan")
+* [Democracy Vouchers](https://www.seattle.gov/democracyvoucher)
+* [Ethics and Elections](http://web6.seattle.gov/ethics/elections/home.aspx)
 
-[![yellow warning icon with a picture of the white house in the background](https://www.seattle.gov/images//images/Council/Issues/ProtectingOurSeattle/Fed-Changes_Protecting-Our-Seattle_310x160.png "yellow warning icon with a picture of the white house in the background")
+### Your Rights and Regulations
 
-Protecting our Seattle
+* [Americans with Disabilities Act (ADA)](https://www.seattle.gov/civilrights/complaints/title-ii-americans-with-disabilities-act-)
+* [Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)
+* [Fair Housing](https://www.seattle.gov/civilrights/housing-rights/fair-housing)
+* [Immigrant Rights (Public Charge)](https://www.seattle.gov/iandraffairs/issues-and-policies/public-charge)
+* [Labor Standards](https://www.seattle.gov/laborstandards/ordinances)
+* [Municipal Code](https://www.seattle.gov/cityclerk/legislation-and-research/seattle-municipal-code-and-city-charter)
+* [Public Notices](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/public-notices)
+* [Renter's and Landlord's Rights and Responsibilities](https://www.seattle.gov/rentinginseattle)
+* [Rights as a Customer](https://www.seattle.gov/your-rights-as-a-customer)
 
-Seattle is committed to protecting its people, especially those most impacted by recent federal policy changes.](https://www.seattle.gov/council/topics/federal-changes-protecting-our-seattle "Federal changes: Protecting our Seattle")
+[Know your rights with programs for immigrants and refugees.](https://www.seattle.gov/iandraffairs/programs-and-services)
 
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
+Public Safety
 
-City Council's Budget Basics
+Close menu for Public SafetyClose
 
-Understand the budget process and when and how you can make your voice heard in the process.](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
+### Animals
 
-1/4
+* [Animal Control](https://www.seattle.gov/animal-shelter/animal-control)
+* [Animal Shelter](https://www.seattle.gov/animal-shelter)
 
-Contact all Councilmembers by emailing [council@seattle.gov](mailto:council@seattle.gov "Email council@seattle.gov"). You can also [get email updates](https://www.seattle.gov/council/news-and-media/newsletter-signup "Get Email Updates").
+### Emergencies
 
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
+* [Earthquake Safety](https://www.seattle.gov/earthquake)
+* [Flooding Safety](https://www.seattle.gov/flood-safety)
+* [Plan for an Emergency](https://www.seattle.gov/emergency-management/prepare/prepare-yourself)
+* [Regional Hazards](https://www.seattle.gov/emergency-management/disaster-impacts/all-hazards)
+* [Seattle 9-1-1/CARE](https://www.seattle.gov/care)
+* [Smoke and Wildfires](https://www.seattle.gov/wildfire-smoke-safety)
+* [Summer Heat Safety](https://www.seattle.gov/heat-safety)
+* [Winter Storms](https://www.seattle.gov/winter-weather)
 
-Councilmembers
---------------
+### [Fire](https://www.seattle.gov/fire)
 
-Councilmembers
---------------
+* [Fire Codes](https://www.seattle.gov/fire/business-services/fire-code-and-fire-safety-documents)
+* [Fire Jobs](https://www.seattle.gov/fire/jobs-and-opportunities/career-overview)
+* [Fire Permits](https://www.seattle.gov/fire/business-services/permits)
+* [Fire Programs for Children](https://www.seattle.gov/fire/safety-and-community/childrens-programs)
+* [Fire Stations](https://www.seattle.gov/fire/about-us/fire-stations)
+* [Schedule a Firefighter Visit or Station Tour](https://www.seattle.gov/fire/safety-and-community/station-tours-firefighter-visits-and-community-events)
 
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+### [Police](https://www.seattle.gov/police)
 
-Rob Saka
+* [Block Watch](https://www.seattle.gov/police/crime-prevention/block-watch)
+* [Calling 911](https://www.seattle.gov/care/9-1-1-communications-center)
+* [Crime Statistics](https://www.seattle.gov/police/information-and-data/data/crime-dashboard)
+* [Police Jobs](https://www.seattle.gov/police/police-jobs)
+* [Police Precincts](https://www.seattle.gov/police/information-and-data/data/mcpp-about/mcpp-location-map)
+* [Real-time 911 and Crime Maps](https://www.seattle.gov/police/information-and-data/data/online-crime-maps)
+* [Report a Crime](https://www.seattle.gov/police/need-help/property-crimes/online-reporting)
+* [Victim Assistance](https://www.seattle.gov/cityattorney/crime-victim-assistance)
 
-Councilmember  
- District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
+### Police Oversight
 
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+* [Community Police Commission](https://www.seattle.gov/community-police-commission)
+* [File a Police Complaint](https://www.seattle.gov/opa/complaints/file-a-complaint)
+* [Office of Inspector General](https://www.seattle.gov/oig)
 
-Mark Solomon
+### Safety Tips
 
-Councilmember  
- District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
+* [Boating and Water Safety Rules](https://www.seattle.gov/police/community-policing/prevention-and-safety/boating-and-water-safety)
+* [Fire Prevention and Safety](https://www.seattle.gov/fire/safety-and-community)
+* [Personal Safety](https://www.seattle.gov/police/crime-prevention/personal-safety)
+* [What to Do After a Collision](https://www.seattle.gov/police/need-help/property-crimes/collision)
 
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
+[Search for your lost pet or research adopting a new one.](https://www.seattle.gov/animal-shelter/find-an-animal)
 
-Joy Hollingsworth
+Assistance and Utilities
 
-Councilmember  
- District 3](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
+Close menu for Assistance and UtilitiesClose
 
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
+### [Assistance and Discounts](https://www.seattle.gov/assistance-and-discounts)
 
-Maritza Rivera
+* [Child Care and Preschool](https://www.seattle.gov/education/for-parents)
+* [Community Resource Center](https://www.seattle.gov/courts/programs-and-services/community-resource-center)
+* [Free Legal Services for Immigrants](https://www.seattle.gov/iandraffairs/programs-and-services/immigration-legal-defense)
+* [Free Smoke and Carbon Monoxide Alarms](https://www.seattle.gov/fire/safety-and-community/smoke-and-carbon-monoxide-alarms)
+* [Free Summer Meals](https://www.seattle.gov/human-services/services-and-programs/youth-and-young-adults/summer-food-service-program)
+* [Fresh Food Vouchers](https://www.seattle.gov/environment/food-policy-and-programs/fresh-bucks)
+* [Recreation Scholarships](https://www.seattle.gov/parks/scholarships-and-financial-aid)
+* [Senior Discounts](https://www.seattle.gov/agefriendly/programs/discounts)
+* [Utility Discount Program](https://www.seattle.gov/human-services/services-and-programs/utility-discount-program)
 
-Councilmember  
- District 4](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
+### Discounted or Free Technology
 
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
+* [Discount Cable Service](https://www.seattle.gov/tech/tv-and-video/discounted-cable-tv)
+* [Free or Discounted Devices](https://www.seattle.gov/tech/internet-and-devices/discounted-computers-and-phones)
+* [Free or Discounted Internet Access](https://www.seattle.gov/tech/internet-and-devices/low-cost-internet)
 
-Debora Juarez
+### [Grants and Funding](https://www.seattle.gov/grants-and-funding)
 
-Councilmember  
- District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
+* [Funding for the Arts](https://www.seattle.gov/arts/programs/grants)
+* [Neighborhood Matching Fund](https://www.seattle.gov/neighborhoods/community-grants/neighborhood-matching-fund)
+* [Only in Seattle Grants](https://www.seattle.gov/economic-development/business-districts/only-in-seattle)
+* [The Seattle Promise](https://www.seattle.gov/education/fepp-levy/the-seattle-promise)
+* [Small Business Support](https://www.seattle.gov/economic-development/start-a-business)
+* [Technology Matching Fund](https://www.seattle.gov/tech/grant-opportunities/digital-equity-grant-opportunities)
 
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+### [Housing](https://www.seattle.gov/housing)
 
-Dan Strauss
+* [Affordable Housing](https://www.seattle.gov/housing/renters/find-housing)
+* [Home Loan Repair](https://www.seattle.gov/housing/homeowners/home-repair)
 
-Councilmember  
- District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
+### Services For...
 
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
+* [Businesses](https://www.seattle.gov/economic-development/start-a-business)
+* [Immigrants and Refugees](https://www.seattle.gov/iandraffairs)
+* [People with Disabilities](https://www.seattle.gov/people-with-disabilities)
+* [Renters and Landlords](https://www.seattle.gov/rentinginseattle)
+* [Seniors](https://www.seattle.gov/agefriendly/programs)
 
-Bob Kettle
+### Utilities
 
-Councilmember  
- District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
+* [Current Electricity Outages](https://www.seattle.gov/city-light/outages)
+* [How to Dispose of Trash, Recyling, and Compost](https://www.seattle.gov/utilities/your-services/collection-and-disposal/where-does-it-go)
+* [Look Up Collection Day](https://www.seattle.gov/utilities/your-services/collection-and-disposal/your-collection-day/look-up-collection-day)
+* [Missed Collection](https://www.seattle.gov/utilities/your-services/collection-and-disposal/your-collection-day/report-missed-collection)
+* [Missing or Damaged Container](https://myutilities.seattle.gov/eportal/#/accountlookup/missingbin)
+* [Pay Utility Bills](https://myutilities.seattle.gov/)
+* [Report Pollution, Graffiti, or Dumping](https://www.seattle.gov/utilities/protecting-our-environment/seattle-clean-city)
+* [Water Outage Map](https://www.seattle.gov/utilities/neighborhood-projects/water-outages)
 
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
+[Find options for receiving and paying your utility bills.](https://www.seattle.gov/utilities/your-services/accounts-and-payments/bills-and-payments)
 
-Alexis Mercedes Rinck
+Learning and Education
+
+Close menu for Learning and EducationClose
 
-Councilmember  
- Position 8](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
+### Classes and Trainings
 
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
+* [Community Police Academy](https://www.seattle.gov/police/community-policing/community-programs/community-police-academy)
+* [CPR Certifications](https://www.seattle.gov/fire/safety-and-community/medic-ii-cpr-training)
+* [Employment Trainings and Webinars](https://www.seattle.gov/laborstandards/training-and-events/training)
+* [English and Job Skills](https://www.seattle.gov/iandraffairs/RTW)
+* [Online Learning from the Library](https://www.spl.org/online-resources/online-learning)
+* [People's Academy for Community Engagement](https://www.seattle.gov/neighborhoods/public-participation/peoples-academy-for-community-engagement)
+* [Womens Personal Safety Class](https://www.seattle.gov/police/crime-prevention/personal-safety-training)
 
-Sara Nelson
+### [Data and Research](https://www.seattle.gov/data-and-research)
 
-Council President  
- Position 9](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
+* [Immigrant and Refugee Data](https://www.seattle.gov/iandraffairs/data)
+* [Legislative Research](https://www.seattle.gov/cityclerk/legislation-and-research)
+* [Open Data Portal](https://data.seattle.gov/)
+* [City History Archives](https://www.seattle.gov/cityarchives)
 
-[See all Councilmembers Go to link](https://www.seattle.gov/council/members "See all Councilmembers")
+### Early Learning (age 3-5)
 
-How to Participate
-------------------
+* [Discovery Park Nature Kids Preschool](https://www.seattle.gov/parks/learning-and-childcare/childcare-and-preschool/discovery-park-nature-kids-preschool)
+* [Early Childhood Education and Assistance Program](https://www.seattle.gov/education/for-parents/child-care-and-preschool/early-childhood-education-and-assistance-program)
+* [Seattle Preschool Program](https://www.seattle.gov/education/for-parents/child-care-and-preschool/seattle-preschool-program)
+* [Child Care Assistance Program](https://www.seattle.gov/education/for-parents/child-care-and-preschool/child-care-assistance-program)
 
-How to Participate
-------------------
+### [Environment and Sustainability](https://www.seattle.gov/environment-and-sustainability)
 
-[Attend a council meeting](https://www.seattle.gov/council/meetings "Council Meetings")
+* [Climate Change](https://www.seattle.gov/environment/climate-change)
+* [Environmental Education & Outdoor Learning](https://www.seattle.gov/parks/learning-and-childcare/environmental-education-all-ages)
+* [Seattle's Environmental Progress](https://www.seattle.gov/environment/environmental-progress)
+* [Watershed Tour or Program](https://www.seattle.gov/utilities/protecting-our-environment/our-water-sources/cedar-river-watershed/education-center)
 
-[View our calendar](https://www.seattle.gov/council/calendar "Council Calendar")
+### [Youth Programs (age 14-24)](https://www.seattle.gov/youth-programs)
 
-[Comment at a public meeting](https://www.seattle.gov/council/meetings/public-comment "Public Comment")
+* [Fire Cadets Program (16-20)](https://www.seattle.gov/fire/jobs-and-opportunities/cadet-program)
+* [Immigrant Family Institute (14+)](https://www.seattle.gov/iandraffairs/RWI)
+* [Learning Buddies (14-18)](https://www.spl.org/programs-and-services/learning/student-success/learning-buddies)
+* [Police Explorers (14-21)](https://www.seattle.gov/police/community-policing/community-programs/police-explorers)
+* [Seattle Youth Employment Program (16-24)](https://www.seattle.gov/human-services/services-and-programs/youth-and-young-adults/seattle-youth-employment-program)
+* [Teen Jobs and Leadership Programs with Seattle Parks (14-24)](https://www.seattle.gov/parks/learning-and-childcare/teen-programs/job-readiness-opportunities-for-teens)
+* [Youth Green Corps (18-24)](https://www.seattle.gov/parks/learning-and-childcare/teen-programs/youth-green-corps)
 
-[Tips on giving public comment](https://www.seattle.gov/council/meetings/public-comment-tips "Public Comment Tips")
+[Get data for your research needs at the Open Data Portal.](https://data.seattle.gov/)
 
-[Sign up for agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
+Explore the City
 
-View the Latest News
---------------------
+Close menu for Explore the CityClose
 
-[### Select Committee on the Comprehensive Plan 9/19/25
+### [About Seattle](https://www.seattle.gov/opcd/population-and-demographics/about-seattle)
 
-Agenda: Call to Order; Approval of the Agenda; Executive Session; CB 120993: relating to major update of Neighborhood Residential zones; Res 32183: relating to One Seattle Plan Comprehensive Plan up[...]](https://www.seattlechannel.org/video.asp?ID=s2162583 " Select Committee on the Comprehensive Plan 9/19/25")
+* [Facts about Seattle](https://www.seattle.gov/cityarchives/seattle-facts)
+* [Newcomers Guide](https://www.seattle.gov/customer-service-bureau/newcomers-guide)
+* [Population and Demographics](https://www.seattle.gov/opcd/population-and-demographics)
 
-[### Select Committee on the Comprehensive Plan Session I 9/18/25
+### [Parks](https://www.seattle.gov/parks/allparks)
 
-Agenda: Call to Order; Approval of the Agenda; CB 120985: relating to the Seattle Comprehensive Plan; CB 120993: relating to major update of Neighborhood Residential zones; Res 32183: relating to On[...]](https://www.seattlechannel.org/video.asp?ID=2162579 " Select Committee on the Comprehensive Plan Session I 9/18/25")
+* [Beaches](https://www.seattle.gov/parks/recreation/outdoor-water-recreation/swimming-beaches)
+* [Boating and Sailing](https://www.seattle.gov/parks/recreation/outdoor-water-recreation/boating-and-sailing)
+* [Hiking and Trails](https://www.seattle.gov/parks/recreation/hiking-and-trails)
+* [Dog Off-Leash Areas](https://www.seattle.gov/parks/recreation/dog-off-leash-areas)
+* [Sprayparks and Wading Pools](https://www.seattle.gov/parks/recreation/outdoor-water-recreation/sprayparks-and-wading-pools)
 
-**[View all Seattle Channel Council videosexternal link](https://www.seattlechannel.org/CityCouncil "Seattle Channel Council videos")**
+### Recreation
 
-[Council Connection Blog](https://council.seattle.gov/category/news-releases/ "undefined Blog")
------------------------------------------------------------------------------------------------
+* [Camps](https://www.seattle.gov/parks/learning-and-childcare/camps)
+* [Activities and Recreation](https://anc.apm.activecommunities.com/seattle/home?onlineSiteId=0&from_original_cui=true)
+* [All Community Centers](https://www.seattle.gov/parks/all-community-centers)
+* [Pools](https://www.seattle.gov/parks/pools)
+* [Recreation for 50+](https://www.seattle.gov/parks/recreation/for-adults-50)
+* [Sports for Adults](https://www.seattle.gov/parks/recreation/sports/adult-sports-teams-and-programs)
+* [Sports for Youth](https://www.seattle.gov/parks/recreation/sports/youth-sports)
+* [Toddler Indoor Play Areas](https://www.seattle.gov/parks/learning-and-childcare/toddler-indoor-play-areas)
 
-[Council Connection Blog RSS FeedCouncil Connection Blog RSS Feed](https://council.seattle.gov/category/news-releases/feed/ "undefined Blog")
+### [Reservations and Events](https://www.seattle.gov/special-events)
 
-9/19
+* [Arts Spaces](https://www.seattle.gov/arts/programs/cultural-space)
+* [Ceremony Sites](https://www.seattle.gov/parks/rentals-and-permits/outdoor-ceremony-reservations)
+* [City Events Calendar](https://www.seattle.gov/event-calendar)
+* [Event Permits](https://www.seattle.gov/special-events/permits/permitting-process)
+* [Picnic Sites](https://www.seattle.gov/parks/rentals-and-permits/picnic-rentals)
+* [Play Streets and Block Parties](https://www.seattle.gov/transportation/permits-and-services/permits/play-streets-and-block-parties)
+* [Rent a Space](https://www.spacefinderseattle.org/)
+* [Sports Fields](https://www.seattle.gov/parks/rentals-and-permits/sports-fields)
 
-[Amended Comprehensive Plan passes out of committee](https://council.seattle.gov/2025/09/19/amended-comprehensive-plan-passes-out-of-committee/)
+### Urban Activities
 
-Council now transitions to budget process while Comp Plan receives additional study before final vote Over the last three days, the Select Committee on the Comprehensive Plan, chaired by Councilmember Joy Hollingsworth (District 3), voted 9-0 to [...]
+* [Artwalks](https://www.seattle.gov/arts/experience/art-walks)
+* [City Art Galleries](https://www.seattle.gov/arts/experience/galleries)
+* [City Landmarks](https://www.seattle.gov/neighborhoods/historic-preservation/city-landmarks/landmarks-list)
+* [Community Gardens (P-Patch)](https://www.seattle.gov/neighborhoods/p-patch-gardening)
+* [Free Passes to Local Museums](https://www.spl.org/programs-and-services/arts-and-culture/museum-pass)
+* [Historic Districts](https://www.seattle.gov/neighborhoods/historic-preservation/historic-districts)
+* [Libraries](https://www.spl.org/hours-and-locations)
+* [Public Art Around the City](https://www.seattle.gov/arts/programs/public-art/civic-art-collection)
+* [Seattle Center](http://www.seattlecenter.com/)
+* [Tree Walks](https://www.seattle.gov/trees/get-involved/tree-walks)
+* [Walking Map](https://www.seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/walking-map)
+* [Waterfront](https://www.seattle.gov/waterfront)
 
-9/16
+[View public funding opportunities for community artists.](https://www.seattle.gov/arts/opportunities)
 
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
+Transportation and Development
 
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
+Close menu for Transportation and DevelopmentClose
 
-9/15
+### City Maintenance
 
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
+* [Potholes](https://www.seattle.gov/transportation/projects-and-programs/programs/maintenance-and-paving/potholes)
+* [Street Maintenance and Paving](https://www.seattle.gov/transportation/projects-and-programs/programs/maintenance-and-paving)
+* [Streetlight Repair Status Map](http://seattlecitygis.maps.arcgis.com/apps/webappviewer/index.html?id=23b9ae8f5843407cb0adaae12663878b)
+* [Tree and Landscaping Services](https://www.seattle.gov/transportation/projects-and-programs/programs/trees-and-landscaping-program)
+* [Tree Trimming Schedule](https://www.seattle.gov/city-light/in-the-community/vegetation-management)
+* [Winter Weather Snow Plow Routes](http://seattlecitygis.maps.arcgis.com/apps/webappviewer/index.html?id=78d66825a3e6478c9fc6bdd3116038c8)
 
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
+### [City Planning](https://www.seattle.gov/city-planning)
 
-Related Resources
+* [Community Planning Meetings](https://www.seattle.gov/opcd/meetings-and-events)
+* [Planning Commission](https://www.seattle.gov/planningcommission)
+* [Planning Initiatives](https://www.seattle.gov/opcd/current-projects)
+
+### City Construction Projects
+
+* [Capital Projects](https://capitalprojects.seattle.gov/projects)
+* [City Light Projects](https://www.seattle.gov/city-light/in-the-community/current-projects)
+* [Design Commission](https://www.seattle.gov/designcommission)
+* [Parks and Recreation Projects](https://www.seattle.gov/parks/about-us/projects)
+* [Project and Construction Map](https://www.seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/construction-coordination-and-mobility-management/project-and-construction-coordination-map)
+* [Public Utilities Projects](https://www.seattle.gov/utilities/neighborhood-projects)
+* [Transportation Projects](https://www.seattle.gov/transportation/projects-and-programs/current-projects)
+* [Waterfront Projects](https://waterfrontseattle.org/waterfront-projects/alaskan-way)
+
+### Incentives for Housing Developers
+
+* [Multifamily Property Tax Exemption (MFTE)](https://www.seattle.gov/housing/housing-developers/multifamily-tax-exemption)
+* [Rental Housing Funding](https://www.seattle.gov/housing/housing-developers/rental-housing-program)
+
+### Neighborhood and Home Projects
+
+* [Comment on a Project](https://cosaccela.seattle.gov/Portal/customization/comments/default.aspx)
+* [Common Building Projects](https://www.seattle.gov/sdci/permits/common-projects)
+* [Community Crosswalks](https://www.seattle.gov/transportation/projects-and-programs/programs/pedestrian-program/community-crosswalks)
+* [Safe Routes to School Mini Grants](https://www.seattle.gov/transportation/projects-and-programs/safety-first/safe-routes-to-school/mini-grants)
+* [Schedule an Inspection](https://www.seattle.gov/sdci/inspections)
+* [Transportation ADA Requests](https://www.seattle.gov/transportation/projects-and-programs/programs/ada-program/make-an-ada-request)
+* [Zoning Map](//seattlecitygis.maps.arcgis.com/apps/webappviewer/index.html?id=f822b2c6498c4163b0cf908e2241e9c2)
+
+### [Parking](https://www.seattle.gov/transportation/projects-and-programs/programs/parking-program/play-like-a-parking-pro)
+
+* [Bike Parking](https://www.seattle.gov/transportation/projects-and-programs/programs/bike-program/bike-racks)
+* [Free Parking Days](https://www.seattle.gov/transportation/projects-and-programs/programs/parking-program/paid-parking-information/free-parking-days)
+* [Motorcycle and Scooter Parking](https://www.seattle.gov/transportation/projects-and-programs/programs/parking-program/parking-regulations/motorcycle-and-scooter-parking-in-seattle)
+* [Parking and Traffic Permits](https://www.seattle.gov/transportation/permits-and-services/permits/parking-permits)
+* [Pay for Parking by Phone](https://www.paybyphone.com/locations/seattle)
+* [Public Parking Map](http://web6.seattle.gov/SDOT/seattleparkingmap/)
+* [Restricted Parking Zone (RPZ) Permits](https://www.seattle.gov/transportation/permits-and-services/permits/parking-permits/rpz-permits)
+
+### Permits
+
+* [Construction Permits](https://www.seattle.gov/sdci/permits)
+* [Permit Activity Map](https://web8.seattle.gov/sdci/shapingseattle/buildings)
+* [Permit Assistance](https://www.seattle.gov/sdci/about-us/who-we-are/sdci-services)
+* [Permit and Property Records](http://web6.seattle.gov/dpd/edms/)
+* [Seattle Services Portal (Permits and Licenses)](https://cosaccela.seattle.gov/Portal/welcome.aspx)
+* [Transportation Permits](https://www.seattle.gov/transportation/permits-and-services/permits)
+* [Send Us a Question](https://www.seattle.gov/sdci/about-us/contact-us)
+
+### [Transit and Commuting](https://www.seattle.gov/transportation/getting-around)
+
+* [Discount ORCA Cards](https://www.seattle.gov/transportation/projects-and-programs/programs/transportation-access-programs/orca-cards-for-sha-tenants)
+* [Traffic and Construction Cameras](https://web6.seattle.gov/Travelers/)
+
+[Learn about parking options, tips, and payment methods.](https://www.seattle.gov/transportation/projects-and-programs/programs/parking-program)
+
+Home Page
+=========
+
+---
+
+City of Seattle Official Website
+
+[Register for Fall Recreation Programs
+
+Seattle community centers offer activities and events for the whole family, including fitness rooms, tot gyms, basketball, and more.
+
+Browse in-person and virtual programs
+
+![Senior citizens walk on a forest trail in Seattle](https://www.seattle.gov/images//images/Global/Home_Parks_Fall_Programs2_Promo.jpg "Senior citizens walk on a forest trail in Seattle")](https://parkways.seattle.gov/2025/08/05/fall-2025-classes-and-activities/ "Browse in-person and virtual programs")
+
+[Safe Routes to School Expanded
+
+New safety initiatives include upgrades near every public school.
+
+Learn about the projects in your neighborhood](https://sdotblog.seattle.gov/2025/09/02/back-to-school-safe-routes-to-school/ "Learn about the projects in your neighborhood")
+
+[2025 Home Fair Date Announced
+
+Mark your calendar for November 8th](https://www.seattle.gov/sdci/about-us/stay-connected/seattle-home-fairs "Mark your calendar for November 8th")
+
+Featured Services
 -----------------
 
-Related Resources
+Featured Services
 -----------------
 
-[Boards and Commissions
+[Pay Utility Bill](https://myutilities.seattle.gov/eportal/#/ "Pay Utility Bill")
 
-Opportunities to serve on over 70 boards and commissions.](https://www.seattle.gov/boards-and-commissions "Boards and Commissions")
+[Pay My Ticket](https://www.seattle.gov/courts/tickets-and-payments/pay-my-ticket "Pay My Ticket")
 
-[City Clerk
+[Adopt a Pet](https://www.seattle.gov/animal-shelter/find-an-animal/adopt "Adopt")
 
-Learn about the City Clerk and get legislation resources.](https://www.seattle.gov/cityclerk "City Clerk")
+[Building Permits](https://www.seattle.gov/sdci/permits "Permits")
 
-[Find It Fix It App
+[Police Information & Data](https://www.seattle.gov/police/information-and-data "Police Information & Data ")
 
-Report non-urgent requests such as clogged storm drains, traffic signal issues, and streetlight outage.](https://www.seattle.gov/customer-service-bureau/find-it-fix-it-mobile-app "Find It Fix It App")
+Latest News and Updates
+-----------------------
 
-[Get Involved
+<
 
-Find ways to volunteer, donate, and have a say on city issues.](https://www.seattle.gov/get-involved "Get Involved")
+[News Releases](javascript:void(0); "News Releases tab")
+[Blog Posts](javascript:void(0); "Blog Posts tab")
 
-1/4
+[Seattle Office of Labor Standards Reaches Settlement with Rivas Painting for Alleged Violatio ...
 
-City Council
-------------
+For Immediate ReleaseContact: Cynthia Santana, Communicat ...
+
+ Posted Sep. 22](https://news.seattle.gov/2025/09/22/seattle-office-of-labor-standards-reaches-settlement-with-rivas-painting-for-alleged-violations-of-paid-sick-and-safe-time-ordinance/ "Seattle Office of Labor Standards Reaches Settlement with Rivas Painting for Alleged Violations of Paid Sick and Safe Time Ordinance")
+
+[La Oficina de Normas Laborales de Seattle llega a un acuerdo con Rivas Painting por presuntas ...
+
+Para publicación inmediataContacto: Cynthia Santana, gere ...
+
+ Posted Sep. 22](https://news.seattle.gov/2025/09/22/la-oficina-de-normas-laborales-de-seattle-llega-a-un-acuerdo-con-rivas-painting-por-presuntas-violaciones-de-la-ordenanza-sobre-el-tiempo-remunerado-por-enfermedad-y-asuntos-de-seguridad/ "La Oficina de Normas Laborales de Seattle llega a un acuerdo con Rivas Painting por presuntas violaciones de la Ordenanza sobre el tiempo remunerado por enfermedad y asuntos de seguridad")
+
+[Amended Comprehensive Plan passes out of committee
+
+Council now transitions to budget process while Comp P ...
+
+ Posted Sep. 19](https://council.seattle.gov/2025/09/19/amended-comprehensive-plan-passes-out-of-committee/ "Amended Comprehensive Plan passes out of committee")
+
+1/3
+
+1/
+
+### **More News**
+
+---
+
+[Subscribe to Newslettersexternal link](https://public.govdelivery.com/accounts/WASEATTLE/subscriber/new?qsp=CODE_RED)
+
+[View all News Releases](https://news.seattle.gov/)
+
+[Driver Jumps University Bridge in Stolen Vehicle
+
+On Wednesday, September 17, at 12:20 p.m., officers attem ...
+
+ Posted Sep. 22](https://spdblotter.seattle.gov/2025/09/22/driver-jumps-university-bridge-in-stolen-vehicle/ "Driver Jumps University Bridge in Stolen Vehicle")
+
+[Amended Comprehensive Plan passes out of committee
+
+Council now transitions to budget process while Comp P ...
+
+ Posted Sep. 19](https://council.seattle.gov/2025/09/19/amended-comprehensive-plan-passes-out-of-committee/ "Amended Comprehensive Plan passes out of committee")
+
+[Mayor Harrell Announces Proposed Federal Response Budget, Expanding Services f ...
+
+New investments join shelter, housing, and food access su ...
+
+ Posted Sep. 19](https://harrell.seattle.gov/2025/09/19/mayor-harrell-announces-proposed-federal-response-budget-expanding-services-for-immigrant-and-refugee-communities-and-investing-to-support-services-at-risk/ "Mayor Harrell Announces Proposed Federal Response Budget, Expanding Services for Immigrant and Refugee Communities and Investing to Support Services at Risk ")
+
+1/3
+
+1/
+
+### **Trending blogs**
+
+---
+
+[Office of the Mayor](https://harrell.seattle.gov//)
+
+[Front Porch (Neighborhoods)](https://frontporch.seattle.gov/)
+
+[SPD Blotter (Police)](https://spdblotter.seattle.gov/)
+
+[Parkways (Parks & Recreation)](https://parkways.seattle.gov/)
+
+[Fireline (Fire Department)](https://fireline.seattle.gov/)
+
+[737,000+
+
+residents in Seattle as of 2020
+
+View the Demographics](https://www.seattle.gov/opcd/population-and-demographics "Population & Demographics")
+
+[45+ billion
+
+gallons of treated drinking water per year
+
+Learn About Water Quality](https://www.seattle.gov/utilities/about/reports/water-quality "Water Quality")
+
+[485+ parks
+
+managed by Seattle Parks and Recreation
+
+Find a Park](https://www.seattle.gov/parks/allparks "Find a Park")
+
+[5,000+ animals
+
+cared for annually by Seattle Animal Shelter
+
+Visit an Animal Shelter](https://www.seattle.gov/animal-shelter "Animal Shelter")
+
+Elected Officials
+-----------------
+
+Elected Officials
+-----------------
+
+[![](https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg)
+
+Mayor Bruce Harrell](https://www.seattle.gov/mayor "Mayor")
+
+[![Seattle City Council group](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/CouncilHeadShots_154x154_2025_Apr.jpg)
+
+City Council](https://www.seattle.gov/council "Council")
+
+[![](https://www.seattle.gov/images//images/Departments/CityAttorney/SeattleHome/AnnDavidson_CircleImage.jpg)
+
+City Attorney Ann Davison](https://www.seattle.gov/cityattorney "City Attorney")
+
+[![](https://www.seattle.gov/images//images/Departments/Court/Homepage/2021JudgesGroup_300x300.png)
+
+Seattle Municipal Court](https://www.seattle.gov/courts "Courts")
+
+[Elected Officials Go to link](https://www.seattle.gov/elected-officials "Elected Officials")
+
+Stay Connected, Stay Informed
+-----------------------------
+
+Sign up for Alert Seattle so we can communicate with you during emergencies. You can opt in to receive free alerts from the City via text message, email, voice message or social media. Alert Seattle is the official emergency notification system used by the City of Seattle.
+
+[Sign Up For Alert Seattleexternal link](https://www.smart911.com/smart911/ref/reg.action?pa=alertseattle)
+
+* [About Seattle](https://www.seattle.gov/opcd/population-and-demographics/about-seattle)
+* [Downtown Campus Map](https://www.seattle.gov/customer-service-bureau/downtown-campus-map)
+* [City Jobs](https://www.governmentjobs.com/careers/seattle)
+* [Seattle Facts](https://www.seattle.gov/cityarchives/seattle-facts)
+
+Contact Us
+----------
+
+[Customer Service Bureau](https://www.seattle.gov/customer-service-bureau)
+
+Phone:
+[(206) 684-2489](tel:+12066842489)
 
 Address:
-[600 4th Ave. 2nd Floor, Seattle, WA, 98104](https://www.google.com/maps/place/600 4th Ave. 2nd Floor, Seattle, WA, 98104)  
-Mailing Address:
-PO Box 34025, Seattle, WA , 98124-4025  
-Phone: [(206) 684-8888](tel: +1 (206) 684-8888)  
-Phone Alt: Listen Line: [(206) 684-8566](tel: +1 (206) 684-8566)  
-Fax: [(206) 684-8587](fax: +1 (206) 684-8587)  
-[Meet the Council](https://www.seattle.gov/council/members)
+[City Hall, 600 Fourth Ave. Seattle, WA 98104](https://www.google.com/maps/place/Seattle+City+Hall/47.6038466,-122.3322341,17z/data=!3m1!4b1!4m5!3m4!1s0x54906ab0a0d78d55:0xad777eeba185ebef!8m2!3d47.603843!4d-122.3300454)
 
-[Seattle City Council Facebook](http://www.facebook.com/seattlecouncil)
-[Seattle City Council Twitter](http://twitter.com/SeattleCouncil)
-[Seattle City Council Instagram](https://www.instagram.com/theseattlecouncil/)
-[Seattle City Council Bluesky](https://bsky.app/profile/council.seattle.gov)
+[City Hall, 600 Fourth Ave.  
+Seattle, WA 98104](https://www.google.com/maps/place/Seattle+City+Hall/47.6038466,-122.3322341,17z/data=!3m1!4b1!4m5!3m4!1s0x54906ab0a0d78d55:0xad777eeba185ebef!8m2!3d47.603843!4d-122.3300454)
+
+[City of Seattle Facebook](https://www.facebook.com/cityofseattlegov/)
+[City of Seattle Twitter](https://twitter.com/CityOfSeattle)
+[City of Seattle Instagram](https://www.instagram.com/CityOfSeattleGov/ )
+
+[Customer Service Centers](https://www.seattle.gov/customer-service-centers)
+
+Report a Problem About...
+
+* [Get the Find It, Fix it Mobile App](https://www.seattle.gov/customer-service-bureau/find-it-fix-it-mobile-app)
+* [Abandoned Vehicles](https://seattle-cwiprod.motorolasolutions.com/cwi/direct/ABANDVEH)
+* [Animals and Pets](https://www.seattle.gov/animal-shelter/animal-control)
+* [Clogged Street Drains](https://www.seattle.gov/utilities/your-services/sewer-and-drainage/side-sewers)
+* [Damaged Sidewalks](https://www.seattle.gov/transportation/projects-and-programs/programs/maintenance-and-paving/sidewalk-repair-program)
+* [Graffiti](https://www.seattle.gov/police/need-help/neighborhood-issues/graffiti)
+* [Overgrown Trees or Bushes](https://www.seattle.gov/sdci/codes/common-code-questions/weeds%C2%A0and-overgrown-vegetation)
+* [Police](https://www.seattle.gov/opa/complaints/file-a-complaint)
+* [Potholes](https://www.seattle.gov/transportation/projects-and-programs/programs/maintenance-and-paving/potholes)
+* [Property or Buildings](https://www.seattle.gov/sdci/codes)
+* [Signals or Signs](https://www.seattle.gov/transportation/permits-and-services/report-a-problem)
+* [Junk Storage or Dumping](https://www.seattle.gov/sdci/codes/common-code-questions/junk-storage-and-illegal-dumping-rules)
+* [See Full List of Issues](https://seattle-cwiprod.motorolasolutions.com/cwi/select)
 
 Citywide Information
 --------------------
@@ -855,13 +1071,11 @@ Citywide Information
 
 ### Popular Pages
 
-1. [Councilmembers](https://www.seattle.gov/council/members)
-2. [Watch Council Meetings Live](https://www.seattle.gov/council/meetings/watch-council-live)
-3. [Committees and Agendas](https://www.seattle.gov/council/meetings/committees-and-agendas)
-4. [Find Your District and Councilmembers](https://www.seattle.gov/council/members/find-your-district-and-councilmembers)
-5. [View a Calendar of Upcoming Meetings](https://www.seattle.gov/council/calendar)
-
-The Seattle City Council establishes City policy through enactment of ordinances (laws) and adoption of resolutions. The City Council also approves and adopts the City's budget. The nine Council members and their legislative assistants are part of the City of Seattle Legislative Department.
+1. [Power Outages](https://www.seattle.gov/city-light/outages)
+2. [Police Jobs](https://www.seattle.gov/police/police-jobs)
+3. [Pay My Ticket](https://www.seattle.gov/courts/tickets-and-payments/pay-my-ticket)
+4. [Adopt a Pet](https://www.seattle.gov/animal-shelter/find-an-animal/adopt)
+5. [Look Up Collection Day](https://www.seattle.gov/utilities/your-services/collection-and-disposal/your-collection-day/look-up-collection-day)
 
 Policies
 --------

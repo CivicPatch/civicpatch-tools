@@ -1,4 +1,5 @@
-Elected Officials | seattle.gov
+Find Your Council District - CityClerk | seattle.gov
+
 
 
 
@@ -174,146 +175,113 @@ Cancel
 
 
 
-* + Elected Officials
-    - Elected Officials Page Cards
-      * Council Members (Legislative)
-        + [Rob Saka](https://www.seattle.gov/x152133.xml "Main Menu Mobile - Council Members (Legislative) Rob Saka")
-        + [Mark Solomon](https://www.seattle.gov/x152136.xml "Main Menu Mobile - Council Members (Legislative) Mark Solomon")
-        + [Joy Hollingsworth](https://www.seattle.gov/x152139.xml "Main Menu Mobile - Council Members (Legislative) Joy Hollingsworth")
-        + [Debora Juarez](https://www.seattle.gov/x178555.xml "Main Menu Mobile - Council Members (Legislative) Debora Juarez")
-        + [Dan Strauss](https://www.seattle.gov/x152140.xml "Main Menu Mobile - Council Members (Legislative) Dan Strauss")
-        + [Bob Kettle](https://www.seattle.gov/x152134.xml "Main Menu Mobile - Council Members (Legislative) Bob Kettle")
-        + [Sara Nelson](https://www.seattle.gov/x152137.xml "Main Menu Mobile - Council Members (Legislative) Sara Nelson")
-      * Law
-        + [Ann Davison](https://www.seattle.gov/x152142.xml "Main Menu Mobile - Law Ann Davison")
-  + Events
-    - [Seattle Citywide Event Calendar Policy and Disclaimer](https://www.seattle.gov/event-calendar/policy-and-disclaimer "Main Menu Mobile - Events Seattle Citywide Event Calendar Policy and Disclaimer")
-    - [Help with Citywide Event Calendar](https://www.seattle.gov/event-calendar/help "Main Menu Mobile - Events Help with Citywide Event Calendar")
-    - [Public Outreach and Engagement Event Calendar](https://www.seattle.gov/event-calendar/public-outreach-and-engagement-calendar "Main Menu Mobile - Events Public Outreach and Engagement Event Calendar")
+* + [City Council Agendas
 
+    City Council Agendas](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources "Main Menu Mobile - Home City Council Agendas")
+    - Agendas
+      * [Contact the City Council](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council "Main Menu Mobile - Agendas Contact the City Council")
+    - [Find Your Council District](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district "Main Menu Mobile - City Council Agendas Find Your Council District")
 
+* [City Council Agendas](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources)
 
-* [City Council Topics](https://www.seattle.gov/council/topics)
+Find Your Council District
+==========================
 
-Know your rights with programs for immigrants and refugees.
+Find your
+[City Council district](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district#finddistrict)
+and
+City Councilmembers
+. Find
+answers to frequent questions
+about City Council Districts.
 
-* [Animal Shelter](https://www.seattle.gov/animal-shelter)
+Your City Council District
+--------------------------
 
-* [Victim Assistance](https://www.seattle.gov/cityattorney/crime-victim-assistance)
+Find your City Council district at either of these sites:
 
-Search for your lost pet or research adopting a new one.
-Find options for receiving and paying your utility bills.
+![City of Seattle logo](https://www.seattle.gov/images/Clerk/CityLogo_50x50.jpg)
 
-* [Teen Jobs and Leadership Programs with Seattle Parks (14-24)](https://www.seattle.gov/parks/learning-and-childcare/teen-programs/job-readiness-opportunities-for-teens)
+Use the
+[City Council's Find Your District and Councilmember](https://www.seattle.gov/council/members/find-your-district-and-councilmembers)
+search page to find the currently-serving district-based Councilmembers.
 
-Get data for your research needs at the Open Data Portal.
+![King County logo](https://www.seattle.gov/images/Clerk/KClogo_50x50.jpg)
 
-* [Historic Districts](https://www.seattle.gov/neighborhoods/historic-preservation/historic-districts)
+Find your congressional, legislative, county council and city council voting districts at
+King County's Find My Districts
+.
 
-View public funding opportunities for community artists.
+See the map of districts on the
+Department of Neighborhoods' web page
+.
 
-* Zoning Map
+There are 9 City Councilmembers:
 
-* [Pay for Parking by Phone](https://www.paybyphone.com/locations/seattle)
+* Positions 1 through 7 are elected by, and represent, constituents in their City Council districts.
+* Positions 8 and 9 are at-large. This means they are elected by, and represent, the entire city.
 
-Learn about parking options, tips, and payment methods.
+Find the current councilmembers and their websites on the
+[City Council web page](https://www.seattle.gov/council)
+.
 
-[![Mayor](https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg)
+Q: When did district elections go into effect?
+:   Voters approved
+    Charter Amendment 19
+    in the November 5, 2013 General And Special Election. The 2015 election was the first election conducted by district. Candidates seeking election to the seven district seats needed to have been a resident of the district for at least 120 days before they filed their declaration of candidacy.
+:   Councilmembers serve four-year terms.
+    Positions 8 and 9, the at-large positions, are on the same election cycle as the Mayor and City Attorney.
+    Positions 1 through 7 are elected two years later.
+    View all elected officials'
+    terms of office
+    .
 
-Bruce Harrell
+Q: How were Councilmember election cycles established?
+:   In 2015:
 
-Mayor](https://www.seattle.gov/mayor "Mayor Home Page")
+    * All nine Council seats were up for election as the transition to the district system went into place.
+    * The seven district Councilmembers were elected to four-year terms.
+    * The two at-large Councilmembers were elected to two-year terms.
 
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+    In 2017:
 
-Rob Saka
+    * The two at-large Councilmembers were elected to four-year terms.
+    * The at-large Council positions are now on the same election cycle as the Mayor and City Attorney.
 
-Councilmember
-District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
+Q: How were the district boundaries drawn?
+:   Charter Amendment 19
+    included the district boundaries in the initiative, which were based on population/census tracts.
+:   As established by the voter-approved changes to the
+    City Charter
+    , in the fall of 2021 a five-member
+    Redistricting Commission
+    was created to redraw the district boundaries (its members will be appointed by the Mayor and the City Council). The
+    final districting plan
+    adopted by the Commission has been placed on file with the City Clerk.
 
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+* [City Council Agendas](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas "Agendas")
 
-Mark Solomon
+  + [Contact the City Council](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council "Contact the City Council")
+* [Find Your Council District](https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district "Find Your Council District")
+No left sidebar
 
-Councilmember
-District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
+* Office of the Mayor
 
-Joy HollingsworthCouncilmemberDistrict 3
-Maritza RiveraCouncilmemberDistrict 4
-
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
-
-Debora Juarez
-
-Councilmember
-District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
-
-Dan Strauss
-
-Councilmember
-District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
-
-Bob Kettle
-
-Councilmember
-District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-
-Alexis Mercedes RinckCouncilmemberPosition 8
-Sara NelsonCouncil PresidentPosition 9
-
-Meet the Council
-
-Ann DavisonCity Attorney
-
-[![Anita Crawford-Willis](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAnitaCrawford-Willis_circle.jpg)
-
-Anita Crawford-Willis
-
-Presiding Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-anita-crawford-willis "Anita Crawford-Willis")
-
-Damon ShadidAssistant Presiding Judge
-
-[![Faye Chess](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeFayeRChess_circle.jpg)
-
-Faye Chess
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-faye-chess "Faye Chess")
-
-[![Andrea Chin](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAndreaChin_circle.jpg)
-
-Andrea Chin
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-andrea-chin "Andrea Chin")
-
-[![Willie Gregory](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeWillieGregory_circle.jpg)
-
-Willie Gregory
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-willie-gregory "Willie Gregory")
-
-Catherine McDowallJudge
-Pooja VaddadiJudge
-Seattle Municipal CourtGeneral Information
-
-Contact Us
-----------
-
-Customer Service Bureau
-Phone:
-(206) 684-2489
+Scheereen Dedman, City Clerk
 
 Address:
-City Hall, 600 Fourth Ave. Seattle, WA 98104
-
-City Hall, 600 Fourth Ave.Seattle, WA 98104
-Customer Service Centers
+600 4th Ave, 3rd Floor, Seattle, WA, 98104
+Mailing Address:
+PO Box 94728, Seattle, WA, 98124-4728
+Phone:
+(206) 684-8344
+Email:
+[CityClerk@seattle.gov](mailto:CityClerk@seattle.gov)
 
 Citywide Information
 --------------------
+
+The Office of the City Clerk maintains the City's official records, provides support for the City Council, and manages the City's historical records through the Seattle Municipal Archives. The Clerk's Office provides information services to the public and to City staff.
 
 About Our Digital Properties
 Privacy Policy
@@ -321,7 +289,6 @@ Privacy Policy
 
 [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)
 Sitemap
-
 
 Original text
 
