@@ -13,19 +13,19 @@ def generate_review_comment(pipeline_context: PipelineContext, people: List[Pers
 
     agreement_score = merge_step.agreement_score
     disagreements_by_person = merge_step.disagreements  # Now a Dict[str, List[FieldComparison]]
-    validation_issues = merge_step.validation_issues
+    validation_errors = merge_step.validation_errors
     missing_people = merge_step.missing_people
 
     # Collect all unique data sources from people.yml
     all_sources = {source for person in people for source in person.sources}
 
-    has_validation_issues = len(validation_issues) > 0
+    has_validation_errors = len(validation_errors) > 0
 
     # Build the markdown
     markdown = []
     
     # Header section
-    if has_validation_issues:
+    if has_validation_errors:
         markdown.append("# Rejected ❌")
         markdown.append("Rejected by Bot - please manually review.")
         markdown.append("### Issues\n")

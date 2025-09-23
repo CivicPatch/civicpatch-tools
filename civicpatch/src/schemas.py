@@ -117,7 +117,7 @@ class MergeRecordsAcrossLLMsStep(BaseModel):
     agreement_score: float
     disagreements: Dict[str, List[FieldComparison]] = {}
     missing_people: List[MissingPerson] = []  # Now properly typed with MissingPerson class
-    validation_issues: List[str] = []
+    validation_errors: List[str] = []
 
 class PipelineContext(BaseModel):
     state: str

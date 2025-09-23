@@ -95,7 +95,7 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     
     # Use helper functions to merge fields
     image = merge_field(records, "image")
-    merged_roles = merge_roles(records, government_type)
+    merged_roles = merge_roles(records)
     merged_divisions = merge_divisions(records)
     phone_number = merge_field(records, "phone_number")
     email = merge_field(records, "email")
@@ -124,6 +124,8 @@ def merge_field(records: List[LLMPerson], field_name: str) -> str:
     """
     Merge a single-value field (phone, email, website, start_date, end_date) from a list of LLMPerson records.
     Prefer non-empty, most frequent value.
+
+    If there's a tie, prefer the value that contains either the first name or last name of the person.
     """
     values = [
         getattr(r, field_name)
@@ -133,10 +135,23 @@ def merge_field(records: List[LLMPerson], field_name: str) -> str:
         return ""
     value_counts = Counter(values)
     most_common = value_counts.most_common(1)[0][0]
-    return most_common
+    merged_value = most_common
+
+    # If there's a tie, prefer the value that contains either the first name or last name of the person
+    if len(value_counts) > 1:
+        top_count = value_counts.most_common(1)[0][1]
+        tied_values = [val for val, count in value_counts.items() if count == top_count]
+        if len(tied_values) > 1:
+            first_name = merge_utils.first_name(records[0].name).lower()
+            last_name = merge_utils.last_name(records[0].name).lower()
+            for val in tied_values:
+                if first_name in val.lower() or last_name in val.lower():
+                    merged_value = val
+                    break
+    return merged_value 
 
 
-def merge_roles(records: List[LLMPerson], government_type: str) -> List[str]:
+def merge_roles(records: List[LLMPerson]) -> List[str]:
     unique_roles = set()
     for record in records:
         for role in record.roles:
