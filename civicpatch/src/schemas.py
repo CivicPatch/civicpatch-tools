@@ -1,7 +1,6 @@
 from typing import Dict, List, Optional, TypeAlias, Any, Callable, Union, NamedTuple
 from pydantic import BaseModel, field_validator
 from enum import Enum
-from utils import config_utils, people_utils
 
 class SearchEngineStatus(Enum):
     NOT_STARTED = "not_started"
@@ -81,14 +80,8 @@ class Person(RawLLMPerson):
     cdn_image: str
     state: str = ""
     place: str = ""
-    counties: List[str] = []
     sources: List[str] # List of source URLs where information was found
     updated_at: str
-
-    @field_validator('divisions')
-    @classmethod
-    def normalize_divisions(cls, divisions: List[str]) -> List[str]:
-        return people_utils.normalize_divisions(divisions)
 
 OtherNamesByCanonicalName: TypeAlias = Dict[str, List[str]] # Canonical name to other names found while scraping
 PeopleByName: TypeAlias = Dict[str, List[LLMPerson]]

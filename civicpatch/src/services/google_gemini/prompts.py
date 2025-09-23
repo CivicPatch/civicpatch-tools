@@ -23,7 +23,7 @@ def research_municipality_prompt(municipality_context: MunicipalityContext):
     Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
 
     Municipality: {municipality_name}, {state}
-    Municipality Website (Optional, for context): {website}
+    Municipality Website: {website}
 
     Instructions:
 

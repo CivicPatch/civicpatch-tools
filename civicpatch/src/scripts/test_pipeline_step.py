@@ -6,11 +6,11 @@ import json
 
 def test_pipeline_step():
     state = "wa"
-    geoid = "5353545"  # Pasco
-    pipeline_status = PipelineStatus.MAYBE_SEND_TO_GITHUB
+    geoid = "5363000"
+    pipeline_status = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
     # Note: need to generate a unique request id
     # if you are testing PR creation
-    request_id = "32faccde-b0d8-4f02-bff4-TEST"
+    request_id = "aaaaa"
 
     pipeline = Pipeline()
     pipeline.set_state(pipeline_status)

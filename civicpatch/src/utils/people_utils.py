@@ -1,6 +1,7 @@
 #from schemas import People
-from typing import List
+from typing import List, Dict
 import utils.config_utils as config_utils
+from schemas import Person
 
 def filter_people_by_roles(role_configs, people):
     """
@@ -105,9 +106,11 @@ def normalize_roles(government_type: str, roles: List[str]) -> List[str]:
         if normalized_role and normalized_role not in seen:
             seen.add(normalized_role)
         else:
-            seen.add(role)
+            # Toss the role
+            continue
 
-    return list(seen)
+    formatted_roles = [r.title() for r in seen]
+    return formatted_roles
 
 def normalize_divisions(divisions: List[str]) -> List[str]:
     """
@@ -272,3 +275,30 @@ def normalize_divisions(divisions: List[str]) -> List[str]:
             result.append(item)
     
     return result
+
+def get_role_priority(government_type: str) -> Dict[str, int]:
+    """
+    Returns a mapping from role name (lowercase) to its priority/order in the config.
+    Aliases are ignored; only main role names are used.
+    """
+    role_configs = config_utils.get_role_configs_by_government_type(government_type)
+    priority = {}
+    for idx, role_entry in enumerate(role_configs):
+        role_name = role_entry["role"].lower()
+        priority[role_name] = idx
+    return priority
+
+def sort_people(people: List[Person], government_type: str) -> List[Person]:
+    """
+    Sort people by role priority (from config), then division, then name.
+    """
+    role_priority = get_role_priority(government_type)
+
+    def sort_key(person: Person):
+        # Find the highest priority among person's roles
+        priorities = [role_priority.get(role.lower(), 9999) for role in person.roles]
+        min_priority = min(priorities) if priorities else 9999
+        first_division = person.divisions[0] if person.divisions else ""
+        return (min_priority, first_division, person.name)
+
+    return sorted(people, key=sort_key)

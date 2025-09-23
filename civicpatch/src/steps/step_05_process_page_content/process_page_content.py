@@ -11,10 +11,8 @@ from schemas import (
   ProcessPageContentStep,
   OtherNamesByCanonicalName
 )
-import utils.config_utils as config_utils
+from utils import data_utils, merge_utils, data_path_utils, config_utils, url_utils
 from utils.data_utils import MunicipalityContext
-import utils.data_path_utils as data_path_utils
-import utils.url_utils as url_utils
 from typing import List, Any, Dict, Tuple
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
@@ -22,9 +20,6 @@ import services.openai.llm as openai_llm
 import services.openai.prompts as openai_prompt
 import services.together_ai.llm as together_ai_llm
 import services.together_ai.prompts as together_ai_prompt
-import utils.data_utils as data_utils
-import steps.step_05_process_page_content.merge_utils as merge_utils
-from unittest.mock import patch
 
 LLMS = [
     {
