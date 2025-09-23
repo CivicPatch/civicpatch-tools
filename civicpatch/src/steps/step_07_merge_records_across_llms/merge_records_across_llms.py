@@ -1,6 +1,7 @@
+import json
 from typing import List, Dict, TypedDict, Any
 from utils import people_utils, merge_utils, data_utils
-from schemas import Person, PipelineStatus, PipelineContext, MissingPerson, FieldComparison
+from schemas import Person, PipelineStatus, PipelineContext, MissingPerson, FieldComparison, MergeRecordsAcrossLLMsStep
 from collections import Counter
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
@@ -22,47 +23,112 @@ def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
     place = municipality_context.municipality_entry.name
 
     # Group records across LLMs based on weak ties and names
-    identity_groups = group_records_across_llms(people_by_llm)
+    groups_by_llm = group_records_across_llms(people_by_llm)
+    # with open("identity_groups.json", "w") as f:
+    #     json.dump([
+    #         {llm: [person.model_dump() for person in llm_people] 
+    #         for llm, llm_people in group.items()} for group in groups_by_llm
+    #     ], f, indent=2, default=str)
 
-    # Merge each group into a single Person object
-    merged_people = [merge_group_across_llms(identity_group, government_type, state, place) for identity_group in identity_groups]
+    # Merge each group and collect disagreements
+    merged_people = []
+    all_disagreements = {}  # Dict[person_name, List[FieldComparison]]
+    missing_people = []
+
+    fields_to_check = ["roles", "divisions", "phone_number", "email", "website", "start_date", "end_date"]
+
+    for grouped_people_by_llm in groups_by_llm:
+        # Fix: Check if the group is empty
+        if not grouped_people_by_llm:
+            continue
+            
+        # Merge the group
+        merged_person = merge_group_across_llms(
+            [person for llm_people in grouped_people_by_llm.values() for person in llm_people],
+            state, 
+            place
+        )
+        merged_people.append(merged_person)
+        
+        # Collect field-by-field disagreements for this person
+        field_comparisons = collect_field_comparisons(
+            merged_person,
+            grouped_people_by_llm,  # Pass the grouped data directly
+            fields_to_check
+        )
+        
+        # Store disagreements if any exist
+        if field_comparisons:
+            all_disagreements[merged_person.name] = field_comparisons
+        
+        # Fix: Pass the correct parameters to check_for_missing_person
+        missing_person = check_for_missing_person(
+            merged_person.name,
+            grouped_people_by_llm,  # Pass the grouped data
+            list(people_by_llm.keys())  # Pass all LLM names
+        )
+        if missing_person:
+            missing_people.append(missing_person)
+
+    # Calculate overall agreement score (include missing people in the calculation)
+    overall_agreement_score = calculate_overall_agreement_score(
+        all_disagreements, 
+        missing_people, 
+        len(people_by_llm), 
+        len(fields_to_check), 
+        len(merged_people)
+    )
 
     # Sort people by role priority, division, and name
     sorted_people = people_utils.sort_people(merged_people, government_type)
 
-    # Convert to dicts for easier processing
-    sorted_people_dict = [person.model_dump() for person in sorted_people]
+    validation_errors = []
+    if overall_agreement_score < MINIMUM_AGREEMENT_SCORE:
+        validation_errors.append(
+            f"Overall agreement score {overall_agreement_score:.2f}% is below the minimum threshold of {MINIMUM_AGREEMENT_SCORE}%."
+        )
+
+    # Create the final step result
+    step_result = MergeRecordsAcrossLLMsStep(
+        people=sorted_people,
+        agreement_score=overall_agreement_score,
+        disagreements=all_disagreements,
+        missing_people=missing_people,
+        validation_errors=validation_errors,
+    )
 
     return {
         "steps": {
             **context["steps"],
-            PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value: {
-                "people": sorted_people_dict
-            }
+            PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value: step_result.model_dump()
         }
     }
 
-def values_match(value1, value2):
-    """Helper to compare values case-insensitively, handling both strings and lists."""
-    if isinstance(value1, list) and isinstance(value2, list):
-        # Convert lists to sets of lowercase strings for comparison
-        set1 = {str(item).lower() for item in value1}
-        set2 = {str(item).lower() for item in value2}
-        return bool(set1 & set2)  # Return True if any items match
-    elif isinstance(value1, str) and isinstance(value2, str):
-        # Compare strings case-insensitively
-        return value1.lower() == value2.lower()
-    else:
-        return value1 == value2
+def check_for_missing_person(person_name: str, grouped_people_by_llm: Dict[str, List[Person]], all_llm_names: List[str]) -> MissingPerson:
+    """
+    Check if this person is missing from some LLMs and create MissingPerson if so.
+    """
+    # Remove debug print
+    found_in_llms = list(grouped_people_by_llm.keys())
+    missing_from_llms = [llm for llm in all_llm_names if llm not in found_in_llms]
+    
+    if missing_from_llms:
+        return MissingPerson(
+            name=person_name,
+            missing_from_llms=missing_from_llms,
+            found_in_llms=found_in_llms
+        )
+    
+    return None
 
 def collect_field_comparisons(
-    canonical_name: str,
     merged_person: Person,
-    grouped_people_by_llm: Dict[str, List[Person]],
+    grouped_people_by_llm: Dict[str, List[Person]],  # This is now directly from the group
     fields: List[str]
 ) -> List[FieldComparison]:
     """
     Compare each llm's value against the final merged value.
+    Returns only fields that have disagreements.
     """
     comparisons = []
     
@@ -79,28 +145,157 @@ def collect_field_comparisons(
                 has_disagreement = True
                 continue
             
-            llm_value = getattr(people[0], field)
+            llm_value = getattr(people[0], field)  # Take first person (should be only one after within-LLM merge)
             if isinstance(llm_value, list):
                 llm_values[llm] = ", ".join(llm_value) if llm_value else "(empty)"
             else:
-                llm_values[llm] = llm_value if llm_value else "(empty)"
+                llm_values[llm] = str(llm_value) if llm_value else "(empty)"
 
             # Compare original values before string conversion
             if llm_value and not values_match(llm_value, merged_value):
                 has_disagreement = True
         
+        # Only add to comparisons if there's disagreement
         if has_disagreement:
             # Convert merged_value to string format for output
-            merged_str = ", ".join(merged_value) if isinstance(merged_value, list) else merged_value
+            merged_str = ", ".join(merged_value) if isinstance(merged_value, list) else (str(merged_value) if merged_value else "(empty)")
             comparisons.append(FieldComparison(
                 field=field,
-                person_name=canonical_name,
-                merged_value=merged_str or "(empty)",
+                merged_value=merged_str,
                 llm_values=llm_values,
                 disagreement_score=calculate_disagreement_score(field, merged_str, llm_values)
             ))
     
     return comparisons
+
+def group_records_across_llms(people_by_llm: Dict[str, List[Person]]) -> List[Dict[str, List[Person]]]:
+    """
+    Group records across LLMs based on weak ties.
+    Returns a list of groups, where each group is a dict mapping LLM -> List[Person] for that identity.
+
+    Ex:
+    [
+        {
+            "LLM1": [PersonA_from_LLM1, PersonB_from_LLM1],
+            "LLM2": [PersonA_from_LLM2]
+        },
+        {
+            "LLM3": [PersonC_from_LLM3]
+        }
+    ]
+    """
+    # Create a list of (person, llm_source) tuples
+    all_people_with_source = [
+        (person, llm) 
+        for llm, people in people_by_llm.items() 
+        for person in people
+    ]
+    
+    visited = set()
+    groups = []
+
+    for i, (person, llm) in enumerate(all_people_with_source):
+        if i in visited:
+            continue
+
+        # Start a new group with the current person
+        group = {llm: [person]}
+        visited.add(i)
+
+        # Compare with all other people
+        for j, (other_person, other_llm) in enumerate(all_people_with_source):
+            if j in visited:
+                continue
+            
+            # Check if this person matches anyone already in the group
+            if any(merge_utils.is_weakly_tied(existing_person, other_person) 
+                   for existing_people in group.values() 
+                   for existing_person in existing_people):
+                
+                if other_llm not in group:
+                    group[other_llm] = []
+                group[other_llm].append(other_person)
+                visited.add(j)
+
+        groups.append(group)
+
+    return groups
+
+def merge_group_across_llms(group: List[Person], state, place) -> Person:
+    """
+    Merge a group of weakly tied Person objects into a single Person object.
+    """
+    # Collect roles and divisions that appear in more than one source
+    role_counter = Counter(role for person in group for role in person.roles)
+    division_counter = Counter(div for person in group for div in person.divisions)
+
+    roles = [role for role, count in role_counter.items() if count > 1]  # Include roles present in more than one source
+    divisions = [div for div, count in division_counter.items() if count > 1]  # Include divisions present in more than one source
+
+    # For single-value fields, take the most common non-empty value across all sources
+    image_counter = Counter(person.image for person in group if person.image)
+    phone_counter = Counter(person.phone_number for person in group if person.phone_number)
+    website_counter = Counter(person.website for person in group if person.website)
+    start_date_counter = Counter(person.start_date for person in group if person.start_date)
+    end_date_counter = Counter(person.end_date for person in group if person.end_date)
+    sources = set(
+        ds
+        for person in group
+        if person.sources  # Check if sources exists
+        for ds in person.sources  # Flatten the list of data sources
+    )
+
+    # Use the most common name in the group as the canonical name
+    name_counter = Counter(person.name for person in group)
+    canonical_name = name_counter.most_common(1)[0][0]
+
+    return Person(
+        name=canonical_name,
+        roles=roles,
+        divisions=divisions,
+        image=image_counter.most_common(1)[0][0] if image_counter else "",
+        cdn_image="",
+        email=merge_field([person.email for person in group]),
+        phone_number=merge_field([person.phone_number for person in group]),
+        website=merge_field([person.website for person in group]),
+        start_date=merge_field([person.start_date for person in group]),
+        end_date=merge_field([person.end_date for person in group]),
+        sources=sources,
+        state=state, 
+        place=place,
+        updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
+    )
+
+def merge_field(values: List[str]) -> Any:
+    """
+    Merge a list of fields with the following criteria:
+    - If all values are empty, return empty string
+    - If no value has at least 2 occurrences, return empty string
+    - Otherwise, return the most common non-empty value
+    
+    """
+    non_empty_values = [v for v in values if v]
+    if not non_empty_values:
+        return ""
+    
+    value_counter = Counter(non_empty_values)
+    most_common_value, count = value_counter.most_common(1)[0]
+    if count < 2:
+        return ""
+    return most_common_value
+
+def values_match(value1, value2):
+    """Helper to compare values case-insensitively, handling both strings and lists."""
+    if isinstance(value1, list) and isinstance(value2, list):
+        # Convert lists to sets of lowercase strings for comparison
+        set1 = {str(item).lower() for item in value1}
+        set2 = {str(item).lower() for item in value2}
+        return bool(set1 & set2)  # Return True if any items match
+    elif isinstance(value1, str) and isinstance(value2, str):
+        # Compare strings case-insensitively
+        return value1.lower() == value2.lower()
+    else:
+        return value1 == value2
 
 def calculate_disagreement_score(field_name: str, merged_value: str, llm_values: Dict[str, str]) -> float:
     """
@@ -139,130 +334,34 @@ def calculate_disagreement_score(field_name: str, merged_value: str, llm_values:
         avg_dissimilarity = 1 - (sum(similarities) / len(similarities))
         return round(avg_dissimilarity, 2)  # Round to 2 decimal places
 
-def calculate_agreement_score(people_by_llm: Dict[str, List[Person]]) -> float:
+def calculate_overall_agreement_score(all_disagreements: Dict[str, List[FieldComparison]], missing_people: List[MissingPerson], total_llms: int, total_fields: int, total_people: int) -> float:
     """
-    Calculate an agreement score based on the consistency of data across llms.
-    Start with 100 and subtract disagreement scores for inconsistent fields.
+    Calculate the overall agreement score as:
+    1 - (normalized_disagreement_score + normalized_missing_people_penalty)
     """
-    if not people_by_llm:
-        return 0.0
+    # Total fields that can be disagreed with
 
-    total_disagreement = 0
-    num_sources = len(people_by_llm)
+    # Calculate total disagreement score
+    total_disagreement = 0.0
+    for person_disagreements in all_disagreements.values():
+        for field_comparison in person_disagreements:
+            total_disagreement += field_comparison.disagreement_score
 
-    # Aggregate all people across llms
-    all_people = [person for people in people_by_llm.values() for person in people]
+    # Normalize disagreement score
+    disagreement_weight = 0.5
+    disagreement = (total_disagreement / total_fields) * disagreement_weight  if total_fields > 0 else 0.0
 
-    # Check roles and divisions
-    role_counter = Counter(role for person in all_people for role in person.roles)
-    division_counter = Counter(div for person in all_people for div in person.divisions)
+    # Calculate missing people penalty
+    missing_penalty = 0.0
+    if missing_people:
+        for missing_person in missing_people:
+            missing_ratio = len(missing_person.missing_from_llms) / total_llms
+            missing_penalty += missing_ratio
+        missing_penalty = missing_penalty / total_people  # Normalize by total people
+    missing_penalty = missing_penalty * (1 - disagreement_weight)  # Weight the missing penalty
 
-    # Add disagreement for roles/divisions not present in all llms
-    total_disagreement += sum(1 for count in role_counter.values() if count < num_sources)
-    total_disagreement += sum(1 for count in division_counter.values() if count < num_sources)
+    # Final score: 1 - (normalized_disagreement + missing_penalty)
+    agreement_score = 1.0 - (disagreement + missing_penalty)
 
-    # Check single-value fields
-    fields = ["phone_number", "email", "website", "start_date", "end_date"]  # Optional fields included
-    for field in fields:
-        field_values = [
-            getattr(person, field)
-            for person in all_people
-            if getattr(person, field)  # Only consider non-empty values
-        ]
-        if len(field_values) > 1 and len(set(field_values)) > 1:
-            total_disagreement += 1
-
-    # Calculate final agreement score
-    max_possible_disagreement = len(all_people) * len(fields)  # Include optional fields
-    if max_possible_disagreement == 0:
-        return 100.0
-
-    agreement_score = 100 * (1 - (total_disagreement / max_possible_disagreement))
-    return max(0.0, min(100.0, agreement_score))
-
-def people_with_target_roles(people: List[Person], target_roles: List[str]) -> List[Person]:
-    """
-    Return a list of people who have any of the target roles.
-    """
-    target_roles_lower = {role.lower() for role in target_roles}
-    return [
-        person for person in people
-        if any(role.lower() in target_roles_lower for role in person.roles)
-    ]
-
-def group_records_across_llms(people_by_llm: Dict[str, List[Person]]) -> List[List[Person]]:
-    """
-    Group records across LLMs based on weak ties.
-    Returns a list of groups, where each group is a list of Person objects that are weakly tied.
-    """
-    all_people = [
-        person for people in people_by_llm.values() for person in people
-    ]
-    visited = set()
-    groups = []
-
-    for i, person in enumerate(all_people):
-        if i in visited:
-            continue
-
-        # Start a new group with the current person
-        group = [person]
-        visited.add(i)
-
-        # Compare the current person with all other people
-        for j, other_person in enumerate(all_people):
-            if j in visited:
-                continue
-            if any(merge_utils.is_weakly_tied(group_person, other_person) for group_person in group):
-                group.append(other_person)
-                visited.add(j)
-
-        groups.append(group)
-
-    return groups
-
-def merge_group_across_llms(group: List[Person], government_type: str, state, place) -> Person:
-    """
-    Merge a group of weakly tied Person objects into a single Person object.
-    """
-    # Collect roles and divisions that appear in more than one source
-    role_counter = Counter(role for person in group for role in person.roles)
-    division_counter = Counter(div for person in group for div in person.divisions)
-
-    roles = [role for role, count in role_counter.items() if count > 1]  # Include roles present in more than one source
-    divisions = [div for div, count in division_counter.items() if count > 1]  # Include divisions present in more than one source
-
-    # For single-value fields, take the most common non-empty value across all sources
-    image_counter = Counter(person.image for person in group if person.image)
-    phone_counter = Counter(person.phone_number for person in group if person.phone_number)
-    email_counter = Counter(person.email for person in group if person.email)
-    website_counter = Counter(person.website for person in group if person.website)
-    start_date_counter = Counter(person.start_date for person in group if person.start_date)
-    end_date_counter = Counter(person.end_date for person in group if person.end_date)
-    sources = set(
-        ds
-        for person in group
-        if person.sources  # Check if sources exists
-        for ds in person.sources  # Flatten the list of data sources
-    )
-
-    # Use the most common name in the group as the canonical name
-    name_counter = Counter(person.name for person in group)
-    canonical_name = name_counter.most_common(1)[0][0]
-
-    return Person(
-        name=canonical_name,
-        roles=roles,
-        divisions=divisions,
-        image=image_counter.most_common(1)[0][0] if image_counter else "",
-        cdn_image="",
-        email=email_counter.most_common(1)[0][0] if email_counter else "",
-        phone_number=phone_counter.most_common(1)[0][0] if phone_counter else "",
-        website=website_counter.most_common(1)[0][0] if website_counter else "",
-        start_date=start_date_counter.most_common(1)[0][0] if start_date_counter else "",
-        end_date=end_date_counter.most_common(1)[0][0] if end_date_counter else "",
-        sources=sources,
-        state=state, 
-        place=place,
-        updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
-    )
+    # Convert to percentage and clamp between 0 and 100
+    return max(0.0, min(100.0, round(agreement_score * 100, 2)))
