@@ -563,7 +563,8 @@ ContinueCancel
     - [Tips on Giving Public Comment](https://www.seattle.gov/council/meetings/public-comment-tips "Main Menu Mobile - Council Meetings Tips on Giving Public Comment")
     - [Visiting City Hall](https://www.seattle.gov/council/meetings/visiting-city-hall "Main Menu Mobile - Council Meetings Visiting City Hall")
     - [Visitor Sign-in Sheets](https://www.seattle.gov/council/meetings/visitor-sign-in-sheets "Main Menu Mobile - Council Meetings Visitor Sign-in Sheets")
-  + [Topics](https://www.seattle.gov/council/topics "Main Menu Mobile - Home Topics")
+  + [TopicsTopics](https://www.seattle.gov/council/topics "Main Menu Mobile - Home Topics")
+    - [Budget Glossary of Terms](https://www.seattle.gov/council/topics/glossary-of-terms "Main Menu Mobile - Topics Budget Glossary of Terms")
   + [News & MediaNews & Media](https://www.seattle.gov/council/news-and-media "Main Menu Mobile - Home News & Media")
     - [Press Kit](https://www.seattle.gov/council/news-and-media/press-kit "Main Menu Mobile - News & Media Press Kit")
     - [Newsletter Signup](https://www.seattle.gov/council/news-and-media/newsletter-signup "Main Menu Mobile - News & Media Newsletter Signup")
@@ -644,13 +645,19 @@ Featured Topics
 Featured Topics
 ---------------
 
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/PublicSafety/Public-Safety_310x160.png "police officers smiling on a sunny day")
+[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
+
+City Council's Budget Basics
+
+Understand the budget process and when and how you can make your voice heard in the process.](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
+
+[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
 
 Focus on Public Safety
 
 The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
 
-[![a small group of people looking at a paper document together](https://www.seattle.gov/images//images/Council/Issues/2025ComprehensivePlan/LEG_Comprehensive%20Plan_310x160.png "a small group of people looking at a paper document together")
+[![a small group of people looking at a paper document together](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Comprehensive%20Plan_310x160.png "a small group of people looking at a paper document together")
 
 2025 Comprehensive Plan
 
@@ -661,12 +668,6 @@ A roadmap for where and how Seattle will grow and invest in our communities over
 Protecting our Seattle
 
 Seattle is committed to protecting its people, especially those most impacted by recent federal policy changes.](https://www.seattle.gov/council/topics/federal-changes-protecting-our-seattle "Federal changes: Protecting our Seattle")
-
-[![two children looking at a workbook. one child writes while the other points to the book](https://www.seattle.gov/images//images/Council/Issues/2026FEPPLevy/FEPP-Levy_310x160.jpg "two children looking at a workbook. one child writes while the other points to the book")
-
-2026 FEPP Levy Renewal
-
-The Families, Education, Preschool, and Promise levy is intended to build a better future for Seattle students.](https://www.seattle.gov/council/topics/families-education-preschool-and-promise-(fepp)-levy "Families, Education, Preschool, and Promise (FEPP) Levy")
 
 1/4
 
@@ -764,13 +765,13 @@ How to Participate
 View the Latest News
 --------------------
 
-[### Land Use Committee 9/15/2025
+[### Housing & Human Services Committee 9/22/2025
 
-Agenda: Call to Order; Approval of the Agenda; Public Comment; CF 314534: relating to a rezone in Uptown; CB 121074: relating to a rezone in Uptown; CB 121045: relating to timelines for City review [...]](https://www.seattlechannel.org/video.asp?ID=2722533 "Land Use Committee 9/15/2025")
+Agenda: Call to Order; Approval of the Agenda; Public Comment; Appointments and reappointments; CB 121055: relating to the Multifamily Housing Property Tax Exemption Program; Adjournment.](https://www.seattlechannel.org/video.asp?ID=2762533 "Housing & Human Services Committee 9/22/2025")
 
-[### Council Briefing 9/15/25
+[### Council Briefing 9/22/25
 
-Agenda: Approval of the Minutes; President's Report; 2025 Budget Process Preview; Signing of Letters and Proclamations; Preview of City Council Actions, Council and Regional Committees; Adjournment.[...]](https://www.seattlechannel.org/video.asp?ID=2012561 "Council Briefing 9/15/25")
+Agenda: Approval of the Minutes; President's Report; Signing of Letters and Proclamations; Preview of City Council Actions, Council and Regional Committees; Executive Session I, II, and III on Pendi[...]](https://www.seattlechannel.org/video.asp?ID=2012563 "Council Briefing 9/22/25")
 
 **[View all Seattle Channel Council videosexternal link](https://www.seattlechannel.org/CityCouncil "Seattle Channel Council videos")**
 
@@ -779,23 +780,23 @@ Agenda: Approval of the Minutes; President's Report; 2025 Budget Process Preview
 
 [Council Connection Blog RSS FeedCouncil Connection Blog RSS Feed](https://council.seattle.gov/category/news-releases/feed/ "undefined Blog")
 
-9/15
+9/19
 
-[Councilmember Hollingsworth releases chair’s packages for Comprehensive Plan](https://council.seattle.gov/2025/09/15/councilmember-hollingsworth-releases-chairs-packages-for-comprehensive-plan/)
+[Amended Comprehensive Plan passes out of committee](https://council.seattle.gov/2025/09/19/amended-comprehensive-plan-passes-out-of-committee/)
 
-Balances urgent actions to enhance Seattle’s livability Today, City Councilmember Joy Hollingsworth (District 3), Chair of the Select Committee on the Comprehensive Plan, released her Chair’s Packages of proposed amendments for the Comprehensive [...]
+Council now transitions to budget process while Comp Plan receives additional study before final vote Over the last three days, the Select Committee on the Comprehensive Plan, chaired by Councilmember Joy Hollingsworth (District 3), voted 9-0 to [...]
 
-9/9
+9/16
 
-[Council approves pair of public safety technology bills](https://council.seattle.gov/2025/09/09/council-approves-pair-of-public-safety-technology-bills/)
+[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
 
-Amended legislation includes added data and privacy safeguards SEATTLE – Today the City Council voted 7-2 in favor of two crime prevention bills which authorize the installation of cameras in three new public places (Capitol Hill, the Stadium [...]
+Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
 
-9/2
+9/16
 
-[Public Safety Chair Kettle and Council President Nelson on protecting Seattle from federal public safety threats](https://council.seattle.gov/2025/09/02/public-safety-chair-kettle-and-council-president-nelson-on-protecting-seattle-from-federal-public-safety-threats-2/)
+[Councilmember Kettle voices strong support for public safety plan in Little Saigon, Chinatown International District](https://council.seattle.gov/2025/09/16/councilmember-kettle-voices-strong-support-for-public-safety-plan-in-little-saigon-chinatown-international-district/)
 
-Councilmember Bob Kettle (District 7), Chair of the Public Safety Committee, and Council President Sara Nelson (Position 9) released the following statements in response to unprecedented actions by the federal government involving ICE [...]
+Earlier today Councilmember Bob Kettle (District 7), chair of the Public Safety Committee, made the following statement in support of a community-led 15-Point Plan aimed at addressing crime and enhancing public safety in Little Saigon, Chinatown [...]
 
 Related Resources
 -----------------
