@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Councilmembers - Council | seattle.gov
 
 
 
@@ -17,7 +17,7 @@ Website addresses ending in .gov belong to official government organizations in 
 **Secure .gov websites use HTTPS**  
 A lock () or https:// means you've safely connected to the .gov website. Only share sensitive information on official, secure websites.
 
-[Skip to main content](https://www.seattle.gov/council#content)
+[Skip to main content](https://www.seattle.gov/council/members#content)
 
 Seattle
 
@@ -576,7 +576,6 @@ ContinueCancel
   + [Events](https://www.seattle.gov/event-calendar "Main Menu Mobile - Seattle.gov Events")
 
 [Seattle City Council](https://www.seattle.gov/council)
-=======================================================
 
 [Public Comment](https://www.seattle.gov/council/meetings/public-comment)
 
@@ -632,195 +631,177 @@ ContinueCancel
     Get high resolution photo downloads in the Seattle City Council press kit
 * [Legislation & Research](https://www.seattle.gov/council/legislation-and-research)
 
-Watch Council Meetings
-----------------------
+breadcrumb divider[Home](https://www.seattle.gov/council)
+breadcrumb end
 
-The Seattle Channel's 24/7 stream features live Council meetings and a range of other award-winning programs.
+Councilmembers
+==============
 
-[Watch Council Live](https://www.seattle.gov/council/meetings/watch-council-live "Watch Council Live")
+* District 1: [Rob Saka](https://www.seattle.gov/council/members#RobSaka "Rob Saka")
+* District 2: [Mark Solomon](https://www.seattle.gov/council/members#MarkSolomon "Mark Solomon")
+* District 3: [Joy Hollingsworth](https://www.seattle.gov/council/members#JoyHollingsworth "Joy Hollingsworth")
+* District 4: [Maritza Rivera](https://www.seattle.gov/council/members#MaritzaRivera "Maritza Rivera")
+* District 5: [Debora Juarez](https://www.seattle.gov/council/members#DeboraJuarez "Debora Juarez")
 
-Featured Topics
----------------
-
-Featured Topics
----------------
-
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
-
-City Council's Budget Basics
-
-Understand the budget process and when and how you can make your voice heard in the process.](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
-
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
-
-Focus on Public Safety
-
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
-
-[![a small group of people looking at a paper document together](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Comprehensive%20Plan_310x160.png "a small group of people looking at a paper document together")
-
-2025 Comprehensive Plan
-
-A roadmap for where and how Seattle will grow and invest in our communities over the next 20 years and beyond.](https://www.seattle.gov/council/topics/2025-comprehensive-plan "2025 Comprehensive Plan")
-
-[![yellow warning icon with a picture of the white house in the background](https://www.seattle.gov/images//images/Council/Issues/ProtectingOurSeattle/Fed-Changes_Protecting-Our-Seattle_310x160.png "yellow warning icon with a picture of the white house in the background")
-
-Protecting our Seattle
-
-Seattle is committed to protecting its people, especially those most impacted by recent federal policy changes.](https://www.seattle.gov/council/topics/federal-changes-protecting-our-seattle "Federal changes: Protecting our Seattle")
-
-1/4
+* District 6: [Dan Strauss](https://www.seattle.gov/council/members#DanStrauss "Dan Strauss")
+* District 7: [Robert Kettle](https://www.seattle.gov/council/members#RobertKettle "Robert Kettle")
+* Position 8: [Alexis Mercedes Rinck](https://www.seattle.gov/council/members#AlexisMercedesRinck "Alexis Mercedes Rinck")
+* Position 9: [Sara Nelson](https://www.seattle.gov/council/members#SaraNelson "Sara Nelson")
 
 Contact all Councilmembers by emailing [council@seattle.gov](mailto:council@seattle.gov "Email council@seattle.gov"). You can also [get email updates](https://www.seattle.gov/council/news-and-media/newsletter-signup "Get Email Updates").
 
 [Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
 
-Councilmembers
---------------
-
-Councilmembers
---------------
-
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+![Rob Saka](https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/saka_300.jpg "Rob Saka")
 
 Rob Saka
+--------
 
-Councilmember  
- District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
+District 1 (West Seattle, South Park, Georgetown, Pioneer Square)
 
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+Bio +  -
+
+[Visit Rob's Web Pages](https://www.seattle.gov/council/members/rob-saka "Visit Rob's Web Pages")
+
+### Contact
+
+* [(206) 684-8801](tel: +1 (206) 684-8801)
+* [rob.saka@seattle.gov](mailto:rob.saka@seattle.gov)
+
+![Mark Solomon](https://www.seattle.gov/images//images/Council/Members/Solomon/mark-solomon.jpg "Mark Solomon")
 
 Mark Solomon
+------------
 
-Councilmember  
- District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
+District 2 (South Seattle, Yesler Terrace to Rainier Beach)
 
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
+Bio +  -
+
+[Visit Mark's Web Pages](https://www.seattle.gov/council/members/mark-solomon "Visit Mark's Web Pages")
+
+### Contact
+
+* [(206) 684-8802](tel: +1 (206) 684-8802)
+* [mark.solomon2@seattle.gov](mailto:mark.solomon2@seattle.gov)
+
+![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/hollingsworth_300.jpg "Joy Hollingsworth")
 
 Joy Hollingsworth
+-----------------
 
-Councilmember  
- District 3](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
+District 3 (Central Seattle)
 
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
+Bio +  -
+
+[Visit Joy's Web Pages](https://www.seattle.gov/council/members/joy-hollingsworth "Visit Joy's Web Pages")
+
+### Contact
+
+* [(206) 684-8803](tel: +1 (206) 684-8803)
+* [joy.hollingsworth@seattle.gov](mailto:joy.hollingsworth@seattle.gov)
+
+![Maritza Rivera](https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rivera_300.jpg "Maritza Rivera")
 
 Maritza Rivera
+--------------
 
-Councilmember  
- District 4](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
+District 4 (Northeast Seattle)
 
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
+Bio +  -
+
+[Visit Maritza's Web Pages](https://www.seattle.gov/council/members/maritza-rivera "Visit Maritza's Web Pages")
+
+### Contact
+
+* [(206) 684-8804](tel: +1 (206) 684-8804)
+* [maritza.rivera@seattle.gov](mailto:maritza.rivera@seattle.gov)
+
+![Debora Juarez](https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/juarez_300.jpg "Debora Juarez")
 
 Debora Juarez
+-------------
 
-Councilmember  
- District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
+District 5 (North Seattle)
 
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+Bio +  -
+
+[Visit Debora's Web Pages](https://www.seattle.gov/council/members/debora-juarez "Visit Debora's Web Pages")
+
+### Contact
+
+* [(206) 684-8805](tel: +1 (206) 684-8805)
+* [debora.juarez@seattle.gov](mailto:debora.juarez@seattle.gov)
+
+![Dan Strauss](https://www.seattle.gov/images//images/Council/Members/Strauss/Struass-2022-headshot_square.jpg "Dan Strauss")
 
 Dan Strauss
+-----------
 
-Councilmember  
- District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
+District 6 (Northwest Seattle)
 
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
+Bio +  -
 
-Bob Kettle
+[Visit Dan's Web Pages](https://www.seattle.gov/council/members/dan-strauss "Visit Dan's Web Pages")
 
-Councilmember  
- District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
+### Contact
 
-[![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rinck_154x154.jpg)
+* [(206) 684-8806](tel: +1 (206) 684-8806)
+* [dan.strauss@seattle.gov](mailto:dan.strauss@seattle.gov)
+
+![Robert Kettle](https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/kettle_300.jpg "Robert Kettle")
+
+Robert Kettle
+-------------
+
+District 7 (Downtown to Magnolia, including Queen Anne, Uptown, Westlake, Interbay, Eastlake, South Lake Union, and Belltown)
+
+Bio +  -
+
+[Visit Robert's Web Pages](https://www.seattle.gov/council/members/bob-kettle "Visit Robert's Web Pages")
+
+### Contact
+
+* [(206) 684-8807](tel: +1 (206) 684-8807)
+* [robert.kettle@seattle.gov](mailto:robert.kettle@seattle.gov)
+
+![Alexis Mercedes Rinck](https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rinck_300.jpg "Alexis Mercedes Rinck")
 
 Alexis Mercedes Rinck
+---------------------
 
-Councilmember  
- Position 8](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Alexis Mercedes Rinck")
+Position 8 (Citywide, Representing All of Seattle)
 
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
+Bio +  -
+
+[Visit Alexis' Web Pages](https://www.seattle.gov/council/members/alexis-mercedes-rinck "Visit Alexis' Web Pages")
+
+### Contact
+
+* [(206) 684-8808](tel: +1 (206) 684-8808)
+* [AlexisMercedes.Rinck@seattle.gov](mailto:AlexisMercedes.Rinck@seattle.gov)
+
+![Sara Nelson](https://www.seattle.gov/images//images/Council/Members/Nelson/nelson_300x300.jpg "Sara Nelson")
 
 Sara Nelson
+-----------
 
-Council President  
- Position 9](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
+Council President - Position 9 (Citywide, Representing All of Seattle)
 
-[See all Councilmembers Go to link](https://www.seattle.gov/council/members "See all Councilmembers")
+Bio +  -
 
-How to Participate
-------------------
+[Visit Sara's Web Pages](https://www.seattle.gov/council/members/sara-nelson "Visit Sara's Web Pages")
 
-How to Participate
-------------------
+### Contact
 
-[Attend a council meeting](https://www.seattle.gov/council/meetings "Council Meetings")
+* [(206) 684-8809](tel: +1 (206) 684-8809)
+* [sara.nelson@seattle.gov](mailto:sara.nelson@seattle.gov)
 
-[View our calendar](https://www.seattle.gov/council/calendar "Council Calendar")
-
-[Comment at a public meeting](https://www.seattle.gov/council/meetings/public-comment "Public Comment")
-
-[Tips on giving public comment](https://www.seattle.gov/council/meetings/public-comment-tips "Public Comment Tips")
-
-[Sign up for agendas](https://www.seattle.gov/council/meetings/committees-and-agendas/sign-up-for-agendas "Sign Up for Agendas")
-
-View the Latest News
+Additional Resources
 --------------------
 
-[### Housing & Human Services Committee 9/22/2025
-
-Agenda: Call to Order; Approval of the Agenda; Public Comment; Appointments and reappointments; CB 121055: relating to the Multifamily Housing Property Tax Exemption Program; Adjournment.](https://www.seattlechannel.org/video.asp?ID=2762533 "Housing & Human Services Committee 9/22/2025")
-
-[### Council Briefing 9/22/25
-
-Agenda: Approval of the Minutes; President's Report; Signing of Letters and Proclamations; Preview of City Council Actions, Council and Regional Committees; Executive Session I, II, and III on Pendi[...]](https://www.seattlechannel.org/video.asp?ID=2012563 "Council Briefing 9/22/25")
-
-**[View all Seattle Channel Council videosexternal link](https://www.seattlechannel.org/CityCouncil "Seattle Channel Council videos")**
-
-[Council Connection Blog](https://council.seattle.gov/category/news-releases/ "undefined Blog")
------------------------------------------------------------------------------------------------
-
-[Council Connection Blog RSS FeedCouncil Connection Blog RSS Feed](https://council.seattle.gov/category/news-releases/feed/ "undefined Blog")
-
-9/19
-
-[Amended Comprehensive Plan passes out of committee](https://council.seattle.gov/2025/09/19/amended-comprehensive-plan-passes-out-of-committee/)
-
-Council now transitions to budget process while Comp Plan receives additional study before final vote Over the last three days, the Select Committee on the Comprehensive Plan, chaired by Councilmember Joy Hollingsworth (District 3), voted 9-0 to [...]
-
-9/16
-
-[Council President Nelson celebrates passage of permitting bills to help small businesses and activate vacant storefronts](https://council.seattle.gov/2025/09/16/council-president-nelson-celebrates-passage-of-permitting-bills-to-help-small-businesses-and-activate-vacant-storefronts/)
-
-Earlier today the City Council voted to approve new legislation that will reduce barriers and allow small businesses to setup storefronts faster and cheaper. The bills (CB 121045 and CB 121047), introduced and sponsored by Council President Sara [...]
-
-9/16
-
-[Councilmember Kettle voices strong support for public safety plan in Little Saigon, Chinatown International District](https://council.seattle.gov/2025/09/16/councilmember-kettle-voices-strong-support-for-public-safety-plan-in-little-saigon-chinatown-international-district/)
-
-Earlier today Councilmember Bob Kettle (District 7), chair of the Public Safety Committee, made the following statement in support of a community-led 15-Point Plan aimed at addressing crime and enhancing public safety in Little Saigon, Chinatown [...]
-
-Related Resources
------------------
-
-Related Resources
------------------
-
-[Boards and Commissions
-
-Opportunities to serve on over 70 boards and commissions.](https://www.seattle.gov/boards-and-commissions "Boards and Commissions")
-
-[City Clerk
-
-Learn about the City Clerk and get legislation resources.](https://www.seattle.gov/cityclerk "City Clerk")
-
-[Find It Fix It App
-
-Report non-urgent requests such as clogged storm drains, traffic signal issues, and streetlight outage.](https://www.seattle.gov/customer-service-bureau/find-it-fix-it-mobile-app "Find It Fix It App")
-
-[Get Involved
-
-Find ways to volunteer, donate, and have a say on city issues.](https://www.seattle.gov/get-involved "Get Involved")
-
-1/4
+* [Watch Council Meetings](https://www.seattle.gov/council/meetings/watch-council-live "Watch Council Meetings")
+* [Visiting City Hall](https://www.seattle.gov/council/meetings/visiting-city-hall "Visiting City Hall")
+* [Visitor Sign In Sheets](https://www.seattle.gov/council/meetings/visitor-sign-in-sheets "Visitor Sign In Sheets")
 
 City Council
 ------------
@@ -875,7 +856,6 @@ Policies
 [Title VI: Civil Rights Act](https://www.seattle.gov/civilrights/laws-we-enforce/title-vi-civil-rights-act)
 
 [Sitemap](//www.seattle.gov/sitemap)
-
 
 
 
