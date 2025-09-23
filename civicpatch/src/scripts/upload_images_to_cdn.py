@@ -7,7 +7,7 @@ from schemas import Person
 import posixpath
 
 STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
-STORAGE_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY")
+STORAGE_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY_ID")
 STORAGE_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_ACCESS_KEY")
 FRIENDLY_STORAGE_HOST = os.getenv("FRIENDLY_STORAGE_HOST", "cdn.civicpatch.org")
 

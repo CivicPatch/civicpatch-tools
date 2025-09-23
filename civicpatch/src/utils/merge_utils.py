@@ -16,6 +16,33 @@ def normalize_name(name: str) -> str:
     parsed_name = HumanName(name)
     return f"{parsed_name.first} {parsed_name.last}".strip()
 
+def first_name(name: str) -> str:
+    """
+    Extract the first name from a full name using nameparser.
+    """
+    parsed_name = HumanName(name)
+    return parsed_name.first
+
+def last_name(name: str) -> str:
+    """
+    Extract the last name from a full name using nameparser.
+    """
+    parsed_name = HumanName(name)
+    return parsed_name.last
+
+def has_name_overlap(record1: LLMPerson, record2: LLMPerson) -> bool:
+    """
+    Check if two records have overlapping first or last names.
+    """
+    parsed_name1 = HumanName(record1.name)
+    parsed_name2 = HumanName(record2.name)
+    firstname1 = parsed_name1.first
+    firstname2 = parsed_name2.first
+    surname1 = parsed_name1.last
+    surname2 = parsed_name2.last
+
+    return bool(set([firstname1, surname1]) & set([firstname2, surname2]))
+
 
 def are_names_similar(first_name1: str, first_name2: str, threshold: int = NAME_SIMILARITY_THRESHOLD) -> bool:
     """
@@ -104,3 +131,26 @@ def group_people_by_name(
         name_map[canonical_name] = sorted(set(name_map[canonical_name]))
 
     return name_map, people_by_name
+
+def is_weakly_tied(record1: LLMPerson, record2: LLMPerson) -> bool:
+    """
+    Determine if two records are weakly tied based on shared attributes.
+    """
+
+    if not has_name_overlap(record1, record2):
+        return False
+
+    # Check for matching roles
+    if set(record1.roles) & set(record2.roles):
+        return True
+
+    # Check for matching email addresses
+    if record1.email and record2.email and record1.email == record2.email: 
+        return True
+
+    # Check for matching websites if available
+    if record1.website and record2.website and record1.website == record2.website:
+        return True
+
+    return False
+

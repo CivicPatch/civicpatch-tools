@@ -3,29 +3,33 @@ from schemas import (
     LLMPerson, Person, PipelineStatus, RecordsByLLM, PipelineContext
 )
 from collections import Counter
-import utils.config_utils as config_utils
+from utils import merge_utils
 
 def merge_records_within_llm(context: PipelineContext):
     """
-    Merge records within each llm to produce a unified list of Person objects.
+    Consolidate records within each LLM to produce a unified list of Person objects.
     """
-
     records_by_llm: RecordsByLLM = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]["records_by_llm"]
-    people_by_llm: Dict[str, List[Person]] = {}
+    records_by_llm = { k: {name: [LLMPerson.model_validate(p) if isinstance(p, dict) else p for p in v] for name, v in people.items()} for k, people in records_by_llm.items() } if isinstance(records_by_llm, dict) else records_by_llm
     government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
 
-    for source, people_by_name in records_by_llm.items():
+    # Flatten the records so that we can later group by last name 
+    # and merge weakly tied records
+    flattened_records_by_llm = {llm: [person for people in people_by_name.values() for person in people] for llm, people_by_name in records_by_llm.items()}
+    people_by_llm: Dict[str, List[Person]] = {}
+
+    for llm, records in flattened_records_by_llm.items():
         merged_people: List[Person] = []
+        groups_by_last_name = group_by_last_name(records)
 
-        for canonical_name, llm_people_list in people_by_name.items():
-            merged_person = merge_llm_people_to_person(canonical_name, llm_people_list, government_type)
-            merged_person = merged_person.model_dump()
+        for llm_records_list in groups_by_last_name.values():
+            consolidated_people = merge_records(llm_records_list, government_type)
+            merged_people.extend(consolidated_people)
 
-            # Only include merged person if they have roles
-            if merged_person["roles"]:
-                merged_people.append(merged_person)
+        people_by_llm[llm] = merged_people
 
-        people_by_llm[source] = merged_people
+    # Format to dict
+    people_by_llm = {k: [person.model_dump() for person in v] for k, v in people_by_llm.items()}
 
     return {
         "steps": {
@@ -36,6 +40,17 @@ def merge_records_within_llm(context: PipelineContext):
         }
     }
 
+def group_by_last_name(llm_people_list: List[LLMPerson]) -> Dict[str, List[LLMPerson]]:
+    """
+    Group LLMPerson records by their surnames.
+    """
+    last_name_groups: Dict[str, List[LLMPerson]] = {}
+    for person in llm_people_list:
+        last_name = merge_utils.last_name(person.name)
+        if last_name not in last_name_groups:
+            last_name_groups[last_name] = []
+        last_name_groups[last_name].append(person)
+    return last_name_groups
 
 def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPerson], government_type: str) -> Person:
     """
@@ -110,3 +125,32 @@ def merge_divisions(records: List[LLMPerson]) -> List[str]:
             if division:
                 unique_divisions.add(division)
     return list(unique_divisions)
+
+def merge_records(llm_people_list: List[LLMPerson], government_type: str) -> List[Person]:
+    """
+    Consolidate records within a single group of LLMPerson objects.
+    Merge records that are weakly tied into unified Person objects.
+    """
+    consolidated_groups = []  # To store groups of weakly tied records
+    visited = set()  # To track processed records
+
+    for i, record in enumerate(llm_people_list):
+        if i in visited:
+            continue  # Skip already processed records
+
+        # Start a new group with the current record
+        group = [record]
+        visited.add(i)
+
+        # Compare the current record with all other records
+        for j, other_record in enumerate(llm_people_list):
+            if j in visited:
+                continue
+            if any(merge_utils.is_weakly_tied(group_record, other_record) for group_record in group):
+                group.append(other_record)
+                visited.add(j)
+
+        # Merge all records in the group into a single Person object
+        consolidated_groups.append(merge_llm_people_to_person(group[0].name, group, government_type))
+
+    return consolidated_groups

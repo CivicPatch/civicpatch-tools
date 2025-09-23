@@ -1,5 +1,5 @@
 from typing import List, Dict, TypedDict, Any
-from utils import config_utils, data_utils, people_utils
+from utils import people_utils, merge_utils, data_utils
 from schemas import Person, PipelineStatus, PipelineContext, MissingPerson, FieldComparison
 from collections import Counter
 from datetime import datetime, timezone
@@ -9,121 +9,35 @@ MINIMUM_AGREEMENT_SCORE = 80
 
 def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
     """
-    Merge records across all llms to produce a unified list of Person objects.
+    Merge records across all LLMs to produce a unified list of Person objects.
     Uses people_by_llm from the previous step (MERGE_RECORDS_WITHIN_LLM).
     """
-    # Get people_by_llm from previous step
-    people_by_llm: Dict[str, List[Dict]] = context["steps"][PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value]["people_by_llm"]
-
+    # Get people_by_llm from the previous step
+    people_by_llm: Dict[str, List[Person]] = context["steps"][PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value]["people_by_llm"]
+    people_by_llm = {k: [Person.model_validate(p) if isinstance(p, dict) else p for p in v] for k, v in people_by_llm.items()}
+    government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
     state = context["state"]
     geoid = context["geoid"]
-
     municipality_context = data_utils.get_municipality_context(state, geoid)
-
-    counties = municipality_context.municipality_entry.counties
     place = municipality_context.municipality_entry.name
 
-    # Filter people_by_llm to only include target roles
-    government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
+    # Group records across LLMs based on weak ties and names
+    identity_groups = group_records_across_llms(people_by_llm)
 
-    target_roles = config_utils.get_roles_by_government_type(government_type)
-    for source, people in people_by_llm.items():
-        filtered_people = people_with_target_roles(
-            [Person.model_validate(person) for person in people],
-            target_roles
-        )
-        people_by_llm[source] = [person.model_dump() for person in filtered_people]
+    # Merge each group into a single Person object
+    merged_people = [merge_group_across_llms(identity_group, government_type, state, place) for identity_group in identity_groups]
 
-    # Aggregate all unique names across llms
-    canonical_names = set(context.get("names", []))
+    # Sort people by role priority, division, and name
+    sorted_people = people_utils.sort_people(merged_people, government_type)
 
-    # Initialize disagreements, missing_people lists, and disagreement score
-    missing_people: List[MissingPerson] = []
-    total_disagreement_score = 0
-
-    # Merge people with same canonical name across llms 
-    merged_people: List[Dict] = []
-    num_sources = len(people_by_llm)
-
-    fields = ["roles", "divisions", "phone_number", "email", "website", "start_date", "end_date"]
-    
-    # Initialize disagreements as a dictionary keyed by person
-    disagreements_by_person: Dict[str, List[FieldComparison]] = {}
-    
-    for canonical_name in canonical_names:
-        # Collect all Person objects grouped by source for this canonical name
-        grouped_people_by_llm = {
-            source: [
-                Person.model_validate(person)
-                for person in people
-                if Person.model_validate(person).name == canonical_name
-            ]
-            for source, people in people_by_llm.items()
-        }
-        
-        # Only process if person appears in at least 2 sources
-        sources_with_person = [source for source, people in grouped_people_by_llm.items() if people]
-        if len(sources_with_person) < 2:
-            continue
-
-        # Now identify missing sources (only for people that appear in 2+ sources)
-        missing_sources = [
-            source for source, people in grouped_people_by_llm.items() if not people
-        ]
-        
-        for source in missing_sources:
-            missing_people.append(MissingPerson(name=canonical_name, missing_from_llms=missing_sources, found_in_llms=sources_with_person))
-
-        # Merge Person objects into a single Person object
-        merged_person = merge_people_across_llms(government_type, canonical_name, grouped_people_by_llm)
-        merged_person.state = state
-        merged_person.place = place
-        merged_person.counties = counties
-
-        # Identify disagreements during merging
-        person_comparisons = collect_field_comparisons(
-            canonical_name,
-            merged_person,
-            grouped_people_by_llm,
-            fields
-        )
-        
-        # If there are any disagreements for this person, add them to the dictionary
-        if person_comparisons:
-            disagreements_by_person[canonical_name] = person_comparisons
-            total_disagreement_score += sum(c.disagreement_score for c in person_comparisons)
-
-        merged_people.append(merged_person.model_dump())
-
-    # Calculate agreement score
-    max_possible_disagreement = num_sources * len(canonical_names) * len(fields)
-    agreement_score = 100 * (1 - (total_disagreement_score / max_possible_disagreement)) if max_possible_disagreement > 0 else 100.0
-
-    validation_issues = []
-
-    if agreement_score < MINIMUM_AGREEMENT_SCORE:
-        validation_issues.append(f"Low agreement score: {agreement_score:.2f}. Minimum expected is {MINIMUM_AGREEMENT_SCORE}.")
+    # Convert to dicts for easier processing
+    sorted_people_dict = [person.model_dump() for person in sorted_people]
 
     return {
         "steps": {
             **context["steps"],
             PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value: {
-                "people": sort_people(merged_people, government_type),
-                "agreement_score": agreement_score,
-                "disagreements": {
-                    person_name: [
-                        {
-                            "field": c.field,
-                            "merged_value": c.merged_value,
-                            "llm_values": c.llm_values,
-                            "disagreement_score": c.disagreement_score
-                        }
-                        for c in comparisons
-                    ]
-                    for person_name, comparisons in disagreements_by_person.items()
-                },
-                "missing_people": [missing_person.model_dump() for missing_person in missing_people],
-                "validation_issues": validation_issues
+                "people": sorted_people_dict
             }
         }
     }
@@ -225,75 +139,6 @@ def calculate_disagreement_score(field_name: str, merged_value: str, llm_values:
         avg_dissimilarity = 1 - (sum(similarities) / len(similarities))
         return round(avg_dissimilarity, 2)  # Round to 2 decimal places
 
-def get_role_priority(government_type: str) -> Dict[str, int]:
-    """
-    Returns a mapping from role name (lowercase) to its priority/order in the config.
-    Aliases are ignored; only main role names are used.
-    """
-    role_configs = config_utils.get_role_configs_by_government_type(government_type)
-    priority = {}
-    for idx, role_entry in enumerate(role_configs):
-        role_name = role_entry["role"].lower()
-        priority[role_name] = idx
-    return priority
-
-def sort_people(people: List[Person], government_type: str) -> List[Person]:
-    """
-    Sort people by role priority (from config), then division, then name.
-    """
-    role_priority = get_role_priority(government_type)
-
-    def sort_key(person: Person):
-        # Find the highest priority among person's roles
-        priorities = [role_priority.get(role.lower(), 9999) for role in person["roles"]]
-        min_priority = min(priorities) if priorities else 9999
-        first_division = person["divisions"][0] if person["divisions"] else ""
-        return (min_priority, first_division, person["name"])
-
-    return sorted(people, key=sort_key)
-
-def merge_people_across_llms(government_type: str, canonical_name: str, people_by_llm: Dict[str, List[Person]]) -> Person:
-    """
-    Merge a list of Person objects grouped by source into a single Person object.
-    Only include roles and divisions that appear in more than one source.
-    """
-    # Collect roles and divisions that appear in more than one source
-    role_counter = Counter(role for source, people in people_by_llm.items() for person in people for role in person.roles)
-    division_counter = Counter(div for source, people in people_by_llm.items() for person in people for div in person.divisions)
-    
-    roles = [role for role, count in role_counter.items() if count > 1]  # Include roles present in more than one source
-    divisions = [div for div, count in division_counter.items() if count > 1]  # Include divisions present in more than one source
-    
-    # For single-value fields, take the most common non-empty value across all sources
-    image_counter = Counter(person.image for source, people in people_by_llm.items() for person in people if person.image)
-    phone_counter = Counter(person.phone_number for source, people in people_by_llm.items() for person in people if person.phone_number)
-    email_counter = Counter(person.email for source, people in people_by_llm.items() for person in people if person.email)
-    website_counter = Counter(person.website for source, people in people_by_llm.items() for person in people if person.website)
-    start_date_counter = Counter(person.start_date for source, people in people_by_llm.items() for person in people if person.start_date)
-    end_date_counter = Counter(person.end_date for source, people in people_by_llm.items() for person in people if person.end_date)
-    sources = set(
-        ds
-        for people in people_by_llm.values()
-        for person in people
-        if person.sources  # Check if sources exists
-        for ds in person.sources  # Flatten the list of data sources
-    )
-
-    return Person(
-        name=canonical_name,
-        roles=people_utils.normalize_roles(government_type, roles),
-        divisions=divisions,
-        image=image_counter.most_common(1)[0][0] if image_counter else "",
-        cdn_image="",
-        email=email_counter.most_common(1)[0][0] if email_counter else "",
-        phone_number=phone_counter.most_common(1)[0][0] if phone_counter else "",
-        website=website_counter.most_common(1)[0][0] if website_counter else "",
-        start_date=start_date_counter.most_common(1)[0][0] if start_date_counter else "",
-        end_date=end_date_counter.most_common(1)[0][0] if end_date_counter else "",
-        sources=sources,
-        updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
-    )
-
 def calculate_agreement_score(people_by_llm: Dict[str, List[Person]]) -> float:
     """
     Calculate an agreement score based on the consistency of data across llms.
@@ -344,3 +189,80 @@ def people_with_target_roles(people: List[Person], target_roles: List[str]) -> L
         person for person in people
         if any(role.lower() in target_roles_lower for role in person.roles)
     ]
+
+def group_records_across_llms(people_by_llm: Dict[str, List[Person]]) -> List[List[Person]]:
+    """
+    Group records across LLMs based on weak ties.
+    Returns a list of groups, where each group is a list of Person objects that are weakly tied.
+    """
+    all_people = [
+        person for people in people_by_llm.values() for person in people
+    ]
+    visited = set()
+    groups = []
+
+    for i, person in enumerate(all_people):
+        if i in visited:
+            continue
+
+        # Start a new group with the current person
+        group = [person]
+        visited.add(i)
+
+        # Compare the current person with all other people
+        for j, other_person in enumerate(all_people):
+            if j in visited:
+                continue
+            if any(merge_utils.is_weakly_tied(group_person, other_person) for group_person in group):
+                group.append(other_person)
+                visited.add(j)
+
+        groups.append(group)
+
+    return groups
+
+def merge_group_across_llms(group: List[Person], government_type: str, state, place) -> Person:
+    """
+    Merge a group of weakly tied Person objects into a single Person object.
+    """
+    # Collect roles and divisions that appear in more than one source
+    role_counter = Counter(role for person in group for role in person.roles)
+    division_counter = Counter(div for person in group for div in person.divisions)
+
+    roles = [role for role, count in role_counter.items() if count > 1]  # Include roles present in more than one source
+    divisions = [div for div, count in division_counter.items() if count > 1]  # Include divisions present in more than one source
+
+    # For single-value fields, take the most common non-empty value across all sources
+    image_counter = Counter(person.image for person in group if person.image)
+    phone_counter = Counter(person.phone_number for person in group if person.phone_number)
+    email_counter = Counter(person.email for person in group if person.email)
+    website_counter = Counter(person.website for person in group if person.website)
+    start_date_counter = Counter(person.start_date for person in group if person.start_date)
+    end_date_counter = Counter(person.end_date for person in group if person.end_date)
+    sources = set(
+        ds
+        for person in group
+        if person.sources  # Check if sources exists
+        for ds in person.sources  # Flatten the list of data sources
+    )
+
+    # Use the most common name in the group as the canonical name
+    name_counter = Counter(person.name for person in group)
+    canonical_name = name_counter.most_common(1)[0][0]
+
+    return Person(
+        name=canonical_name,
+        roles=people_utils.normalize_roles(government_type, roles),
+        divisions=people_utils.normalize_divisions(divisions),
+        image=image_counter.most_common(1)[0][0] if image_counter else "",
+        cdn_image="",
+        email=email_counter.most_common(1)[0][0] if email_counter else "",
+        phone_number=phone_counter.most_common(1)[0][0] if phone_counter else "",
+        website=website_counter.most_common(1)[0][0] if website_counter else "",
+        start_date=start_date_counter.most_common(1)[0][0] if start_date_counter else "",
+        end_date=end_date_counter.most_common(1)[0][0] if end_date_counter else "",
+        sources=sources,
+        state=state, 
+        place=place,
+        updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
+    )
