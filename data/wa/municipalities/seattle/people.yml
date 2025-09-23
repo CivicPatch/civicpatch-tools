@@ -1,331 +1,337 @@
 - name: Bruce Harrell
-  image: https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg
   roles:
   - Mayor
   divisions: []
   phone_number: ''
   email: ''
   website: https://www.seattle.gov/mayor
-  start_date: 2022-01
+  start_date: ''
   end_date: ''
+  image: https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg
+  cdn_image: ''
   state: wa
   place: Seattle
-  counties:
-  - King
   sources:
-  - https://www.seattle.gov/council/members/alexis-mercedes-rinck
-  - https://www.seattle.gov/council/members/joy-hollingsworth
   - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/members/maritza-rivera/about-maritza
-  cdn_image: ''
-  updated_at: '2025-09-21T04:52:34+00:00'
-- name: Joy Hollingsworth
-  image: https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/hollingsworth_635x250.jpg
-  roles:
-  - Council Member
-  - Chair
-  divisions:
-  - District 3
-  phone_number: (206) 684-8888
-  email: council@seattle.gov
-  website: https://www.seattle.gov/council/members/joy-hollingsworth
-  start_date: '2022-01-01'
-  end_date: ''
-  state: wa
-  place: Seattle
-  counties:
-  - King
-  sources:
-  - https://www.seattle.gov/council/members
-  - https://www.seattle.gov/council
-  - https://www.seattle.gov/council/members/bob-kettle
-  - https://www.seattle.gov/council/members/find-your-district-and-councilmembers
-  - https://www.seattle.gov/council/members/mark-solomon
-  - https://www.seattle.gov/council/members/alexis-mercedes-rinck
-  - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/members/sara-nelson
-  - https://www.seattle.gov/council/members/rob-saka
-  - https://www.seattle.gov/council/members/maritza-rivera
-  - https://www.seattle.gov/council/members/joy-hollingsworth
-  - https://www.seattle.gov/council/members/debora-juarez
-  - https://www.seattle.gov/council/members/dan-strauss
-  - https://www.seattle.gov/council/members/maritza-rivera/about-maritza
-  cdn_image: ''
-  updated_at: '2025-09-21T04:52:34+00:00'
+  updated_at: '2025-09-23T18:40:47+00:00'
 - name: Sara Nelson
-  image: https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/nelson_635x250.jpg
   roles:
   - Council President
-  - Council Member
   divisions:
-  - At-Large
   - Position 9
-  phone_number: (206) 684-8888
-  email: council@seattle.gov
+  phone_number: (206) 684-8809
+  email: sara.nelson@seattle.gov
   website: https://www.seattle.gov/council/members/sara-nelson
-  start_date: '2022-01-01'
+  start_date: ''
   end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg
+  cdn_image: ''
   state: wa
   place: Seattle
-  counties:
-  - King
   sources:
-  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/council
-  - https://www.seattle.gov/council/members/bob-kettle
-  - https://www.seattle.gov/council/members/find-your-district-and-councilmembers
-  - https://www.seattle.gov/council/members/mark-solomon
-  - https://www.seattle.gov/council/members/alexis-mercedes-rinck
+  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/members/sara-nelson
-  - https://www.seattle.gov/council/members/rob-saka
-  - https://www.seattle.gov/council/members/maritza-rivera
-  - https://www.seattle.gov/council/members/joy-hollingsworth
-  - https://www.seattle.gov/council/members/debora-juarez
-  - https://www.seattle.gov/council/members/dan-strauss
-  - https://www.seattle.gov/council/members/maritza-rivera/about-maritza
-  cdn_image: ''
-  updated_at: '2025-09-21T04:52:34+00:00'
+  updated_at: '2025-09-23T18:40:47+00:00'
 - name: Rob Saka
-  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg
   roles:
   - Council Member
   divisions:
   - District 1
-  phone_number: (206) 684-8888
-  email: council@seattle.gov
+  phone_number: (206) 684-8801
+  email: rob.saka@seattle.gov
   website: https://www.seattle.gov/council/members/rob-saka
-  start_date: '2022-01-01'
+  start_date: ''
   end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg
+  cdn_image: ''
   state: wa
   place: Seattle
-  counties:
-  - King
   sources:
-  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/council
-  - https://www.seattle.gov/council/members/bob-kettle
-  - https://www.seattle.gov/council/members/find-your-district-and-councilmembers
-  - https://www.seattle.gov/council/members/mark-solomon
-  - https://www.seattle.gov/council/members/alexis-mercedes-rinck
+  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/members/sara-nelson
-  - https://www.seattle.gov/council/members/rob-saka
-  - https://www.seattle.gov/council/members/maritza-rivera
-  - https://www.seattle.gov/council/members/joy-hollingsworth
-  - https://www.seattle.gov/council/members/debora-juarez
-  - https://www.seattle.gov/council/members/dan-strauss
-  - https://www.seattle.gov/council/members/maritza-rivera/about-maritza
-  cdn_image: ''
-  updated_at: '2025-09-21T04:52:34+00:00'
+  updated_at: '2025-09-23T18:40:47+00:00'
 - name: Mark Solomon
-  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png
   roles:
   - Council Member
   divisions:
   - District 2
-  phone_number: (206) 684-8888
-  email: council@seattle.gov
+  phone_number: (206) 684-8802
+  email: mark.solomon2@seattle.gov
   website: https://www.seattle.gov/council/members/mark-solomon
-  start_date: '2025-01-27'
+  start_date: ''
   end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png
+  cdn_image: ''
   state: wa
   place: Seattle
-  counties:
-  - King
   sources:
-  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/council
-  - https://www.seattle.gov/council/members/bob-kettle
-  - https://www.seattle.gov/council/members/find-your-district-and-councilmembers
-  - https://www.seattle.gov/council/members/mark-solomon
-  - https://www.seattle.gov/council/members/alexis-mercedes-rinck
+  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/members/sara-nelson
-  - https://www.seattle.gov/council/members/rob-saka
-  - https://www.seattle.gov/council/members/maritza-rivera
-  - https://www.seattle.gov/council/members/joy-hollingsworth
-  - https://www.seattle.gov/council/members/debora-juarez
-  - https://www.seattle.gov/council/members/dan-strauss
-  - https://www.seattle.gov/council/members/maritza-rivera/about-maritza
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Joy Hollingsworth
+  roles:
+  - Council Member
+  divisions:
+  - District 3
+  phone_number: (206) 684-8803
+  email: joy.hollingsworth@seattle.gov
+  website: https://www.seattle.gov/council/members/joy-hollingsworth
+  start_date: ''
+  end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg
   cdn_image: ''
-  updated_at: '2025-09-21T04:52:34+00:00'
+  state: wa
+  place: Seattle
+  sources:
+  - https://www.seattle.gov/council
+  - https://www.seattle.gov/council/members
+  - https://www.seattle.gov/elected-officials
+  updated_at: '2025-09-23T18:40:47+00:00'
 - name: Maritza Rivera
-  image: https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/rivera_635x250.jpg
   roles:
   - Council Member
   divisions:
   - District 4
-  phone_number: (206) 684-8888
-  email: council@seattle.gov
+  phone_number: (206) 684-8804
+  email: maritza.rivera@seattle.gov
   website: https://www.seattle.gov/council/members/maritza-rivera
-  start_date: 2024-01
-  end_date: 2027-12
+  start_date: ''
+  end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg
+  cdn_image: ''
   state: wa
   place: Seattle
-  counties:
-  - King
   sources:
-  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/council
-  - https://www.seattle.gov/council/members/bob-kettle
-  - https://www.seattle.gov/council/members/find-your-district-and-councilmembers
-  - https://www.seattle.gov/council/members/mark-solomon
-  - https://www.seattle.gov/council/members/alexis-mercedes-rinck
+  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/members/sara-nelson
-  - https://www.seattle.gov/council/members/rob-saka
-  - https://www.seattle.gov/council/members/maritza-rivera
-  - https://www.seattle.gov/council/members/joy-hollingsworth
-  - https://www.seattle.gov/council/members/debora-juarez
-  - https://www.seattle.gov/council/members/dan-strauss
-  - https://www.seattle.gov/council/members/maritza-rivera/about-maritza
-  cdn_image: ''
-  updated_at: '2025-09-21T04:52:34+00:00'
+  updated_at: '2025-09-23T18:40:47+00:00'
 - name: Debora Juarez
-  image: https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/juarez_635x250.jpg
   roles:
   - Council Member
   divisions:
   - District 5
   phone_number: (206) 684-8805
-  email: Debora.Juarez@seattle.gov
+  email: debora.juarez@seattle.gov
   website: https://www.seattle.gov/council/members/debora-juarez
-  start_date: '2025-07-28'
+  start_date: ''
   end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg
+  cdn_image: ''
   state: wa
   place: Seattle
-  counties:
-  - King
   sources:
-  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/council
-  - https://www.seattle.gov/council/members/bob-kettle
-  - https://www.seattle.gov/council/members/find-your-district-and-councilmembers
-  - https://www.seattle.gov/council/members/mark-solomon
+  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/members/maritza-rivera
-  - https://www.seattle.gov/council/members/joy-hollingsworth
-  - https://www.seattle.gov/council/members/debora-juarez
-  - https://www.seattle.gov/council/members/dan-strauss
-  - https://www.seattle.gov/council/members/rob-saka
-  cdn_image: ''
-  updated_at: '2025-09-21T04:52:34+00:00'
+  updated_at: '2025-09-23T18:40:47+00:00'
 - name: Dan Strauss
-  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg
   roles:
   - Council Member
   divisions:
   - District 6
-  phone_number: (206) 684-8888
-  email: council@seattle.gov
+  phone_number: (206) 684-8806
+  email: dan.strauss@seattle.gov
   website: https://www.seattle.gov/council/members/dan-strauss
-  start_date: '2022-01-01'
+  start_date: ''
   end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg
+  cdn_image: ''
   state: wa
   place: Seattle
-  counties:
-  - King
   sources:
-  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/council
-  - https://www.seattle.gov/council/members/bob-kettle
-  - https://www.seattle.gov/council/members/find-your-district-and-councilmembers
-  - https://www.seattle.gov/council/members/mark-solomon
-  - https://www.seattle.gov/council/members/alexis-mercedes-rinck
+  - https://www.seattle.gov/council/members
   - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/members/sara-nelson
-  - https://www.seattle.gov/council/members/rob-saka
-  - https://www.seattle.gov/council/members/maritza-rivera
-  - https://www.seattle.gov/council/members/joy-hollingsworth
-  - https://www.seattle.gov/council/members/debora-juarez
-  - https://www.seattle.gov/council/members/dan-strauss
-  - https://www.seattle.gov/council/members/maritza-rivera/about-maritza
-  cdn_image: ''
-  updated_at: '2025-09-21T04:52:34+00:00'
+  updated_at: '2025-09-23T18:40:47+00:00'
 - name: Bob Kettle
-  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg
   roles:
   - Council Member
   divisions:
   - District 7
-  phone_number: ''
-  email: ''
+  phone_number: (206) 684-8807
+  email: robert.kettle@seattle.gov
   website: https://www.seattle.gov/council/members/bob-kettle
-  start_date: '2024'
+  start_date: ''
   end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg
+  cdn_image: ''
   state: wa
   place: Seattle
-  counties:
-  - King
   sources:
   - https://www.seattle.gov/council
-  - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/members/bob-kettle
-  - https://www.seattle.gov/council/members/find-your-district-and-councilmembers
-  cdn_image: ''
-  updated_at: '2025-09-21T04:52:34+00:00'
-- name: Robert Kettle
-  image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg
-  roles:
-  - Council Member
-  divisions:
-  - District 7
-  phone_number: (206) 684-8888
-  email: council@seattle.gov
-  website: https://www.seattle.gov/council/members/bob-kettle
-  start_date: '2022-01-01'
-  end_date: ''
-  state: wa
-  place: Seattle
-  counties:
-  - King
-  sources:
   - https://www.seattle.gov/council/members
-  - https://www.seattle.gov/council
-  - https://www.seattle.gov/council/members/bob-kettle
-  - https://www.seattle.gov/council/members/find-your-district-and-councilmembers
-  - https://www.seattle.gov/council/members/mark-solomon
-  - https://www.seattle.gov/council/members/alexis-mercedes-rinck
-  - https://www.seattle.gov/council/members/sara-nelson
-  - https://www.seattle.gov/council/members/rob-saka
-  - https://www.seattle.gov/council/members/maritza-rivera
-  - https://www.seattle.gov/council/members/joy-hollingsworth
-  - https://www.seattle.gov/council/members/debora-juarez
-  - https://www.seattle.gov/council/members/dan-strauss
-  - https://www.seattle.gov/council/members/maritza-rivera/about-maritza
-  cdn_image: ''
-  updated_at: '2025-09-21T04:52:34+00:00'
-- name: Alexis Rinck
-  image: https://www.seattle.gov/images//images/Council/Members/CouncilmemberBanners/rinck_635x250.jpg
+  - https://www.seattle.gov/elected-officials
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Alexis Mercedes Rinck
   roles:
   - Council Member
   divisions:
   - Position 8
-  phone_number: (206) 684-8888
+  phone_number: (206) 684-8808
   email: council@seattle.gov
   website: https://www.seattle.gov/council/members/alexis-mercedes-rinck
-  start_date: '2022-01-01'
+  start_date: ''
   end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rinck_300.jpg
+  cdn_image: ''
   state: wa
   place: Seattle
-  counties:
-  - King
+  sources:
+  - https://www.seattle.gov/council
+  - https://www.seattle.gov/council/members
+  - https://www.seattle.gov/elected-officials
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Alexis Mercedes Rinck
+  roles: []
+  divisions: []
+  phone_number: (206) 684-8808
+  email: AlexisMercedes.Rinck@seattle.gov
+  website: ''
+  start_date: ''
+  end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rinck_300.jpg
+  cdn_image: ''
+  state: wa
+  place: Seattle
   sources:
   - https://www.seattle.gov/council/members
-  - https://www.seattle.gov/council
-  - https://www.seattle.gov/council/members/bob-kettle
-  - https://www.seattle.gov/council/members/find-your-district-and-councilmembers
-  - https://www.seattle.gov/council/members/mark-solomon
-  - https://www.seattle.gov/council/members/alexis-mercedes-rinck
-  - https://www.seattle.gov/elected-officials
-  - https://www.seattle.gov/council/members/sara-nelson
-  - https://www.seattle.gov/council/members/rob-saka
-  - https://www.seattle.gov/council/members/maritza-rivera
-  - https://www.seattle.gov/council/members/joy-hollingsworth
-  - https://www.seattle.gov/council/members/alexis-mercedes-rinck/about-alexis
-  - https://www.seattle.gov/council/members/debora-juarez
-  - https://www.seattle.gov/council/members/dan-strauss
-  - https://www.seattle.gov/council/members/maritza-rivera/about-maritza
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Alexis Mercedes Rinck
+  roles: []
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: https://www.seattle.gov/x152135.xml
+  start_date: ''
+  end_date: ''
+  image: ''
   cdn_image: ''
-  updated_at: '2025-09-21T04:52:34+00:00'
+  state: wa
+  place: Seattle
+  sources:
+  - https://www.seattle.gov/elected-officials
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Alexis Mercedes Rinck
+  roles: []
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: ''
+  end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rinck_300.jpg?crc=4212344221
+  cdn_image: ''
+  state: wa
+  place: Seattle
+  sources:
+  - https://www.seattle.gov/council/members
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Dan Strauss
+  roles: []
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: ''
+  end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Members/Strauss/Struass-2022-headshot_square.jpg?crc=4212344221
+  cdn_image: ''
+  state: wa
+  place: Seattle
+  sources:
+  - https://www.seattle.gov/council/members
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Debora Juarez
+  roles: []
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: ''
+  end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/juarez_300.jpg?crc=4212344221
+  cdn_image: ''
+  state: wa
+  place: Seattle
+  sources:
+  - https://www.seattle.gov/council/members
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Joy Hollingsworth
+  roles: []
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: ''
+  end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/hollingsworth_300.jpg?crc=4212344221
+  cdn_image: ''
+  state: wa
+  place: Seattle
+  sources:
+  - https://www.seattle.gov/council/members
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Maritza Rivera
+  roles: []
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: ''
+  end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rivera_300.jpg?crc=4212344221
+  cdn_image: ''
+  state: wa
+  place: Seattle
+  sources:
+  - https://www.seattle.gov/council/members
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Mark Solomon
+  roles: []
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: ''
+  end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Members/Solomon/mark-solomon.jpg?crc=4212344221
+  cdn_image: ''
+  state: wa
+  place: Seattle
+  sources:
+  - https://www.seattle.gov/council/members
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Rob Saka
+  roles: []
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: ''
+  end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/saka_300.jpg?crc=4212344221
+  cdn_image: ''
+  state: wa
+  place: Seattle
+  sources:
+  - https://www.seattle.gov/council/members
+  updated_at: '2025-09-23T18:40:47+00:00'
+- name: Robert Kettle
+  roles: []
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: ''
+  start_date: ''
+  end_date: ''
+  image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/kettle_300.jpg?crc=4212344221
+  cdn_image: ''
+  state: wa
+  place: Seattle
+  sources:
+  - https://www.seattle.gov/council/members
+  updated_at: '2025-09-23T18:40:47+00:00'
