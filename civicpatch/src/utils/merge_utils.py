@@ -16,6 +16,12 @@ def normalize_name(name: str) -> str:
     parsed_name = HumanName(name)
     return f"{parsed_name.first} {parsed_name.last}".strip()
 
+def same_name(record1: LLMPerson, record2: LLMPerson) -> bool:
+    """
+    Check if two records have the same normalized name.
+    """
+    return normalize_name(record1.name) == normalize_name(record2.name)
+
 def first_name(name: str) -> str:
     """
     Extract the first name from a full name using nameparser.

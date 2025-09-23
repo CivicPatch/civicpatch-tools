@@ -252,8 +252,8 @@ def merge_group_across_llms(group: List[Person], government_type: str, state, pl
 
     return Person(
         name=canonical_name,
-        roles=people_utils.normalize_roles(government_type, roles),
-        divisions=people_utils.normalize_divisions(divisions),
+        roles=roles,
+        divisions=divisions,
         image=image_counter.most_common(1)[0][0] if image_counter else "",
         cdn_image="",
         email=email_counter.most_common(1)[0][0] if email_counter else "",
