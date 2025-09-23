@@ -92,22 +92,12 @@ def merge_field(records: List[LLMPerson], field_name: str) -> str:
 
 
 def merge_roles(records: List[LLMPerson], government_type: str) -> List[str]:
-    """
-    Collect roles from all records, but only include those that can be normalized
-    using the role alias map. This ensures we only keep roles that match our 
-    expected set of roles for the given government type.
-    """
-    role_alias_map = config_utils.get_role_alias_map(government_type)
-    seen = set()
-    unique_roles = []
+    unique_roles = set()
     for record in records:
         for role in record.roles:
-            if role and role.lower() in role_alias_map:  # Only process roles found in map
-                normalized_role = role_alias_map[role.lower()]
-                if normalized_role not in seen:
-                    seen.add(normalized_role)
-                    unique_roles.append(normalized_role)
-    return unique_roles
+            if role:
+                unique_roles.add(role)
+    return list(unique_roles)
 
 def merge_divisions(records: List[LLMPerson]) -> List[str]:
     """

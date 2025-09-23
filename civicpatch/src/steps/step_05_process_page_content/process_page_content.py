@@ -193,7 +193,7 @@ def calculate_progress(
             for role in person.roles
         ]
         
-        has_target_role = target_role is None or target_role.lower() in all_roles
+        has_target_role = target_role is None or target_role == "" or target_role.lower() in all_roles
         if has_target_role:
             target_role_found_with_an_llm.append(llm)
 

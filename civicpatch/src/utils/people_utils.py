@@ -84,6 +84,31 @@ def normalize_remaining_text(text: str) -> str:
     # Otherwise return original text
     return text
 
+def normalize_roles(government_type: str, roles: List[str]) -> List[str]:
+    """
+    Normalize roles using configured aliases.
+    """
+    if not roles:
+        return []
+
+    role_aliases = config_utils.get_role_alias_map(government_type)
+    seen = set()
+
+    for role in roles:
+        role = str(role).strip()
+        if not role:
+            continue
+            
+        # Normalize using alias map
+        normalized_role = role_aliases.get(role.lower(), role).strip()
+        
+        if normalized_role and normalized_role not in seen:
+            seen.add(normalized_role)
+        else:
+            seen.add(role)
+
+    return list(seen)
+
 def normalize_divisions(divisions: List[str]) -> List[str]:
     """
     Normalize divisions using configured aliases.
