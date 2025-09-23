@@ -9,6 +9,8 @@ from schemas import PipelineContext, Person, MergeRecordsAcrossLLMsStep
 def generate_review_comment(pipeline_context: PipelineContext, people: List[Person]) -> str:
     # Get data from MERGE_RECORDS_ACROSS_LLMS step
     merge_step: MergeRecordsAcrossLLMsStep = pipeline_context.steps.get("MERGE_RECORDS_ACROSS_LLMS", {})
+    merge_step = MergeRecordsAcrossLLMsStep.model_validate(merge_step)
+
     agreement_score = merge_step.agreement_score
     disagreements_by_person = merge_step.disagreements  # Now a Dict[str, List[FieldComparison]]
     validation_issues = merge_step.validation_issues
