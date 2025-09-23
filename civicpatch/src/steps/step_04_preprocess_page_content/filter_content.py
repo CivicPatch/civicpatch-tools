@@ -14,6 +14,15 @@ def count_nodes(node: Tag):
             count += count_nodes(child)
     return count
 
+def has_relevant_content(text: str, government_type) -> bool:
+    """Check if text contains any relevant content including emails and phones."""
+    if not text.strip():
+        return False
+    
+    people, dates, emails, phones, keywords = entity_extraction.extract_data(text, government_type)
+    # Include emails and phones in relevance check
+    return any([people, emails, phones, keywords])
+
 def filter_content(input_html: str, government_type, progress_log_interval: int = 10) -> str:
     soup = BeautifulSoup(input_html, "html.parser")
     total_nodes = count_nodes(soup)
@@ -53,7 +62,7 @@ def filter_node_content(node: Tag, state, government_type):
         table_text = " ".join(cell.get_text(strip=True) for cell in node.find_all(["td", "th"]))
         if table_text.strip():
             people, dates, emails, phones, keywords = entity_extraction.extract_data(table_text, government_type)
-            if any([people, keywords]):  # Keep the table only if it contains relevant content
+            if any([people, keywords]):  # Keep original logic - only check people and keywords for tables
                 # Mark this table to keep ALL its content
                 node._keep_table = True
                 return  # Keep the entire table structure intact
@@ -84,8 +93,7 @@ def filter_node_content(node: Tag, state, government_type):
         
         # For other http links, check content relevance
         if href.startswith("http") and link_text:
-            link_people, _, _, _, link_keywords = entity_extraction.extract_data(link_text, government_type)
-            if link_people or link_keywords:
+            if has_relevant_content(link_text, government_type):  # Use the fixed function
                 return
         
         # If link is not relevant, replace with just the text content
@@ -99,8 +107,7 @@ def filter_node_content(node: Tag, state, government_type):
     if node and node.name:
         node_text = node.get_text(strip=True)
         if node_text:
-            text_people, _, _, _, text_keywords = entity_extraction.extract_data(node_text, government_type)
-            if text_people or text_keywords:
+            if has_relevant_content(node_text, government_type):  # Use the fixed function
                 return  # Keep nodes with relevant content
     
     # Handle specific structural elements more carefully
@@ -108,8 +115,7 @@ def filter_node_content(node: Tag, state, government_type):
         # Check if this element or its children contain relevant content
         descendant_text = node.get_text(strip=True)
         if descendant_text:
-            desc_people, _, _, _, desc_keywords = entity_extraction.extract_data(descendant_text, government_type)
-            if desc_people or desc_keywords:
+            if has_relevant_content(descendant_text, government_type):  # Use the fixed function
                 return  # Keep structural elements that contain relevant content
         
         # If no relevant content, unwrap instead of removing completely

@@ -1,5 +1,5 @@
 from typing import List, Dict, TypedDict, Any
-from utils import config_utils, data_utils
+from utils import config_utils, data_utils, people_utils
 from schemas import Person, PipelineStatus, PipelineContext, MissingPerson, FieldComparison
 from collections import Counter
 from datetime import datetime, timezone
@@ -75,7 +75,7 @@ def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
             missing_people.append(MissingPerson(name=canonical_name, missing_from_llms=missing_sources, found_in_llms=sources_with_person))
 
         # Merge Person objects into a single Person object
-        merged_person = merge_people_across_llms(canonical_name, grouped_people_by_llm)
+        merged_person = merge_people_across_llms(government_type, canonical_name, grouped_people_by_llm)
         merged_person.state = state
         merged_person.place = place
         merged_person.counties = counties
@@ -252,7 +252,7 @@ def sort_people(people: List[Person], government_type: str) -> List[Person]:
 
     return sorted(people, key=sort_key)
 
-def merge_people_across_llms(canonical_name: str, people_by_llm: Dict[str, List[Person]]) -> Person:
+def merge_people_across_llms(government_type: str, canonical_name: str, people_by_llm: Dict[str, List[Person]]) -> Person:
     """
     Merge a list of Person objects grouped by source into a single Person object.
     Only include roles and divisions that appear in more than one source.
@@ -281,8 +281,8 @@ def merge_people_across_llms(canonical_name: str, people_by_llm: Dict[str, List[
 
     return Person(
         name=canonical_name,
-        roles=[format_role(role) for role in roles],
-        divisions=[format_division(div) for div in divisions],
+        roles=people_utils.normalize_roles(government_type, roles),
+        divisions=divisions,
         image=image_counter.most_common(1)[0][0] if image_counter else "",
         cdn_image="",
         email=email_counter.most_common(1)[0][0] if email_counter else "",
@@ -293,18 +293,6 @@ def merge_people_across_llms(canonical_name: str, people_by_llm: Dict[str, List[
         sources=sources,
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )
-
-def format_role(role: str) -> str:
-    """
-    Format a role string to have each word capitalized.
-    """
-    return " ".join(word.capitalize() for word in role.split())
-
-def format_division(division: str) -> str:
-    """
-    Format a division string to have each word capitalized.
-    """
-    return " ".join(word.capitalize() for word in division.split())
 
 def calculate_agreement_score(people_by_llm: Dict[str, List[Person]]) -> float:
     """

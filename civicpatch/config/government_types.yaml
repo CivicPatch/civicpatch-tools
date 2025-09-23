@@ -54,6 +54,7 @@ government_types:
         - meet
         - about
   mayor_council:
+    head_of_government: mayor
     roles:
       - role: mayor
       - role: mayor pro tempore
