@@ -1,4 +1,4 @@
-Seattle City Council - Council | seattle.gov
+Find Your District and Councilmembers - Council | seattle.gov
 
 
 
@@ -266,130 +266,16 @@ Cancel
   Read the latest Council new releases and updates+ Press Kit
     Get high resolution photo downloads in the Seattle City Council press kit
 
-The Seattle Channel's 24/7 stream features live Council meetings and a range of other award-winning programs.
-Watch Council Live
+Find Your District and Councilmembers
+=====================================
 
-[![six binders, each with a single letter on its binding which all together spells "budget"](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/LEG_Budget_310x160.jpg "six binders, each with a single letter on its binding which all together spells \"budget\"")
+Open the
+[Find Your District and Councilmembers Map](https://maps.seattle.gov/find-your-district)
+to learn which councilmembers represent any Seattle address.
 
-City Council's Budget Basics
+To use the map:
 
-Understand the budget process and when and how you can make your voice heard in the process.](https://www.seattle.gov/council/topics/city-council-budget-basics "City Council Budget Basics")
-
-[![police officers smiling on a sunny day](https://www.seattle.gov/images//images/Council/Issues/0_Card%20Images/Public-Safety_310x160.png "police officers smiling on a sunny day")
-
-Focus on Public Safety
-
-The new City Council has prioritized legislation that addresses public safety needs throughout the Seattle community.](https://www.seattle.gov/council/topics/councils-focus-on-public-safety "Council's Focus on Public Safety")
-
-2025 Comprehensive PlanA roadmap for where and how Seattle will grow and invest in our communities over the next 20 years and beyond.
-Protecting our SeattleSeattle is committed to protecting its people, especially those most impacted by recent federal policy changes.
-
-1
-/4
-
-Contact all Councilmembers by emailing
-[council@seattle.gov](mailto:council@seattle.gov "Email council@seattle.gov")
-. You can also
-[get email updates](https://www.seattle.gov/council/news-and-media/newsletter-signup "Get Email Updates")
-.
-
-[Find Your District and Councilmembers](https://maps.seattle.gov/find-your-district)
-
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
-
-Rob Saka
-
-Councilmember
-District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
-
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
-
-Mark Solomon
-
-Councilmember
-District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
-
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
-
-Joy Hollingsworth
-
-Councilmember
-District 3](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
-
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
-
-Maritza Rivera
-
-Councilmember
-District 4](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
-
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
-
-Debora Juarez
-
-Councilmember
-District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
-
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
-
-Dan Strauss
-
-Councilmember
-District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
-
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
-
-Bob Kettle
-
-Councilmember
-District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
-
-Alexis Mercedes RinckCouncilmemberPosition 8
-
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
-
-Sara Nelson
-
-Council President
-Position 9](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
-
-See all Councilmembers
-
-Attend a council meeting
-View our calendar
-Comment at a public meeting
-Tips on giving public comment
-Sign up for agendas
-
-Agenda: Call to Order; Approval of the Agenda; Public Comment; Appointments and reappointments; CB 121055: relating to the Multifamily Housing Property Tax Exemption Program; Adjournment.
-
-[Agenda: Approval of the Minutes; President's Report; Signing of Letters and Proclamations; Preview of City Council Actions, Council and Regional Committees; Executive Session I, II, and III on Pendi[...]](https://www.seattlechannel.org/video.asp?ID=2012563 "Council Briefing 9/22/25")
-
-Council Connection Blog RSS Feed
-
-9/23
-
-[City Council approves ‘Roots to Roofs’ bonus pilot program](https://council.seattle.gov/2025/09/23/city-council-approves-roots-to-roofs-bonus-pilot-program/)
-
-Legislation promotes creation of more community-led affordable housing across Seattle Today, the City Council voted unanimously to approve the ‘Roots to Roofs’ bonus pilot program, also known as Council Bill 121011. The bill, sponsored by [...]
-
-9/23
-
-[City Council approves District Project Fund](https://council.seattle.gov/2025/09/23/city-council-approves-district-project-fund/)
-
-Aimed at creating significant traffic safety improvements at the district level Today, the Seattle City Council voted to approve new legislation that puts into place the District Project Fund, establishing that transportation program funding [...]
-
-9/23
-Council approves new e-cargo bike program for deliveries
-
-Incentivizes businesses to explore bike deliveries, boosting efficiencies and reducing carbon emissions Today, the City Council passed first-in-the-nation legislation (CB 121040), creating a brand new e-cargo bike program in Seattle. The bill [...]
-
-Boards and CommissionsOpportunities to serve on over 70 boards and commissions.
-City ClerkLearn about the City Clerk and get legislation resources.
-Find It Fix It AppReport non-urgent requests such as clogged storm drains, traffic signal issues, and streetlight outage.
-Get InvolvedFind ways to volunteer, donate, and have a say on city issues.
-1
-/4
+* Click or tap the search box and enter an address or choose "Use current location"
 
 City Council
 ------------

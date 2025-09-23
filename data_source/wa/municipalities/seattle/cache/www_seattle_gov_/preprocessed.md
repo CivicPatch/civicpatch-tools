@@ -1,4 +1,5 @@
-Elected Officials | seattle.gov
+Seattle.gov Home
+
 
 
 
@@ -172,34 +173,6 @@ Cancel
 
 
 
-* + Elected Officials
-    - Elected Officials Page Cards
-      * Council Members (Legislative)
-        + [Rob Saka](https://www.seattle.gov/x152133.xml "Main Menu Mobile - Council Members (Legislative) Rob Saka")
-        + [Mark Solomon](https://www.seattle.gov/x152136.xml "Main Menu Mobile - Council Members (Legislative) Mark Solomon")
-        + [Joy Hollingsworth](https://www.seattle.gov/x152139.xml "Main Menu Mobile - Council Members (Legislative) Joy Hollingsworth")
-        + [Maritza Rivera](https://www.seattle.gov/x152138.xml "Main Menu Mobile - Council Members (Legislative) Maritza Rivera")
-        + [Debora Juarez](https://www.seattle.gov/x178555.xml "Main Menu Mobile - Council Members (Legislative) Debora Juarez")
-        + [Dan Strauss](https://www.seattle.gov/x152140.xml "Main Menu Mobile - Council Members (Legislative) Dan Strauss")
-        + [Bob Kettle](https://www.seattle.gov/x152134.xml "Main Menu Mobile - Council Members (Legislative) Bob Kettle")
-        + [Alexis Mercedes Rinck](https://www.seattle.gov/x152135.xml "Main Menu Mobile - Council Members (Legislative) Alexis Mercedes Rinck")
-        + [Sara Nelson](https://www.seattle.gov/x152137.xml "Main Menu Mobile - Council Members (Legislative) Sara Nelson")
-      * Law
-        + [Ann Davison](https://www.seattle.gov/x152142.xml "Main Menu Mobile - Law Ann Davison")
-      * Judicial
-        + [Faye Chess](https://www.seattle.gov/x152145.xml "Main Menu Mobile - Judicial Faye Chess")
-        + [Andrea Chin](https://www.seattle.gov/x152146.xml "Main Menu Mobile - Judicial Andrea Chin")
-        + [Anita Crawford-Willis](https://www.seattle.gov/x152147.xml "Main Menu Mobile - Judicial Anita Crawford-Willis")
-        + [Willie Gregory](https://www.seattle.gov/x152144.xml "Main Menu Mobile - Judicial Willie Gregory")
-        + [Catherine McDowall](https://www.seattle.gov/x152148.xml "Main Menu Mobile - Judicial Catherine McDowall")
-        + [Damon Shadid](https://www.seattle.gov/x152149.xml "Main Menu Mobile - Judicial Damon Shadid")
-        + [Pooja Vaddadi](https://www.seattle.gov/x153163.xml "Main Menu Mobile - Judicial Pooja Vaddadi")
-  + Events
-    - [Seattle Citywide Event Calendar Policy and Disclaimer](https://www.seattle.gov/event-calendar/policy-and-disclaimer "Main Menu Mobile - Events Seattle Citywide Event Calendar Policy and Disclaimer")
-    - [Help with Citywide Event Calendar](https://www.seattle.gov/event-calendar/help "Main Menu Mobile - Events Help with Citywide Event Calendar")
-
-
-
 * [City Council Topics](https://www.seattle.gov/council/topics)
 
 Know your rights with programs for immigrants and refugees.
@@ -223,111 +196,102 @@ View public funding opportunities for community artists.
 
 Learn about parking options, tips, and payment methods.
 
-[![Mayor](https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg)
+City of Seattle Official Website
+Register for Fall Recreation ProgramsSeattle community centers offer activities and events for the whole family, including fitness rooms, tot gyms, basketball, and more.Browse in-person and virtual programs
+Safe Routes to School ExpandedNew safety initiatives include upgrades near every public school.Learn about the projects in your neighborhood
+2025 Home Fair Date AnnouncedMark your calendar for November 8th
+Pay Utility Bill
+Pay My Ticket
+Adopt a Pet
+Building Permits
+Police Information & Data
 
-Bruce Harrell
+<
+News Releases
+Blog Posts
 
-Mayor](https://www.seattle.gov/mayor "Mayor Home Page")
+[Statement from Mayor Bruce Harrell on Immigration Enforcement Advertisements
 
-[![Rob Saka](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg)
+Seattle – Today, Mayor Bruce Harrell made the following s ...
 
-Rob Saka
+Posted Sep. 23](https://harrell.seattle.gov/2025/09/23/statement-from-mayor-bruce-harrell-on-immigration-enforcement-advertisements/ "Statement from Mayor Bruce Harrell on Immigration Enforcement Advertisements")
 
-Councilmember
-District 1](https://www.seattle.gov/council/members/rob-saka "Rob Saka")
+[Councilmember Strauss kicks off budget deliberations with focus on working families
 
-[![Seattle Council Member Mark Solomon](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png)
+The Seattle City Council’s budget process is now under ...
 
-Mark Solomon
+Posted Sep. 23](https://council.seattle.gov/2025/09/23/councilmember-strauss-kicks-off-budget-deliberations-with-focus-on-working-families/ "Councilmember Strauss kicks off budget deliberations with focus on working families")
 
-Councilmember
-District 2](https://www.seattle.gov/council/members/mark-solomon "Mark Solomon")
+[Mayor Harrell Announces 2026 Budget Proposal with Focus on Affordability, Public Safety, Home ...
 
-[![Joy Hollingsworth](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg)
+Mayor proposes 2026 budget that makes record investments ...
 
-Joy Hollingsworth
+Posted Sep. 23](https://harrell.seattle.gov/2025/09/23/mayor-harrell-announces-2026-budget-proposal-with-focus-on-affordability-public-safety-homelessness-and-protecting-local-priorities-from-federal-threats/ "Mayor Harrell Announces 2026 Budget Proposal with Focus on Affordability, Public Safety, Homelessness, and Protecting Local Priorities from Federal Threats ")
 
-Councilmember
-District 3](https://www.seattle.gov/council/members/joy-hollingsworth "Joy Hollingsworth")
+1
+/3
 
-[![Maritza Rivera](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg)
+1
+/
 
-Maritza Rivera
+Subscribe to Newsletters
+View all News Releases
 
-Councilmember
-District 4](https://www.seattle.gov/council/members/maritza-rivera "Maritza Rivera")
+Human Services issues RFP to invest in community safetyThe City of Seattle Human Services Department announced t ...Posted Sep. 23
 
-[![Debora Juarez](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg)
+[Councilmember Kettle: Ongoing ICE operations endanger public safety progress
 
-Debora Juarez
+Today, Councilmember Bob Kettle (District 7) released ...
 
-Councilmember
-District 5](https://www.seattle.gov/council/members/debora-juarez "Debora Juarez")
+Posted Sep. 23](https://council.seattle.gov/2025/09/23/councilmember-kettle-ongoing-ice-operations-endanger-public-safety-progress/ "Councilmember Kettle: Ongoing ICE operations endanger public safety progress")
 
-[![Dan Strauss](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg)
+[Seattle Parks and Recreation Awards Contract for Paving Projects
 
-Dan Strauss
+Seattle Parks and Recreation’s (SPR) is contracting with ...
 
-Councilmember
-District 6](https://www.seattle.gov/council/members/dan-strauss "Dan Strauss")
+Posted Sep. 23](https://parkways.seattle.gov/2025/09/23/seattle-parks-and-recreation-awards-contract-for-paving-projects-2/ "Seattle Parks and Recreation Awards Contract for Paving Projects")
 
-[![Bob Kettle](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg)
+1
+/3
 
-Bob Kettle
+1
+/
 
-Councilmember
-District 7](https://www.seattle.gov/council/members/bob-kettle "Bob Kettle")
+[Office of the Mayor](https://harrell.seattle.gov//)
 
-Alexis Mercedes RinckCouncilmemberPosition 8
+Front Porch (Neighborhoods)
+SPD Blotter (Police)
+Parkways (Parks & Recreation)
+Fireline (Fire Department)
 
-[![Sara Nelson](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg)
+737,000+residents in Seattle as of 2020View the Demographics
+45+ billiongallons of treated drinking water per yearLearn About Water Quality
 
-Sara Nelson
+[485+ parks
+managed by Seattle Parks and Recreation
+Find a Park](https://www.seattle.gov/parks/allparks "Find a Park")
 
-Council President
-Position 9](https://www.seattle.gov/council/members/sara-nelson "Sara Nelson")
+5,000+ animalscared for annually by Seattle Animal ShelterVisit an Animal Shelter
 
-Meet the Council
+[![](https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg)
 
-[![Ann Davison](https://www.seattle.gov/images//images/Departments/CityAttorney/SeattleHome/AnnDavidson_CircleImage.jpg)
+Mayor Bruce Harrell](https://www.seattle.gov/mayor "Mayor")
 
-Ann Davison
+[![Seattle City Council group](https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/CouncilHeadShots_154x154_2025_Apr.jpg)
 
-City Attorney](https://www.seattle.gov/cityattorney "Ann Davison")
+City Council](https://www.seattle.gov/council "Council")
 
-[![Anita Crawford-Willis](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAnitaCrawford-Willis_circle.jpg)
+[![](https://www.seattle.gov/images//images/Departments/CityAttorney/SeattleHome/AnnDavidson_CircleImage.jpg)
 
-Anita Crawford-Willis
+City Attorney Ann Davison](https://www.seattle.gov/cityattorney "City Attorney")
 
-Presiding Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-anita-crawford-willis "Anita Crawford-Willis")
+Seattle Municipal Court
 
-[![Dan Shadid](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeDamonShadid_circle.jpg)
+Elected Officials
 
-Damon Shadid
+Sign up for Alert Seattle so we can communicate with you during emergencies. You can opt in to receive free alerts from the City via text message, email, voice message or social media. Alert Seattle is the official emergency notification system used by the City of Seattle.
 
-Assistant Presiding Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-damon-shadid "Damon Shadid")
-
-[![Faye Chess](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeFayeRChess_circle.jpg)
-
-Faye Chess
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-faye-chess "Faye Chess")
-
-[![Andrea Chin](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeAndreaChin_circle.jpg)
-
-Andrea Chin
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-andrea-chin "Andrea Chin")
-
-[![Willie Gregory](https://www.seattle.gov/images//images/Departments/Court/Homepage/JudgeWillieGregory_circle.jpg)
-
-Willie Gregory
-
-Judge](https://www.seattle.gov/courts/about/seattle-municipal-court-judges/honorable-willie-gregory "Willie Gregory")
-
-Catherine McDowallJudge
-Pooja VaddadiJudge
-Seattle Municipal CourtGeneral Information
+Sign Up For Alert Seattle
 
 Contact Us
 ----------
