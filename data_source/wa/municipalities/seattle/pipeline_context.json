@@ -1,5 +1,5 @@
 {
-    "request_id": "aaaaa",
+    "request_id": "ddddddd",
     "state": "wa",
     "geoid": "5363000",
     "links": [
@@ -2082,8 +2082,8 @@
                     {
                         "name": "Sara Nelson",
                         "roles": [
-                            "Council President",
-                            "Council Member"
+                            "Council Member",
+                            "Council President"
                         ],
                         "divisions": [
                             "Position 9"
@@ -2559,8 +2559,8 @@
                     {
                         "name": "Sara Nelson",
                         "roles": [
-                            "Council President",
-                            "Council Member"
+                            "Council Member",
+                            "Council President"
                         ],
                         "divisions": [
                             "Position 9"
@@ -2626,13 +2626,13 @@
                     "sources": [
                         "https://www.seattle.gov/elected-officials"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:39:39+00:00"
                 },
                 {
                     "name": "Sara Nelson",
                     "roles": [
-                        "Council President",
-                        "Council Member"
+                        "Council Member",
+                        "Council President"
                     ],
                     "divisions": [
                         "Position 9"
@@ -2647,11 +2647,11 @@
                     "state": "wa",
                     "place": "Seattle",
                     "sources": [
-                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/council/members"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:39:39+00:00"
                 },
                 {
                     "name": "Rob Saka",
@@ -2671,11 +2671,11 @@
                     "state": "wa",
                     "place": "Seattle",
                     "sources": [
-                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/council/members"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:39:39+00:00"
                 },
                 {
                     "name": "Mark Solomon",
@@ -2695,11 +2695,11 @@
                     "state": "wa",
                     "place": "Seattle",
                     "sources": [
-                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/council/members"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:39:39+00:00"
                 },
                 {
                     "name": "Joy Hollingsworth",
@@ -2719,11 +2719,11 @@
                     "state": "wa",
                     "place": "Seattle",
                     "sources": [
-                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/council/members"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:39:39+00:00"
                 },
                 {
                     "name": "Maritza Rivera",
@@ -2743,11 +2743,11 @@
                     "state": "wa",
                     "place": "Seattle",
                     "sources": [
-                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/council/members"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:39:39+00:00"
                 },
                 {
                     "name": "Debora Juarez",
@@ -2767,11 +2767,11 @@
                     "state": "wa",
                     "place": "Seattle",
                     "sources": [
-                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/council/members"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:39:39+00:00"
                 },
                 {
                     "name": "Dan Strauss",
@@ -2791,11 +2791,11 @@
                     "state": "wa",
                     "place": "Seattle",
                     "sources": [
-                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/council/members"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:39:39+00:00"
                 },
                 {
                     "name": "Bob Kettle",
@@ -2815,11 +2815,11 @@
                     "state": "wa",
                     "place": "Seattle",
                     "sources": [
-                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/council/members"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:39:39+00:00"
                 },
                 {
                     "name": "Alexis Mercedes Rinck",
@@ -2839,14 +2839,14 @@
                     "state": "wa",
                     "place": "Seattle",
                     "sources": [
-                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/council",
                         "https://www.seattle.gov/council/members"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:39:39+00:00"
                 }
             ],
-            "agreement_score": 92.86,
+            "agreement_score": 100.0,
             "disagreements": {
                 "Bruce Harrell": [
                     {
@@ -2857,7 +2857,7 @@
                             "openai": "(empty)",
                             "together_ai": "Seattle"
                         },
-                        "disagreement_score": 1.0
+                        "disagreement_score": 0.0
                     }
                 ]
             },
@@ -2870,8 +2870,8 @@
         "MAYBE_SEND_TO_GITHUB": {
             "status": "completed",
             "response_status_code": 200,
-            "response_text": "{\"filename\":\"request_aaaaa_wa_5363000.zip\",\"status\":\"uploaded\",\"zip_url\":\"https://crudder.c9ae2b352766fe3e6f7dbee61bcd4c7c.r2.cloudflarestorage.com/request_aaaaa_wa_5363000.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=83c1bf330c0ac3dc3e457dc295867d5f%2F20250923%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250923T210508Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=ae831282e99e1315c5703e8c60d1863ab8d4c6808c0a3c1f7158e9e79c8aafe6\",\"metadata\":{\"state\":\"wa\",\"geoid\":\"5363000\",\"municipality_name\":\"Seattle\",\"request_id\":\"aaaaa\"}}"
+            "response_text": "{\"filename\":\"request_ccccccc_wa_5363000.zip\",\"status\":\"uploaded\",\"zip_url\":\"https://crudder.c9ae2b352766fe3e6f7dbee61bcd4c7c.r2.cloudflarestorage.com/request_ccccccc_wa_5363000.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=83c1bf330c0ac3dc3e457dc295867d5f%2F20250924%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250924T002810Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=fa102972d8312251b12654a55efdd61b1daba89d445c2bee07201ed7857a7ccd\",\"metadata\":{\"state\":\"wa\",\"geoid\":\"5363000\",\"municipality_name\":\"Seattle\",\"request_id\":\"ccccccc\"}}"
         }
     },
-    "pipeline_duration_seconds": 1.8395986557006836
+    "pipeline_duration_seconds": 3.6463165283203125
 }
