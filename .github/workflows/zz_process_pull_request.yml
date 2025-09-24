@@ -110,12 +110,11 @@ jobs:
       - name: Commit image updates
         if: ${{ inputs.upload_images == true }} 
         env:
+          GITHUB_USERNAME: civic-patch-pipeline-bot
           GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
         run: |
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-
           # Configure git
-          git config --global user.name "civic-patch-pipeline-bot"
+          git config --global user.name "$GITHUB_USERNAME"
           git config --global user.email "civicpatch-tools@civicpatch.org"
 
           # Commit changes if any images were updated
