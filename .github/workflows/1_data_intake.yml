@@ -38,7 +38,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       pr_number: ${{ steps.create-pr.outputs.pr_number }}
-      head_sha: ${{ steps.create-pr.outputs.head_sha }}
       head_ref: ${{ steps.extract_branch.outputs.branch_name }}
       municipality_path: ${{ steps.create-pr.outputs.municipality-path }}
     steps:
@@ -92,9 +91,6 @@ jobs:
 
           echo ${{ github.actor }}
 
-          head_sha=$(git rev-parse HEAD)
-          echo "head_sha=$head_sha" >> $GITHUB_OUTPUT
-
           github_pull_request_url=$(gh pr create \
             --title "Data intake for ${{ github.event.inputs.state }} - ${{ github.event.inputs.municipality_name }} by ${{ github.event.inputs.user_email }}" \
             --body "Automated data intake for request ID: ${{ github.event.inputs.request_id }}. Please review the data before merging." \
@@ -111,7 +107,6 @@ jobs:
     uses: ./.github/workflows/zz_process_pull_request.yml
     with:
       pr_number: ${{ fromJson(needs.data-intake.outputs.pr_number) }}
-      head_sha: ${{ needs.data-intake.outputs.head_sha }}
       head_ref: ${{ needs.data-intake.outputs.head_ref }}
       municipality_path: ${{ github.event.inputs.municipality_path }}
       upload_images: true
