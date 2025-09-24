@@ -59,6 +59,13 @@ jobs:
           app-id: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
           private-key: ${{ secrets.GH_APP_BOT_PIPELINE_PRIVATE_KEY }}
 
+      # Use this next step for git commits
+      - name: Get GitHub App User ID
+        id: get-user-id
+        run: echo "user-id=$(gh api "/users/${{ steps.generate-pipeline-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
+
       - name: Unzip data into root project directory
         run: |
           unzip -o /tmp/payload.zip -d .
@@ -77,13 +84,12 @@ jobs:
       - name: Create a PR
         id: create-pr
         env:
-          GITHUB_USERNAME: civic-patch-pipeline-bot
-          GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
           SERVER_URL: ${{ github.event.inputs.server_url }}
           USER_EMAIL: ${{ github.event.inputs.user_email }}
         run: |
-          git config --global user.name "$GITHUB_USERNAME"
-          git config --global user.email "civicpatch-tools@civicpatch.org"
+          git config --global user.name '${{ steps.generate-pipeline-token.outputs.app-slug }}[bot]'
+          git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.generate-pipeline-token.outputs.app-slug }}[bot]@users.noreply.github.com'
+
           git checkout -B ${{ steps.extract_branch.outputs.branch_name }}
           git add .
           git commit -m "Add municipal officials for ${{ github.event.inputs.state }} - ${{ github.event.inputs.geoid }} by ${{ github.event.inputs.user_email }}"
@@ -101,9 +107,6 @@ jobs:
   
   process-pull-request:
     needs: data-intake
-    permissions:
-      contents: write
-      pull-requests: write
     uses: ./.github/workflows/zz_process_pull_request.yml
     with:
       pr_number: ${{ fromJson(needs.data-intake.outputs.pr_number) }}
