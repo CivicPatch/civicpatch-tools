@@ -8,7 +8,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/MayorHarrell/Home/bruce_harrell_headshot.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/municipalities/seattle/195b414e2edf.png
   state: wa
   place: Seattle
   sources:
@@ -27,7 +27,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_nelson_circle2.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/municipalities/seattle/86f9f0ee78ca.png
   state: wa
   place: Seattle
   sources:
@@ -48,7 +48,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_saka_circle.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/municipalities/seattle/44109d69c9ec.png
   state: wa
   place: Seattle
   sources:
@@ -69,7 +69,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_Solomon_circle2.png
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/municipalities/seattle/cc032e2da344.png
   state: wa
   place: Seattle
   sources:
@@ -90,7 +90,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_hollingsworth_circle.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/municipalities/seattle/3fffe111ac1a.png
   state: wa
   place: Seattle
   sources:
@@ -111,7 +111,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_rivera_circle.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/municipalities/seattle/6f719fad59e2.png
   state: wa
   place: Seattle
   sources:
@@ -132,7 +132,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_juarez_154x154.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/municipalities/seattle/1eb061401e8f.png
   state: wa
   place: Seattle
   sources:
@@ -153,7 +153,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_struass_circle.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/municipalities/seattle/bcee73743e70.png
   state: wa
   place: Seattle
   sources:
@@ -174,7 +174,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Citywide%20Circle%20Headshots/council_kettle_circle.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/municipalities/seattle/f580e51d678b.png
   state: wa
   place: Seattle
   sources:
@@ -195,7 +195,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rinck_300.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/municipalities/seattle/99ad0841d929.png
   state: wa
   place: Seattle
   sources:
