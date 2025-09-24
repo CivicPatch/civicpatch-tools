@@ -110,7 +110,7 @@ jobs:
       - name: Commit image updates
         if: ${{ inputs.upload_images == true }} 
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ steps.generate-pipeline-token.outputs.token }}
         run: |
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
 
