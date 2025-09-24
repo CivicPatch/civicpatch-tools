@@ -893,23 +893,23 @@ Latest News and Updates
 [News Releases](javascript:void(0); "News Releases tab")
 [Blog Posts](javascript:void(0); "Blog Posts tab")
 
-[Statement from Mayor Bruce Harrell on Immigration Enforcement Advertisements
+[City Council approves Roots to Roofs bonus pilot program
 
-Seattle – Today, Mayor Bruce Harrell made the following s ...
+Legislation promotes creation of more community-led af ...
 
- Posted Sep. 23](https://harrell.seattle.gov/2025/09/23/statement-from-mayor-bruce-harrell-on-immigration-enforcement-advertisements/ "Statement from Mayor Bruce Harrell on Immigration Enforcement Advertisements")
+ Posted Sep. 23](https://council.seattle.gov/2025/09/23/city-council-approves-roots-to-roofs-bonus-pilot-program/ "City Council approves Roots to Roofs bonus pilot program")
 
-[Councilmember Strauss kicks off budget deliberations with focus on working families
+[City Council approves District Project Fund
 
-The Seattle City Council’s budget process is now under ...
+Aimed at creating significant traffic safety improveme ...
 
- Posted Sep. 23](https://council.seattle.gov/2025/09/23/councilmember-strauss-kicks-off-budget-deliberations-with-focus-on-working-families/ "Councilmember Strauss kicks off budget deliberations with focus on working families")
+ Posted Sep. 23](https://council.seattle.gov/2025/09/23/city-council-approves-district-project-fund/ "City Council approves District Project Fund")
 
-[Mayor Harrell Announces 2026 Budget Proposal with Focus on Affordability, Public Safety, Home ...
+[Council approves new e-cargo bike program for deliveries
 
-Mayor proposes 2026 budget that makes record investments ...
+Incentivizes businesses to explore bike deliveries, bo ...
 
- Posted Sep. 23](https://harrell.seattle.gov/2025/09/23/mayor-harrell-announces-2026-budget-proposal-with-focus-on-affordability-public-safety-homelessness-and-protecting-local-priorities-from-federal-threats/ "Mayor Harrell Announces 2026 Budget Proposal with Focus on Affordability, Public Safety, Homelessness, and Protecting Local Priorities from Federal Threats ")
+ Posted Sep. 23](https://council.seattle.gov/2025/09/23/council-approves-new-e-cargo-bike-program-for-deliveries/ "Council approves new e-cargo bike program for deliveries")
 
 1/3
 
@@ -923,23 +923,23 @@ Mayor proposes 2026 budget that makes record investments ...
 
 [View all News Releases](https://news.seattle.gov/)
 
-[Human Services issues RFP to invest in community safety
+[City Council approves Roots to Roofs bonus pilot program
 
-The City of Seattle Human Services Department announced t ...
+Legislation promotes creation of more community-led af ...
 
- Posted Sep. 23](https://humaninterests.seattle.gov/2025/09/23/human-services-issues-rfp-to-invest-in-community-safety/ "Human Services issues RFP to invest in community safety")
+ Posted Sep. 23](https://council.seattle.gov/2025/09/23/city-council-approves-roots-to-roofs-bonus-pilot-program/ "City Council approves Roots to Roofs bonus pilot program")
 
-[Councilmember Kettle: Ongoing ICE operations endanger public safety progress
+[City Council approves District Project Fund
 
-Today, Councilmember Bob Kettle (District 7) released ...
+Aimed at creating significant traffic safety improveme ...
 
- Posted Sep. 23](https://council.seattle.gov/2025/09/23/councilmember-kettle-ongoing-ice-operations-endanger-public-safety-progress/ "Councilmember Kettle: Ongoing ICE operations endanger public safety progress")
+ Posted Sep. 23](https://council.seattle.gov/2025/09/23/city-council-approves-district-project-fund/ "City Council approves District Project Fund")
 
-[Seattle Parks and Recreation Awards Contract for Paving Projects
+[Council approves new e-cargo bike program for deliveries
 
-Seattle Parks and Recreation’s (SPR) is contracting with ...
+Incentivizes businesses to explore bike deliveries, bo ...
 
- Posted Sep. 23](https://parkways.seattle.gov/2025/09/23/seattle-parks-and-recreation-awards-contract-for-paving-projects-2/ "Seattle Parks and Recreation Awards Contract for Paving Projects")
+ Posted Sep. 23](https://council.seattle.gov/2025/09/23/council-approves-new-e-cargo-bike-program-for-deliveries/ "Council approves new e-cargo bike program for deliveries")
 
 1/3
 
