@@ -210,23 +210,19 @@ Police Information & Data
 News Releases
 Blog Posts
 
-[Statement from Mayor Bruce Harrell on Immigration Enforcement Advertisements
+[City Council approves Roots to Roofs bonus pilot program
 
-Seattle – Today, Mayor Bruce Harrell made the following s ...
+Legislation promotes creation of more community-led af ...
 
-Posted Sep. 23](https://harrell.seattle.gov/2025/09/23/statement-from-mayor-bruce-harrell-on-immigration-enforcement-advertisements/ "Statement from Mayor Bruce Harrell on Immigration Enforcement Advertisements")
+Posted Sep. 23](https://council.seattle.gov/2025/09/23/city-council-approves-roots-to-roofs-bonus-pilot-program/ "City Council approves Roots to Roofs bonus pilot program")
 
-[Councilmember Strauss kicks off budget deliberations with focus on working families
+[City Council approves District Project Fund
 
-The Seattle City Council’s budget process is now under ...
+Aimed at creating significant traffic safety improveme ...
 
-Posted Sep. 23](https://council.seattle.gov/2025/09/23/councilmember-strauss-kicks-off-budget-deliberations-with-focus-on-working-families/ "Councilmember Strauss kicks off budget deliberations with focus on working families")
+Posted Sep. 23](https://council.seattle.gov/2025/09/23/city-council-approves-district-project-fund/ "City Council approves District Project Fund")
 
-[Mayor Harrell Announces 2026 Budget Proposal with Focus on Affordability, Public Safety, Home ...
-
-Mayor proposes 2026 budget that makes record investments ...
-
-Posted Sep. 23](https://harrell.seattle.gov/2025/09/23/mayor-harrell-announces-2026-budget-proposal-with-focus-on-affordability-public-safety-homelessness-and-protecting-local-priorities-from-federal-threats/ "Mayor Harrell Announces 2026 Budget Proposal with Focus on Affordability, Public Safety, Homelessness, and Protecting Local Priorities from Federal Threats ")
+Council approves new e-cargo bike program for deliveriesIncentivizes businesses to explore bike deliveries, bo ...Posted Sep. 23
 
 1
 /3
@@ -237,23 +233,11 @@ Posted Sep. 23](https://harrell.seattle.gov/2025/09/23/mayor-harrell-announces-2
 Subscribe to Newsletters
 View all News Releases
 
-Human Services issues RFP to invest in community safetyThe City of Seattle Human Services Department announced t ...Posted Sep. 23
-
-[Councilmember Kettle: Ongoing ICE operations endanger public safety progress
-
-Today, Councilmember Bob Kettle (District 7) released ...
-
-Posted Sep. 23](https://council.seattle.gov/2025/09/23/councilmember-kettle-ongoing-ice-operations-endanger-public-safety-progress/ "Councilmember Kettle: Ongoing ICE operations endanger public safety progress")
-
-[Seattle Parks and Recreation Awards Contract for Paving Projects
-
-Seattle Parks and Recreation’s (SPR) is contracting with ...
-
-Posted Sep. 23](https://parkways.seattle.gov/2025/09/23/seattle-parks-and-recreation-awards-contract-for-paving-projects-2/ "Seattle Parks and Recreation Awards Contract for Paving Projects")
-
+Police Recover Drugs, Cash, Gun During Arrest in First HillSeattle police arrested a 36-year-old man and recovered d ...Posted Sep. 24
+Fall 2025 Free Teen Swims!Dive into fun this fall! 💦 Improve your swimming skills, ...Posted Sep. 24
+Thousands of additional bus trips, millions of dollars invested, greater access to transit, a ...Blog stats: 1,000 words | 5-minute read  Summary:&nb ...Posted Sep. 24
 1
 /3
-
 1
 /
 
