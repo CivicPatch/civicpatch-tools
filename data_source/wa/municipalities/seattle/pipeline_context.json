@@ -1,5 +1,5 @@
 {
-    "request_id": "aaaaa",
+    "request_id": "ccccccc",
     "state": "wa",
     "geoid": "5363000",
     "links": [
@@ -2626,7 +2626,7 @@
                     "sources": [
                         "https://www.seattle.gov/elected-officials"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:28:09+00:00"
                 },
                 {
                     "name": "Sara Nelson",
@@ -2648,10 +2648,10 @@
                     "place": "Seattle",
                     "sources": [
                         "https://www.seattle.gov/council",
-                        "https://www.seattle.gov/elected-officials",
-                        "https://www.seattle.gov/council/members"
+                        "https://www.seattle.gov/council/members",
+                        "https://www.seattle.gov/elected-officials"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:28:09+00:00"
                 },
                 {
                     "name": "Rob Saka",
@@ -2672,10 +2672,10 @@
                     "place": "Seattle",
                     "sources": [
                         "https://www.seattle.gov/council",
-                        "https://www.seattle.gov/elected-officials",
-                        "https://www.seattle.gov/council/members"
+                        "https://www.seattle.gov/council/members",
+                        "https://www.seattle.gov/elected-officials"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:28:09+00:00"
                 },
                 {
                     "name": "Mark Solomon",
@@ -2696,10 +2696,10 @@
                     "place": "Seattle",
                     "sources": [
                         "https://www.seattle.gov/council",
-                        "https://www.seattle.gov/elected-officials",
-                        "https://www.seattle.gov/council/members"
+                        "https://www.seattle.gov/council/members",
+                        "https://www.seattle.gov/elected-officials"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:28:09+00:00"
                 },
                 {
                     "name": "Joy Hollingsworth",
@@ -2720,10 +2720,10 @@
                     "place": "Seattle",
                     "sources": [
                         "https://www.seattle.gov/council",
-                        "https://www.seattle.gov/elected-officials",
-                        "https://www.seattle.gov/council/members"
+                        "https://www.seattle.gov/council/members",
+                        "https://www.seattle.gov/elected-officials"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:28:09+00:00"
                 },
                 {
                     "name": "Maritza Rivera",
@@ -2744,10 +2744,10 @@
                     "place": "Seattle",
                     "sources": [
                         "https://www.seattle.gov/council",
-                        "https://www.seattle.gov/elected-officials",
-                        "https://www.seattle.gov/council/members"
+                        "https://www.seattle.gov/council/members",
+                        "https://www.seattle.gov/elected-officials"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:28:09+00:00"
                 },
                 {
                     "name": "Debora Juarez",
@@ -2768,10 +2768,10 @@
                     "place": "Seattle",
                     "sources": [
                         "https://www.seattle.gov/council",
-                        "https://www.seattle.gov/elected-officials",
-                        "https://www.seattle.gov/council/members"
+                        "https://www.seattle.gov/council/members",
+                        "https://www.seattle.gov/elected-officials"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:28:09+00:00"
                 },
                 {
                     "name": "Dan Strauss",
@@ -2792,10 +2792,10 @@
                     "place": "Seattle",
                     "sources": [
                         "https://www.seattle.gov/council",
-                        "https://www.seattle.gov/elected-officials",
-                        "https://www.seattle.gov/council/members"
+                        "https://www.seattle.gov/council/members",
+                        "https://www.seattle.gov/elected-officials"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:28:09+00:00"
                 },
                 {
                     "name": "Bob Kettle",
@@ -2816,10 +2816,10 @@
                     "place": "Seattle",
                     "sources": [
                         "https://www.seattle.gov/council",
-                        "https://www.seattle.gov/elected-officials",
-                        "https://www.seattle.gov/council/members"
+                        "https://www.seattle.gov/council/members",
+                        "https://www.seattle.gov/elected-officials"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:28:09+00:00"
                 },
                 {
                     "name": "Alexis Mercedes Rinck",
@@ -2840,13 +2840,13 @@
                     "place": "Seattle",
                     "sources": [
                         "https://www.seattle.gov/council",
-                        "https://www.seattle.gov/elected-officials",
-                        "https://www.seattle.gov/council/members"
+                        "https://www.seattle.gov/council/members",
+                        "https://www.seattle.gov/elected-officials"
                     ],
-                    "updated_at": "2025-09-23T23:21:21+00:00"
+                    "updated_at": "2025-09-24T00:28:09+00:00"
                 }
             ],
-            "agreement_score": 92.86,
+            "agreement_score": 100.0,
             "disagreements": {
                 "Bruce Harrell": [
                     {
@@ -2857,7 +2857,7 @@
                             "openai": "(empty)",
                             "together_ai": "Seattle"
                         },
-                        "disagreement_score": 1.0
+                        "disagreement_score": 0.0
                     }
                 ]
             },
