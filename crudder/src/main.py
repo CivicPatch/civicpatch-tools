@@ -148,7 +148,7 @@ async def github_intake(
     # Now you have access to the parameters
     print(f"Processing intake for {request_id} - {jurisdiction_id}")
 
-    zip_url = await upload_file_to_storage(
+    zip_file_url = await upload_file_to_storage(
         STORAGE_ENDPOINT,
         STORAGE_ACCESS_KEY_ID,
         STORAGE_SECRET_ACCESS_KEY,
@@ -164,13 +164,13 @@ async def github_intake(
         server_detail["server_url"], 
         request_id=request_id, 
         jurisdiction_id=jurisdiction_id,
-        zip_url=zip_url,
+        zip_file_url=zip_file_url,
     )
 
     return {
         "filename": file.filename, 
         "status": "uploaded", 
-        "zip_url": zip_url,
+        "zip_file_url": zip_file_url,
         "metadata": {
             "request_id": request_id,
             "jurisdiction_id": jurisdiction_id
