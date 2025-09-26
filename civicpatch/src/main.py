@@ -1,5 +1,5 @@
 import asyncio
-from fastapi import FastAPI, HTTPException, Depends, Request, BackgroundTasks
+from fastapi import FastAPI, HTTPException, Depends, Request, BackgroundTasks, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
@@ -10,6 +10,9 @@ from auth.token_handler import verify_github_action_data_query
 from utils import id_utils
 from schemas import PipelineRequest
 import os
+from utils import data_path_utils
+import json
+from fastapi.responses import RedirectResponse
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="src/static"), name="static")
@@ -52,34 +55,43 @@ async def search_endpoint(
     #     )
     # return {"jurisdiction_ids": jurisdiction_ids}
 
+def run_pipeline(request: PipelineRequest, background_tasks: BackgroundTasks):    
+    request_id = id_utils.make_request_id()
+    jurisdiction_id = id_utils.parse_jurisdiction_id(request.jurisdiction_id)
+    warnings: List[str] = []
+    errors: List[str] = []
+
+    if not jurisdiction_id:
+        errors.append(f"Invalid jurisdiction_id format: {request.jurisdiction_id}")
+    if not request.name:
+        warnings.append("Missing 'name' field: A name and legal status (e.g., 'Seattle city') is preferred for search purposess. Substituting with place name jurisdiction_id.")
+    if not request.url:
+        errors.append("Missing 'url' field")
+
+    if len(errors) == 0:
+        pipeline = Pipeline(pipeline_state=PipelineStatus.INIT)
+        background_tasks.add_task(pipeline.run_async, request_id, request)
+
+    return request_id, warnings, errors
+
 # Internal usage only
 @app.post("/api/pipeline")
 async def pipeline_endpoint(request: PipelineRequest, background_tasks: BackgroundTasks):
     """Run pipeline for a specific municipality"""
     try:
-        pipeline = Pipeline(pipeline_state=PipelineStatus.INIT)
-        request_id = id_utils.make_request_id()
-        jurisdiction_id = id_utils.parse_jurisdiction_id(request.jurisdiction_id)
-        warnings: List[str] = []
+        request_id, warnings, errors = run_pipeline(request, background_tasks)
 
-        if not jurisdiction_id:
+        if len(errors) > 0:
             raise HTTPException(
-                status_code=400,
-                detail=f"Invalid jurisdiction_id format: {request.jurisdiction_id}"
+                status_code = 400,
+                detail="; ".join(errors)
             )
-        
-        if not request.url:
-            raise HTTPException(
-                status_code=400,
-                detail="Missing 'url' field."
-            )
-        
-        if not request.name:
-            warnings.append("Missing 'name' field: A name and legal status (e.g., 'Seattle city') is preferred for search purposess. Substituting with place name jurisdiction_id.")
 
-        background_tasks.add_task(pipeline.run_async, request_id, request)
-        response = {"status": "started",
-                    "request_id": request_id}
+        response = {
+            "status": "started",
+            "request_id": request_id,
+        }
+
         if len(warnings) > 0:
             response["warnings"] = warnings
         return response
@@ -90,10 +102,52 @@ async def pipeline_endpoint(request: PipelineRequest, background_tasks: Backgrou
             detail=str(e)
         )
 
+@app.post("/pipelines/run", include_in_schema=False)
+async def pipelines_run(
+    background_tasks: BackgroundTasks,
+    jurisdiction_id: str = Form(...),
+    name: str = Form(...),
+    url: str = Form(...),
+):
+    request = PipelineRequest(jurisdiction_id=jurisdiction_id, name=name, url=url)
+    request_id, warnings, errors = run_pipeline(request, background_tasks)
+
+    try:
+        if len(errors) > 0:
+            # TODO: point to error template
+            raise HTTPException(
+                status_code = 400,
+                detail="; ".join(errors)
+            )
+
+        # Redirect to the pipeline request page for this jurisdiction
+        jurisdiction_id_url = id_utils.jurisdiction_id_to_git_branch(jurisdiction_id, request_id)
+        return RedirectResponse(
+            url=f"/pipelines/{jurisdiction_id_url}",
+            status_code=303
+        )
+
+    except Exception as e:
+        # TODO: point to error template
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
+
+@app.get("/pipelines/{jurisdiction_id_url}")
+async def pipeline_request_page(request: Request, jurisdiction_id_url: str):
+    jurisdiction_id = id_utils.git_branch_to_jurisdiction_id(jurisdiction_id_url)
+    pipeline_context_file = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
+    with open(pipeline_context_file, "r") as f:
+        pipeline_context = json.load(f) 
+
+    return templates.TemplateResponse("request.html", {
+        "request": request, 
+        "jurisdiction_id": jurisdiction_id, 
+        "pipeline_context": pipeline_context
+    })
+
 @app.get("/")
 async def index(request: Request):
     missing = [var for var in REQUIRED_ENV_VARS if not os.getenv(var)]
     return templates.TemplateResponse("index.html", {"request": request, "missing_env": missing})
-
-# TODO
-# @app.get("/api/pipeline/{request_id}")
