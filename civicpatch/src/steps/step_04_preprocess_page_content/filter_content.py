@@ -2,7 +2,6 @@ import time
 from bs4 import Tag, BeautifulSoup, NavigableString
 from steps.step_04_preprocess_page_content import entity_extraction
 
-IMAGE_EXTENSIONS_WHITELIST = ["png", "jpg", "jpeg", "webp"]
 BLACKLISTED_CLASSES = [ # Warning -- these need to be carefully curated
     "language" # Google Translate
 ]
@@ -76,10 +75,6 @@ def filter_node_content(node: Tag, state, government_type):
     
     # Handle images
     if node.name == "img":
-        src_clean = node.get("src", "").split("?")[0].lower()
-        if src_clean.endswith(tuple(IMAGE_EXTENSIONS_WHITELIST)):
-            return  # Keep whitelisted images
-        node.decompose()  # Remove non-whitelisted images
         return
     
     # Handle links - be more selective about which links to keep

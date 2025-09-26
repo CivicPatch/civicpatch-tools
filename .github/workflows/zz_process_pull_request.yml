@@ -11,8 +11,8 @@ on:
         description: 'The head ref (branch name) of the PR'
         required: true
         type: string
-      municipality_path:
-        description: 'The path to the municipality (e.g. wa/municipalities/seattle)'
+      jurisdiction_id:
+        description: 'The ocdid jurisdiction identifier for the municipality'
         required: true
         type: string
       upload_images:
@@ -105,11 +105,8 @@ jobs:
           STORAGE_SECRET_ACCESS_KEY: ${{ secrets.STORAGE_SECRET_ACCESS_KEY }}
         run: |
           cd civicpatch
-          mise upload-images-to-cdn --municipality-path "${{ inputs.municipality_path }}"
-          # Remove local images after upload
-          rm -rf data_source/${{ inputs.municipality_path }}/images 
-
-          # Commit changes
+          mise upload-images-to-cdn --jurisdiction-id "${{ inputs.jurisdiction_id }}"
+          # Remove local images after upload TODO
 
       - name: Commit image updates
         if: ${{ inputs.upload_images == true }} 
@@ -121,7 +118,7 @@ jobs:
           # Commit changes if any images were updated
           if [ -n "$(git status --porcelain)" ]; then
             git add .
-            git commit -m "Upload images to CDN for ${{ inputs.municipality_path }}"
+            git commit -m "Upload images to CDN for ${{ inputs.jurisdiction_id }}"
             git push -u origin ${{ inputs.head_ref }}
           fi
       
@@ -133,7 +130,7 @@ jobs:
           PR_NUMBER=${{ inputs.pr_number }}
           cd civicpatch
 
-          COMMENT=$(mise generate-data-comment --municipality-path ${{ inputs.municipality_path }} )
+          COMMENT=$(mise generate-data-comment --jurisdiction-id ${{ inputs.jurisdiction_id }} )
           gh pr comment $PR_NUMBER --edit-last --create-if-none --body "$COMMENT"
 
       - name: Create Approval/Disapproval Comment
@@ -143,7 +140,7 @@ jobs:
         run: |
           PR_NUMBER=${{ inputs.pr_number }}
           cd civicpatch
-          COMMENT=$(mise generate-review-comment --municipality-path ${{ inputs.municipality_path }} )
+          COMMENT=$(mise generate-review-comment --jurisdiction-id ${{ inputs.jurisdiction_id }} )
 
           if [ -n "$REJECTED_REASONS" ]; then
             gh pr review $PR_NUMBER --request-changes -b "$COMMENT"

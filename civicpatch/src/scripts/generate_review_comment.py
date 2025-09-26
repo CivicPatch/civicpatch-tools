@@ -5,6 +5,7 @@ import sys
 from collections import Counter
 from typing import List
 from schemas import PipelineContext, Person, MergeRecordsAcrossLLMsStep
+from utils import data_path_utils
 
 def generate_review_comment(pipeline_context: PipelineContext, people: List[Person]) -> str:
     # Get data from MERGE_RECORDS_ACROSS_LLMS step
@@ -113,14 +114,13 @@ def load_pipeline_context_from_json(filepath: str) -> PipelineContext:
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python generate_review_comment.py <file_path>")
+        print("Usage: python generate_review_comment.py <jurisdiction_id>")
         sys.exit(1)
     else:
-        municipality_path = sys.argv[1]
+        jurisdiction_id = sys.argv[1]
         # It should be defined in the dockerfile
-        PYTHONPATH = os.getenv("PYTHONPATH", "/app/src")
-        pipeline_context_file_path = os.path.join(PYTHONPATH, "..", "data_source", municipality_path, "pipeline_context.json")
-        people_file_path = os.path.join(PYTHONPATH, "..", "data", municipality_path, "people.yml")
+        pipeline_context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
+        people_file_path = data_path_utils.get_people_file_path(jurisdiction_id)
 
         pipeline_context = load_pipeline_context_from_json(pipeline_context_file_path)
         people = load_people_from_yaml(people_file_path)

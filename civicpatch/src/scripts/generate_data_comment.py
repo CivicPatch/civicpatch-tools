@@ -3,6 +3,7 @@ import yaml
 import sys
 from typing import List
 from schemas import Person
+from utils import data_path_utils
 
 def generate_data_comment(people: List[Person]) -> str:
     """
@@ -37,14 +38,13 @@ def load_people_from_yaml(filepath: str) -> List[Person]:
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python generate_data_comment.py <municipality_path>")
+        print("Usage: python generate_data_comment.py <jurisdiction_id>")
         sys.exit(1)
     
-    municipality_path = sys.argv[1]
+    jurisdiction_id = sys.argv[1]
     try:
         # It should be defined in the dockerfile
-        PYTHONPATH = os.getenv("PYTHONPATH", "/app/src")
-        people_path = os.path.join(PYTHONPATH, "..", "data", municipality_path, "people.yml")
+        people_path = data_path_utils.get_people_file_path(jurisdiction_id)
         people = load_people_from_yaml(people_path)
         markdown_table = generate_data_comment(people)
         print(markdown_table)

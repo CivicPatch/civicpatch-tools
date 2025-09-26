@@ -4,7 +4,6 @@ from services.brave_search import search as brave_search
 from utils.array_utils import interleave_arrays
 #from utils.log_utils import log_search_engine_call
 from utils.config_utils import search_keywords
-from schemas import MunicipalityContext
 
 from steps.step_02_search_links.crawl import crawl
 
@@ -18,18 +17,18 @@ SEARCH_SERVICES = {
 
 SearchEngineNames = list(SEARCH_SERVICES.keys())
 
-def search(search_engine: str, municipality_context: MunicipalityContext, search_query: str):
+def search(search_engine: str, municipality_name, municipality_website, search_query: str):
     """
     Perform a search using a specific search engine.
     """
     search_service = SEARCH_SERVICES[search_engine]
 
     print(f"Searching with {search_engine} for {search_query}")
-    keyword_with_type = f"{municipality_context.municipality_entry.type} {search_query}"
+    keyword_with_type = f"{municipality_name} {search_query}"
 
     results = search_service(
         search_query=keyword_with_type,
-        site_search=municipality_context.municipality_entry.website
+        site_search=municipality_website
     )
 
     if not results:

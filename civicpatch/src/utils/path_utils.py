@@ -32,10 +32,3 @@ def get_data_source_path():
 
     return data_source_path
 
-def get_municipalities_file_path(state):
-    """
-    Returns the file path for the municipalities JSON file based on the state.
-    """
-
-    data_source_dir = get_data_source_path()
-    return os.path.join(data_source_dir, state, 'municipalities.json')

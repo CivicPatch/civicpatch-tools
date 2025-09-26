@@ -6,7 +6,6 @@ from typing import List, Dict, Any
 # from langchain.text_splitter import MarkdownHeaderTextSplitter
 from utils.request_utils import with_retry
 from utils.log_utils import log_llm_cost
-from schemas import MunicipalityContext
 
 PROMPT_TOKENS=600
 OUTPUT_BUFFER=1500
@@ -120,7 +119,7 @@ MODELS_BY_TYPE = {
     },
 }
 
-def run_prompt(municipality_context: MunicipalityContext, prompt, content="", response_schema=None, model_type="STANDARD"):
+def run_prompt(jurisdiction_id: str, prompt, content="", response_schema=None, model_type="STANDARD"):
     """
     Run a prompt against Together AI's API using OpenAI-compatible interface
     """
@@ -157,7 +156,7 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, content="", re
         # Log token usage
         usage = completion.usage
         log_llm_cost(
-            municipality_context, 
+            jurisdiction_id, 
             "together_ai", 
             model, 
             usage.prompt_tokens,

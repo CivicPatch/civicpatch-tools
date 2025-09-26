@@ -11,8 +11,7 @@ from schemas import (
   ProcessPageContentStep,
   OtherNamesByCanonicalName
 )
-from utils import data_utils, merge_utils, data_path_utils, config_utils, url_utils
-from utils.data_utils import MunicipalityContext
+from utils import merge_utils, data_path_utils, config_utils, url_utils
 from typing import List, Any, Dict, Tuple
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
@@ -55,18 +54,18 @@ def process_page_content(
     """
     print(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process['url']}")
 
+    jurisdiction_id = context["jurisdiction_id"]
     government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
     people_hint = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["elected_officials"]
 
-    cache_path = data_path_utils.get_cache_path(context["state"], context["geoid"])
+    cache_path = data_path_utils.get_cache_path(jurisdiction_id)
     content_file_path = os.path.join(cache_path, page_to_process["folder_name"], "preprocessed.md")
     with open(content_file_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    municipality_context = data_utils.get_municipality_context(context["state"], context["geoid"])
     source_url = page_to_process["url"]
 
-    responses = process_with_llms(source_url, municipality_context, government_type, content, people_hint)
+    responses = process_with_llms(source_url, jurisdiction_id, government_type, content, people_hint)
 
     updated_processed_data: ProcessPageContentStep = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]
     if not isinstance(updated_processed_data, ProcessPageContentStep):
@@ -127,7 +126,7 @@ def update_records_by_llm(
 
 def process_with_llms(
     source_url: str,
-    municipality_context: MunicipalityContext,
+    jurisdiction_id: str,
     government_type: str,
     content: str,
     people_hint: List[Any]
@@ -139,8 +138,8 @@ def process_with_llms(
     for llm in LLMS:
         prompt = llm["prompt"].municipality_officials_prompt(government_type, people_hint)
         response = llm["service"].run_prompt(
-            municipality_context, 
-            prompt, 
+            jurisdiction_id,
+            prompt,
             response_schema=PeopleArrayLLMResponseSchema,
             content=content
         )

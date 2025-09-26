@@ -38,16 +38,14 @@ def last_name(name: str) -> str:
 
 def has_name_overlap(record1: LLMPerson, record2: LLMPerson) -> bool:
     """
-    Check if two records have overlapping first or last names.
+    Check if two records have the same last names.
     """
     parsed_name1 = HumanName(record1.name)
     parsed_name2 = HumanName(record2.name)
-    firstname1 = parsed_name1.first
-    firstname2 = parsed_name2.first
     surname1 = parsed_name1.last
     surname2 = parsed_name2.last
 
-    return bool(set([firstname1, surname1]) & set([firstname2, surname2]))
+    return surname1 == surname2
 
 
 def are_names_similar(first_name1: str, first_name2: str, threshold: int = NAME_SIMILARITY_THRESHOLD) -> bool:

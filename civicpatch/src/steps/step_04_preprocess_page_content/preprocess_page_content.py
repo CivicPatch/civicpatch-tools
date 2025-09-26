@@ -10,10 +10,10 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
     Preprocess the scraped HTML content of a page.
     """
     print(f"Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}: {page_to_preprocess['url']}")
+    jurisdiction_id = context["jurisdiction_id"]
 
     time_start = time.time()
-
-    cache_path = data_path_utils.get_cache_path(context["state"], context["geoid"])
+    cache_path = data_path_utils.get_cache_path(jurisdiction_id)
     output_html_file_path = os.path.join(cache_path, page_to_preprocess["folder_name"], "original.html")
 
     with open(output_html_file_path, "r", encoding="utf-8") as f:

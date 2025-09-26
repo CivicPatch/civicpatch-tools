@@ -3,7 +3,6 @@ MAX_RETRIES = 3
 from utils.scrape_utils import scrape
 from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
 from utils.array_utils import interleave_arrays
-from utils.data_utils import get_municipality_context, MunicipalityContext
 from utils.config_utils import search_keywords
 from utils.request_utils import with_retry
 from .utils import search, SearchEngineNames
@@ -17,7 +16,8 @@ def search_links(context: PipelineContext):
     search_link_pointer = context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_link_pointer"]
 
     # Load keyword term groups
-    municipality_context = get_municipality_context(context["state"], context["geoid"])
+    municipality_name = context["name"]
+    municipality_website = context["url"]
     government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
 
     keyword_term_groups = search_keywords(government_type)
@@ -33,7 +33,7 @@ def search_links(context: PipelineContext):
         urls_found = []
         for keyword_term in keyword_term_groups:
             print(f"Searching for keyword term: {keyword_term}")
-            urls_for_term = municipality_search(municipality_context, search_engine, keyword_term)
+            urls_for_term = municipality_search(municipality_name, municipality_website, search_engine, keyword_term)
             urls_found.append(urls_for_term)
         return urls_found
 
@@ -74,7 +74,7 @@ def search_links(context: PipelineContext):
         result["error"] = error_message
     return result
 
-def municipality_search(municipality_context: MunicipalityContext, search_engine, keyword_term: str):
+def municipality_search(municipality_name, municipality_website, search_engine, keyword_term: str):
     """
     Search for a single keyword term using multiple search engines with fallback logic.
     """
@@ -82,12 +82,13 @@ def municipality_search(municipality_context: MunicipalityContext, search_engine
     urls = []
 
     # Construct the search query
-    keyword_with_type = f"{municipality_context.municipality_entry.type} {query_keywords}"
+    keyword_with_type = f"{municipality_name} {query_keywords}"
 
     # Perform the search
     results = search(
         search_engine=search_engine,
-        municipality_context=municipality_context,
+        municipality_name=municipality_name,
+        municipality_website=municipality_website,
         search_query=keyword_with_type
     )
 

@@ -9,16 +9,17 @@ async def scrape_page(context: PipelineContext, link_to_scrape: Link):
     Scrape pages based on the links found in the previous search step.
     """
     print(f"Step 3: {PipelineStatus.SCRAPE_PAGE.value}, scraping {link_to_scrape['url']}")
+    jurisdiction_id = context["jurisdiction_id"]
 
     try:
-        image_directory = data_path_utils.get_images_path(context["state"], context["geoid"])
+        image_directory = data_path_utils.get_images_path(jurisdiction_id)
         html_content = await scrape_utils.scrape(link_to_scrape["url"], { "image_directory": image_directory })
 
         if html_content is None:
             raise ValueError("No HTML content retrieved")
 
         # Save html_content to file under data_source
-        cache_path = data_path_utils.get_cache_path(context["state"], context["geoid"])
+        cache_path = data_path_utils.get_cache_path(jurisdiction_id)
         folder_name = url_utils.format_url_to_folder(link_to_scrape["url"])
 
         page_path = os.path.join(cache_path, f"{folder_name}")

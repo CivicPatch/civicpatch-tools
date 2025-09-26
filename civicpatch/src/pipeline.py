@@ -1,7 +1,7 @@
 import os
 import asyncio
 import json
-from schemas import PipelineContext, PipelineStatus, LinkStatus, SearchEngineStatus, Link, Person
+from schemas import PipelineContext, PipelineRequest, PipelineStatus, LinkStatus, SearchEngineStatus, Link, Person 
 from typing import Dict, Any, List
 import yaml
 import time
@@ -71,20 +71,21 @@ class Pipeline:
         else:
             raise ValueError(f"Invalid pipeline state: {state}")
 
-    def save_context(self, state, geoid):
+    def save_context(self):
         """
         Save the current pipeline context to a file for persistence.
         """
-        context_file_path = data_path_utils.get_pipeline_context_file_path(state, geoid)
+        jurisdiction_id = self.context["jurisdiction_id"]
+        context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
         with open(context_file_path, "w") as f:
             json.dump(self.context, f, indent=4)
 
-    def load_context(self, request_id: str, state: str, geoid: str) -> PipelineContext:
+    def load_context(self, request_id: str, pipeline_request: PipelineRequest) -> PipelineContext:
         """
         Always create a new pipeline context and overwrite any existing file.
         """  
         # Ensure the directory exists
-        context_file_path = data_path_utils.get_pipeline_context_file_path(state, geoid)
+        context_file_path = data_path_utils.get_pipeline_context_file_path(pipeline_request.jurisdiction_id)
         os.makedirs(os.path.dirname(context_file_path), exist_ok=True)
 
         if os.path.exists(context_file_path):
@@ -98,8 +99,9 @@ class Pipeline:
 
         context: PipelineContext = {
             "request_id": request_id,
-            "state": state,
-            "geoid": geoid
+            "jurisdiction_id": pipeline_request.jurisdiction_id,
+            "name": pipeline_request.name,
+            "url": pipeline_request.url,
         }
 
         with open(context_file_path, "w") as f:
@@ -126,14 +128,11 @@ class Pipeline:
         """
         return [link for link in self.context["links"] if link["status"] == status.value]
     
-    def run(self, request_id, state, geoid):
-        asyncio.run(self.run_async(request_id, state, geoid))
-    
-    async def run_async(self, request_id, state, geoid):
+    async def run_async(self, request_id, pipeline_request: PipelineRequest):
         """
-        Main function to run the pipeline for a given state and geoid.
+        Main function to run the pipeline for a given jurisdiction id.
         """
-        self.context = self.load_context(request_id, state, geoid)
+        self.context = self.load_context(request_id, pipeline_request)
         process_config = config_utils.get_process()
 
         start_time = time.time()
@@ -236,12 +235,12 @@ class Pipeline:
                 self.state = PipelineStatus.DONE
 
             # Save the context after each step
-            self.save_context(state, geoid)
+            self.save_context()
 
         end_time = time.time()
         pipeline_duration = end_time - start_time
         self.context.update({"pipeline_duration_seconds": pipeline_duration})
-        self.save_context(state, geoid)
+        self.save_context()
         print(f"Pipeline completed successfully in {pipeline_duration:.2f} seconds.")
 
     def process_page_content_step(self):
@@ -267,11 +266,6 @@ class Pipeline:
         """
         Calculate the next state for the pipeline based on the current progress and processed count.
         """
-        next_pending_link = self.get_next_link(LinkStatus.PENDING)
-        if next_pending_link and next_pending_link["is_profile_page"] == True:
-            print("More pending links to scrape, continuing to scrape...", next_pending_link)
-            return PipelineStatus.SCRAPE_PAGE
-
         required_data = self.context["progress"]["required_data"]
         current_data = self.context["progress"]["current_data"]
         has_target_role = self.context["progress"].get("has_target_role", False)
@@ -285,20 +279,18 @@ class Pipeline:
             print(f"Max pages ({max_pages_with_required_data}) reached, moving to next step...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
-        print("Not enough data processed yet, collecting more data...")
+        print(f"Not enough data processed yet, collecting more data... {processed_count}/{max_pages_with_required_data}")
         return PipelineStatus.SCRAPE_PAGE
     
     def save_data(self, people: List[Person]):
         """
         Save the processed people data to a file.
         """
-        state = self.context["state"]
-        geoid = self.context["geoid"]
-        data_municipality_path = data_path_utils.get_data_municipality_path(state, geoid)
-        people_file_path = os.path.join(data_municipality_path, 'people.yml')
+        jurisdiction_id = self.context["jurisdiction_id"]
+        people_file_path = data_path_utils.get_people_file_path(jurisdiction_id)
 
         # Ensure the directory exists
-        os.makedirs(data_municipality_path, exist_ok=True)
+        os.makedirs(os.path.dirname(people_file_path), exist_ok=True)
 
         with open(people_file_path, "w") as f:
             yaml.dump([person for person in people], f, default_flow_style=False, sort_keys=False)

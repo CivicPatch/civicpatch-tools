@@ -30,7 +30,7 @@ Return JSON array of people with:
 - divisions: (Array) Strictly districts/wards. 
     Example: "Ward 1", "District 2"
 - image: (String|null) Photo URL (.jpg/.png)
-- website: (String|null) Profile/bio page URL
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
 - phone_number: (String|null) Contact number
 - email: (String|null) Email address
 - start_date: (String|null) YYYY[-MM[-DD]]

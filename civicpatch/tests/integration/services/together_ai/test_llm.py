@@ -5,7 +5,7 @@ import json
 import utils.llm_utils as llm_utils
 from services.together_ai.llm import run_prompt
 from services.together_ai.prompts import municipality_officials_prompt
-from schemas import PeopleArrayLLMResponseSchema, MunicipalityContext
+from schemas import PeopleArrayLLMResponseSchema
 
 def test_run_prompt_integration():
     """Integration test for run_prompt using actual environment variables and API."""
@@ -13,6 +13,8 @@ def test_run_prompt_integration():
     # Ensure the environment variable is set
     api_key = os.getenv("TOGETHER_AI_TOKEN")
     assert api_key, "TOGETHER_AI_TOKEN must be set in environment variables for integration testing."
+
+    jurisdiction_id = "ocd-jurisdiction/country:us/state:wa/place:spokane"
 
     # Load content from the fixture file
     current_dir = os.path.dirname(__file__)  # Get the directory of the current file
@@ -24,13 +26,6 @@ def test_run_prompt_integration():
     expected_path = os.path.join(current_dir, "../fixtures/spokane_with_people_expected.json")
     with open(expected_path, "r") as file:
         expected_result = json.load(file)
-
-    municipality_context: MunicipalityContext = MunicipalityContext(
-        state="wa",
-        municipality_entry={
-            "name": "Spokane",
-        }
-    )
 
     people_hint = [
                 {
@@ -91,14 +86,13 @@ def test_run_prompt_integration():
 
     start_time = time.time()
 
-    result = run_prompt(municipality_context, prompt, content=content, response_schema=PeopleArrayLLMResponseSchema)
+    result = run_prompt(jurisdiction_id, prompt, content=content, response_schema=PeopleArrayLLMResponseSchema)
     result = result.model_dump() 
 
     end_time = time.time()
 
     assert end_time - start_time < 60, "Prompt execution took too long."
 
-    #print("Result:")
     #print(json.dumps(result, indent=4))
     print("Finished in {:.2f} seconds".format(end_time - start_time))
     

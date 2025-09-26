@@ -10,7 +10,8 @@ import utils.url_utils as url_utils
 def cleanup(context: PipelineContext):
     # Remove files under data_source/cache and data_source/images
     print(f"Step 9: {PipelineStatus.CLEANUP.value}")
-    data_source_dir = get_data_source_municipality_path(context["state"], context["geoid"])
+    jurisdiction_id = context["jurisdiction_id"]
+    data_source_dir = get_data_source_municipality_path(jurisdiction_id)
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 

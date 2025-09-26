@@ -27,8 +27,9 @@ run = """
 curl -X POST http://localhost:8000/api/pipeline \
   -H "Content-Type: application/json" \
   -d '{
-    "state": "wa",
-    "geoid": "5363000"
+    "name": "Greensboro",
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+    "url": "https://www.greensboro-nc.gov"
   }'
 """
 
@@ -51,18 +52,38 @@ run = "docker compose -f ./docker-compose.development.yml run --rm civicpatch po
 [tasks.generate-data-comment]
 run = """
 docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
-  python src/scripts/generate_data_comment.py {{ option(name="municipality-path") }} 
+  python src/scripts/generate_data_comment.py {{ option(name="jurisdiction-id") }} 
 """
 
 [tasks.generate-review-comment]
 # Ex: /app/data/wa/municipalities/spokane/people.yml
 run = """
 docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
-  python src/scripts/generate_review_comment.py {{ option(name="municipality-path") }}
+  python src/scripts/generate_review_comment.py {{ option(name="jurisdiction-id") }}
 """
 
 [tasks.upload-images-to-cdn]
 run = """
 docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
-  python src/scripts/upload_images_to_cdn.py {{ option(name="municipality-path") }}
+  python src/scripts/upload_images_to_cdn.py {{ option(name="jurisdiction-id") }}
+"""
+
+[tasks.parse-jurisdiction-id]
+run = """
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+python -c "
+import sys
+from utils.id_utils import parse_jurisdiction_id, state_name
+jurisdiction_id = '{{ arg(name="jurisdiction_id") }}'
+key = '{{ arg(name="key") }}'
+
+parsed = parse_jurisdiction_id(jurisdiction_id)
+attr = getattr(parsed, key, None)
+if key == 'state':
+    attr = state_name(jurisdiction_id)
+else:
+  attr = attr.title()
+
+print(attr)
+"
 """
