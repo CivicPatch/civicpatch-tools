@@ -10,7 +10,7 @@ SERVICE = "crudder"  # The main service to push
 GITEA_API_URL = 'https://code.wizards.cafe/api/v1'
 GITEA_TOKEN = os.getenv('REMOTELAB_WORKFLOW_TOKEN')
 REPO_OWNER = 'witch'
-REPO_NAME = 'remotelab'
+REPO_NAME = 'spellbook'
 WORKFLOW_FILE = f'deploy-{SERVICE}.yml'
 
 def run(command, cwd=None, input=None):

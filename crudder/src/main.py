@@ -162,7 +162,9 @@ async def github_intake(
         GITHUB_WORKFLOW_TOKEN, 
         server_detail["user_email"], 
         server_detail["server_url"], 
-        zip_url
+        request_id=request_id, 
+        jurisdiction_id=jurisdiction_id,
+        zip_url=zip_url,
     )
 
     return {
