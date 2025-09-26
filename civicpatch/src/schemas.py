@@ -2,6 +2,12 @@ from typing import Dict, List, Optional, TypeAlias, Any, Callable, Union, NamedT
 from pydantic import BaseModel, field_validator
 from enum import Enum
 
+class JurisdictionId(BaseModel):
+    country: str
+    state: str
+    county: Optional[str] = None
+    place: str = None
+
 class SearchEngineStatus(Enum):
     NOT_STARTED = "not_started"
     PROCESSING = "processing"
@@ -45,19 +51,6 @@ class PipelineStatus(Enum):
     RETRY = "RETRY"
     DONE = "DONE"
 
-class MunicipalityEntry(BaseModel):
-    name: str
-    geoid: str
-    website: Optional[str] = None
-    counties: List[str] = None
-    type: str
-    government_type: str
-
-class MunicipalityContext(BaseModel):
-    state: str
-    geoid: str
-    municipality_entry: MunicipalityEntry
-
 class RawLLMPerson(BaseModel):
     name: str
     roles: List[str]
@@ -78,8 +71,7 @@ class PeopleArrayLLMResponseSchema(BaseModel):
 
 class Person(RawLLMPerson):
     cdn_image: str
-    state: str = ""
-    place: str = ""
+    jurisdiction_id: str
     sources: List[str] # List of source URLs where information was found
     updated_at: str
 
@@ -119,10 +111,17 @@ class MergeRecordsAcrossLLMsStep(BaseModel):
     missing_people: List[MissingPerson] = []  # Now properly typed with MissingPerson class
     validation_errors: List[str] = []
 
+class PipelineRequest(BaseModel):
+    name: str # Human-readable name -- typically this would include the lsad (ex: Naperville township)
+    jurisdiction_id: str # Format: ocd-jurisdiction/country:us/state:wa/place:seattle
+                         # OR ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville, for cousubs
+    url: str
+
 class PipelineContext(BaseModel):
-    state: str
-    geoid: str
     request_id: str
+    jurisdiction_id: str
+    name: str # Name of municipality + lsad (ex: Naperville township)
+    url: str # Municipality url. Without it we can't scrape anything.
     links: List[Link]  # TODO: move to SEARCH_LINKS
     names: Dict[str, List[str]]  # Canonical names to names found while scraping
     steps: Dict[str, Union[

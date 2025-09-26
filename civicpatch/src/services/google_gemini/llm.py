@@ -6,7 +6,6 @@ import json
 # from google import Gemini
 from utils.request_utils import with_retry
 from utils.log_utils import log_llm_cost
-from schemas import MunicipalityContext
 
 BASE_URI = "https://generativelanguage.googleapis.com/v1beta/models"
 DEFAULT_TIMEOUT = 180  # seconds
@@ -21,7 +20,7 @@ MODEL_FALLBACKS = [
 # Note: CANNOT get flash-lite to extract dates
 MAX_RETRIES = 5
 
-def run_prompt(municipality_context: MunicipalityContext, prompt, response_schema=None, content="", with_search=False):
+def run_prompt(jurisdiction_id: str, prompt, response_schema=None, content="", with_search=False):
     """
     Run a prompt against Google Gemini's API
     """
@@ -52,7 +51,7 @@ def run_prompt(municipality_context: MunicipalityContext, prompt, response_schem
             input_tokens_num = usage.prompt_token_count
             output_tokens_num = usage.candidates_token_count
 
-        log_llm_cost(municipality_context, "google_gemini", model, input_tokens_num, output_tokens_num, with_search=False)
+        log_llm_cost(jurisdiction_id, "google_gemini", model, input_tokens_num, output_tokens_num, with_search=False)
 
         return response
 

@@ -1,5 +1,6 @@
 #from schemas import People
 from typing import List, Dict
+import re
 import utils.config_utils as config_utils
 from schemas import Person
 
@@ -96,21 +97,27 @@ def normalize_roles(government_type: str, roles: List[str]) -> List[str]:
     seen = set()
 
     for role in roles:
-        role = str(role).strip()
-        if not role:
-            continue
-            
-        # Normalize using alias map
-        normalized_role = role_aliases.get(role.lower(), role).strip()
-        
-        if normalized_role and normalized_role not in seen:
-            seen.add(normalized_role)
-        else:
-            # Toss the role
+        role = str(role).strip().lower()
+
+        # 1. Exact match to a role key
+        if role in role_aliases:
+            seen.add(role)
             continue
 
-    formatted_roles = [r.title() for r in seen]
-    return formatted_roles
+        # 2. Exact match to an alias
+        for role_key, alias_roles in role_aliases.items():
+            if role in alias_roles:
+                seen.add(role_key)
+                break
+        else:
+            # 3. Whole phrase match (word boundaries) to a role key
+            for role_key in role_aliases:
+                pattern = r'\b' + re.escape(role_key) + r'\b'
+                if re.search(pattern, role):
+                    seen.add(role_key)
+                    break
+
+    return [r.title() for r in seen]
 
 def normalize_divisions(divisions: List[str]) -> List[str]:
     """

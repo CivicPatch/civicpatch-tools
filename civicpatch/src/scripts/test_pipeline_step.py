@@ -5,8 +5,7 @@ import os
 import json
 
 def test_pipeline_step():
-    state = "wa"
-    geoid = "5363000"
+    jurisdiction_id = "ocd_jurisdiction/country:us/state:nc/place:greensboro"
     pipeline_status = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
     # Note: need to generate a unique request id
     # if you are testing PR creation
@@ -16,7 +15,7 @@ def test_pipeline_step():
     pipeline.set_state(pipeline_status)
 
     # Update pipeline_context_path with request_id
-    pipeline_context_path = get_pipeline_context_file_path(state, geoid)
+    pipeline_context_path = get_pipeline_context_file_path(jurisdiction_id)
 
     with open(pipeline_context_path, "r") as f:
         context = json.load(f)
@@ -24,7 +23,7 @@ def test_pipeline_step():
     with open(pipeline_context_path, "w") as f:
         json.dump(context, f, indent=2)
 
-    pipeline.run(request_id, state, geoid) 
+    pipeline.run(request_id, jurisdiction_id)
 
 if __name__ == "__main__":
     test_pipeline_step()

@@ -1,27 +1,30 @@
 import os
 import boto3
 from botocore.client import Config
-from typing import BinaryIO, List
+from typing import BinaryIO
 import yaml
 from schemas import Person
 import posixpath
+from utils import data_path_utils, id_utils
 
 STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
 STORAGE_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY_ID")
 STORAGE_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_ACCESS_KEY")
 FRIENDLY_STORAGE_HOST = os.getenv("FRIENDLY_STORAGE_HOST", "cdn.civicpatch.org")
 
-def upload_images_to_cdn(municipality_path):
-    image_map_path = os.path.join("data_source", municipality_path, "images", "image_map.json")
-    people_path = os.path.join("data", municipality_path, "people.yml")
+def upload_images_to_cdn(jurisdiction_id: str):
+    jurisdiction_folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
+    image_path = data_path_utils.get_images_path(jurisdiction_id)
+    image_map_file_path = os.path.join(image_path, "image_map.json")
+    people_file_path = data_path_utils.get_people_file_path(jurisdiction_id)
 
-    with open(people_path) as f:
+    with open(people_file_path) as f:
         people = [Person(**person) for person in yaml.safe_load(f)]
-    with open(image_map_path) as f:
+    with open(image_map_file_path) as f:
         image_map = yaml.safe_load(f)
 
     # Remove existing images from CDN
-    dest_prefix_path = posixpath.normpath(posixpath.join("open-data", municipality_path))
+    dest_prefix_path = posixpath.normpath(posixpath.join("open-data", jurisdiction_folder_path))
 
     delete_files_with_prefix(
         bucket_name="civicpatch",
@@ -31,7 +34,7 @@ def upload_images_to_cdn(municipality_path):
     for person in people:
         if person.image and person.image in image_map:
             filename = image_map[person.image]
-            image_file_path = os.path.join("data_source", municipality_path, "images", filename)
+            image_file_path = os.path.join("data_source", jurisdiction_folder_path, "images", filename)
             if os.path.exists(image_file_path):
                 with open(image_file_path, 'rb') as img_file:
                     try:
@@ -51,7 +54,7 @@ def upload_images_to_cdn(municipality_path):
             print(f"No image mapping found for {person.name} or image is missing.")
 
     # Update people.yaml with CDN URLs
-    with open(people_path, 'w') as f:
+    with open(people_file_path, 'w') as f:
         yaml.dump([person.model_dump() for person in people], f, sort_keys=False)  
 
 def upload_file_to_storage(

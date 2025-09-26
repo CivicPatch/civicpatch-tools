@@ -10,6 +10,7 @@ def merge_records_within_llm(context: PipelineContext):
     """
     Consolidate records within each LLM to produce a unified list of Person objects.
     """
+    jurisdiction_id = context["jurisdiction_id"]
     records_by_llm: RecordsByLLM = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]["records_by_llm"]
     records_by_llm = { k: {name: [LLMPerson.model_validate(p) if isinstance(p, dict) else p for p in v] for name, v in people.items()} for k, people in records_by_llm.items() } if isinstance(records_by_llm, dict) else records_by_llm
     government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
@@ -27,7 +28,7 @@ def merge_records_within_llm(context: PipelineContext):
         groups_by_last_name = group_by_last_name(records)
 
         for llm_records_list in groups_by_last_name.values():
-            consolidated_people = merge_records(llm_records_list, government_type)
+            consolidated_people = merge_records(llm_records_list, jurisdiction_id)
             merged_people.extend(consolidated_people)
 
         people_by_llm[llm] = merged_people
@@ -82,7 +83,7 @@ def group_by_last_name(llm_people_list: List[LLMPerson]) -> Dict[str, List[LLMPe
         last_name_groups[last_name].append(person)
     return last_name_groups
 
-def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPerson], government_type: str) -> Person:
+def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPerson], jurisdiction_id: str) -> Person:
     """
     Merge a list of LLMPerson objects into a single Person object.
     Handles both Pydantic models and dictionary inputs.
@@ -116,6 +117,7 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
         start_date=start_date,
         end_date=end_date,
         sources=sources,
+        jurisdiction_id=jurisdiction_id,
         updated_at="",  # Placeholder for updated_at
     )
 
@@ -171,7 +173,7 @@ def merge_divisions(records: List[LLMPerson]) -> List[str]:
                 unique_divisions.add(division)
     return list(unique_divisions)
 
-def merge_records(llm_people_list: List[LLMPerson], government_type: str) -> List[Person]:
+def merge_records(llm_people_list: List[LLMPerson], jurisdiction_id: str) -> List[Person]:
     """
     Consolidate records within a single group of LLMPerson objects.
     Merge records that are weakly tied into unified Person objects.
@@ -199,6 +201,6 @@ def merge_records(llm_people_list: List[LLMPerson], government_type: str) -> Lis
                 visited.add(j)
 
         # Merge all records in the group into a single Person object
-        consolidated_groups.append(merge_llm_people_to_person(group[0].name, group, government_type))
+        consolidated_groups.append(merge_llm_people_to_person(group[0].name, group, jurisdiction_id))
 
     return consolidated_groups

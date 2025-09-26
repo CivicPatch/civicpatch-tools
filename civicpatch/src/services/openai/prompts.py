@@ -54,7 +54,7 @@ Output Field Definitions & Structure:
           only if specified (e.g., "Ward 1", "District 2").
 - phone_number: (String or null) Formatted phone number
 - email: (String or null) Email address (email@example.com)
-- website: (String or null) Website URL (http(s)://...)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
 - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
 - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
 

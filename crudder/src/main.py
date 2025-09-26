@@ -121,11 +121,8 @@ api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 async def github_intake(
     file: UploadFile,
     authorization: str = Security(api_key_header),  # Changed this line
-    state: str = Form(...),
-    geoid: str = Form(...),
-    municipality_path: str = Form(...),
-    municipality_name: str = Form(...),
-    request_id: str = Form(...)
+    request_id: str = Form(...),
+    jurisdiction_id: str = Form(...)
 ):
     if not authorization:
         raise HTTPException(status_code=401, detail="Missing Authorization header")
@@ -149,8 +146,8 @@ async def github_intake(
         raise HTTPException(status_code=400, detail="Invalid content type for zip file")
     
     # Now you have access to the parameters
-    print(f"Processing intake for {municipality_name} ({state}, {geoid})")
-    
+    print(f"Processing intake for {request_id} - {jurisdiction_id}")
+
     zip_url = await upload_file_to_storage(
         STORAGE_ENDPOINT,
         STORAGE_ACCESS_KEY_ID,
@@ -165,11 +162,6 @@ async def github_intake(
         GITHUB_WORKFLOW_TOKEN, 
         server_detail["user_email"], 
         server_detail["server_url"], 
-        request_id,
-        state, 
-        geoid,
-        municipality_path,
-        municipality_name,
         zip_url
     )
 
@@ -178,10 +170,8 @@ async def github_intake(
         "status": "uploaded", 
         "zip_url": zip_url,
         "metadata": {
-            "state": state,
-            "geoid": geoid,
-            "municipality_name": municipality_name,
-            "request_id": request_id
+            "request_id": request_id,
+            "jurisdiction_id": jurisdiction_id
         }
     }
 

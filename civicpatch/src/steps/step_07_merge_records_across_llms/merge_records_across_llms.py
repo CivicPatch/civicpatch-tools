@@ -1,6 +1,5 @@
-import json
-from typing import List, Dict, TypedDict, Any
-from utils import people_utils, merge_utils, data_utils
+from typing import List, Dict, Any
+from utils import people_utils, merge_utils
 from schemas import Person, PipelineStatus, PipelineContext, MissingPerson, FieldComparison, MergeRecordsAcrossLLMsStep
 from collections import Counter
 from datetime import datetime, timezone
@@ -22,15 +21,12 @@ def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
     """
     Merge records across all LLMs to produce a unified list of Person objects.
     """
+    jurisdiction_id = context["jurisdiction_id"]
 
     # Get people_by_llm from the previous step
     people_by_llm: Dict[str, List[Person]] = context["steps"][PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value]["people_by_llm"]
     people_by_llm = {k: [Person.model_validate(p) if isinstance(p, dict) else p for p in v] for k, v in people_by_llm.items()}
     government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
-    state = context["state"]
-    geoid = context["geoid"]
-    municipality_context = data_utils.get_municipality_context(state, geoid)
-    place = municipality_context.municipality_entry.name
 
     # Group records across LLMs based on weak ties and names
     groups_by_llm = group_records_across_llms(people_by_llm)
@@ -48,9 +44,13 @@ def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
         # Merge the group
         merged_person = merge_group_across_llms(
             [person for llm_people in grouped_people_by_llm.values() for person in llm_people],
-            state, 
-            place
+            jurisdiction_id
         )
+
+        # Skip person if no roles after merge
+        if len(merged_person.roles) == 0:
+            continue
+
         merged_people.append(merged_person)
         
         # Collect field-by-field disagreements for this person
@@ -223,7 +223,7 @@ def group_records_across_llms(people_by_llm: Dict[str, List[Person]]) -> List[Di
 
     return groups
 
-def merge_group_across_llms(group: List[Person], state, place) -> Person:
+def merge_group_across_llms(group: List[Person], jurisdiction_id: str) -> Person:
     """
     Merge a group of weakly tied Person objects into a single Person object.
     """
@@ -236,10 +236,6 @@ def merge_group_across_llms(group: List[Person], state, place) -> Person:
 
     # For single-value fields, take the most common non-empty value across all sources
     image_counter = Counter(person.image for person in group if person.image)
-    phone_counter = Counter(person.phone_number for person in group if person.phone_number)
-    website_counter = Counter(person.website for person in group if person.website)
-    start_date_counter = Counter(person.start_date for person in group if person.start_date)
-    end_date_counter = Counter(person.end_date for person in group if person.end_date)
     sources = set(
         ds
         for person in group
@@ -257,18 +253,17 @@ def merge_group_across_llms(group: List[Person], state, place) -> Person:
         divisions=divisions,
         image=image_counter.most_common(1)[0][0] if image_counter else "",
         cdn_image="",
-        email=merge_field([person.email for person in group]),
-        phone_number=merge_field([person.phone_number for person in group]),
-        website=merge_field([person.website for person in group]),
-        start_date=merge_field([person.start_date for person in group]),
-        end_date=merge_field([person.end_date for person in group]),
+        email=merge_field("email", [person.email for person in group]),
+        phone_number=merge_field("phone_number", [person.phone_number for person in group]),
+        website=merge_field("website", [person.website for person in group]),
+        start_date=merge_field("start_date", [person.start_date for person in group]),
+        end_date=merge_field("end_date", [person.end_date for person in group]),
         sources=sources,
-        state=state, 
-        place=place,
+        jurisdiction_id=jurisdiction_id,
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )
 
-def merge_field(values: List[str]) -> Any:
+def merge_field(field: str, values: List[str]) -> Any:
     """
     Merge a list of fields with the following criteria:
     - If all values are empty, return empty string
@@ -279,11 +274,16 @@ def merge_field(values: List[str]) -> Any:
     non_empty_values = [v for v in values if v]
     if not non_empty_values:
         return ""
-    
+
     value_counter = Counter(non_empty_values)
     most_common_value, count = value_counter.most_common(1)[0]
     if count < 2:
+        if field in ["website"]:
+            # For website, allow a single occurrence if it's a valid URL
+            if most_common_value.startswith("http://") or most_common_value.startswith("https://"):
+                return most_common_value
         return ""
+
     return most_common_value
 
 def values_match(value1, value2):
@@ -355,8 +355,6 @@ def calculate_overall_agreement_score(
     disagreement_weight = 0.5
     total_weight = sum(FIELD_WEIGHTS.get(field, 1.0) for field in FIELDS_TO_CHECK)
     disagreement = (total_disagreement / (total_weight * total_llms)) * disagreement_weight if total_weight > 0 else 0.0
-
-    print("Disagreement because", disagreement)
 
     # Calculate missing people penalty
     missing_penalty = 0.0

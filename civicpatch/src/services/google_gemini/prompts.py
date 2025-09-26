@@ -1,29 +1,27 @@
 from datetime import datetime
-from schemas import MunicipalityContext
+from utils import id_utils
 import utils.config_utils as config_utils
 
-def research_municipality_prompt(municipality_context: MunicipalityContext):
+def research_municipality_prompt(jurisdiction_id: str, municipality_name: str):
     """
     Generate a prompt for researching municipality information.
 
     Args:
-        state: State of the municipality.
-        municipality_entry: Dictionary containing municipality details (e.g., name, website).
+        jurisdiction_id: Identifier for the municipality.
+        municipality_name: Name of the municipality.
 
     Returns:
         A string containing the prompt.
     """
 
-    municipality_name = municipality_context.municipality_entry.name
-    state = municipality_context.state
-    website = municipality_context.municipality_entry.website
+    jurisdiction_id_parts = id_utils.parse_jurisdiction_id(jurisdiction_id)
+    state = jurisdiction_id_parts.state
     government_type_keys = "- " + "\n- ".join(list(config_utils.get_government_types().keys()))
 
     return f"""
     Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
 
     Municipality: {municipality_name}, {state}
-    Municipality Website: {website}
 
     Instructions:
 
@@ -100,7 +98,7 @@ def municipality_officials_prompt(government_type, people_hint):
     - divisions: (Array of strings) Specific district/ward names
     - phone_number: (String or null) Formatted phone number
     - email: (String or null) Email address
-    - website: (String or null) Website URL (http(s)://)
+    - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
     - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
     - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
 

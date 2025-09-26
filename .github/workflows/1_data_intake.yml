@@ -12,19 +12,10 @@ on:
         description: 'Email associated with your CivicPatch account'
         required: true
       request_id:
-        description: 'Unique request ID for this data intake (e.g. UUID)'
+        description: 'Unique request ID for this data intake'
         required: true
-      state:
-        description: 'State' 
-        required: true
-      municipality_path:
-        description: 'Municipality Path (e.g. <state>/municipalities/<municipality_name>)'
-        required: true
-      municipality_name:
-        description: 'Municipality Name'
-        required: true
-      geoid:
-        description: 'Geographic ID'
+      jurisdiction_id:
+        description: 'ocdid for the municipality'
         required: true
       zip_file_url:
         description: 'Presigned URL of the ZIP file containing YAML data'
@@ -47,6 +38,25 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull Prebuilt Docker Image
+        run: docker pull ghcr.io/civicpatch/civicpatch-slim:latest
+
+      - name: Set up mise
+        uses: jdx/mise-action@v3.2.0
+        with:
+          version: '2025.9.6'
+          cache: true
+          log_level: debug
+          working_directory: civicpatch # Doesn't seem to work?
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download ZIP file
         run: |
@@ -93,13 +103,13 @@ jobs:
 
           git checkout -B ${{ steps.extract_branch.outputs.branch_name }}
           git add .
-          git commit -m "Add municipal officials for ${{ github.event.inputs.state }} - ${{ github.event.inputs.geoid }} by ${{ github.event.inputs.user_email }}"
+          git commit -m "Add municipal officials for ${{ github.event.inputs.jurisdiction_id }} by ${{ github.event.inputs.user_email }}"
           git push -u origin ${{ steps.extract_branch.outputs.branch_name }} 
 
           echo ${{ github.actor }}
 
           github_pull_request_url=$(gh pr create \
-            --title "Data intake for ${{ github.event.inputs.state }} - ${{ github.event.inputs.municipality_name }} by ${{ github.event.inputs.user_email }}" \
+            --title "Data intake for ${{ github.event.inputs.jurisdiction_id }} by ${{ github.event.inputs.user_email }}" \
             --body "Automated data intake for request ID: ${{ github.event.inputs.request_id }}. Please review the data before merging." \
             --base main
           )
@@ -112,7 +122,7 @@ jobs:
     with:
       pr_number: ${{ fromJson(needs.data-intake.outputs.pr_number) }}
       head_ref: ${{ needs.data-intake.outputs.head_ref }}
-      municipality_path: ${{ github.event.inputs.municipality_path }}
+      jurisdiction_id: ${{ github.event.inputs.jurisdiction_id }}
       upload_images: true
     secrets:
       GH_APP_BOT_PIPELINE_APP_ID: ${{ secrets.GH_APP_BOT_PIPELINE_APP_ID }}
