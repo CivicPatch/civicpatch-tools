@@ -10,7 +10,7 @@ async def test_pipeline_step():
     pipeline_status = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
     # Note: need to generate a unique request id
     # if you are testing PR creation
-    request_id = "bbbbbbbbbbbbbb"
+    request_id = "ddddd"
 
     pipeline = Pipeline()
     pipeline.set_state(pipeline_status)
