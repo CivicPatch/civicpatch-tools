@@ -15,25 +15,48 @@ Data collected includes
 
 Roles and divisions are standardized via the rules listed under [./config](./config).
 
-## Development
-
-### Requirements
-
-- [mise](https://mise.jdx.dev/getting-started.html)
-- [docker](https://www.docker.com/products/docker-desktop/)
-
-## Setup
+## Setup (Run)
 
 ### Windows
 
-### MacOS/Linux
-
-1. Download [docker]()
+1. Download [docker](https://www.docker.com/products/docker-desktop/)
+  1.a Set up Docker with WSL Integration. Guide [here](https://docs.docker.com/desktop/features/wsl/)
+2. Copy the files from [civicpatch/examples/setup_project](./examples/setup_project/) onto your computer
 2. Set up the necessary environment variables under a new `civicpatch/.env` file.
    See [.env.example] for the necessary variables.
-   You may need further instructions/permissions to continue.
-3. Under the `civicpatch/` directory, run `docker compose up`. This will take a while if it's the first time.
-3. You're done. Open up a browser at `http://localhost:8000`
+   You will need to collaborate with the crudder maintainer to use the `CRUDDER_SHARED_TOKEN`.
+   See: [CRUDDER_SHARED_TOKEN](#crudder_shared_token)
+3. Under the `civicpatch` directory, run:
+  a. (with powershell), run: `docker compose pull ghcr.io/civicpatch/civicpatch:latest`
+    This may take a while.
+  b. (with powershell), run: `docker compose up`
+4. You're done. Open up a browser at `http://localhost:8000`
+
+### MacOS/Linux
+1. Download [docker](https://www.docker.com/products/docker-desktop/)
+2. Copy the files from [civicpatch/examples/setup_project](./examples/setup_project/) onto your computer
+2. Set up the necessary environment variables under a new `civicpatch/.env` file.
+   See [.env.example] for the necessary variables.
+   You will need to collaborate with the crudder maintainer to use the `CRUDDER_SHARED_TOKEN`.
+   See: [CRUDDER_SHARED_TOKEN](#crudder_shared_token)
+3. Under the `civicpatch` directory, run:
+  a. (with a terminal), run: `docker compose pull ghcr.io/civicpatch/civicpatch:latest`
+    This may take a while.
+  b. (with terminal), run: `docker compose up`
+4. You're done. Open up a browser at `http://localhost:8000`
+
+## Setup (Development)
+
+### MacOS/Linux
+1. Download [docker](https://www.docker.com/products/docker-desktop/)
+2. Download [mise](https://mise.jdx.dev/getting-started.html)
+  2.a. Run mise install under the `civicpatch` directory
+3. Set up the necessary environment variables under a new `civicpatch/.env` file.
+   See [.env.example] for the necessary variables.
+   You will need to collaborate with the crudder maintainer to use the `CRUDDER_SHARED_TOKEN`.
+   See: [CRUDDER_SHARED_TOKEN](#crudder_shared_token)
+4. Under the `civicpatch/` directory, run `mise dev`. This will take a while if it's the first time.
+5. You're done. Open up a browser at `http://localhost:8000`
 
 ### Commands
 
@@ -53,42 +76,15 @@ mise container poetry add <package>
 docker compose build
 ```
 
-## Environment Setup
-
-Add a .env file with the following variables:
-
-```dotenv
-BRAVE_SEARCH_TOKEN=
-GOOGLE_SEARCH_TOKEN=
-GOOGLE_SEARCH_ENGINE_ID=
-SERP_API_SEARCH_TOKEN=
-
-GOOGLE_GEMINI_TOKEN=
-OPENAI_TOKEN=
-TOGETHER_AI_TOKEN=
-
-CRUDDER_URL="https://crudder.civicpatch.org"
-CRUDDER_SHARED_TOKEN=ABCDEF12345
-```
-
-Optional environment variables:
-
-- GOOGLE_SHEETS_TOKEN and GOOGLE_SHEETS_ID are used to log
-  calculated operating costs of running each scrape job.
-
-```dotenv
-GOOGLE_SHEETS_TOKEN=
-GOOGLE_SHEETS_ID=
-```
-
 ### CRUDDER_SHARED_TOKEN
 1. Go to crudder.civicpatch.org and generate an API token.
-2. Email the repo maintainer about your new account. Provide the following details:
+2. Email the repo maintainer (michelle@civicpatch.org) about your new account. Provide the following details:
   - provider
   - provider_user_id
   - user_email
 3. Set up your CivicPatch Server URL. This is a public URL your server can be reached by.
-
+  NOTE: this step is optional if you're just testing -- you should be able to generate PRs without this.
+  Let me know if it skipping it doesn't work -- you could try putting a garbage link in the form.
   3.a. Example Setup (local):
     - Download [tailscale](https://tailscale.com/download)
       and follow setup instructions.
