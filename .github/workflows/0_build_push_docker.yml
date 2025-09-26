@@ -5,9 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "civicpatch/Dockerfile"
-      - "civicpatch/pyproject.toml"
-      - "civicpatch/poetry.lock"
+      - "civicpatch/**"
   workflow_dispatch:
 
 permissions:
@@ -49,7 +47,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # MASSIVE image; 8GB+
+      # Big image
       - name: Build and push (production)
         uses: docker/build-push-action@v6
         with:
