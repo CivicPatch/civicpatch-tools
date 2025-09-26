@@ -1,5 +1,6 @@
 import asyncio
 from fastapi import FastAPI, HTTPException, Depends, Request, BackgroundTasks
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from typing import List, Optional
@@ -11,6 +12,7 @@ from schemas import PipelineRequest
 import os
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="src/static"), name="static")
 templates = Jinja2Templates(directory="src/templates")
 
 REQUIRED_ENV_VARS = [

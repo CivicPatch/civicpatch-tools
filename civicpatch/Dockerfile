@@ -75,8 +75,6 @@ FROM post-install AS production
 WORKDIR /app
 
 COPY --chown=civicpatch_user:civicpatch_user ./${PROJECT_NAME} /app
-COPY --chown=civicpatch_user:civicpatch_user ./data /app/data
-COPY --chown=civicpatch_user:civicpatch_user ./data_source /app/data_source
 
 USER civicpatch_user
 EXPOSE 8000
