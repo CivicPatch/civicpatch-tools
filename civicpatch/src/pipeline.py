@@ -237,6 +237,7 @@ class Pipeline:
                 self.state = PipelineStatus.DONE
 
             # Save the context after each step
+            self.context["state"] = self.state.value
             self.save_context()
 
         end_time = time.time()
