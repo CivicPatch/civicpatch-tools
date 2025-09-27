@@ -8,7 +8,7 @@
   start_date: ''
   end_date: ''
   image: https://www.fairfield-city.org/ImageRepository/Document?documentID=7921
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/oh/fairfield/f9f62846cbc9.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:fairfield/government
   sources:
   - https://www.fairfield-city.org/534/Mayor
@@ -25,7 +25,7 @@
   start_date: ''
   end_date: ''
   image: https://www.fairfield-city.org/ImageRepository/Document?documentID=8016
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/oh/fairfield/f3c50e38e0b7.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:fairfield/government
   sources:
   - https://www.fairfield-city.org/534/Mayor
