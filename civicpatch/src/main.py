@@ -12,7 +12,8 @@ from schemas import PipelineRequest
 import os
 from utils import data_path_utils
 import json
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, StreamingResponse
+import time
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="src/static"), name="static")
@@ -110,7 +111,8 @@ async def pipelines_run(
     url: str = Form(...),
 ):
     request = PipelineRequest(jurisdiction_id=jurisdiction_id, name=name, url=url)
-    request_id, warnings, errors = run_pipeline(request, background_tasks)
+    request_id, _warnings, errors = run_pipeline(request, background_tasks)
+    errors = []
 
     try:
         if len(errors) > 0:
@@ -121,7 +123,8 @@ async def pipelines_run(
             )
 
         # Redirect to the pipeline request page for this jurisdiction
-        jurisdiction_id_url = id_utils.jurisdiction_id_to_git_branch(jurisdiction_id, request_id)
+        jurisdiction_id_url = id_utils.jurisdiction_id_to_slug(jurisdiction_id)
+
         return RedirectResponse(
             url=f"/pipelines/{jurisdiction_id_url}",
             status_code=303
@@ -136,16 +139,20 @@ async def pipelines_run(
 
 @app.get("/pipelines/{jurisdiction_id_url}")
 async def pipeline_request_page(request: Request, jurisdiction_id_url: str):
-    jurisdiction_id = id_utils.git_branch_to_jurisdiction_id(jurisdiction_id_url)
-    pipeline_context_file = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
-    with open(pipeline_context_file, "r") as f:
-        pipeline_context = json.load(f) 
+    jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_url)
 
-    return templates.TemplateResponse("request.html", {
+    return templates.TemplateResponse("pipeline_request.html", {
         "request": request, 
-        "jurisdiction_id": jurisdiction_id, 
-        "pipeline_context": pipeline_context
+        "jurisdiction_id": jurisdiction_id,
+        "jurisdiction_id_url": jurisdiction_id_url
     })
+
+@app.get("/pipelines/{jurisdiction_id_url}/context")
+async def stream_pipeline_context(jurisdiction_id_url: str):
+    jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_url)
+    pipeline_context_file = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
+    file_like = open(pipeline_context_file, "rb")
+    return StreamingResponse(file_like, media_type="application/json")
 
 @app.get("/")
 async def index(request: Request):
