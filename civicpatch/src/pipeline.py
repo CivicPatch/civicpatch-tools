@@ -21,6 +21,7 @@ from steps.step_08_maybe_send_to_github.maybe_send_to_github import maybe_send_t
 from steps.step_09_cleanup.cleanup import cleanup
 
 DEFAULT_STATE: PipelineContext = { 
+    "state": PipelineStatus.INIT.value,
     "links": [], 
     "progress": {
         "required_data": 5, # Default number of council members
@@ -76,6 +77,7 @@ class Pipeline:
         Save the current pipeline context to a file for persistence.
         """
         jurisdiction_id = self.context["jurisdiction_id"]
+        self.context["state"] = self.state.value
         context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
         with open(context_file_path, "w") as f:
             json.dump(self.context, f, indent=4)

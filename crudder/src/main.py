@@ -1,5 +1,4 @@
 import os
-import io
 import datetime
 from fastapi import FastAPI, Request, Security, HTTPException, Depends, Form, Header, File, UploadFile
 from fastapi.responses import HTMLResponse, RedirectResponse
