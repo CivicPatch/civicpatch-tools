@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html class="js no-flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths wf-muli-n3-active wf-muli-n4-active wf-muli-i4-active wf-muli-n7-active wf-active has-webFonts" lang="en" style="height: 100%;">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-type"/>
+  <!-- Google Tag Manager for GA4 -->
+  <!-- End Google Tag Manager for GA4 -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- End Global Site Tag script -->
+ </head>
+ <body class="wide withFeatureColumn cpTextResizeOn doneLoading" style="position: relative; min-height: 100%; top: 0px;">
+  Loading
+  <img height="1" src="https://dlxpix.net/3eq1Rud" style="position: absolute; left: -150px;" width="1"/>
+  <img height="1" src="https://dlxpix.net/3wKfUlk" style="position: absolute; left: -150px;" width="1"/>
+  <meta content="Home" name="category0"/>
+  <meta content="Government" name="category1"/>
+  <meta content="Mayor" name="category2"/>
+  <meta content="#3e811a" name="theme-color"/>
+  <title>
+   Mayor Mitch Rhodus | Fairfield, OH
+  </title>
+  <meta content="Meet the Mayor of the City of Fairfield." name="description"/>
+  <!--[if IE 6]><script language="JavaScript" type="text/javascript"> var isie6 = true; </script><![endif]-->
+  <!--[if IE 7]><script language="JavaScript" type="text/javascript"> var isie7 = true; </script><![endif]-->
+  <!--[if IE 8]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+  <!--[if IE 9]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+  <script type="text/javascript">
+   window.Pages = window.Pages || {};
+		// FrontEnd RWD initialization
+		window.Pages.rwdReady = $.Deferred();
+		window.Pages.toolBarDeferred = $.Deferred();
+		window.Pages.rwdSetupComplete = $.Deferred();
+		window.Pages.megaMenuLoaded = $.Deferred();
+		window.Pages.angularToolbarComplete = $.Deferred();
+		window.Pages.frontEndToolbarComplete = $.Deferred();
+  </script>
+  <!--CPHeadContent-->
+  ­
+  <!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="/App_Themes/ie8.css"><![endif]-->
+  <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/App_Themes/ie7.css"><![endif]-->
+  <!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/App_Themes/ie6.css"><![endif]-->
+  <!--[if lt IE 9]><script type="text/javascript" src="/Scripts/html5.js"></script><![endif]-->
+  <script>
+   jQuery(document).click(function (event) {
+	var target = jQuery(event.target);
+	if (target.attr('src') && target.parents('.image').length && target.parents('.widget').length) {
+		var text = target.attr('title');
+		
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Image',
+				eventAction: 'Image - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.is('button') || target.hasClass('button') || target.parents().hasClass('button')) {
+		var text = "";
+		if (target.parents('.button')[0]) {
+			text = target.parents('.button').first().text();
+		} else if (target.text().length) {
+			text = target.text();
+		} else if (target.attr('title').length) {
+			text = target.attr('title');
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Button',
+				eventAction: 'Button - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetCustomHtml').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Custom Html',
+				eventAction: 'Custom Html Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.editor').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Editor',
+				eventAction: 'Editor Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.GraphicLinks').length) {
+		var text = "";
+		var targetGraphicLink = target;
+		if (target.hasClass('widgetGraphicLinksLink')) {
+			targetGraphicLink = jQuery(target.children()[0]);
+		}
+		if (targetGraphicLink.hasClass('text')) {
+			text = targetGraphicLink.text();
+		} else if (targetGraphicLink.attr('src').length) {
+			if (targetGraphicLink.attr('alt').length) {
+				text = targetGraphicLink.attr('alt');
+			} else {
+				text = targetGraphicLink.attr('src');
+			}
+		} else {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Graphic Links',
+				eventAction: 'Graphic Link - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.InfoAdvanced').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Info Advanced',
+				eventAction: 'Info Advanced Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.list').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'List',
+				eventAction: 'List Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.megaMenuItem').length || target.parents('.topMenuItem').length) {
+		var megaMenuText = jQuery('.topMenuItem.mouseover').find('span').text();
+		var breadCrumbs = [];
+		jQuery('.breadCrumbs > li').each(function () {
+			 breadCrumbs.push(this.textContent);
+		});
+		var pageTitle = breadCrumbs.join('>');
+		var subTitleText = target.parents('.megaMenuItem').children('.widgetTitle').children().text();
+		var text = "";
+		if (pageTitle) {
+			text += pageTitle + " | ";
+		} else {
+			text += document.title + ' - ';
+		}
+		if (target.text() == "" && megaMenuText == "") {
+			text += "N/A";
+		} else if (target.text().length && megaMenuText.length) {
+			if (megaMenuText == target.text()) {
+				text += megaMenuText;
+			} else {
+				text += megaMenuText + " - " + subTitleText + " - " + target.text();
+			}
+		} else if (target.text() == "") {
+			text += megaMenuText;
+		} else {
+			text += target.text();
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Mega Menu',
+				eventAction: 'Mega Menu : ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetNewsFlash').length && target.parents('.widgetItem').length) {
+		var text = jQuery(target.parents('.widgetItem')[0]).find('.widgetTitle').children().text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'News Flash',
+				eventAction: 'News Flash - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.hasClass('widgetQuickLinksLink') || target.find('.widgetQuickLinksLink').length) {
+		var text = target.text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Quick Links',
+				eventAction: 'Quick Links - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.attr('src') && target.parents('.cpSlideshow').length) {
+		var text = target.attr('title');
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Slideshow',
+				eventAction: 'Slideshow - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetText').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Text',
+				eventAction: 'Text Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+});
+  </script>
+  Skip to Main Content
+  <div class="outer-wrap" id="outer-wrap">
+   <div class="inner-wrap" id="inner-wrap">
+    <!-- Begin Signed Out Bar -->
+    Create a Website Account
+    - Manage notification subscriptions, save form progress and more.
+    <!-- End Signed Out Bar -->
+    <div class="noTransition" id="bodyWrapper" style="padding-top: 35px;">
+     <div data-cprole="structuralContainer" id="structuralContainer1" style="min-height: 2644px;">
+      <div data-cprole="banner" id="banner1" style="padding-top: 122px;">
+       <div data-cprole="structuralContainer" id="structuralContainer4">
+        <div class="siteWrap2">
+         <div class="mainWrap" data-cprole="structuralContainer" id="structuralContainer5" role="main">
+          <div class="outerContentWrap" data-cprole="structuralContainer" id="structuralContainer6">
+           <div class="contentWrap" data-cprole="structuralContainer" id="structuralContainer7">
+            <div class="breadCrumbContainer" data-cprole="breadCrumbs" id="breadCrumbs">
+             <ol class="semanticList breadCrumbs">
+              <li data-pageid="534" id="currentBCPage">
+               Mayor
+              </li>
+             </ol>
+            </div>
+            <div data-cprole="mainContentContainer" id="moduleContent">
+             <div class="moduleContentNew" id="page">
+              <h1 class="headline" id="versionHeadLine">
+               Mayor Mitch Rhodus
+              </h1>
+              <div class="pageContent cpGrid cpGrid24" data-containerid="5f8c90dc-b4cb-431b-90ee-10648f8df655" data-contentcontainerbreakpoint="30" data-smoothscrolling="True" id="cc5f8c90dc-b4cb-431b-90ee-10648f8df655">
+               <div class="row outer wide">
+                <!--
+-->
+                <div class="outer col col24 first last" data-widgetcontainerid="548d222b-6c6f-4627-980f-984e6a8f4414" style="height: auto;">
+                 <div class="row nest first last wide">
+                  <div class="inner col col24 first last id960fc978-1091-4a4f-962f-350e2c6f71f6" data-widgetcontainerid="960fc978-1091-4a4f-962f-350e2c6f71f6" style="height: 305px; min-height: 0px;">
+                   <div class="widget editor pageStyles wide" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' id="divEditor3ed9a970-8cb8-4ce0-ba8c-89ce74e44afb">
+                    <div class="fr-view">
+                     Thank you for visiting the Website of the City of Fairfield! On behalf of all of our citizens, I would like to welcome you.
+                     We are proud of our community, and hope that you will find the information on this website helpful.
+                     We believe that effective communication is an integral part of serving the needs of our citizens.
+                     <span>
+                      Please feel free to call, email or message us on the City's social media accounts to provide information and feedback to our entire team.
+                     </span>
+                     Mitch Rhodus
+                     Mayor
+                    </div>
+                   </div>
+                  </div>
+                  <!-- inner column -->
+                 </div>
+                 <!-- inner row -->
+                </div>
+                <!-- outer column -->
+                <!-- -->
+               </div>
+               <!-- outer row -->
+               <div class="row outer wide">
+                <!--
+-->
+                <div class="outer col col24 first last" data-widgetcontainerid="34741a29-df76-41b0-a09e-0aebfb34d5d1" style="height: auto;">
+                 <div class="row nest first last wide">
+                  <div class="inner col col24 first last id5c9cd692-feb7-45b0-b48b-9bd6e33a6f90" data-widgetcontainerid="5c9cd692-feb7-45b0-b48b-9bd6e33a6f90" style="height: 1282px; min-height: 0px;">
+                   <div class="widget widgetText" data-modulename="list" data-widget-id="a9466c7c-17a8-4f13-b54e-43b700e01d79" id="widgetTexta9466c7c-17a8-4f13-b54e-43b700e01d79">
+                    <div class="widgetBody pageStyles" id="diva9466c7c-17a8-4f13-b54e-43b700e01d79">
+                     <div style="min-height: 18px;">
+                      <div class="textContent">
+                       Biography
+                       A life-long resident of Fairfield, Mitch graduated from Fairfield Sr. High School in 1976 and went on to attend Miami University as a Business and Marketing major.  Mitch started his career working for five years at both Procter &amp; Gamble and GE Aviation before finding his passion as an entrepreneur and launching his own business in the promotional product industry where he has spent the last 33 years.  His company operates as a global supplier to several of the largest companies in the world.
+                       <p>
+                        Mitch married his high school sweetheart, Lois (Bennett) Rhodus, and they have two grown children Brad (Brooke) and Katie, three grandchildren (Grady, Laney, and Betty Rae), and another soon to arrive in Feb 2022.  He enjoys spending time with his grandkids and long weekends with Lois and friends traveling in their RV.
+                       </p>
+                       <p>
+                        Mitch first began serving the Fairfield community in 1993, representing the 3rd Ward as a member and Chairman of the Parks Board.  Mitch’s service on the Parks Board and Planning Commission was marked by one of the most explosive and exciting times in our City’s parks development, where he played a vital role in the design and implementation of several of our newest facilities including the Village Green Amphitheatre, the Community Arts Center, the Aquatic Center, and the redevelopment of Marsh Lake.
+                       </p>
+                       <p>
+                        In 2003, Mitch was elected to City Council where he served until 2011 due to term limits.  While on City Council, he continued on the Parks Board, Planning Commission, and several other committees serving under Mayor Eric Cook and Ron D’Epfianio.
+                       </p>
+                       <p>
+                        Mitch has been an active Boy Scout Leader since 1990 where he served in multiple positions from Assistant Scoutmaster, Scoutmaster, and several other leadership roles in the Ft. Hamilton District, including Chairman.  He was awarded the Silver Beaver National Award in 2005, an honor given for his distinguished service and currently serves as the Chairman of the Nominating Committee.  His son, Brad, is an Eagle Scout from Troop 902.
+                       </p>
+                       <p>
+                        Mitch is active in his church, Fairfield Church of Christ, and the Fairfield Rotary Club where he has been a member for over 20 years.
+                       </p>
+                       <p>
+                        You can’t get any more “homegrown” than Mitch.  A paperboy in the late 60’s, he delivered the newspaper every day to the Fairfield City Building where he walked the halls and often spent time in the Mayor’s office talking to the current Mayor.  He mowed the grass at the YMCA on Nilles Road in exchange for a family pass so he and his four brothers could swim in the new pool!  He was also a photographer for the local newspaper and Police Department during high school and has photographed over 400 local weddings.
+                       </p>
+                       <p>
+                        Mitch campaigned on and will continue to be a force in bringing higher quality restaurants to Fairfield.  This effort will take the entire City Council’s support as it may require land acquisitions to ensure the best use of our City’s land – a tactic neighboring cities have used to great success!
+                       </p>
+                      </div>
+                     </div>
+                    </div>
+                   </div>
+                  </div>
+                  <!-- inner column -->
+                 </div>
+                 <!-- inner row -->
+                </div>
+                <!-- outer column -->
+                <!-- -->
+               </div>
+               <!-- outer row -->
+              </div>
+             </div>
+            </div>
+           </div>
+           <aside class="secondaryContent" data-cprole="contentContainer" id="featureColumn" style="display: block; min-height: 1742px;">
+            <div class="pageContent cpGrid cpGrid24 showInMobile" data-containerid="d6923f64-2522-4bce-8783-61ad1b416b69" data-contentcontainerbreakpoint="40" data-smoothscrolling="True" id="ccd6923f64-2522-4bce-8783-61ad1b416b69">
+             <div class="row outer autoWidths center">
+              <!--
+-->
+              <div class="outer col col24 first last" data-widgetcontainerid="a415dd2e-aee3-4027-bbcd-f8976199c3e2" style="height: auto;">
+               <div class="row nest first last">
+                <div class="inner col col24 first last id9e76174b-2ce3-4382-993b-5884c39abbf3" data-widgetcontainerid="9e76174b-2ce3-4382-993b-5884c39abbf3" style="height: auto; min-height: 0px;">
+                 <div data-modulewidgettype="cityDirectory" data-widget-controller-path="/CityDirectory/Widget" data-widget-id="b2ff94c7-4fea-40cd-bd47-0e0086fc021a">
+                  <div class="widget widgetStaffDirectory skin49 wide" id="cityDirectoryWidgetb2ff94c7-4fea-40cd-bd47-0e0086fc021a">
+                   <div class="widgetHeader">
+                    <h3>
+                     <a href="https://www.fairfield-city.org/Directory.aspx" style="">
+                      Contact Us
+                     </a>
+                    </h3>
+                   </div>
+                   <ol class="semanticList">
+                    <li class="widgetItem h-card">
+                     <img alt="MRhodus.5" class="field u-photo" src="https://www.fairfield-city.org/ImageRepository/Document?documentID=7921" title="MRhodus.5"/>
+                     <h4 class="widgetTitle field p-name">
+                      Mitch Rhodus
+                     </h4>
+                     <div class="field p-job-title">
+                      Mayor
+                     </div>
+                     <div class="field u-email">
+                      <a href="https://www.fairfield-city.org/formcenter/City-Council-15/Contact-the-Mayor-Rhodus-108">
+                       Email Mayor Rhodus
+                      </a>
+                     </div>
+                     <div class="field p-tel">
+                      Phone:
+                      513-867-5383
+                     </div>
+                    </li>
+                   </ol>
+                  </div>
+                 </div>
+                </div>
+                <!-- inner column -->
+               </div>
+               <!-- inner row -->
+              </div>
+              <!-- outer column -->
+              <!-- -->
+             </div>
+             <!-- outer row -->
+            </div>
+           </aside>
+          </div>
+         </div>
+        </div>
+       </div>
+       <img alt="" class="bannerObject" data-is-delayed="false" src="https://www.fairfield-city.org/ImageRepository/Document?documentID=9011" style="position: absolute; left: 50%; margin: 0px 0px 0px -1300px; z-index: 2;" width="2600px"/>
+       <img alt="" class="bannerObject" data-delayed-image="/ImageRepository/Document?documentID=9017" data-is-delayed="true" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" style="position: absolute; left: 50%; margin: 0px 0px 0px -1300px; z-index: 3; display: none;" width="2600px"/>
+      </div>
+      <!-- end banner1 -->
+      <div data-cprole="structuralContainer" id="structuralContainer10">
+       <div class="siteWrap">
+        <aside data-cprole="contentContainer" id="contentContainer10a">
+         <div class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-containerid="151aa4a3-1da6-499f-9587-c7aaf3eb1d4c" data-contentcontainerbreakpoint="66" id="cc151aa4a3-1da6-499f-9587-c7aaf3eb1d4c">
+          <div class="row outer wide">
+           <!--
+-->
+           <!-- inner column -->
+           <!-- inner row -->
+           <!-- outer column -->
+           <!-- -->
+           <!-- inner column -->
+           <!-- inner row -->
+           <!-- outer column -->
+           <!-- -->
+           <div class="outer col col8" data-widgetcontainerid="6a2d0dd2-cc93-48d3-be85-cd5aac3da98e" style="height: auto;">
+            <div class="row nest first last wide">
+             <div class="inner col col8 first last id8ee592ac-e0a6-4324-98f7-facf120ff641" data-widgetcontainerid="8ee592ac-e0a6-4324-98f7-facf120ff641" style="height: 137px; min-height: 0px;">
+              <div data-widget-controller-path="/InfoAdvanced/Widget" data-widget-id="086653f4-5589-4f9d-ab21-a8da51f4bb60">
+               <section aria-label="Info Advanced" class="widget widgetInfoAdvanced skin37 widgetOptionSet29 narrow" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="infoAdv" id="divInfoAdv086653f4-5589-4f9d-ab21-a8da51f4bb60">
+                <div class="widgetBody cpGrid cpGrid1">
+                 <div class="row narrow">
+                  <div class="col col1 first last">
+                   <ol class="pageStyles semanticList">
+                    <li class="InfoAdvanced widgetItem fr-view">
+                     <p>
+                      <a href="https://www.fairfield-city.org/FormCenter/City-Manager-4/Email-Us-147">
+                       Email Us
+                      </a>
+                     </p>
+                     5350 Pleasant Avenue, Fairfield, OH 45014
+                     513-867-5300
+                    </li>
+                   </ol>
+                  </div>
+                 </div>
+                </div>
+               </section>
+              </div>
+             </div>
+             <!-- inner column -->
+            </div>
+            <!-- inner row -->
+           </div>
+           <!-- outer column -->
+           <!-- -->
+           /QuickLinks.aspx
+           <!-- inner column -->
+           <!-- inner row -->
+           /QuickLinks.aspx
+           <!-- inner column -->
+           <!-- inner row -->
+           <!-- outer column -->
+           <!-- -->
+          </div>
+          <!-- outer row -->
+         </div>
+        </aside>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  Loading
+  <!-- Content from the Froala Editor will go here. -->
+  Loading
+  <!----------Google Translate (Mobile Friendly)--------->
+  <style>
+   #google-translate-container {float: right;padding: 3px 5px 0px 0px;}.goog-te-combo,.goog-te-banner *,.goog-te-ftab *,.goog-te-menu *,.goog-te-menu2 *,.goog-te-balloon * {font-family: arial;font-size: 10pt;background-image: url("https://theme.zdassets.com/theme_assets/958586/bae8aa24db8d43595871692a9d259186f2db3fb4.png");background-position: 3px 4px;background-size: 22px;background-repeat: no-repeat;text-indent: 20px;background-color: #fff;color: #000 !important;}.goog-logo-link {display: none !important;}.goog-te-gadget {color: transparent !important;}.goog-te-gadget .goog-te-combo {margin: 2px 0 !important;border-radius: 15px !important;}.goog-te-combo{border: 1px solid !important;border-color: #bcc9d7 #96a3b1 #96a3b1 #bcc9d7 !important;border-radius: 0 !important;height:32px; !important;padding: 0 1px 0 .25rem !important;}
+
+#launcher-wrapper {bottom: 50px !important;}
+  </style>
+  Powered by
+  Translate
+  <!--------------End Google Translate----------------->
+  <!-- Fixed Nav Adjustment -->
+  <!-- End Fixed Nav Adjustment -->
+  <!-- Move banner to outer wrap -->
+  <!-- end move banner to outer wrap -->
+  Original text
+  Rate this translation
+  Your feedback will be used to help improve Google Translate
+ </body>
+</html>

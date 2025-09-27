@@ -1,0 +1,1923 @@
+{
+    "request_id": "2025-09-27-22e2",
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+    "name": "fairfield",
+    "url": "https://www.fairfield-city.org/",
+    "links": [
+        {
+            "url": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+            "status": "done",
+            "folder_name": "www_fairfield-city_org_989_gwen-brill-councilmember-at-large",
+            "is_profile_page": true
+        },
+        {
+            "url": "https://www.fairfield-city.org/694/tim-meyers-councilmember-at-large",
+            "status": "pending",
+            "folder_name": "www_fairfield-city_org_694_tim-meyers-councilmember-at-large",
+            "is_profile_page": true
+        },
+        {
+            "url": "https://www.fairfield-city.org/534/Mayor",
+            "status": "done",
+            "folder_name": "www_fairfield-city_org_534_mayor",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/537/City-Council",
+            "status": "done",
+            "folder_name": "www_fairfield-city_org_537_city-council",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/316/Municipal-Court",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/696/Matthew-Davidson-Council-Member-At-Large",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/524/Article-XI",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/27/Government",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/697/City-Council-Liaisons",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/573/Memorial-Day-Parade-Ceremony",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/513/Article-III",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/522/Article-X",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/410/Accreditation",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/directory.aspx?EID=64",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/411/Founders-Park",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/989/Gwen-Brill-Councilmember-At-Large",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/1144/Course-History",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/693/Adam-Kraft-4th-Ward",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/217/Budgets-Reports",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/Calendar.aspx?EID=2416",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/690/Leslie-Besl-1st-Ward",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/507/City-Charter",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/Archive/ViewFile/Item/2430",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/980/Dale-Paullus-2nd-Ward",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.fairfield-city.org/222/Annual-Comprehensive-Financial-Reports",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        }
+    ],
+    "progress": {
+        "required_data": 8,
+        "current_data": 8,
+        "has_target_role": true
+    },
+    "names": {
+        "Gwen Brill": [
+            "Gwen Brill"
+        ],
+        "Tim Meyers": [
+            "Tim Meyers"
+        ],
+        "Matthew Davidson": [
+            "Matthew Davidson"
+        ],
+        "Leslie Besl": [
+            "Leslie Besl"
+        ],
+        "Dale Paullus": [
+            "Dale Paullus"
+        ],
+        "Debbie Pennington": [
+            "Debbie Pennington"
+        ],
+        "Adam Kraft": [
+            "Adam Kraft"
+        ],
+        "Mitch Rhodus": [
+            "Mitch Rhodus"
+        ]
+    },
+    "steps": {
+        "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "Mitch Rhodus",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Leslie Besl",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 1"
+                    ]
+                },
+                {
+                    "name": "Dale Paullus",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 2"
+                    ]
+                },
+                {
+                    "name": "Debbie Pennington",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 3"
+                    ]
+                },
+                {
+                    "name": "Adam Kraft",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 4"
+                    ]
+                },
+                {
+                    "name": "Tim Meyers",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                },
+                {
+                    "name": "Matthew Davidson",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                },
+                {
+                    "name": "Gwen Brill",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "Mitch Rhodus",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Leslie Besl",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 1"
+                    ]
+                },
+                {
+                    "name": "Dale Paullus",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 2"
+                    ]
+                },
+                {
+                    "name": "Debbie Pennington",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 3"
+                    ]
+                },
+                {
+                    "name": "Adam Kraft",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 4"
+                    ]
+                },
+                {
+                    "name": "Tim Meyers",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                },
+                {
+                    "name": "Matthew Davidson",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                },
+                {
+                    "name": "Gwen Brill",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                }
+            ],
+            "notes": "Fairfield, Ohio operates under a Council-Manager form of government with an elected Mayor and City Council. Mayor Mitch Rhodus's current term is set to end at the close of 2025, as he is not seeking re-election."
+        },
+        "SEARCH_LINKS": {
+            "search_link_pointer": 1,
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "https://www.fairfield-city.org/534/Mayor",
+                        "https://www.fairfield-city.org/537/City-Council",
+                        "https://www.fairfield-city.org/",
+                        "https://www.fairfield-city.org/316/Municipal-Court",
+                        "https://www.fairfield-city.org/696/Matthew-Davidson-Council-Member-At-Large",
+                        "https://www.fairfield-city.org/524/Article-XI",
+                        "https://www.fairfield-city.org/27/Government",
+                        "https://www.fairfield-city.org/697/City-Council-Liaisons",
+                        "https://www.fairfield-city.org/573/Memorial-Day-Parade-Ceremony",
+                        "https://www.fairfield-city.org/513/Article-III",
+                        "https://www.fairfield-city.org/522/Article-X",
+                        "https://www.fairfield-city.org/410/Accreditation",
+                        "https://www.fairfield-city.org/directory.aspx?EID=64",
+                        "https://www.fairfield-city.org/411/Founders-Park",
+                        "https://www.fairfield-city.org/989/Gwen-Brill-Councilmember-At-Large",
+                        "https://www.fairfield-city.org/1144/Course-History",
+                        "https://www.fairfield-city.org/693/Adam-Kraft-4th-Ward",
+                        "https://www.fairfield-city.org/217/Budgets-Reports",
+                        "https://www.fairfield-city.org/Calendar.aspx?EID=2416",
+                        "https://www.fairfield-city.org/690/Leslie-Besl-1st-Ward",
+                        "https://www.fairfield-city.org/507/City-Charter",
+                        "https://www.fairfield-city.org/Archive/ViewFile/Item/2430",
+                        "https://www.fairfield-city.org/980/Dale-Paullus-2nd-Ward",
+                        "https://www.fairfield-city.org/222/Annual-Comprehensive-Financial-Reports"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {
+            "elapsed_times": [
+                6.3672425746917725,
+                3.238535165786743,
+                3.9050681591033936
+            ],
+            "total_elapsed_time_seconds": 13.51084589958191,
+            "average_elapsed_time_seconds": 4.503615299860637
+        },
+        "PROCESS_PAGE_CONTENT": {
+            "records_by_llm": {
+                "google_gemini": {
+                    "Mitch Rhodus": [
+                        {
+                            "name": "Mitch Rhodus",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": "513-867-5383",
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/directory.aspx",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=7921",
+                            "source": "https://www.fairfield-city.org/534/Mayor"
+                        }
+                    ],
+                    "Tim Meyers": [
+                        {
+                            "name": "Tim Meyers",
+                            "roles": [
+                                "Councilmember At-Large"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/694/tim-meyers-councilmember-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        },
+                        {
+                            "name": "Tim Meyers",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/694/tim-meyers-councilmember-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        }
+                    ],
+                    "Matthew Davidson": [
+                        {
+                            "name": "Matthew Davidson",
+                            "roles": [
+                                "Council Member At-Large"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/696/matthew-davidson-council-member-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        },
+                        {
+                            "name": "Matthew Davidson",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/696/matthew-davidson-council-member-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        }
+                    ],
+                    "Gwen Brill": [
+                        {
+                            "name": "Gwen Brill",
+                            "roles": [
+                                "Councilmember At-Large"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        },
+                        {
+                            "name": "Gwen Brill",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": "513-867-5383",
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=8016",
+                            "source": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        }
+                    ],
+                    "Leslie Besl": [
+                        {
+                            "name": "Leslie Besl",
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "1st Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/690/leslie-besl-1st-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        },
+                        {
+                            "name": "Leslie Besl",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "1st Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/690/leslie-besl-1st-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        }
+                    ],
+                    "Dale Paullus": [
+                        {
+                            "name": "Dale Paullus",
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "2nd Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/980/dale-paullus-2nd-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        },
+                        {
+                            "name": "Dale Paullus",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "2nd Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/980/dale-paullus-2nd-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        }
+                    ],
+                    "Debbie Pennington": [
+                        {
+                            "name": "Debbie Pennington",
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "3rd Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/1113/debbie-pennington-3rd-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        },
+                        {
+                            "name": "Debbie Pennington",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "3rd Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/1113/debbie-pennington-3rd-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        }
+                    ],
+                    "Adam Kraft": [
+                        {
+                            "name": "Adam Kraft",
+                            "roles": [
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "4th Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/693/adam-kraft-4th-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        },
+                        {
+                            "name": "Adam Kraft",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "4th Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/693/adam-kraft-4th-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        }
+                    ]
+                },
+                "openai": {
+                    "Mitch Rhodus": [
+                        {
+                            "name": "Mitch Rhodus",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": "513-867-5383",
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/formcenter/city-council-15/contact-the-mayor-rhodus-108",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=7921",
+                            "source": "https://www.fairfield-city.org/534/Mayor"
+                        }
+                    ],
+                    "Tim Meyers": [
+                        {
+                            "name": "Tim Meyers",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/694/tim-meyers-councilmember-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ],
+                    "Matthew Davidson": [
+                        {
+                            "name": "Matthew Davidson",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/696/matthew-davidson-council-member-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ],
+                    "Gwen Brill": [
+                        {
+                            "name": "Gwen Brill",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        },
+                        {
+                            "name": "Gwen Brill",
+                            "roles": [
+                                "Councilmember At-Large"
+                            ],
+                            "divisions": [],
+                            "phone_number": "513-867-5383",
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=8016",
+                            "source": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        }
+                    ],
+                    "Leslie Besl": [
+                        {
+                            "name": "Leslie Besl",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "1st Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/690/leslie-besl-1st-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ],
+                    "Dale Paullus": [
+                        {
+                            "name": "Dale Paullus",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "2nd Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/980/dale-paullus-2nd-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ],
+                    "Debbie Pennington": [
+                        {
+                            "name": "Debbie Pennington",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "3rd Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/1113/debbie-pennington-3rd-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ],
+                    "Adam Kraft": [
+                        {
+                            "name": "Adam Kraft",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "4th Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/693/adam-kraft-4th-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ]
+                },
+                "together_ai": {
+                    "Mitch Rhodus": [
+                        {
+                            "name": "Mitch Rhodus",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "Fairfield, OH"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=7921 \u00a0\u00bb, ",
+                            "source": "https://www.fairfield-city.org/534/Mayor"
+                        }
+                    ],
+                    "Leslie Besl": [
+                        {
+                            "name": "Leslie Besl",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/directory.aspx",
+                            "start_date": "2020-01-01",
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/534/Mayor"
+                        },
+                        {
+                            "name": "Leslie Besl",
+                            "roles": [
+                                "1st Ward"
+                            ],
+                            "divisions": [
+                                "1st Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/690/leslie-besl-1st-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ],
+                    "Dale Paullus": [
+                        {
+                            "name": "Dale Paullus",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/directory.aspx",
+                            "start_date": "2020-01-01",
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/534/Mayor"
+                        },
+                        {
+                            "name": "Dale Paullus",
+                            "roles": [
+                                "2nd Ward"
+                            ],
+                            "divisions": [
+                                "2nd Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/980/dale-paullus-2nd-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ],
+                    "Debbie Pennington": [
+                        {
+                            "name": "Debbie Pennington",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/directory.aspx",
+                            "start_date": "2020-01-01",
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/534/Mayor"
+                        },
+                        {
+                            "name": "Debbie Pennington",
+                            "roles": [
+                                "3rd Ward"
+                            ],
+                            "divisions": [
+                                "3rd Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/1113/debbie-pennington-3rd-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ],
+                    "Adam Kraft": [
+                        {
+                            "name": "Adam Kraft",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/directory.aspx",
+                            "start_date": "2020-01-01",
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/534/Mayor"
+                        },
+                        {
+                            "name": "Adam Kraft",
+                            "roles": [
+                                "4th Ward"
+                            ],
+                            "divisions": [
+                                "4th Ward"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/693/adam-kraft-4th-ward",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ],
+                    "Tim Meyers": [
+                        {
+                            "name": "Tim Meyers",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/directory.aspx",
+                            "start_date": "2020-01-01",
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/534/Mayor"
+                        },
+                        {
+                            "name": "Tim Meyers",
+                            "roles": [
+                                "Councilmember At-Large"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/694/tim-meyers-councilmember-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ],
+                    "Matthew Davidson": [
+                        {
+                            "name": "Matthew Davidson",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/directory.aspx",
+                            "start_date": "2020-01-01",
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/534/Mayor"
+                        },
+                        {
+                            "name": "Matthew Davidson",
+                            "roles": [
+                                "Council Member At-Large"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/696/matthew-davidson-council-member-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        }
+                    ],
+                    "Gwen Brill": [
+                        {
+                            "name": "Gwen Brill",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 7"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/directory.aspx",
+                            "start_date": "2020-01-01",
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/534/Mayor"
+                        },
+                        {
+                            "name": "Gwen Brill",
+                            "roles": [
+                                "Councilmember At-Large"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.fairfield-city.org/537/City-Council"
+                        },
+                        {
+                            "name": "Gwen Brill",
+                            "roles": [
+                                "Councilmember At-Large"
+                            ],
+                            "divisions": [
+                                "Fairfield"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=8016 ",
+                            "source": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        }
+                    ]
+                }
+            }
+        },
+        "MERGE_RECORDS_WITHIN_LLM": {
+            "people_by_llm": {
+                "google_gemini": [
+                    {
+                        "name": "Mitch Rhodus",
+                        "roles": [
+                            "Mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "(513) 867-5383",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/directory.aspx",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=7921",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/534/Mayor"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Tim Meyers",
+                        "roles": [
+                            "Councilmember",
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/694/tim-meyers-councilmember-at-large",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council",
+                            "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Matthew Davidson",
+                        "roles": [
+                            "Council Member",
+                            "Council Member At-Large"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/696/matthew-davidson-council-member-at-large",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council",
+                            "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Gwen Brill",
+                        "roles": [
+                            "Councilmember",
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "(513) 867-5383",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=8016",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council",
+                            "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Leslie Besl",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 1"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/690/leslie-besl-1st-ward",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council",
+                            "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Dale Paullus",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 2"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/980/dale-paullus-2nd-ward",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council",
+                            "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Debbie Pennington",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 3"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/1113/debbie-pennington-3rd-ward",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council",
+                            "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Adam Kraft",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 4"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/693/adam-kraft-4th-ward",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council",
+                            "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "openai": [
+                    {
+                        "name": "Mitch Rhodus",
+                        "roles": [
+                            "Mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "(513) 867-5383",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/formcenter/city-council-15/contact-the-mayor-rhodus-108",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=7921",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/534/Mayor"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Tim Meyers",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/694/tim-meyers-councilmember-at-large",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Matthew Davidson",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/696/matthew-davidson-council-member-at-large",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Gwen Brill",
+                        "roles": [
+                            "Councilmember",
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "(513) 867-5383",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=8016",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council",
+                            "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Leslie Besl",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 1"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/690/leslie-besl-1st-ward",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Dale Paullus",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 2"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/980/dale-paullus-2nd-ward",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Debbie Pennington",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 3"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/1113/debbie-pennington-3rd-ward",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Adam Kraft",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 4"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/693/adam-kraft-4th-ward",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "together_ai": [
+                    {
+                        "name": "Mitch Rhodus",
+                        "roles": [
+                            "Mayor"
+                        ],
+                        "divisions": [
+                            "Fairfield, OH"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=7921 \u00a0\u00bb, ",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/534/Mayor"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Leslie Besl",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 1"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/690/leslie-besl-1st-ward",
+                        "start_date": "2020-01-01",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/534/Mayor",
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Dale Paullus",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 2"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/980/dale-paullus-2nd-ward",
+                        "start_date": "2020-01-01",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/534/Mayor",
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Debbie Pennington",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 3"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/1113/debbie-pennington-3rd-ward",
+                        "start_date": "2020-01-01",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/534/Mayor",
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Adam Kraft",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 4"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/693/adam-kraft-4th-ward",
+                        "start_date": "2020-01-01",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/534/Mayor",
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Tim Meyers",
+                        "roles": [
+                            "Councilmember",
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "At-Large",
+                            "Ward 5"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/694/tim-meyers-councilmember-at-large",
+                        "start_date": "2020-01-01",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/534/Mayor",
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Matthew Davidson",
+                        "roles": [
+                            "Council Member",
+                            "Council Member At-Large"
+                        ],
+                        "divisions": [
+                            "At-Large",
+                            "Ward 6"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/696/matthew-davidson-council-member-at-large",
+                        "start_date": "2020-01-01",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/534/Mayor",
+                            "https://www.fairfield-city.org/537/City-Council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Gwen Brill",
+                        "roles": [
+                            "Councilmember",
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "At-Large",
+                            "Ward 7",
+                            "Fairfield"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                        "start_date": "2020-01-01",
+                        "end_date": "",
+                        "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=8016 ",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                        "sources": [
+                            "https://www.fairfield-city.org/534/Mayor",
+                            "https://www.fairfield-city.org/537/City-Council",
+                            "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large"
+                        ],
+                        "updated_at": ""
+                    }
+                ]
+            }
+        },
+        "MERGE_RECORDS_ACROSS_LLMS": {
+            "people": [
+                {
+                    "name": "Mitch Rhodus",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": [],
+                    "phone_number": "(513) 867-5383",
+                    "email": "",
+                    "website": "https://www.fairfield-city.org/directory.aspx",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=7921",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                    "sources": [
+                        "https://www.fairfield-city.org/534/Mayor"
+                    ],
+                    "updated_at": "2025-09-27T23:49:39+00:00"
+                },
+                {
+                    "name": "Gwen Brill",
+                    "roles": [
+                        "Councilmember",
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ],
+                    "phone_number": "(513) 867-5383",
+                    "email": "",
+                    "website": "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.fairfield-city.org/ImageRepository/Document?documentID=8016",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                    "sources": [
+                        "https://www.fairfield-city.org/534/Mayor",
+                        "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                        "https://www.fairfield-city.org/537/City-Council"
+                    ],
+                    "updated_at": "2025-09-27T23:49:39+00:00"
+                },
+                {
+                    "name": "Matthew Davidson",
+                    "roles": [
+                        "Council Member",
+                        "Council Member At-Large"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.fairfield-city.org/696/matthew-davidson-council-member-at-large",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                    "sources": [
+                        "https://www.fairfield-city.org/534/Mayor",
+                        "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                        "https://www.fairfield-city.org/537/City-Council"
+                    ],
+                    "updated_at": "2025-09-27T23:49:39+00:00"
+                },
+                {
+                    "name": "Tim Meyers",
+                    "roles": [
+                        "Councilmember",
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.fairfield-city.org/694/tim-meyers-councilmember-at-large",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                    "sources": [
+                        "https://www.fairfield-city.org/534/Mayor",
+                        "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                        "https://www.fairfield-city.org/537/City-Council"
+                    ],
+                    "updated_at": "2025-09-27T23:49:39+00:00"
+                },
+                {
+                    "name": "Leslie Besl",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 1"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.fairfield-city.org/690/leslie-besl-1st-ward",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                    "sources": [
+                        "https://www.fairfield-city.org/534/Mayor",
+                        "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                        "https://www.fairfield-city.org/537/City-Council"
+                    ],
+                    "updated_at": "2025-09-27T23:49:39+00:00"
+                },
+                {
+                    "name": "Dale Paullus",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 2"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.fairfield-city.org/980/dale-paullus-2nd-ward",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                    "sources": [
+                        "https://www.fairfield-city.org/534/Mayor",
+                        "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                        "https://www.fairfield-city.org/537/City-Council"
+                    ],
+                    "updated_at": "2025-09-27T23:49:39+00:00"
+                },
+                {
+                    "name": "Debbie Pennington",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 3"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.fairfield-city.org/1113/debbie-pennington-3rd-ward",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                    "sources": [
+                        "https://www.fairfield-city.org/534/Mayor",
+                        "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                        "https://www.fairfield-city.org/537/City-Council"
+                    ],
+                    "updated_at": "2025-09-27T23:49:39+00:00"
+                },
+                {
+                    "name": "Adam Kraft",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 4"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.fairfield-city.org/693/adam-kraft-4th-ward",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:fairfield/government",
+                    "sources": [
+                        "https://www.fairfield-city.org/534/Mayor",
+                        "https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large",
+                        "https://www.fairfield-city.org/537/City-Council"
+                    ],
+                    "updated_at": "2025-09-27T23:49:39+00:00"
+                }
+            ],
+            "agreement_score": 100.0,
+            "disagreements": {
+                "Mitch Rhodus": [
+                    {
+                        "field": "divisions",
+                        "merged_value": "",
+                        "llm_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "Fairfield, OH"
+                        },
+                        "disagreement_score": 0.0
+                    },
+                    {
+                        "field": "website",
+                        "merged_value": "https://www.fairfield-city.org/directory.aspx",
+                        "llm_values": {
+                            "google_gemini": "https://www.fairfield-city.org/directory.aspx",
+                            "openai": "https://www.fairfield-city.org/formcenter/city-council-15/contact-the-mayor-rhodus-108",
+                            "together_ai": "(empty)"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Tim Meyers": [
+                    {
+                        "field": "start_date",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "2020-01-01"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Matthew Davidson": [
+                    {
+                        "field": "start_date",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "2020-01-01"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Gwen Brill": [
+                    {
+                        "field": "start_date",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "2020-01-01"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Leslie Besl": [
+                    {
+                        "field": "start_date",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "2020-01-01"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Dale Paullus": [
+                    {
+                        "field": "start_date",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "2020-01-01"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Debbie Pennington": [
+                    {
+                        "field": "start_date",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "2020-01-01"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Adam Kraft": [
+                    {
+                        "field": "start_date",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "2020-01-01"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ]
+            },
+            "missing_people": [],
+            "validation_errors": []
+        },
+        "CLEANUP": {},
+        "RETRY": {},
+        "DONE": {}
+    }
+}

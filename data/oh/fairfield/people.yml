@@ -1,0 +1,144 @@
+- name: Mitch Rhodus
+  roles:
+  - Mayor
+  divisions: []
+  phone_number: (513) 867-5383
+  email: ''
+  website: https://www.fairfield-city.org/directory.aspx
+  start_date: ''
+  end_date: ''
+  image: https://www.fairfield-city.org/ImageRepository/Document?documentID=7921
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:fairfield/government
+  sources:
+  - https://www.fairfield-city.org/534/Mayor
+  updated_at: '2025-09-27T23:49:39+00:00'
+- name: Gwen Brill
+  roles:
+  - Councilmember
+  - Council Member
+  divisions:
+  - At-Large
+  phone_number: (513) 867-5383
+  email: ''
+  website: https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large
+  start_date: ''
+  end_date: ''
+  image: https://www.fairfield-city.org/ImageRepository/Document?documentID=8016
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:fairfield/government
+  sources:
+  - https://www.fairfield-city.org/534/Mayor
+  - https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large
+  - https://www.fairfield-city.org/537/City-Council
+  updated_at: '2025-09-27T23:49:39+00:00'
+- name: Matthew Davidson
+  roles:
+  - Council Member
+  - Council Member At-Large
+  divisions:
+  - At-Large
+  phone_number: ''
+  email: ''
+  website: https://www.fairfield-city.org/696/matthew-davidson-council-member-at-large
+  start_date: ''
+  end_date: ''
+  image: ''
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:fairfield/government
+  sources:
+  - https://www.fairfield-city.org/534/Mayor
+  - https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large
+  - https://www.fairfield-city.org/537/City-Council
+  updated_at: '2025-09-27T23:49:39+00:00'
+- name: Tim Meyers
+  roles:
+  - Councilmember
+  - Council Member
+  divisions:
+  - At-Large
+  phone_number: ''
+  email: ''
+  website: https://www.fairfield-city.org/694/tim-meyers-councilmember-at-large
+  start_date: ''
+  end_date: ''
+  image: ''
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:fairfield/government
+  sources:
+  - https://www.fairfield-city.org/534/Mayor
+  - https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large
+  - https://www.fairfield-city.org/537/City-Council
+  updated_at: '2025-09-27T23:49:39+00:00'
+- name: Leslie Besl
+  roles:
+  - Council Member
+  divisions:
+  - Ward 1
+  phone_number: ''
+  email: ''
+  website: https://www.fairfield-city.org/690/leslie-besl-1st-ward
+  start_date: ''
+  end_date: ''
+  image: ''
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:fairfield/government
+  sources:
+  - https://www.fairfield-city.org/534/Mayor
+  - https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large
+  - https://www.fairfield-city.org/537/City-Council
+  updated_at: '2025-09-27T23:49:39+00:00'
+- name: Dale Paullus
+  roles:
+  - Council Member
+  divisions:
+  - Ward 2
+  phone_number: ''
+  email: ''
+  website: https://www.fairfield-city.org/980/dale-paullus-2nd-ward
+  start_date: ''
+  end_date: ''
+  image: ''
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:fairfield/government
+  sources:
+  - https://www.fairfield-city.org/534/Mayor
+  - https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large
+  - https://www.fairfield-city.org/537/City-Council
+  updated_at: '2025-09-27T23:49:39+00:00'
+- name: Debbie Pennington
+  roles:
+  - Council Member
+  divisions:
+  - Ward 3
+  phone_number: ''
+  email: ''
+  website: https://www.fairfield-city.org/1113/debbie-pennington-3rd-ward
+  start_date: ''
+  end_date: ''
+  image: ''
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:fairfield/government
+  sources:
+  - https://www.fairfield-city.org/534/Mayor
+  - https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large
+  - https://www.fairfield-city.org/537/City-Council
+  updated_at: '2025-09-27T23:49:39+00:00'
+- name: Adam Kraft
+  roles:
+  - Council Member
+  divisions:
+  - Ward 4
+  phone_number: ''
+  email: ''
+  website: https://www.fairfield-city.org/693/adam-kraft-4th-ward
+  start_date: ''
+  end_date: ''
+  image: ''
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:fairfield/government
+  sources:
+  - https://www.fairfield-city.org/534/Mayor
+  - https://www.fairfield-city.org/989/gwen-brill-councilmember-at-large
+  - https://www.fairfield-city.org/537/City-Council
+  updated_at: '2025-09-27T23:49:39+00:00'
