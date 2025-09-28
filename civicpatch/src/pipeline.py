@@ -43,6 +43,7 @@ DEFAULT_STATE: PipelineContext = {
         PipelineStatus.SCRAPE_PAGE.value: {},
         PipelineStatus.PREPROCESS_PAGE_CONTENT.value: {},
         PipelineStatus.PROCESS_PAGE_CONTENT.value: { # Lists of people by names
+            "raw_records_by_llm": {},
             "records_by_llm": {
                 "google_gemini": {},
                 "openai": {},
@@ -199,14 +200,27 @@ class Pipeline:
                 self.context.update(result)
                 
                 context_progress = self.context["progress"]
+                current_data = context_progress.get("current_data", 0)
+                required_data = context_progress.get("required_data", 0)
+                minimum_required_data = max(required_data - 3, 1) # At least 1 person
 
-                print("Current data:", context_progress.get("current_data", 0))
-                print("Required data:", context_progress.get("required_data", 0))
+                print("Current data:", current_data)
+                print("Required data:", required_data)
+
+                print("Minimum required data:", minimum_required_data)
                 print("Has target role:", context_progress.get("has_target_role", False))
+                print("Has target divisions (if available):", context_progress.get("has_target_divisions", False))
 
                 process_max_pages = process_config.get("max_pages", 15)
 
-                next_state = self.get_next_state_for_process_page_content(processed_count, process_max_pages)
+                next_state = self.get_next_state_for_process_page_content(
+                    processed_count, 
+                    process_max_pages,
+                    current_data,
+                    required_data,
+                    minimum_required_data
+                )
+
                 self.state = next_state
 
             elif self.state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM:
@@ -222,15 +236,15 @@ class Pipeline:
                 self.state = PipelineStatus.CLEANUP
 
             elif self.state == PipelineStatus.CLEANUP:
-                #result = cleanup(self.context)
+                result = cleanup(self.context)
 
-                #self.context.update(result)
+                self.context.update(result)
                 self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
             elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
-                result = maybe_send_to_github(self.context)
+                #result = maybe_send_to_github(self.context)
 
-                self.context.update(result)
+                #self.context.update(result)
                 self.state = PipelineStatus.DONE
             else:
                 print("Pipeline logic not yet implemented.")
@@ -265,15 +279,20 @@ class Pipeline:
 
         return updated_context, processed_count
 
-    def get_next_state_for_process_page_content(self, processed_count: int, max_pages: int) -> PipelineStatus:
+    def get_next_state_for_process_page_content(self, 
+                                                processed_count: int, 
+                                                max_pages: int,
+                                                current_data: int,
+                                                required_data: int,
+                                                minimum_required_data: int,
+                                                ) -> PipelineStatus:
         """
         Calculate the next state for the pipeline based on the current progress and processed count.
         """
-        required_data = self.context["progress"]["required_data"]
-        current_data = self.context["progress"]["current_data"]
         has_target_role = self.context["progress"].get("has_target_role", False)
+        has_target_divisions = self.context["progress"].get("has_target_divisions", False) 
 
-        if current_data >= required_data and has_target_role:
+        if current_data >= minimum_required_data and has_target_role and has_target_divisions:
             print("Enough data processed, moving to report generation...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 

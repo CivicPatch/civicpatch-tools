@@ -2,9 +2,9 @@
 from typing import List, Dict
 import re
 import utils.config_utils as config_utils
-from schemas import Person
+from schemas import Person, ResearchedPerson
 
-def filter_people_by_roles(role_configs, people):
+def filter_people_by_roles(role_configs, people: List[ResearchedPerson]):
     """
     Filters people whose 'role' matches any role or alias in role_configs.
     Args:
@@ -23,7 +23,7 @@ def filter_people_by_roles(role_configs, people):
     # Filter people whose role matches any vigalid role/alias
     filtered = []
     for person in people:
-        person_roles = [r.strip().lower() for r in person.get("roles", [])]
+        person_roles = [r.strip().lower() for r in person.roles]
         if any(role in valid_roles for role in person_roles):
             filtered.append(person)
 

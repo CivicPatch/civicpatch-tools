@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, TypeAlias, Any, Callable, Union, NamedTuple
+from typing import Dict, List, Optional, TypeAlias, Any, Callable, Union, NamedTuple, Literal
 from pydantic import BaseModel, field_validator
 from enum import Enum
 
@@ -21,7 +21,8 @@ class SearchEngineState(BaseModel):
 class ProgressState(BaseModel):
     required_data: int
     current_data: int
-    has_target_role: bool
+    has_target_role: bool # Depends on the configs; might not have one. If so true by default
+    has_target_divisions: bool # Depends on municipal research. If none, true by default
 
 class LinkStatus(Enum):
     PENDING = "pending"
@@ -79,11 +80,23 @@ OtherNamesByCanonicalName: TypeAlias = Dict[str, List[str]] # Canonical name to 
 PeopleByName: TypeAlias = Dict[str, List[LLMPerson]]
 RecordsByLLM: TypeAlias = Dict[str, PeopleByName]
 
+class ResearchedPerson(BaseModel):
+    name: str
+    roles: List[str]
+    divisions: List[str]
+
+class ResearchMunicipalityStep(BaseModel):
+    government_type: str
+    people: List[ResearchedPerson]
+    elected_officials: List[ResearchedPerson]
+    notes: Optional[str] = None
+
 class SearchLinksStep(BaseModel):
     search_engines: Dict[str, SearchEngineState]  # e.g., "google": SearchEngineState
     links: List[Link]
 
 class ProcessPageContentStep(BaseModel):
+    raw_records_by_llm: RecordsByLLM
     records_by_llm: RecordsByLLM
 
 class MergeRecordsWithinLLMStep(BaseModel):
@@ -124,16 +137,23 @@ class PipelineContext(BaseModel):
     url: str # Municipality url. Without it we can't scrape anything.
     links: List[Link]  # TODO: move to SEARCH_LINKS
     names: Dict[str, List[str]]  # Canonical names to names found while scraping
-    steps: Dict[str, Union[
-        SearchLinksStep,
-        MergeRecordsWithinLLMStep,
-        MergeRecordsAcrossLLMsStep,
-        Any  # Add other step types as needed
-    ]]
+    steps: Dict[
+        Literal[
+            "INIT",
+            "SEARCH_LINKS",
+            "RESEARCH_MUNICIPALITY",
+            "MERGE_RECORDS_WITHIN_LLM",
+            "MERGE_RECORDS_ACROSS_LLMS"
+        ],
+        Union[
+            None,
+            SearchLinksStep,
+            ResearchMunicipalityStep,
+            MergeRecordsWithinLLMStep,
+            MergeRecordsAcrossLLMsStep
+        ]
+    ]
     progress: ProgressState
-
-# PeopleByNameDict: TypeAlias = Dict[str, ProcessedLLMPeople]
-# ProcessedDataDict: TypeAlias = Dict[str, PeopleByNameDict]
 
 class PipelineCompletePayload(BaseModel):
     pipeline_context: PipelineContext

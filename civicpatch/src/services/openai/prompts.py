@@ -1,7 +1,9 @@
 from datetime import datetime
+from typing import List
+from schemas import ResearchedPerson
 import utils.config_utils as config_utils
 
-def municipality_officials_prompt(government_type, people_hint):
+def municipality_officials_prompt(government_type: str, people_hint: List[ResearchedPerson]):
     """
     Generate a single prompt string for extracting city officials, following the detailed Ruby and Gemini logic.
     If people_hint has exactly one entry, treat that as person_name for targeting.
@@ -11,7 +13,7 @@ def municipality_officials_prompt(government_type, people_hint):
     division_names = config_utils.get_divisions()
     current_date = datetime.now().strftime("%Y-%m-%d")
 
-    maybe_target_people = [p.get("name") for p in (people_hint or []) if p.get("name")]
+    maybe_target_people = [p.name for p in (people_hint or []) if p.name]
 
     if len(maybe_target_people) == 1:
         person_name = maybe_target_people[0]

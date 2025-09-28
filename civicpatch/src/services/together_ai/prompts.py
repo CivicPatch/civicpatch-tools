@@ -1,7 +1,9 @@
 from datetime import datetime
+from typing import List
+from schemas import ResearchedPerson
 import utils.config_utils as config_utils
 
-def municipality_officials_prompt(government_type, people_hint):
+def municipality_officials_prompt(government_type, people_hint: List[ResearchedPerson]):
     """
     Generate a prompt to identify municipality officials from the given content.
     """
@@ -12,7 +14,7 @@ def municipality_officials_prompt(government_type, people_hint):
 
     hint_str = ""
     if people_hint:
-        hint_names = [person.get("name") for person in people_hint if person.get("name")]
+        hint_names = [person.name for person in people_hint if person.name]
         if hint_names:
             hint_str = "Here are the list of known target people (may be missing or include a few extra): " + ", ".join(hint_names) + "."
 

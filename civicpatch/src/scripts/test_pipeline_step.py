@@ -1,7 +1,6 @@
-from schemas import PipelineContext, PipelineRequest, PipelineStatus
+from schemas import PipelineRequest, PipelineStatus
 from pipeline import Pipeline
 from utils.data_path_utils import get_pipeline_context_file_path
-import os
 import json
 import asyncio
 

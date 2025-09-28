@@ -16,6 +16,7 @@ async function fetchContext(jurisdiction_id_url) {
             <li>Required Data: ${ctx.progress.required_data}</li>
             <li>Current Data: ${ctx.progress.current_data}</li>
             <li>Has Target Role: ${ctx.progress.has_target_role}</li>
+            <li>Has Target Divisions: ${ctx.progress.has_target_divisions}</li>
           </ul>
         </li>
         <li><strong>Names:</strong>

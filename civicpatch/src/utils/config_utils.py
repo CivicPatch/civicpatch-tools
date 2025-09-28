@@ -12,7 +12,7 @@ def get_divisions():
     with open(divisions_file_path, 'r') as config_file:
         config_data = yaml.safe_load(config_file)
     
-    return config_data.get('divisions', [])
+    return config_data.get('divisions', {})
 
 def get_division_alias_map() -> Dict[str, str]:
     """

@@ -4,7 +4,6 @@ from schemas import (
 )
 from collections import Counter
 from utils import merge_utils, people_utils
-import phonenumbers
 
 def merge_records_within_llm(context: PipelineContext):
     """
@@ -18,12 +17,10 @@ def merge_records_within_llm(context: PipelineContext):
     # Flatten the records so that we can later group by last name 
     # and merge weakly tied records
     flattened_records_by_llm = {llm: [person for people in people_by_name.values() for person in people] for llm, people_by_name in records_by_llm.items()}
-    # Then, normalize the records for comparison
-    formatted_records_by_llm = {llm: [normalize_record(person, government_type) for person in people] for llm, people in flattened_records_by_llm.items()}
 
     people_by_llm: Dict[str, List[Person]] = {}
 
-    for llm, records in formatted_records_by_llm.items():
+    for llm, records in flattened_records_by_llm.items():
         merged_people: List[Person] = []
         groups_by_last_name = group_by_last_name(records)
 
@@ -44,32 +41,6 @@ def merge_records_within_llm(context: PipelineContext):
             }
         }
     }
-
-def normalize_record(record: LLMPerson, government_type: str) -> LLMPerson:
-    """
-    Normalize roles and divisions in an LLMPerson record.
-    """
-    normalized_roles = people_utils.normalize_roles(government_type, record.roles)
-    normalized_divisions = people_utils.normalize_divisions(record.divisions)
-
-    try:
-        phone_number = phonenumbers.parse(record.phone_number, "US") if record.phone_number else None
-        normalized_phone_number = phonenumbers.format_number(phone_number, phonenumbers.PhoneNumberFormat.NATIONAL) if phone_number and phonenumbers.is_valid_number(phone_number) else None
-    except:
-        normalized_phone_number = None
-
-    return LLMPerson(
-        name=record.name,
-        roles=normalized_roles,
-        divisions=normalized_divisions,
-        phone_number=normalized_phone_number,
-        email=record.email,
-        website=record.website,
-        start_date=record.start_date,
-        end_date=record.end_date,
-        image=record.image,
-        source=record.source
-    )
 
 def group_by_last_name(llm_people_list: List[LLMPerson]) -> Dict[str, List[LLMPerson]]:
     """
