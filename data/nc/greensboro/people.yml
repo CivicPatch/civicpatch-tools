@@ -8,7 +8,7 @@
   start_date: ''
   end_date: ''
   image: https://www.greensboro-nc.gov/home/showpublishedimage/30670/638028287037900000
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/nc/greensboro/69da94da97e1.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
@@ -26,7 +26,7 @@
   start_date: ''
   end_date: ''
   image: https://www.greensboro-nc.gov/home/showpublishedimage/39276/638784151225130000
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/nc/greensboro/6dae74c2a24c.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
@@ -44,7 +44,7 @@
   start_date: ''
   end_date: ''
   image: https://www.greensboro-nc.gov/home/showpublishedimage/5845/638028278965130000
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/nc/greensboro/d249694569d8.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
@@ -63,7 +63,7 @@
   start_date: ''
   end_date: ''
   image: https://www.greensboro-nc.gov/home/showpublishedimage/30265/638318536081830000
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/nc/greensboro/7af1f80f058f.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
@@ -82,7 +82,7 @@
   start_date: ''
   end_date: ''
   image: https://www.greensboro-nc.gov/home/showpublishedimage/10230/638028304351000000
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/nc/greensboro/c5b26a9fe910.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
@@ -101,7 +101,7 @@
   start_date: ''
   end_date: ''
   image: https://www.greensboro-nc.gov/home/showpublishedimage/14845/638029244382970000
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/nc/greensboro/8e9c780cc779.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
@@ -120,7 +120,7 @@
   start_date: ''
   end_date: ''
   image: https://www.greensboro-nc.gov/home/showpublishedimage/30257/638784152026670000
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/nc/greensboro/44e0ebc8b7cc.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
@@ -139,7 +139,7 @@
   start_date: ''
   end_date: ''
   image: https://www.greensboro-nc.gov/home/showpublishedimage/5847/638784150671900000
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/nc/greensboro/8a8d2680f5cb.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
@@ -158,7 +158,7 @@
   start_date: ''
   end_date: ''
   image: https://www.greensboro-nc.gov/home/showpublishedimage/26694/638784150054870000
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/nc/greensboro/a92d28722aec.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
