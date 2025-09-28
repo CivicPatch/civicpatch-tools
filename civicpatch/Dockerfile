@@ -18,7 +18,7 @@ ENV PYTHONUNBUFFERED=1 \
     # with python 3.12-trixie
     # https://github.com/microsoft/playwright/issues/34255#issuecomment-2579839102
     # https://github.com/microsoft/playwright/blob/ef40dcbd59fcff11dde5eb6146e58ce3cccff1a4/packages/playwright-core/src/server/registry/index.ts#L231
-    PLAYWRIGHT_HOST_PLATFORM_OVERRIDE="debian12-x64" \
+    PLAYWRIGHT_HOST_PLATFORM_OVERRIDE="debian13-x64" \
     # Poetry setup with pip
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_HOME="/opt/poetry" \
