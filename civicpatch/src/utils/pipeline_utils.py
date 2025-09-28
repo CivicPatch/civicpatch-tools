@@ -1,8 +1,6 @@
 import json
 from typing import List
 from utils import id_utils, path_utils
-from fastapi import BackgroundTasks
-from schemas import PipelineRequest, PipelineStatus, Pipeline
 
 def get_municipalities_to_scrape(state, num_to_scrape, geoids_to_ignore=None):
     """
