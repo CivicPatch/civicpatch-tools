@@ -31,7 +31,7 @@ async def scrape(website_url, options=None):
     async with async_playwright() as playwright:
         browser = await playwright.chromium.launch(
             headless=False,
-            args=["--disable-crashpad-for-testing"]
+            args=["--disable-crashpad-for-testing"] # Fixes crashpad write issue
             )
         context = await browser.new_context()
         page = await context.new_page()
