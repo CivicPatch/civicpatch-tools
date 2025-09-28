@@ -25,8 +25,8 @@ ENV PYTHONUNBUFFERED=1 \
     PATH="/opt/poetry/bin:$PATH" \
     # Fix issue with running chromium under GitHub Actions
     # https://github.com/microsoft/playwright/issues/35140
-    XDG_CONFIG_HOME=/tmp/.chromium \
-    XDG_CACHE_HOME=/tmp/.chromium
+    XDG_CONFIG_HOME=/home/civicpatch_user/.config \
+    XDG_CACHE_HOME=/home/civicpatch_user/.cache
 
 # Needed especially for post-install step
 # cache files are 8GB
@@ -38,7 +38,10 @@ WORKDIR /app
 
 # COPY ./utils /app/utils
 
-RUN useradd -m -s /bin/bash civicpatch_user 
+RUN useradd -m -s /bin/bash civicpatch_user \
+    && chown -R civicpatch_user:civicpatch_user /home/civicpatch_user
+RUN mkdir -p /home/civicpatch_user/.config /home/civicpatch_user/.cache \
+    && chown -R civicpatch_user:civicpatch_user /home/civicpatch_user/.config /home/civicpatch_user/.cache
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 RUN poetry install --no-root
 

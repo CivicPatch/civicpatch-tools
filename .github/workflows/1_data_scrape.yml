@@ -36,9 +36,18 @@ jobs:
           log_level: debug
           working_directory: civicpatch # Doesn't seem to work?
           github_token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Determine docker tag
+        id: docker-tag
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "docker-tag=latest" >> $GITHUB_OUTPUT
+          else
+            echo "docker-tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Pull docker image
-        run: docker pull ghcr.io/civicpatch/civicpatch:latest
+        run: docker pull ghcr.io/civicpatch/civicpatch:${{ steps.docker-tag.outputs.docker-tag }}
 
       - name: Run data scrape
         env:
@@ -53,6 +62,8 @@ jobs:
 
           CRUDDER_SHARED_TOKEN: ${{ secrets.CRUDDER_SHARED_TOKEN }}
           CRUDDER_URL: ${{ vars.CRUDDER_URL }}
+
+          DOCKER_TAG: ${{ steps.docker-tag.outputs.docker-tag }}
         run: |
           cd civicpatch
           mise pipeline-run \
