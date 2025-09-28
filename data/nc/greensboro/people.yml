@@ -12,7 +12,7 @@
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council
-  updated_at: '2025-09-26T17:05:33+00:00'
+  updated_at: '2025-09-28T02:09:29+00:00'
 - name: Jamilla Pinder
   roles:
   - Council Member
@@ -27,7 +27,7 @@
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council
-  updated_at: '2025-09-26T17:05:33+00:00'
+  updated_at: '2025-09-28T02:09:29+00:00'
 - name: Marikay Abuzuaiter
   roles:
   - Council Member
@@ -37,12 +37,12 @@
   website: https://www.greensboro-nc.gov/government/city-council
   start_date: ''
   end_date: ''
-  image: ''
+  image: https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000
   cdn_image: ''
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council
-  updated_at: '2025-09-26T17:05:33+00:00'
+  updated_at: '2025-09-28T02:09:29+00:00'
 - name: Nancy Hoffmann
   roles:
   - Council Member
@@ -57,7 +57,7 @@
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council
-  updated_at: '2025-09-26T17:05:33+00:00'
+  updated_at: '2025-09-28T02:09:29+00:00'
 - name: Sharon Hightower
   roles:
   - Council Member
@@ -72,7 +72,7 @@
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council
-  updated_at: '2025-09-26T17:05:33+00:00'
+  updated_at: '2025-09-28T02:09:29+00:00'
 - name: Hugh Holston
   roles:
   - Council Member
@@ -88,8 +88,8 @@
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council
-  updated_at: '2025-09-26T17:05:33+00:00'
-- name: Goldie F. Wells
+  updated_at: '2025-09-28T02:09:29+00:00'
+- name: Goldie Wells
   roles:
   - Council Member
   divisions:
@@ -104,7 +104,7 @@
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council
-  updated_at: '2025-09-26T17:05:33+00:00'
+  updated_at: '2025-09-28T02:09:29+00:00'
 - name: Zack Matheny
   roles:
   - Council Member
@@ -120,7 +120,7 @@
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council
-  updated_at: '2025-09-26T17:05:33+00:00'
+  updated_at: '2025-09-28T02:09:29+00:00'
 - name: Tammi Thurm
   roles:
   - Council Member
@@ -136,4 +136,4 @@
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council
-  updated_at: '2025-09-26T17:05:33+00:00'
+  updated_at: '2025-09-28T02:09:29+00:00'

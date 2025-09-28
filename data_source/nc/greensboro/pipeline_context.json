@@ -1,0 +1,2191 @@
+{
+    "request_id": "2025-09-28-b7e1",
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+    "name": "Greensboro city",
+    "url": "https://www.greensboro-nc.gov",
+    "state": "MAYBE_SEND_TO_GITHUB",
+    "links": [
+        {
+            "url": "https://www.greensboro-nc.gov/government/city-council",
+            "status": "done",
+            "folder_name": "www_greensboro-nc_gov_government_city-council",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/government/city-council/council-meetings",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/government/city-council/interact-with-city-council",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/government/city-manager-s-office",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/government/boards-and-commissions",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/departments",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/departments/planning",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/departments/budget-evaluation",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/Home/Components/News/News/20257/36",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        }
+    ],
+    "progress": {
+        "required_data": 9,
+        "current_data": 9,
+        "has_target_role": true,
+        "has_target_divisions": false
+    },
+    "names": {
+        "Nancy Vaughan": [
+            "Nancy Vaughan"
+        ],
+        "Marikay Abuzuaiter": [
+            "Marikay Abuzuaiter"
+        ],
+        "Hugh Holston": [
+            "Hugh Holston"
+        ],
+        "Jamilla Pinder": [
+            "Jamilla Pinder"
+        ],
+        "Sharon Hightower": [
+            "Sharon Hightower"
+        ],
+        "Goldie Wells": [
+            "Goldie Wells"
+        ],
+        "Zack Matheny": [
+            "Zack Matheny"
+        ],
+        "Nancy Hoffmann": [
+            "Nancy Hoffmann"
+        ],
+        "Tammi Thurm": [
+            "Tammi Thurm"
+        ]
+    },
+    "steps": {
+        "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "Nancy Vaughan",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Marikay Abuzuaiter",
+                    "roles": [
+                        "Mayor Pro Tem",
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Hugh Holston",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Jamilla Pinder",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Sharon Hightower",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 1"
+                    ]
+                },
+                {
+                    "name": "Goldie Wells",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 2"
+                    ]
+                },
+                {
+                    "name": "Zack Matheny",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 3"
+                    ]
+                },
+                {
+                    "name": "Nancy Hoffmann",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 4"
+                    ]
+                },
+                {
+                    "name": "Tammi Thurm",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 5"
+                    ]
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "Nancy Vaughan",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Marikay Abuzuaiter",
+                    "roles": [
+                        "Mayor Pro Tem",
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Hugh Holston",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Jamilla Pinder",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Sharon Hightower",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 1"
+                    ]
+                },
+                {
+                    "name": "Goldie Wells",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 2"
+                    ]
+                },
+                {
+                    "name": "Zack Matheny",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 3"
+                    ]
+                },
+                {
+                    "name": "Nancy Hoffmann",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 4"
+                    ]
+                },
+                {
+                    "name": "Tammi Thurm",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 5"
+                    ]
+                }
+            ],
+            "notes": "Greensboro, NC operates under a Council-Manager form of government. The City Council consists of a Mayor and eight Council members. The Mayor and three Council members are elected at-large, while five are elected from districts. The information on elected officials is current as of June 2025."
+        },
+        "SEARCH_LINKS": {
+            "search_link_pointer": 1,
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "https://www.greensboro-nc.gov/government/city-council",
+                        "https://www.greensboro-nc.gov/",
+                        "https://www.greensboro-nc.gov/government/city-council/council-meetings",
+                        "https://www.greensboro-nc.gov/government/city-council/interact-with-city-council",
+                        "https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council",
+                        "https://www.greensboro-nc.gov/government/city-manager-s-office",
+                        "https://www.greensboro-nc.gov/government/boards-and-commissions",
+                        "https://www.greensboro-nc.gov/departments",
+                        "https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/",
+                        "https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission",
+                        "https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions",
+                        "https://www.greensboro-nc.gov/departments/planning",
+                        "https://www.greensboro-nc.gov/departments/budget-evaluation",
+                        "https://www.greensboro-nc.gov/Home/Components/News/News/20257/36"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {
+            "elapsed_times": [
+                10.356975793838501
+            ],
+            "total_elapsed_time_seconds": 10.356975793838501,
+            "average_elapsed_time_seconds": 10.356975793838501
+        },
+        "PROCESS_PAGE_CONTENT": {
+            "raw_records_by_llm": {
+                "google_gemini": {
+                    "Nancy Vaughan": [
+                        {
+                            "name": "Nancy Vaughan",
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "At Large"
+                            ],
+                            "phone_number": "336-373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Hugh Holston": [
+                        {
+                            "name": "Hugh Holston",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "At Large"
+                            ],
+                            "phone_number": "336-373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Tammi Thurm": [
+                        {
+                            "name": "Tammi Thurm",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": "336-373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Goldie Wells": [
+                        {
+                            "name": "Goldie Wells",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": "336-373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Zack Matheny": [
+                        {
+                            "name": "Zack Matheny",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": "336-373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Nancy Hoffmann": [
+                        {
+                            "name": "Nancy Hoffmann",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": "336-373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Jamilla Pinder": [
+                        {
+                            "name": "Jamilla Pinder",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": "336-373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Sharon Hightower": [
+                        {
+                            "name": "Sharon Hightower",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": "336-373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Marikay Abuzuaiter": [
+                        {
+                            "name": "Marikay Abuzuaiter",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [],
+                            "phone_number": "336-373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ]
+                },
+                "openai": {
+                    "Hugh Holston": [
+                        {
+                            "name": "Hugh Holston",
+                            "roles": [
+                                "Council Member At Large"
+                            ],
+                            "divisions": [
+                                "At Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Tammi Thurm": [
+                        {
+                            "name": "Tammi Thurm",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Goldie Wells": [
+                        {
+                            "name": "Goldie Wells",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Zack Matheny": [
+                        {
+                            "name": "Zack Matheny",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Nancy Hoffmann": [
+                        {
+                            "name": "Nancy Hoffmann",
+                            "roles": [
+                                "Council Member At Large"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Jamilla Pinder": [
+                        {
+                            "name": "Jamilla Pinder",
+                            "roles": [
+                                "Council Member At Large"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Sharon Hightower": [
+                        {
+                            "name": "Sharon Hightower",
+                            "roles": [
+                                "Council Member At Large"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Marikay Abuzuaiter": [
+                        {
+                            "name": "Marikay Abuzuaiter",
+                            "roles": [
+                                "Council Member At Large"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Nancy Vaughan": [
+                        {
+                            "name": "Nancy Vaughan",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ]
+                },
+                "together_ai": {
+                    "Nancy Vaughan": [
+                        {
+                            "name": "Nancy Vaughan",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Marikay Abuzuaiter": [
+                        {
+                            "name": "Marikay Abuzuaiter",
+                            "roles": [
+                                "At Large"
+                            ],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Hugh Holston": [
+                        {
+                            "name": "Hugh Holston",
+                            "roles": [
+                                "At Large"
+                            ],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Jamilla Pinder": [
+                        {
+                            "name": "Jamilla Pinder",
+                            "roles": [
+                                "District 1"
+                            ],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Sharon Hightower": [
+                        {
+                            "name": "Sharon Hightower",
+                            "roles": [
+                                "District 1"
+                            ],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Goldie Wells": [
+                        {
+                            "name": "Goldie Wells",
+                            "roles": [
+                                "District 2"
+                            ],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Zack Matheny": [
+                        {
+                            "name": "Zack Matheny",
+                            "roles": [
+                                "District 3"
+                            ],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Nancy Hoffmann": [
+                        {
+                            "name": "Nancy Hoffmann",
+                            "roles": [
+                                "At Large"
+                            ],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Tammi Thurm": [
+                        {
+                            "name": "Tammi Thurm",
+                            "roles": [
+                                "District 5"
+                            ],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ]
+                }
+            },
+            "records_by_llm": {
+                "google_gemini": {
+                    "Nancy Vaughan": [
+                        {
+                            "name": "Nancy Vaughan",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": "(336) 373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Hugh Holston": [
+                        {
+                            "name": "Hugh Holston",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": "(336) 373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Tammi Thurm": [
+                        {
+                            "name": "Tammi Thurm",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": "(336) 373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Goldie Wells": [
+                        {
+                            "name": "Goldie Wells",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": "(336) 373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Zack Matheny": [
+                        {
+                            "name": "Zack Matheny",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": "(336) 373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Nancy Hoffmann": [
+                        {
+                            "name": "Nancy Hoffmann",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": "(336) 373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Jamilla Pinder": [
+                        {
+                            "name": "Jamilla Pinder",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": "(336) 373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Sharon Hightower": [
+                        {
+                            "name": "Sharon Hightower",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": "(336) 373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Marikay Abuzuaiter": [
+                        {
+                            "name": "Marikay Abuzuaiter",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": "(336) 373-2489",
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ]
+                },
+                "openai": {
+                    "Hugh Holston": [
+                        {
+                            "name": "Hugh Holston",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "At-Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Tammi Thurm": [
+                        {
+                            "name": "Tammi Thurm",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Goldie Wells": [
+                        {
+                            "name": "Goldie Wells",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Zack Matheny": [
+                        {
+                            "name": "Zack Matheny",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "District 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Nancy Hoffmann": [
+                        {
+                            "name": "Nancy Hoffmann",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Jamilla Pinder": [
+                        {
+                            "name": "Jamilla Pinder",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Sharon Hightower": [
+                        {
+                            "name": "Sharon Hightower",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Marikay Abuzuaiter": [
+                        {
+                            "name": "Marikay Abuzuaiter",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Nancy Vaughan": [
+                        {
+                            "name": "Nancy Vaughan",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.greensboro-nc.gov/government/city-council",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ]
+                },
+                "together_ai": {
+                    "Nancy Vaughan": [
+                        {
+                            "name": "Nancy Vaughan",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Marikay Abuzuaiter": [
+                        {
+                            "name": "Marikay Abuzuaiter",
+                            "roles": [],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Hugh Holston": [
+                        {
+                            "name": "Hugh Holston",
+                            "roles": [],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Jamilla Pinder": [
+                        {
+                            "name": "Jamilla Pinder",
+                            "roles": [],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Sharon Hightower": [
+                        {
+                            "name": "Sharon Hightower",
+                            "roles": [],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Goldie Wells": [
+                        {
+                            "name": "Goldie Wells",
+                            "roles": [],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Zack Matheny": [
+                        {
+                            "name": "Zack Matheny",
+                            "roles": [],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Nancy Hoffmann": [
+                        {
+                            "name": "Nancy Hoffmann",
+                            "roles": [],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ],
+                    "Tammi Thurm": [
+                        {
+                            "name": "Tammi Thurm",
+                            "roles": [],
+                            "divisions": [
+                                "Greensboro, NC"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.greensboro-nc.gov/government/city-council"
+                        }
+                    ]
+                }
+            }
+        },
+        "MERGE_RECORDS_WITHIN_LLM": {
+            "people_by_llm": {
+                "google_gemini": [
+                    {
+                        "name": "Nancy Vaughan",
+                        "roles": [
+                            "Mayor"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "(336) 373-2489",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Hugh Holston",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "(336) 373-2489",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Tammi Thurm",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "District 5"
+                        ],
+                        "phone_number": "(336) 373-2489",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Goldie Wells",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "District 2"
+                        ],
+                        "phone_number": "(336) 373-2489",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Zack Matheny",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "District 3"
+                        ],
+                        "phone_number": "(336) 373-2489",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Nancy Hoffmann",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "(336) 373-2489",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jamilla Pinder",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "(336) 373-2489",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Sharon Hightower",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "(336) 373-2489",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Marikay Abuzuaiter",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "(336) 373-2489",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "openai": [
+                    {
+                        "name": "Hugh Holston",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Tammi Thurm",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "District 5"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Goldie Wells",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "District 2"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Zack Matheny",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "District 3"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Nancy Hoffmann",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jamilla Pinder",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Sharon Hightower",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Marikay Abuzuaiter",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Nancy Vaughan",
+                        "roles": [
+                            "Mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.greensboro-nc.gov/government/city-council",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "together_ai": [
+                    {
+                        "name": "Nancy Vaughan",
+                        "roles": [
+                            "Mayor"
+                        ],
+                        "divisions": [
+                            "Greensboro, NC"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Marikay Abuzuaiter",
+                        "roles": [],
+                        "divisions": [
+                            "Greensboro, NC"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Hugh Holston",
+                        "roles": [],
+                        "divisions": [
+                            "Greensboro, NC"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Jamilla Pinder",
+                        "roles": [],
+                        "divisions": [
+                            "Greensboro, NC"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Sharon Hightower",
+                        "roles": [],
+                        "divisions": [
+                            "Greensboro, NC"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Goldie Wells",
+                        "roles": [],
+                        "divisions": [
+                            "Greensboro, NC"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Zack Matheny",
+                        "roles": [],
+                        "divisions": [
+                            "Greensboro, NC"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Nancy Hoffmann",
+                        "roles": [],
+                        "divisions": [
+                            "Greensboro, NC"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Tammi Thurm",
+                        "roles": [],
+                        "divisions": [
+                            "Greensboro, NC"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                        "sources": [
+                            "https://www.greensboro-nc.gov/government/city-council"
+                        ],
+                        "updated_at": ""
+                    }
+                ]
+            }
+        },
+        "MERGE_RECORDS_ACROSS_LLMS": {
+            "people": [
+                {
+                    "name": "Nancy Vaughan",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.greensboro-nc.gov/government/city-council",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                    "sources": [
+                        "https://www.greensboro-nc.gov/government/city-council"
+                    ],
+                    "updated_at": "2025-09-28T02:09:29+00:00"
+                },
+                {
+                    "name": "Jamilla Pinder",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.greensboro-nc.gov/government/city-council",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                    "sources": [
+                        "https://www.greensboro-nc.gov/government/city-council"
+                    ],
+                    "updated_at": "2025-09-28T02:09:29+00:00"
+                },
+                {
+                    "name": "Marikay Abuzuaiter",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.greensboro-nc.gov/government/city-council",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                    "sources": [
+                        "https://www.greensboro-nc.gov/government/city-council"
+                    ],
+                    "updated_at": "2025-09-28T02:09:29+00:00"
+                },
+                {
+                    "name": "Nancy Hoffmann",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.greensboro-nc.gov/government/city-council",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                    "sources": [
+                        "https://www.greensboro-nc.gov/government/city-council"
+                    ],
+                    "updated_at": "2025-09-28T02:09:29+00:00"
+                },
+                {
+                    "name": "Sharon Hightower",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.greensboro-nc.gov/government/city-council",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                    "sources": [
+                        "https://www.greensboro-nc.gov/government/city-council"
+                    ],
+                    "updated_at": "2025-09-28T02:09:29+00:00"
+                },
+                {
+                    "name": "Hugh Holston",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.greensboro-nc.gov/government/city-council",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                    "sources": [
+                        "https://www.greensboro-nc.gov/government/city-council"
+                    ],
+                    "updated_at": "2025-09-28T02:09:29+00:00"
+                },
+                {
+                    "name": "Goldie Wells",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 2"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.greensboro-nc.gov/government/city-council",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                    "sources": [
+                        "https://www.greensboro-nc.gov/government/city-council"
+                    ],
+                    "updated_at": "2025-09-28T02:09:29+00:00"
+                },
+                {
+                    "name": "Zack Matheny",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 3"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.greensboro-nc.gov/government/city-council",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                    "sources": [
+                        "https://www.greensboro-nc.gov/government/city-council"
+                    ],
+                    "updated_at": "2025-09-28T02:09:29+00:00"
+                },
+                {
+                    "name": "Tammi Thurm",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 5"
+                    ],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.greensboro-nc.gov/government/city-council",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+                    "sources": [
+                        "https://www.greensboro-nc.gov/government/city-council"
+                    ],
+                    "updated_at": "2025-09-28T02:09:29+00:00"
+                }
+            ],
+            "agreement_score": 81.14,
+            "disagreements": {
+                "Nancy Vaughan": [
+                    {
+                        "field": "divisions",
+                        "merged_value": "",
+                        "llm_values": {
+                            "google_gemini": "At-Large",
+                            "openai": "(empty)",
+                            "together_ai": "Greensboro, NC"
+                        },
+                        "disagreement_score": 0.8
+                    },
+                    {
+                        "field": "phone_number",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(336) 373-2489",
+                            "openai": "(empty)",
+                            "together_ai": "(empty)"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Hugh Holston": [
+                    {
+                        "field": "phone_number",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(336) 373-2489",
+                            "openai": "(empty)"
+                        },
+                        "disagreement_score": 0.1619047619047619
+                    }
+                ],
+                "Tammi Thurm": [
+                    {
+                        "field": "phone_number",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(336) 373-2489",
+                            "openai": "(empty)"
+                        },
+                        "disagreement_score": 0.1619047619047619
+                    }
+                ],
+                "Goldie Wells": [
+                    {
+                        "field": "phone_number",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(336) 373-2489",
+                            "openai": "(empty)"
+                        },
+                        "disagreement_score": 0.1619047619047619
+                    }
+                ],
+                "Zack Matheny": [
+                    {
+                        "field": "phone_number",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(336) 373-2489",
+                            "openai": "(empty)"
+                        },
+                        "disagreement_score": 0.1619047619047619
+                    }
+                ],
+                "Nancy Hoffmann": [
+                    {
+                        "field": "phone_number",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(336) 373-2489",
+                            "openai": "(empty)"
+                        },
+                        "disagreement_score": 0.1619047619047619
+                    }
+                ],
+                "Jamilla Pinder": [
+                    {
+                        "field": "phone_number",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(336) 373-2489",
+                            "openai": "(empty)"
+                        },
+                        "disagreement_score": 0.1619047619047619
+                    }
+                ],
+                "Sharon Hightower": [
+                    {
+                        "field": "phone_number",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(336) 373-2489",
+                            "openai": "(empty)"
+                        },
+                        "disagreement_score": 0.1619047619047619
+                    }
+                ],
+                "Marikay Abuzuaiter": [
+                    {
+                        "field": "phone_number",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(336) 373-2489",
+                            "openai": "(empty)"
+                        },
+                        "disagreement_score": 0.1619047619047619
+                    }
+                ]
+            },
+            "missing_people": [
+                {
+                    "name": "Hugh Holston",
+                    "missing_from_llms": [
+                        "together_ai"
+                    ],
+                    "found_in_llms": [
+                        "google_gemini",
+                        "openai"
+                    ]
+                },
+                {
+                    "name": "Tammi Thurm",
+                    "missing_from_llms": [
+                        "together_ai"
+                    ],
+                    "found_in_llms": [
+                        "google_gemini",
+                        "openai"
+                    ]
+                },
+                {
+                    "name": "Goldie Wells",
+                    "missing_from_llms": [
+                        "together_ai"
+                    ],
+                    "found_in_llms": [
+                        "google_gemini",
+                        "openai"
+                    ]
+                },
+                {
+                    "name": "Zack Matheny",
+                    "missing_from_llms": [
+                        "together_ai"
+                    ],
+                    "found_in_llms": [
+                        "google_gemini",
+                        "openai"
+                    ]
+                },
+                {
+                    "name": "Nancy Hoffmann",
+                    "missing_from_llms": [
+                        "together_ai"
+                    ],
+                    "found_in_llms": [
+                        "google_gemini",
+                        "openai"
+                    ]
+                },
+                {
+                    "name": "Jamilla Pinder",
+                    "missing_from_llms": [
+                        "together_ai"
+                    ],
+                    "found_in_llms": [
+                        "google_gemini",
+                        "openai"
+                    ]
+                },
+                {
+                    "name": "Sharon Hightower",
+                    "missing_from_llms": [
+                        "together_ai"
+                    ],
+                    "found_in_llms": [
+                        "google_gemini",
+                        "openai"
+                    ]
+                },
+                {
+                    "name": "Marikay Abuzuaiter",
+                    "missing_from_llms": [
+                        "together_ai"
+                    ],
+                    "found_in_llms": [
+                        "google_gemini",
+                        "openai"
+                    ]
+                }
+            ],
+            "validation_errors": []
+        },
+        "CLEANUP": {},
+        "RETRY": {},
+        "DONE": {}
+    }
+}
