@@ -90,6 +90,8 @@ print(attr)
 
 [tasks.pipeline-run]
 run = """
+UID=$(id -u) \
+GID=$(id -g) \
 docker compose -f docker-compose.yml run --rm civicpatch poetry run \
   python src/cli.py \
     --jurisdiction-id "{{ option(name="jurisdiction-id") }}" \

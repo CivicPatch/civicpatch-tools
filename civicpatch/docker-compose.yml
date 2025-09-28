@@ -16,6 +16,7 @@ services:
     image: ghcr.io/civicpatch/civicpatch:latest
     ports:
       - "8000:8000"
+    user: "${UID}:${GID}"
     volumes:
       - ../data:/app/data
       - ../data_source:/app/data_source
