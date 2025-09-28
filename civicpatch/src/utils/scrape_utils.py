@@ -29,7 +29,8 @@ async def scrape(website_url, options=None):
         str: The HTML content of the website.
     """
     async with async_playwright() as playwright:
-        browser = await playwright.chromium.launch(headless=False)
+        browser = await playwright.chromium.launch(headless=False,
+                                                   args=["--no-sandbox"])
         context = await browser.new_context()
         page = await context.new_page()
 
