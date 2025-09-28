@@ -90,7 +90,7 @@ print(attr)
 
 [tasks.pipeline-run]
 run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch poetry run \
+docker compose -f docker-compose.yml run --rm civicpatch poetry run \
   python src/cli.py \
     --jurisdiction-id "{{ option(name="jurisdiction-id") }}" \
     --name "{{ option(name="name") }}" \
