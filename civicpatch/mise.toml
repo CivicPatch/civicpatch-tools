@@ -1,14 +1,14 @@
 [env]
 _.file = ".env"
-[tasks.pipeline]
+#[tasks.pipeline]
 # TODO
-run = "docker compose run --rm civicpatch poetry run python main.py pipeline --state"
-[tasks.unit]
-run = "docker compose run --rm civicpatch poetry run pytest -s tests/unit"
-[tasks.integration]
-run = "docker compose run --rm civicpatch poetry run pytest -s tests/integration"
-[tasks.inttest]
-run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s -vv tests/integration/services/together_ai/test_llm.py"
+#run = "docker compose run --rm civicpatch poetry run python main.py pipeline --state"
+#[tasks.unit]
+#run = "docker compose run --rm civicpatch poetry run pytest -s tests/unit"
+#[tasks.integration]
+#run = "docker compose run --rm civicpatch poetry run pytest -s tests/integration"
+#[tasks.inttest]
+#run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s -vv tests/integration/services/together_ai/test_llm.py"
 
 ###################################################
 ## 🚀✨ DEVELOPMENT TASKS ✨🚀 
@@ -86,4 +86,13 @@ else:
 
 print(attr)
 "
+"""
+
+[tasks.pipeline-run]
+run = """
+docker compose -f docker-compose.development.yml run --rm civicpatch poetry run \
+  python src/cli.py \
+    --jurisdiction-id "{{ option(name="jurisdiction-id") }}" \
+    --name "{{ option(name="name") }}" \
+    --url "{{ option(name="url") }}"
 """
