@@ -8,7 +8,7 @@
   start_date: ''
   end_date: ''
   image: https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/nc/greensboro/64d5a566a1a6.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council
