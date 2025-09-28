@@ -30,7 +30,7 @@ async def scrape(website_url, options=None):
     """
     async with async_playwright() as playwright:
         browser = await playwright.chromium.launch(headless=False,
-                                                   args=["--no-sandbox"])
+                                                   args=["--disable-dev-shm-usage"])
         context = await browser.new_context()
         page = await context.new_page()
 
