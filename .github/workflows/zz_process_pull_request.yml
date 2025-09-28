@@ -99,7 +99,7 @@ jobs:
       - name: Upload images to CDN
         if: ${{ inputs.upload_images == true }} 
         env:
-          FRIENDLY_STORAGE_HOST: https://cdn.civicpatch.org
+          FRIENDLY_STORAGE_HOST: ${{ vars.FRIENDLY_STORAGE_HOST }}
           STORAGE_ENDPOINT: ${{ secrets.STORAGE_ENDPOINT }}
           STORAGE_ACCESS_KEY_ID: ${{ secrets.STORAGE_ACCESS_KEY_ID }}
           STORAGE_SECRET_ACCESS_KEY: ${{ secrets.STORAGE_SECRET_ACCESS_KEY }}
