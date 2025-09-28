@@ -1,6 +1,7 @@
 from datetime import datetime
-from utils import id_utils
-import utils.config_utils as config_utils
+from typing import List
+from utils import id_utils, config_utils
+from schemas import ResearchedPerson
 
 def research_municipality_prompt(jurisdiction_id: str, municipality_name: str):
     """
@@ -57,7 +58,7 @@ def research_municipality_prompt(jurisdiction_id: str, municipality_name: str):
     """
 
 
-def municipality_officials_prompt(government_type, people_hint):
+def municipality_officials_prompt(government_type: str, people_hint: List[ResearchedPerson]):
     """
     Generate a prompt for extracting municipality officials.
     """
@@ -66,7 +67,7 @@ def municipality_officials_prompt(government_type, people_hint):
     current_date = datetime.now().strftime("%Y-%m-%d")
 
     person_name = None
-    maybe_target_people = [person.get("name") for person in people_hint if person.get("name")]
+    maybe_target_people = [person.name for person in people_hint if person.name]
 
     if len(maybe_target_people) == 1:
         person_name = maybe_target_people[0]

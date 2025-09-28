@@ -1,4 +1,5 @@
-from schemas import PipelineContext, PipelineStatus
+from typing import List
+from schemas import PipelineContext, PipelineStatus, ResearchMunicipalityStep, ResearchedPerson
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 import utils.config_utils as config_utils
@@ -28,20 +29,23 @@ def research_municipality(context: PipelineContext):
 
     government_types = config_utils.get_government_types() 
     role_configs = government_types[government_type].get("roles", [])
-    elected_officials = people_utils.filter_people_by_roles(role_configs, people)
+    researched_people: List[ResearchedPerson] = [ResearchedPerson.model_validate(p) if isinstance(p, dict) else p for p in people]
+    target_people = people_utils.filter_people_by_roles(role_configs, researched_people)
+
+    result = ResearchMunicipalityStep(
+        government_type=government_type,
+        people=people,
+        elected_officials=target_people,
+        notes=response.get("notes"),
+    )
 
     return {
         "progress": {
-            "required_data": max(MINIMUM_ELECTED_OFFICIALS_NUM, len(elected_officials)),
+            "required_data": max(MINIMUM_ELECTED_OFFICIALS_NUM, len(target_people)),
             "current_data": 0,  # Default current data count
         },
         "steps": {
             **context["steps"],
-            PipelineStatus.RESEARCH_MUNICIPALITY.value: {
-                "government_type": response.get("government_type"),
-                "people": people,
-                "elected_officials": elected_officials,
-                "notes": response.get("notes"),
-            }
+            PipelineStatus.RESEARCH_MUNICIPALITY.value: result.model_dump()
         }
     }

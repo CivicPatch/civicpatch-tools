@@ -1,19 +1,21 @@
 ---
 divisions:
+  ward:
+    has_geographic_area: true
+    aliases:
+      - council ward
+      - ward council
+  district:
+    has_geographic_area: true
+    aliases:
+      - council district
+      - district council
   at-large:
     aliases: 
       - citywide
       - city-wide
       - at large
       - city wide
-  ward:
-    aliases:
-      - council ward
-      - ward council
-  district:
-    aliases:
-      - council district
-      - district council
   position:
     aliases:
       - council position

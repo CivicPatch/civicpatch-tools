@@ -9,9 +9,11 @@ from schemas import (
   PeopleArrayLLMResponseSchema, 
   RecordsByLLM,
   ProcessPageContentStep,
-  OtherNamesByCanonicalName
+  OtherNamesByCanonicalName,
+  ResearchMunicipalityStep,
+  ResearchedPerson
 )
-from utils import merge_utils, data_path_utils, config_utils, url_utils
+from utils import merge_utils, data_path_utils, config_utils, url_utils, people_utils
 from typing import List, Any, Dict, Tuple
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
@@ -19,6 +21,7 @@ import services.openai.llm as openai_llm
 import services.openai.prompts as openai_prompt
 import services.together_ai.llm as together_ai_llm
 import services.together_ai.prompts as together_ai_prompt
+import phonenumbers
 
 LLMS = [
     {
@@ -55,8 +58,16 @@ def process_page_content(
     print(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process['url']}")
 
     jurisdiction_id = context["jurisdiction_id"]
-    government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
-    people_hint = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["elected_officials"]
+    municipality_research: ResearchMunicipalityStep = ResearchMunicipalityStep.model_validate(
+        context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]
+    )
+    government_type = municipality_research.government_type
+
+    # Only care about collecting divisions that have geographic areas
+    divisions = config_utils.get_divisions()
+    divisions_with_geo = [d for d, v in divisions.items() if v.get("has_geographic_area", False)]
+
+    people_hint: List[ResearchedPerson] = municipality_research.elected_officials
 
     cache_path = data_path_utils.get_cache_path(jurisdiction_id)
     content_file_path = os.path.join(cache_path, page_to_process["folder_name"], "preprocessed.md")
@@ -75,13 +86,24 @@ def process_page_content(
     updated_names, updated_records_by_llm = update_records_by_llm(
         names, updated_processed_data.records_by_llm, responses
     )
-    updated_processed_data.records_by_llm = updated_records_by_llm
+    updated_processed_data.raw_records_by_llm = updated_records_by_llm
 
-    roles = config_utils.get_all_roles_by_government_type(government_type)
+    for llm, people_by_name in updated_records_by_llm.items():
+        for name, people in people_by_name.items():
+            normalized_people = [normalize_record(person, government_type) for person in people]
+            updated_processed_data.records_by_llm[llm][name] = normalized_people
+            updated_processed_data.raw_records_by_llm[llm][name] = people  # Keep raw records as is
+
+    roles = config_utils.get_roles_by_government_type(government_type)
     target_role = config_utils.get_head_of_government_role(government_type)
-    
+    target_divisions = get_target_divisions(divisions_with_geo, people_hint)
+
     updated_progress = calculate_progress(
-        context["progress"].copy(), updated_processed_data.records_by_llm, target_role, roles
+        context["progress"].copy(), 
+        updated_processed_data.records_by_llm, 
+        roles,
+        target_role, 
+        target_divisions
     )
 
     updated_links = []
@@ -103,6 +125,44 @@ def process_page_content(
             PipelineStatus.PROCESS_PAGE_CONTENT.value: updated_processed_data.model_dump()
         }
     }
+
+def normalize_record(record: LLMPerson, government_type: str) -> LLMPerson:
+    """
+    Normalize roles and divisions in an LLMPerson record.
+    """
+    normalized_roles = people_utils.normalize_roles(government_type, record.roles)
+    normalized_divisions = people_utils.normalize_divisions(record.divisions)
+
+    try:
+        phone_number = phonenumbers.parse(record.phone_number, "US") if record.phone_number else None
+        normalized_phone_number = phonenumbers.format_number(phone_number, phonenumbers.PhoneNumberFormat.NATIONAL) if phone_number and phonenumbers.is_valid_number(phone_number) else None
+    except:
+        normalized_phone_number = None
+
+    return LLMPerson(
+        name=record.name,
+        roles=normalized_roles,
+        divisions=normalized_divisions,
+        phone_number=normalized_phone_number,
+        email=record.email,
+        website=record.website,
+        start_date=record.start_date,
+        end_date=record.end_date,
+        image=record.image,
+        source=record.source
+    )
+
+def get_target_divisions(divisions_with_geo: List[str], people_hint: List[ResearchedPerson]) -> List[str]:
+    """
+    Extract target divisions from people hint.
+    """
+    divisions = set()
+    for person in people_hint:
+        for division in person.divisions:
+            if division and division.strip() and any(dg in division.lower() for dg in divisions_with_geo):
+                divisions.add(division.strip().lower())
+    print("result divisions", divisions)
+    return list(divisions)
 
 def update_records_by_llm(
     names: OtherNamesByCanonicalName,
@@ -129,7 +189,7 @@ def process_with_llms(
     jurisdiction_id: str,
     government_type: str,
     content: str,
-    people_hint: List[Any]
+    people_hint: List[ResearchedPerson]
 ) -> Dict[str, List[LLMPerson]]:
     """
     Run the LLM prompt to process the page content.
@@ -162,47 +222,56 @@ def process_with_llms(
 def calculate_progress(
     progress: Dict[str, Any],
     updated_records_by_llm: RecordsByLLM,
+    roles: List[str],
     target_role: str,
-    roles: List[str]
+    target_divisions: List[str]
 ) -> Dict[str, Any]:
     """
     Update the progress based on the processed data.
     """
-    lengths = []
-    target_role_found_with_an_llm = []
+    llm_people_found_lengths = []
+    target_role_found_with_an_llm = set()
+    divisions_found_with_an_llm = set()
+    num_target_divisions = len(target_divisions)
 
     for llm, people_by_name in updated_records_by_llm.items():
-        filtered = [
-            p for p in people_by_name.values()
-            if has_role_and_contact_info(roles, p)
+        # Only count a person if any of their records has both a role and contact info
+        valid_people = [
+            person_list for person_list in people_by_name.values()
+            if has_role_and_contact_info(roles, person_list)
         ]
-        lengths.append(len(filtered))
-        print(f"{llm}: {len(filtered)} people with roles and contact info")
+        llm_people_found_lengths.append(len(valid_people))
 
-        # Flatten the nested roles structure and check for target role
-        all_roles = [
-            role.strip().lower()
-            for person_records in filtered
-            for person in person_records
-            for role in person.roles
-        ]
-        
-        has_target_role = target_role is None or target_role == "" or target_role.lower() in all_roles
-        if has_target_role:
-            target_role_found_with_an_llm.append(llm)
+        if target_role:
+            # Check for target role among valid people
+            all_roles = {role.strip().lower() for person_list in valid_people for person in person_list for role in person.roles}
+            if target_role.strip().lower() in all_roles:
+                target_role_found_with_an_llm.add(llm)
+        else:
+            target_role_found_with_an_llm.add(llm)
 
-    # Gather count of each length
-    current_progress = 0
-    # Find the largest value that appears at least twice
-    sorted_lengths = sorted(lengths, reverse=True)
-    if len(sorted_lengths) >= 2:
-        current_progress = sorted_lengths[1]
-    elif sorted_lengths:
-        current_progress = sorted_lengths[0]
+        # Count valid people with non-empty divisions
+        if len(target_divisions) > 0:
+            people_with_divisions = [
+                person_list for person_list in valid_people
+                if any(person.divisions and any(d.strip() for d in person.divisions) for person in person_list)
+            ]
+            if len(people_with_divisions) >= num_target_divisions:
+                divisions_found_with_an_llm.add(llm)
+        else:
+            divisions_found_with_an_llm.add(llm)
+
+    
+    # Following are only true if at least 2 LLMs found enough data
+    progress["has_target_role"] = len(target_role_found_with_an_llm) >= 2
+    progress["has_target_divisions"] = len(divisions_found_with_an_llm) >= 2
+
+    sorted_lengths = sorted(llm_people_found_lengths, reverse=True)
+    if len(sorted_lengths) > 1:
+        progress["current_data"] = sorted_lengths[1]
     else:
-        current_progress = 0
-    progress["current_data"] = current_progress
-    progress["has_target_role"] = len(target_role_found_with_an_llm) > 1
+        progress["current_data"] = 0
+
     return progress
 
 def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> bool:

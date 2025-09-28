@@ -27,7 +27,7 @@ Roles and divisions are standardized via the rules listed under [./config](./con
    You will need to collaborate with the crudder maintainer to use the `CRUDDER_SHARED_TOKEN`.
    See: [CRUDDER_SHARED_TOKEN](#crudder_shared_token)
 3. Under the `civicpatch` directory, run:
-  a. (with powershell), run: `docker compose pull ghcr.io/civicpatch/civicpatch:latest`
+  a. (with powershell), run: `docker pull ghcr.io/civicpatch/civicpatch:latest`
     This may take a while.
   b. (with powershell), run: `docker compose up`
 4. You're done. Open up a browser at `http://localhost:8000`
@@ -40,7 +40,7 @@ Roles and divisions are standardized via the rules listed under [./config](./con
    You will need to collaborate with the crudder maintainer to use the `CRUDDER_SHARED_TOKEN`.
    See: [CRUDDER_SHARED_TOKEN](#crudder_shared_token)
 3. Under the `civicpatch` directory, run:
-  a. (with a terminal), run: `docker compose pull ghcr.io/civicpatch/civicpatch:latest`
+  a. (with a terminal), run: `docker pull ghcr.io/civicpatch/civicpatch:latest`
     This may take a while.
   b. (with terminal), run: `docker compose up`
 4. You're done. Open up a browser at `http://localhost:8000`
@@ -51,12 +51,12 @@ Roles and divisions are standardized via the rules listed under [./config](./con
 1. Download [docker](https://www.docker.com/products/docker-desktop/)
 2. Download [mise](https://mise.jdx.dev/getting-started.html)
   2.a. Run mise install under the `civicpatch` directory
-3. Set up the necessary environment variables under a new `civicpatch/.env` file.
+3. Set up the necessar environment variables under a new `civicpatch/.env` file.
    See [.env.example] for the necessary variables.
    You will need to collaborate with the crudder maintainer to use the `CRUDDER_SHARED_TOKEN`.
    See: [CRUDDER_SHARED_TOKEN](#crudder_shared_token)
 4. Under the `civicpatch/` directory, run `mise dev`. This will take a while if it's the first time.
-5. You're done. Open up a browser at `http://localhost:8000`
+5. You're done. yOpen up a browser at `http://localhost:8000`
 
 ### Commands
 
