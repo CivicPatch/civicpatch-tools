@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html class="js no-flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths wf-muli-n3-active wf-muli-n4-active wf-muli-i4-active wf-muli-n7-active wf-active has-webFonts" lang="en">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-type"/>
+  <!-- Google Tag Manager for GA4 -->
+  <!-- End Google Tag Manager for GA4 -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="rgb(0, 109, 178)" name="theme-color"/>
+  <title>
+   Staff Directory • Amanda Boyd
+  </title>
+  <!--[if IE 6]><script language="JavaScript" type="text/javascript"> var isie6 = true; </script><![endif]-->
+  <!--[if IE 7]><script language="JavaScript" type="text/javascript"> var isie7 = true; </script><![endif]-->
+  <!--[if IE 8]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+  <!--[if IE 9]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+  <script type="text/javascript">
+   window.Pages = window.Pages || {};
+		// FrontEnd RWD initialization
+		window.Pages.rwdReady = $.Deferred();
+		window.Pages.toolBarDeferred = $.Deferred();
+		window.Pages.rwdSetupComplete = $.Deferred();
+		window.Pages.megaMenuLoaded = $.Deferred();
+		window.Pages.angularToolbarComplete = $.Deferred();
+		window.Pages.frontEndToolbarComplete = $.Deferred();
+  </script>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+  <!-- Dynamic Header Scripts -->
+  <!--Reference Stylesheet-->
+  <!--Dynamic Header Styles-->
+  <!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="/App_Themes/ie8.css"><![endif]-->
+  <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/App_Themes/ie7.css"><![endif]-->
+  <!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/App_Themes/ie6.css"><![endif]-->
+  <!--[if lt IE 9]><script type="text/javascript" src="/Scripts/html5.js"></script><![endif]-->
+ </head>
+ <body class="wide cpTextResizeOn doneLoading" style="cursor: default;">
+  Loading
+  <script>
+   jQuery(document).click(function (event) {
+	var target = jQuery(event.target);
+	if (target.attr('src') && target.parents('.image').length && target.parents('.widget').length) {
+		var text = target.attr('title');
+		
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Image',
+				eventAction: 'Image - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.is('button') || target.hasClass('button') || target.parents().hasClass('button')) {
+		var text = "";
+		if (target.parents('.button')[0]) {
+			text = target.parents('.button').first().text();
+		} else if (target.text().length) {
+			text = target.text();
+		} else if (target.attr('title').length) {
+			text = target.attr('title');
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Button',
+				eventAction: 'Button - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetCustomHtml').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Custom Html',
+				eventAction: 'Custom Html Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.editor').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Editor',
+				eventAction: 'Editor Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.GraphicLinks').length) {
+		var text = "";
+		var targetGraphicLink = target;
+		if (target.hasClass('widgetGraphicLinksLink')) {
+			targetGraphicLink = jQuery(target.children()[0]);
+		}
+		if (targetGraphicLink.hasClass('text')) {
+			text = targetGraphicLink.text();
+		} else if (targetGraphicLink.attr('src').length) {
+			if (targetGraphicLink.attr('alt').length) {
+				text = targetGraphicLink.attr('alt');
+			} else {
+				text = targetGraphicLink.attr('src');
+			}
+		} else {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Graphic Links',
+				eventAction: 'Graphic Link - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.InfoAdvanced').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Info Advanced',
+				eventAction: 'Info Advanced Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.list').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'List',
+				eventAction: 'List Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.megaMenuItem').length || target.parents('.topMenuItem').length) {
+		var megaMenuText = jQuery('.topMenuItem.mouseover').find('span').text();
+		var breadCrumbs = [];
+		jQuery('.breadCrumbs > li').each(function () {
+			 breadCrumbs.push(this.textContent);
+		});
+		var pageTitle = breadCrumbs.join('>');
+		var subTitleText = target.parents('.megaMenuItem').children('.widgetTitle').children().text();
+		var text = "";
+		if (pageTitle) {
+			text += pageTitle + " | ";
+		} else {
+			text += document.title + ' - ';
+		}
+		if (target.text() == "" && megaMenuText == "") {
+			text += "N/A";
+		} else if (target.text().length && megaMenuText.length) {
+			if (megaMenuText == target.text()) {
+				text += megaMenuText;
+			} else {
+				text += megaMenuText + " - " + subTitleText + " - " + target.text();
+			}
+		} else if (target.text() == "") {
+			text += megaMenuText;
+		} else {
+			text += target.text();
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Mega Menu',
+				eventAction: 'Mega Menu : ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetNewsFlash').length && target.parents('.widgetItem').length) {
+		var text = jQuery(target.parents('.widgetItem')[0]).find('.widgetTitle').children().text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'News Flash',
+				eventAction: 'News Flash - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.hasClass('widgetQuickLinksLink') || target.find('.widgetQuickLinksLink').length) {
+		var text = target.text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Quick Links',
+				eventAction: 'Quick Links - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.attr('src') && target.parents('.cpSlideshow').length) {
+		var text = target.attr('title');
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Slideshow',
+				eventAction: 'Slideshow - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetText').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Text',
+				eventAction: 'Text Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+});
+  </script>
+  Skip to Main Content
+  <div class="outer-wrap" id="outer-wrap">
+   <div class="inner-wrap" id="inner-wrap">
+    <!-- Begin Signed Out Bar -->
+    Create a Website Account
+    - Manage notification subscriptions, save form progress and more.
+    <!-- End Signed Out Bar -->
+    <div id="bodyWrapper" style="padding-top: 35px;">
+     <div data-cprole="structuralContainer" id="bodyContainerTS">
+      <!-- Header Container -->
+      <!--
+-->
+      <script defer="" type="text/javascript">
+       $(document).ready(function () {
+			try {
+				$(".widgetSearchButton.widgetSearchButtondb7f19c9-0cc6-4262-a9f0-c67d9d876b25").click(function (e) {
+				e.preventDefault();
+					if (false||$("#ysnSearchOnlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25").is(':checked'))
+					{
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), Number(0));
+					}
+					else {
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), 0);
+					}
+			});
+			$("#searchFielddb7f19c9-0cc6-4262-a9f0-c67d9d876b25").keypress(function (e) {
+				if (window.clipboardData) {
+					if (e.keyCode === 13) {
+						if ($("#ysnSearchOnlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				} else {
+					if (e.which === 13) {
+						if ($("#ysnSearchOnlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				}
+				return true;
+			});
+
+				if (true) {
+					var currentRequest = null;
+					var $searchField = $("#searchFielddb7f19c9-0cc6-4262-a9f0-c67d9d876b25").autocomplete({
+						source: function (request, response) {
+							currentRequest = $.ajax({
+								url: '/Search/AutoComplete' + ($("#ysnSearchOnlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25").is(':checked') || false? '?departmentId=0' : ''),
+								dataType: "json",
+								timeout: 10000,
+								beforeSend: function () {
+									if (currentRequest != null) {
+										currentRequest.abort();
+									}
+								},
+								data:
+								{
+									term: request.term,
+								},
+								success: function (data) {
+									response(data);
+									$('.autoCompleteError').remove();
+								},
+								error: function (xmlhttprequest, textstatus, message) {
+									if (textstatus === "timeout") {
+										if ($("#searchFielddb7f19c9-0cc6-4262-a9f0-c67d9d876b25").siblings('.autoCompleteError').length == 0)
+											$('<span class="autoCompleteError"><p class="alert error">Search autocomplete is currently not responding. Please try again later.</p></span>').insertAfter($("#searchFielddb7f19c9-0cc6-4262-a9f0-c67d9d876b25"));
+									}
+								}
+							});
+						},
+						html: true,
+						delay: 500,
+						select: function (event, ui) {
+							$(this).val(ui.item.value);
+							$(this).next().click();
+						}
+					});
+
+					$searchField.data("ui-autocomplete")._renderItem = function (ul, item) {
+						return $("<li class=\"itemList\"></li>")
+							.data("ui-autocomplete-item", item)
+							.append("<a>" + item.label + "</a>")
+							.appendTo(ul);
+					};
+}
+}
+			catch(e) {} //we're going to eat this error. Autocomplete won't work but we dont wan't to break anything else on the page.
+		});
+      </script>
+      <!-- For the button right and inside -->
+      <style scoped="">
+       .widgetSearch ::-webkit-input-placeholder {
+		color: #000000;
+	  }
+		.widgetSearch :-moz-placeholder { /* Firefox 18- */
+	   color: #000000;
+	}
+		.widgetSearch ::-moz-placeholder {  /* Firefox 19+ */
+	   color: #000000;
+	}
+	.widgetSearch :-ms-input-placeholder {
+	   color: #000000;
+	}
+	
+
+	.widgetSearch .widgetBody .widgetSearchBoxdb7f19c9-0cc6-4262-a9f0-c67d9d876b25
+	{
+		color: #000000;
+		background-color: #fff;
+height: 60px;
+border: 0 none;
+border-left: 2px solid #DDCA26;
+padding-left: 1.5em;
+font-family: Montserrat;
+font-weight: 400;
+font-style: italic;
+font-size: 16px;
+	}
+	.widgetSearch .widgetBody .widgetSearchButtondb7f19c9-0cc6-4262-a9f0-c67d9d876b25
+	{
+		
+	}
+	.widgetSearch .widgetSearch-onlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25
+	{
+		display: inline-block;
+		color: #333;
+		
+		
+		 padding-top: 10px;
+	}
+	#ysnSearchOnlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25
+	{
+		position: relative;
+		top: .125em;
+	}
+      </style>
+      <!-- inner column -->
+      <!-- inner row -->
+      <!-- outer column -->
+      <!-- -->
+      <!-- outer row -->
+      <!-- Banner -->
+      <img alt="" class="bannerObject" data-is-delayed="false" src="https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=98" style="position: absolute; left: 0px; margin: 0px; width: 2288px;" width="1265px"/>
+      <!-- Content container -->
+      <div data-cprole="structuralContainer" id="mainContainerTS">
+       <div class="siteWrap">
+        <div class="mainWrap" data-cprole="structuralContainer" id="mainWrapTS" role="main">
+         <div class="outerContentWrap" data-cprole="structuralContainer" id="outerContentWrapTS">
+          <div class="contentWrap" data-cprole="structuralContainer" id="contentWrapTS">
+           <div data-cprole="mainContentContainer" id="moduleContent">
+            <div id="ctl00_ctl00_MainContent_BodyWrapper">
+             <!--[if IE 6]><script type="text/javascript">isie6 = true; isie6or7 = true;</script><![endif]-->
+             <!--[if IE 7]><script type="text/javascript">isie7 = true; isie6or7 = true;</script><![endif]-->
+             <form action="./directory.aspx?eid=26" autocomplete="off" enctype="multipart/form-data" id="aspnetForm" method="post" name="aspnetForm" onsubmit="return headerValidationCallback();" style="display:inline;">
+              <!--for archiving purpose-->
+              <div id="modulecontent" name="modulecontent.aspx" style="padding-top: 0px;">
+               <!-- BEGIN CityDirectoryContent.aspx ***** -->
+               <div id="CityDirectoryLeftMargin" style="margin-left: 20px;">
+                <img alt="Amanda Boyd" class="imageAlignRight" src="https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=149" title="Amanda Boyd"/>
+                <div class="BioText" style="float: left;">
+                 <h1 class="BioName">
+                  Amanda Boyd
+                 </h1>
+                 <div>
+                  <a class="BioLink" href="https://www.cityofparma-oh.gov/Directory.aspx?DID=30">
+                   City Council
+                  </a>
+                  Title: Ward 8
+                  Phone:
+                  330-607-5537
+                  <script language="javascript" type="text/javascript">
+                   <!--
+	var wsd="aboyd";
+	var xsd="cityofparma-oh.gov";
+	var ysd="Email Amanda Boyd";
+	var zsd = document.write("<a class='BioLink' href=\"mailto:" + wsd + '@' + xsd + '\">'+ ysd + '</a>');
+//-->
+                  </script>
+                  <a class="BioLink" href="mailto:aboyd@cityofparma-oh.gov">
+                   Email Amanda Boyd
+                  </a>
+                 </div>
+                </div>
+                <div class="BioText fr-view">
+                 <h2 fr-original-class="subhead1" fr-original-style="" style="color: rgb(0, 86, 140); font-size: 1.4em; font-weight: 700; margin: 0.167em 0px 0px; font-family: Montserrat; font-style: normal; text-decoration: none; letter-spacing: 0.02em; box-sizing: inherit;">
+                  Physical Address
+                 </h2>
+                 6209 Stanbury Road
+                 Parma, Ohio 44129
+                 <p fr-original-style="" style="margin: 0px 0px 1.4em; box-sizing: inherit; font-style: normal; font-weight: 400; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.5;">
+                  Finance, Governmental Operations, Environmental Standards (Vice Chairwoman), Public Housing, Appointment Scanning (Chairwoman).
+                 </p>
+                 <p fr-original-style="" style="margin: 0px 0px 1.4em; box-sizing: inherit; font-style: normal; font-weight: 400; font-family: Montserrat; color: rgb(0, 0, 0); line-height: 1.5;">
+                  Amanda Boyd began her term as Ward 8 councilwoman in January 2024. Previously, she served for five years on the City of Parma's Board of Building Appeals and for six years on the Executive Cuyahoga County Central Committee. She also worked with students in the drama program at Parma Senior High School from 2018 to 2020. She welcomes using her skills, accomplishments and experiences to serve the City of Parma.
+                 </p>
+                 Boyd's career includes executive and community leadership, early-childhood education and performing arts. Currently, she serves as an education consultant, facilitating and managing projects for learning communities within youth-serving organizations and networks throughout the United States. Prior to consultancy, she coordinated events and spearheaded projects to facilitate growth and equity in the corporate sector.
+                 Boyd has a bachelor's degree in early-childhood education from The University of Akron. During her tenure as an early-childhood educator, she taught and adapted a music-movement program, as well as developed and facilitated an early-childhood arts curriculum for a new program.
+                 She has experience as a professional stage manager, director and performer throughout Greater Cleveland, which includes Cleveland Public Theatre, Playhouse Square and Ensemble Theatre. She also worked with Keegan Theatre in Washington, D.C., and traveled to Ireland for three tours.
+                 Boyd resides In Parma with her husband, Dave, and their miniature pincher, Crouton. During her personal time, she enjoys macrameing, riding motorcycles, traveling and hiking.
+                </div>
+                Return to Staff Directory
+               </div>
+               <!-- END CityDirectoryContent.aspx ***** -->
+              </div>
+             </form>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <!-- GBs -->
+      <!--
+-->
+      <!--
+-->
+      <!--
+-->
+      Agendas &amp; Minutes
+      <style scoped="scoped">
+       .fancyButton56.fancyButton:link,.fancyButton56.fancyButton:visited, .fancyButton56div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton56.fancyButton:hover,.fancyButton56.fancyButton:focus,.fancyButton56.fancyButton:active,.fancyButton56.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton56.fancyButton:link > span,.fancyButton56.fancyButton:visited > span, .fancyButton56div.fancyButton > span{
+}
+.fancyButton56.fancyButton:hover > span,.fancyButton56.fancyButton:focus > span,.fancyButton56.fancyButton:active > span,.fancyButton56.fancyButton.hover > span{
+}
+.fancyButton56.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=74');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton56.fancyButton:hover .text,.fancyButton56.fancyButton:focus .text,.fancyButton56.fancyButton:active .text,.fancyButton56.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!--
+-->
+      Employment
+      <style scoped="scoped">
+       .fancyButton68.fancyButton:link,.fancyButton68.fancyButton:visited, .fancyButton68div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton68.fancyButton:hover,.fancyButton68.fancyButton:focus,.fancyButton68.fancyButton:active,.fancyButton68.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton68.fancyButton:link > span,.fancyButton68.fancyButton:visited > span, .fancyButton68div.fancyButton > span{
+}
+.fancyButton68.fancyButton:hover > span,.fancyButton68.fancyButton:focus > span,.fancyButton68.fancyButton:active > span,.fancyButton68.fancyButton.hover > span{
+}
+.fancyButton68.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=76');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton68.fancyButton:hover .text,.fancyButton68.fancyButton:focus .text,.fancyButton68.fancyButton:active .text,.fancyButton68.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!-- inner column -->
+      <!-- inner row -->
+      <!-- outer column -->
+      <!-- -->
+      <!--
+-->
+      <!--
+-->
+      Report A Concern
+      <style scoped="scoped">
+       .fancyButton59.fancyButton:link,.fancyButton59.fancyButton:visited, .fancyButton59div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton59.fancyButton:hover,.fancyButton59.fancyButton:focus,.fancyButton59.fancyButton:active,.fancyButton59.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton59.fancyButton:link > span,.fancyButton59.fancyButton:visited > span, .fancyButton59div.fancyButton > span{
+}
+.fancyButton59.fancyButton:hover > span,.fancyButton59.fancyButton:focus > span,.fancyButton59.fancyButton:active > span,.fancyButton59.fancyButton.hover > span{
+}
+.fancyButton59.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=81');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton59.fancyButton:hover .text,.fancyButton59.fancyButton:focus .text,.fancyButton59.fancyButton:active .text,.fancyButton59.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+.fancyButton59.fancyButton .textStyle1{
+	color: rgb(0, 0, 0);
+	font-size: 1.15em;
+	font-weight: 100;
+	text-decoration: none;
+line-height: 1.15;}
+.fancyButton59.fancyButton:hover .textStyle1, .fancyButton59.fancyButton.hover .textStyle1{
+	text-decoration: underline;
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!--
+-->
+      Online Tax Payment
+      <style scoped="scoped">
+       .fancyButton67.fancyButton:link,.fancyButton67.fancyButton:visited, .fancyButton67div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton67.fancyButton:hover,.fancyButton67.fancyButton:focus,.fancyButton67.fancyButton:active,.fancyButton67.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton67.fancyButton:link > span,.fancyButton67.fancyButton:visited > span, .fancyButton67div.fancyButton > span{
+}
+.fancyButton67.fancyButton:hover > span,.fancyButton67.fancyButton:focus > span,.fancyButton67.fancyButton:active > span,.fancyButton67.fancyButton.hover > span{
+}
+.fancyButton67.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=79');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton67.fancyButton:hover .text,.fancyButton67.fancyButton:focus .text,.fancyButton67.fancyButton:active .text,.fancyButton67.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!-- inner column -->
+      <!-- inner row -->
+      <!-- outer column -->
+      <!-- -->
+      <!--
+-->
+      <!--
+-->
+      Permits, Licenses&amp; Forms
+      <style scoped="scoped">
+       .fancyButton61.fancyButton:link,.fancyButton61.fancyButton:visited, .fancyButton61div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton61.fancyButton:hover,.fancyButton61.fancyButton:focus,.fancyButton61.fancyButton:active,.fancyButton61.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton61.fancyButton:link > span,.fancyButton61.fancyButton:visited > span, .fancyButton61div.fancyButton > span{
+}
+.fancyButton61.fancyButton:hover > span,.fancyButton61.fancyButton:focus > span,.fancyButton61.fancyButton:active > span,.fancyButton61.fancyButton.hover > span{
+}
+.fancyButton61.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=77');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton61.fancyButton:hover .text,.fancyButton61.fancyButton:focus .text,.fancyButton61.fancyButton:active .text,.fancyButton61.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!--
+-->
+      Parks &amp; Recreation
+      <style scoped="scoped">
+       .fancyButton66.fancyButton:link,.fancyButton66.fancyButton:visited, .fancyButton66div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton66.fancyButton:hover,.fancyButton66.fancyButton:focus,.fancyButton66.fancyButton:active,.fancyButton66.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton66.fancyButton:link > span,.fancyButton66.fancyButton:visited > span, .fancyButton66div.fancyButton > span{
+}
+.fancyButton66.fancyButton:hover > span,.fancyButton66.fancyButton:focus > span,.fancyButton66.fancyButton:active > span,.fancyButton66.fancyButton.hover > span{
+}
+.fancyButton66.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=78');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton66.fancyButton:hover .text,.fancyButton66.fancyButton:focus .text,.fancyButton66.fancyButton:active .text,.fancyButton66.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!-- inner column -->
+      <!-- inner row -->
+      <!-- outer column -->
+      <!-- -->
+      <!-- outer row -->
+      <!-- Calendar/Carousel -->
+      <!-- <div data-cpRole="structuralContainer" id="homeContainer1">
+    <div class="siteWrap">
+      <div data-cpRole="contentContainer" id="homeContent1a"></div>
+    </div>
+  </div> -->
+      <!-- Footer -->
+      <footer data-cprole="structuralContainer" id="footerContainerTS">
+       <div class="siteWrap">
+        <div data-cprole="contentContainer" id="footerTS">
+         <div class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-containerid="bd1ef652-1ed7-46a5-80f8-4d5b41110c8d" data-contentcontainerbreakpoint="60" id="ccbd1ef652-1ed7-46a5-80f8-4d5b41110c8d">
+          <div class="row outer wide">
+           <!--
+-->
+           <!-- inner column -->
+           <!-- inner row -->
+           <!--
+-->
+           <!--
+-->
+           <!--
+-->
+           <!-- -->
+           <!--
+-->
+           <!--
+-->
+           <!-- -->
+           <!--
+-->
+           <!--
+-->
+           <!-- -->
+           <!--
+-->
+           <!--
+-->
+           <!-- -->
+           <!-- inner column -->
+           <!-- inner row -->
+           <!-- outer column -->
+           <!-- -->
+           <!-- inner column -->
+           <!-- inner row -->
+           <!-- outer column -->
+           <!-- -->
+           <div class="outer col col6" data-widgetcontainerid="3f8b564a-a392-4b1b-928f-3630cb10a599" style="height: auto;">
+            <div class="row nest first last wide">
+             <div class="inner col col6 first last idf47bebd5-af46-4fb9-a135-5e1b761766ab" data-widgetcontainerid="f47bebd5-af46-4fb9-a135-5e1b761766ab" style="height: 300px;">
+              <div data-widget-controller-path="/InfoAdvanced/Widget" data-widget-id="a807a93f-ed6d-4229-a980-a0f1c85bf749">
+               <section aria-labelledby="headera807a93f-ed6d-4229-a980-a0f1c85bf749" class="widget widgetInfoAdvanced skin37 widgetOptionSet5 narrow" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="infoAdv" id="divInfoAdva807a93f-ed6d-4229-a980-a0f1c85bf749">
+                <header class="widgetHeader" id="headera807a93f-ed6d-4229-a980-a0f1c85bf749">
+                 <div class="">
+                  <h3>
+                   Contact Us
+                  </h3>
+                 </div>
+                </header>
+               </section>
+              </div>
+             </div>
+             <!-- inner column -->
+            </div>
+            <!-- inner row -->
+           </div>
+           <!-- outer column -->
+           <!-- -->
+           /QuickLinks.aspx
+           <!-- inner column -->
+           <!-- inner row -->
+           <!-- outer column -->
+           <!-- -->
+           <div class="outer col col5 last" data-widgetcontainerid="1ed02cc6-1d6f-42be-85e5-e4be09f44ea2" style="height: auto;">
+            <div class="row nest first last wide">
+             <div class="inner col col5 first last id62a77a8e-baee-4667-8c3b-c03a0d08824c" data-widgetcontainerid="62a77a8e-baee-4667-8c3b-c03a0d08824c" style="height: 300px;">
+              <div data-widget-controller-path="/QuickLinks/Widget" data-widget-id="fd293997-cede-4f1d-871a-977a720fd3b3">
+               <section aria-labelledby="quickLinksHeaderfd293997-cede-4f1d-871a-977a720fd3b3" class="widget widgetQuickLinks skin37 widgetOptionSet28 narrow" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="quickLinks" id="widgetQuicklinkfd293997-cede-4f1d-871a-977a720fd3b3">
+                <div class="widgetBody cpGrid cpGrid1">
+                 <div class="row narrow">
+                  <div class="col col1 first last">
+                   <ol class="semanticList">
+                    <li class="widgetItem QuickLinks" style="position:relative">
+                     <a class="widgetDesc widgetQuickLinksLink" href="https://www.cityofparma-oh.gov/directory" target="_self">
+                      Contact Us
+                     </a>
+                    </li>
+                   </ol>
+                  </div>
+                 </div>
+                </div>
+                /QuickLinks.aspx
+               </section>
+              </div>
+             </div>
+             <!-- inner column -->
+            </div>
+            <!-- inner row -->
+           </div>
+           <!-- outer column -->
+           <!-- -->
+          </div>
+          <!-- outer row -->
+         </div>
+        </div>
+       </div>
+      </footer>
+      <!-- Powered By -->
+      <!--
+-->
+      Government Websites by
+      CivicPlus®
+      <!-- inner column -->
+      <!-- inner row -->
+      <!-- outer column -->
+      <!-- -->
+      <!-- outer row -->
+     </div>
+    </div>
+   </div>
+  </div>
+  Loading
+  <!-- Content from the Froala Editor will go here. -->
+  Loading
+ </body>
+</html>

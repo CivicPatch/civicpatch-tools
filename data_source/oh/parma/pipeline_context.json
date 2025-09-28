@@ -1,0 +1,3879 @@
+{
+    "request_id": "2025-09-28-acef",
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+    "name": "Parma ",
+    "url": "https://www.cityofparma-oh.gov/",
+    "links": [
+        {
+            "url": "https://www.cityofparma-oh.gov/",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?did=30",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_civicalerts_aspx?aid=38",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?eid=31",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/265/Police",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_265_police",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=10",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?eid=10",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Minutes/_03042024-6",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Agenda/_10072024-154?packet=true",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_civicalerts_asp?aid=26",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?eid=30",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/245?fileID=1342",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/CivicAlerts.aspx",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_civicalerts_aspx",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Minutes/_02202024-10",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?eid=29",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/233?fileID=1265",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?eid=28",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/214?fileID=1054",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/251?fileID=1388",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=33",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?eid=33",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?eid=26",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/238?fileID=1288",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Minutes/_09162024-152",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/258?fileID=1430",
+            "status": "error",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?eid=32",
+            "is_profile_page": false
+        }
+    ],
+    "progress": {
+        "required_data": 11,
+        "current_data": 10,
+        "has_target_role": false
+    },
+    "names": {
+        "Deborah Lime": [
+            "Deborah A. Lime",
+            "Deborah Lime"
+        ],
+        "Timothy DeGeeter": [
+            "Timothy DeGeeter",
+            "Timothy J. DeGeeter"
+        ],
+        "Vito Dipierro": [
+            "Vito Dipierro"
+        ],
+        "Monica Wilson": [
+            "Monica Wilson"
+        ],
+        "Kevin Kussmaul": [
+            "Kevin Kussmaul"
+        ],
+        "Kammy Shuman": [
+            "Kammy Coyle Shuman",
+            "Kammy Shuman"
+        ],
+        "Sean Brennan": [
+            "Sean Brennan"
+        ],
+        "Paul Gallagher": [
+            "Paul W. Gallagher"
+        ],
+        "Thomas City": [
+            "Thomas M. City"
+        ],
+        "Geoffrey Thomas": [
+            "Geoffrey T. Thomas"
+        ],
+        "Casey Malone": [
+            "Casey Malone"
+        ],
+        "Brian Brock": [
+            "Brian Brock"
+        ],
+        "Paula Rice": [
+            "Paula M. Rice"
+        ],
+        "Amanda Boyd": [
+            "Amanda Boyd"
+        ],
+        "Kristin Saban": [
+            "Kristin Saban"
+        ],
+        "Allan Divis": [
+            "Allan Divis"
+        ],
+        "Tim DeGeeter": [
+            "Tim DeGeeter"
+        ],
+        "Rob Euerle": [
+            "Rob Euerle"
+        ],
+        "John Soeder": [
+            "John Soeder"
+        ],
+        "Kelly Zacharias": [
+            "Kelly Zacharias"
+        ],
+        "Erin Lally": [
+            "Erin Lally"
+        ]
+    },
+    "steps": {
+        "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "Timothy J. DeGeeter",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Vito Dipierro",
+                    "roles": [
+                        "Council President"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Kristin Saban",
+                    "roles": [
+                        "Clerk of Council"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Monica Wilson",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 1"
+                    ]
+                },
+                {
+                    "name": "Deborah Lime",
+                    "roles": [
+                        "Council Member",
+                        "President Pro Tempore"
+                    ],
+                    "divisions": [
+                        "Ward 2"
+                    ]
+                },
+                {
+                    "name": "John Soeder",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 3"
+                    ]
+                },
+                {
+                    "name": "Kelly Zacharias",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 4"
+                    ]
+                },
+                {
+                    "name": "Allan Divis",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 5"
+                    ]
+                },
+                {
+                    "name": "Kevin Kussmaul",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 6"
+                    ]
+                },
+                {
+                    "name": "Kammy Coyle Shuman",
+                    "roles": [
+                        "Council Member",
+                        "Majority Leader"
+                    ],
+                    "divisions": [
+                        "Ward 7"
+                    ]
+                },
+                {
+                    "name": "Amanda Boyd",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 8"
+                    ]
+                },
+                {
+                    "name": "Rob Euerle",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 9"
+                    ]
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "Timothy J. DeGeeter",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Vito Dipierro",
+                    "roles": [
+                        "Council President"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Monica Wilson",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 1"
+                    ]
+                },
+                {
+                    "name": "Deborah Lime",
+                    "roles": [
+                        "Council Member",
+                        "President Pro Tempore"
+                    ],
+                    "divisions": [
+                        "Ward 2"
+                    ]
+                },
+                {
+                    "name": "John Soeder",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 3"
+                    ]
+                },
+                {
+                    "name": "Kelly Zacharias",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 4"
+                    ]
+                },
+                {
+                    "name": "Allan Divis",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 5"
+                    ]
+                },
+                {
+                    "name": "Kevin Kussmaul",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 6"
+                    ]
+                },
+                {
+                    "name": "Kammy Coyle Shuman",
+                    "roles": [
+                        "Council Member",
+                        "Majority Leader"
+                    ],
+                    "divisions": [
+                        "Ward 7"
+                    ]
+                },
+                {
+                    "name": "Amanda Boyd",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 8"
+                    ]
+                },
+                {
+                    "name": "Rob Euerle",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 9"
+                    ]
+                }
+            ],
+            "notes": "Parma, Ohio, operates under a mayor-council form of government. The Mayor is Timothy J. DeGeeter. The City Council includes a President, Clerk of Council, and nine Ward Council members. The Clerk of Council is an elected official but typically serves an administrative role for the council rather than representing a ward as a voting member."
+        },
+        "SEARCH_LINKS": {
+            "search_link_pointer": 1,
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "https://www.cityofparma-oh.gov/",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=10",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Minutes/_03042024-6",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Agenda/_10072024-154?packet=true",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/245?fileID=1342",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Minutes/_02202024-10",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/233?fileID=1265",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/214?fileID=1054",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/251?fileID=1388",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=33",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/238?fileID=1288",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Minutes/_09162024-152",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/258?fileID=1430",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {
+            "elapsed_times": [
+                4.5969297885894775,
+                3.1479055881500244,
+                4.483544588088989,
+                3.096346616744995,
+                2.2876884937286377,
+                3.125750780105591,
+                4.29047417640686,
+                3.279585361480713,
+                9.660032749176025,
+                3.285764455795288,
+                3.150137186050415,
+                3.06245756149292,
+                3.4672586917877197,
+                3.049654006958008
+            ],
+            "total_elapsed_time_seconds": 53.983530044555664,
+            "average_elapsed_time_seconds": 3.855966431753976
+        },
+        "PROCESS_PAGE_CONTENT": {
+            "records_by_llm": {
+                "google_gemini": {
+                    "Amanda Boyd": [
+                        {
+                            "name": "Amanda Boyd",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 8"
+                            ],
+                            "phone_number": "330-607-5537",
+                            "email": "aboyd@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Amanda Boyd",
+                            "roles": [
+                                "council member",
+                                "Vice Chairwoman",
+                                "Chairwoman"
+                            ],
+                            "divisions": [
+                                "Ward 8"
+                            ],
+                            "phone_number": "330-607-5537",
+                            "email": "aboyd@cityofparma-oh.gov",
+                            "website": null,
+                            "start_date": "2024-01",
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=149",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=26"
+                        }
+                    ],
+                    "John Soeder": [
+                        {
+                            "name": "John Soeder",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 3"
+                            ],
+                            "phone_number": "216-635-6600",
+                            "email": "jsoeder@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=27",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        }
+                    ],
+                    "Vito Dipierro": [
+                        {
+                            "name": "Vito Dipierro",
+                            "roles": [
+                                "council president"
+                            ],
+                            "divisions": [],
+                            "phone_number": "440-885-8091",
+                            "email": "vdipierro@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Vito Dipierro",
+                            "roles": [
+                                "council president"
+                            ],
+                            "divisions": [],
+                            "phone_number": "440-885-8091",
+                            "email": "vdipierro@cityofparma-oh.gov",
+                            "website": null,
+                            "start_date": "2023-01",
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=136",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=28"
+                        }
+                    ],
+                    "Allan Divis": [
+                        {
+                            "name": "Allan Divis",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": "440-888-7213",
+                            "email": "adivis@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Allan Divis",
+                            "roles": [
+                                "council member",
+                                "Chairman of Public Service",
+                                "Vice Chairman of Public Safety"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": "440-888-7213",
+                            "email": "adivis@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "start_date": "2011-11",
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=142",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=29"
+                        }
+                    ],
+                    "Rob Euerle": [
+                        {
+                            "name": "Rob Euerle",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 9"
+                            ],
+                            "phone_number": "216-418-8342",
+                            "email": "reuerle@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Rob Euerle",
+                            "roles": [
+                                "council member",
+                                "chair",
+                                "vice chair"
+                            ],
+                            "divisions": [
+                                "Ward 9"
+                            ],
+                            "phone_number": "216-418-8342",
+                            "email": "reuerle@cityofparma-oh.gov",
+                            "website": null,
+                            "start_date": "2022",
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=708",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=30"
+                        }
+                    ],
+                    "Kevin Kussmaul": [
+                        {
+                            "name": "Kevin Kussmaul",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": "440-823-6608",
+                            "email": "kkussmaul@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Kevin Kussmaul",
+                            "roles": [
+                                "council member",
+                                "vice chair",
+                                "chair"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": "440-823-6608",
+                            "email": "kkussmaul@cityofparma-oh.gov",
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=335",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=31"
+                        }
+                    ],
+                    "Deborah Lime": [
+                        {
+                            "name": "Deborah Lime",
+                            "roles": [
+                                "council member",
+                                "council president pro tem"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": "440-845-1714",
+                            "email": "dlime@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Deborah A. Lime",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx"
+                        },
+                        {
+                            "name": "Deborah Lime",
+                            "roles": [
+                                "President Pro Tempore",
+                                "Council member"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": "440-845-1714",
+                            "email": "dlime@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "start_date": "2011-01-22",
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=139",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Kammy Shuman": [
+                        {
+                            "name": "Kammy Coyle Shuman",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 7"
+                            ],
+                            "phone_number": "440-884-2138",
+                            "email": "kshuman@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=34",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        }
+                    ],
+                    "Monica Wilson": [
+                        {
+                            "name": "Monica Wilson",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 1"
+                            ],
+                            "phone_number": "440-409-7354",
+                            "email": "mwilson@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=35",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        }
+                    ],
+                    "Kelly Zacharias": [
+                        {
+                            "name": "Kelly Zacharias",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 4"
+                            ],
+                            "phone_number": "216-290-2644",
+                            "email": "kzacharias@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=36",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        }
+                    ],
+                    "Timothy DeGeeter": [
+                        {
+                            "name": "Timothy J. DeGeeter",
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        }
+                    ],
+                    "Tim DeGeeter": [
+                        {
+                            "name": "Tim DeGeeter",
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx"
+                        }
+                    ]
+                },
+                "openai": {
+                    "Amanda Boyd": [
+                        {
+                            "name": "Amanda Boyd",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 8"
+                            ],
+                            "phone_number": "330-607-5537",
+                            "email": "aboyd@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Amanda Boyd",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 8"
+                            ],
+                            "phone_number": "330-607-5537",
+                            "email": "aboyd@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "start_date": "2024-01",
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=149",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=26"
+                        }
+                    ],
+                    "John Soeder": [
+                        {
+                            "name": "John Soeder",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 3"
+                            ],
+                            "phone_number": "216-635-6600",
+                            "email": "jsoeder@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=27",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        }
+                    ],
+                    "Vito Dipierro": [
+                        {
+                            "name": "Vito Dipierro",
+                            "roles": [
+                                "Council President"
+                            ],
+                            "divisions": [],
+                            "phone_number": "440-885-8091",
+                            "email": "vdipierro@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Vito Dipierro",
+                            "roles": [
+                                "Council President"
+                            ],
+                            "divisions": [],
+                            "phone_number": "440-885-8091",
+                            "email": "vdipierro@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "start_date": "2023-01",
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=136",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=28"
+                        }
+                    ],
+                    "Allan Divis": [
+                        {
+                            "name": "Allan Divis",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": "440-888-7213",
+                            "email": "adivis@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Allan Divis",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": "440-888-7213",
+                            "email": "adivis@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "start_date": "2011-11",
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=142",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=29"
+                        }
+                    ],
+                    "Rob Euerle": [
+                        {
+                            "name": "Rob Euerle",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 9"
+                            ],
+                            "phone_number": "216-418-8342",
+                            "email": "reuerle@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Rob Euerle",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 9"
+                            ],
+                            "phone_number": "216-418-8342",
+                            "email": "reuerle@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "start_date": "2022",
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=708",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=30"
+                        }
+                    ],
+                    "Kevin Kussmaul": [
+                        {
+                            "name": "Kevin Kussmaul",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": "440-823-6608",
+                            "email": "kkussmaul@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Kevin Kussmaul",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": "440-823-6608",
+                            "email": "kkussmaul@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=335",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=31"
+                        }
+                    ],
+                    "Deborah Lime": [
+                        {
+                            "name": "Deborah Lime",
+                            "roles": [
+                                "Council President Pro Tem"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": "440-845-1714",
+                            "email": "dlime@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Deborah Lime",
+                            "roles": [
+                                "Council Member",
+                                "Council President Pro Tem"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": "440-845-1714",
+                            "email": "dlime@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "start_date": "2011-01-22",
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=139",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Kammy Shuman": [
+                        {
+                            "name": "Kammy Coyle Shuman",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 7"
+                            ],
+                            "phone_number": "440-884-2138",
+                            "email": "kshuman@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=34",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        }
+                    ],
+                    "Monica Wilson": [
+                        {
+                            "name": "Monica Wilson",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 1"
+                            ],
+                            "phone_number": "440-409-7354",
+                            "email": "mwilson@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=35",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        }
+                    ],
+                    "Kelly Zacharias": [
+                        {
+                            "name": "Kelly Zacharias",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 4"
+                            ],
+                            "phone_number": "216-290-2644",
+                            "email": "kzacharias@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=36",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        }
+                    ],
+                    "Timothy DeGeeter": [
+                        {
+                            "name": "Timothy J. DeGeeter",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.cityofparma-oh.gov/directory",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=98",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "Timothy J. DeGeeter",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.cityofparma-oh.gov/directory",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=97",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx"
+                        }
+                    ],
+                    "Kristin Saban": [
+                        {
+                            "name": "Kristin Saban",
+                            "roles": [
+                                "Clerk of Council",
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 4"
+                            ],
+                            "phone_number": "440-885-8065",
+                            "email": "ksaban@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=337",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=33"
+                        }
+                    ]
+                },
+                "together_ai": {
+                    "Timothy DeGeeter": [
+                        {
+                            "name": "Timothy J. DeGeeter",
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "Parma"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/"
+                        },
+                        {
+                            "name": "Timothy J. DeGeeter",
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "Parma"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "Timothy J. DeGeeter",
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "Parma"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/265/Police"
+                        },
+                        {
+                            "name": "Timothy J. DeGeeter",
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "Parma"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        },
+                        {
+                            "name": "Timothy J. DeGeeter",
+                            "roles": [
+                                "mayor"
+                            ],
+                            "divisions": [
+                                "Parma"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx"
+                        },
+                        {
+                            "name": "Timothy J. DeGeeter",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "Mayor's Office"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=98\u00a0\u00bb, ",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=28"
+                        },
+                        {
+                            "name": "Timothy J. DeGeeter",
+                            "roles": [
+                                "Mayor"
+                            ],
+                            "divisions": [
+                                "Mayor's Office"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        },
+                        {
+                            "name": "Timothy J. DeGeeter",
+                            "roles": [
+                                "Council President"
+                            ],
+                            "divisions": [
+                                "Council President"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Vito Dipierro": [
+                        {
+                            "name": "Vito Dipierro",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/"
+                        },
+                        {
+                            "name": "Vito Dipierro",
+                            "roles": [
+                                "President"
+                            ],
+                            "divisions": [
+                                "President"
+                            ],
+                            "phone_number": null,
+                            "email": "vdipierro@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Vito Dipierro",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "Vito Dipierro",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/265/Police"
+                        },
+                        {
+                            "name": "Vito Dipierro",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        },
+                        {
+                            "name": "Vito Dipierro",
+                            "roles": [
+                                "President"
+                            ],
+                            "divisions": [
+                                "Ward 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=136\u00a0\u00bb, ",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=28"
+                        },
+                        {
+                            "name": "Vito Dipierro",
+                            "roles": [
+                                "Councilman",
+                                "Ward 1"
+                            ],
+                            "divisions": [
+                                "Ward 1"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Monica Wilson": [
+                        {
+                            "name": "Monica Wilson",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/"
+                        },
+                        {
+                            "name": "Monica Wilson",
+                            "roles": [
+                                "Ward 1"
+                            ],
+                            "divisions": [
+                                "Ward 1"
+                            ],
+                            "phone_number": null,
+                            "email": "mwilson@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=35",
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Monica Wilson",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "Monica Wilson",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/265/Police"
+                        },
+                        {
+                            "name": "Monica Wilson",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        },
+                        {
+                            "name": "Monica Wilson",
+                            "roles": [
+                                "Council Member"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": "440-885-8092",
+                            "email": "mwilson@cityofparma-oh.gov",
+                            "website": null,
+                            "start_date": "2020",
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=28"
+                        },
+                        {
+                            "name": "Monica Wilson",
+                            "roles": [
+                                "Councilwoman",
+                                "Ward 3"
+                            ],
+                            "divisions": [
+                                "Ward 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Deborah Lime": [
+                        {
+                            "name": "Deborah Lime",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/"
+                        },
+                        {
+                            "name": "Deborah Lime",
+                            "roles": [
+                                "Ward 2 / President Pro Tempore"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": null,
+                            "email": "dlime@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Deborah Lime",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "Deborah Lime",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/265/Police"
+                        },
+                        {
+                            "name": "Deborah Lime",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 3"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        },
+                        {
+                            "name": "Deborah A. Lime",
+                            "roles": [
+                                "ward 2 city councilwoman"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx"
+                        },
+                        {
+                            "name": "Deborah Lime",
+                            "roles": [
+                                "Ward 2",
+                                "President Pro Tempore"
+                            ],
+                            "divisions": [
+                                "Ward 2"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=139 \textit;Deborah Lime\textit;\u201d, ",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "John Soeder": [
+                        {
+                            "name": "John Soeder",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/"
+                        },
+                        {
+                            "name": "John Soeder",
+                            "roles": [
+                                "Ward 3"
+                            ],
+                            "divisions": [
+                                "Ward 3"
+                            ],
+                            "phone_number": null,
+                            "email": "jsoeder@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=27",
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "John Soeder",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "John Soeder",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/265/Police"
+                        },
+                        {
+                            "name": "John Soeder",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        }
+                    ],
+                    "Kelly Zacharias": [
+                        {
+                            "name": "Kelly Zacharias",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/"
+                        },
+                        {
+                            "name": "Kelly Zacharias",
+                            "roles": [
+                                "Ward 4"
+                            ],
+                            "divisions": [
+                                "Ward 4"
+                            ],
+                            "phone_number": null,
+                            "email": "kzacharias@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=36",
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Kelly Zacharias",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "Kelly Zacharias",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/265/Police"
+                        },
+                        {
+                            "name": "Kelly Zacharias",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        }
+                    ],
+                    "Allan Divis": [
+                        {
+                            "name": "Allan Divis",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/"
+                        },
+                        {
+                            "name": "Allan Divis",
+                            "roles": [
+                                "Ward 5"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": null,
+                            "email": "adivis@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Allan Divis",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "Allan Divis",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/265/Police"
+                        },
+                        {
+                            "name": "Allan Divis",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        },
+                        {
+                            "name": "Allan Divis",
+                            "roles": [
+                                "Councilman"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=142 \u00a0Allan Divis\u00a0(.jpg/.png)\u00a0\u00bb, ",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=29"
+                        }
+                    ],
+                    "Kevin Kussmaul": [
+                        {
+                            "name": "Kevin Kussmaul",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 7"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/"
+                        },
+                        {
+                            "name": "Kevin Kussmaul",
+                            "roles": [
+                                "Ward 6"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": null,
+                            "email": "kkussmaul@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Kevin Kussmaul",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 7"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "Kevin Kussmaul",
+                            "roles": [
+                                "Ward 6 Councilman"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": "440-823-6608",
+                            "email": "kkussmaul@cityofparma-oh.gov",
+                            "website": null,
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=335",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=31"
+                        },
+                        {
+                            "name": "Kevin Kussmaul",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 7"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/265/Police"
+                        },
+                        {
+                            "name": "Kevin Kussmaul",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 7"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        },
+                        {
+                            "name": "Kevin Kussmaul",
+                            "roles": [
+                                "Councilman",
+                                "Ward 4"
+                            ],
+                            "divisions": [
+                                "Ward 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Kammy Shuman": [
+                        {
+                            "name": "Kammy Coyle Shuman",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 8"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/"
+                        },
+                        {
+                            "name": "Kammy Coyle Shuman",
+                            "roles": [
+                                "Ward 7/Majority Leader"
+                            ],
+                            "divisions": [
+                                "Ward 7"
+                            ],
+                            "phone_number": null,
+                            "email": "kshuman@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=34",
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Kammy Coyle Shuman",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 8"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "Kammy Coyle Shuman",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 8"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/265/Police"
+                        },
+                        {
+                            "name": "Kammy Coyle Shuman",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 8"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        },
+                        {
+                            "name": "Kammy Coyle Shuman",
+                            "roles": [
+                                "Councilwoman",
+                                "Ward 5"
+                            ],
+                            "divisions": [
+                                "Ward 5"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Amanda Boyd": [
+                        {
+                            "name": "Amanda Boyd",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 9"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/"
+                        },
+                        {
+                            "name": "Amanda Boyd",
+                            "roles": [
+                                "Ward 8"
+                            ],
+                            "divisions": [
+                                "Ward 8"
+                            ],
+                            "phone_number": null,
+                            "email": "aboyd@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Amanda Boyd",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 9"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "Amanda Boyd",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 9"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/265/Police"
+                        },
+                        {
+                            "name": "Amanda Boyd",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 9"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        },
+                        {
+                            "name": "Amanda Boyd",
+                            "roles": [
+                                "Ward 8 councilwoman",
+                                "Vice Chairwoman of Finance, Governmental Operations, Environmental Standards",
+                                "Chairwoman of Appointment Scanning"
+                            ],
+                            "divisions": [
+                                "Ward 8"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "start_date": "2024",
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=149",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=26"
+                        }
+                    ],
+                    "Rob Euerle": [
+                        {
+                            "name": "Rob Euerle",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 10"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/"
+                        },
+                        {
+                            "name": "Rob Euerle",
+                            "roles": [
+                                "Ward 9"
+                            ],
+                            "divisions": [
+                                "Ward 9"
+                            ],
+                            "phone_number": null,
+                            "email": "reuerle@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Rob Euerle",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 10"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38"
+                        },
+                        {
+                            "name": "Rob Euerle",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 10"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/265/Police"
+                        },
+                        {
+                            "name": "Rob Euerle",
+                            "roles": [
+                                "council member"
+                            ],
+                            "divisions": [
+                                "Ward 10"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        },
+                        {
+                            "name": "Rob Euerle",
+                            "roles": [
+                                "Ward 9 Councilman"
+                            ],
+                            "divisions": [
+                                "Ward 9"
+                            ],
+                            "phone_number": "216-418-8342",
+                            "email": "reuerle@cityofparma-oh.gov",
+                            "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "start_date": "2022",
+                            "end_date": null,
+                            "image": null,
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=30"
+                        }
+                    ],
+                    "Kristin Saban": [
+                        {
+                            "name": "Kristin Saban",
+                            "roles": [
+                                "Clerk of Council"
+                            ],
+                            "divisions": [
+                                "Clerk of Council"
+                            ],
+                            "phone_number": null,
+                            "email": "ksaban@cityofparma-oh.gov",
+                            "website": "",
+                            "start_date": "",
+                            "end_date": "",
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        },
+                        {
+                            "name": "Kristin Saban",
+                            "roles": [
+                                "Clerk of Council"
+                            ],
+                            "divisions": [
+                                "Ward 4"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=337",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=33"
+                        }
+                    ],
+                    "Erin Lally": [
+                        {
+                            "name": "Erin Lally",
+                            "roles": [
+                                "Donna Smallwood Activities Center Director"
+                            ],
+                            "divisions": [
+                                "Donna Smallwood Activities Center"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=322",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=10"
+                        }
+                    ],
+                    "Sean Brennan": [
+                        {
+                            "name": "Sean Brennan",
+                            "roles": [
+                                "Councilman",
+                                "Ward 6"
+                            ],
+                            "divisions": [
+                                "Ward 6"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Paul Gallagher": [
+                        {
+                            "name": "Paul W. Gallagher",
+                            "roles": [
+                                "Councilman",
+                                "Ward 7"
+                            ],
+                            "divisions": [
+                                "Ward 7"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Thomas City": [
+                        {
+                            "name": "Thomas M. City",
+                            "roles": [
+                                "Councilman",
+                                "Ward 8"
+                            ],
+                            "divisions": [
+                                "Ward 8"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Geoffrey Thomas": [
+                        {
+                            "name": "Geoffrey T. Thomas",
+                            "roles": [
+                                "Councilman",
+                                "Ward 9"
+                            ],
+                            "divisions": [
+                                "Ward 9"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Casey Malone": [
+                        {
+                            "name": "Casey Malone",
+                            "roles": [
+                                "Councilman",
+                                "At Large"
+                            ],
+                            "divisions": [
+                                "At Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Brian Brock": [
+                        {
+                            "name": "Brian Brock",
+                            "roles": [
+                                "Councilman",
+                                "At Large"
+                            ],
+                            "divisions": [
+                                "At Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ],
+                    "Paula Rice": [
+                        {
+                            "name": "Paula M. Rice",
+                            "roles": [
+                                "Councilwoman",
+                                "At Large"
+                            ],
+                            "divisions": [
+                                "At Large"
+                            ],
+                            "phone_number": null,
+                            "email": null,
+                            "website": null,
+                            "start_date": null,
+                            "end_date": null,
+                            "image": "",
+                            "source": "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        }
+                    ]
+                }
+            }
+        },
+        "MERGE_RECORDS_WITHIN_LLM": {
+            "people_by_llm": {
+                "google_gemini": [
+                    {
+                        "name": "Amanda Boyd",
+                        "roles": [
+                            "Council Member",
+                            "Chairwoman",
+                            "Vice Chairwoman"
+                        ],
+                        "divisions": [
+                            "Ward 8"
+                        ],
+                        "phone_number": "(330) 607-5537",
+                        "email": "aboyd@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+                        "start_date": "2024-01",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=149",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=26"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "John Soeder",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 3"
+                        ],
+                        "phone_number": "(216) 635-6600",
+                        "email": "jsoeder@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=27",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Vito Dipierro",
+                        "roles": [
+                            "Council President"
+                        ],
+                        "divisions": [],
+                        "phone_number": "(440) 885-8091",
+                        "email": "vdipierro@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                        "start_date": "2023-01",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=136",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=28"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Allan Divis",
+                        "roles": [
+                            "Chairman",
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 5"
+                        ],
+                        "phone_number": "(440) 888-7213",
+                        "email": "adivis@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+                        "start_date": "2011-11",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=142",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=29"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Rob Euerle",
+                        "roles": [
+                            "Vice Chair",
+                            "Council Member",
+                            "Chair"
+                        ],
+                        "divisions": [
+                            "Ward 9"
+                        ],
+                        "phone_number": "(216) 418-8342",
+                        "email": "reuerle@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+                        "start_date": "2022",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=708",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=30"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kevin Kussmaul",
+                        "roles": [
+                            "Vice Chair",
+                            "Council Member",
+                            "Chair"
+                        ],
+                        "divisions": [
+                            "Ward 6"
+                        ],
+                        "phone_number": "(440) 823-6608",
+                        "email": "kkussmaul@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=335",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=31"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Deborah Lime",
+                        "roles": [
+                            "Council President Pro Tem",
+                            "Council Member",
+                            "President"
+                        ],
+                        "divisions": [
+                            "Ward 2"
+                        ],
+                        "phone_number": "(440) 845-1714",
+                        "email": "dlime@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                        "start_date": "2011-01-22",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=139",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kammy Coyle Shuman",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 7"
+                        ],
+                        "phone_number": "(440) 884-2138",
+                        "email": "kshuman@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=34",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Monica Wilson",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 1"
+                        ],
+                        "phone_number": "(440) 409-7354",
+                        "email": "mwilson@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=35",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kelly Zacharias",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 4"
+                        ],
+                        "phone_number": "(216) 290-2644",
+                        "email": "kzacharias@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=36",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Timothy J. DeGeeter",
+                        "roles": [
+                            "Mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "openai": [
+                    {
+                        "name": "Amanda Boyd",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 8"
+                        ],
+                        "phone_number": "(330) 607-5537",
+                        "email": "aboyd@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+                        "start_date": "2024-01",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=149",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=26"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "John Soeder",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 3"
+                        ],
+                        "phone_number": "(216) 635-6600",
+                        "email": "jsoeder@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=27",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Vito Dipierro",
+                        "roles": [
+                            "Council President"
+                        ],
+                        "divisions": [],
+                        "phone_number": "(440) 885-8091",
+                        "email": "vdipierro@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                        "start_date": "2023-01",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=136",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=28"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Allan Divis",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 5"
+                        ],
+                        "phone_number": "(440) 888-7213",
+                        "email": "adivis@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+                        "start_date": "2011-11",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=142",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=29"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Rob Euerle",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 9"
+                        ],
+                        "phone_number": "(216) 418-8342",
+                        "email": "reuerle@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+                        "start_date": "2022",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=708",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=30"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kevin Kussmaul",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 6"
+                        ],
+                        "phone_number": "(440) 823-6608",
+                        "email": "kkussmaul@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=335",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=31"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Deborah Lime",
+                        "roles": [
+                            "Council President Pro Tem",
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 2"
+                        ],
+                        "phone_number": "(440) 845-1714",
+                        "email": "dlime@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                        "start_date": "2011-01-22",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=139",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kammy Coyle Shuman",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 7"
+                        ],
+                        "phone_number": "(440) 884-2138",
+                        "email": "kshuman@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=34",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Monica Wilson",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 1"
+                        ],
+                        "phone_number": "(440) 409-7354",
+                        "email": "mwilson@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=35",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kelly Zacharias",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 4"
+                        ],
+                        "phone_number": "(216) 290-2644",
+                        "email": "kzacharias@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=36",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Timothy J. DeGeeter",
+                        "roles": [
+                            "Mayor"
+                        ],
+                        "divisions": [],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "https://www.cityofparma-oh.gov/directory",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=98",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kristin Saban",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 4"
+                        ],
+                        "phone_number": "(440) 885-8065",
+                        "email": "ksaban@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=337",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=33"
+                        ],
+                        "updated_at": ""
+                    }
+                ],
+                "together_ai": [
+                    {
+                        "name": "Timothy J. DeGeeter",
+                        "roles": [
+                            "Council President",
+                            "Mayor"
+                        ],
+                        "divisions": [
+                            "Parma",
+                            "Council President",
+                            "Mayor's Office"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=98\u00a0\u00bb, ",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/265/Police",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Vito Dipierro",
+                        "roles": [
+                            "Council Member",
+                            "Councilman",
+                            "President"
+                        ],
+                        "divisions": [
+                            "President",
+                            "Ward 1"
+                        ],
+                        "phone_number": "",
+                        "email": "vdipierro@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=136\u00a0\u00bb, ",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/",
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/265/Police",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Monica Wilson",
+                        "roles": [
+                            "Council Member",
+                            "Councilwoman"
+                        ],
+                        "divisions": [
+                            "Ward 2",
+                            "Ward 3",
+                            "Ward 1"
+                        ],
+                        "phone_number": "(440) 885-8092",
+                        "email": "mwilson@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=35",
+                        "start_date": "2020",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/",
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/265/Police",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Deborah Lime",
+                        "roles": [
+                            "Council Member",
+                            "President",
+                            "Councilwoman"
+                        ],
+                        "divisions": [
+                            "Ward 2",
+                            "Ward 3"
+                        ],
+                        "phone_number": "",
+                        "email": "dlime@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=139 \textit;Deborah Lime\textit;\u201d, ",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/",
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/265/Police",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "John Soeder",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 3",
+                            "Ward 4"
+                        ],
+                        "phone_number": "",
+                        "email": "jsoeder@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=27",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/",
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/265/Police",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kelly Zacharias",
+                        "roles": [
+                            "Council Member"
+                        ],
+                        "divisions": [
+                            "Ward 5",
+                            "Ward 4"
+                        ],
+                        "phone_number": "",
+                        "email": "kzacharias@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=36",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/",
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/265/Police",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Allan Divis",
+                        "roles": [
+                            "Council Member",
+                            "Councilman"
+                        ],
+                        "divisions": [
+                            "Ward 5",
+                            "Ward 6"
+                        ],
+                        "phone_number": "",
+                        "email": "adivis@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=142 \u00a0Allan Divis\u00a0(.jpg/.png)\u00a0\u00bb, ",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/",
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/265/Police",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=29"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kevin Kussmaul",
+                        "roles": [
+                            "Council Member",
+                            "Councilman"
+                        ],
+                        "divisions": [
+                            "Ward 4",
+                            "Ward 7",
+                            "Ward 6"
+                        ],
+                        "phone_number": "(440) 823-6608",
+                        "email": "kkussmaul@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=335",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/",
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+                            "https://www.cityofparma-oh.gov/265/Police",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kammy Coyle Shuman",
+                        "roles": [
+                            "Council Member",
+                            "Councilwoman"
+                        ],
+                        "divisions": [
+                            "Ward 7",
+                            "Ward 8",
+                            "Ward 5"
+                        ],
+                        "phone_number": "",
+                        "email": "kshuman@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=34",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/",
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/265/Police",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Amanda Boyd",
+                        "roles": [
+                            "Chairwoman",
+                            "Council Member",
+                            "Councilwoman"
+                        ],
+                        "divisions": [
+                            "Ward 9",
+                            "Ward 8"
+                        ],
+                        "phone_number": "",
+                        "email": "aboyd@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+                        "start_date": "2024",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=149",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/",
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/265/Police",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=26"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Rob Euerle",
+                        "roles": [
+                            "Council Member",
+                            "Councilman"
+                        ],
+                        "divisions": [
+                            "Ward 9",
+                            "Ward 10"
+                        ],
+                        "phone_number": "(216) 418-8342",
+                        "email": "reuerle@cityofparma-oh.gov",
+                        "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+                        "start_date": "2022",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/",
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                            "https://www.cityofparma-oh.gov/265/Police",
+                            "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=30"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Kristin Saban",
+                        "roles": [],
+                        "divisions": [
+                            "Ward 4",
+                            "Clerk of Council"
+                        ],
+                        "phone_number": "",
+                        "email": "ksaban@cityofparma-oh.gov",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=337",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=33"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Erin Lally",
+                        "roles": [],
+                        "divisions": [
+                            "Donna Smallwood Activities Center"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=322",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=10"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Sean Brennan",
+                        "roles": [
+                            "Councilman"
+                        ],
+                        "divisions": [
+                            "Ward 6"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Paul W. Gallagher",
+                        "roles": [
+                            "Councilman"
+                        ],
+                        "divisions": [
+                            "Ward 7"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Thomas M. City",
+                        "roles": [
+                            "Councilman"
+                        ],
+                        "divisions": [
+                            "Ward 8"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Geoffrey T. Thomas",
+                        "roles": [
+                            "Councilman"
+                        ],
+                        "divisions": [
+                            "Ward 9"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Casey Malone",
+                        "roles": [
+                            "Councilman"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Brian Brock",
+                        "roles": [
+                            "Councilman"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    },
+                    {
+                        "name": "Paula M. Rice",
+                        "roles": [
+                            "Councilwoman"
+                        ],
+                        "divisions": [
+                            "At-Large"
+                        ],
+                        "phone_number": "",
+                        "email": "",
+                        "website": "",
+                        "start_date": "",
+                        "end_date": "",
+                        "image": "",
+                        "cdn_image": "",
+                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                        "sources": [
+                            "https://www.cityofparma-oh.gov/directory.aspx?eid=32"
+                        ],
+                        "updated_at": ""
+                    }
+                ]
+            }
+        },
+        "MERGE_RECORDS_ACROSS_LLMS": {
+            "people": [
+                {
+                    "name": "Timothy J. DeGeeter",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": [],
+                    "phone_number": "",
+                    "email": "",
+                    "website": "https://www.cityofparma-oh.gov/directory",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=98",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                    "sources": [
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/"
+                    ],
+                    "updated_at": "2025-09-28T00:49:53+00:00"
+                },
+                {
+                    "name": "Vito Dipierro",
+                    "roles": [
+                        "Council President"
+                    ],
+                    "divisions": [],
+                    "phone_number": "(440) 885-8091",
+                    "email": "vdipierro@cityofparma-oh.gov",
+                    "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                    "start_date": "2023-01",
+                    "end_date": "",
+                    "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=136",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                    "sources": [
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/"
+                    ],
+                    "updated_at": "2025-09-28T00:49:53+00:00"
+                },
+                {
+                    "name": "Deborah Lime",
+                    "roles": [
+                        "Council President Pro Tem",
+                        "Council Member",
+                        "President"
+                    ],
+                    "divisions": [
+                        "Ward 2"
+                    ],
+                    "phone_number": "(440) 845-1714",
+                    "email": "dlime@cityofparma-oh.gov",
+                    "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                    "start_date": "2011-01-22",
+                    "end_date": "",
+                    "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=139",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                    "sources": [
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/"
+                    ],
+                    "updated_at": "2025-09-28T00:49:53+00:00"
+                },
+                {
+                    "name": "Monica Wilson",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 1"
+                    ],
+                    "phone_number": "(440) 409-7354",
+                    "email": "mwilson@cityofparma-oh.gov",
+                    "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=35",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                    "sources": [
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/"
+                    ],
+                    "updated_at": "2025-09-28T00:49:53+00:00"
+                },
+                {
+                    "name": "John Soeder",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 3"
+                    ],
+                    "phone_number": "(216) 635-6600",
+                    "email": "jsoeder@cityofparma-oh.gov",
+                    "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=27",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                    "sources": [
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/"
+                    ],
+                    "updated_at": "2025-09-28T00:49:53+00:00"
+                },
+                {
+                    "name": "Kelly Zacharias",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 4"
+                    ],
+                    "phone_number": "(216) 290-2644",
+                    "email": "kzacharias@cityofparma-oh.gov",
+                    "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=36",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                    "sources": [
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/"
+                    ],
+                    "updated_at": "2025-09-28T00:49:53+00:00"
+                },
+                {
+                    "name": "Allan Divis",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 5"
+                    ],
+                    "phone_number": "(440) 888-7213",
+                    "email": "adivis@cityofparma-oh.gov",
+                    "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+                    "start_date": "2011-11",
+                    "end_date": "",
+                    "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=142",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                    "sources": [
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/"
+                    ],
+                    "updated_at": "2025-09-28T00:49:53+00:00"
+                },
+                {
+                    "name": "Kevin Kussmaul",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 6"
+                    ],
+                    "phone_number": "(440) 823-6608",
+                    "email": "kkussmaul@cityofparma-oh.gov",
+                    "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=335",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                    "sources": [
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/"
+                    ],
+                    "updated_at": "2025-09-28T00:49:53+00:00"
+                },
+                {
+                    "name": "Kammy Coyle Shuman",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 7"
+                    ],
+                    "phone_number": "(440) 884-2138",
+                    "email": "kshuman@cityofparma-oh.gov",
+                    "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=34",
+                    "start_date": "",
+                    "end_date": "",
+                    "image": "",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                    "sources": [
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/"
+                    ],
+                    "updated_at": "2025-09-28T00:49:53+00:00"
+                },
+                {
+                    "name": "Amanda Boyd",
+                    "roles": [
+                        "Council Member",
+                        "Chairwoman"
+                    ],
+                    "divisions": [
+                        "Ward 8"
+                    ],
+                    "phone_number": "(330) 607-5537",
+                    "email": "aboyd@cityofparma-oh.gov",
+                    "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+                    "start_date": "2024-01",
+                    "end_date": "",
+                    "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=149",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                    "sources": [
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/"
+                    ],
+                    "updated_at": "2025-09-28T00:49:53+00:00"
+                },
+                {
+                    "name": "Rob Euerle",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 9"
+                    ],
+                    "phone_number": "(216) 418-8342",
+                    "email": "reuerle@cityofparma-oh.gov",
+                    "website": "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+                    "start_date": "2022",
+                    "end_date": "",
+                    "image": "https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=708",
+                    "cdn_image": "",
+                    "jurisdiction_id": "ocd-jurisdiction/country:us/state:oh/place:parma/government",
+                    "sources": [
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/"
+                    ],
+                    "updated_at": "2025-09-28T00:49:53+00:00"
+                }
+            ],
+            "agreement_score": 100.0,
+            "disagreements": {
+                "Amanda Boyd": [
+                    {
+                        "field": "start_date",
+                        "merged_value": "2024-01",
+                        "llm_values": {
+                            "google_gemini": "2024-01",
+                            "openai": "2024-01",
+                            "together_ai": "2024"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Vito Dipierro": [
+                    {
+                        "field": "roles",
+                        "merged_value": "Council President",
+                        "llm_values": {
+                            "google_gemini": "Council President",
+                            "openai": "Council President",
+                            "together_ai": "Council Member, Councilman, President"
+                        },
+                        "disagreement_score": 0.0
+                    },
+                    {
+                        "field": "divisions",
+                        "merged_value": "",
+                        "llm_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "President, Ward 1"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Monica Wilson": [
+                    {
+                        "field": "start_date",
+                        "merged_value": "(empty)",
+                        "llm_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "2020"
+                        },
+                        "disagreement_score": 0.0
+                    },
+                    {
+                        "field": "phone_number",
+                        "merged_value": "(440) 409-7354",
+                        "llm_values": {
+                            "google_gemini": "(440) 409-7354",
+                            "openai": "(440) 409-7354",
+                            "together_ai": "(440) 885-8092"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ],
+                "Timothy J. DeGeeter": [
+                    {
+                        "field": "divisions",
+                        "merged_value": "",
+                        "llm_values": {
+                            "google_gemini": "(empty)",
+                            "openai": "(empty)",
+                            "together_ai": "Parma, Council President, Mayor's Office"
+                        },
+                        "disagreement_score": 0.0
+                    }
+                ]
+            },
+            "missing_people": [],
+            "validation_errors": []
+        },
+        "CLEANUP": {},
+        "RETRY": {},
+        "DONE": {}
+    }
+}

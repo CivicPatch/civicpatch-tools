@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html class="js no-flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths wf-muli-n4-active wf-muli-i4-active wf-muli-n7-active wf-muli-n3-active wf-active has-webFonts" lang="en">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-type"/>
+  <!-- Google Tag Manager for GA4 -->
+  <!-- End Google Tag Manager for GA4 -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="rgb(0, 109, 178)" name="theme-color"/>
+  <title>
+   News Flash • Parma, OH • CivicEngage
+  </title>
+  <!--[if IE 6]><script language="JavaScript" type="text/javascript"> var isie6 = true; </script><![endif]-->
+  <!--[if IE 7]><script language="JavaScript" type="text/javascript"> var isie7 = true; </script><![endif]-->
+  <!--[if IE 8]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+  <!--[if IE 9]><script language="JavaScript" type="text/javascript"> var isie8 = true; </script><![endif]-->
+  <script type="text/javascript">
+   window.Pages = window.Pages || {};
+		// FrontEnd RWD initialization
+		window.Pages.rwdReady = $.Deferred();
+		window.Pages.toolBarDeferred = $.Deferred();
+		window.Pages.rwdSetupComplete = $.Deferred();
+		window.Pages.megaMenuLoaded = $.Deferred();
+		window.Pages.angularToolbarComplete = $.Deferred();
+		window.Pages.frontEndToolbarComplete = $.Deferred();
+  </script>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+  <!-- Dynamic Header Scripts -->
+  <!--Reference Stylesheet-->
+  <!--Dynamic Header Styles-->
+  <meta content="News Flash" property="og:title"/>
+  <meta content="website" property="og:type"/>
+  <meta content="https://www.cityofparma-oh.gov/CivicAlerts.aspx" property="og:url"/>
+  <meta content="News Flash " property="og:description"/>
+  <!--[if lte IE 8]><link rel="stylesheet" type="text/css" href="/App_Themes/ie8.css"><![endif]-->
+  <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/App_Themes/ie7.css"><![endif]-->
+  <!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/App_Themes/ie6.css"><![endif]-->
+  <!--[if lt IE 9]><script type="text/javascript" src="/Scripts/html5.js"></script><![endif]-->
+ </head>
+ <body class="wide cpTextResizeOn doneLoading" style="cursor: default;">
+  Loading
+  <script>
+   jQuery(document).click(function (event) {
+	var target = jQuery(event.target);
+	if (target.attr('src') && target.parents('.image').length && target.parents('.widget').length) {
+		var text = target.attr('title');
+		
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Image',
+				eventAction: 'Image - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.is('button') || target.hasClass('button') || target.parents().hasClass('button')) {
+		var text = "";
+		if (target.parents('.button')[0]) {
+			text = target.parents('.button').first().text();
+		} else if (target.text().length) {
+			text = target.text();
+		} else if (target.attr('title').length) {
+			text = target.attr('title');
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Button',
+				eventAction: 'Button - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetCustomHtml').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Custom Html',
+				eventAction: 'Custom Html Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.editor').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Editor',
+				eventAction: 'Editor Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.GraphicLinks').length) {
+		var text = "";
+		var targetGraphicLink = target;
+		if (target.hasClass('widgetGraphicLinksLink')) {
+			targetGraphicLink = jQuery(target.children()[0]);
+		}
+		if (targetGraphicLink.hasClass('text')) {
+			text = targetGraphicLink.text();
+		} else if (targetGraphicLink.attr('src').length) {
+			if (targetGraphicLink.attr('alt').length) {
+				text = targetGraphicLink.attr('alt');
+			} else {
+				text = targetGraphicLink.attr('src');
+			}
+		} else {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Graphic Links',
+				eventAction: 'Graphic Link - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.InfoAdvanced').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Info Advanced',
+				eventAction: 'Info Advanced Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.list').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'List',
+				eventAction: 'List Clicked',
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.megaMenuItem').length || target.parents('.topMenuItem').length) {
+		var megaMenuText = jQuery('.topMenuItem.mouseover').find('span').text();
+		var breadCrumbs = [];
+		jQuery('.breadCrumbs > li').each(function () {
+			 breadCrumbs.push(this.textContent);
+		});
+		var pageTitle = breadCrumbs.join('>');
+		var subTitleText = target.parents('.megaMenuItem').children('.widgetTitle').children().text();
+		var text = "";
+		if (pageTitle) {
+			text += pageTitle + " | ";
+		} else {
+			text += document.title + ' - ';
+		}
+		if (target.text() == "" && megaMenuText == "") {
+			text += "N/A";
+		} else if (target.text().length && megaMenuText.length) {
+			if (megaMenuText == target.text()) {
+				text += megaMenuText;
+			} else {
+				text += megaMenuText + " - " + subTitleText + " - " + target.text();
+			}
+		} else if (target.text() == "") {
+			text += megaMenuText;
+		} else {
+			text += target.text();
+		}
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Mega Menu',
+				eventAction: 'Mega Menu : ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetNewsFlash').length && target.parents('.widgetItem').length) {
+		var text = jQuery(target.parents('.widgetItem')[0]).find('.widgetTitle').children().text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'News Flash',
+				eventAction: 'News Flash - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.hasClass('widgetQuickLinksLink') || target.find('.widgetQuickLinksLink').length) {
+		var text = target.text();
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Quick Links',
+				eventAction: 'Quick Links - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.attr('src') && target.parents('.cpSlideshow').length) {
+		var text = target.attr('title');
+		if (!text.length) {
+			text = "N/A";
+		}
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Slideshow',
+				eventAction: 'Slideshow - ' + text,
+				eventLabel: window.location.href
+			});
+	}
+	if (target.parents('.widgetText').length) {
+		ga('send',
+			{
+				hitType: 'event',
+				eventCategory: 'Text',
+				eventAction: 'Text Link Clicked',
+				eventLabel: window.location.href
+			});
+	}
+});
+  </script>
+  Skip to Main Content
+  <div class="outer-wrap" id="outer-wrap">
+   <div class="inner-wrap" id="inner-wrap">
+    <!-- Begin Signed Out Bar -->
+    Create a Website Account
+    - Manage notification subscriptions, save form progress and more.
+    <!-- End Signed Out Bar -->
+    <div id="bodyWrapper" style="padding-top: 35px;">
+     <div data-cprole="structuralContainer" id="bodyContainerTS">
+      <!-- Header Container -->
+      <!--
+-->
+      <script defer="" type="text/javascript">
+       $(document).ready(function () {
+			try {
+				$(".widgetSearchButton.widgetSearchButtondb7f19c9-0cc6-4262-a9f0-c67d9d876b25").click(function (e) {
+				e.preventDefault();
+					if (false||$("#ysnSearchOnlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25").is(':checked'))
+					{
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), Number(0));
+					}
+					else {
+						doWidgetSearch($(this).siblings(".widgetSearchBox").val(), 0);
+					}
+			});
+			$("#searchFielddb7f19c9-0cc6-4262-a9f0-c67d9d876b25").keypress(function (e) {
+				if (window.clipboardData) {
+					if (e.keyCode === 13) {
+						if ($("#ysnSearchOnlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				} else {
+					if (e.which === 13) {
+						if ($("#ysnSearchOnlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25").is(':checked') || false) {
+								doWidgetSearch($(this).val(), Number(0));
+							} else {
+								doWidgetSearch($(this).val(), 0);
+							}
+						return false;
+					}
+				}
+				return true;
+			});
+
+				if (true) {
+					var currentRequest = null;
+					var $searchField = $("#searchFielddb7f19c9-0cc6-4262-a9f0-c67d9d876b25").autocomplete({
+						source: function (request, response) {
+							currentRequest = $.ajax({
+								url: '/Search/AutoComplete' + ($("#ysnSearchOnlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25").is(':checked') || false? '?departmentId=0' : ''),
+								dataType: "json",
+								timeout: 10000,
+								beforeSend: function () {
+									if (currentRequest != null) {
+										currentRequest.abort();
+									}
+								},
+								data:
+								{
+									term: request.term,
+								},
+								success: function (data) {
+									response(data);
+									$('.autoCompleteError').remove();
+								},
+								error: function (xmlhttprequest, textstatus, message) {
+									if (textstatus === "timeout") {
+										if ($("#searchFielddb7f19c9-0cc6-4262-a9f0-c67d9d876b25").siblings('.autoCompleteError').length == 0)
+											$('<span class="autoCompleteError"><p class="alert error">Search autocomplete is currently not responding. Please try again later.</p></span>').insertAfter($("#searchFielddb7f19c9-0cc6-4262-a9f0-c67d9d876b25"));
+									}
+								}
+							});
+						},
+						html: true,
+						delay: 500,
+						select: function (event, ui) {
+							$(this).val(ui.item.value);
+							$(this).next().click();
+						}
+					});
+
+					$searchField.data("ui-autocomplete")._renderItem = function (ul, item) {
+						return $("<li class=\"itemList\"></li>")
+							.data("ui-autocomplete-item", item)
+							.append("<a>" + item.label + "</a>")
+							.appendTo(ul);
+					};
+}
+}
+			catch(e) {} //we're going to eat this error. Autocomplete won't work but we dont wan't to break anything else on the page.
+		});
+      </script>
+      <!-- For the button right and inside -->
+      <style scoped="">
+       .widgetSearch ::-webkit-input-placeholder {
+		color: #000000;
+	  }
+		.widgetSearch :-moz-placeholder { /* Firefox 18- */
+	   color: #000000;
+	}
+		.widgetSearch ::-moz-placeholder {  /* Firefox 19+ */
+	   color: #000000;
+	}
+	.widgetSearch :-ms-input-placeholder {
+	   color: #000000;
+	}
+	
+
+	.widgetSearch .widgetBody .widgetSearchBoxdb7f19c9-0cc6-4262-a9f0-c67d9d876b25
+	{
+		color: #000000;
+		background-color: #fff;
+height: 60px;
+border: 0 none;
+border-left: 2px solid #DDCA26;
+padding-left: 1.5em;
+font-family: Montserrat;
+font-weight: 400;
+font-style: italic;
+font-size: 16px;
+	}
+	.widgetSearch .widgetBody .widgetSearchButtondb7f19c9-0cc6-4262-a9f0-c67d9d876b25
+	{
+		
+	}
+	.widgetSearch .widgetSearch-onlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25
+	{
+		display: inline-block;
+		color: #333;
+		
+		
+		 padding-top: 10px;
+	}
+	#ysnSearchOnlyDeptdb7f19c9-0cc6-4262-a9f0-c67d9d876b25
+	{
+		position: relative;
+		top: .125em;
+	}
+      </style>
+      <!-- inner column -->
+      <!-- inner row -->
+      <!-- outer column -->
+      <!-- -->
+      <!-- outer row -->
+      <!-- Banner -->
+      <img alt="" class="bannerObject" data-is-delayed="false" src="https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=97" style="position: absolute; left: 0px; margin: 0px; width: 2288px;" width="1265px"/>
+      <!-- Content container -->
+      <div data-cprole="structuralContainer" id="mainContainerTS">
+       <div class="siteWrap">
+        <div class="mainWrap" data-cprole="structuralContainer" id="mainWrapTS" role="main">
+         <div class="outerContentWrap" data-cprole="structuralContainer" id="outerContentWrapTS">
+          <div class="contentWrap" data-cprole="structuralContainer" id="contentWrapTS">
+           <div data-cprole="mainContentContainer" id="moduleContent">
+            <div id="ctl00_ctl00_MainContent_BodyWrapper">
+             <!--[if IE 6]><script type="text/javascript">isie6 = true; isie6or7 = true;</script><![endif]-->
+             <!--[if IE 7]><script type="text/javascript">isie7 = true; isie6or7 = true;</script><![endif]-->
+             <form action="./CivicAlerts.aspx" autocomplete="off" enctype="multipart/form-data" id="aspnetForm" method="post" name="aspnetForm" onsubmit="return headerValidationCallback();" style="display:inline;">
+              <!--for archiving purpose-->
+              <div id="modulecontent" name="modulecontent.aspx" style="padding-top: 0px;">
+               <!-- BEGIN CivicAlertContent.aspx ***** -->
+               <div class="newCP moduleContentNew pageStyles minWidth320px" id="NewsFlashContent">
+                <div id="ctl00_ctl00_MainContent_ModuleContent_ctl00_contentUpdatePanel">
+                 <div class="contentMain selfClear">
+                  Posted September 4, 2025  | Last Modified on: September 4, 2025
+                  The following Environmental Assessment (EA) is for a project eliminating failing household sewage treatment systems in Parma, which the Ohio Environmental Protection Agency intends to finance through its Water Pollution Control Loan Fund below-market inte...
+                  North &amp; West Linden Lanes Septic Abatement Phase 1Read on...
+                  <div id="ctl00_ctl00_MainContent_ModuleContent_ctl00_UpdatePanel6" style="clear:left;">
+                   <div class="listing listingCollapse">
+                    34 Stories
+                    <div id="6">
+                     Posted on: September 22, 2025
+                     The Parma Area Chamber of Commerce recently held a ribbon cutting at Masala Monsoon, located in The Shoppes at Parma.
+                     Read on...
+                     Media Coverage
+                     Posted on: September 22, 2025
+                     You know Halloween is right around the corner when the Young Professionals of Parma announce their Spooky Showdown.
+                     Read on...
+                     Media Coverage
+                     Posted on: September 22, 2025 | Last Modified on: September 22, 2025
+                     The recently completed Valley Villas septic abatement project included the installation of 34 new sanitary sewers and sanitary connections.
+                     Read on...
+                     Media Coverage
+                     Posted on: September 18, 2025
+                     It’s nearly time to let the dogs out.
+                     Read on...
+                     Media Coverage
+                     Posted on: September 10, 2025
+                     Residents of Cuyahoga County who are looking to purchase a home can receive up to nearly $21,000 towards a down payment.
+                     Read on...
+                     Media Coverage
+                     <div class="item intro fr-view">
+                      Posted on: September 4, 2025
+                      <h3>
+                       <a href="https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=45" id="alertTitle_45" style="font-family: 'arial';">
+                        New Parma e-bike ordinance aims to address ‘out of control’ safety issues
+                       </a>
+                      </h3>
+                      <p>
+                       Ward 2 City Councilwoman Deborah A. Lime says the proliferation of electric bikes operating unsafely in the community has to stop.
+                      </p>
+                      Read on...
+                      Media Coverage
+                     </div>
+                     Posted on: September 4, 2025
+                     Two years into its culling program, Parma sharpshooters have killed 367 deer in the community.
+                     Read on...
+                     Media Coverage
+                     <div class="item intro fr-view">
+                      Posted on: August 29, 2025
+                      <p>
+                       Earlier this year, Parma Service Director Tony Vannello talked about the possibility of adding a third salt dome in the city.
+                      </p>
+                      Read on...
+                      Media Coverage
+                     </div>
+                     Posted on: August 28, 2025
+                     It’s the time of year when motorists apparently need a refresher course on school bus protocol.
+                     Read on...
+                     Media Coverage
+                     Posted on: August 26, 2025
+                     The City of Parma is preparing to roll out another year of deer culling this fall.
+                     Watch this...
+                     Media Coverage
+                     Posted on: August 19, 2025
+                     Sirens, safety vehicles and smiles dominated Parma’s Safety Fair, which took place Aug. 9 at the Justice Center.
+                     Read on...
+                     Media Coverage
+                     <div class="item intro fr-view">
+                      Posted on: August 13, 2025
+                      <h3>
+                       <a href="https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38" id="alertTitle_38" style="font-family: 'arial';">
+                        Parma mayor remembers when NASA astronaut Capt. James Lovell visited the city
+                       </a>
+                      </h3>
+                      <p>
+                       The recent passing of NASA astronaut Capt. James Lovell has Mayor Tim DeGeeter thanking his lucky stars once again.
+                      </p>
+                      Read on...
+                      Media Coverage
+                     </div>
+                     Posted on: August 13, 2025
+                     <h3>
+                      <a href="https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=36" id="alertTitle_36" style="font-family: 'arial';">
+                       Parma Animal Shelter holds ‘Play for the PAWS’ softball fundraiser: Sun Postings
+                      </a>
+                     </h3>
+                     The Parma Animal Shelter recently held a successful softball tournament fundraiser at Nike Park.
+                     Read on...
+                     Media Coverage
+                     <div class="item intro fr-view">
+                      Posted on: August 13, 2025
+                      <p>
+                       The dog days of summer mean the first school bell isn’t too far away. To kick off the new academic year in style, the Parma City School District is hosting its “Back to School CommUNITY Fair” from 5 to 7 p.m. Aug. 13 at Byers Field.
+                      </p>
+                      Read on...
+                      Media Coverage
+                     </div>
+                     <div class="item intro fr-view">
+                      Posted on: August 13, 2025
+                      <p>
+                       When Bob Berry purchased Hot Dog Diner &amp; Burger Co. in Parma this past May, his initial plan was to relocate the business to Brunswick.
+                      </p>
+                      Read on...
+                      Media Coverage
+                     </div>
+                     Posted on: August 13, 2025
+                     The orange barrel invasion of Snow Road continues between Ridge and State roads in Parma.
+                     Read on...
+                     Media Coverage
+                     Posted on: August 1, 2025
+                     Creekside Collaborative continues to help the community grow a healthier and more resilient future.
+                     Read on...
+                     Media Coverage
+                     Posted on: July 28, 2025
+                     The annual Parma Safety Fair provides the ultimate meet-and-greet opportunity for first responders and community members.
+                     Read on...
+                     Media Coverage
+                     Posted on: July 30, 2025
+                     While it may seem unusual, authorities said seeing a coyote in Parma is not uncommon. Still, Parma Police remind people to be vigilant, as they have noted that these natural predators often appear in wooded areas.
+                     Watch this...
+                     Media Coverage
+                     Posted on: August 1, 2025
+                     The opposite of a kitten stuck in a tree would perhaps be a puppy stuck in ductwork.
+                     Read on...
+                     Media Coverage
+                     Posted on: July 29, 2025
+                     A little 3-month-old puppy had a big day after getting stuck in an HVAC vent, according to the Parma Fire Department.
+                     Watch this...
+                     Media Coverage
+                     <div class="item intro fr-view">
+                      Posted on: July 25, 2025
+                      <h3>
+                       <a href="https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=25" id="alertTitle_25" style="font-family: 'arial';">
+                        James Day Park Named The Pearl of Parma - Kee On Sports Media Group
+                       </a>
+                      </h3>
+                      <p>
+                       What a tremendous park James Day Park in Parma is, and my family chose it as stop 32 on the 2025 Summer Park Tour.
+                      </p>
+                      Read on...
+                      Media Coverage
+                     </div>
+                     Posted on: July 25, 2025
+                     The Society of Thoracic Surgeons has awarded University Hospitals Harrington Heart &amp; Vascular Institute with its highest designation for quality outcomes for isolated Coronary Artery Bypass Grafting (CABG), also known as heart bypass surgery.
+                     Read on...
+                     Media Coverage
+                     Posted on: July 25, 2025
+                     A year after dual-use cannabis dispensaries first opened around the Buckeye State, Parma is about to get its first such location.
+                     Read on...
+                     Media Coverage
+                     <div class="item intro fr-view">
+                      Posted on: July 25, 2025
+                      <p>
+                       Longtime resident and Parma Observer editor Daniel McCarthy passed away July 9.
+                      </p>
+                      Read on...
+                      Media Coverage
+                     </div>
+                     Posted on: July 25, 2025
+                     A year after the former Renwood Elementary School was demolished, the future of the land it sat on has recently become clear.
+                     Read on...
+                     Media Coverage
+                     Posted on: July 25, 2025
+                     The demands on first responders have evolved from criminal and life-threatening duties to safety calls of a different nature.
+                     Read on...
+                     Media Coverage
+                     Posted on: July 25, 2025
+                     Parma and Parma Heights are the latest cities in the county to create a program that will dispatch social workers alongside first responders in certain emergencies.
+                     Read on...
+                     Media Coverage
+                     Posted on: July 25, 2025
+                     Parma once again celebrated the Fourth of July with a parade on Ridge Road that ended at the Shoppes at Parma.
+                     Read on...
+                     Media Coverage
+                     <div class="item intro fr-view">
+                      Posted on: July 25, 2025
+                      <p>
+                       Parma City School District students recently visited Donna Smallwood Activities Center members for some video game fun.
+                      </p>
+                      Read on...
+                      Media Coverage
+                     </div>
+                     <div class="item intro fr-view">
+                      Posted on: July 28, 2025
+                      <p>
+                       Nearly a decade after starting a body-worn camera program, Police Chief James I. Blair said his department is currently in the process of updating its technology.
+                      </p>
+                      Read on...
+                      Media Coverage
+                     </div>
+                     Posted on: July 25, 2025
+                     The United States is celebrating its 250th birthday -- its semiquincentennial -- in 2026. Parma is celebrating 200 years -- and the easier to say bicentennial -- next year as well.
+                     Read on...
+                     Media Coverage
+                     Posted on: July 25, 2025
+                     Rosco and Remi are the newest additions to the Parma Police Department. The Parma pups are Support K9s. The brother and sister double doddles are on a mission to serve the community, but also provide support to those who protect and serve.
+                     Watch this...
+                     Media Coverage
+                     <div class="item intro fr-view">
+                      Posted on: July 25, 2025
+                      <p>
+                       After Ridge-Brook Elementary School fourth-graders recently read Jacqueline Davies’ book “The Lemonade War,” they participated in their own lemonade war, raising $1,390 for local charities.
+                      </p>
+                      Read on...
+                      Media Coverage
+                     </div>
+                    </div>
+                   </div>
+                  </div>
+                  1 Story
+                  Posted on: September 4, 2025 | Last Modified on: September 4, 2025
+                  The following Environmental Assessment (EA) is for a project eliminating failing household sewage treatment systems in Parma, which the Ohio Environmental Protection Agency intends to finance through its Water Pollution Control Loan Fund below-market inte...
+                  Read on...
+                  Additional Info...
+                  Public Notices
+                  <div id="ctl00_ctl00_MainContent_ModuleContent_ctl00_UpdatePanel1" style="clear:left;">
+                   <div class="listing listingCollapse">
+                    4 Stories
+                    <div id="1">
+                     <div class="item intro fr-view">
+                      Posted on: March 26, 2025
+                      <p style="">
+                       Broadcaster Dick Russ asks Mayor Tim DeGeeter questions about important city matters such as economic development, infrastructure projects, housing development, environmental initiatives and other areas of city management.
+                      </p>
+                      Read on...
+                      2025 State of the City
+                      Staying Connected
+                     </div>
+                     <div class="item intro fr-view">
+                      Posted on: May 8, 2023
+                      <p style="">
+                       Notify Me allows you to subscribe to an unlimited number of email lists. Receive email or text message updates regarding the information you have requested. Check out
+                       Notify Me
+                       today!
+                      </p>
+                      Read on...
+                      Staying Connected
+                     </div>
+                     Posted on: May 8, 2023
+                     Stay in touch. Follow us on Facebook, Instagram and X, or subscribe to our RSS feeds.
+                     Staying Connected
+                     Posted on: May 8, 2023
+                     By clicking “Website Sign In” on the MyAccount bar at the top of the screen, users may create a login for the site or use their Facebook profile to access MyAccount. Creating a MyAccount profile will allow for streamlined access to subscription management...
+                     Read on...
+                     Staying Connected
+                    </div>
+                   </div>
+                  </div>
+                 </div>
+                </div>
+               </div>
+               <!-- END CivicAlertContent.aspx ***** -->
+              </div>
+             </form>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <!-- GBs -->
+      <!--
+-->
+      <!--
+-->
+      <!--
+-->
+      Agendas &amp; Minutes
+      <style scoped="scoped">
+       .fancyButton56.fancyButton:link,.fancyButton56.fancyButton:visited, .fancyButton56div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton56.fancyButton:hover,.fancyButton56.fancyButton:focus,.fancyButton56.fancyButton:active,.fancyButton56.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton56.fancyButton:link > span,.fancyButton56.fancyButton:visited > span, .fancyButton56div.fancyButton > span{
+}
+.fancyButton56.fancyButton:hover > span,.fancyButton56.fancyButton:focus > span,.fancyButton56.fancyButton:active > span,.fancyButton56.fancyButton.hover > span{
+}
+.fancyButton56.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=74');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton56.fancyButton:hover .text,.fancyButton56.fancyButton:focus .text,.fancyButton56.fancyButton:active .text,.fancyButton56.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!--
+-->
+      Employment
+      <style scoped="scoped">
+       .fancyButton68.fancyButton:link,.fancyButton68.fancyButton:visited, .fancyButton68div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton68.fancyButton:hover,.fancyButton68.fancyButton:focus,.fancyButton68.fancyButton:active,.fancyButton68.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton68.fancyButton:link > span,.fancyButton68.fancyButton:visited > span, .fancyButton68div.fancyButton > span{
+}
+.fancyButton68.fancyButton:hover > span,.fancyButton68.fancyButton:focus > span,.fancyButton68.fancyButton:active > span,.fancyButton68.fancyButton.hover > span{
+}
+.fancyButton68.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=76');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton68.fancyButton:hover .text,.fancyButton68.fancyButton:focus .text,.fancyButton68.fancyButton:active .text,.fancyButton68.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!-- inner column -->
+      <!-- inner row -->
+      <!-- outer column -->
+      <!-- -->
+      <!--
+-->
+      <!--
+-->
+      Report A Concern
+      <style scoped="scoped">
+       .fancyButton59.fancyButton:link,.fancyButton59.fancyButton:visited, .fancyButton59div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton59.fancyButton:hover,.fancyButton59.fancyButton:focus,.fancyButton59.fancyButton:active,.fancyButton59.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton59.fancyButton:link > span,.fancyButton59.fancyButton:visited > span, .fancyButton59div.fancyButton > span{
+}
+.fancyButton59.fancyButton:hover > span,.fancyButton59.fancyButton:focus > span,.fancyButton59.fancyButton:active > span,.fancyButton59.fancyButton.hover > span{
+}
+.fancyButton59.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=81');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton59.fancyButton:hover .text,.fancyButton59.fancyButton:focus .text,.fancyButton59.fancyButton:active .text,.fancyButton59.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+.fancyButton59.fancyButton .textStyle1{
+	color: rgb(0, 0, 0);
+	font-size: 1.15em;
+	font-weight: 100;
+	text-decoration: none;
+line-height: 1.15;}
+.fancyButton59.fancyButton:hover .textStyle1, .fancyButton59.fancyButton.hover .textStyle1{
+	text-decoration: underline;
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!--
+-->
+      Online Tax Payment
+      <style scoped="scoped">
+       .fancyButton67.fancyButton:link,.fancyButton67.fancyButton:visited, .fancyButton67div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton67.fancyButton:hover,.fancyButton67.fancyButton:focus,.fancyButton67.fancyButton:active,.fancyButton67.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton67.fancyButton:link > span,.fancyButton67.fancyButton:visited > span, .fancyButton67div.fancyButton > span{
+}
+.fancyButton67.fancyButton:hover > span,.fancyButton67.fancyButton:focus > span,.fancyButton67.fancyButton:active > span,.fancyButton67.fancyButton.hover > span{
+}
+.fancyButton67.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=79');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton67.fancyButton:hover .text,.fancyButton67.fancyButton:focus .text,.fancyButton67.fancyButton:active .text,.fancyButton67.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!-- inner column -->
+      <!-- inner row -->
+      <!-- outer column -->
+      <!-- -->
+      <!--
+-->
+      <!--
+-->
+      Permits, Licenses&amp; Forms
+      <style scoped="scoped">
+       .fancyButton61.fancyButton:link,.fancyButton61.fancyButton:visited, .fancyButton61div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton61.fancyButton:hover,.fancyButton61.fancyButton:focus,.fancyButton61.fancyButton:active,.fancyButton61.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton61.fancyButton:link > span,.fancyButton61.fancyButton:visited > span, .fancyButton61div.fancyButton > span{
+}
+.fancyButton61.fancyButton:hover > span,.fancyButton61.fancyButton:focus > span,.fancyButton61.fancyButton:active > span,.fancyButton61.fancyButton.hover > span{
+}
+.fancyButton61.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=77');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton61.fancyButton:hover .text,.fancyButton61.fancyButton:focus .text,.fancyButton61.fancyButton:active .text,.fancyButton61.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!--
+-->
+      Parks &amp; Recreation
+      <style scoped="scoped">
+       .fancyButton66.fancyButton:link,.fancyButton66.fancyButton:visited, .fancyButton66div.fancyButton{
+	background-image: url('/ImageRepository/Document?documentID=75');
+	background-repeat: no-repeat;
+	background-position: center top;
+transition: all .2s ease-in-out;}
+.fancyButton66.fancyButton:hover,.fancyButton66.fancyButton:focus,.fancyButton66.fancyButton:active,.fancyButton66.fancyButton.hover{
+	background-image: url('/ImageRepository/Document?documentID=80');
+	background-repeat: no-repeat;
+	background-position: center top;
+}
+.fancyButton66.fancyButton:link > span,.fancyButton66.fancyButton:visited > span, .fancyButton66div.fancyButton > span{
+}
+.fancyButton66.fancyButton:hover > span,.fancyButton66.fancyButton:focus > span,.fancyButton66.fancyButton:active > span,.fancyButton66.fancyButton.hover > span{
+}
+.fancyButton66.fancyButton .text{
+	color: #000000;
+	font-size: 1.15em;
+	font-family: "Montserrat";
+	padding-top: 115px;
+	font-weight: 700;
+	text-decoration: none;
+	padding-top: 115px;
+	background-image: url('/ImageRepository/Document?documentID=78');
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+line-height: 1.15;}
+.fancyButton66.fancyButton:hover .text,.fancyButton66.fancyButton:focus .text,.fancyButton66.fancyButton:active .text,.fancyButton66.fancyButton.hover .text{
+	text-decoration: underline;
+	background-repeat: no-repeat;
+	background-position: center 22px ;
+
+
+}
+      </style>
+      <!--
+-->
+      <!-- -->
+      <!-- inner column -->
+      <!-- inner row -->
+      <!-- outer column -->
+      <!-- -->
+      <!-- outer row -->
+      <!-- Calendar/Carousel -->
+      <!-- <div data-cpRole="structuralContainer" id="homeContainer1">
+    <div class="siteWrap">
+      <div data-cpRole="contentContainer" id="homeContent1a"></div>
+    </div>
+  </div> -->
+      <!-- Footer -->
+      <footer data-cprole="structuralContainer" id="footerContainerTS">
+       <div class="siteWrap">
+        <div data-cprole="contentContainer" id="footerTS">
+         <div class="pageContent cpGrid cpGrid24 isLockedContainer showInMobile" data-containerid="bd1ef652-1ed7-46a5-80f8-4d5b41110c8d" data-contentcontainerbreakpoint="60" id="ccbd1ef652-1ed7-46a5-80f8-4d5b41110c8d">
+          <div class="row outer wide">
+           <!--
+-->
+           <!-- inner column -->
+           <!-- inner row -->
+           <!--
+-->
+           <!--
+-->
+           <!--
+-->
+           <!-- -->
+           <!--
+-->
+           <!--
+-->
+           <!-- -->
+           <!--
+-->
+           <!--
+-->
+           <!-- -->
+           <!--
+-->
+           <!--
+-->
+           <!-- -->
+           <!-- inner column -->
+           <!-- inner row -->
+           <!-- outer column -->
+           <!-- -->
+           <!-- inner column -->
+           <!-- inner row -->
+           <!-- outer column -->
+           <!-- -->
+           <div class="outer col col6" data-widgetcontainerid="3f8b564a-a392-4b1b-928f-3630cb10a599" style="height: auto;">
+            <div class="row nest first last wide">
+             <div class="inner col col6 first last idf47bebd5-af46-4fb9-a135-5e1b761766ab" data-widgetcontainerid="f47bebd5-af46-4fb9-a135-5e1b761766ab" style="height: 300px;">
+              <div data-widget-controller-path="/InfoAdvanced/Widget" data-widget-id="a807a93f-ed6d-4229-a980-a0f1c85bf749">
+               <section aria-labelledby="headera807a93f-ed6d-4229-a980-a0f1c85bf749" class="widget widgetInfoAdvanced skin37 widgetOptionSet5 narrow" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="infoAdv" id="divInfoAdva807a93f-ed6d-4229-a980-a0f1c85bf749">
+                <header class="widgetHeader" id="headera807a93f-ed6d-4229-a980-a0f1c85bf749">
+                 <div class="">
+                  <h3>
+                   Contact Us
+                  </h3>
+                 </div>
+                </header>
+               </section>
+              </div>
+             </div>
+             <!-- inner column -->
+            </div>
+            <!-- inner row -->
+           </div>
+           <!-- outer column -->
+           <!-- -->
+           /QuickLinks.aspx
+           <!-- inner column -->
+           <!-- inner row -->
+           <!-- outer column -->
+           <!-- -->
+           <div class="outer col col5 last" data-widgetcontainerid="1ed02cc6-1d6f-42be-85e5-e4be09f44ea2" style="height: auto;">
+            <div class="row nest first last wide">
+             <div class="inner col col5 first last id62a77a8e-baee-4667-8c3b-c03a0d08824c" data-widgetcontainerid="62a77a8e-baee-4667-8c3b-c03a0d08824c" style="height: 300px;">
+              <div data-widget-controller-path="/QuickLinks/Widget" data-widget-id="fd293997-cede-4f1d-871a-977a720fd3b3">
+               <section aria-labelledby="quickLinksHeaderfd293997-cede-4f1d-871a-977a720fd3b3" class="widget widgetQuickLinks skin37 widgetOptionSet28 narrow" data-elementqueryclasses='{"wide-narrow":"min-width:25em"}' data-elementquerymatch="matchMultiColumn" data-elementqueryunmatch="unmatchMultiColumn" data-modulewidgettype="quickLinks" id="widgetQuicklinkfd293997-cede-4f1d-871a-977a720fd3b3">
+                <div class="widgetBody cpGrid cpGrid1">
+                 <div class="row narrow">
+                  <div class="col col1 first last">
+                   <ol class="semanticList">
+                    <li class="widgetItem QuickLinks" style="position:relative">
+                     <a class="widgetDesc widgetQuickLinksLink" href="https://www.cityofparma-oh.gov/directory" target="_self">
+                      Contact Us
+                     </a>
+                    </li>
+                   </ol>
+                  </div>
+                 </div>
+                </div>
+                /QuickLinks.aspx
+               </section>
+              </div>
+             </div>
+             <!-- inner column -->
+            </div>
+            <!-- inner row -->
+           </div>
+           <!-- outer column -->
+           <!-- -->
+          </div>
+          <!-- outer row -->
+         </div>
+        </div>
+       </div>
+      </footer>
+      <!-- Powered By -->
+      <!--
+-->
+      Government Websites by
+      CivicPlus®
+      <!-- inner column -->
+      <!-- inner row -->
+      <!-- outer column -->
+      <!-- -->
+      <!-- outer row -->
+     </div>
+    </div>
+   </div>
+  </div>
+  Loading
+  <!-- Content from the Froala Editor will go here. -->
+  Loading
+ </body>
+</html>

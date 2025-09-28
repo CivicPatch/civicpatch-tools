@@ -1,0 +1,235 @@
+- name: Timothy J. DeGeeter
+  roles:
+  - Mayor
+  divisions: []
+  phone_number: ''
+  email: ''
+  website: https://www.cityofparma-oh.gov/directory
+  start_date: ''
+  end_date: ''
+  image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=98
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
+  sources:
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx
+  - https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=32
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=28
+  - https://www.cityofparma-oh.gov/265/Police
+  - https://www.cityofparma-oh.gov/
+  updated_at: '2025-09-28T00:49:53+00:00'
+- name: Vito Dipierro
+  roles:
+  - Council President
+  divisions: []
+  phone_number: (440) 885-8091
+  email: vdipierro@cityofparma-oh.gov
+  website: https://www.cityofparma-oh.gov/directory.aspx?eid=28
+  start_date: 2023-01
+  end_date: ''
+  image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=136
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
+  sources:
+  - https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=32
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=28
+  - https://www.cityofparma-oh.gov/directory.aspx?did=30
+  - https://www.cityofparma-oh.gov/265/Police
+  - https://www.cityofparma-oh.gov/
+  updated_at: '2025-09-28T00:49:53+00:00'
+- name: Deborah Lime
+  roles:
+  - Council President Pro Tem
+  - Council Member
+  - President
+  divisions:
+  - Ward 2
+  phone_number: (440) 845-1714
+  email: dlime@cityofparma-oh.gov
+  website: https://www.cityofparma-oh.gov/directory.aspx?eid=32
+  start_date: '2011-01-22'
+  end_date: ''
+  image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=139
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
+  sources:
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx
+  - https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=32
+  - https://www.cityofparma-oh.gov/directory.aspx?did=30
+  - https://www.cityofparma-oh.gov/265/Police
+  - https://www.cityofparma-oh.gov/
+  updated_at: '2025-09-28T00:49:53+00:00'
+- name: Monica Wilson
+  roles:
+  - Council Member
+  divisions:
+  - Ward 1
+  phone_number: (440) 409-7354
+  email: mwilson@cityofparma-oh.gov
+  website: https://www.cityofparma-oh.gov/directory.aspx?eid=35
+  start_date: ''
+  end_date: ''
+  image: ''
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
+  sources:
+  - https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=32
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=28
+  - https://www.cityofparma-oh.gov/directory.aspx?did=30
+  - https://www.cityofparma-oh.gov/265/Police
+  - https://www.cityofparma-oh.gov/
+  updated_at: '2025-09-28T00:49:53+00:00'
+- name: John Soeder
+  roles:
+  - Council Member
+  divisions:
+  - Ward 3
+  phone_number: (216) 635-6600
+  email: jsoeder@cityofparma-oh.gov
+  website: https://www.cityofparma-oh.gov/directory.aspx?eid=27
+  start_date: ''
+  end_date: ''
+  image: ''
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
+  sources:
+  - https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38
+  - https://www.cityofparma-oh.gov/directory.aspx?did=30
+  - https://www.cityofparma-oh.gov/265/Police
+  - https://www.cityofparma-oh.gov/
+  updated_at: '2025-09-28T00:49:53+00:00'
+- name: Kelly Zacharias
+  roles:
+  - Council Member
+  divisions:
+  - Ward 4
+  phone_number: (216) 290-2644
+  email: kzacharias@cityofparma-oh.gov
+  website: https://www.cityofparma-oh.gov/directory.aspx?eid=36
+  start_date: ''
+  end_date: ''
+  image: ''
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
+  sources:
+  - https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38
+  - https://www.cityofparma-oh.gov/directory.aspx?did=30
+  - https://www.cityofparma-oh.gov/265/Police
+  - https://www.cityofparma-oh.gov/
+  updated_at: '2025-09-28T00:49:53+00:00'
+- name: Allan Divis
+  roles:
+  - Council Member
+  divisions:
+  - Ward 5
+  phone_number: (440) 888-7213
+  email: adivis@cityofparma-oh.gov
+  website: https://www.cityofparma-oh.gov/directory.aspx?eid=29
+  start_date: 2011-11
+  end_date: ''
+  image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=142
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
+  sources:
+  - https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=29
+  - https://www.cityofparma-oh.gov/directory.aspx?did=30
+  - https://www.cityofparma-oh.gov/265/Police
+  - https://www.cityofparma-oh.gov/
+  updated_at: '2025-09-28T00:49:53+00:00'
+- name: Kevin Kussmaul
+  roles:
+  - Council Member
+  divisions:
+  - Ward 6
+  phone_number: (440) 823-6608
+  email: kkussmaul@cityofparma-oh.gov
+  website: https://www.cityofparma-oh.gov/directory.aspx?eid=31
+  start_date: ''
+  end_date: ''
+  image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=335
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
+  sources:
+  - https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=32
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=31
+  - https://www.cityofparma-oh.gov/directory.aspx?did=30
+  - https://www.cityofparma-oh.gov/265/Police
+  - https://www.cityofparma-oh.gov/
+  updated_at: '2025-09-28T00:49:53+00:00'
+- name: Kammy Coyle Shuman
+  roles:
+  - Council Member
+  divisions:
+  - Ward 7
+  phone_number: (440) 884-2138
+  email: kshuman@cityofparma-oh.gov
+  website: https://www.cityofparma-oh.gov/directory.aspx?eid=34
+  start_date: ''
+  end_date: ''
+  image: ''
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
+  sources:
+  - https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=32
+  - https://www.cityofparma-oh.gov/directory.aspx?did=30
+  - https://www.cityofparma-oh.gov/265/Police
+  - https://www.cityofparma-oh.gov/
+  updated_at: '2025-09-28T00:49:53+00:00'
+- name: Amanda Boyd
+  roles:
+  - Council Member
+  - Chairwoman
+  divisions:
+  - Ward 8
+  phone_number: (330) 607-5537
+  email: aboyd@cityofparma-oh.gov
+  website: https://www.cityofparma-oh.gov/directory.aspx?eid=26
+  start_date: 2024-01
+  end_date: ''
+  image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=149
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
+  sources:
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38
+  - https://www.cityofparma-oh.gov/directory.aspx?did=30
+  - https://www.cityofparma-oh.gov/265/Police
+  - https://www.cityofparma-oh.gov/
+  updated_at: '2025-09-28T00:49:53+00:00'
+- name: Rob Euerle
+  roles:
+  - Council Member
+  divisions:
+  - Ward 9
+  phone_number: (216) 418-8342
+  email: reuerle@cityofparma-oh.gov
+  website: https://www.cityofparma-oh.gov/directory.aspx?eid=30
+  start_date: '2022'
+  end_date: ''
+  image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=708
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
+  sources:
+  - https://www.cityofparma-oh.gov/directory.aspx?eid=30
+  - https://www.cityofparma-oh.gov/CivicAlerts.asp?AID=26
+  - https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38
+  - https://www.cityofparma-oh.gov/directory.aspx?did=30
+  - https://www.cityofparma-oh.gov/265/Police
+  - https://www.cityofparma-oh.gov/
+  updated_at: '2025-09-28T00:49:53+00:00'
