@@ -22,7 +22,7 @@ ENV PYTHONUNBUFFERED=1 \
     # Poetry setup with pip
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_HOME="/opt/poetry" \
-    PATH="/opt/poetry/bin:$PATH" \
+    PATH="/opt/poetry/bin:$PATH"
 
 # Needed especially for post-install step
 # cache files are 8GB
