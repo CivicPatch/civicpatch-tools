@@ -47,7 +47,9 @@ jobs:
           fi
 
       - name: Pull docker image
-        run: docker pull ghcr.io/civicpatch/civicpatch:${{ steps.docker-tag.outputs.docker-tag }}
+        run: |
+          docker pull --no-cache ghcr.io/civicpatch/civicpatch:${{ steps.docker-tag.outputs.docker-tag }}
+          docker inspect ghcr.io/civicpatch/civicpatch:${{ steps.docker-tag.outputs.docker-tag }} | jq '.[0].Created'
 
       - name: Run data scrape
         env:
