@@ -1,8 +1,11 @@
 import os
 import hashlib
 import json
+from unittest import result
 from playwright.async_api import async_playwright, Page
 from typing import TypedDict
+import psutil
+import subprocess
 
 IMAGE_URL_BLACKLIST = ["https://google.com"]
 IMAGE_EXT_BLACKLIST = [".svg", ".gif"]
@@ -31,8 +34,27 @@ async def scrape(website_url, options=None):
     async with async_playwright() as playwright:
         browser = await playwright.chromium.launch(
             headless=False,
-            args=["--disable-crashpad-for-testing"] # Fixes crashpad write issue
+            args=[
+                "--no-sandbox",
+                "--disable-crashpad-for-testing"
+                ] # Fixes crashpad write issue
             )
+        
+        # GitHub Actions default args:
+        #<launching> /ms-playwright/chromium-1187/chrome-linux/chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-D9gMGh --remote-debugging-pipe --no-startup-window
+        
+        print(f"Browser launched successfully, connected: {browser.is_connected()}") 
+        await page.goto("about:blank")
+        print("Successfully navigated to about:blank")
+        print(f"Available memory: {psutil.virtual_memory().available / 1024**3:.2f} GB")
+        print(f"CPU count: {psutil.cpu_count()}")
+        print(f"Load average: {psutil.getloadavg()}")
+        result = subprocess.run(['ps', 'aux'], capture_output=True, text=True)
+        chrome_processes = [line for line in result.stdout.split('\n') if 'chrome' in line.lower()]
+        print(f"Chrome processes: {len(chrome_processes)}")
+        for proc in chrome_processes[:5]:  # Show first 5
+            print(proc)
+        
         context = await browser.new_context()
         page = await context.new_page()
 
