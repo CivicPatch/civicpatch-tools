@@ -25,9 +25,6 @@ ENV PROJECT_NAME="civicpatch" \
     XDG_CACHE_HOME="/tmp/.cache" \
     XDG_CONFIG_HOME="/tmp/.config" 
 
-# For xvfb
-RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
-
 # Needed especially for post-install step
 # cache files are 8GB
 RUN pip config set global.no-cache-dir true
@@ -40,7 +37,14 @@ WORKDIR /app
 # COPY ./utils /app/utils
 
 RUN useradd -m -s /bin/bash civicpatch_user
-RUN chown -R civicpatch_user:civicpatch_user /tmp
+
+# For xvfb
+RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
+    mkdir -p /tmp/.cache && \
+    mkdir -p /tmp/.config && \
+    chown -R root:root /tmp/.X11-unix
+
+RUN chown -R civicpatch_user:civicpatch_user /tmp/.cache /tmp/.config
 
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 RUN poetry install --no-root
@@ -67,8 +71,6 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-RUN chown -R civicpatch_user:civicpatch_user /tmp
-RUN chown -R root:root /tmp/.X11-unix
 
 USER civicpatch_user
 EXPOSE 8000
@@ -80,8 +82,6 @@ FROM post-install AS production
 
 WORKDIR /app
 COPY --chown=civicpatch_user:civicpatch_user ./${PROJECT_NAME} /app
-RUN chown -R civicpatch_user:civicpatch_user /tmp
-RUN chown -R root:root /tmp/.X11-unix
 
 USER civicpatch_user
 EXPOSE 8000
