@@ -13,6 +13,7 @@ services:
       - CRUDDER_SHARED_TOKEN
       - CRUDDER_URL
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
+    ipc: host
     image: ghcr.io/civicpatch/civicpatch:${DOCKER_TAG:-latest}
     user: "${UID:-1000}:${GID:-1000}"
     ports:
