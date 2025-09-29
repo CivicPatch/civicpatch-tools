@@ -20,7 +20,7 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"
-    user: "${UID}:${GID}"
+    user: "${UID:-1000}:${GID:-1000}"
     volumes:
       # - ../utils:/app/utils:ro  # Mount shared library
       - ../data:/app/data
