@@ -4,7 +4,6 @@ import json
 from unittest import result
 from playwright.async_api import async_playwright, Page
 from typing import TypedDict
-import psutil
 import subprocess
 
 IMAGE_URL_BLACKLIST = ["https://google.com"]
@@ -33,6 +32,7 @@ async def scrape(website_url, options=None):
     """
     async with async_playwright() as playwright:
         browser = await playwright.chromium.launch(
+            channel="chrome",
             headless=False,
             args=[
                 "--no-sandbox",
@@ -46,9 +46,6 @@ async def scrape(website_url, options=None):
         print(f"Browser launched successfully, connected: {browser.is_connected()}") 
         await page.goto("about:blank")
         print("Successfully navigated to about:blank")
-        print(f"Available memory: {psutil.virtual_memory().available / 1024**3:.2f} GB")
-        print(f"CPU count: {psutil.cpu_count()}")
-        print(f"Load average: {psutil.getloadavg()}")
         result = subprocess.run(['ps', 'aux'], capture_output=True, text=True)
         chrome_processes = [line for line in result.stdout.split('\n') if 'chrome' in line.lower()]
         print(f"Chrome processes: {len(chrome_processes)}")

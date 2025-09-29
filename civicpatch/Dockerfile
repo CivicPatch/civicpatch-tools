@@ -22,7 +22,8 @@ ENV PYTHONUNBUFFERED=1 \
     # Poetry setup with pip
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_HOME="/opt/poetry" \
-    PATH="/opt/poetry/bin:$PATH"
+    PATH="/opt/poetry/bin:$PATH" \
+    DEBUG="pw:browser"
 
 # Needed especially for post-install step
 # cache files are 8GB
@@ -43,7 +44,7 @@ RUN poetry install --no-root
 
 FROM image-base AS post-install
 
-RUN poetry run playwright install --with-deps chromium
+RUN poetry run playwright install --with-deps chrome
 
 USER civicpatch_user
 
