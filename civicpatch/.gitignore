@@ -1,5 +1,6 @@
 __pycache__/
 .env
+tmp/
 
 crudder_data/*
 !crudder_data/README.md

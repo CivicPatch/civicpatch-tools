@@ -22,8 +22,10 @@ ENV PROJECT_NAME="civicpatch" \
     POETRY_HOME="/opt/poetry" \
     PATH="/opt/poetry/bin:$PATH" \
     # DEBUG="pw:browser" \
-    XDG_CACHE_HOME="/tmp/.cache" \
-    XDG_CONFIG_HOME="/tmp/.config" 
+    XDG_CACHE_HOME="/app/tmp/.cache" \
+    XDG_CONFIG_HOME="/app/tmp/.config" 
+
+RUN mkdir -p /app/tmp
 
 # Needed especially for post-install step
 # cache files are 8GB
@@ -40,12 +42,11 @@ RUN useradd -m -s /bin/bash civicpatch_user
 
 # For xvfb
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
-    mkdir -p /tmp/.cache && \
-    mkdir -p /tmp/.config && \
+    mkdir -p /app/tmp/.cache && \
+    mkdir -p /app/tmp/.config && \
     chown -R root:root /tmp/.X11-unix
 
-RUN chown -R civicpatch_user:civicpatch_user /tmp/.cache /tmp/.config
-
+RUN chown -R civicpatch_user:civicpatch_user /app/tmp/.cache /app/tmp/.config
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 RUN poetry install --no-root
 
