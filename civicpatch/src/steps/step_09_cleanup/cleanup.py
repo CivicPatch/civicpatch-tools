@@ -19,8 +19,8 @@ def cleanup(context: PipelineContext):
     people = [Person.parse_obj(person) for person in people_data]
 
     # TODO: clean up after creyton is done testing
-    #if os.path.exists(cache_dir):
-    #    cleanup_cache(cache_dir, people)
+    if os.path.exists(cache_dir):
+        cleanup_cache(cache_dir, people)
     if os.path.exists(images_dir):
         cleanup_images(images_dir, people)
 

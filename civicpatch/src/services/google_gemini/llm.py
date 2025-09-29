@@ -12,7 +12,8 @@ DEFAULT_TIMEOUT = 180  # seconds
 # Model fallback order: try flash-latest, then pro-latest
 MODEL_FALLBACKS = [
     "gemini-2.5-flash",
-    "gemini-2.5-flash-lite-preview-06-17"
+    "gemini-2.5-flash-preview",
+    "gemini-2.5-flash-lite",
 ]
 # gemini-2.5-flash
 # gemini-2.5-flash-preview-05-20
@@ -68,6 +69,7 @@ def run_prompt(jurisdiction_id: str, prompt, response_schema=None, content="", w
     raise RuntimeError("All Gemini model fallbacks failed.")
 
 def make_request_with_search(model, api_key, prompt):
+    print("making request with search")
     url = f"{BASE_URI}/{model}:generateContent?key={api_key}"
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
@@ -79,6 +81,7 @@ def make_request_with_search(model, api_key, prompt):
     headers = {"Content-Type": "application/json"}
 
     raw_response = requests.post(url, json=payload, headers=headers, timeout=DEFAULT_TIMEOUT)
+    print("raw_response:", raw_response.text)
 
     response = parse_raw_response(raw_response.json())
 
