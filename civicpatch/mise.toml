@@ -98,3 +98,8 @@ docker compose -f docker-compose.yml run --rm civicpatch poetry run \
     --name "{{ option(name="name") }}" \
     --url "{{ option(name="url") }}"
 """
+
+#mise pipeline-run \
+#  --jurisdiction-id "ocd-jurisdiction/country:us/state:wa/place:seattle" \
+#  --name "Seattle city" \
+#  --url "https://www.seattle.gov"

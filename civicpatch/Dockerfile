@@ -23,10 +23,6 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_HOME="/opt/poetry" \
     PATH="/opt/poetry/bin:$PATH" \
-    # Fix issue with running chromium under GitHub Actions
-    # https://github.com/microsoft/playwright/issues/35140
-    XDG_CONFIG_HOME=/home/civicpatch_user/.config \
-    XDG_CACHE_HOME=/home/civicpatch_user/.cache
 
 # Needed especially for post-install step
 # cache files are 8GB
