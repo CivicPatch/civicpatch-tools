@@ -8,7 +8,7 @@
   start_date: '2021'
   end_date: ''
   image: https://www.seattle.gov/images/MayorHarrell/mayor-bruce-harrell.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/8e6f56cc98e3.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:wa/place:seattle
   sources:
   - https://www.seattle.gov/mayor/about
@@ -24,7 +24,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Members/Nelson/nelson_300x300.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/0b69e4131116.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:wa/place:seattle
   sources:
   - https://www.seattle.gov/council/members
@@ -40,7 +40,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/saka_300.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/cff4d84fc3da.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:wa/place:seattle
   sources:
   - https://www.seattle.gov/council/members
@@ -56,7 +56,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Members/Solomon/mark-solomon.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/2c29f05305fd.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:wa/place:seattle
   sources:
   - https://www.seattle.gov/council/members
@@ -72,7 +72,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/hollingsworth_300.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/605125d4db35.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:wa/place:seattle
   sources:
   - https://www.seattle.gov/council/members
@@ -88,7 +88,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rivera_300.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/51f9aec375fa.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:wa/place:seattle
   sources:
   - https://www.seattle.gov/council/members
@@ -104,7 +104,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/juarez_300.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/ba0a8bf2e48c.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:wa/place:seattle
   sources:
   - https://www.seattle.gov/council/members
@@ -120,7 +120,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Members/Strauss/Struass-2022-headshot_square.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/72cb2afc2923.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:wa/place:seattle
   sources:
   - https://www.seattle.gov/council/members
@@ -136,7 +136,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/kettle_300.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/224680c27986.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:wa/place:seattle
   sources:
   - https://www.seattle.gov/council/members
@@ -152,7 +152,7 @@
   start_date: ''
   end_date: ''
   image: https://www.seattle.gov/images//images/Council/Members/SquareHeadshots/rinck_300.jpg
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/wa/seattle/99ad0841d929.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:wa/place:seattle
   sources:
   - https://www.seattle.gov/council/members
