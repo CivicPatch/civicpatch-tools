@@ -3,7 +3,7 @@ set -e
 export DISPLAY=:99
 
 echo "Starting Xvfb in background..."
-echo $(id -u) $(id -g)
+echo "Running as $(id -u) $(id -g)"
 
 [ -f /tmp/.X99-lock ] && rm -f /tmp/.X99-lock
 

@@ -105,6 +105,29 @@ docker compose -f docker-compose.yml run --rm civicpatch poetry run \
     --url "{{ option(name="url") }}"
 """
 
+[tasks.test-build]
+run = """
+ docker build --file Dockerfile.github-actions
+"""
+
+[tasks.test-pipeline-run-cicd]
+run = """
+docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poetry run \
+  python src/cli.py \
+    --jurisdiction-id "ocd-jurisdiction/country:us/state:wa/place:seattle" \
+    --name "Seattle city" \
+    --url "https://www.seattle.gov"
+"""
+
+[tasks.pipeline-run-cicd]
+run = """
+docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poetry run \
+  python src/cli.py \
+    --jurisdiction-id "{{ option(name="jurisdiction-id") }}" \
+    --name "{{ option(name="name") }}" \
+    --url "{{ option(name="url") }}"
+"""
+
 #mise pipeline-run \
 #  --jurisdiction-id "ocd-jurisdiction/country:us/state:wa/place:seattle" \
 #  --name "Seattle city" \
