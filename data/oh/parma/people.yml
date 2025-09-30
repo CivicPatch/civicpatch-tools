@@ -30,7 +30,7 @@
   start_date: 2024-01
   end_date: ''
   image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=149
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/oh/parma/7b747b080706.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
   sources:
   - https://www.cityofparma-oh.gov/directory.aspx?eid=26
@@ -51,7 +51,7 @@
   start_date: ''
   end_date: ''
   image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=136
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/oh/parma/6e30d729fa0a.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
   sources:
   - https://www.cityofparma-oh.gov/directory.aspx?did=30
@@ -72,7 +72,7 @@
   start_date: ''
   end_date: ''
   image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=139
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/oh/parma/0cc7e81c9fe4.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
   sources:
   - https://www.cityofparma-oh.gov/directory.aspx?did=30
@@ -150,7 +150,7 @@
   start_date: 2011-11
   end_date: ''
   image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=142
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/oh/parma/3e035d0a2e71.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
   sources:
   - https://www.cityofparma-oh.gov/directory.aspx?did=30
@@ -170,7 +170,7 @@
   start_date: ''
   end_date: ''
   image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=335
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/oh/parma/f2455f2261e2.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
   sources:
   - https://www.cityofparma-oh.gov/directory.aspx?did=30
@@ -209,7 +209,7 @@
   start_date: '2022'
   end_date: ''
   image: https://www.cityofparma-oh.gov/ImageRepository/Document?documentID=708
-  cdn_image: ''
+  cdn_image: https://cdn.civicpatch.org/open-data/oh/parma/6c43e97a220f.png
   jurisdiction_id: ocd-jurisdiction/country:us/state:oh/place:parma/government
   sources:
   - https://www.cityofparma-oh.gov/directory.aspx?did=30
