@@ -37,10 +37,8 @@ RUN python3 -m venv $POETRY_HOME && \
 
 # For xvfb
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
-    mkdir -p /app/tmp/.cache && \
-    mkdir -p /app/tmp/.config && \
-    mkdir -p /app/data_source && \
-    mkdir -p /app/data
+    mkdir -p /tmp/.cache && \
+    mkdir -p /tmp/.config
 
 COPY ./pyproject.toml ./poetry.lock ./
 COPY ./src/scripts/docker-entrypoint.sh ./src/scripts/docker-entrypoint.sh
