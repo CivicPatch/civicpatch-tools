@@ -13,9 +13,9 @@ services:
       - CRUDDER_SHARED_TOKEN
       - CRUDDER_URL
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
-    # image: ghcr.io/civicpatch/civicpatch-github-actions:latest
-    build:
-      context: .
-      dockerfile: Dockerfile.github-actions
+    image: ghcr.io/civicpatch/civicpatch-github-actions:latest
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile.github-actions
     volumes:
       - .:/app
