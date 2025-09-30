@@ -137,23 +137,8 @@ class PipelineContext(BaseModel):
     url: str # Municipality url. Without it we can't scrape anything.
     links: List[Link]  # TODO: move to SEARCH_LINKS
     names: Dict[str, List[str]]  # Canonical names to names found while scraping
-    steps: Dict[
-        Literal[
-            "INIT",
-            "SEARCH_LINKS",
-            "RESEARCH_MUNICIPALITY",
-            "MERGE_RECORDS_WITHIN_LLM",
-            "MERGE_RECORDS_ACROSS_LLMS"
-        ],
-        Union[
-            None,
-            SearchLinksStep,
-            ResearchMunicipalityStep,
-            MergeRecordsWithinLLMStep,
-            MergeRecordsAcrossLLMsStep
-        ]
-    ]
     progress: ProgressState
+    steps: Dict[str, Any]
 
 class PipelineCompletePayload(BaseModel):
     pipeline_context: PipelineContext

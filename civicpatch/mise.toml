@@ -60,6 +60,12 @@ docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
   python src/scripts/generate_data_comment.py {{ option(name="jurisdiction-id") }} 
 """
 
+[tasks.test-generate-review-comment]
+run = """
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+  python src/scripts/generate_review_comment.py ocd-jurisdiction/country:us/state:wa/place:seattle
+"""
+
 [tasks.generate-review-comment]
 # Ex: /app/data/wa/municipalities/spokane/people.yml
 run = """
