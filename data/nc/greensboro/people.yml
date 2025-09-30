@@ -7,51 +7,15 @@
   website: https://www.greensboro-nc.gov/government/city-council
   start_date: ''
   end_date: ''
-  image: https://www.greensboro-nc.gov/home/showpublishedimage/30670/638028287037900000
+  image: https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000
   cdn_image: ''
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
+  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
   - https://www.greensboro-nc.gov/government/city-council
   - https://www.greensboro-nc.gov/
-  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
-  updated_at: '2025-09-28T18:26:59+00:00'
-- name: Jamilla Pinder
-  roles:
-  - Council Member
-  divisions: []
-  phone_number: (336) 373-2396
-  email: ''
-  website: https://www.greensboro-nc.gov/government/city-council
-  start_date: ''
-  end_date: ''
-  image: https://www.greensboro-nc.gov/home/showpublishedimage/39276/638784151225130000
-  cdn_image: ''
-  jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
-  sources:
-  - https://www.greensboro-nc.gov/government/city-council/council-meetings
-  - https://www.greensboro-nc.gov/government/city-council
-  - https://www.greensboro-nc.gov/
-  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
-  updated_at: '2025-09-28T18:26:59+00:00'
-- name: Marikay Abuzuaiter
-  roles:
-  - Council Member
-  divisions: []
-  phone_number: (336) 373-2396
-  email: ''
-  website: https://www.greensboro-nc.gov/government/city-council
-  start_date: ''
-  end_date: ''
-  image: https://www.greensboro-nc.gov/home/showpublishedimage/5845/638028278965130000
-  cdn_image: ''
-  jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
-  sources:
-  - https://www.greensboro-nc.gov/government/city-council/council-meetings
-  - https://www.greensboro-nc.gov/government/city-council
-  - https://www.greensboro-nc.gov/
-  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
-  updated_at: '2025-09-28T18:26:59+00:00'
+  updated_at: '2025-09-30T19:41:01+00:00'
 - name: Hugh Holston
   roles:
   - Council Member
@@ -62,15 +26,54 @@
   website: https://www.greensboro-nc.gov/government/city-council
   start_date: ''
   end_date: ''
-  image: https://www.greensboro-nc.gov/home/showpublishedimage/30265/638318536081830000
+  image: https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000
   cdn_image: ''
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
+  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
   - https://www.greensboro-nc.gov/government/city-council
   - https://www.greensboro-nc.gov/
+  updated_at: '2025-09-30T19:41:01+00:00'
+- name: Jamilla Pinder
+  roles:
+  - Council Member
+  divisions:
+  - At-Large
+  phone_number: (336) 373-2396
+  email: ''
+  website: https://www.greensboro-nc.gov/government/city-council
+  start_date: ''
+  end_date: ''
+  image: https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
+  sources:
+  - https://www.greensboro-nc.gov/government/city-council/council-meetings
   - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
-  updated_at: '2025-09-28T18:26:59+00:00'
+  - https://www.greensboro-nc.gov/government/city-council
+  - https://www.greensboro-nc.gov/
+  updated_at: '2025-09-30T19:41:01+00:00'
+- name: Marikay Abuzuaiter
+  roles:
+  - Council Member
+  - Mayor Pro Tem
+  divisions:
+  - At-Large
+  phone_number: (336) 373-2396
+  email: ''
+  website: https://www.greensboro-nc.gov/government/city-council
+  start_date: ''
+  end_date: ''
+  image: https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000
+  cdn_image: ''
+  jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
+  sources:
+  - https://www.greensboro-nc.gov/government/city-council/council-meetings
+  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+  - https://www.greensboro-nc.gov/government/city-council
+  - https://www.greensboro-nc.gov/
+  updated_at: '2025-09-30T19:41:01+00:00'
 - name: Sharon Hightower
   roles:
   - Council Member
@@ -81,15 +84,15 @@
   website: https://www.greensboro-nc.gov/government/city-council
   start_date: ''
   end_date: ''
-  image: https://www.greensboro-nc.gov/home/showpublishedimage/10230/638028304351000000
+  image: https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000
   cdn_image: ''
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
+  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
   - https://www.greensboro-nc.gov/government/city-council
   - https://www.greensboro-nc.gov/
-  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
-  updated_at: '2025-09-28T18:26:59+00:00'
+  updated_at: '2025-09-30T19:41:01+00:00'
 - name: Goldie F. Wells
   roles:
   - Council Member
@@ -100,15 +103,15 @@
   website: https://www.greensboro-nc.gov/government/city-council
   start_date: ''
   end_date: ''
-  image: https://www.greensboro-nc.gov/home/showpublishedimage/14845/638029244382970000
+  image: https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000
   cdn_image: ''
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
+  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
   - https://www.greensboro-nc.gov/government/city-council
   - https://www.greensboro-nc.gov/
-  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
-  updated_at: '2025-09-28T18:26:59+00:00'
+  updated_at: '2025-09-30T19:41:01+00:00'
 - name: Zack Matheny
   roles:
   - Council Member
@@ -119,15 +122,15 @@
   website: https://www.greensboro-nc.gov/government/city-council
   start_date: ''
   end_date: ''
-  image: https://www.greensboro-nc.gov/home/showpublishedimage/30257/638784152026670000
+  image: https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000
   cdn_image: ''
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
+  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
   - https://www.greensboro-nc.gov/government/city-council
   - https://www.greensboro-nc.gov/
-  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
-  updated_at: '2025-09-28T18:26:59+00:00'
+  updated_at: '2025-09-30T19:41:01+00:00'
 - name: Nancy Hoffmann
   roles:
   - Council Member
@@ -138,15 +141,15 @@
   website: https://www.greensboro-nc.gov/government/city-council
   start_date: ''
   end_date: ''
-  image: https://www.greensboro-nc.gov/home/showpublishedimage/5847/638784150671900000
+  image: https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000
   cdn_image: ''
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
+  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
   - https://www.greensboro-nc.gov/government/city-council
   - https://www.greensboro-nc.gov/
-  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
-  updated_at: '2025-09-28T18:26:59+00:00'
+  updated_at: '2025-09-30T19:41:01+00:00'
 - name: Tammi Thurm
   roles:
   - Council Member
@@ -157,12 +160,12 @@
   website: https://www.greensboro-nc.gov/government/city-council
   start_date: ''
   end_date: ''
-  image: https://www.greensboro-nc.gov/home/showpublishedimage/26694/638784150054870000
+  image: https://www.greensboro-nc.gov/home/showpublishedimage/39396/638751413912470000
   cdn_image: ''
   jurisdiction_id: ocd-jurisdiction/country:us/state:nc/place:greensboro
   sources:
   - https://www.greensboro-nc.gov/government/city-council/council-meetings
+  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
   - https://www.greensboro-nc.gov/government/city-council
   - https://www.greensboro-nc.gov/
-  - https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
-  updated_at: '2025-09-28T18:26:59+00:00'
+  updated_at: '2025-09-30T19:41:01+00:00'
