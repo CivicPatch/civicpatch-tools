@@ -1,0 +1,427 @@
+{
+    "request_id": "2025-09-30-c866",
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle",
+    "name": "Seattle city",
+    "url": "https://www.seattle.gov",
+    "state": "MAYBE_SEND_TO_GITHUB",
+    "links": [
+        {
+            "url": "https://www.seattle.gov/mayor/about",
+            "status": "done",
+            "folder_name": "www_seattle_gov_mayor_about",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/council/members",
+            "status": "done",
+            "folder_name": "www_seattle_gov_council_members",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/elected-officials",
+            "status": "done",
+            "folder_name": "www_seattle_gov_elected-officials",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/cityarchives/seattle-facts/city-officials/mayors/mayors-1948-present",
+            "status": "done",
+            "folder_name": "www_seattle_gov_cityarchives_seattle-facts_city-officials_mayors_mayors-1948-present",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/council",
+            "status": "done",
+            "folder_name": "www_seattle_gov_council",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/council/members/find-your-district-and-councilmembers",
+            "status": "done",
+            "folder_name": "www_seattle_gov_council_members_find-your-district-and-councilmembers",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/council/topics/city-council-budget-basics",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/cityarchives/seattle-facts/city-officials",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/light/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/council/topics/budget-dashboard",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/council/topics",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process/city-budget-process",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/city-budget-office/budget-archives/2021-adopted-budget",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/city-budget-office",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/council/meetings/committees-and-agendas/public-safety",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/council/meetings/committees-and-agendas/council-central-staff",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.seattle.gov/ethics",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        }
+    ],
+    "progress": {
+        "required_data": 10,
+        "current_data": 0,
+        "has_target_role": false,
+        "has_target_divisions": false
+    },
+    "names": {},
+    "steps": {
+        "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "Bruce Harrell",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Sara Nelson",
+                    "roles": [
+                        "Council Member",
+                        "Council President"
+                    ],
+                    "divisions": [
+                        "Position 9"
+                    ]
+                },
+                {
+                    "name": "Rob Saka",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 1"
+                    ]
+                },
+                {
+                    "name": "Mark Solomon",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 2"
+                    ]
+                },
+                {
+                    "name": "Joy Hollingsworth",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 3"
+                    ]
+                },
+                {
+                    "name": "Maritza Rivera",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 4"
+                    ]
+                },
+                {
+                    "name": "Debora Juarez",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 5"
+                    ]
+                },
+                {
+                    "name": "Dan Strauss",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 6"
+                    ]
+                },
+                {
+                    "name": "Bob Kettle",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 7"
+                    ]
+                },
+                {
+                    "name": "Alexis Mercedes Rinck",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Position 8"
+                    ]
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "Bruce Harrell",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Sara Nelson",
+                    "roles": [
+                        "Council Member",
+                        "Council President"
+                    ],
+                    "divisions": [
+                        "Position 9"
+                    ]
+                },
+                {
+                    "name": "Rob Saka",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 1"
+                    ]
+                },
+                {
+                    "name": "Mark Solomon",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 2"
+                    ]
+                },
+                {
+                    "name": "Joy Hollingsworth",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 3"
+                    ]
+                },
+                {
+                    "name": "Maritza Rivera",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 4"
+                    ]
+                },
+                {
+                    "name": "Debora Juarez",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 5"
+                    ]
+                },
+                {
+                    "name": "Dan Strauss",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 6"
+                    ]
+                },
+                {
+                    "name": "Bob Kettle",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 7"
+                    ]
+                },
+                {
+                    "name": "Alexis Mercedes Rinck",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Position 8"
+                    ]
+                }
+            ],
+            "notes": "Seattle operates under a mayor-council form of government. The Mayor is elected citywide. The City Council has nine members; seven are elected by district, and two are elected at-large (Positions 8 and 9). Sara Nelson holds an at-large position and is also the Council President."
+        },
+        "SEARCH_LINKS": {
+            "search_link_pointer": 1,
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "https://www.seattle.gov/mayor/about",
+                        "https://www.seattle.gov/council/members",
+                        "https://www.seattle.gov/elected-officials",
+                        "https://www.seattle.gov/cityarchives/seattle-facts/city-officials/mayors/mayors-1948-present",
+                        "https://www.seattle.gov/council",
+                        "https://www.seattle.gov/council/members/find-your-district-and-councilmembers",
+                        "https://www.seattle.gov/",
+                        "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council",
+                        "https://www.seattle.gov/council/topics/city-council-budget-basics",
+                        "https://www.seattle.gov/cityarchives/seattle-facts/city-officials",
+                        "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district",
+                        "https://www.seattle.gov/light/",
+                        "https://www.seattle.gov/council/topics/budget-dashboard",
+                        "https://www.seattle.gov/council/topics",
+                        "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/terms-of-office-for-elected-officials",
+                        "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process/city-budget-process",
+                        "https://www.seattle.gov/cityarchives/seattle-facts/city-officials/city-council-members",
+                        "https://www.seattle.gov/city-budget-office/budget-archives/2021-adopted-budget",
+                        "https://www.seattle.gov/city-budget-office",
+                        "https://www.seattle.gov/council/meetings/committees-and-agendas/public-safety",
+                        "https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process",
+                        "https://www.seattle.gov/council/meetings/committees-and-agendas/council-central-staff",
+                        "https://www.seattle.gov/ethics"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {
+            "elapsed_times": [
+                11.674587726593018,
+                7.750474691390991,
+                7.699427127838135,
+                7.793694496154785,
+                7.832810878753662,
+                5.84323263168335
+            ],
+            "total_elapsed_time_seconds": 48.59422755241394,
+            "average_elapsed_time_seconds": 8.099037925402323
+        },
+        "PROCESS_PAGE_CONTENT": {
+            "raw_records_by_llm": {
+                "google_gemini": {},
+                "openai": {},
+                "together_ai": {}
+            },
+            "records_by_llm": {
+                "google_gemini": {},
+                "openai": {},
+                "together_ai": {}
+            }
+        },
+        "MERGE_RECORDS_WITHIN_LLM": {
+            "people_by_llm": {
+                "google_gemini": [],
+                "openai": [],
+                "together_ai": []
+            }
+        },
+        "MERGE_RECORDS_ACROSS_LLMS": {
+            "people": [],
+            "agreement_score": 100.0,
+            "disagreements": {},
+            "missing_people": [],
+            "validation_errors": []
+        },
+        "CLEANUP": {},
+        "RETRY": {},
+        "DONE": {}
+    }
+}
