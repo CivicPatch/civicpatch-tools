@@ -19,10 +19,6 @@ jobs:
   build-and-push-docker-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-        with:
-          ref: ${{ github.ref_name }}
-
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -69,8 +65,8 @@ jobs:
       - name: Build and push (github actions)
         uses: docker/build-push-action@v6
         with:
-          context: civicpatch
-          file: Dockerfile.github-actions
+          context: ./civicpatch
+          file: ./civicpatch/Dockerfile.github-actions
           push: true
           tags: ghcr.io/civicpatch/civicpatch-github-actions:latest
           cache-from: type=gha
