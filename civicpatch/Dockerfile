@@ -21,7 +21,7 @@ ENV PROJECT_NAME="civicpatch" \
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_HOME="/opt/poetry" \
     PATH="/opt/poetry/bin:$PATH" \
-    DEBUG="pw:browser" \
+    #DEBUG="pw:browser" \
     XDG_CACHE_HOME="/app/tmp/.cache" \
     XDG_CONFIG_HOME="/app/tmp/.config" 
 

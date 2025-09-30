@@ -236,9 +236,9 @@ class Pipeline:
                 self.state = PipelineStatus.CLEANUP
 
             elif self.state == PipelineStatus.CLEANUP:
-                result = cleanup(self.context)
+                #result = cleanup(self.context)
 
-                self.context.update(result)
+                #self.context.update(result)
                 self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
             elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
@@ -296,12 +296,13 @@ class Pipeline:
             print("Enough data processed, moving to report generation...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
-        max_pages_with_required_data = max_pages + required_data # Each person might have a profile page
-        if processed_count >= max_pages_with_required_data:
-            print(f"Max pages ({max_pages_with_required_data}) reached, moving to next step...")
+        # max_pages_with_required_data = max_pages + required_data # Each person might have a profile page
+        max_pages = 5
+        if processed_count >= max_pages:
+            print(f"Max pages ({max_pages}) reached, moving to next step...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
-        print(f"Not enough data processed yet, collecting more data... {processed_count}/{max_pages_with_required_data}")
+        print(f"Not enough data processed yet, collecting more data... {processed_count}/{max_pages}")
         return PipelineStatus.SCRAPE_PAGE
     
     def save_data(self, people: List[Person]):

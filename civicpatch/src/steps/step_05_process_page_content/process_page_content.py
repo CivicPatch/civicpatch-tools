@@ -197,15 +197,17 @@ def process_with_llms(
     responses: Dict[str, List[LLMPerson]] = {}
     for llm in LLMS:
         prompt = llm["prompt"].municipality_officials_prompt(government_type, people_hint)
-        response = llm["service"].run_prompt(
-            jurisdiction_id,
-            prompt,
-            response_schema=PeopleArrayLLMResponseSchema,
-            content=content
-        )
+        print("Using LLM:", llm["name"], "with prompt:")
+        print(prompt)
+        #response = llm["service"].run_prompt(
+        #    jurisdiction_id,
+        #    prompt,
+        #    response_schema=PeopleArrayLLMResponseSchema,
+        #    content=content
+        #)
 
         # Convert LLMPerson to ProcessedLLMPerson
-        people = response.people
+        people = []
         processed_people = []
         for p in people:
             p = p.model_dump() 
