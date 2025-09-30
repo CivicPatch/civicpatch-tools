@@ -36,19 +36,7 @@ jobs:
 
       # Really not that slim; it is 2GB
       # TODO: make it smaller
-      - name: Build and push (slim) with custom tag
-        if: ${{ github.ref_name != 'main' }}
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: civicpatch/Dockerfile
-          push: true
-          tags: ghcr.io/civicpatch/civicpatch-slim:${{ github.ref_name }}
-          target: image-base
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: Build and push (slim) with default tags
+      - name: Build and push (slim)
         if: ${{ github.ref_name == 'main' }}
         uses: docker/build-push-action@v6
         with:
@@ -62,20 +50,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Build and push (production) with custom tag
-        if: ${{ github.ref_name != 'main' }}
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: civicpatch/Dockerfile
-          push: true
-          tags: ghcr.io/civicpatch/civicpatch:${{ github.ref_name }}
-          target: production
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-      - name: Build and push (production) with default tags
-        if: ${{ !github.event.inputs.docker_tag }}
+      - name: Build and push (production)
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -85,5 +60,15 @@ jobs:
             ghcr.io/civicpatch/civicpatch:latest
             ghcr.io/civicpatch/civicpatch:${{ steps.date.outputs.date-tag }}
           target: production
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push (github actions)
+        uses: docker/build-push-action@v6
+        with:
+          context: civicpatch
+          file: Dockerfile.github-actions
+          push: true
+          tags: ghcr.io/civicpatch/civicpatch-github-actions:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max

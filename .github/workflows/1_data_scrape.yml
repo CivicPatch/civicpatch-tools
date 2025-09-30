@@ -47,12 +47,9 @@ jobs:
           fi
 
       - name: Pull docker image
-        env:
-          DOCKER_TAG: ${{ steps.docker-tag.outputs.docker-tag }}
         run: |
           cd civicpatch
-          docker compose pull civicpatch
-          docker inspect ghcr.io/civicpatch/civicpatch:${DOCKER_TAG} | jq '.[0].Created'
+          docker compose -f docker-compose.github-actions.yml pull civicpatch-cicd
 
       - name: Run data scrape
         env:
@@ -71,7 +68,7 @@ jobs:
           DOCKER_TAG: ${{ steps.docker-tag.outputs.docker-tag }}
         run: |
           cd civicpatch
-          mise pipeline-run \
+          mise pipeline-run-cicd \
             --jurisdiction-id "${{ github.event.inputs.jurisdiction_id }}" \
             --name "${{ github.event.inputs.name }}" \
             --url "${{ github.event.inputs.url }}"
