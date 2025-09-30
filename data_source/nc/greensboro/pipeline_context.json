@@ -1,0 +1,346 @@
+{
+    "request_id": "2025-09-30-e553",
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+    "name": "'Greensboro city'",
+    "url": "https://www.greensboro-nc.gov",
+    "state": "MAYBE_SEND_TO_GITHUB",
+    "links": [
+        {
+            "url": "https://www.greensboro-nc.gov/government/city-council",
+            "status": "done",
+            "folder_name": "www_greensboro-nc_gov_government_city-council",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/",
+            "status": "done",
+            "folder_name": "www_greensboro-nc_gov_",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/government/city-council/council-meetings",
+            "status": "done",
+            "folder_name": "www_greensboro-nc_gov_government_city-council_council-meetings",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/government/city-council/interact-with-city-council",
+            "status": "done",
+            "folder_name": "www_greensboro-nc_gov_government_city-council_interact-with-city-council",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council",
+            "status": "done",
+            "folder_name": "www_greensboro-nc_gov_i-want-to_contact_e-mail-city-council",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/government/city-manager-s-office",
+            "status": "done",
+            "folder_name": "www_greensboro-nc_gov_government_city-manager-s-office",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/government/boards-and-commissions",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/departments",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/departments/planning",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/departments/budget-evaluation",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.greensboro-nc.gov/Home/Components/News/News/20257/36",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        }
+    ],
+    "progress": {
+        "required_data": 9,
+        "current_data": 0,
+        "has_target_role": false,
+        "has_target_divisions": false
+    },
+    "names": {},
+    "steps": {
+        "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "Nancy Vaughan",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Marikay Abuzuaiter",
+                    "roles": [
+                        "Mayor Pro Tem",
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                },
+                {
+                    "name": "Hugh Holston",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                },
+                {
+                    "name": "Jamilla Pinder",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                },
+                {
+                    "name": "Sharon Hightower",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 1"
+                    ]
+                },
+                {
+                    "name": "Goldie F. Wells",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 2"
+                    ]
+                },
+                {
+                    "name": "Zack Matheny",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 3"
+                    ]
+                },
+                {
+                    "name": "Nancy Hoffmann",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 4"
+                    ]
+                },
+                {
+                    "name": "Tammi Thurm",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 5"
+                    ]
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "Nancy Vaughan",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Marikay Abuzuaiter",
+                    "roles": [
+                        "Mayor Pro Tem",
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                },
+                {
+                    "name": "Hugh Holston",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                },
+                {
+                    "name": "Jamilla Pinder",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "At-Large"
+                    ]
+                },
+                {
+                    "name": "Sharon Hightower",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 1"
+                    ]
+                },
+                {
+                    "name": "Goldie F. Wells",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 2"
+                    ]
+                },
+                {
+                    "name": "Zack Matheny",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 3"
+                    ]
+                },
+                {
+                    "name": "Nancy Hoffmann",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 4"
+                    ]
+                },
+                {
+                    "name": "Tammi Thurm",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "District 5"
+                    ]
+                }
+            ],
+            "notes": "Greensboro, NC operates under a Council-Manager form of government. The Mayor and three Council members are elected at-large, while five Council members are elected from districts. Jamilla Pinder was appointed to an At-Large seat on January 31, 2025, following the passing of Yvonne Johnson. The next elections are in 2025."
+        },
+        "SEARCH_LINKS": {
+            "search_link_pointer": 1,
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "https://www.greensboro-nc.gov/government/city-council",
+                        "https://www.greensboro-nc.gov/",
+                        "https://www.greensboro-nc.gov/government/city-council/council-meetings",
+                        "https://www.greensboro-nc.gov/government/city-council/interact-with-city-council",
+                        "https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council",
+                        "https://www.greensboro-nc.gov/government/city-manager-s-office",
+                        "https://www.greensboro-nc.gov/government/boards-and-commissions",
+                        "https://www.greensboro-nc.gov/departments",
+                        "https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/",
+                        "https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission",
+                        "https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions",
+                        "https://www.greensboro-nc.gov/departments/planning",
+                        "https://www.greensboro-nc.gov/departments/budget-evaluation",
+                        "https://www.greensboro-nc.gov/Home/Components/News/News/20257/36"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {
+            "elapsed_times": [
+                10.987658977508545,
+                13.989834547042847,
+                9.052797794342041,
+                10.865499019622803,
+                8.934653282165527,
+                9.091845512390137
+            ],
+            "total_elapsed_time_seconds": 62.9222891330719,
+            "average_elapsed_time_seconds": 10.487048188845316
+        },
+        "PROCESS_PAGE_CONTENT": {
+            "raw_records_by_llm": {
+                "google_gemini": {},
+                "openai": {},
+                "together_ai": {}
+            },
+            "records_by_llm": {
+                "google_gemini": {},
+                "openai": {},
+                "together_ai": {}
+            }
+        },
+        "MERGE_RECORDS_WITHIN_LLM": {
+            "people_by_llm": {
+                "google_gemini": [],
+                "openai": [],
+                "together_ai": []
+            }
+        },
+        "MERGE_RECORDS_ACROSS_LLMS": {
+            "people": [],
+            "agreement_score": 100.0,
+            "disagreements": {},
+            "missing_people": [],
+            "validation_errors": []
+        },
+        "CLEANUP": {},
+        "RETRY": {},
+        "DONE": {}
+    }
+}
