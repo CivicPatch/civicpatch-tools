@@ -1,0 +1,465 @@
+{
+    "request_id": "2025-10-03-24d5",
+    "jurisdiction_id": "ocd-division/country:us/state:oh/place:parma",
+    "name": "'Parma city'",
+    "url": "https://www.cityofparma-oh.gov/",
+    "state": "MAYBE_SEND_TO_GITHUB",
+    "links": [
+        {
+            "url": "https://www.cityofparma-oh.gov/",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?did=30",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?eid=31",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/calendar.aspx?CID=23",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_calendar_aspx?cid=23",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?eid=26",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=10",
+            "status": "done",
+            "folder_name": "www_cityofparma-oh_gov_directory_aspx?eid=10",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=33",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/265/Police",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/CivicAlerts.aspx?CID=1,6",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Agenda/_10072024-154?packet=true",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?eid=34",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/directory.aspx?DID=",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Agenda/_04152024-1?packet=true",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/251?fileID=1388",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Minutes/_03042024-6",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        },
+        {
+            "url": "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Agenda/_03182024-3?packet=true",
+            "status": "pending",
+            "folder_name": "",
+            "is_profile_page": false
+        }
+    ],
+    "progress": {
+        "required_data": 11,
+        "current_data": 0,
+        "has_target_role": false,
+        "has_target_divisions": false
+    },
+    "names": {},
+    "steps": {
+        "INIT": {},
+        "RESEARCH_MUNICIPALITY": {
+            "government_type": "mayor_council",
+            "people": [
+                {
+                    "name": "Timothy J. DeGeeter",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Vito Dipierro",
+                    "roles": [
+                        "Council President"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Monica Wilson",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 1"
+                    ]
+                },
+                {
+                    "name": "Deborah Lime",
+                    "roles": [
+                        "Council Member",
+                        "President Pro Tempore"
+                    ],
+                    "divisions": [
+                        "Ward 2"
+                    ]
+                },
+                {
+                    "name": "John Soeder",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 3"
+                    ]
+                },
+                {
+                    "name": "Kelly Zacharias",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 4"
+                    ]
+                },
+                {
+                    "name": "Allan Divis",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 5"
+                    ]
+                },
+                {
+                    "name": "Kevin Kussmaul",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 6"
+                    ]
+                },
+                {
+                    "name": "Kammy Coyle Shuman",
+                    "roles": [
+                        "Council Member",
+                        "Majority Leader"
+                    ],
+                    "divisions": [
+                        "Ward 7"
+                    ]
+                },
+                {
+                    "name": "Amanda Boyd",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 8"
+                    ]
+                },
+                {
+                    "name": "Rob Euerle",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 9"
+                    ]
+                },
+                {
+                    "name": "Brian Day",
+                    "roles": [
+                        "Auditor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Scott M. Tuma",
+                    "roles": [
+                        "Law Director",
+                        "Chief Prosecutor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Thomas Mastroianni",
+                    "roles": [
+                        "Treasurer"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Timothy G. Dobeck",
+                    "roles": [
+                        "Judge"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Timothy P. Gilligan",
+                    "roles": [
+                        "Judge"
+                    ],
+                    "divisions": []
+                }
+            ],
+            "elected_officials": [
+                {
+                    "name": "Timothy J. DeGeeter",
+                    "roles": [
+                        "Mayor"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Vito Dipierro",
+                    "roles": [
+                        "Council President"
+                    ],
+                    "divisions": []
+                },
+                {
+                    "name": "Monica Wilson",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 1"
+                    ]
+                },
+                {
+                    "name": "Deborah Lime",
+                    "roles": [
+                        "Council Member",
+                        "President Pro Tempore"
+                    ],
+                    "divisions": [
+                        "Ward 2"
+                    ]
+                },
+                {
+                    "name": "John Soeder",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 3"
+                    ]
+                },
+                {
+                    "name": "Kelly Zacharias",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 4"
+                    ]
+                },
+                {
+                    "name": "Allan Divis",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 5"
+                    ]
+                },
+                {
+                    "name": "Kevin Kussmaul",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 6"
+                    ]
+                },
+                {
+                    "name": "Kammy Coyle Shuman",
+                    "roles": [
+                        "Council Member",
+                        "Majority Leader"
+                    ],
+                    "divisions": [
+                        "Ward 7"
+                    ]
+                },
+                {
+                    "name": "Amanda Boyd",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 8"
+                    ]
+                },
+                {
+                    "name": "Rob Euerle",
+                    "roles": [
+                        "Council Member"
+                    ],
+                    "divisions": [
+                        "Ward 9"
+                    ]
+                }
+            ],
+            "notes": "Parma, Ohio operates under a mayor-council form of government. The Mayor is the chief executive, and the City Council consists of a President and nine ward representatives. Other elected officials include the Auditor, Law Director/Chief Prosecutor, Treasurer, and two Judges. The Clerk of Council is typically an appointed position and has been excluded from the list of elected officials."
+        },
+        "SEARCH_LINKS": {
+            "search_link_pointer": 1,
+            "search_engines": {
+                "google": {
+                    "links": [
+                        "https://www.cityofparma-oh.gov/",
+                        "https://www.cityofparma-oh.gov/directory.aspx?did=30",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=31",
+                        "https://www.cityofparma-oh.gov/calendar.aspx?CID=23",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=26",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=10",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=33",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=28",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?AID=38",
+                        "https://www.cityofparma-oh.gov/265/Police",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=29",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=32",
+                        "https://www.cityofparma-oh.gov/CivicAlerts.aspx?CID=1,6",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=30",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Agenda/_10072024-154?packet=true",
+                        "https://www.cityofparma-oh.gov/directory.aspx?eid=34",
+                        "https://www.cityofparma-oh.gov/directory.aspx?DID=",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Agenda/_04152024-1?packet=true",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Item/251?fileID=1388",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Minutes/_03042024-6",
+                        "https://www.cityofparma-oh.gov/AgendaCenter/ViewFile/Agenda/_03182024-3?packet=true"
+                    ],
+                    "status": "completed"
+                },
+                "brave": {
+                    "status": "not_started"
+                },
+                "serp": {
+                    "status": "not_started"
+                },
+                "crawl": {
+                    "status": "not_started"
+                }
+            }
+        },
+        "SCRAPE_PAGE": {},
+        "PREPROCESS_PAGE_CONTENT": {
+            "elapsed_times": [
+                5.074517011642456,
+                4.15116810798645,
+                4.290727853775024,
+                5.084550619125366,
+                4.697802543640137,
+                4.234060525894165
+            ],
+            "total_elapsed_time_seconds": 27.5328266620636,
+            "average_elapsed_time_seconds": 4.588804443677266
+        },
+        "PROCESS_PAGE_CONTENT": {
+            "raw_records_by_llm": {
+                "google_gemini": {},
+                "openai": {},
+                "together_ai": {}
+            },
+            "records_by_llm": {
+                "google_gemini": {},
+                "openai": {},
+                "together_ai": {}
+            }
+        },
+        "MERGE_RECORDS_WITHIN_LLM": {
+            "people_by_llm": {
+                "google_gemini": [],
+                "openai": [],
+                "together_ai": []
+            }
+        },
+        "MERGE_RECORDS_ACROSS_LLMS": {
+            "people": [],
+            "agreement_score": 100.0,
+            "disagreements": {},
+            "missing_people": [],
+            "validation_errors": []
+        },
+        "CLEANUP": {},
+        "RETRY": {},
+        "DONE": {}
+    }
+}
