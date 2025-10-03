@@ -1,13 +1,18 @@
 import os
-import asyncio
 import json
 from schemas import PipelineContext, PipelineRequest, PipelineStatus, LinkStatus, SearchEngineStatus, Link, Person 
-from typing import Dict, Any, List
+from typing import List
 import yaml
 import time
+import asyncio
 
-import utils.data_path_utils as data_path_utils
-import utils.config_utils as config_utils
+# Background saver
+import threading
+import queue
+import json
+import os
+
+from utils import data_path_utils, config_utils, log_utils
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from steps.step_01_research_municipality.research_municipality import research_municipality
 from steps.step_02_search_links.search_links import search_links
@@ -58,18 +63,43 @@ DEFAULT_STATE: PipelineContext = {
     },
 }
 
+class BackgroundSaver:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.q = queue.Queue()
+        self.thread = threading.Thread(target=self._worker, daemon=True)
+        self.thread.start()
+
+    def save(self, context):
+        self.q.put(context.copy())  # copy to avoid mutation
+
+    def _worker(self):
+        while True:
+            context = self.q.get()
+            if context is None:
+                break
+            with open(self.file_path, "w") as f:
+                json.dump(context, f, indent=4)
+            self.q.task_done()
+
+    def close(self):
+        self.q.put(None)
+        self.thread.join()
+
 class Pipeline:
     def __init__(self, pipeline_state=PipelineStatus.INIT, context=DEFAULT_STATE):
         self.state = pipeline_state
         self.context: PipelineContext = context
+        self.saver = None
 
     def set_state(self, state: PipelineStatus):
         """
         Set the pipeline to start at a specific state.
         """
+        logger = log_utils.get_pipeline_logger(self.context["jurisdiction_id"])
         if state in PipelineStatus:
             self.state = state
-            print(f"Pipeline state set to: {state}")
+            logger.info(f"Pipeline state set to: {state}")
         else:
             raise ValueError(f"Invalid pipeline state: {state}")
 
@@ -80,10 +110,11 @@ class Pipeline:
         jurisdiction_id = self.context["jurisdiction_id"]
         self.context["state"] = self.state.value
         context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
-        with open(context_file_path, "w") as f:
-            json.dump(self.context, f, indent=4)
+        if self.saver is None:
+            self.saver = BackgroundSaver(context_file_path)
+        self.saver.save(self.context)
 
-    def load_context(self, request_id: str, pipeline_request: PipelineRequest) -> PipelineContext:
+    def load_context(self, logger, request_id: str, pipeline_request: PipelineRequest) -> PipelineContext:
         """
         Always create a new pipeline context and overwrite any existing file.
         """  
@@ -97,7 +128,7 @@ class Pipeline:
                 existing_request_id = existing_context["request_id"]
 
                 if request_id == existing_request_id:
-                    print("Found existing request id, loading existing context")
+                    logger.info("Found existing request id, loading existing context")
                     return existing_context
 
         context: PipelineContext = {
@@ -109,9 +140,17 @@ class Pipeline:
 
         with open(context_file_path, "w") as f:
             json.dump(context, f, indent=4)
-        print("New pipeline context created and saved.")
+        logger.info("New pipeline context created and saved.")
 
         return context
+
+    def cleanup(self):
+        if self.saver:
+            self.saver.close()
+            self.saver = None
+
+        log_utils.close_pipeline_logger(self.context["jurisdiction_id"])
+        
     
     def get_next_link(self, status: LinkStatus):
         for link in self.context["links"]:
@@ -131,136 +170,145 @@ class Pipeline:
         """
         return [link for link in self.context["links"] if link["status"] == status.value]
     
+    def run(self, request_id, pipeline_request: PipelineRequest):
+        asyncio.run(self.run_async(request_id, pipeline_request))
+    
     async def run_async(self, request_id, pipeline_request: PipelineRequest):
         """
         Main function to run the pipeline for a given jurisdiction id.
         """
-        self.context = self.load_context(request_id, pipeline_request)
+        logger = log_utils.get_pipeline_logger(pipeline_request.jurisdiction_id)
+        self.context = self.load_context(logger, request_id, pipeline_request)
         process_config = config_utils.get_process()
 
         start_time = time.time()
-        print(f"Pipeline started at {time.ctime(start_time)}")
 
-        while self.state != PipelineStatus.DONE:
-            if self.state == PipelineStatus.INIT:
-                context: PipelineContext = {
-                    **self.context,
-                    **DEFAULT_STATE,
-                }
-                result = prepare_pipeline(context)
-                self.context.update(result)
-                self.state = PipelineStatus.RESEARCH_MUNICIPALITY
+        logger.info(f"Pipeline started at {time.ctime(start_time)}")
 
-            elif self.state == PipelineStatus.RESEARCH_MUNICIPALITY:
-                result = research_municipality(self.context)
-                self.context.update(result)
-                self.state = PipelineStatus.SEARCH_LINKS
-
-            elif self.state == PipelineStatus.SEARCH_LINKS:
-                search_link_pointer = self.context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_link_pointer"]
-                if search_link_pointer >= len(SearchEngineNames):
-                    print("All search engines have been processed.")
-                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
-                else:
-                    result = search_links(self.context)
+        try:
+            while self.state != PipelineStatus.DONE:
+                if self.state == PipelineStatus.INIT:
+                    context: PipelineContext = {
+                        **self.context,
+                        **DEFAULT_STATE,
+                    }
+                    result = prepare_pipeline(context)
                     self.context.update(result)
-                    self.state = PipelineStatus.SCRAPE_PAGE
+                    self.state = PipelineStatus.RESEARCH_MUNICIPALITY
 
-            elif self.state == PipelineStatus.SCRAPE_PAGE:
-                page_to_scrape = self.get_next_link(LinkStatus.PENDING)
+                elif self.state == PipelineStatus.RESEARCH_MUNICIPALITY:
+                    result = research_municipality(self.context)
+                    self.context.update(result)
+                    self.state = PipelineStatus.SEARCH_LINKS
 
-                if not page_to_scrape:
-                    print("No pending links left to scrape.")
-                    self.state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
-                    continue
+                elif self.state == PipelineStatus.SEARCH_LINKS:
+                    search_link_pointer = self.context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_link_pointer"]
+                    if search_link_pointer >= len(SearchEngineNames):
+                        logger.info("All search engines have been processed.")
+                        self.state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+                    else:
+                        result = search_links(self.context)
+                        self.context.update(result)
+                        self.state = PipelineStatus.SCRAPE_PAGE
 
-                result = await scrape_page(self.context, page_to_scrape)
-                self.context.update(result)
+                elif self.state == PipelineStatus.SCRAPE_PAGE:
+                    page_to_scrape = self.get_next_link(LinkStatus.PENDING)
 
-                link_status = self.get_link_status_by_url(page_to_scrape["url"])
-                if link_status == LinkStatus.SCRAPED:
-                    self.state = PipelineStatus.PREPROCESS_PAGE_CONTENT
+                    if not page_to_scrape:
+                        logger.info("No pending links left to scrape.")
+                        self.state = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+                        continue
+
+                    result = await scrape_page(self.context, page_to_scrape)
+                    self.context.update(result)
+
+                    link_status = self.get_link_status_by_url(page_to_scrape["url"])
+                    if link_status == LinkStatus.SCRAPED:
+                        self.state = PipelineStatus.PREPROCESS_PAGE_CONTENT
+                    else:
+                        self.state = PipelineStatus.SCRAPE_PAGE
+
+                elif self.state == PipelineStatus.PREPROCESS_PAGE_CONTENT:
+                    page_to_preprocess = self.get_next_link(LinkStatus.SCRAPED)
+                    result = preprocess_page_content(self.context, page_to_preprocess)
+                    self.context.update(result)
+
+                    link_status = self.get_link_status_by_url(page_to_preprocess["url"])
+
+                    if link_status == LinkStatus.PREPROCESSED:
+                        self.state = PipelineStatus.PROCESS_PAGE_CONTENT
+                    else: # link_status == LinkStatus.PREPROCESSED_NO_CONTENT:
+                        self.state = PipelineStatus.SCRAPE_PAGE
+
+                elif self.state == PipelineStatus.PROCESS_PAGE_CONTENT:
+                    result, processed_count = self.process_page_content_step(logger)
+                    self.context.update(result)
+
+                    context_progress = self.context["progress"]
+                    current_data = context_progress.get("current_data", 0)
+                    required_data = context_progress.get("required_data", 0)
+                    minimum_required_data = max(required_data - 3, 1) # At least 1 person
+
+                    logger.info("Current data: %d", current_data)
+                    logger.info("Required data: %d", required_data)
+
+                    logger.info("Minimum required data: %d", minimum_required_data)
+                    logger.info("Has target role: %s", context_progress.get("has_target_role", False))
+                    logger.info("Has target divisions (if available): %s", context_progress.get("has_target_divisions", False))
+
+                    process_max_pages = process_config.get("max_pages", 15)
+
+                    next_state = self.get_next_state_for_process_page_content(
+                        logger,
+                        processed_count, 
+                        process_max_pages,
+                        current_data,
+                        required_data,
+                        minimum_required_data
+                    )
+
+                    self.state = next_state
+
+                elif self.state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM:
+                    result = merge_records_within_llm(self.context)
+                    self.context.update(result)
+                    self.state = PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
+
+                elif self.state == PipelineStatus.MERGE_RECORDS_ACROSS_LLMS:
+                    result = merge_records_across_llms(self.context)
+                    self.save_data(result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value]["people"])
+
+                    self.context.update(result)
+                    self.state = PipelineStatus.CLEANUP
+
+                elif self.state == PipelineStatus.CLEANUP:
+                    result = cleanup(self.context)
+
+                    self.context.update(result)
+                    self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
+
+                elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
+                    result = maybe_send_to_github(self.context)
+
+                    self.context.update(result)
+                    self.state = PipelineStatus.DONE
                 else:
-                    self.state = PipelineStatus.SCRAPE_PAGE
+                    logger.error(f"Pipeline logic not yet implemented for state: {self.state}")
+                    self.state = PipelineStatus.DONE
 
-            elif self.state == PipelineStatus.PREPROCESS_PAGE_CONTENT:
-                page_to_preprocess = self.get_next_link(LinkStatus.SCRAPED)
-                result = preprocess_page_content(self.context, page_to_preprocess)
-                self.context.update(result)
+                # Save the context after each step
+                self.context["state"] = self.state.value
+                self.save_context()
 
-                link_status = self.get_link_status_by_url(page_to_preprocess["url"])
-
-                if link_status == LinkStatus.PREPROCESSED:
-                    self.state = PipelineStatus.PROCESS_PAGE_CONTENT
-                else: # link_status == LinkStatus.PREPROCESSED_NO_CONTENT:
-                    self.state = PipelineStatus.SCRAPE_PAGE
-
-            elif self.state == PipelineStatus.PROCESS_PAGE_CONTENT:
-                result, processed_count = self.process_page_content_step()
-                self.context.update(result)
-                
-                context_progress = self.context["progress"]
-                current_data = context_progress.get("current_data", 0)
-                required_data = context_progress.get("required_data", 0)
-                minimum_required_data = max(required_data - 3, 1) # At least 1 person
-
-                print("Current data:", current_data)
-                print("Required data:", required_data)
-
-                print("Minimum required data:", minimum_required_data)
-                print("Has target role:", context_progress.get("has_target_role", False))
-                print("Has target divisions (if available):", context_progress.get("has_target_divisions", False))
-
-                process_max_pages = process_config.get("max_pages", 15)
-
-                next_state = self.get_next_state_for_process_page_content(
-                    processed_count, 
-                    process_max_pages,
-                    current_data,
-                    required_data,
-                    minimum_required_data
-                )
-
-                self.state = next_state
-
-            elif self.state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM:
-                result = merge_records_within_llm(self.context)
-                self.context.update(result)
-                self.state = PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
-
-            elif self.state == PipelineStatus.MERGE_RECORDS_ACROSS_LLMS:
-                result = merge_records_across_llms(self.context)
-                self.save_data(result["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value]["people"])
-
-                self.context.update(result)
-                self.state = PipelineStatus.CLEANUP
-
-            elif self.state == PipelineStatus.CLEANUP:
-                result = cleanup(self.context)
-
-                self.context.update(result)
-                self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
-
-            elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
-                result = maybe_send_to_github(self.context)
-
-                self.context.update(result)
-                self.state = PipelineStatus.DONE
-            else:
-                print("Pipeline logic not yet implemented.")
-                self.state = PipelineStatus.DONE
-
-            # Save the context after each step
-            self.context["state"] = self.state.value
+            end_time = time.time()
+            pipeline_duration = end_time - start_time
+            self.context.update({"pipeline_duration_seconds": pipeline_duration})
             self.save_context()
+            logger.info(f"Pipeline completed successfully in {pipeline_duration:.2f} seconds.")
+        finally:
+            self.cleanup()
 
-        end_time = time.time()
-        pipeline_duration = end_time - start_time
-        self.context.update({"pipeline_duration_seconds": pipeline_duration})
-        self.save_context()
-        print(f"Pipeline completed successfully in {pipeline_duration:.2f} seconds.")
-
-    def process_page_content_step(self):
+    def process_page_content_step(self, logger):
         """
         Handle the PROCESS_PAGE_CONTENT pipeline step.
         Returns the updated context and the next state.
@@ -270,7 +318,7 @@ class Pipeline:
         processed_count = len(links_processed)
 
         if len(preprocessed_links) == 0:
-            print("No preprocessed links left to process.")
+            logger.info("No preprocessed links left to process.")
             return {}, processed_count 
 
         page_to_process = preprocessed_links[0] 
@@ -279,7 +327,8 @@ class Pipeline:
 
         return updated_context, processed_count
 
-    def get_next_state_for_process_page_content(self, 
+    def get_next_state_for_process_page_content(self,
+                                                logger,
                                                 processed_count: int, 
                                                 max_pages: int,
                                                 current_data: int,
@@ -293,15 +342,15 @@ class Pipeline:
         has_target_divisions = self.context["progress"].get("has_target_divisions", False) 
 
         if current_data >= minimum_required_data and has_target_role and has_target_divisions:
-            print("Enough data processed, moving to report generation...")
+            logger.info("Enough data processed, moving to report generation...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
         max_pages_with_required_data = max_pages + required_data # Each person might have a profile page
         if processed_count >= max_pages_with_required_data:
-            print(f"Max pages ({max_pages_with_required_data}) reached, moving to next step...")
+            logger.info(f"Max pages ({max_pages_with_required_data}) reached, moving to next step...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
-        print(f"Not enough data processed yet, collecting more data... {processed_count}/{max_pages_with_required_data}")
+        logger.info(f"Not enough data processed yet, collecting more data... {processed_count}/{max_pages_with_required_data}")
         return PipelineStatus.SCRAPE_PAGE
     
     def save_data(self, people: List[Person]):

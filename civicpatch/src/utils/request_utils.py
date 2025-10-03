@@ -3,7 +3,7 @@ import random
 
 BASE_SLEEP = 2
 
-def with_retry(max_retries, func):
+def with_retry(logger, max_retries, func):
     """
     Execute a function with retry logic.
 
@@ -25,7 +25,7 @@ def with_retry(max_retries, func):
         except Exception as e:
             if retry_attempts < max_retries:
                 sleep_time = BASE_SLEEP ** retry_attempts + random.uniform(0, 1)
-                print(f"{e} - Retrying in {sleep_time:.2f} seconds... (Attempt #{retry_attempts + 1})")
+                logger.warning(f"{e} - Retrying in {sleep_time:.2f} seconds... (Attempt #{retry_attempts + 1})")
                 time.sleep(sleep_time)
                 retry_attempts += 1
             else:

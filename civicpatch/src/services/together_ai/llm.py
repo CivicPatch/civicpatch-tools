@@ -5,7 +5,7 @@ import openai
 from typing import List, Dict, Any
 # from langchain.text_splitter import MarkdownHeaderTextSplitter
 from utils.request_utils import with_retry
-from utils.log_utils import log_llm_cost
+from utils.log_utils import log_llm_cost, get_pipeline_logger
 
 PROMPT_TOKENS=600
 OUTPUT_BUFFER=1500
@@ -123,7 +123,8 @@ def run_prompt(jurisdiction_id: str, prompt, content="", response_schema=None, m
     """
     Run a prompt against Together AI's API using OpenAI-compatible interface
     """
-    print("together prompt: ", prompt)
+    logger = get_pipeline_logger(jurisdiction_id)
+    logger.info(f"Running Together AI prompt: {prompt}")
     api_key = os.getenv("TOGETHER_AI_TOKEN")
     if not api_key:
         raise ValueError("TOGETHER_AI_TOKEN is not set")
@@ -167,7 +168,7 @@ def run_prompt(jurisdiction_id: str, prompt, content="", response_schema=None, m
         return response
 
     start_time = time.time()
-    result = with_retry(MAX_RETRIES, execute)
+    result = with_retry(logger, MAX_RETRIES, execute)
     end_time = time.time()
-    print(f"together_ai LLM call took {end_time - start_time:.2f} seconds")
+    logger.info(f"together_ai LLM call took {end_time - start_time:.2f} seconds")
     return result

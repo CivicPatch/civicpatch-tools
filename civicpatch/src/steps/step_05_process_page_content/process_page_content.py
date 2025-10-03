@@ -13,7 +13,14 @@ from schemas import (
   ResearchMunicipalityStep,
   ResearchedPerson
 )
-from utils import merge_utils, data_path_utils, config_utils, url_utils, people_utils
+from utils import (
+    merge_utils, 
+    data_path_utils, 
+    config_utils, 
+    url_utils, 
+    people_utils,
+    log_utils
+)
 from typing import List, Any, Dict, Tuple
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
@@ -55,7 +62,8 @@ def process_page_content(
     """
     Process the preprocessed data to extract relevant information.
     """
-    print(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process['url']}")
+    logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
+    logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process['url']}")
 
     jurisdiction_id = context["jurisdiction_id"]
     municipality_research: ResearchMunicipalityStep = ResearchMunicipalityStep.model_validate(
@@ -114,7 +122,7 @@ def process_page_content(
         else:
             updated_links.append(link)
 
-    updated_links = update_website_links(roles, updated_links, updated_processed_data.records_by_llm)
+    updated_links = update_website_links(logger, roles, updated_links, updated_processed_data.records_by_llm)
 
     return {
         "links": updated_links,
@@ -161,7 +169,6 @@ def get_target_divisions(divisions_with_geo: List[str], people_hint: List[Resear
         for division in person.divisions:
             if division and division.strip() and any(dg in division.lower() for dg in divisions_with_geo):
                 divisions.add(division.strip().lower())
-    print("result divisions", divisions)
     return list(divisions)
 
 def update_records_by_llm(
@@ -292,12 +299,12 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     )
     return has_contact and has_role
 
-def update_website_links(roles, existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
+def update_website_links(logger, roles, existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
     """
     Update the links with websites found in the processed data.
     """
     updated_links = copy.deepcopy(existing_links)
-    found_websites = extract_websites_from_processed_data(roles, records_by_llm)
+    found_websites = extract_websites_from_processed_data(logger, roles, records_by_llm)
 
     for website in found_websites:
         existing_link = next((link for link in updated_links if link["url"] == website), None)
@@ -318,7 +325,7 @@ def update_website_links(roles, existing_links: List[Link], records_by_llm: Reco
 
     return updated_links
 
-def extract_websites_from_processed_data(roles: List[str], records_by_llm: RecordsByLLM) -> List[str]:
+def extract_websites_from_processed_data(logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[str]:
     """
     Extract website links from the processed data.
     """
@@ -330,7 +337,7 @@ def extract_websites_from_processed_data(roles: List[str], records_by_llm: Recor
             if has_role_and_contact_info(
                 roles, person_list
             ):
-                print("Skipping adding websites for person with role and contact info")
+                logger.debug("Skipping adding websites for person with role and contact info")
                 continue
 
             for person_record in person_list:
