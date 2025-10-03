@@ -1,0 +1,1518 @@
+2025-10-03 19:16:23,742 - INFO - New pipeline context created and saved.
+2025-10-03 19:16:23,743 - INFO - Pipeline started at Fri Oct  3 19:16:23 2025
+2025-10-03 19:16:23,743 - INFO - Step 0: INIT
+2025-10-03 19:16:23,747 - INFO - Step 1: RESEARCH_MUNICIPALITY
+2025-10-03 19:16:23,781 - INFO - Running Gemini prompt: 
+    Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
+
+    Municipality: Greensboro city, nc
+
+    Instructions:
+
+    1. Determine the government type of the city. Available government types:
+- mayor_commission
+- mayor_council
+- select_board
+- aldermen
+
+    2. Identify the elected officials in the local government, 
+       including the Mayor (if applicable).
+       2.1. For each official, extract the following details:
+            - name: Full name only (no titles)
+            - roles: List of active municipal roles (e.g., Mayor, Council Member)
+            - divisions: List of (ward, district), only if applicable
+
+    3. Create a JSON object with the following structure:
+       ```json
+       {
+         "government_type": examples - "mayor_council" or "mayor_commission", etc.,
+         "people": [
+           {
+             "name": "Full name of the official or null if uncertain",
+             "roles": ["Mayor", "Council Member", "Commissioner", etc.],
+             "divisions": ["Ward 1", "District 2", etc.] or [],
+           }
+         ],
+         "notes": "Brief notes about the search and results"
+       }
+       ```
+
+    IMPORTANT: If the response contains anything other than a valid JSON object,
+    it will be considered incorrect. Ensure the response is strictly JSON.
+    Verify that the response is valid JSON before returning it.
+    If it is not valid JSON, retry the generation.
+    
+2025-10-03 19:16:23,782 - INFO - making request with search
+2025-10-03 19:16:36,031 - INFO - gemini gemini-2.5-flash LLM call took 12.25 seconds
+2025-10-03 19:16:36,055 - INFO - Step 2: SEARCH_LINKS
+2025-10-03 19:16:36,081 - INFO - Searching for keyword term: mayor
+2025-10-03 19:16:36,081 - INFO - Searching with google for Greensboro city mayor
+2025-10-03 19:16:36,566 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:16:36,566 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:16:36,566 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:16:36,567 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:16:36,567 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:16:36,567 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:16:36,567 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:16:36,567 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:16:36,568 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:16:36,568 - INFO - -> https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:16:36,568 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:16:36,568 - INFO - Searching for keyword term: council members
+2025-10-03 19:16:36,568 - INFO - Searching with google for Greensboro city council members
+2025-10-03 19:16:37,051 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:16:37,051 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:16:37,052 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:16:37,052 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:16:37,052 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:16:37,052 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:16:37,052 - INFO - -> https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:16:37,052 - INFO - -> https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:16:37,052 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:16:37,052 - INFO - -> https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:16:37,053 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:16:37,053 - INFO - Searching for keyword term: elected officials
+2025-10-03 19:16:37,053 - INFO - Searching with google for Greensboro city elected officials
+2025-10-03 19:16:37,554 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:16:37,554 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:16:37,555 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:16:37,555 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:16:37,555 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:16:37,555 - INFO - -> https://www.greensboro-nc.gov/departments
+2025-10-03 19:16:37,555 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:16:37,555 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:16:37,555 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:16:37,555 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:16:37,556 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:16:37,557 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:16:37,581 - INFO - New pipeline context created and saved.
+2025-10-03 19:16:37,582 - INFO - Pipeline started at Fri Oct  3 19:16:37 2025
+2025-10-03 19:16:37,582 - INFO - Step 0: INIT
+2025-10-03 19:16:37,584 - INFO - Step 1: RESEARCH_MUNICIPALITY
+2025-10-03 19:16:37,599 - INFO - Running Gemini prompt: 
+    Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
+
+    Municipality: Greensboro city, nc
+
+    Instructions:
+
+    1. Determine the government type of the city. Available government types:
+- mayor_commission
+- mayor_council
+- select_board
+- aldermen
+
+    2. Identify the elected officials in the local government, 
+       including the Mayor (if applicable).
+       2.1. For each official, extract the following details:
+            - name: Full name only (no titles)
+            - roles: List of active municipal roles (e.g., Mayor, Council Member)
+            - divisions: List of (ward, district), only if applicable
+
+    3. Create a JSON object with the following structure:
+       ```json
+       {
+         "government_type": examples - "mayor_council" or "mayor_commission", etc.,
+         "people": [
+           {
+             "name": "Full name of the official or null if uncertain",
+             "roles": ["Mayor", "Council Member", "Commissioner", etc.],
+             "divisions": ["Ward 1", "District 2", etc.] or [],
+           }
+         ],
+         "notes": "Brief notes about the search and results"
+       }
+       ```
+
+    IMPORTANT: If the response contains anything other than a valid JSON object,
+    it will be considered incorrect. Ensure the response is strictly JSON.
+    Verify that the response is valid JSON before returning it.
+    If it is not valid JSON, retry the generation.
+    
+2025-10-03 19:16:37,600 - INFO - making request with search
+2025-10-03 19:16:52,762 - INFO - gemini gemini-2.5-flash LLM call took 15.16 seconds
+2025-10-03 19:16:52,832 - INFO - Step 2: SEARCH_LINKS
+2025-10-03 19:16:52,848 - INFO - Searching for keyword term: mayor
+2025-10-03 19:16:52,848 - INFO - Searching with google for Greensboro city mayor
+2025-10-03 19:16:53,153 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:16:53,153 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:16:53,154 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:16:53,154 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:16:53,154 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:16:53,154 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:16:53,154 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:16:53,155 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:16:53,155 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:16:53,155 - INFO - -> https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:16:53,155 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:16:53,155 - INFO - Searching for keyword term: council members
+2025-10-03 19:16:53,155 - INFO - Searching with google for Greensboro city council members
+2025-10-03 19:16:53,448 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:16:53,449 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:16:53,449 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:16:53,449 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:16:53,450 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:16:53,450 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:16:53,450 - INFO - -> https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:16:53,450 - INFO - -> https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:16:53,450 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:16:53,450 - INFO - -> https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:16:53,450 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:16:53,450 - INFO - Searching for keyword term: elected officials
+2025-10-03 19:16:53,450 - INFO - Searching with google for Greensboro city elected officials
+2025-10-03 19:16:53,669 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:16:53,669 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:16:53,670 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:16:53,670 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:16:53,670 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:16:53,670 - INFO - -> https://www.greensboro-nc.gov/departments
+2025-10-03 19:16:53,670 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:16:53,671 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:16:53,671 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:16:53,671 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:16:53,671 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:16:53,673 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:16:55,768 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:16:55,769 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/
+2025-10-03 19:16:55,795 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:16:55,797 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/
+2025-10-03 19:16:56,715 - ERROR - Error scraping https://www.greensboro-nc.gov/: 'str' object has no attribute 'warning'
+2025-10-03 19:16:56,718 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:16:56,829 - ERROR - Error scraping https://www.greensboro-nc.gov/: 'str' object has no attribute 'warning'
+2025-10-03 19:16:56,831 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:16:57,557 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/council-meetings: 'str' object has no attribute 'warning'
+2025-10-03 19:16:57,562 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:16:57,740 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/council-meetings: 'str' object has no attribute 'warning'
+2025-10-03 19:16:57,742 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:16:58,437 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:16:58,442 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:16:58,536 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:16:58,538 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:16:59,389 - ERROR - Error scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:16:59,391 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:16:59,456 - ERROR - Error scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:16:59,458 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:17:00,276 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-manager-s-office: 'str' object has no attribute 'warning'
+2025-10-03 19:17:00,281 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:17:00,424 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-manager-s-office: 'str' object has no attribute 'warning'
+2025-10-03 19:17:00,426 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:17:01,230 - ERROR - Error scraping https://www.greensboro-nc.gov/government/boards-and-commissions: 'str' object has no attribute 'warning'
+2025-10-03 19:17:01,233 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments
+2025-10-03 19:17:01,331 - ERROR - Error scraping https://www.greensboro-nc.gov/government/boards-and-commissions: 'str' object has no attribute 'warning'
+2025-10-03 19:17:01,334 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments
+2025-10-03 19:17:02,159 - ERROR - Error scraping https://www.greensboro-nc.gov/departments: 'str' object has no attribute 'warning'
+2025-10-03 19:17:02,164 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:17:02,332 - ERROR - Error scraping https://www.greensboro-nc.gov/departments: 'str' object has no attribute 'warning'
+2025-10-03 19:17:02,335 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:17:03,127 - ERROR - Error scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/: 'str' object has no attribute 'warning'
+2025-10-03 19:17:03,133 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:17:03,422 - ERROR - Error scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/: 'str' object has no attribute 'warning'
+2025-10-03 19:17:03,424 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:17:04,147 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission: 'str' object has no attribute 'warning'
+2025-10-03 19:17:04,149 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:17:04,308 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission: 'str' object has no attribute 'warning'
+2025-10-03 19:17:04,316 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:17:05,099 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions: 'str' object has no attribute 'warning'
+2025-10-03 19:17:05,101 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:17:05,210 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions: 'str' object has no attribute 'warning'
+2025-10-03 19:17:05,216 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:17:06,159 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning: 'str' object has no attribute 'warning'
+2025-10-03 19:17:06,161 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:17:06,255 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning: 'str' object has no attribute 'warning'
+2025-10-03 19:17:06,259 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:17:06,986 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/budget-evaluation: 'str' object has no attribute 'warning'
+2025-10-03 19:17:06,988 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:17:07,152 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/budget-evaluation: 'str' object has no attribute 'warning'
+2025-10-03 19:17:07,155 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:17:07,943 - ERROR - Error scraping https://www.greensboro-nc.gov/Home/Components/News/News/20257/36: 'str' object has no attribute 'warning'
+2025-10-03 19:17:07,947 - INFO - No pending links left to scrape.
+2025-10-03 19:17:07,982 - INFO - Step 9: CLEANUP
+2025-10-03 19:17:08,042 - INFO - Step 9: CLEANUP
+2025-10-03 19:22:25,775 - INFO - Pipeline started at Fri Oct  3 19:22:25 2025
+2025-10-03 19:22:25,777 - INFO - Step 0: INIT
+2025-10-03 19:22:25,780 - INFO - Step 1: RESEARCH_MUNICIPALITY
+2025-10-03 19:22:25,809 - INFO - Running Gemini prompt: 
+    Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
+
+    Municipality: Greensboro city, nc
+
+    Instructions:
+
+    1. Determine the government type of the city. Available government types:
+- mayor_commission
+- mayor_council
+- select_board
+- aldermen
+
+    2. Identify the elected officials in the local government, 
+       including the Mayor (if applicable).
+       2.1. For each official, extract the following details:
+            - name: Full name only (no titles)
+            - roles: List of active municipal roles (e.g., Mayor, Council Member)
+            - divisions: List of (ward, district), only if applicable
+
+    3. Create a JSON object with the following structure:
+       ```json
+       {
+         "government_type": examples - "mayor_council" or "mayor_commission", etc.,
+         "people": [
+           {
+             "name": "Full name of the official or null if uncertain",
+             "roles": ["Mayor", "Council Member", "Commissioner", etc.],
+             "divisions": ["Ward 1", "District 2", etc.] or [],
+           }
+         ],
+         "notes": "Brief notes about the search and results"
+       }
+       ```
+
+    IMPORTANT: If the response contains anything other than a valid JSON object,
+    it will be considered incorrect. Ensure the response is strictly JSON.
+    Verify that the response is valid JSON before returning it.
+    If it is not valid JSON, retry the generation.
+    
+2025-10-03 19:22:25,810 - INFO - making request with search
+2025-10-03 19:22:39,545 - INFO - gemini gemini-2.5-flash LLM call took 13.74 seconds
+2025-10-03 19:22:39,579 - INFO - Step 2: SEARCH_LINKS
+2025-10-03 19:22:39,605 - INFO - Searching for keyword term: mayor
+2025-10-03 19:22:39,605 - INFO - Searching with google for Greensboro city mayor
+2025-10-03 19:22:39,990 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:22:39,990 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:22:39,991 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:22:39,991 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:22:39,991 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:22:39,992 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:22:39,992 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:22:39,992 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:22:39,992 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:22:39,992 - INFO - -> https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:22:39,993 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:22:39,993 - INFO - Searching for keyword term: council members
+2025-10-03 19:22:39,993 - INFO - Searching with google for Greensboro city council members
+2025-10-03 19:22:40,225 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:22:40,226 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:22:40,226 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:22:40,226 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:22:40,226 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:22:40,226 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:22:40,227 - INFO - -> https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:22:40,227 - INFO - -> https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:22:40,227 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:22:40,227 - INFO - -> https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:22:40,227 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:22:40,227 - INFO - Searching for keyword term: elected officials
+2025-10-03 19:22:40,228 - INFO - Searching with google for Greensboro city elected officials
+2025-10-03 19:22:40,547 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:22:40,548 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:22:40,548 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:22:40,549 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:22:40,549 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:22:40,549 - INFO - -> https://www.greensboro-nc.gov/departments
+2025-10-03 19:22:40,549 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:22:40,550 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:22:40,550 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:22:40,550 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:22:40,550 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:22:40,551 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:22:41,581 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:22:41,583 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/
+2025-10-03 19:22:42,410 - ERROR - Error scraping https://www.greensboro-nc.gov/: 'str' object has no attribute 'warning'
+2025-10-03 19:22:42,411 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:22:43,362 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/council-meetings: 'str' object has no attribute 'warning'
+2025-10-03 19:22:43,365 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:22:44,304 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:22:44,306 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:22:45,127 - ERROR - Error scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:22:45,129 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:22:45,959 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-manager-s-office: 'str' object has no attribute 'warning'
+2025-10-03 19:22:45,960 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:22:46,782 - ERROR - Error scraping https://www.greensboro-nc.gov/government/boards-and-commissions: 'str' object has no attribute 'warning'
+2025-10-03 19:22:46,790 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments
+2025-10-03 19:22:47,647 - ERROR - Error scraping https://www.greensboro-nc.gov/departments: 'str' object has no attribute 'warning'
+2025-10-03 19:22:47,649 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:22:48,462 - ERROR - Error scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/: 'str' object has no attribute 'warning'
+2025-10-03 19:22:48,464 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:22:49,265 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission: 'str' object has no attribute 'warning'
+2025-10-03 19:22:49,268 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:22:50,230 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions: 'str' object has no attribute 'warning'
+2025-10-03 19:22:50,233 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:22:51,122 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning: 'str' object has no attribute 'warning'
+2025-10-03 19:22:51,124 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:22:51,904 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/budget-evaluation: 'str' object has no attribute 'warning'
+2025-10-03 19:22:51,908 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:22:52,810 - ERROR - Error scraping https://www.greensboro-nc.gov/Home/Components/News/News/20257/36: 'str' object has no attribute 'warning'
+2025-10-03 19:22:52,832 - INFO - Step 9: CLEANUP
+2025-10-03 19:26:04,063 - INFO - Pipeline started at Fri Oct  3 19:26:04 2025
+2025-10-03 19:26:04,063 - INFO - Step 0: INIT
+2025-10-03 19:26:04,066 - INFO - Step 1: RESEARCH_MUNICIPALITY
+2025-10-03 19:26:04,099 - INFO - Running Gemini prompt: 
+    Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
+
+    Municipality: Greensboro city, nc
+
+    Instructions:
+
+    1. Determine the government type of the city. Available government types:
+- mayor_commission
+- mayor_council
+- select_board
+- aldermen
+
+    2. Identify the elected officials in the local government, 
+       including the Mayor (if applicable).
+       2.1. For each official, extract the following details:
+            - name: Full name only (no titles)
+            - roles: List of active municipal roles (e.g., Mayor, Council Member)
+            - divisions: List of (ward, district), only if applicable
+
+    3. Create a JSON object with the following structure:
+       ```json
+       {
+         "government_type": examples - "mayor_council" or "mayor_commission", etc.,
+         "people": [
+           {
+             "name": "Full name of the official or null if uncertain",
+             "roles": ["Mayor", "Council Member", "Commissioner", etc.],
+             "divisions": ["Ward 1", "District 2", etc.] or [],
+           }
+         ],
+         "notes": "Brief notes about the search and results"
+       }
+       ```
+
+    IMPORTANT: If the response contains anything other than a valid JSON object,
+    it will be considered incorrect. Ensure the response is strictly JSON.
+    Verify that the response is valid JSON before returning it.
+    If it is not valid JSON, retry the generation.
+    
+2025-10-03 19:26:04,099 - INFO - making request with search
+2025-10-03 19:26:12,297 - INFO - gemini gemini-2.5-flash LLM call took 8.20 seconds
+2025-10-03 19:26:12,313 - INFO - Step 2: SEARCH_LINKS
+2025-10-03 19:26:12,340 - INFO - Searching for keyword term: mayor
+2025-10-03 19:26:12,340 - INFO - Searching with google for Greensboro city mayor
+2025-10-03 19:26:12,609 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:26:12,610 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:26:12,610 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:26:12,610 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:26:12,610 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:26:12,610 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:26:12,611 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:26:12,611 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:26:12,611 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:26:12,611 - INFO - -> https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:26:12,611 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:26:12,611 - INFO - Searching for keyword term: council members
+2025-10-03 19:26:12,611 - INFO - Searching with google for Greensboro city council members
+2025-10-03 19:26:12,844 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:26:12,846 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:26:12,847 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:26:12,849 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:26:12,850 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:26:12,850 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:26:12,850 - INFO - -> https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:26:12,850 - INFO - -> https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:26:12,851 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:26:12,851 - INFO - -> https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:26:12,851 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:26:12,851 - INFO - Searching for keyword term: elected officials
+2025-10-03 19:26:12,851 - INFO - Searching with google for Greensboro city elected officials
+2025-10-03 19:26:13,171 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:26:13,171 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:26:13,171 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:26:13,172 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:26:13,172 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:26:13,172 - INFO - -> https://www.greensboro-nc.gov/departments
+2025-10-03 19:26:13,172 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:26:13,172 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:26:13,172 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:26:13,172 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:26:13,172 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:26:13,173 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:26:14,149 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:26:14,150 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/
+2025-10-03 19:26:15,046 - ERROR - Error scraping https://www.greensboro-nc.gov/: 'str' object has no attribute 'warning'
+2025-10-03 19:26:15,046 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:26:15,766 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/council-meetings: 'str' object has no attribute 'warning'
+2025-10-03 19:26:15,766 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:26:16,406 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:26:16,406 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:26:17,071 - ERROR - Error scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:26:17,072 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:26:17,810 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-manager-s-office: 'str' object has no attribute 'warning'
+2025-10-03 19:26:17,818 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:26:18,472 - ERROR - Error scraping https://www.greensboro-nc.gov/government/boards-and-commissions: 'str' object has no attribute 'warning'
+2025-10-03 19:26:18,473 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments
+2025-10-03 19:26:19,254 - ERROR - Error scraping https://www.greensboro-nc.gov/departments: 'str' object has no attribute 'warning'
+2025-10-03 19:26:19,255 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:26:20,101 - ERROR - Error scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/: 'str' object has no attribute 'warning'
+2025-10-03 19:26:20,102 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:26:20,975 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission: 'str' object has no attribute 'warning'
+2025-10-03 19:26:20,977 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:26:21,630 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions: 'str' object has no attribute 'warning'
+2025-10-03 19:26:21,630 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:26:22,272 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning: 'str' object has no attribute 'warning'
+2025-10-03 19:26:22,273 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:26:23,046 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/budget-evaluation: 'str' object has no attribute 'warning'
+2025-10-03 19:26:23,047 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:26:23,781 - ERROR - Error scraping https://www.greensboro-nc.gov/Home/Components/News/News/20257/36: 'str' object has no attribute 'warning'
+2025-10-03 19:26:23,802 - INFO - Step 9: CLEANUP
+2025-10-03 19:28:01,931 - INFO - New pipeline context created and saved.
+2025-10-03 19:28:01,932 - INFO - Pipeline started at Fri Oct  3 19:28:01 2025
+2025-10-03 19:28:01,932 - INFO - Step 0: INIT
+2025-10-03 19:28:01,934 - INFO - Step 1: RESEARCH_MUNICIPALITY
+2025-10-03 19:28:01,954 - INFO - Running Gemini prompt: 
+    Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
+
+    Municipality: Greensboro city, nc
+
+    Instructions:
+
+    1. Determine the government type of the city. Available government types:
+- mayor_commission
+- mayor_council
+- select_board
+- aldermen
+
+    2. Identify the elected officials in the local government, 
+       including the Mayor (if applicable).
+       2.1. For each official, extract the following details:
+            - name: Full name only (no titles)
+            - roles: List of active municipal roles (e.g., Mayor, Council Member)
+            - divisions: List of (ward, district), only if applicable
+
+    3. Create a JSON object with the following structure:
+       ```json
+       {
+         "government_type": examples - "mayor_council" or "mayor_commission", etc.,
+         "people": [
+           {
+             "name": "Full name of the official or null if uncertain",
+             "roles": ["Mayor", "Council Member", "Commissioner", etc.],
+             "divisions": ["Ward 1", "District 2", etc.] or [],
+           }
+         ],
+         "notes": "Brief notes about the search and results"
+       }
+       ```
+
+    IMPORTANT: If the response contains anything other than a valid JSON object,
+    it will be considered incorrect. Ensure the response is strictly JSON.
+    Verify that the response is valid JSON before returning it.
+    If it is not valid JSON, retry the generation.
+    
+2025-10-03 19:28:01,955 - INFO - making request with search
+2025-10-03 19:28:16,075 - INFO - gemini gemini-2.5-flash LLM call took 14.12 seconds
+2025-10-03 19:28:16,102 - INFO - Step 2: SEARCH_LINKS
+2025-10-03 19:28:16,133 - INFO - Searching for keyword term: mayor
+2025-10-03 19:28:16,135 - INFO - Searching with google for Greensboro city mayor
+2025-10-03 19:28:16,502 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:28:16,503 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:28:16,503 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:28:16,503 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:28:16,503 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:28:16,504 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:28:16,504 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:28:16,504 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:28:16,504 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:28:16,504 - INFO - -> https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:28:16,505 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:28:16,505 - INFO - Searching for keyword term: council members
+2025-10-03 19:28:16,505 - INFO - Searching with google for Greensboro city council members
+2025-10-03 19:28:16,810 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:28:16,810 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:28:16,810 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:28:16,811 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:28:16,811 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:28:16,811 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:28:16,811 - INFO - -> https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:28:16,811 - INFO - -> https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:28:16,811 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:28:16,811 - INFO - -> https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:28:16,812 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:28:16,812 - INFO - Searching for keyword term: elected officials
+2025-10-03 19:28:16,812 - INFO - Searching with google for Greensboro city elected officials
+2025-10-03 19:28:17,107 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:28:17,109 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:28:17,109 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:28:17,109 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:28:17,109 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:28:17,109 - INFO - -> https://www.greensboro-nc.gov/departments
+2025-10-03 19:28:17,109 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:28:17,110 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:28:17,110 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:28:17,110 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:28:17,110 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:28:17,110 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:28:17,813 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:28:17,814 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/
+2025-10-03 19:28:18,648 - ERROR - Error scraping https://www.greensboro-nc.gov/: 'str' object has no attribute 'warning'
+2025-10-03 19:28:18,648 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:28:19,405 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/council-meetings: 'str' object has no attribute 'warning'
+2025-10-03 19:28:19,406 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:28:20,251 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:28:20,252 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:28:21,063 - ERROR - Error scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:28:21,064 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:28:22,049 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-manager-s-office: 'str' object has no attribute 'warning'
+2025-10-03 19:28:22,050 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:28:22,810 - ERROR - Error scraping https://www.greensboro-nc.gov/government/boards-and-commissions: 'str' object has no attribute 'warning'
+2025-10-03 19:28:22,811 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments
+2025-10-03 19:28:23,505 - ERROR - Error scraping https://www.greensboro-nc.gov/departments: 'str' object has no attribute 'warning'
+2025-10-03 19:28:23,506 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:28:24,277 - ERROR - Error scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/: 'str' object has no attribute 'warning'
+2025-10-03 19:28:24,278 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:28:25,146 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission: 'str' object has no attribute 'warning'
+2025-10-03 19:28:25,147 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:28:25,892 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions: 'str' object has no attribute 'warning'
+2025-10-03 19:28:25,892 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:28:26,746 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning: 'str' object has no attribute 'warning'
+2025-10-03 19:28:26,746 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:28:27,471 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/budget-evaluation: 'str' object has no attribute 'warning'
+2025-10-03 19:28:27,472 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:28:28,143 - ERROR - Error scraping https://www.greensboro-nc.gov/Home/Components/News/News/20257/36: 'str' object has no attribute 'warning'
+2025-10-03 19:28:28,144 - INFO - No pending links left to scrape.
+2025-10-03 19:28:28,161 - INFO - Step 9: CLEANUP
+2025-10-03 19:32:18,226 - INFO - New pipeline context created and saved.
+2025-10-03 19:32:18,230 - INFO - Pipeline started at Fri Oct  3 19:32:18 2025
+2025-10-03 19:32:18,230 - INFO - Step 0: INIT
+2025-10-03 19:32:18,232 - INFO - Step 1: RESEARCH_MUNICIPALITY
+2025-10-03 19:32:18,256 - INFO - Running Gemini prompt: 
+    Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
+
+    Municipality: Greensboro city, nc
+
+    Instructions:
+
+    1. Determine the government type of the city. Available government types:
+- mayor_commission
+- mayor_council
+- select_board
+- aldermen
+
+    2. Identify the elected officials in the local government, 
+       including the Mayor (if applicable).
+       2.1. For each official, extract the following details:
+            - name: Full name only (no titles)
+            - roles: List of active municipal roles (e.g., Mayor, Council Member)
+            - divisions: List of (ward, district), only if applicable
+
+    3. Create a JSON object with the following structure:
+       ```json
+       {
+         "government_type": examples - "mayor_council" or "mayor_commission", etc.,
+         "people": [
+           {
+             "name": "Full name of the official or null if uncertain",
+             "roles": ["Mayor", "Council Member", "Commissioner", etc.],
+             "divisions": ["Ward 1", "District 2", etc.] or [],
+           }
+         ],
+         "notes": "Brief notes about the search and results"
+       }
+       ```
+
+    IMPORTANT: If the response contains anything other than a valid JSON object,
+    it will be considered incorrect. Ensure the response is strictly JSON.
+    Verify that the response is valid JSON before returning it.
+    If it is not valid JSON, retry the generation.
+    
+2025-10-03 19:32:18,256 - INFO - making request with search
+2025-10-03 19:32:32,084 - INFO - gemini gemini-2.5-flash LLM call took 13.83 seconds
+2025-10-03 19:32:32,107 - INFO - Step 2: SEARCH_LINKS
+2025-10-03 19:32:32,135 - INFO - Searching for keyword term: mayor
+2025-10-03 19:32:32,136 - INFO - Searching with google for Greensboro city mayor
+2025-10-03 19:32:32,445 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:32:32,446 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:32:32,446 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:32:32,446 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:32:32,446 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:32:32,446 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:32:32,447 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:32:32,447 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:32:32,447 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:32:32,447 - INFO - -> https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:32:32,447 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:32:32,447 - INFO - Searching for keyword term: council members
+2025-10-03 19:32:32,447 - INFO - Searching with google for Greensboro city council members
+2025-10-03 19:32:32,757 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:32:32,757 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:32:32,758 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:32:32,758 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:32:32,758 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:32:32,758 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:32:32,758 - INFO - -> https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:32:32,759 - INFO - -> https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:32:32,759 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:32:32,759 - INFO - -> https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:32:32,759 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:32:32,759 - INFO - Searching for keyword term: elected officials
+2025-10-03 19:32:32,759 - INFO - Searching with google for Greensboro city elected officials
+2025-10-03 19:32:32,973 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:32:32,974 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:32:32,974 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:32:32,974 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:32:32,975 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:32:32,975 - INFO - -> https://www.greensboro-nc.gov/departments
+2025-10-03 19:32:32,975 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:32:32,975 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:32:32,975 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:32:32,976 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:32:32,976 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:32:32,976 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:32:33,787 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:32:33,787 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/
+2025-10-03 19:32:34,599 - ERROR - Error scraping https://www.greensboro-nc.gov/: 'str' object has no attribute 'warning'
+2025-10-03 19:32:34,600 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:32:35,404 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/council-meetings: 'str' object has no attribute 'warning'
+2025-10-03 19:32:35,404 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:32:36,240 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:32:36,240 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:32:36,913 - ERROR - Error scraping https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council: 'str' object has no attribute 'warning'
+2025-10-03 19:32:36,913 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:32:37,576 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-manager-s-office: 'str' object has no attribute 'warning'
+2025-10-03 19:32:37,577 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:32:38,220 - ERROR - Error scraping https://www.greensboro-nc.gov/government/boards-and-commissions: 'str' object has no attribute 'warning'
+2025-10-03 19:32:38,221 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments
+2025-10-03 19:32:38,967 - ERROR - Error scraping https://www.greensboro-nc.gov/departments: 'str' object has no attribute 'warning'
+2025-10-03 19:32:38,967 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:32:39,609 - ERROR - Error scraping https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/: 'str' object has no attribute 'warning'
+2025-10-03 19:32:39,609 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:32:40,247 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission: 'str' object has no attribute 'warning'
+2025-10-03 19:32:40,247 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:32:40,922 - ERROR - Error scraping https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions: 'str' object has no attribute 'warning'
+2025-10-03 19:32:40,923 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:32:41,838 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/planning: 'str' object has no attribute 'warning'
+2025-10-03 19:32:41,839 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:32:42,498 - ERROR - Error scraping https://www.greensboro-nc.gov/departments/budget-evaluation: 'str' object has no attribute 'warning'
+2025-10-03 19:32:42,499 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:32:43,237 - ERROR - Error scraping https://www.greensboro-nc.gov/Home/Components/News/News/20257/36: 'str' object has no attribute 'warning'
+2025-10-03 19:32:43,238 - INFO - No pending links left to scrape.
+2025-10-03 19:32:43,256 - INFO - Step 9: CLEANUP
+2025-10-03 19:35:34,351 - INFO - New pipeline context created and saved.
+2025-10-03 19:35:34,352 - INFO - Pipeline started at Fri Oct  3 19:35:34 2025
+2025-10-03 19:35:34,352 - INFO - Step 0: INIT
+2025-10-03 19:35:34,355 - INFO - Step 1: RESEARCH_MUNICIPALITY
+2025-10-03 19:35:34,386 - INFO - Running Gemini prompt: 
+    Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
+
+    Municipality: Greensboro city, nc
+
+    Instructions:
+
+    1. Determine the government type of the city. Available government types:
+- mayor_commission
+- mayor_council
+- select_board
+- aldermen
+
+    2. Identify the elected officials in the local government, 
+       including the Mayor (if applicable).
+       2.1. For each official, extract the following details:
+            - name: Full name only (no titles)
+            - roles: List of active municipal roles (e.g., Mayor, Council Member)
+            - divisions: List of (ward, district), only if applicable
+
+    3. Create a JSON object with the following structure:
+       ```json
+       {
+         "government_type": examples - "mayor_council" or "mayor_commission", etc.,
+         "people": [
+           {
+             "name": "Full name of the official or null if uncertain",
+             "roles": ["Mayor", "Council Member", "Commissioner", etc.],
+             "divisions": ["Ward 1", "District 2", etc.] or [],
+           }
+         ],
+         "notes": "Brief notes about the search and results"
+       }
+       ```
+
+    IMPORTANT: If the response contains anything other than a valid JSON object,
+    it will be considered incorrect. Ensure the response is strictly JSON.
+    Verify that the response is valid JSON before returning it.
+    If it is not valid JSON, retry the generation.
+    
+2025-10-03 19:35:34,386 - INFO - making request with search
+2025-10-03 19:35:44,833 - INFO - gemini gemini-2.5-flash LLM call took 10.45 seconds
+2025-10-03 19:35:44,857 - INFO - Step 2: SEARCH_LINKS
+2025-10-03 19:35:44,878 - INFO - Searching for keyword term: mayor
+2025-10-03 19:35:44,879 - INFO - Searching with google for Greensboro city mayor
+2025-10-03 19:35:45,204 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:35:45,205 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:35:45,205 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:35:45,205 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:35:45,206 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:35:45,206 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:35:45,206 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:35:45,206 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:35:45,206 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:35:45,206 - INFO - -> https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:35:45,206 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:35:45,207 - INFO - Searching for keyword term: council members
+2025-10-03 19:35:45,207 - INFO - Searching with google for Greensboro city council members
+2025-10-03 19:35:45,432 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:35:45,433 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:35:45,433 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:35:45,433 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:35:45,433 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:35:45,433 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:35:45,433 - INFO - -> https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:35:45,433 - INFO - -> https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:35:45,433 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:35:45,434 - INFO - -> https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:35:45,434 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:35:45,434 - INFO - Searching for keyword term: elected officials
+2025-10-03 19:35:45,434 - INFO - Searching with google for Greensboro city elected officials
+2025-10-03 19:35:45,638 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:35:45,639 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:35:45,639 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:35:45,640 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:35:45,640 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:35:45,640 - INFO - -> https://www.greensboro-nc.gov/departments
+2025-10-03 19:35:45,640 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:35:45,641 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:35:45,641 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:35:45,641 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:35:45,641 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:35:45,641 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:35:52,841 - INFO - Step 4: PREPROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:36:05,105 - INFO - -> Progress: 99% (1405/1413)
+2025-10-03 19:36:05,471 - INFO - /Step 4: PREPROCESS_PAGE_CONTENT
+
+2025-10-03 19:36:05,471 - INFO - -> Elapsed time: 12.63 seconds
+2025-10-03 19:36:05,472 - INFO - -> Average elapsed time: 12.63 seconds
+2025-10-03 19:36:05,472 - INFO - -> Total elapsed time: 12.63 seconds
+2025-10-03 19:36:05,472 - INFO - Step 5: PROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:36:05,495 - INFO - Running Gemini prompt: 
+    First, determine if the content contains relevant information about the main governing body of the target municipality. If the content includes information about the following people, they are very likely to be on the council: Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+    If not, return an empty JSON array `[]`.
+
+    Target Roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+    Target Divisions: ward, district
+    Current Date: 2025-10-03
+
+    Return a JSON object with people, each having:
+    - name: (String) Full name only (no titles)
+    - image: (String or null) URL to profile image (https://...)
+    - roles: (Array of strings) Active municipal roles
+    - divisions: (Array of strings) Specific district/ward names
+    - phone_number: (String or null) Formatted phone number
+    - email: (String or null) Email address
+    - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+
+    Guidelines:
+    - Roles extraction:
+        - Extract roles that match the **target roles** provided (e.g., mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member).
+    - Division extraction:
+        - Extract divisions if explicitly mentioned in the text and relevant to the person's role.
+        - Examples: "Ward 1", "District 2"
+    - Name extraction:
+        - Extract full names ONLY, not titles.
+    - Phone number extraction:
+        - Extract phone numbers even when formatted as Markdown link text.
+    - Website extraction:
+        - Extract URLs starting with "http://" or "https://".
+    - Email extraction:
+        - Extract email addresses found directly in the text or formatted as Markdown link text.
+    - Start and End Date Extraction:
+        - Extract dates only if explicitly written in the text.
+        - **Start Date**:
+            - Extract the date associated with the **most recent election or appointment**.
+            - Ignore past terms or historical dates unless explicitly stated as the current term.
+            - Example: "Elected in November 2020 and reelected in November 2024" → `start_date`: `2024-11`.
+        - **End Date**:
+            - Extract the date associated with the **current term expiration**.
+            - Example: "Term ends December 2028" → `end_date`: `2028-12`.
+        - If no explicit dates are found, set both `start_date` and `end_date` to `null`.
+
+    Additional Rules:
+    - Ensure all extracted details refer to the **current term** of the official.
+    - Use the provided `current_date` to filter out roles or terms that are no longer active.
+    - Exclude individuals who have resigned, vacated their roles, or are deceased.
+    - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
+    
+2025-10-03 19:37:11,303 - INFO - gemini gemini-2.5-flash LLM call took 65.81 seconds
+2025-10-03 19:37:20,714 - INFO - openai LLM call took 9.39 seconds
+2025-10-03 19:37:20,743 - INFO - Running Together AI prompt: 
+Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
+from the markdown text. Here are the list of known target people (may be missing or include a few extra): Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+
+Government type: 'mayor_council'
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district 
+
+Return JSON array of people with:
+- name: (String) Full name only
+- roles: (Array) Official titles
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
+- image: (String|null) Photo URL (.jpg/.png)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- phone_number: (String|null) Contact number
+- email: (String|null) Email address
+- start_date: (String|null) YYYY[-MM[-DD]]
+- end_date: (String|null) YYYY[-MM[-DD]]
+
+URLs: Include profile/bio pages. Exclude news/events/press.
+Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
+
+2025-10-03 19:37:26,308 - INFO - together_ai LLM call took 5.56 seconds
+2025-10-03 19:37:26,781 - INFO - Current data: 0
+2025-10-03 19:37:26,781 - INFO - Required data: 9
+2025-10-03 19:37:26,781 - INFO - Minimum required data: 6
+2025-10-03 19:37:26,782 - INFO - Has target role: False
+2025-10-03 19:37:26,782 - INFO - Has target divisions (if available): False
+2025-10-03 19:37:26,782 - INFO - Not enough data processed yet, collecting more data... 0/14
+2025-10-03 19:37:26,782 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/
+2025-10-03 19:37:26,812 - INFO - New pipeline context created and saved.
+2025-10-03 19:37:26,813 - INFO - Pipeline started at Fri Oct  3 19:37:26 2025
+2025-10-03 19:37:26,813 - INFO - Step 0: INIT
+2025-10-03 19:37:26,818 - INFO - Step 1: RESEARCH_MUNICIPALITY
+2025-10-03 19:37:26,839 - INFO - Running Gemini prompt: 
+    Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
+
+    Municipality: Greensboro city, nc
+
+    Instructions:
+
+    1. Determine the government type of the city. Available government types:
+- mayor_commission
+- mayor_council
+- select_board
+- aldermen
+
+    2. Identify the elected officials in the local government, 
+       including the Mayor (if applicable).
+       2.1. For each official, extract the following details:
+            - name: Full name only (no titles)
+            - roles: List of active municipal roles (e.g., Mayor, Council Member)
+            - divisions: List of (ward, district), only if applicable
+
+    3. Create a JSON object with the following structure:
+       ```json
+       {
+         "government_type": examples - "mayor_council" or "mayor_commission", etc.,
+         "people": [
+           {
+             "name": "Full name of the official or null if uncertain",
+             "roles": ["Mayor", "Council Member", "Commissioner", etc.],
+             "divisions": ["Ward 1", "District 2", etc.] or [],
+           }
+         ],
+         "notes": "Brief notes about the search and results"
+       }
+       ```
+
+    IMPORTANT: If the response contains anything other than a valid JSON object,
+    it will be considered incorrect. Ensure the response is strictly JSON.
+    Verify that the response is valid JSON before returning it.
+    If it is not valid JSON, retry the generation.
+    
+2025-10-03 19:37:26,839 - INFO - making request with search
+2025-10-03 19:37:40,246 - INFO - gemini gemini-2.5-flash LLM call took 13.41 seconds
+2025-10-03 19:37:40,272 - INFO - Step 2: SEARCH_LINKS
+2025-10-03 19:37:40,296 - INFO - Searching for keyword term: mayor
+2025-10-03 19:37:40,296 - INFO - Searching with google for Greensboro city mayor
+2025-10-03 19:37:40,671 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:37:40,672 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:37:40,672 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:37:40,673 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:37:40,673 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:37:40,673 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:37:40,673 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:37:40,673 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:37:40,674 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:37:40,674 - INFO - -> https://www.greensboro-nc.gov/departments/budget-evaluation
+2025-10-03 19:37:40,674 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:37:40,674 - INFO - Searching for keyword term: council members
+2025-10-03 19:37:40,674 - INFO - Searching with google for Greensboro city council members
+2025-10-03 19:37:41,087 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:37:41,087 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:37:41,088 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:37:41,088 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:37:41,088 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:37:41,088 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:37:41,088 - INFO - -> https://www.greensboro-nc.gov/departments/planning/boards-commissions-meetings/planning-and-zoning-commission
+2025-10-03 19:37:41,088 - INFO - -> https://www.greensboro-nc.gov/government/city-council/frequently-asked-questions
+2025-10-03 19:37:41,088 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:37:41,089 - INFO - -> https://www.greensboro-nc.gov/Home/Components/News/News/20257/36
+2025-10-03 19:37:41,089 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:37:41,089 - INFO - Searching for keyword term: elected officials
+2025-10-03 19:37:41,089 - INFO - Searching with google for Greensboro city elected officials
+2025-10-03 19:37:41,340 - INFO - -> https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:37:41,341 - INFO - -> https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:37:41,341 - INFO - -> https://www.greensboro-nc.gov/
+2025-10-03 19:37:41,342 - INFO - -> https://www.greensboro-nc.gov/i-want-to/contact/e-mail-city-council
+2025-10-03 19:37:41,342 - INFO - -> https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:37:41,342 - INFO - -> https://www.greensboro-nc.gov/departments
+2025-10-03 19:37:41,342 - INFO - -> https://www.greensboro-nc.gov/government/city-manager-s-office
+2025-10-03 19:37:41,343 - INFO - -> https://www.greensboro-nc.gov/departments/planning
+2025-10-03 19:37:41,343 - INFO - -> https://www.greensboro-nc.gov/government/boards-and-commissions
+2025-10-03 19:37:41,343 - INFO - -> https://www.greensboro-nc.gov/Home/Components/FacilityDirectory/FacilityDirectory/2/
+2025-10-03 19:37:41,343 - INFO - Search successful with google. Found 10 results.
+2025-10-03 19:37:41,344 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:38:07,172 - INFO - Step 4: PREPROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:38:17,910 - INFO - -> Progress: 99% (1405/1413)
+2025-10-03 19:38:18,229 - INFO - /Step 4: PREPROCESS_PAGE_CONTENT
+
+2025-10-03 19:38:18,229 - INFO - -> Elapsed time: 11.06 seconds
+2025-10-03 19:38:18,229 - INFO - -> Average elapsed time: 11.06 seconds
+2025-10-03 19:38:18,230 - INFO - -> Total elapsed time: 11.06 seconds
+2025-10-03 19:38:18,230 - INFO - Step 5: PROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/government/city-council
+2025-10-03 19:38:18,247 - INFO - Running Gemini prompt: 
+    First, determine if the content contains relevant information about the main governing body of the target municipality. If the content includes information about the following people, they are very likely to be on the council: Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+    If not, return an empty JSON array `[]`.
+
+    Target Roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+    Target Divisions: ward, district
+    Current Date: 2025-10-03
+
+    Return a JSON object with people, each having:
+    - name: (String) Full name only (no titles)
+    - image: (String or null) URL to profile image (https://...)
+    - roles: (Array of strings) Active municipal roles
+    - divisions: (Array of strings) Specific district/ward names
+    - phone_number: (String or null) Formatted phone number
+    - email: (String or null) Email address
+    - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+
+    Guidelines:
+    - Roles extraction:
+        - Extract roles that match the **target roles** provided (e.g., mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member).
+    - Division extraction:
+        - Extract divisions if explicitly mentioned in the text and relevant to the person's role.
+        - Examples: "Ward 1", "District 2"
+    - Name extraction:
+        - Extract full names ONLY, not titles.
+    - Phone number extraction:
+        - Extract phone numbers even when formatted as Markdown link text.
+    - Website extraction:
+        - Extract URLs starting with "http://" or "https://".
+    - Email extraction:
+        - Extract email addresses found directly in the text or formatted as Markdown link text.
+    - Start and End Date Extraction:
+        - Extract dates only if explicitly written in the text.
+        - **Start Date**:
+            - Extract the date associated with the **most recent election or appointment**.
+            - Ignore past terms or historical dates unless explicitly stated as the current term.
+            - Example: "Elected in November 2020 and reelected in November 2024" → `start_date`: `2024-11`.
+        - **End Date**:
+            - Extract the date associated with the **current term expiration**.
+            - Example: "Term ends December 2028" → `end_date`: `2028-12`.
+        - If no explicit dates are found, set both `start_date` and `end_date` to `null`.
+
+    Additional Rules:
+    - Ensure all extracted details refer to the **current term** of the official.
+    - Use the provided `current_date` to filter out roles or terms that are no longer active.
+    - Exclude individuals who have resigned, vacated their roles, or are deceased.
+    - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
+    
+2025-10-03 19:38:48,549 - INFO - gemini gemini-2.5-flash LLM call took 30.30 seconds
+2025-10-03 19:39:03,130 - INFO - openai LLM call took 14.55 seconds
+2025-10-03 19:39:03,144 - INFO - Running Together AI prompt: 
+Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
+from the markdown text. Here are the list of known target people (may be missing or include a few extra): Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+
+Government type: 'mayor_council'
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district 
+
+Return JSON array of people with:
+- name: (String) Full name only
+- roles: (Array) Official titles
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
+- image: (String|null) Photo URL (.jpg/.png)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- phone_number: (String|null) Contact number
+- email: (String|null) Email address
+- start_date: (String|null) YYYY[-MM[-DD]]
+- end_date: (String|null) YYYY[-MM[-DD]]
+
+URLs: Include profile/bio pages. Exclude news/events/press.
+Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
+
+2025-10-03 19:39:08,105 - INFO - together_ai LLM call took 4.96 seconds
+2025-10-03 19:39:08,685 - INFO - Current data: 0
+2025-10-03 19:39:08,685 - INFO - Required data: 9
+2025-10-03 19:39:08,686 - INFO - Minimum required data: 6
+2025-10-03 19:39:08,686 - INFO - Has target role: False
+2025-10-03 19:39:08,686 - INFO - Has target divisions (if available): False
+2025-10-03 19:39:08,686 - INFO - Not enough data processed yet, collecting more data... 0/14
+2025-10-03 19:39:08,687 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/
+2025-10-03 19:39:18,023 - INFO - Step 4: PREPROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/
+2025-10-03 19:39:28,231 - INFO - -> Progress: 72% (1309/1810)
+2025-10-03 19:39:38,321 - INFO - -> Progress: 99% (1802/1810)
+2025-10-03 19:39:38,938 - INFO - /Step 4: PREPROCESS_PAGE_CONTENT
+
+2025-10-03 19:39:38,939 - INFO - -> Elapsed time: 20.92 seconds
+2025-10-03 19:39:38,939 - INFO - -> Average elapsed time: 16.77 seconds
+2025-10-03 19:39:38,939 - INFO - -> Total elapsed time: 33.54 seconds
+2025-10-03 19:39:38,939 - INFO - Step 5: PROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/
+2025-10-03 19:39:38,961 - INFO - Running Gemini prompt: 
+    First, determine if the content contains relevant information about the main governing body of the target municipality. If the content includes information about the following people, they are very likely to be on the council: Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+    If not, return an empty JSON array `[]`.
+
+    Target Roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+    Target Divisions: ward, district
+    Current Date: 2025-10-03
+
+    Return a JSON object with people, each having:
+    - name: (String) Full name only (no titles)
+    - image: (String or null) URL to profile image (https://...)
+    - roles: (Array of strings) Active municipal roles
+    - divisions: (Array of strings) Specific district/ward names
+    - phone_number: (String or null) Formatted phone number
+    - email: (String or null) Email address
+    - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+
+    Guidelines:
+    - Roles extraction:
+        - Extract roles that match the **target roles** provided (e.g., mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member).
+    - Division extraction:
+        - Extract divisions if explicitly mentioned in the text and relevant to the person's role.
+        - Examples: "Ward 1", "District 2"
+    - Name extraction:
+        - Extract full names ONLY, not titles.
+    - Phone number extraction:
+        - Extract phone numbers even when formatted as Markdown link text.
+    - Website extraction:
+        - Extract URLs starting with "http://" or "https://".
+    - Email extraction:
+        - Extract email addresses found directly in the text or formatted as Markdown link text.
+    - Start and End Date Extraction:
+        - Extract dates only if explicitly written in the text.
+        - **Start Date**:
+            - Extract the date associated with the **most recent election or appointment**.
+            - Ignore past terms or historical dates unless explicitly stated as the current term.
+            - Example: "Elected in November 2020 and reelected in November 2024" → `start_date`: `2024-11`.
+        - **End Date**:
+            - Extract the date associated with the **current term expiration**.
+            - Example: "Term ends December 2028" → `end_date`: `2028-12`.
+        - If no explicit dates are found, set both `start_date` and `end_date` to `null`.
+
+    Additional Rules:
+    - Ensure all extracted details refer to the **current term** of the official.
+    - Use the provided `current_date` to filter out roles or terms that are no longer active.
+    - Exclude individuals who have resigned, vacated their roles, or are deceased.
+    - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
+    
+2025-10-03 19:39:41,347 - INFO - gemini gemini-2.5-flash LLM call took 2.39 seconds
+2025-10-03 19:39:43,734 - INFO - openai LLM call took 2.36 seconds
+2025-10-03 19:39:43,758 - INFO - Running Together AI prompt: 
+Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
+from the markdown text. Here are the list of known target people (may be missing or include a few extra): Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+
+Government type: 'mayor_council'
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district 
+
+Return JSON array of people with:
+- name: (String) Full name only
+- roles: (Array) Official titles
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
+- image: (String|null) Photo URL (.jpg/.png)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- phone_number: (String|null) Contact number
+- email: (String|null) Email address
+- start_date: (String|null) YYYY[-MM[-DD]]
+- end_date: (String|null) YYYY[-MM[-DD]]
+
+URLs: Include profile/bio pages. Exclude news/events/press.
+Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
+
+2025-10-03 19:39:50,826 - INFO - together_ai LLM call took 7.07 seconds
+2025-10-03 19:39:51,428 - INFO - Current data: 0
+2025-10-03 19:39:51,429 - INFO - Required data: 9
+2025-10-03 19:39:51,430 - INFO - Minimum required data: 6
+2025-10-03 19:39:51,430 - INFO - Has target role: False
+2025-10-03 19:39:51,430 - INFO - Has target divisions (if available): False
+2025-10-03 19:39:51,430 - INFO - Not enough data processed yet, collecting more data... 1/14
+2025-10-03 19:39:51,430 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:39:55,806 - INFO - Step 4: PREPROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/
+2025-10-03 19:40:06,109 - INFO - -> Progress: 87% (1593/1811)
+2025-10-03 19:40:11,492 - INFO - /Step 4: PREPROCESS_PAGE_CONTENT
+
+2025-10-03 19:40:11,492 - INFO - -> Elapsed time: 15.69 seconds
+2025-10-03 19:40:11,492 - INFO - -> Average elapsed time: 13.37 seconds
+2025-10-03 19:40:11,492 - INFO - -> Total elapsed time: 26.74 seconds
+2025-10-03 19:40:11,492 - INFO - Step 5: PROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/
+2025-10-03 19:40:11,514 - INFO - Running Gemini prompt: 
+    First, determine if the content contains relevant information about the main governing body of the target municipality. If the content includes information about the following people, they are very likely to be on the council: Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+    If not, return an empty JSON array `[]`.
+
+    Target Roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+    Target Divisions: ward, district
+    Current Date: 2025-10-03
+
+    Return a JSON object with people, each having:
+    - name: (String) Full name only (no titles)
+    - image: (String or null) URL to profile image (https://...)
+    - roles: (Array of strings) Active municipal roles
+    - divisions: (Array of strings) Specific district/ward names
+    - phone_number: (String or null) Formatted phone number
+    - email: (String or null) Email address
+    - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+
+    Guidelines:
+    - Roles extraction:
+        - Extract roles that match the **target roles** provided (e.g., mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member).
+    - Division extraction:
+        - Extract divisions if explicitly mentioned in the text and relevant to the person's role.
+        - Examples: "Ward 1", "District 2"
+    - Name extraction:
+        - Extract full names ONLY, not titles.
+    - Phone number extraction:
+        - Extract phone numbers even when formatted as Markdown link text.
+    - Website extraction:
+        - Extract URLs starting with "http://" or "https://".
+    - Email extraction:
+        - Extract email addresses found directly in the text or formatted as Markdown link text.
+    - Start and End Date Extraction:
+        - Extract dates only if explicitly written in the text.
+        - **Start Date**:
+            - Extract the date associated with the **most recent election or appointment**.
+            - Ignore past terms or historical dates unless explicitly stated as the current term.
+            - Example: "Elected in November 2020 and reelected in November 2024" → `start_date`: `2024-11`.
+        - **End Date**:
+            - Extract the date associated with the **current term expiration**.
+            - Example: "Term ends December 2028" → `end_date`: `2028-12`.
+        - If no explicit dates are found, set both `start_date` and `end_date` to `null`.
+
+    Additional Rules:
+    - Ensure all extracted details refer to the **current term** of the official.
+    - Use the provided `current_date` to filter out roles or terms that are no longer active.
+    - Exclude individuals who have resigned, vacated their roles, or are deceased.
+    - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
+    
+2025-10-03 19:40:14,375 - INFO - gemini gemini-2.5-flash LLM call took 2.86 seconds
+2025-10-03 19:40:16,830 - INFO - openai LLM call took 2.43 seconds
+2025-10-03 19:40:16,843 - INFO - Running Together AI prompt: 
+Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
+from the markdown text. Here are the list of known target people (may be missing or include a few extra): Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+
+Government type: 'mayor_council'
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district 
+
+Return JSON array of people with:
+- name: (String) Full name only
+- roles: (Array) Official titles
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
+- image: (String|null) Photo URL (.jpg/.png)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- phone_number: (String|null) Contact number
+- email: (String|null) Email address
+- start_date: (String|null) YYYY[-MM[-DD]]
+- end_date: (String|null) YYYY[-MM[-DD]]
+
+URLs: Include profile/bio pages. Exclude news/events/press.
+Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
+
+2025-10-03 19:40:23,626 - INFO - together_ai LLM call took 6.78 seconds
+2025-10-03 19:40:24,241 - INFO - Current data: 0
+2025-10-03 19:40:24,241 - INFO - Required data: 9
+2025-10-03 19:40:24,241 - INFO - Minimum required data: 6
+2025-10-03 19:40:24,241 - INFO - Has target role: False
+2025-10-03 19:40:24,241 - INFO - Has target divisions (if available): False
+2025-10-03 19:40:24,241 - INFO - Not enough data processed yet, collecting more data... 1/14
+2025-10-03 19:40:24,242 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:40:26,724 - INFO - Step 4: PREPROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:40:36,428 - INFO - /Step 4: PREPROCESS_PAGE_CONTENT
+
+2025-10-03 19:40:36,428 - INFO - -> Elapsed time: 9.70 seconds
+2025-10-03 19:40:36,428 - INFO - -> Average elapsed time: 14.42 seconds
+2025-10-03 19:40:36,429 - INFO - -> Total elapsed time: 43.25 seconds
+2025-10-03 19:40:36,429 - INFO - Step 5: PROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:40:36,448 - INFO - Running Gemini prompt: 
+    First, determine if the content contains relevant information about the main governing body of the target municipality. If the content includes information about the following people, they are very likely to be on the council: Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+    If not, return an empty JSON array `[]`.
+
+    Target Roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+    Target Divisions: ward, district
+    Current Date: 2025-10-03
+
+    Return a JSON object with people, each having:
+    - name: (String) Full name only (no titles)
+    - image: (String or null) URL to profile image (https://...)
+    - roles: (Array of strings) Active municipal roles
+    - divisions: (Array of strings) Specific district/ward names
+    - phone_number: (String or null) Formatted phone number
+    - email: (String or null) Email address
+    - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+
+    Guidelines:
+    - Roles extraction:
+        - Extract roles that match the **target roles** provided (e.g., mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member).
+    - Division extraction:
+        - Extract divisions if explicitly mentioned in the text and relevant to the person's role.
+        - Examples: "Ward 1", "District 2"
+    - Name extraction:
+        - Extract full names ONLY, not titles.
+    - Phone number extraction:
+        - Extract phone numbers even when formatted as Markdown link text.
+    - Website extraction:
+        - Extract URLs starting with "http://" or "https://".
+    - Email extraction:
+        - Extract email addresses found directly in the text or formatted as Markdown link text.
+    - Start and End Date Extraction:
+        - Extract dates only if explicitly written in the text.
+        - **Start Date**:
+            - Extract the date associated with the **most recent election or appointment**.
+            - Ignore past terms or historical dates unless explicitly stated as the current term.
+            - Example: "Elected in November 2020 and reelected in November 2024" → `start_date`: `2024-11`.
+        - **End Date**:
+            - Extract the date associated with the **current term expiration**.
+            - Example: "Term ends December 2028" → `end_date`: `2028-12`.
+        - If no explicit dates are found, set both `start_date` and `end_date` to `null`.
+
+    Additional Rules:
+    - Ensure all extracted details refer to the **current term** of the official.
+    - Use the provided `current_date` to filter out roles or terms that are no longer active.
+    - Exclude individuals who have resigned, vacated their roles, or are deceased.
+    - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
+    
+2025-10-03 19:40:52,559 - INFO - gemini gemini-2.5-flash LLM call took 16.11 seconds
+2025-10-03 19:40:55,038 - INFO - openai LLM call took 2.45 seconds
+2025-10-03 19:40:55,062 - INFO - Running Together AI prompt: 
+Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
+from the markdown text. Here are the list of known target people (may be missing or include a few extra): Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+
+Government type: 'mayor_council'
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district 
+
+Return JSON array of people with:
+- name: (String) Full name only
+- roles: (Array) Official titles
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
+- image: (String|null) Photo URL (.jpg/.png)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- phone_number: (String|null) Contact number
+- email: (String|null) Email address
+- start_date: (String|null) YYYY[-MM[-DD]]
+- end_date: (String|null) YYYY[-MM[-DD]]
+
+URLs: Include profile/bio pages. Exclude news/events/press.
+Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
+
+2025-10-03 19:41:02,173 - INFO - together_ai LLM call took 7.11 seconds
+2025-10-03 19:41:02,932 - INFO - Current data: 0
+2025-10-03 19:41:02,932 - INFO - Required data: 9
+2025-10-03 19:41:02,933 - INFO - Minimum required data: 6
+2025-10-03 19:41:02,933 - INFO - Has target role: False
+2025-10-03 19:41:02,933 - INFO - Has target divisions (if available): False
+2025-10-03 19:41:02,933 - INFO - Not enough data processed yet, collecting more data... 2/14
+2025-10-03 19:41:02,934 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:41:02,965 - WARNING - Warning: navigation to https://www.greensboro-nc.gov/government/city-council/council-meetings with wait_until=networkidle failed: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.greensboro-nc.gov/government/city-council/council-meetings", waiting until "networkidle"
+
+2025-10-03 19:41:06,734 - INFO - Step 4: PREPROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:41:18,209 - INFO - -> Progress: 99% (1303/1312)
+2025-10-03 19:41:18,366 - INFO - /Step 4: PREPROCESS_PAGE_CONTENT
+
+2025-10-03 19:41:18,367 - INFO - -> Elapsed time: 11.63 seconds
+2025-10-03 19:41:18,367 - INFO - -> Average elapsed time: 12.79 seconds
+2025-10-03 19:41:18,367 - INFO - -> Total elapsed time: 38.37 seconds
+2025-10-03 19:41:18,367 - INFO - Step 5: PROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/government/city-council/council-meetings
+2025-10-03 19:41:18,390 - INFO - Running Gemini prompt: 
+    First, determine if the content contains relevant information about the main governing body of the target municipality. If the content includes information about the following people, they are very likely to be on the council: Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+    If not, return an empty JSON array `[]`.
+
+    Target Roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+    Target Divisions: ward, district
+    Current Date: 2025-10-03
+
+    Return a JSON object with people, each having:
+    - name: (String) Full name only (no titles)
+    - image: (String or null) URL to profile image (https://...)
+    - roles: (Array of strings) Active municipal roles
+    - divisions: (Array of strings) Specific district/ward names
+    - phone_number: (String or null) Formatted phone number
+    - email: (String or null) Email address
+    - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+
+    Guidelines:
+    - Roles extraction:
+        - Extract roles that match the **target roles** provided (e.g., mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member).
+    - Division extraction:
+        - Extract divisions if explicitly mentioned in the text and relevant to the person's role.
+        - Examples: "Ward 1", "District 2"
+    - Name extraction:
+        - Extract full names ONLY, not titles.
+    - Phone number extraction:
+        - Extract phone numbers even when formatted as Markdown link text.
+    - Website extraction:
+        - Extract URLs starting with "http://" or "https://".
+    - Email extraction:
+        - Extract email addresses found directly in the text or formatted as Markdown link text.
+    - Start and End Date Extraction:
+        - Extract dates only if explicitly written in the text.
+        - **Start Date**:
+            - Extract the date associated with the **most recent election or appointment**.
+            - Ignore past terms or historical dates unless explicitly stated as the current term.
+            - Example: "Elected in November 2020 and reelected in November 2024" → `start_date`: `2024-11`.
+        - **End Date**:
+            - Extract the date associated with the **current term expiration**.
+            - Example: "Term ends December 2028" → `end_date`: `2028-12`.
+        - If no explicit dates are found, set both `start_date` and `end_date` to `null`.
+
+    Additional Rules:
+    - Ensure all extracted details refer to the **current term** of the official.
+    - Use the provided `current_date` to filter out roles or terms that are no longer active.
+    - Exclude individuals who have resigned, vacated their roles, or are deceased.
+    - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
+    
+2025-10-03 19:41:21,103 - INFO - gemini gemini-2.5-flash LLM call took 2.71 seconds
+2025-10-03 19:41:22,515 - INFO - openai LLM call took 1.39 seconds
+2025-10-03 19:41:22,537 - INFO - Running Together AI prompt: 
+Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
+from the markdown text. Here are the list of known target people (may be missing or include a few extra): Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+
+Government type: 'mayor_council'
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district 
+
+Return JSON array of people with:
+- name: (String) Full name only
+- roles: (Array) Official titles
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
+- image: (String|null) Photo URL (.jpg/.png)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- phone_number: (String|null) Contact number
+- email: (String|null) Email address
+- start_date: (String|null) YYYY[-MM[-DD]]
+- end_date: (String|null) YYYY[-MM[-DD]]
+
+URLs: Include profile/bio pages. Exclude news/events/press.
+Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
+
+2025-10-03 19:41:28,859 - INFO - together_ai LLM call took 6.32 seconds
+2025-10-03 19:41:29,709 - INFO - Current data: 0
+2025-10-03 19:41:29,709 - INFO - Required data: 9
+2025-10-03 19:41:29,709 - INFO - Minimum required data: 6
+2025-10-03 19:41:29,710 - INFO - Has target role: False
+2025-10-03 19:41:29,710 - INFO - Has target divisions (if available): False
+2025-10-03 19:41:29,710 - INFO - Not enough data processed yet, collecting more data... 2/14
+2025-10-03 19:41:29,710 - INFO - Step 3: SCRAPE_PAGE: scraping https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:41:33,748 - WARNING - Warning: navigation to https://www.greensboro-nc.gov/government/city-council/interact-with-city-council with wait_until=networkidle failed: Page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://www.greensboro-nc.gov/government/city-council/interact-with-city-council", waiting until "networkidle"
+
+2025-10-03 19:41:41,807 - INFO - Step 4: PREPROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:41:52,025 - INFO - -> Progress: 92% (1481/1599)
+2025-10-03 19:41:57,045 - INFO - /Step 4: PREPROCESS_PAGE_CONTENT
+
+2025-10-03 19:41:57,045 - INFO - -> Elapsed time: 15.24 seconds
+2025-10-03 19:41:57,045 - INFO - -> Average elapsed time: 14.62 seconds
+2025-10-03 19:41:57,045 - INFO - -> Total elapsed time: 58.49 seconds
+2025-10-03 19:41:57,045 - INFO - Step 5: PROCESS_PAGE_CONTENT: https://www.greensboro-nc.gov/government/city-council/interact-with-city-council
+2025-10-03 19:41:57,068 - INFO - Running Gemini prompt: 
+    First, determine if the content contains relevant information about the main governing body of the target municipality. If the content includes information about the following people, they are very likely to be on the council: Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+    If not, return an empty JSON array `[]`.
+
+    Target Roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+    Target Divisions: ward, district
+    Current Date: 2025-10-03
+
+    Return a JSON object with people, each having:
+    - name: (String) Full name only (no titles)
+    - image: (String or null) URL to profile image (https://...)
+    - roles: (Array of strings) Active municipal roles
+    - divisions: (Array of strings) Specific district/ward names
+    - phone_number: (String or null) Formatted phone number
+    - email: (String or null) Email address
+    - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+
+    Guidelines:
+    - Roles extraction:
+        - Extract roles that match the **target roles** provided (e.g., mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member).
+    - Division extraction:
+        - Extract divisions if explicitly mentioned in the text and relevant to the person's role.
+        - Examples: "Ward 1", "District 2"
+    - Name extraction:
+        - Extract full names ONLY, not titles.
+    - Phone number extraction:
+        - Extract phone numbers even when formatted as Markdown link text.
+    - Website extraction:
+        - Extract URLs starting with "http://" or "https://".
+    - Email extraction:
+        - Extract email addresses found directly in the text or formatted as Markdown link text.
+    - Start and End Date Extraction:
+        - Extract dates only if explicitly written in the text.
+        - **Start Date**:
+            - Extract the date associated with the **most recent election or appointment**.
+            - Ignore past terms or historical dates unless explicitly stated as the current term.
+            - Example: "Elected in November 2020 and reelected in November 2024" → `start_date`: `2024-11`.
+        - **End Date**:
+            - Extract the date associated with the **current term expiration**.
+            - Example: "Term ends December 2028" → `end_date`: `2028-12`.
+        - If no explicit dates are found, set both `start_date` and `end_date` to `null`.
+
+    Additional Rules:
+    - Ensure all extracted details refer to the **current term** of the official.
+    - Use the provided `current_date` to filter out roles or terms that are no longer active.
+    - Exclude individuals who have resigned, vacated their roles, or are deceased.
+    - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
+    
+2025-10-03 19:42:26,840 - INFO - gemini gemini-2.5-flash LLM call took 29.77 seconds
+2025-10-03 19:42:45,964 - INFO - openai LLM call took 19.09 seconds
+2025-10-03 19:42:45,987 - INFO - Running Together AI prompt: 
+Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
+from the markdown text. Here are the list of known target people (may be missing or include a few extra): Nancy Vaughan, Marikay Abuzuaiter, Hugh Holston, Jamilla Pinder, Sharon Hightower, Goldie F. Wells, Zack Matheny, Nancy Hoffmann, Tammi Thurm.
+
+Government type: 'mayor_council'
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district 
+
+Return JSON array of people with:
+- name: (String) Full name only
+- roles: (Array) Official titles
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
+- image: (String|null) Photo URL (.jpg/.png)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- phone_number: (String|null) Contact number
+- email: (String|null) Email address
+- start_date: (String|null) YYYY[-MM[-DD]]
+- end_date: (String|null) YYYY[-MM[-DD]]
+
+URLs: Include profile/bio pages. Exclude news/events/press.
+Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
+
+2025-10-03 19:42:57,779 - INFO - together_ai LLM call took 11.79 seconds
+2025-10-03 19:42:59,278 - INFO - Current data: 9
+2025-10-03 19:42:59,279 - INFO - Required data: 9
+2025-10-03 19:42:59,279 - INFO - Minimum required data: 6
+2025-10-03 19:42:59,279 - INFO - Has target role: True
+2025-10-03 19:42:59,279 - INFO - Has target divisions (if available): True
+2025-10-03 19:42:59,279 - INFO - Enough data processed, moving to report generation...
+2025-10-03 19:42:59,328 - INFO - Step 9: CLEANUP
+2025-10-03 19:42:59,351 - INFO - Step 5: MAYBE_SEND_TO_GITHUB
+2025-10-03 19:42:59,351 - INFO - CRUDDER_UPLOAD_URL: https://crudder.civicpatch.org/api/github_intake
