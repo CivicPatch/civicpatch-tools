@@ -2,8 +2,7 @@ from typing import List
 from schemas import PipelineContext, PipelineStatus, ResearchMunicipalityStep, ResearchedPerson
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
-import utils.config_utils as config_utils
-import utils.people_utils as people_utils
+from utils import config_utils, people_utils, log_utils
 
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
 
@@ -11,8 +10,8 @@ def research_municipality(context: PipelineContext):
     """
     Research the municipality to gather necessary data for further processing.
     """
-    print(f"Step 1: {PipelineStatus.RESEARCH_MUNICIPALITY.value}")
-
+    logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
+    logger.info(f"Step 1: {PipelineStatus.RESEARCH_MUNICIPALITY.value}")
     jurisdiction_id = context["jurisdiction_id"]
     municipality_name = context["name"]
     prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_id, municipality_name)

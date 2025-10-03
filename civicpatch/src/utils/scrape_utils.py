@@ -19,7 +19,7 @@ def hash_string(s: str) -> str:
     """Returns a SHA256 hash of the input string."""
     return hashlib.sha256(s.encode('utf-8')).hexdigest()[:12]
 
-async def scrape(website_url, options=None):
+async def scrape(logger, website_url, options=None):
     """
     Fetches the content of a given website URL using Playwright.
 
@@ -44,11 +44,11 @@ async def scrape(website_url, options=None):
                 await page.goto(website_url, wait_until=wait_until)
                 break
             except Exception as e:
-                print(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
+                logger.warning(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
 
         # Check if, after redirect, we have already scraped this URL
         if options and options.get('scraped_urls') and page.url in options.get('scraped_urls'):
-            print("Already scraped url: {website_url}, redirected to: {page.url}")
+            logger.info(f"Already scraped url: {website_url}, redirected to: {page.url}")
             await browser.close()
             raise ValueError("Already scraped this URL after redirect")
 
@@ -63,7 +63,7 @@ async def scrape(website_url, options=None):
 
         if options and options.get('image_directory'):
             # Download images if the option is set
-            await download_images(page, options.get('image_directory'))
+            await download_images(logger, page, options.get('image_directory'))
 
         content = await page.content()
         await browser.close()
@@ -138,7 +138,7 @@ async def html_relative_to_absolute_urls(page: Page):
         }
     """, base_url)
 
-async def download_images(page: Page, image_dir: str):
+async def download_images(logger, page: Page, image_dir: str):
     """
     Captures screenshots of images from the current page using Playwright,
     renames them with hashed strings, and saves a mapping of original URLs to hashed strings in a JSON file.
@@ -173,7 +173,7 @@ async def download_images(page: Page, image_dir: str):
             image_map[src] = file_name
         except Exception as e:
             if src is not None:
-                print(f"Failed to capture image {src}: {e}")
+                logger.warning(f"Failed to capture image {src}: {e}")
 
             await page.evaluate("""(img) => {
                 if (img && img.parentNode) {

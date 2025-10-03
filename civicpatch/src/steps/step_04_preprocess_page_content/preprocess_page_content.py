@@ -3,13 +3,14 @@ import time
 from markdownify import markdownify as md
 from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
 from steps.step_04_preprocess_page_content.filter_content import filter_content
-import utils.data_path_utils as data_path_utils
+from utils import data_path_utils, log_utils
 
 def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
     """
     Preprocess the scraped HTML content of a page.
     """
-    print(f"Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}: {page_to_preprocess['url']}")
+    logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
+    logger.info(f"Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}: {page_to_preprocess['url']}")
     jurisdiction_id = context["jurisdiction_id"]
 
     time_start = time.time()
@@ -22,7 +23,7 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
     output_md = md(output_html)
 
     government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
-    preprocessed_html  = filter_content(output_html, government_type=government_type)
+    preprocessed_html  = filter_content(logger, output_html, government_type=government_type)
     preprocessed_md = md(preprocessed_html)
 
     preprocessed_html_file_path = os.path.join(cache_path, page_to_preprocess["folder_name"], "preprocessed.html")
@@ -61,10 +62,10 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
 
     average_elapsed_time_seconds = total_elapsed_time_seconds / len(elapsed_times) if elapsed_times else 0
 
-    print(f"/Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}\n")
-    print(f"-> Elapsed time: {elapsed_time:.2f} seconds")
-    print(f"-> Average elapsed time: {average_elapsed_time_seconds:.2f} seconds")
-    print(f"-> Total elapsed time: {total_elapsed_time_seconds:.2f} seconds")
+    logger.info(f"/Step 4: {PipelineStatus.PREPROCESS_PAGE_CONTENT.value}\n")
+    logger.info(f"-> Elapsed time: {elapsed_time:.2f} seconds")
+    logger.info(f"-> Average elapsed time: {average_elapsed_time_seconds:.2f} seconds")
+    logger.info(f"-> Total elapsed time: {total_elapsed_time_seconds:.2f} seconds")
 
     return {
         "links": updated_links,

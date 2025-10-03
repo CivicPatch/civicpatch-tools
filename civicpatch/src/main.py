@@ -1,4 +1,3 @@
-import asyncio
 from fastapi import FastAPI, HTTPException, Depends, Request, BackgroundTasks, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -7,7 +6,7 @@ from typing import List, Optional
 from utils.pipeline_utils import get_municipalities_to_scrape
 from pipeline import Pipeline, PipelineStatus
 from auth.token_handler import verify_github_action_data_query
-from utils import id_utils
+from utils import id_utils, log_utils
 from schemas import PipelineRequest
 import os
 from utils import data_path_utils
@@ -71,7 +70,7 @@ def run_pipeline(request: PipelineRequest, background_tasks: BackgroundTasks):
 
     if len(errors) == 0:
         pipeline = Pipeline(pipeline_state=PipelineStatus.INIT)
-        background_tasks.add_task(pipeline.run_async, request_id, request)
+        background_tasks.add_task(pipeline.run, request_id, request)
 
     return request_id, warnings, errors
 

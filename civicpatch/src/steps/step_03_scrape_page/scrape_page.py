@@ -3,17 +3,19 @@ import utils.scrape_utils as scrape_utils
 from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
 import utils.data_path_utils as data_path_utils
 import utils.url_utils as url_utils
+from utils import data_path_utils, log_utils, url_utils
 
 async def scrape_page(context: PipelineContext, link_to_scrape: Link):
     """
     Scrape pages based on the links found in the previous search step.
     """
-    print(f"Step 3: {PipelineStatus.SCRAPE_PAGE.value}, scraping {link_to_scrape['url']}")
+    logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
+    logger.info(f"Step 3: {PipelineStatus.SCRAPE_PAGE.value}: scraping {link_to_scrape['url']}")
     jurisdiction_id = context["jurisdiction_id"]
 
     try:
         image_directory = data_path_utils.get_images_path(jurisdiction_id)
-        html_content = await scrape_utils.scrape(link_to_scrape["url"], { "image_directory": image_directory })
+        html_content = await scrape_utils.scrape(logger, link_to_scrape["url"], { "image_directory": image_directory })
 
         if html_content is None:
             raise ValueError("No HTML content retrieved")
@@ -41,7 +43,7 @@ async def scrape_page(context: PipelineContext, link_to_scrape: Link):
             "links": updated_links
         }
     except Exception as e:
-        print(f"Error scraping {link_to_scrape['url']}: {e}")
+        logger.error(f"Error scraping {link_to_scrape['url']}: {e}")
         # If error, update the link status to "error"
         updated_links = []
         for link in context["links"]:

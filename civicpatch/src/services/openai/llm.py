@@ -3,7 +3,7 @@ import instructor
 import time
 # from openai import OpenAI
 from utils.request_utils import with_retry
-from utils.log_utils import log_llm_cost
+from utils.log_utils import log_llm_cost, get_pipeline_logger
 
 MODEL = "openai/gpt-4.1-mini"
 MAX_RETRIES = 5
@@ -13,7 +13,8 @@ def run_prompt(jurisdiction_id: str, prompt, response_schema, content=""):
     """
     Run a prompt against OpenAI's API
     """
-    print("openai prompt: ", prompt)
+    logger = get_pipeline_logger(jurisdiction_id)
+    logger.debug(f"Running OpenAI prompt: {prompt}")
     api_key = os.getenv("OPENAI_TOKEN")
     if not api_key:
         raise ValueError("OPENAI_TOKEN is not set in environment variables.")
@@ -42,7 +43,7 @@ def run_prompt(jurisdiction_id: str, prompt, response_schema, content=""):
         return response
 
     start_time = time.time()
-    result = with_retry(MAX_RETRIES, execute)
+    result = with_retry(logger, MAX_RETRIES, execute)
     end_time = time.time()
-    print(f"openai LLM call took {end_time - start_time:.2f} seconds")
+    logger.info(f"openai LLM call took {end_time - start_time:.2f} seconds")
     return result

@@ -5,13 +5,15 @@ from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
 from utils.array_utils import interleave_arrays
 from utils.config_utils import search_keywords
 from utils.request_utils import with_retry
+from utils import log_utils
 from .utils import search, SearchEngineNames
 
 def search_links(context: PipelineContext):
     """
     Search for links using multiple search engines and queries.
     """
-    print(f"Step 2: {PipelineStatus.SEARCH_LINKS.value}")
+    logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
+    logger.info(f"Step 2: {PipelineStatus.SEARCH_LINKS.value}")
 
     search_link_pointer = context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_link_pointer"]
 
@@ -32,13 +34,13 @@ def search_links(context: PipelineContext):
     def search_all_keywords():
         urls_found = []
         for keyword_term in keyword_term_groups:
-            print(f"Searching for keyword term: {keyword_term}")
-            urls_for_term = municipality_search(municipality_name, municipality_website, search_engine, keyword_term)
+            logger.info(f"Searching for keyword term: {keyword_term}")
+            urls_for_term = municipality_search(logger, municipality_name, municipality_website, search_engine, keyword_term)
             urls_found.append(urls_for_term)
         return urls_found
 
     try:
-        urls_found = with_retry(MAX_RETRIES, search_all_keywords)
+        urls_found = with_retry(logger, MAX_RETRIES, search_all_keywords)
         status_value = "completed"
         error_message = None
     except Exception as e:
@@ -74,7 +76,7 @@ def search_links(context: PipelineContext):
         result["error"] = error_message
     return result
 
-def municipality_search(municipality_name, municipality_website, search_engine, keyword_term: str):
+def municipality_search(logger, municipality_name, municipality_website, search_engine, keyword_term: str):
     """
     Search for a single keyword term using multiple search engines with fallback logic.
     """
@@ -86,6 +88,7 @@ def municipality_search(municipality_name, municipality_website, search_engine, 
 
     # Perform the search
     results = search(
+        logger,
         search_engine=search_engine,
         municipality_name=municipality_name,
         municipality_website=municipality_website,
@@ -95,7 +98,7 @@ def municipality_search(municipality_name, municipality_website, search_engine, 
     if not results:
         raise Exception(f"No results found with {search_engine}")
 
-    print(f"Search successful with {search_engine}. Found {len(results)} results.")
+    logger.info(f"Search successful with {search_engine}. Found {len(results)} results.")
     urls.extend(results)
 
     return urls  # Return results immediately on success

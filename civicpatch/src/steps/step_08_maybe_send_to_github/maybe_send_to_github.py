@@ -5,24 +5,25 @@ from schemas import PipelineContext, PipelineStatus
 
 from utils.request_utils import with_retry
 from utils.data_path_utils import get_data_municipality_path, get_data_source_municipality_path
-from utils import id_utils
+from utils import id_utils, log_utils
 
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
 
 def maybe_send_to_github(context: PipelineContext):
-  print(f"Step 5: {PipelineStatus.MAYBE_SEND_TO_GITHUB.value}")
+  logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
+  logger.info(f"Step 5: {PipelineStatus.MAYBE_SEND_TO_GITHUB.value}")
 
   # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
   # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
   CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
   CRUDDER_URL = os.getenv("CRUDDER_URL", "https://crudder.civicpatch.org")
   CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/api/github_intake"
-  print(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
+  logger.info(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
 
   try:
     if not CRUDDER_SHARED_TOKEN:
-      print("CRUDDER_SHARED_TOKEN is not set, skipping github workflow dispatch.")
-      print(f"Generate api key from CRUDDER at {CRUDDER_URL}")
+      logger.error("CRUDDER_SHARED_TOKEN is not set, skipping github workflow dispatch.")
+      logger.error(f"Generate api key from CRUDDER at {CRUDDER_URL}")
 
       return {
         "steps": {
@@ -50,6 +51,7 @@ def maybe_send_to_github(context: PipelineContext):
     } 
 
     response = with_retry(
+        logger,
         max_retries=5, 
         func=lambda: requests.post(
             CRUDDER_UPLOAD_URL, 
@@ -70,7 +72,7 @@ def maybe_send_to_github(context: PipelineContext):
       }
     }
   except Exception as e:
-    print(f"Error sending to Crudder: {e}")
+    logger.error(f"Error sending to Crudder: {e}")
     return {
       "steps": {
         **context["steps"],

@@ -20,9 +20,9 @@ def has_relevant_content(text: str, government_type) -> bool:
     
     people, dates, emails, phones, keywords = entity_extraction.extract_data(text, government_type)
     # Include emails and phones in relevance check
-    return any([people, emails, phones, keywords])
+    return any([people, dates, emails, phones, keywords])
 
-def filter_content(input_html: str, government_type, progress_log_interval: int = 10) -> str:
+def filter_content(logger, input_html: str, government_type, progress_log_interval: int = 10) -> str:
     soup = BeautifulSoup(input_html, "html.parser")
     total_nodes = count_nodes(soup)
     state = {
@@ -31,14 +31,14 @@ def filter_content(input_html: str, government_type, progress_log_interval: int 
         "last_progress_time": time.time(),
         "progress_log_interval": progress_log_interval
     }
-    filter_node_content(soup, state, government_type)
+    filter_node_content(logger, soup, state, government_type)
 
     if not soup.find_all():  # No tags left in the tree
         return ""
     filtered_content = soup.prettify()
     return filtered_content
 
-def filter_node_content(node: Tag, state, government_type):
+def filter_node_content(logger, node: Tag, state, government_type):
     # Skip processing if this node is inside a kept table
     if node.find_parent("table") and hasattr(node.find_parent("table"), '_keep_table'):
         return  # Don't process nodes inside tables that are marked to keep
@@ -46,14 +46,14 @@ def filter_node_content(node: Tag, state, government_type):
     # Recursively process children first
     for child in list(node.children):  # Use list() to avoid modifying the iterator during traversal
         if isinstance(child, Tag):  # Ensure the child is a Tag (not a string or comment)
-            filter_node_content(child, state, government_type)
-    
+            filter_node_content(logger, child, state, government_type)
+
     # Process the parent node after all its children
     state["processed"] += 1
     now = time.time()
     if now - state["last_progress_time"] >= state["progress_log_interval"]:
         percent = int(100 * state["processed"] / state["total"])
-        print(f"-> Progress: {percent}% ({state['processed']}/{state['total']})")
+        logger.info(f"-> Progress: {percent}% ({state['processed']}/{state['total']})")
         state["last_progress_time"] = now
     
     # Handle tables - evaluate the entire table content

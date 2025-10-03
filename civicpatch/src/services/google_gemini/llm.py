@@ -5,7 +5,7 @@ import requests
 import json
 # from google import Gemini
 from utils.request_utils import with_retry
-from utils.log_utils import log_llm_cost
+from utils.log_utils import log_llm_cost, get_pipeline_logger
 
 BASE_URI = "https://generativelanguage.googleapis.com/v1beta/models"
 DEFAULT_TIMEOUT = 180  # seconds
@@ -25,14 +25,15 @@ def run_prompt(jurisdiction_id: str, prompt, response_schema=None, content="", w
     """
     Run a prompt against Google Gemini's API
     """
-    print("gemini prompt: ", prompt)
+    logger = get_pipeline_logger(jurisdiction_id)
+    logger.info(f"Running Gemini prompt: {prompt}")
     api_key = os.getenv("GOOGLE_GEMINI_TOKEN")
     if not api_key:
         raise ValueError("GOOGLE_GEMINI_TOKEN is not set in environment variables.")
 
     def execute(model):
         if with_search:
-            response, input_tokens_num, output_tokens_num = make_request_with_search(model, api_key, prompt)
+            response, input_tokens_num, output_tokens_num = make_request_with_search(logger, model, api_key, prompt)
         else:
             client = instructor.from_provider(model=f"google/{model}", api_key=api_key)
             
@@ -59,17 +60,17 @@ def run_prompt(jurisdiction_id: str, prompt, response_schema=None, content="", w
     for model in MODEL_FALLBACKS:
         try:
             start_time = time.time()
-            result = with_retry(MAX_RETRIES, lambda: execute(model))
+            result = with_retry(logger, MAX_RETRIES, lambda: execute(model))
             end_time = time.time()
-            print(f"gemini {model} LLM call took {end_time - start_time:.2f} seconds")
+            logger.info(f"gemini {model} LLM call took {end_time - start_time:.2f} seconds")
             return result   
         except Exception:
             continue
 
     raise RuntimeError("All Gemini model fallbacks failed.")
 
-def make_request_with_search(model, api_key, prompt):
-    print("making request with search")
+def make_request_with_search(logger, model, api_key, prompt):
+    logger.info("making request with search")
     url = f"{BASE_URI}/{model}:generateContent?key={api_key}"
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
@@ -81,7 +82,6 @@ def make_request_with_search(model, api_key, prompt):
     headers = {"Content-Type": "application/json"}
 
     raw_response = requests.post(url, json=payload, headers=headers, timeout=DEFAULT_TIMEOUT)
-    print("raw_response:", raw_response.text)
 
     response = parse_raw_response(raw_response.json())
 
