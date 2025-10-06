@@ -50,7 +50,7 @@ jobs:
         run: docker pull ghcr.io/civicpatch/civicpatch-slim:latest
 
       - name: Set up mise
-        uses: jdx/mise-action@v3.2.0
+        uses: jdx/mise-action@v3.3.1
         with:
           version: '2025.9.6'
           cache: true
