@@ -7,6 +7,9 @@ run = """
 docker compose run --rm crudder
 """
 
+[tasks.containsh]
+run = "docker compose exec crudder bash"
+
 [tasks.deploy_crudder]
 run = "python scripts/deploy.py"
 
