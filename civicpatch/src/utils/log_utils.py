@@ -5,7 +5,7 @@ from utils import id_utils, data_path_utils
 app_logger = logging.getLogger("app_logger")
 app_logger.setLevel(logging.INFO)
 
-_active_handlers = {} 
+_active_handlers = {}
 
 def get_pipeline_log_path(jurisdiction_id: str) -> str:
     data_source_municipality_path = data_path_utils.get_data_source_municipality_path(jurisdiction_id)

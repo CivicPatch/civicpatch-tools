@@ -12,7 +12,7 @@ DEFAULT_TIMEOUT = 180  # seconds
 # Model fallback order: try flash-latest, then pro-latest
 MODEL_FALLBACKS = [
     "gemini-2.5-flash",
-    "gemini-2.5-flash-preview",
+    "gemini-2.5-flash-preview-09-2025",
     "gemini-2.5-flash-lite",
 ]
 # gemini-2.5-flash
