@@ -12,7 +12,7 @@ import queue
 import json
 import os
 
-from utils import data_path_utils, config_utils, log_utils
+from utils import data_path_utils, config_utils, log_utils, cost_utils
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from steps.step_01_research_municipality.research_municipality import research_municipality
 from steps.step_02_search_links.search_links import search_links
@@ -149,7 +149,7 @@ class Pipeline:
             self.saver.close()
             self.saver = None
 
-        log_utils.close_pipeline_logger(self.context["jurisdiction_id"])
+        log_utils.cleanup_pipeline_logger(self.context["jurisdiction_id"])
         
     
     def get_next_link(self, status: LinkStatus):
@@ -178,6 +178,8 @@ class Pipeline:
         Main function to run the pipeline for a given jurisdiction id.
         """
         logger = log_utils.get_pipeline_logger(pipeline_request.jurisdiction_id)
+        logger.info("Manual test message")
+        print(f"Wrote text message..., {pipeline_request.jurisdiction_id}")
         self.context = self.load_context(logger, request_id, pipeline_request)
         process_config = config_utils.get_process()
 
@@ -249,12 +251,12 @@ class Pipeline:
                     required_data = context_progress.get("required_data", 0)
                     minimum_required_data = max(required_data - 3, 1) # At least 1 person
 
-                    logger.info("Current data: %d", current_data)
-                    logger.info("Required data: %d", required_data)
+                    logger.info(f"Current data: {current_data}")
+                    logger.info(f"Required data: {required_data}")
 
-                    logger.info("Minimum required data: %d", minimum_required_data)
-                    logger.info("Has target role: %s", context_progress.get("has_target_role", False))
-                    logger.info("Has target divisions (if available): %s", context_progress.get("has_target_divisions", False))
+                    logger.info(f"Minimum required data: {minimum_required_data}")
+                    logger.info(f"Has target role: {context_progress.get('has_target_role', False)}")
+                    logger.info(f"Has target divisions (if available): {context_progress.get('has_target_divisions', False)}")
 
                     process_max_pages = process_config.get("max_pages", 15)
 
@@ -288,9 +290,10 @@ class Pipeline:
                     self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
                 elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
-                    result = maybe_send_to_github(self.context)
+                    #result = maybe_send_to_github(self.context)
 
-                    self.context.update(result)
+                    #self.context.update(result)
+                    cost_utils.log_costs(self.context["jurisdiction_id"])
                     self.state = PipelineStatus.DONE
                 else:
                     logger.error(f"Pipeline logic not yet implemented for state: {self.state}")

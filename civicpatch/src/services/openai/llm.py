@@ -3,7 +3,8 @@ import instructor
 import time
 # from openai import OpenAI
 from utils.request_utils import with_retry
-from utils.log_utils import log_llm_cost, get_pipeline_logger
+from utils.log_utils import get_pipeline_logger
+from utils import cost_utils
 
 MODEL = "openai/gpt-4.1-mini"
 MAX_RETRIES = 5
@@ -38,7 +39,14 @@ def run_prompt(jurisdiction_id: str, prompt, response_schema, content=""):
         input_tokens_num = usage.prompt_tokens
         output_tokens_num = usage.completion_tokens
 
-        log_llm_cost(jurisdiction_id, "openai", MODEL, input_tokens_num, output_tokens_num, with_search=False)
+        cost_utils.add_llm_cost(
+            jurisdiction_id, 
+            "openai", 
+            MODEL, 
+            input_tokens_num, 
+            output_tokens_num, 
+            with_search=False
+        )
 
         return response
 

@@ -5,7 +5,7 @@ from typing import List
 
 from utils.data_path_utils import get_data_source_municipality_path
 from schemas import PipelineContext, PipelineStatus, Person
-from utils import url_utils, log_utils
+from utils import url_utils, log_utils, cost_utils
 
 def cleanup(context: PipelineContext):
     # Remove files under data_source/cache and data_source/images
@@ -19,10 +19,11 @@ def cleanup(context: PipelineContext):
     people_data = context["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value]["people"]
     people = [Person.parse_obj(person) for person in people_data]
 
-    # TODO: clean up after creyton is done testing
     if os.path.exists(cache_dir):
+        # Only keep cache folders that are referenced by people
         cleanup_cache(cache_dir, people)
     if os.path.exists(images_dir):
+        # Only keep images that are referenced by people
         cleanup_images(logger, images_dir, people)
 
     return {}
@@ -73,6 +74,10 @@ def cleanup_images(logger, images_dir: str, people_list: List[Person]):
                 os.remove(image_file_path)
             else:
                 images_found.add(image_file)
+                cost_utils.add_storage_cost(
+                    logger.jurisdiction_id, 
+                    file_size_bytes=os.path.getsize(image_file_path)
+                )
 
     missing_images = images_to_keep - images_found
     if len(missing_images) > 0:
