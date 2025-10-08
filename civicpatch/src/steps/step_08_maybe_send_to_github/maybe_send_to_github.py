@@ -5,7 +5,7 @@ from schemas import PipelineContext, PipelineStatus
 
 from utils.request_utils import with_retry
 from utils.data_path_utils import get_data_municipality_path, get_data_source_municipality_path
-from utils import id_utils, log_utils
+from utils import id_utils, log_utils, cost_utils
 
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
 
@@ -35,6 +35,12 @@ def maybe_send_to_github(context: PipelineContext):
       }
 
     zip_file_path = zip_files(context["request_id"], context["jurisdiction_id"])
+    zip_file_size = os.path.getsize(zip_file_path)
+    logger.info(f"Created zip file at {zip_file_path}, size: {zip_file_size} bytes")
+    cost_utils.add_storage_cost(
+        context["jurisdiction_id"], 
+        file_size_bytes=zip_file_size
+    )
 
     headers = {
       "Authorization": CRUDDER_SHARED_TOKEN,

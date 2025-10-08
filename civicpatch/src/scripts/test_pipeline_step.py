@@ -3,13 +3,14 @@ from pipeline import Pipeline
 from utils.data_path_utils import get_pipeline_context_file_path
 import json
 import asyncio
+import uuid
 
 async def test_pipeline_step():
-    jurisdiction_id = "ocd_jurisdiction/country:us/state:nc/place:greensboro"
+    jurisdiction_id = "ocd_jurisdiction/country:us/state:nc/place:greensboro/council"
     pipeline_status = PipelineStatus.MERGE_RECORDS_WITHIN_LLM
     # Note: need to generate a unique request id
     # if you are testing PR creation
-    request_id = "ddddd"
+    request_id = f"test_pipeline_{str(uuid.uuid4())}"
 
     pipeline = Pipeline()
     pipeline.set_state(pipeline_status)

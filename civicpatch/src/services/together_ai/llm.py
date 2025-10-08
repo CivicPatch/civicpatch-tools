@@ -5,7 +5,8 @@ import openai
 from typing import List, Dict, Any
 # from langchain.text_splitter import MarkdownHeaderTextSplitter
 from utils.request_utils import with_retry
-from utils.log_utils import log_llm_cost, get_pipeline_logger
+from utils.log_utils import get_pipeline_logger
+from utils import cost_utils
 
 PROMPT_TOKENS=600
 OUTPUT_BUFFER=1500
@@ -156,12 +157,13 @@ def run_prompt(jurisdiction_id: str, prompt, content="", response_schema=None, m
 
         # Log token usage
         usage = completion.usage
-        log_llm_cost(
+        
+        cost_utils.add_llm_cost(
             jurisdiction_id, 
             "together_ai", 
             model, 
-            usage.prompt_tokens,
-            usage.completion_tokens,
+            usage.prompt_tokens, 
+            usage.completion_tokens, 
             with_search=False
         )
 

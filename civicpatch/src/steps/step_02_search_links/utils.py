@@ -2,7 +2,7 @@ from services.google_search import search as google_search
 from services.serp_search import search as serp_search
 from services.brave_search import search as brave_search 
 # from utils.array_utils import interleave_arrays
-from utils.log_utils import log_search_engine_call
+from utils import cost_utils
 # from utils.config_utils import search_keywords
 
 from steps.step_02_search_links.crawl import crawl
@@ -36,4 +36,9 @@ def search(logger, search_engine: str, municipality_name, municipality_website, 
 
     for result in results:
         logger.info(f"-> {result}")
+
+    cost_utils.add_search_engine_cost(
+        jurisdiction_id=municipality_name,
+        search_engine_name=search_engine
+    )
     return results
