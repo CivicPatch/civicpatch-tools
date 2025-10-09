@@ -15,7 +15,8 @@ def run_prompt(request_id, jurisdiction_id: str, prompt, response_schema, conten
     Run a prompt against OpenAI's API
     """
     logger = get_pipeline_logger(jurisdiction_id)
-    logger.debug(f"Running OpenAI prompt: {prompt}")
+    logger.info(f"Running OpenAI prompt")
+    logger.debug(f"Prompt: \n{prompt}")
     api_key = os.getenv("OPENAI_TOKEN")
     if not api_key:
         raise ValueError("OPENAI_TOKEN is not set in environment variables.")

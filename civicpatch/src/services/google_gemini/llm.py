@@ -27,7 +27,8 @@ def run_prompt(request_id, jurisdiction_id: str, prompt, response_schema=None, c
     Run a prompt against Google Gemini's API
     """
     logger = get_pipeline_logger(jurisdiction_id)
-    logger.info(f"Running Gemini prompt: {prompt}")
+    logger.info(f"Running Gemini prompt")
+    logger.debug(f"Prompt: \n{prompt}")
     api_key = os.getenv("GOOGLE_GEMINI_TOKEN")
     if not api_key:
         raise ValueError("GOOGLE_GEMINI_TOKEN is not set in environment variables.")

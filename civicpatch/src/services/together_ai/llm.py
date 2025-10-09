@@ -126,6 +126,7 @@ def run_prompt(request_id, jurisdiction_id: str, prompt, content="", response_sc
     """
     logger = get_pipeline_logger(jurisdiction_id)
     logger.info(f"Running Together AI prompt: {prompt}")
+    logger.debug(f"Prompt: \n{prompt}")
     api_key = os.getenv("TOGETHER_AI_TOKEN")
     if not api_key:
         raise ValueError("TOGETHER_AI_TOKEN is not set")
