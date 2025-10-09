@@ -63,7 +63,7 @@ def run_pipeline(request: PipelineRequest, background_tasks: BackgroundTasks, wi
     errors: List[str] = []
 
     if not jurisdiction_id_obj:
-        errors.append(f"Invalid jurisdiction_id format: {jurisdiction_id}")
+        errors.append(f"Invalid jurisdiction_id format: {jurisdiction_id}. Examples of valid formats: 'ocd-jurisdiction/country:us/state:wa/place:seattle/council' or 'ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/council'")
     if not request.name:
         warnings.append("Missing 'name' field: A name and legal status (e.g., 'Seattle city') is preferred for search purposess. Substituting with place name jurisdiction_id.")
     if not request.url:

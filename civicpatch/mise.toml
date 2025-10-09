@@ -31,9 +31,9 @@ run = """
 curl -X POST http://localhost:8000/api/pipeline \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Greensboro city",
-    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro/council",
-    "url": "https://www.greensboro-nc.gov"
+    "name": "Seattle city",
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+    "url": "https://www.seattle.gov/"
   }'
 """
 
