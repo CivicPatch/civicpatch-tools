@@ -27,6 +27,12 @@ def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId | None:
             key, value = component.split(":", 1)
             result[key] = value.lower()
     
+    # Last component MUST contain the jurisdiction type
+    # Which has no ":"
+    last_component = components[-1]
+    if ":" in last_component:
+        return None
+    
     if (
         "country" not in result or 
         "state" not in result or
