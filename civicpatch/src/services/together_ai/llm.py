@@ -120,7 +120,7 @@ MODELS_BY_TYPE = {
     },
 }
 
-def run_prompt(jurisdiction_id: str, prompt, content="", response_schema=None, model_type="STANDARD"):
+def run_prompt(request_id, jurisdiction_id: str, prompt, content="", response_schema=None, model_type="STANDARD"):
     """
     Run a prompt against Together AI's API using OpenAI-compatible interface
     """
@@ -159,6 +159,7 @@ def run_prompt(jurisdiction_id: str, prompt, content="", response_schema=None, m
         usage = completion.usage
         
         cost_utils.add_llm_cost(
+            request_id,
             jurisdiction_id, 
             "together_ai", 
             model, 

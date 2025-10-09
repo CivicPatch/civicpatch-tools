@@ -10,7 +10,7 @@ MODEL = "openai/gpt-4.1-mini"
 MAX_RETRIES = 5
 OPENAI_URL = "https://api.openai.com/v1/responses"
 
-def run_prompt(jurisdiction_id: str, prompt, response_schema, content=""):
+def run_prompt(request_id, jurisdiction_id: str, prompt, response_schema, content=""):
     """
     Run a prompt against OpenAI's API
     """
@@ -40,6 +40,7 @@ def run_prompt(jurisdiction_id: str, prompt, response_schema, content=""):
         output_tokens_num = usage.completion_tokens
 
         cost_utils.add_llm_cost(
+            request_id,
             jurisdiction_id, 
             "openai", 
             MODEL, 

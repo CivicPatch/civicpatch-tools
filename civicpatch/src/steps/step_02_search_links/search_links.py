@@ -18,6 +18,8 @@ def search_links(context: PipelineContext):
     search_link_pointer = context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_link_pointer"]
 
     # Load keyword term groups
+    request_id = context["request_id"]
+    jurisdiction_id = context["jurisdiction_id"]
     municipality_name = context["name"]
     municipality_website = context["url"]
     government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
@@ -35,7 +37,7 @@ def search_links(context: PipelineContext):
         urls_found = []
         for keyword_term in keyword_term_groups:
             logger.info(f"Searching for keyword term: {keyword_term}")
-            urls_for_term = municipality_search(logger, municipality_name, municipality_website, search_engine, keyword_term)
+            urls_for_term = municipality_search(logger, request_id, jurisdiction_id, municipality_name, municipality_website, search_engine, keyword_term)
             urls_found.append(urls_for_term)
         return urls_found
 
@@ -76,7 +78,7 @@ def search_links(context: PipelineContext):
         result["error"] = error_message
     return result
 
-def municipality_search(logger, municipality_name, municipality_website, search_engine, keyword_term: str):
+def municipality_search(logger, request_id, jurisdiction_id, municipality_name, municipality_website, search_engine, keyword_term: str):
     """
     Search for a single keyword term using multiple search engines with fallback logic.
     """
@@ -90,6 +92,8 @@ def municipality_search(logger, municipality_name, municipality_website, search_
     results = search(
         logger,
         search_engine=search_engine,
+        request_id=request_id,
+        jurisdiction_id=jurisdiction_id,
         municipality_name=municipality_name,
         municipality_website=municipality_website,
         search_query=keyword_with_type

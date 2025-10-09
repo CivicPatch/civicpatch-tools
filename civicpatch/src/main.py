@@ -4,7 +4,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from typing import List, Optional
 from utils.pipeline_utils import get_municipalities_to_scrape
-from pipeline import Pipeline, PipelineStatus
+from pipeline import Pipeline, PipelineStatus, get_pipeline_status_by_jurisdiction_id
 from auth.token_handler import verify_github_action_data_query
 from utils import id_utils, log_utils
 from schemas import PipelineRequest
@@ -55,18 +55,24 @@ async def search_endpoint(
     #     )
     # return {"jurisdiction_ids": jurisdiction_ids}
 
-def run_pipeline(request: PipelineRequest, background_tasks: BackgroundTasks):    
+def run_pipeline(request: PipelineRequest, background_tasks: BackgroundTasks, with_debug = False):    
     request_id = id_utils.make_request_id()
-    jurisdiction_id = id_utils.parse_jurisdiction_id(request.jurisdiction_id)
+    jurisdiction_id = request.jurisdiction_id
+    jurisdiction_id_obj= id_utils.parse_jurisdiction_id(jurisdiction_id)
     warnings: List[str] = []
     errors: List[str] = []
 
-    if not jurisdiction_id:
-        errors.append(f"Invalid jurisdiction_id format: {request.jurisdiction_id}")
+    if not jurisdiction_id_obj:
+        errors.append(f"Invalid jurisdiction_id format: {jurisdiction_id}")
     if not request.name:
         warnings.append("Missing 'name' field: A name and legal status (e.g., 'Seattle city') is preferred for search purposess. Substituting with place name jurisdiction_id.")
     if not request.url:
         errors.append("Missing 'url' field")
+
+    pipeline_state = get_pipeline_status_by_jurisdiction_id(jurisdiction_id)
+    if not with_debug and pipeline_state is not None:
+        print(f"{jurisdiction_id}/{request_id}: Found existing pipeline with state: {pipeline_state}, cancelling job...")
+        raise Exception("Pipeline already running for this jurisdiction")
 
     if len(errors) == 0:
         pipeline = Pipeline(pipeline_state=PipelineStatus.INIT)
@@ -101,6 +107,33 @@ async def pipeline_endpoint(request: PipelineRequest, background_tasks: Backgrou
             status_code=500,
             detail=str(e)
         )
+    
+@app.get("/api/pipeline/{jurisdiction_id}/status")
+async def pipeline_status(jurisdiction_id: str):
+    pipeline_state = get_pipeline_status_by_jurisdiction_id(jurisdiction_id)
+    if pipeline_state is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Pipeline not found"
+        )
+    
+    statuses = [PipelineStatus.INIT.value, 
+                PipelineStatus.RESEARCH_MUNICIPALITY.value, 
+                PipelineStatus.SEARCH_LINKS.value, 
+                PipelineStatus.SCRAPE_PAGE.value,
+                PipelineStatus.PREPROCESS_PAGE_CONTENT.value,
+                PipelineStatus.PROCESS_PAGE_CONTENT.value,
+                PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value,
+                PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value,
+                PipelineStatus.MAYBE_SEND_TO_GITHUB.value,
+                PipelineStatus.CLEANUP.value,
+                PipelineStatus.DONE.value]
+    previous_statuses = [status for status in statuses if statuses.index(status) < statuses.index(pipeline_state.value)]
+    future_statuses = [status for status in statuses if statuses.index(status) > statuses.index(pipeline_state.value)]
+
+    return {"status": pipeline_state, 
+            "previous_statuses": previous_statuses, 
+            "future_statuses": future_statuses}
 
 @app.post("/pipelines/run", include_in_schema=False)
 async def pipelines_run(

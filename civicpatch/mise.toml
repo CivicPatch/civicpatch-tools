@@ -32,7 +32,7 @@ curl -X POST http://localhost:8000/api/pipeline \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Greensboro city",
-    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro",
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro/council",
     "url": "https://www.greensboro-nc.gov"
   }'
 """
@@ -48,7 +48,13 @@ curl -X GET "http://localhost:8000/api/search?state=wa&num=10"
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/utils/test_people_utils.py"
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_filter_content.py"
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_entity_extraction.py"
-run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/utils/test_scrape_utils.py"
+# run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/utils/test_scrape_utils.py"
+# run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run python src/scripts/test.py"
+run = """
+docker compose -f docker-compose.development.yml run --rm civicpatch poetry run \
+  python src/scripts/send_costs_to_google_sheets.py {{ option(name="jurisdiction-id") }}
+"""
+#mise scratch --jurisdiction-id "ocd-jurisdiction/country:us/state:nc/place:greensboro/council"
 
 ###############################################
 ## 🚀✨ GITHUB ACTIONS TASKS ✨🚀 
@@ -77,6 +83,12 @@ docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
 run = """
 docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
   python src/scripts/upload_images_to_cdn.py {{ option(name="jurisdiction-id") }}
+"""
+
+[tasks.send-costs-to-google-sheets]
+run = """
+docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
+  python src/scripts/send_costs_to_google_sheets.py {{ option(name="jurisdiction-id") }}
 """
 
 [tasks.parse-jurisdiction-id]

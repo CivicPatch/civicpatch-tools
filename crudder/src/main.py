@@ -156,7 +156,6 @@ async def github_intake(
         with_presigned_url=True
     )
 
-    # Use the parameters in your workflow trigger
     trigger_github_data_intake_workflow(
         GITHUB_WORKFLOW_TOKEN, 
         server_detail["user_email"], 
