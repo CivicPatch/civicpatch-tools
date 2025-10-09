@@ -22,7 +22,7 @@ MODEL_FALLBACKS = [
 # Note: CANNOT get flash-lite to extract dates
 MAX_RETRIES = 5
 
-def run_prompt(jurisdiction_id: str, prompt, response_schema=None, content="", with_search=False):
+def run_prompt(request_id, jurisdiction_id: str, prompt, response_schema=None, content="", with_search=False):
     """
     Run a prompt against Google Gemini's API
     """
@@ -55,6 +55,7 @@ def run_prompt(jurisdiction_id: str, prompt, response_schema=None, content="", w
             output_tokens_num = usage.candidates_token_count
 
         cost_utils.add_llm_cost(
+            request_id,
             jurisdiction_id, 
             "google_gemini", 
             model, 
@@ -78,7 +79,6 @@ def run_prompt(jurisdiction_id: str, prompt, response_schema=None, content="", w
     raise RuntimeError("All Gemini model fallbacks failed.")
 
 def make_request_with_search(logger, model, api_key, prompt):
-    logger.info("making request with search")
     url = f"{BASE_URI}/{model}:generateContent?key={api_key}"
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
@@ -92,6 +92,7 @@ def make_request_with_search(logger, model, api_key, prompt):
     raw_response = requests.post(url, json=payload, headers=headers, timeout=DEFAULT_TIMEOUT)
 
     response = parse_raw_response(raw_response.json())
+    logger.debug(f"Gemini raw response: {response}")
 
     usage = response.get("usageMetadata", {})
     input_tokens_num = usage.get("promptTokenCount", 0)

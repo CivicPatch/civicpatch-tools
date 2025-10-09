@@ -65,6 +65,7 @@ def process_page_content(
     logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
     logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process['url']}")
 
+    request_id = context["request_id"]
     jurisdiction_id = context["jurisdiction_id"]
     municipality_research: ResearchMunicipalityStep = ResearchMunicipalityStep.model_validate(
         context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]
@@ -84,7 +85,7 @@ def process_page_content(
 
     source_url = page_to_process["url"]
 
-    responses = process_with_llms(source_url, jurisdiction_id, government_type, content, people_hint)
+    responses = process_with_llms(source_url, request_id, jurisdiction_id, government_type, content, people_hint)
 
     updated_processed_data: ProcessPageContentStep = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]
     if not isinstance(updated_processed_data, ProcessPageContentStep):
@@ -193,6 +194,7 @@ def update_records_by_llm(
 
 def process_with_llms(
     source_url: str,
+    request_id,
     jurisdiction_id: str,
     government_type: str,
     content: str,
@@ -205,6 +207,7 @@ def process_with_llms(
     for llm in LLMS:
         prompt = llm["prompt"].municipality_officials_prompt(government_type, people_hint)
         response = llm["service"].run_prompt(
+            request_id,
             jurisdiction_id,
             prompt,
             response_schema=PeopleArrayLLMResponseSchema,

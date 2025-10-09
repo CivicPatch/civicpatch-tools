@@ -5,6 +5,7 @@ from typing import List
 import yaml
 import time
 import asyncio
+import aiofiles
 
 # Background saver
 import threading
@@ -24,6 +25,8 @@ from steps.step_06_merge_records_within_llm.merge_records_within_llm import merg
 from steps.step_07_merge_records_across_llms.merge_records_across_llms import merge_records_across_llms
 from steps.step_08_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
 from steps.step_09_cleanup.cleanup import cleanup
+
+_PIPELINE_PROGRESS_BY_JURISDICTION_ID = {}
 
 DEFAULT_STATE: PipelineContext = { 
     "state": PipelineStatus.INIT.value,
@@ -63,62 +66,36 @@ DEFAULT_STATE: PipelineContext = {
     },
 }
 
-class BackgroundSaver:
-    def __init__(self, file_path):
-        self.file_path = file_path
-        self.q = queue.Queue()
-        self.thread = threading.Thread(target=self._worker, daemon=True)
-        self.thread.start()
-
-    def save(self, context):
-        self.q.put(context.copy())  # copy to avoid mutation
-
-    def _worker(self):
-        while True:
-            context = self.q.get()
-            if context is None:
-                break
-            with open(self.file_path, "w") as f:
-                json.dump(context, f, indent=4)
-            self.q.task_done()
-
-    def close(self):
-        self.q.put(None)
-        self.thread.join()
-
 class Pipeline:
     def __init__(self, pipeline_state=PipelineStatus.INIT, context=DEFAULT_STATE):
         self.state = pipeline_state
         self.context: PipelineContext = context
-        self.saver = None
 
     def set_state(self, state: PipelineStatus):
         """
         Set the pipeline to start at a specific state.
         """
-        logger = log_utils.get_pipeline_logger(self.context["jurisdiction_id"])
         if state in PipelineStatus:
             self.state = state
-            logger.info(f"Pipeline state set to: {state}")
+            print(f"Pipeline state set to: {state}")
         else:
             raise ValueError(f"Invalid pipeline state: {state}")
 
-    def save_context(self):
-        """
-        Save the current pipeline context to a file for persistence.
-        """
+    async def save_context(self):
+        """Save context asynchronously without blocking"""
         jurisdiction_id = self.context["jurisdiction_id"]
         self.context["state"] = self.state.value
         context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
-        if self.saver is None:
-            self.saver = BackgroundSaver(context_file_path)
-        self.saver.save(self.context)
+        
+        async with aiofiles.open(context_file_path, "w") as f:
+            await f.write(json.dumps(self.context, indent=4))
 
-    def load_context(self, logger, request_id: str, pipeline_request: PipelineRequest) -> PipelineContext:
+    def load_context(self, request_id: str, pipeline_request: PipelineRequest) -> PipelineContext:
         """
         Always create a new pipeline context and overwrite any existing file.
         """  
         # Ensure the directory exists
+        jurisdiction_id = pipeline_request.jurisdiction_id
         context_file_path = data_path_utils.get_pipeline_context_file_path(pipeline_request.jurisdiction_id)
         os.makedirs(os.path.dirname(context_file_path), exist_ok=True)
 
@@ -128,29 +105,24 @@ class Pipeline:
                 existing_request_id = existing_context["request_id"]
 
                 if request_id == existing_request_id:
-                    logger.info("Found existing request id, loading existing context")
+                    print(f"Found existing request id, loading existing context")
                     return existing_context
 
         context: PipelineContext = {
             "request_id": request_id,
-            "jurisdiction_id": pipeline_request.jurisdiction_id,
+            "jurisdiction_id": jurisdiction_id,
             "name": pipeline_request.name,
             "url": pipeline_request.url,
         }
 
         with open(context_file_path, "w") as f:
             json.dump(context, f, indent=4)
-        logger.info("New pipeline context created and saved.")
+        print(f"{jurisdiction_id}/{request_id}: New pipeline context created and saved.")
 
         return context
 
     def cleanup(self):
-        if self.saver:
-            self.saver.close()
-            self.saver = None
-
         log_utils.cleanup_pipeline_logger(self.context["jurisdiction_id"])
-        
     
     def get_next_link(self, status: LinkStatus):
         for link in self.context["links"]:
@@ -173,14 +145,14 @@ class Pipeline:
     def run(self, request_id, pipeline_request: PipelineRequest):
         asyncio.run(self.run_async(request_id, pipeline_request))
     
-    async def run_async(self, request_id, pipeline_request: PipelineRequest):
+    async def run_async(self, request_id, pipeline_request: PipelineRequest, with_debug = False):
         """
         Main function to run the pipeline for a given jurisdiction id.
         """
-        logger = log_utils.get_pipeline_logger(pipeline_request.jurisdiction_id)
-        logger.info("Manual test message")
-        print(f"Wrote text message..., {pipeline_request.jurisdiction_id}")
-        self.context = self.load_context(logger, request_id, pipeline_request)
+        self.context = self.load_context(request_id, pipeline_request)
+
+        jurisdiction_id = self.context["jurisdiction_id"]
+        logger = log_utils.get_pipeline_logger(jurisdiction_id)
         process_config = config_utils.get_process()
 
         start_time = time.time()
@@ -293,7 +265,7 @@ class Pipeline:
                     #result = maybe_send_to_github(self.context)
 
                     #self.context.update(result)
-                    cost_utils.log_costs(self.context["jurisdiction_id"])
+                    cost_utils.log_costs(self.context["request_id"], self.context["jurisdiction_id"])
                     self.state = PipelineStatus.DONE
                 else:
                     logger.error(f"Pipeline logic not yet implemented for state: {self.state}")
@@ -301,14 +273,15 @@ class Pipeline:
 
                 # Save the context after each step
                 self.context["state"] = self.state.value
-                self.save_context()
+                _PIPELINE_PROGRESS_BY_JURISDICTION_ID[jurisdiction_id] = self.state.value
+                await self.save_context()
 
             end_time = time.time()
             pipeline_duration = end_time - start_time
             self.context.update({"pipeline_duration_seconds": pipeline_duration})
-            self.save_context()
             logger.info(f"Pipeline completed successfully in {pipeline_duration:.2f} seconds.")
         finally:
+            _PIPELINE_PROGRESS_BY_JURISDICTION_ID.pop(jurisdiction_id, None)
             self.cleanup()
 
     def process_page_content_step(self, logger):
@@ -368,3 +341,6 @@ class Pipeline:
 
         with open(people_file_path, "w") as f:
             yaml.dump([person for person in people], f, default_flow_style=False, sort_keys=False)
+
+def get_pipeline_status_by_jurisdiction_id(jurisdiction_id):
+    return _PIPELINE_PROGRESS_BY_JURISDICTION_ID.get(jurisdiction_id, None)

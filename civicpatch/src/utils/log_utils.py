@@ -3,8 +3,9 @@ from utils import data_path_utils
 import threading
 from datetime import datetime
 
-_PIPELINE_LOCK = threading.Lock()
+_PIPELINE_LOGGER_LOCK = threading.Lock()
 _PIPELINE_LOG_FILES = {}
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 
 class PipelineLogger:
     def __init__(self, jurisdiction_id: str):
@@ -23,11 +24,12 @@ class PipelineLogger:
         if os.getenv("LOG_TO_CONSOLE", "true").lower() == "true":
             print(line, end="")
 
+    def debug(self, message: str):
+        if LOG_LEVEL == "DEBUG":
+            self._write("DEBUG", message)
+
     def info(self, message: str):
         self._write("INFO", message)
-
-    def debug(self, message: str):
-        self._write("DEBUG", message)
 
     def warning(self, message: str):
         self._write("WARNING", message)
@@ -51,7 +53,7 @@ def get_pipeline_log_path(jurisdiction_id: str) -> str:
 
 
 def get_pipeline_logger(jurisdiction_id: str) -> PipelineLogger:
-    with _PIPELINE_LOCK:
+    with _PIPELINE_LOGGER_LOCK:
         if jurisdiction_id in _PIPELINE_LOG_FILES:
             return _PIPELINE_LOG_FILES[jurisdiction_id]
 
@@ -60,7 +62,7 @@ def get_pipeline_logger(jurisdiction_id: str) -> PipelineLogger:
         return logger
 
 def cleanup_pipeline_logger(jurisdiction_id: str):
-    with _PIPELINE_LOCK:
+    with _PIPELINE_LOGGER_LOCK:
         logger = _PIPELINE_LOG_FILES.pop(jurisdiction_id, None)
     if logger:
         logger.close()

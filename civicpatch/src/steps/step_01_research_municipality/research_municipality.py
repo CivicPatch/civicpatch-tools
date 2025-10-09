@@ -12,10 +12,11 @@ def research_municipality(context: PipelineContext):
     """
     logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
     logger.info(f"Step 1: {PipelineStatus.RESEARCH_MUNICIPALITY.value}")
+    request_id = context["request_id"]
     jurisdiction_id = context["jurisdiction_id"]
     municipality_name = context["name"]
     prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_id, municipality_name)
-    response = google_gemini_llm.run_prompt(jurisdiction_id, prompt, with_search=True)
+    response = google_gemini_llm.run_prompt(request_id, jurisdiction_id, prompt, with_search=True)
     people = response.get("people", [])
     government_type = response.get("government_type", "mayor_council")
 

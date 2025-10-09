@@ -9,9 +9,10 @@ from utils import url_utils, log_utils, cost_utils
 
 def cleanup(context: PipelineContext):
     # Remove files under data_source/cache and data_source/images
-    logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
-    logger.info(f"Step 9: {PipelineStatus.CLEANUP.value}")
     jurisdiction_id = context["jurisdiction_id"]
+    logger = log_utils.get_pipeline_logger(jurisdiction_id)
+    logger.info(f"Step 9: {PipelineStatus.CLEANUP.value}")
+    request_id = context["request_id"]
     data_source_dir = get_data_source_municipality_path(jurisdiction_id)
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
@@ -24,8 +25,7 @@ def cleanup(context: PipelineContext):
         cleanup_cache(cache_dir, people)
     if os.path.exists(images_dir):
         # Only keep images that are referenced by people
-        cleanup_images(logger, images_dir, people)
-
+        cleanup_images(logger, request_id, jurisdiction_id, images_dir, people)
     return {}
 
 def cleanup_cache(cache_dir: str, people_list: List[Person]):
@@ -46,7 +46,7 @@ def cleanup_cache(cache_dir: str, people_list: List[Person]):
             if folder not in pages_to_keep:
                 shutil.rmtree(folder_path)
 
-def cleanup_images(logger, images_dir: str, people_list: List[Person]):
+def cleanup_images(logger, request_id, jurisdiction_id, images_dir: str, people_list: List[Person]):
     # Clear out any images that are not under image
     images_to_keep = set()
     image_map_file_path = os.path.join(images_dir, "image_map.json")
@@ -75,7 +75,8 @@ def cleanup_images(logger, images_dir: str, people_list: List[Person]):
             else:
                 images_found.add(image_file)
                 cost_utils.add_storage_cost(
-                    logger.jurisdiction_id, 
+                    request_id=request_id,
+                    jurisdiction_id=jurisdiction_id,
                     file_size_bytes=os.path.getsize(image_file_path)
                 )
 

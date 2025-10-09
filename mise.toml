@@ -5,16 +5,9 @@ python = '3.12.11'
 poetry = "2.1.3"
 dive = "0.13.1"
 
-[tasks.run_civicpatch]
-run = """
-cd civicpatch
-docker compose up
-"""
+[env]
+_.file = [
+    "civicpatch/.env",
+    "crudder/.env"
+]
 
-[tasks.get_municipalities]
-run = """
-curl -X GET http://localhost/api/search?state=ca&num=5
-"""
-
-[tasks.crudder]
-run = "docker compose exec crudder bash"
