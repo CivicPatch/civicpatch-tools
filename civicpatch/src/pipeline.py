@@ -6,14 +6,10 @@ import yaml
 import time
 import asyncio
 import aiofiles
-
-# Background saver
-import threading
-import queue
 import json
 import os
 
-from utils import data_path_utils, config_utils, log_utils, cost_utils
+from utils import data_path_utils, config_utils, log_utils, cost_utils, id_utils
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from steps.step_01_research_municipality.research_municipality import research_municipality
 from steps.step_02_search_links.search_links import search_links
@@ -262,9 +258,9 @@ class Pipeline:
                     self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
                 elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
-                    #result = maybe_send_to_github(self.context)
+                    result = maybe_send_to_github(self.context)
 
-                    #self.context.update(result)
+                    self.context.update(result)
                     cost_utils.log_costs(self.context["request_id"], self.context["jurisdiction_id"])
                     self.state = PipelineStatus.DONE
                 else:
@@ -329,18 +325,25 @@ class Pipeline:
         logger.info(f"Not enough data processed yet, collecting more data... {processed_count}/{max_pages_with_required_data}")
         return PipelineStatus.SCRAPE_PAGE
     
-    def save_data(self, people: List[Person]):
+    def save_data(self, found_serialized_people: List[Person]):
         """
         Save the processed people data to a file.
-        """
+        """ 
         jurisdiction_id = self.context["jurisdiction_id"]
+        jurisdiction_type = id_utils.parse_jurisdiction_id(jurisdiction_id).jurisdiction_type
+
+        existing_data = data_path_utils.get_people(jurisdiction_id)
+        existing_data[jurisdiction_type] = found_serialized_people
         people_file_path = data_path_utils.get_people_file_path(jurisdiction_id)
+        if not os.path.exists(people_file_path):
+            # Ensure the directory exists
+            os.makedirs(os.path.dirname(people_file_path), exist_ok=True)
 
-        # Ensure the directory exists
-        os.makedirs(os.path.dirname(people_file_path), exist_ok=True)
+            with open(people_file_path, "w", encoding="utf-8") as f:
+                data = {jurisdiction_type: found_serialized_people}
 
-        with open(people_file_path, "w") as f:
-            yaml.dump([person for person in people], f, default_flow_style=False, sort_keys=False)
+        with open(people_file_path, "w", encoding="utf-8") as f:
+            yaml.dump(data, f, default_flow_style=False, sort_keys=False)
 
 def get_pipeline_status_by_jurisdiction_id(jurisdiction_id):
     return _PIPELINE_PROGRESS_BY_JURISDICTION_ID.get(jurisdiction_id, None)

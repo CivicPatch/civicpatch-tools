@@ -6,7 +6,7 @@
 #       - opened
 #       - synchronize
 #     paths:
-#       - '**/people.yml'
+#       - 'data/**'
 
 # permissions:
 #   contents: read
