@@ -258,9 +258,9 @@ class Pipeline:
                     self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
                 elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
-                    result = maybe_send_to_github(self.context)
+                    # result = maybe_send_to_github(self.context)
 
-                    self.context.update(result)
+                    #self.context.update(result)
                     cost_utils.log_costs(self.context["request_id"], self.context["jurisdiction_id"])
                     self.state = PipelineStatus.DONE
                 else:

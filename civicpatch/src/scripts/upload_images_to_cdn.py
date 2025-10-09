@@ -16,7 +16,13 @@ def upload_images_to_cdn(jurisdiction_id: str):
     jurisdiction_folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
     image_path = data_path_utils.get_images_path(jurisdiction_id)
     image_map_file_path = os.path.join(image_path, "image_map.json")
-    serialized_people = data_path_utils.get_people_from_jurisdiction_type(jurisdiction_id)
+    
+    people_file_path = data_path_utils.get_people_file_path(jurisdiction_id)
+
+    existing_data = data_path_utils.get_people(jurisdiction_id)
+    jurisdiction_type = id_utils.parse_jurisdiction_id(jurisdiction_id).jurisdiction_type
+    serialized_people = existing_data[jurisdiction_type]
+
     people = [Person(**person) for person in serialized_people]
 
     with open(image_map_file_path) as f:
@@ -54,7 +60,8 @@ def upload_images_to_cdn(jurisdiction_id: str):
 
     # Update people.yaml with CDN URLs
     with open(people_file_path, 'w') as f:
-        yaml.dump([person.model_dump() for person in people], f, sort_keys=False)  
+        existing_data[jurisdiction_type] = [person.model_dump() for person in people]
+        yaml.dump(existing_data, f, sort_keys=False)  
 
 def upload_file_to_storage(
     file_name: str,
