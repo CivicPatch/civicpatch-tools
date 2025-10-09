@@ -3,7 +3,7 @@ import yaml
 import sys
 from typing import List
 from schemas import Person
-from utils import data_path_utils
+from utils import data_path_utils, id_utils
 
 def generate_data_comment(people: List[Person]) -> str:
     """
@@ -28,14 +28,6 @@ def generate_data_comment(people: List[Person]) -> str:
     
     return table_header + table_rows
 
-def load_people_from_yaml(filepath: str) -> List[Person]:
-    """
-    Load a list of Person objects from a YAML file.
-    """
-    with open(filepath, "r") as file:
-        data = yaml.safe_load(file)
-        return [Person(**person_data) for person_data in data]
-
 def main():
     if len(sys.argv) != 2:
         print("Usage: python generate_data_comment.py <jurisdiction_id>")
@@ -44,8 +36,8 @@ def main():
     jurisdiction_id = sys.argv[1]
     try:
         # It should be defined in the dockerfile
-        people_path = data_path_utils.get_people_file_path(jurisdiction_id)
-        people = load_people_from_yaml(people_path)
+        serialized_people = data_path_utils.get_people_from_jurisdiction_type(jurisdiction_id)
+        people = [Person(**person) for person in serialized_people]
         markdown_table = generate_data_comment(people)
         print(markdown_table)
     except Exception as e:

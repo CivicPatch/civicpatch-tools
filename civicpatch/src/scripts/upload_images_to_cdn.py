@@ -16,10 +16,9 @@ def upload_images_to_cdn(jurisdiction_id: str):
     jurisdiction_folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
     image_path = data_path_utils.get_images_path(jurisdiction_id)
     image_map_file_path = os.path.join(image_path, "image_map.json")
-    people_file_path = data_path_utils.get_people_file_path(jurisdiction_id)
+    serialized_people = data_path_utils.get_people_from_jurisdiction_type(jurisdiction_id)
+    people = [Person(**person) for person in serialized_people]
 
-    with open(people_file_path) as f:
-        people = [Person(**person) for person in yaml.safe_load(f)]
     with open(image_map_file_path) as f:
         image_map = yaml.safe_load(f)
 

@@ -7,6 +7,7 @@ class JurisdictionId(BaseModel):
     state: str
     county: Optional[str] = None
     place: str = None
+    jurisdiction_type: str
 
 class SearchEngineStatus(Enum):
     NOT_STARTED = "not_started"

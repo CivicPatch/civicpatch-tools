@@ -29,8 +29,8 @@ def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId | None:
     
     # Last component MUST contain the jurisdiction type
     # Which has no ":"
-    last_component = components[-1]
-    if ":" in last_component:
+    jurisdiction_type = components[-1]
+    if ":" in jurisdiction_type:
         return None
     
     if (
@@ -44,7 +44,8 @@ def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId | None:
         country=result["country"],
         state=result["state"],
         county=result.get("county"),
-        place=result["place"]
+        place=result["place"],
+        jurisdiction_type=jurisdiction_type
     )
 
 def jurisdiction_id_to_slug(jurisdiction_id: str) -> str:
@@ -129,18 +130,19 @@ def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:
       {
         country: "us",
         state: "il",
-        county: "dupage",
-        place: "naperville"
+        county: "dupage", (optional)
+        place: "naperville",
+        jurisdiction_type: "council"
       }
-      -> "il/dupage/naperville"
+      -> "il/county_dupage__place_naperville"
     """
 
     jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
 
     folder = f"{jurisdiction_id_parts.state}/"
     if jurisdiction_id_parts.county:
-        folder += f"{jurisdiction_id_parts.county}/"
-    folder += jurisdiction_id_parts.place
+        folder += f"county_{jurisdiction_id_parts.county}__"
+    folder += f"place_{jurisdiction_id_parts.place}"
 
     return folder
 

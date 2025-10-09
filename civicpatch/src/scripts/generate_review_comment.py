@@ -96,14 +96,6 @@ def generate_review_comment(pipeline_context: PipelineContext, people: List[Pers
 
     return "\n".join(markdown)
 
-def load_people_from_yaml(filepath: str) -> List[Person]:
-    """
-    Load a list of Person objects from a YAML file.
-    """
-    with open(filepath, "r") as file:
-        data = yaml.safe_load(file)
-        return [Person(**person_data) for person_data in data]
-
 def load_pipeline_context_from_json(filepath: str) -> PipelineContext:
     """
     Load a PipelineContext object from a JSON file.
@@ -120,10 +112,10 @@ def main():
         jurisdiction_id = sys.argv[1]
         # It should be defined in the dockerfile
         pipeline_context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
-        people_file_path = data_path_utils.get_people_file_path(jurisdiction_id)
+        serialized_people = data_path_utils.get_people_from_jurisdiction_type(jurisdiction_id)
+        people = [Person(**person) for person in serialized_people]
 
         pipeline_context = load_pipeline_context_from_json(pipeline_context_file_path)
-        people = load_people_from_yaml(people_file_path)
         comment = generate_review_comment(pipeline_context, people)
         print(comment)
 
