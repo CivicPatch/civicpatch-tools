@@ -130,7 +130,7 @@ jobs:
           GOOGLE_SHEETS_TOKEN_URI: ${{ secrets.GOOGLE_SHEETS_TOKEN_URI }}
         run: |
           cd civicpatch
-          mise upload-costs-to-google-sheets --jurisdiction-id "${{ inputs.jurisdiction_id }}"
+          mise send-costs-to-google-sheets --jurisdiction-id "${{ inputs.jurisdiction_id }}"
       
       - name: Create/Update Data Comment
         env:
