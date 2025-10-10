@@ -1,0 +1,237 @@
+{
+    "llm_costs": [
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "llm_name": "google_gemini",
+            "model": "gemini-2.5-flash",
+            "model_input_price_per_1m": "0.30",
+            "model_output_price_per_1m": "2.50",
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "with_search": true,
+            "input_cost": "0.00",
+            "output_cost": "0.00",
+            "total_cost": "0.00"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "llm_name": "google_gemini",
+            "model": "gemini-2.5-flash",
+            "model_input_price_per_1m": "0.30",
+            "model_output_price_per_1m": "2.50",
+            "input_tokens": 7080,
+            "output_tokens": 272,
+            "with_search": false,
+            "input_cost": "0.0021240",
+            "output_cost": "0.00068000",
+            "total_cost": "0.00280400"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "llm_name": "openai",
+            "model": "openai/gpt-4.1-mini",
+            "model_input_price_per_1m": "0.40",
+            "model_output_price_per_1m": "1.60",
+            "input_tokens": 7237,
+            "output_tokens": 151,
+            "with_search": false,
+            "input_cost": "0.00289480",
+            "output_cost": "0.00024160",
+            "total_cost": "0.00313640"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "llm_name": "together_ai",
+            "model": "mistralai/Mixtral-8x7B-Instruct-v0.1",
+            "model_input_price_per_1m": "0.60",
+            "model_output_price_per_1m": "0.60",
+            "input_tokens": 10058,
+            "output_tokens": 97,
+            "with_search": false,
+            "input_cost": "0.00603480",
+            "output_cost": "0.00005820",
+            "total_cost": "0.00609300"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "llm_name": "google_gemini",
+            "model": "gemini-2.5-flash",
+            "model_input_price_per_1m": "0.30",
+            "model_output_price_per_1m": "2.50",
+            "input_tokens": 7550,
+            "output_tokens": 1246,
+            "with_search": false,
+            "input_cost": "0.0022650",
+            "output_cost": "0.00311500",
+            "total_cost": "0.00538000"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "llm_name": "openai",
+            "model": "openai/gpt-4.1-mini",
+            "model_input_price_per_1m": "0.40",
+            "model_output_price_per_1m": "1.60",
+            "input_tokens": 7753,
+            "output_tokens": 948,
+            "with_search": false,
+            "input_cost": "0.00310120",
+            "output_cost": "0.00151680",
+            "total_cost": "0.00461800"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "llm_name": "together_ai",
+            "model": "mistralai/Mixtral-8x7B-Instruct-v0.1",
+            "model_input_price_per_1m": "0.60",
+            "model_output_price_per_1m": "0.60",
+            "input_tokens": 10579,
+            "output_tokens": 655,
+            "with_search": false,
+            "input_cost": "0.00634740",
+            "output_cost": "0.00039300",
+            "total_cost": "0.00674040"
+        }
+    ],
+    "search_engine_costs": [
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "search_engine_name": "google",
+            "per_1000_requests_price": "5.00",
+            "total_cost": "0.005"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "search_engine_name": "google",
+            "per_1000_requests_price": "5.00",
+            "total_cost": "0.005"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "search_engine_name": "google",
+            "per_1000_requests_price": "5.00",
+            "total_cost": "0.005"
+        }
+    ],
+    "storage_costs": [
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "monthly_storage_gb_price": "0.015",
+            "file_size_bytes": 89799,
+            "total_cost": "0.000001254477538168430328369140625"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "monthly_storage_gb_price": "0.015",
+            "file_size_bytes": 52345,
+            "total_cost": "7.31251202523708343505859375E-7"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "monthly_storage_gb_price": "0.015",
+            "file_size_bytes": 70431,
+            "total_cost": "9.83909703791141510009765625E-7"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "monthly_storage_gb_price": "0.015",
+            "file_size_bytes": 61165,
+            "total_cost": "8.54465179145336151123046875E-7"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "monthly_storage_gb_price": "0.015",
+            "file_size_bytes": 67342,
+            "total_cost": "9.4075687229633331298828125E-7"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "monthly_storage_gb_price": "0.015",
+            "file_size_bytes": 64937,
+            "total_cost": "9.07159410417079925537109375E-7"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "monthly_storage_gb_price": "0.015",
+            "file_size_bytes": 71235,
+            "total_cost": "9.95141454041004180908203125E-7"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "monthly_storage_gb_price": "0.015",
+            "file_size_bytes": 71971,
+            "total_cost": "0.000001005423255264759063720703125"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "monthly_storage_gb_price": "0.015",
+            "file_size_bytes": 59404,
+            "total_cost": "8.298642933368682861328125E-7"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "monthly_storage_gb_price": "0.015",
+            "file_size_bytes": 68522,
+            "total_cost": "9.5724128186702728271484375E-7"
+        },
+        {
+            "timestamp": "2025-10-09",
+            "request_id": "2025-10-09-1d29",
+            "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+            "monthly_storage_gb_price": "0.015",
+            "file_size_bytes": 863773,
+            "total_cost": "0.00001206676941365003585815429688"
+        }
+    ],
+    "total_cost_by_request": {
+        "timestamp": "2025-10-09",
+        "request_id": "2025-10-09-1d29",
+        "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+        "total_costs_llm": "0.02877180",
+        "total_costs_search": "0.015",
+        "total_costs_storage": "0.00002152645960450172424316406250",
+        "llm_google_gemini_cost": "0.00818400",
+        "llm_openai_cost": "0.00775440",
+        "llm_together_ai_cost": "0.01283340",
+        "total_cost": "0.04379332645960450172424316406"
+    }
+}

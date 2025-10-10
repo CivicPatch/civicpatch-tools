@@ -1,0 +1,498 @@
+[2025-10-09T23:19:56.749587] [INFO] Step 0: INIT
+[2025-10-09T23:19:56.781300] [INFO] Step 1: RESEARCH_MUNICIPALITY
+[2025-10-09T23:19:56.803160] [INFO] Running Gemini prompt
+[2025-10-09T23:19:56.803416] [DEBUG] Prompt: 
+
+    Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
+
+    Municipality: Seattle city, wa
+
+    Instructions:
+
+    1. Determine the government type of the city. Available government types:
+- mayor_commission
+- mayor_council
+- select_board
+- aldermen
+
+    2. Identify the elected officials in the local government, 
+       including the Mayor (if applicable).
+       2.1. For each official, extract the following details:
+            - name: Full name only (no titles)
+            - roles: List of active municipal roles (e.g., Mayor, Council Member)
+            - divisions: List of (ward, district), only if applicable
+
+    3. Create a JSON object with the following structure:
+       ```json
+       {
+         "government_type": examples - "mayor_council" or "mayor_commission", etc.,
+         "people": [
+           {
+             "name": "Full name of the official or null if uncertain",
+             "roles": ["Mayor", "Council Member", "Commissioner", etc.],
+             "divisions": ["Ward 1", "District 2", etc.] or [],
+           }
+         ],
+         "notes": "Brief notes about the search and results"
+       }
+       ```
+
+    IMPORTANT: If the response contains anything other than a valid JSON object,
+    it will be considered incorrect. Ensure the response is strictly JSON.
+    Verify that the response is valid JSON before returning it.
+    If it is not valid JSON, retry the generation.
+    
+[2025-10-09T23:20:04.273212] [DEBUG] Gemini raw response: {'government_type': 'mayor_council', 'people': [{'name': 'Bruce Harrell', 'roles': ['Mayor'], 'divisions': []}, {'name': 'Sara Nelson', 'roles': ['Council President', 'Council Member'], 'divisions': ['Position 9']}, {'name': 'Rob Saka', 'roles': ['Council Member'], 'divisions': ['District 1']}, {'name': 'Mark Solomon', 'roles': ['Council Member'], 'divisions': ['District 2']}, {'name': 'Joy Hollingsworth', 'roles': ['Council Member'], 'divisions': ['District 3']}, {'name': 'Maritza Rivera', 'roles': ['Council Member'], 'divisions': ['District 4']}, {'name': 'Debora Juarez', 'roles': ['Council Member'], 'divisions': ['District 5']}, {'name': 'Dan Strauss', 'roles': ['Council Member'], 'divisions': ['District 6']}, {'name': 'Bob Kettle', 'roles': ['Council Member'], 'divisions': ['District 7']}, {'name': 'Alexis Mercedes Rinck', 'roles': ['Council Member'], 'divisions': ['Position 8']}, {'name': 'Ann Davison', 'roles': ['City Attorney'], 'divisions': []}], 'notes': 'Seattle operates under a mayor-council government. The Mayor and City Attorney are elected at-large. The City Council consists of nine members; seven are elected by district, and two are elected at-large (Position 8 and Position 9). Sara Nelson holds the role of Council President in addition to being a Council Member for Position 9.'}
+[2025-10-09T23:20:04.275351] [INFO] gemini gemini-2.5-flash LLM call took 7.47 seconds
+[2025-10-09T23:20:04.312318] [INFO] Step 2: SEARCH_LINKS
+[2025-10-09T23:20:04.331715] [INFO] Searching for keyword term: mayor
+[2025-10-09T23:20:04.332236] [INFO] Searching with google for Seattle city mayor
+[2025-10-09T23:20:04.638796] [INFO] -> https://www.seattle.gov/mayor
+[2025-10-09T23:20:04.639181] [INFO] -> https://www.seattle.gov/mayor/about
+[2025-10-09T23:20:04.639578] [INFO] -> https://www.seattle.gov/cityarchives/seattle-facts/city-officials/mayors/mayors-1948-present
+[2025-10-09T23:20:04.639740] [INFO] -> https://www.seattle.gov/council
+[2025-10-09T23:20:04.639966] [INFO] -> https://www.seattle.gov/
+[2025-10-09T23:20:04.640168] [INFO] -> https://www.seattle.gov/council/members
+[2025-10-09T23:20:04.640339] [INFO] -> https://www.seattle.gov/council/topics/city-council-budget-basics
+[2025-10-09T23:20:04.640541] [INFO] -> https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/legislative-process/city-budget-process
+[2025-10-09T23:20:04.640841] [INFO] -> https://www.seattle.gov/council/topics/budget-dashboard
+[2025-10-09T23:20:04.641007] [INFO] -> https://www.seattle.gov/council/members/maritza-rivera
+[2025-10-09T23:20:04.641697] [INFO] Search successful with google. Found 10 results.
+[2025-10-09T23:20:04.641863] [INFO] Searching for keyword term: council members
+[2025-10-09T23:20:04.642005] [INFO] Searching with google for Seattle city council members
+[2025-10-09T23:20:04.927263] [INFO] -> https://www.seattle.gov/council/members
+[2025-10-09T23:20:04.927740] [INFO] -> https://www.seattle.gov/council
+[2025-10-09T23:20:04.928093] [INFO] -> https://www.seattle.gov/council/members/find-your-district-and-councilmembers
+[2025-10-09T23:20:04.928431] [INFO] -> https://www.seattle.gov/council/members/maritza-rivera
+[2025-10-09T23:20:04.928909] [INFO] -> https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/city-council-agendas/contact-the-city-council
+[2025-10-09T23:20:04.929238] [INFO] -> https://www.seattle.gov/council/meetings/committees-and-agendas
+[2025-10-09T23:20:04.929563] [INFO] -> https://www.seattle.gov/cityclerk/agendas-and-legislative-resources/find-your-council-district
+[2025-10-09T23:20:04.929747] [INFO] -> https://www.seattle.gov/council/topics
+[2025-10-09T23:20:04.929947] [INFO] -> https://www.seattle.gov/council/topics/city-council-budget-basics
+[2025-10-09T23:20:04.930243] [INFO] -> https://www.seattle.gov/council/meetings/committees-and-agendas/land-use
+[2025-10-09T23:20:04.930625] [INFO] Search successful with google. Found 10 results.
+[2025-10-09T23:20:04.930798] [INFO] Searching for keyword term: elected officials
+[2025-10-09T23:20:04.931011] [INFO] Searching with google for Seattle city elected officials
+[2025-10-09T23:20:05.227166] [INFO] -> https://www.seattle.gov/elected-officials
+[2025-10-09T23:20:05.227576] [INFO] -> https://www.seattle.gov/council
+[2025-10-09T23:20:05.227765] [INFO] -> https://www.seattle.gov/
+[2025-10-09T23:20:05.227939] [INFO] -> https://www.seattle.gov/council/members
+[2025-10-09T23:20:05.228130] [INFO] -> https://www.seattle.gov/city-light/outages
+[2025-10-09T23:20:05.228363] [INFO] -> https://www.seattle.gov/mayor
+[2025-10-09T23:20:05.228551] [INFO] -> https://www.seattle.gov/light/
+[2025-10-09T23:20:05.228738] [INFO] -> https://www.seattle.gov/cityarchives/seattle-facts/city-officials
+[2025-10-09T23:20:05.228895] [INFO] -> https://www.seattle.gov/council/members/maritza-rivera
+[2025-10-09T23:20:05.229042] [INFO] -> https://www.seattle.gov/ethics
+[2025-10-09T23:20:05.229433] [INFO] Search successful with google. Found 10 results.
+[2025-10-09T23:20:05.231744] [INFO] Step 3: SCRAPE_PAGE: scraping https://www.seattle.gov/mayor
+[2025-10-09T23:20:08.729871] [INFO] Step 4: PREPROCESS_PAGE_CONTENT: https://www.seattle.gov/mayor
+[2025-10-09T23:20:17.261660] [INFO] /Step 4: PREPROCESS_PAGE_CONTENT
+
+[2025-10-09T23:20:17.261762] [INFO] -> Elapsed time: 8.53 seconds
+[2025-10-09T23:20:17.261883] [INFO] -> Average elapsed time: 8.53 seconds
+[2025-10-09T23:20:17.261941] [INFO] -> Total elapsed time: 8.53 seconds
+[2025-10-09T23:20:17.263906] [INFO] Step 5: PROCESS_PAGE_CONTENT: https://www.seattle.gov/mayor
+[2025-10-09T23:20:17.286295] [INFO] Running Gemini prompt
+[2025-10-09T23:20:17.286714] [DEBUG] Prompt: 
+
+    First, determine if the content contains relevant information about the main governing body of the target municipality. If the content includes information about the following people, they are very likely to be on the council: Bruce Harrell, Sara Nelson, Rob Saka, Mark Solomon, Joy Hollingsworth, Maritza Rivera, Debora Juarez, Dan Strauss, Bob Kettle, Alexis Mercedes Rinck.
+    If not, return an empty JSON array `[]`.
+
+    Target Roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+    Target Divisions: ward, district
+    Current Date: 2025-10-09
+
+    Return a JSON object with people, each having:
+    - name: (String) Full name only (no titles)
+    - image: (String or null) URL to profile image (https://...)
+    - roles: (Array of strings) Active municipal roles
+    - divisions: (Array of strings) Specific district/ward names
+    - phone_number: (String or null) Formatted phone number
+    - email: (String or null) Email address
+    - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+
+    Guidelines:
+    - Roles extraction:
+        - Extract roles that match the **target roles** provided (e.g., mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member).
+    - Division extraction:
+        - Extract divisions if explicitly mentioned in the text and relevant to the person's role.
+        - Examples: "Ward 1", "District 2"
+    - Name extraction:
+        - Extract full names ONLY, not titles.
+    - Phone number extraction:
+        - Extract phone numbers even when formatted as Markdown link text.
+    - Website extraction:
+        - Extract URLs starting with "http://" or "https://".
+    - Email extraction:
+        - Extract email addresses found directly in the text or formatted as Markdown link text.
+    - Start and End Date Extraction:
+        - Extract dates only if explicitly written in the text.
+        - **Start Date**:
+            - Extract the date associated with the **most recent election or appointment**.
+            - Ignore past terms or historical dates unless explicitly stated as the current term.
+            - Example: "Elected in November 2020 and reelected in November 2024" → `start_date`: `2024-11`.
+        - **End Date**:
+            - Extract the date associated with the **current term expiration**.
+            - Example: "Term ends December 2028" → `end_date`: `2028-12`.
+        - If no explicit dates are found, set both `start_date` and `end_date` to `null`.
+
+    Additional Rules:
+    - Ensure all extracted details refer to the **current term** of the official.
+    - Use the provided `current_date` to filter out roles or terms that are no longer active.
+    - Exclude individuals who have resigned, vacated their roles, or are deceased.
+    - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
+    
+[2025-10-09T23:20:27.224208] [INFO] gemini gemini-2.5-flash LLM call took 9.94 seconds
+[2025-10-09T23:20:27.258800] [INFO] Running OpenAI prompt
+[2025-10-09T23:20:27.260625] [DEBUG] Prompt: 
+
+You are an expert data extractor focused on accuracy.
+
+First, determine if the content contains relevant information about any of the main governing body of a municipality. Here is a list of known target people (may be missing or include extra): Bruce Harrell, Sara Nelson, Rob Saka, Mark Solomon, Joy Hollingsworth, Maritza Rivera, Debora Juarez, Dan Strauss, Bob Kettle, Alexis Mercedes Rinck.
+If not, return an empty JSON array `[]`.
+
+Target Person (if applicable): 
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district
+Current Date: 2025-10-09
+
+Return a JSON object.
+
+Output Field Definitions & Structure:
+- name: (String) Full name only (no titles).
+- image: (String or null) URL to profile image (https://...)
+- roles: (Array of strings) Active municipal roles.
+         Identify their official job title or specific position.
+         This can be a wide variety of municipal roles (e.g., "Mayor", "City Manager", "Selectman",
+         "Alderman", "Council Member").
+- divisions: (Array of strings) Specific district/ward and name/number,
+          only if specified (e.g., "Ward 1", "District 2").
+- phone_number: (String or null) Formatted phone number
+- email: (String or null) Email address (email@example.com)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+- end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+
+Extraction Guidelines:
+- Roles extraction:
+  - Extract roles that match the **target roles** provided (e.g., mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member).
+  - If a role includes additional descriptors or variations, normalize it to the closest matching target role when possible.
+    - Example: "Vice President" under a governing body → Normalize to the closest matching target role, such as "Council Vice President" or "Commissioner Vice President."
+    - If a role cannot be normalized to a target role but is clearly valid (e.g., "Vice President"), extract it as-is.
+  - Use the governing body or surrounding context to determine the correct role for ambiguous titles.
+    - Example: If "Vice President" is listed under "Council Members," infer it as "Council Vice President."
+    - Example: If "Vice President" appears without clear context, extract it as "Vice President."
+  - Include only active roles (today is 2025-10-09).
+
+- Divisions:
+  - Extract divisions if explicitly mentioned and relevant to the person's role.
+  - Do not infer divisions if they are not explicitly stated.
+
+- General Guidelines:
+  - Merge details for the same person into a single record.
+  - Assign confidence (0-1 scale) and provide a brief reason for each field's data.
+  - Extract full names only (e.g., "John Smith," not "Mayor John Smith"). Titles belong in the roles field.
+  - Ensure extracted data is accurate and relevant to the governing body or target roles.
+- Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style.
+- Contact Details (Phone/Email/Website):
+  - Associate details logically if near the person's name/section.
+  - Pick the most relevant contact detail if multiple are present.
+  - Phone numbers:
+    - Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
+  - Markdown Links: Extract email/phone from the VISIBLE TEXT of links like `[TEXT](...)`, ignore the target URL.
+  - `website` data MUST be a valid http/https URL. Prefer profile pages. EXCLUDE mailto:, tel:.
+  - `email` data should ONLY contain email addresses.
+- Term Dates (`start_date`, `end_date`):
+  - Extract start_date and end_date in YYYY, YYYY-MM, or YYYY-MM-DD format.
+  - Acceptable date phrases include:
+    - “Elected [date]”, “Appointed [date]”, “Term: [date1] to [date2]”, “Since [date]”.
+    - For vague phrases like "Spring 2025", extract the year only.
+  - If more than one term is mentioned, extract the most recent term dates.
+  - Examples:
+    - "Elected Nov 2024 for term ending Dec 2028" -> start_date: "2024-11", end_date: "2028-12"
+    - "Served January 2018 until December 2021 - Re-elected and serving January 2022 and until December 2025" -> start_date: "2022-01", end_date: "2025-12"
+    - "Elected in 2017 and re-elected in 2021 for the 2022-2025 term." -> start_date: "2022", end_date: "2025"
+
+**FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting,
+  paying close attention to the role inference, date extraction, and term identification rules.
+
+[2025-10-09T23:20:30.566991] [INFO] openai LLM call took 3.31 seconds
+[2025-10-09T23:20:30.601552] [INFO] Running Together AI prompt: 
+Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
+from the markdown text. Here are the list of known target people (may be missing or include a few extra): Bruce Harrell, Sara Nelson, Rob Saka, Mark Solomon, Joy Hollingsworth, Maritza Rivera, Debora Juarez, Dan Strauss, Bob Kettle, Alexis Mercedes Rinck.
+
+Government type: 'mayor_council'
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district 
+
+Return JSON array of people with:
+- name: (String) Full name only
+- roles: (Array) Official titles
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
+- image: (String|null) Photo URL (.jpg/.png)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- phone_number: (String|null) Contact number
+- email: (String|null) Email address
+- start_date: (String|null) YYYY[-MM[-DD]]
+- end_date: (String|null) YYYY[-MM[-DD]]
+
+URLs: Include profile/bio pages. Exclude news/events/press.
+Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
+
+[2025-10-09T23:20:30.601901] [DEBUG] Prompt: 
+
+Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
+from the markdown text. Here are the list of known target people (may be missing or include a few extra): Bruce Harrell, Sara Nelson, Rob Saka, Mark Solomon, Joy Hollingsworth, Maritza Rivera, Debora Juarez, Dan Strauss, Bob Kettle, Alexis Mercedes Rinck.
+
+Government type: 'mayor_council'
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district 
+
+Return JSON array of people with:
+- name: (String) Full name only
+- roles: (Array) Official titles
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
+- image: (String|null) Photo URL (.jpg/.png)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- phone_number: (String|null) Contact number
+- email: (String|null) Email address
+- start_date: (String|null) YYYY[-MM[-DD]]
+- end_date: (String|null) YYYY[-MM[-DD]]
+
+URLs: Include profile/bio pages. Exclude news/events/press.
+Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
+
+[2025-10-09T23:20:32.905305] [INFO] together_ai LLM call took 2.30 seconds
+[2025-10-09T23:20:33.033229] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:20:33.033605] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:20:33.034019] [INFO] Current data: 1
+[2025-10-09T23:20:33.034291] [INFO] Required data: 10
+[2025-10-09T23:20:33.034467] [INFO] Minimum required data: 7
+[2025-10-09T23:20:33.034906] [INFO] Has target role: True
+[2025-10-09T23:20:33.035122] [INFO] Has target divisions (if available): False
+[2025-10-09T23:20:33.035294] [INFO] Not enough data processed yet, collecting more data... 0/15
+[2025-10-09T23:20:33.038872] [INFO] Step 3: SCRAPE_PAGE: scraping https://www.seattle.gov/council/members
+[2025-10-09T23:20:36.889840] [INFO] Step 4: PREPROCESS_PAGE_CONTENT: https://www.seattle.gov/council/members
+[2025-10-09T23:20:44.105219] [INFO] /Step 4: PREPROCESS_PAGE_CONTENT
+
+[2025-10-09T23:20:44.105342] [INFO] -> Elapsed time: 7.22 seconds
+[2025-10-09T23:20:44.105490] [INFO] -> Average elapsed time: 7.87 seconds
+[2025-10-09T23:20:44.105587] [INFO] -> Total elapsed time: 15.75 seconds
+[2025-10-09T23:20:44.107371] [INFO] Step 5: PROCESS_PAGE_CONTENT: https://www.seattle.gov/council/members
+[2025-10-09T23:20:44.134709] [INFO] Running Gemini prompt
+[2025-10-09T23:20:44.135008] [DEBUG] Prompt: 
+
+    First, determine if the content contains relevant information about the main governing body of the target municipality. If the content includes information about the following people, they are very likely to be on the council: Bruce Harrell, Sara Nelson, Rob Saka, Mark Solomon, Joy Hollingsworth, Maritza Rivera, Debora Juarez, Dan Strauss, Bob Kettle, Alexis Mercedes Rinck.
+    If not, return an empty JSON array `[]`.
+
+    Target Roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+    Target Divisions: ward, district
+    Current Date: 2025-10-09
+
+    Return a JSON object with people, each having:
+    - name: (String) Full name only (no titles)
+    - image: (String or null) URL to profile image (https://...)
+    - roles: (Array of strings) Active municipal roles
+    - divisions: (Array of strings) Specific district/ward names
+    - phone_number: (String or null) Formatted phone number
+    - email: (String or null) Email address
+    - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+
+    Guidelines:
+    - Roles extraction:
+        - Extract roles that match the **target roles** provided (e.g., mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member).
+    - Division extraction:
+        - Extract divisions if explicitly mentioned in the text and relevant to the person's role.
+        - Examples: "Ward 1", "District 2"
+    - Name extraction:
+        - Extract full names ONLY, not titles.
+    - Phone number extraction:
+        - Extract phone numbers even when formatted as Markdown link text.
+    - Website extraction:
+        - Extract URLs starting with "http://" or "https://".
+    - Email extraction:
+        - Extract email addresses found directly in the text or formatted as Markdown link text.
+    - Start and End Date Extraction:
+        - Extract dates only if explicitly written in the text.
+        - **Start Date**:
+            - Extract the date associated with the **most recent election or appointment**.
+            - Ignore past terms or historical dates unless explicitly stated as the current term.
+            - Example: "Elected in November 2020 and reelected in November 2024" → `start_date`: `2024-11`.
+        - **End Date**:
+            - Extract the date associated with the **current term expiration**.
+            - Example: "Term ends December 2028" → `end_date`: `2028-12`.
+        - If no explicit dates are found, set both `start_date` and `end_date` to `null`.
+
+    Additional Rules:
+    - Ensure all extracted details refer to the **current term** of the official.
+    - Use the provided `current_date` to filter out roles or terms that are no longer active.
+    - Exclude individuals who have resigned, vacated their roles, or are deceased.
+    - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
+    
+[2025-10-09T23:21:02.705319] [INFO] gemini gemini-2.5-flash LLM call took 18.57 seconds
+[2025-10-09T23:21:02.738724] [INFO] Running OpenAI prompt
+[2025-10-09T23:21:02.739076] [DEBUG] Prompt: 
+
+You are an expert data extractor focused on accuracy.
+
+First, determine if the content contains relevant information about any of the main governing body of a municipality. Here is a list of known target people (may be missing or include extra): Bruce Harrell, Sara Nelson, Rob Saka, Mark Solomon, Joy Hollingsworth, Maritza Rivera, Debora Juarez, Dan Strauss, Bob Kettle, Alexis Mercedes Rinck.
+If not, return an empty JSON array `[]`.
+
+Target Person (if applicable): 
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district
+Current Date: 2025-10-09
+
+Return a JSON object.
+
+Output Field Definitions & Structure:
+- name: (String) Full name only (no titles).
+- image: (String or null) URL to profile image (https://...)
+- roles: (Array of strings) Active municipal roles.
+         Identify their official job title or specific position.
+         This can be a wide variety of municipal roles (e.g., "Mayor", "City Manager", "Selectman",
+         "Alderman", "Council Member").
+- divisions: (Array of strings) Specific district/ward and name/number,
+          only if specified (e.g., "Ward 1", "District 2").
+- phone_number: (String or null) Formatted phone number
+- email: (String or null) Email address (email@example.com)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+- end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+
+Extraction Guidelines:
+- Roles extraction:
+  - Extract roles that match the **target roles** provided (e.g., mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member).
+  - If a role includes additional descriptors or variations, normalize it to the closest matching target role when possible.
+    - Example: "Vice President" under a governing body → Normalize to the closest matching target role, such as "Council Vice President" or "Commissioner Vice President."
+    - If a role cannot be normalized to a target role but is clearly valid (e.g., "Vice President"), extract it as-is.
+  - Use the governing body or surrounding context to determine the correct role for ambiguous titles.
+    - Example: If "Vice President" is listed under "Council Members," infer it as "Council Vice President."
+    - Example: If "Vice President" appears without clear context, extract it as "Vice President."
+  - Include only active roles (today is 2025-10-09).
+
+- Divisions:
+  - Extract divisions if explicitly mentioned and relevant to the person's role.
+  - Do not infer divisions if they are not explicitly stated.
+
+- General Guidelines:
+  - Merge details for the same person into a single record.
+  - Assign confidence (0-1 scale) and provide a brief reason for each field's data.
+  - Extract full names only (e.g., "John Smith," not "Mayor John Smith"). Titles belong in the roles field.
+  - Ensure extracted data is accurate and relevant to the governing body or target roles.
+- Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style.
+- Contact Details (Phone/Email/Website):
+  - Associate details logically if near the person's name/section.
+  - Pick the most relevant contact detail if multiple are present.
+  - Phone numbers:
+    - Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
+  - Markdown Links: Extract email/phone from the VISIBLE TEXT of links like `[TEXT](...)`, ignore the target URL.
+  - `website` data MUST be a valid http/https URL. Prefer profile pages. EXCLUDE mailto:, tel:.
+  - `email` data should ONLY contain email addresses.
+- Term Dates (`start_date`, `end_date`):
+  - Extract start_date and end_date in YYYY, YYYY-MM, or YYYY-MM-DD format.
+  - Acceptable date phrases include:
+    - “Elected [date]”, “Appointed [date]”, “Term: [date1] to [date2]”, “Since [date]”.
+    - For vague phrases like "Spring 2025", extract the year only.
+  - If more than one term is mentioned, extract the most recent term dates.
+  - Examples:
+    - "Elected Nov 2024 for term ending Dec 2028" -> start_date: "2024-11", end_date: "2028-12"
+    - "Served January 2018 until December 2021 - Re-elected and serving January 2022 and until December 2025" -> start_date: "2022-01", end_date: "2025-12"
+    - "Elected in 2017 and re-elected in 2021 for the 2022-2025 term." -> start_date: "2022", end_date: "2025"
+
+**FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting,
+  paying close attention to the role inference, date extraction, and term identification rules.
+
+[2025-10-09T23:21:15.232703] [INFO] openai LLM call took 12.49 seconds
+[2025-10-09T23:21:15.262700] [INFO] Running Together AI prompt: 
+Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
+from the markdown text. Here are the list of known target people (may be missing or include a few extra): Bruce Harrell, Sara Nelson, Rob Saka, Mark Solomon, Joy Hollingsworth, Maritza Rivera, Debora Juarez, Dan Strauss, Bob Kettle, Alexis Mercedes Rinck.
+
+Government type: 'mayor_council'
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district 
+
+Return JSON array of people with:
+- name: (String) Full name only
+- roles: (Array) Official titles
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
+- image: (String|null) Photo URL (.jpg/.png)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- phone_number: (String|null) Contact number
+- email: (String|null) Email address
+- start_date: (String|null) YYYY[-MM[-DD]]
+- end_date: (String|null) YYYY[-MM[-DD]]
+
+URLs: Include profile/bio pages. Exclude news/events/press.
+Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
+
+[2025-10-09T23:21:15.263130] [DEBUG] Prompt: 
+
+Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
+from the markdown text. Here are the list of known target people (may be missing or include a few extra): Bruce Harrell, Sara Nelson, Rob Saka, Mark Solomon, Joy Hollingsworth, Maritza Rivera, Debora Juarez, Dan Strauss, Bob Kettle, Alexis Mercedes Rinck.
+
+Government type: 'mayor_council'
+Target roles: mayor, mayor pro tempore, chair, vice chair, chair pro tem, assistant mayor, deputy mayor, vice mayor, council president, council president pro tem, deputy council president, council vice president, council manager, trustee, council member
+Target divisions: ward, district 
+
+Return JSON array of people with:
+- name: (String) Full name only
+- roles: (Array) Official titles
+- divisions: (Array) Strictly districts/wards. 
+    Example: "Ward 1", "District 2"
+- image: (String|null) Photo URL (.jpg/.png)
+- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- phone_number: (String|null) Contact number
+- email: (String|null) Email address
+- start_date: (String|null) YYYY[-MM[-DD]]
+- end_date: (String|null) YYYY[-MM[-DD]]
+
+URLs: Include profile/bio pages. Exclude news/events/press.
+Terms: "2024-2027" → start: "2024", end: "2027"
+Divisions: Extract exactly from text -- do not infer or make up divisions.
+
+[2025-10-09T23:21:24.833995] [INFO] together_ai LLM call took 9.57 seconds
+[2025-10-09T23:21:25.498427] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.498799] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.499260] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.499815] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.499986] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.500172] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.500340] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.500502] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.500662] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.500962] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.501122] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.501357] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.501625] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.501754] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.501868] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.502026] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.502272] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.502405] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.502528] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.502700] [DEBUG] Skipping adding websites for person with role and contact info
+[2025-10-09T23:21:25.503284] [INFO] Current data: 10
+[2025-10-09T23:21:25.503439] [INFO] Required data: 10
+[2025-10-09T23:21:25.503648] [INFO] Minimum required data: 7
+[2025-10-09T23:21:25.503769] [INFO] Has target role: True
+[2025-10-09T23:21:25.503922] [INFO] Has target divisions (if available): True
+[2025-10-09T23:21:25.504074] [INFO] Enough data processed, moving to report generation...
+[2025-10-09T23:21:25.601897] [INFO] Step 9: CLEANUP
+[2025-10-09T23:21:25.609468] [INFO] Step 5: MAYBE_SEND_TO_GITHUB
+[2025-10-09T23:21:25.609647] [INFO] CRUDDER_UPLOAD_URL: https://crudder.civicpatch.org/api/github_intake
+[2025-10-09T23:21:25.677281] [INFO] Created zip file at crudder_data/2025-10-09-1d29-state-wa-place-seattle.zip, size: 863773 bytes
+[2025-10-09T23:21:26.759530] [INFO] Pipeline completed successfully in 90.01 seconds.
+[2025-10-10T00:19:16.902565] [INFO] Pipeline started at Fri Oct 10 00:19:16 2025
+[2025-10-10T00:19:16.904452] [INFO] Step 5: MAYBE_SEND_TO_GITHUB
+[2025-10-10T00:19:16.905101] [INFO] CRUDDER_UPLOAD_URL: https://crudder.civicpatch.org/api/github_intake
