@@ -4,7 +4,7 @@ import zipfile
 from schemas import PipelineContext, PipelineStatus
 
 from utils.request_utils import with_retry
-from utils.data_path_utils import get_data_municipality_path, get_data_source_municipality_path
+from utils.data_path_utils import get_data_source_municipality_path, get_people_file_path
 from utils import id_utils, log_utils, cost_utils
 
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
@@ -18,6 +18,8 @@ def maybe_send_to_github(context: PipelineContext):
   CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
   CRUDDER_URL = os.getenv("CRUDDER_URL", "https://crudder.civicpatch.org")
   CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/api/github_intake"
+  request_id = context["request_id"]
+  jurisdiction_id = context["jurisdiction_id"]
   logger.info(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
 
   try:
@@ -35,11 +37,12 @@ def maybe_send_to_github(context: PipelineContext):
       }
 
     zip_file_path = zip_files(context["request_id"], context["jurisdiction_id"])
-    zip_file_size = os.path.getsize(zip_file_path)
-    logger.info(f"Created zip file at {zip_file_path}, size: {zip_file_size} bytes")
+    file_size_bytes = os.path.getsize(zip_file_path)
+    logger.info(f"Created zip file at {zip_file_path}, size: {file_size_bytes} bytes")
     cost_utils.add_storage_cost(
-        context["jurisdiction_id"], 
-        file_size_bytes=zip_file_size
+        request_id,
+        jurisdiction_id,
+        file_size_bytes
     )
 
     headers = {
@@ -90,23 +93,29 @@ def maybe_send_to_github(context: PipelineContext):
     }
 
 def zip_files(request_id, jurisdiction_id):
-    data_municipality_path = get_data_municipality_path(jurisdiction_id)
+    data_municipality_file = get_people_file_path(jurisdiction_id)
     data_source_municipality_path = get_data_source_municipality_path(jurisdiction_id)
 
-    git_branch_name= id_utils.jurisdiction_id_to_git_branch(jurisdiction_id, request_id)
+    git_branch_name = id_utils.jurisdiction_id_to_git_branch(jurisdiction_id, request_id)
     zip_file_name = f"{git_branch_name}.zip"
     zip_file_path = os.path.join("crudder_data", zip_file_name)
 
-    # Find the common parent directory
-    common_prefix = os.path.commonpath([data_municipality_path, data_source_municipality_path])
+    # Ensure the crudder_data directory exists
+    os.makedirs(os.path.dirname(zip_file_path), exist_ok=True)
 
     with zipfile.ZipFile(zip_file_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for folder_path in [data_municipality_path, data_source_municipality_path]:
-            for root, _dirs, files in os.walk(folder_path):
-                for file in files:
-                    file_path = os.path.join(root, file)
-                    # arcname will include data/ or data_source/ as the top-level folder
-                    arcname = os.path.relpath(file_path, common_prefix)
-                    zipf.write(file_path, arcname)
+        # Add data_source files - preserve structure starting from "data_source/"
+        for root, _dirs, files in os.walk(data_source_municipality_path):
+            for file in files:
+                file_path = os.path.join(root, file)
+                # Keep the "data_source/..." structure in the zip
+                arcname = f"data_source/{os.path.relpath(file_path, data_source_municipality_path.split('data_source/')[0] + 'data_source/')}"
+                zipf.write(file_path, arcname)
+        
+        # Add data municipality file - preserve structure starting from "data/"
+        # Assuming data_municipality_file is like "/app/data/wa/seattle.yml"
+        data_dir = data_municipality_file.split('data/')[0] + 'data/'
+        data_arcname = f"data/{os.path.relpath(data_municipality_file, data_dir)}"
+        zipf.write(data_municipality_file, data_arcname)
 
     return zip_file_path

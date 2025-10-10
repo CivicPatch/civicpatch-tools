@@ -258,9 +258,9 @@ class Pipeline:
                     self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
                 elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
-                    # result = maybe_send_to_github(self.context)
+                    result = maybe_send_to_github(self.context)
 
-                    #self.context.update(result)
+                    self.context.update(result)
                     cost_utils.log_costs(self.context["request_id"], self.context["jurisdiction_id"])
                     self.state = PipelineStatus.DONE
                 else:
@@ -340,10 +340,10 @@ class Pipeline:
             os.makedirs(os.path.dirname(people_file_path), exist_ok=True)
 
             with open(people_file_path, "w", encoding="utf-8") as f:
-                data = {jurisdiction_type: found_serialized_people}
+                existing_data = {jurisdiction_type: found_serialized_people}
 
         with open(people_file_path, "w", encoding="utf-8") as f:
-            yaml.dump(data, f, default_flow_style=False, sort_keys=False)
+            yaml.dump(existing_data, f, default_flow_style=False, sort_keys=False)
 
 def get_pipeline_status_by_jurisdiction_id(jurisdiction_id):
     return _PIPELINE_PROGRESS_BY_JURISDICTION_ID.get(jurisdiction_id, None)

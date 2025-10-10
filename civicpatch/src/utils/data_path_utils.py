@@ -35,7 +35,7 @@ def get_people(jurisdiction_id: str) -> Dict[str, Any]:
 
     with open(people_file_path, "r", encoding="utf-8") as file:
         data = yaml.safe_load(file)
-        return data
+        return data or {}
 
 # Serialized, filtered by jurisdiction type
 def get_people_from_jurisdiction_type(jurisdiction_id: str) -> List[Any]:
