@@ -36,6 +36,12 @@ on:
         required: false
       STORAGE_SECRET_ACCESS_KEY:
         required: false
+      GOOGLE_SHEETS_PRIVATE_KEY:
+        required: false
+      GOOGLE_SHEETS_CLIENT_EMAIL:
+        required: false
+      GOOGLE_SHEETS_TOKEN_URI:
+        required: false
 
 jobs:
   update-comments:
