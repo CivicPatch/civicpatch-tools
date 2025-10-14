@@ -5,10 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "civicpatch/Dockerfile"
-      - "civicpatch/Dockerfile.github-actions"
-      - "civicpatch/pyproject.toml"
-      - "civicpatch/poetry.lock"
+      - "civicpatch/**"
   workflow_dispatch:
 
 permissions:

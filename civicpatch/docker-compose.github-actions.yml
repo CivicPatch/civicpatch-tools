@@ -20,4 +20,5 @@ services:
     #  context: .
     #  dockerfile: Dockerfile.github-actions
     volumes:
-      - .:/app
+      - ./data:/app/data
+      - ./data_source:/app/data_source
