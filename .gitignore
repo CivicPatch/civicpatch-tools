@@ -1,10 +1,14 @@
 __pycache__/
 .env
 *.env
-civicpatch/data/*
-civicpatch/data_source/*
+civicpatch/data/
+civicpatch/data_source/
 !civicpatch/data/.gitkeep
 !civicpatch/data_source/.gitkeep
+data/
+!data/.gitkeep
+data_source/
+!data_source/.gitkeep
 
 database.db
 *.db
