@@ -50,12 +50,13 @@ RUN chown -R civicpatch_user:civicpatch_user /app/tmp/.cache /app/tmp/.config
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 RUN poetry install --no-root
 
+COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME} /app
+
 FROM image-base AS post-install
 
 RUN poetry run playwright install --with-deps chromium
 
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/setup.py /app/src/setup.py
-COPY --chown=civicpatch_user:civicpatch_user ./${PROJECT_NAME} /app
 RUN poetry run post-install
 
 USER civicpatch_user
