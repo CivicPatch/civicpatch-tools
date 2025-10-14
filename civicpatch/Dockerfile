@@ -55,6 +55,7 @@ FROM image-base AS post-install
 RUN poetry run playwright install --with-deps chromium
 
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/setup.py /app/src/setup.py
+COPY --chown=civicpatch_user:civicpatch_user ./${PROJECT_NAME} /app
 RUN poetry run post-install
 
 USER civicpatch_user
@@ -82,7 +83,6 @@ CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
 FROM post-install AS production
 
 WORKDIR /app
-COPY --chown=civicpatch_user:civicpatch_user ./${PROJECT_NAME} /app
 
 USER civicpatch_user
 EXPOSE 8000
