@@ -6,8 +6,8 @@ import asyncio
 import uuid
 
 async def test_pipeline_step():
-    #jurisdiction_id = "ocd_jurisdiction/country:us/state:nc/place:greensboro/council"
-    jurisdiction_id = "ocd_jurisdiction/country:us/state:wa/place:seattle/council"
+    #jurisdiction_id = "ocd_jurisdiction/country:us/state:nc/place:greensboro/government"
+    jurisdiction_id = "ocd_jurisdiction/country:us/state:wa/place:seattle/government"
     pipeline_status = PipelineStatus.MAYBE_SEND_TO_GITHUB
     # Note: need to generate a unique request id
     # if you are testing PR creation
