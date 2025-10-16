@@ -1,3 +1,7 @@
+[tools]
+poetry = { version="latest", pyproject="{{ config_root }}/pyproject.toml" }
+python = "3.12.11" # must be after poetry so the poetry bin is first in PATH
+
 [env]
 _.file = ".env"
 #[tasks.pipeline]

@@ -8,8 +8,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-ENV PROJECT_NAME="civicpatch" \
-    PYTHONUNBUFFERED=1 \
+ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH="/app/src" \
     PLAYWRIGHT_BROWSERS_PATH="/ms-playwright" \
     # Override for playwright to play nicely
@@ -47,16 +46,16 @@ RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
     chown -R root:root /tmp/.X11-unix
 
 RUN chown -R civicpatch_user:civicpatch_user /app/tmp/.cache /app/tmp/.config
-COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
-RUN poetry install --no-root
+COPY --chown=civicpatch_user:civicpatch_user pyproject.toml poetry.lock ./
+COPY --chown=civicpatch_user:civicpatch_user . /app
 
-COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME} /app
+RUN poetry install
 
 FROM image-base AS post-install
 
 RUN poetry run playwright install --with-deps chromium
 
-COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/setup.py /app/src/setup.py
+COPY --chown=civicpatch_user:civicpatch_user src/setup.py /app/src/setup.py
 RUN poetry run post-install
 
 USER civicpatch_user
