@@ -1,6 +1,6 @@
 import os
 import json
-from schemas import PipelineContext, PipelineRequest, PipelineStatus, LinkStatus, SearchEngineStatus, Link, Person 
+from schemas import PipelineContext, PipelineRequest, PipelineStatus, LinkStatus, ProcessConfig, SearchEngineStatus, Link, Person 
 from typing import List
 import yaml
 import time
@@ -149,14 +149,14 @@ class Pipeline:
 
         jurisdiction_id = self.context["jurisdiction_id"]
         logger = log_utils.get_pipeline_logger(jurisdiction_id)
-        process_config = config_utils.get_process()
+        process_config = config_utils.get_process(logger)
 
         start_time = time.time()
 
         logger.info(f"Pipeline started at {time.ctime(start_time)}")
 
         try:
-            while self.state != PipelineStatus.DONE:
+            while self.state not in [PipelineStatus.DONE, PipelineStatus.PAUSE]:
                 if self.state == PipelineStatus.INIT:
                     context: PipelineContext = {
                         **self.context,
@@ -226,18 +226,18 @@ class Pipeline:
                     logger.info(f"Has target role: {context_progress.get('has_target_role', False)}")
                     logger.info(f"Has target divisions (if available): {context_progress.get('has_target_divisions', False)}")
 
-                    process_max_pages = process_config.get("max_pages", 15)
-
                     next_state = self.get_next_state_for_process_page_content(
                         logger,
                         processed_count, 
-                        process_max_pages,
+                        process_config,
                         current_data,
                         required_data,
                         minimum_required_data
                     )
 
                     self.state = next_state
+                elif self.state == PipelineStatus.PAUSE:
+                    logger.info("Pipeline paused.")
 
                 elif self.state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM:
                     result = merge_records_within_llm(self.context)
@@ -252,16 +252,16 @@ class Pipeline:
                     self.state = PipelineStatus.CLEANUP
 
                 elif self.state == PipelineStatus.CLEANUP:
-                    result = cleanup(self.context)
+                    #result = cleanup(self.context)
 
-                    self.context.update(result)
+                    #self.context.update(result)
                     self.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
                 elif self.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
                     cost_utils.log_costs(self.context["request_id"], self.context["jurisdiction_id"])
-                    result = maybe_send_to_github(self.context)
+                    #result = maybe_send_to_github(self.context)
 
-                    self.context.update(result)
+                    #self.context.update(result)
                     self.state = PipelineStatus.DONE
                 else:
                     logger.error(f"Pipeline logic not yet implemented for state: {self.state}")
@@ -302,7 +302,7 @@ class Pipeline:
     def get_next_state_for_process_page_content(self,
                                                 logger,
                                                 processed_count: int, 
-                                                max_pages: int,
+                                                process_config: ProcessConfig,
                                                 current_data: int,
                                                 required_data: int,
                                                 minimum_required_data: int,
@@ -310,6 +310,17 @@ class Pipeline:
         """
         Calculate the next state for the pipeline based on the current progress and processed count.
         """
+        request_id = self.context["request_id"]
+        jurisdiction_id = self.context["jurisdiction_id"]
+
+        current_total_cost = cost_utils.total_cost_by_request(request_id, jurisdiction_id)["total_cost"]
+        logger.info(f"Current total cost for this run: ${current_total_cost:.2f}")
+
+        cost_limit = process_config.pipeline_run_cost_limit
+        if current_total_cost >= cost_limit:
+            logger.error(f"Cost limit of ${cost_limit} reached. Current cost: ${current_total_cost:.2f}. Moving to next step.")
+            return PipelineStatus.PAUSE
+
         has_target_role = self.context["progress"].get("has_target_role", False)
         has_target_divisions = self.context["progress"].get("has_target_divisions", False) 
 
@@ -317,7 +328,7 @@ class Pipeline:
             logger.info("Enough data processed, moving to report generation...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
 
-        max_pages_with_required_data = max_pages + required_data # Each person might have a profile page
+        max_pages_with_required_data = process_config.max_pages + required_data # Each person might have a profile page
         if processed_count >= max_pages_with_required_data:
             logger.info(f"Max pages ({max_pages_with_required_data}) reached, moving to next step...")
             return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
