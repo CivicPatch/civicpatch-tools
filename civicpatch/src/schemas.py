@@ -1,12 +1,17 @@
-from typing import Dict, List, Optional, TypeAlias, Any, Callable, Union, NamedTuple, Literal
-from pydantic import BaseModel, field_validator
+from typing import Dict, List, Optional, TypeAlias, Any
+from pydantic import BaseModel
+from decimal import Decimal
 from enum import Enum
+
+class ProcessConfig(BaseModel):
+    max_pages: int
+    pipeline_run_cost_limit: Decimal # in USD
 
 class JurisdictionId(BaseModel):
     country: str
     state: str
     county: Optional[str] = None
-    place: str = None
+    place: str
     jurisdiction_type: str
 
 class SearchEngineStatus(Enum):
@@ -52,6 +57,7 @@ class PipelineStatus(Enum):
     CLEANUP = "CLEANUP"
     RETRY = "RETRY"
     DONE = "DONE"
+    PAUSE = "PAUSE"
 
 class RawLLMPerson(BaseModel):
     name: str

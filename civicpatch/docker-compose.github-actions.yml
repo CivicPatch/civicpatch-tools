@@ -1,6 +1,8 @@
 services:
   civicpatch-cicd:
     environment:
+      - PIPELINE_RUN_COST_LIMIT
+
       - BRAVE_SEARCH_TOKEN
       - GOOGLE_SEARCH_TOKEN
       - GOOGLE_SEARCH_ENGINE_ID

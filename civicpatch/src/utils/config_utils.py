@@ -2,17 +2,23 @@ import os
 import yaml
 import utils.path_utils as path_utils
 from typing import Dict, List
+from decimal import Decimal, InvalidOperation
+from schemas import ProcessConfig
+
+_divisions_config = None
+_government_types_config = None
+_crawl_config = None
+_process_config = None
 
 def get_divisions():
-    """
-    Returns a list of divisions from the configuration file.
-    """
-    config_path = path_utils.get_config_path()
-    divisions_file_path = os.path.join(config_path, 'divisions.yaml')
-    with open(divisions_file_path, 'r') as config_file:
-        config_data = yaml.safe_load(config_file)
-    
-    return config_data.get('divisions', {})
+    global _divisions_config
+    if _divisions_config is None:
+        config_path = path_utils.get_config_path()
+        divisions_file_path = os.path.join(config_path, 'divisions.yaml')
+        with open(divisions_file_path, 'r') as config_file:
+            config_data = yaml.safe_load(config_file)
+        _divisions_config = config_data.get('divisions', {})
+    return _divisions_config
 
 def get_division_alias_map() -> Dict[str, str]:
     """
@@ -28,15 +34,14 @@ def get_division_alias_map() -> Dict[str, str]:
     return alias_map
 
 def get_government_types():
-    """
-    Returns a dictionary of government types from the configuration file.
-    """
-    config_path = path_utils.get_config_path()
-    government_types_file_path = os.path.join(config_path, 'government_types.yaml')
-    with open(government_types_file_path, 'r') as config_file:
-        config_data = yaml.safe_load(config_file)
-    
-    return config_data.get('government_types', {})
+    global _government_types_config
+    if _government_types_config is None:
+        config_path = path_utils.get_config_path()
+        government_types_file_path = os.path.join(config_path, 'government_types.yaml')
+        with open(government_types_file_path, 'r') as config_file:
+            config_data = yaml.safe_load(config_file)
+        _government_types_config = config_data.get('government_types', {})
+    return _government_types_config
 
 def get_roles_by_government_type(government_type: str) -> List[str]:
     """
@@ -91,15 +96,13 @@ def get_role_configs_by_government_type(government_type: str) -> List[Dict[str, 
     return government_types.get(government_type, {}).get('roles', [])
 
 def get_crawl():
-    """
-    Returns the crawl configuration from the configuration file.
-    """
-    config_path = path_utils.get_config_path()
-    crawl_file_path = os.path.join(config_path, 'crawl.yaml')
-    with open(crawl_file_path, 'r') as config_file:
-        crawl_config = yaml.safe_load(config_file)
-    
-    return crawl_config
+    global _crawl_config
+    if _crawl_config is None:
+        config_path = path_utils.get_config_path()
+        crawl_file_path = os.path.join(config_path, 'crawl.yaml')
+        with open(crawl_file_path, 'r') as config_file:
+            _crawl_config = yaml.safe_load(config_file)
+    return _crawl_config
 
 def search_keywords(government_type: str) -> Dict[str, List[str]]:
     """
@@ -114,16 +117,28 @@ def search_keywords(government_type: str) -> Dict[str, List[str]]:
     government_type_config = government_types_config.get(government_type, {})
     return government_type_config.get('keywords', [])
 
-def get_process():
-    """
-    Returns the process configuration from the configuration file.
-    """
-    config_path = path_utils.get_config_path()
-    process_file_path = os.path.join(config_path, 'process.yaml')
-    with open(process_file_path, 'r') as config_file:
-        process_config = yaml.safe_load(config_file)
-    
-    return process_config
+def get_process(logger) -> ProcessConfig:
+    # You can override certain properties
+    global _process_config
+    if _process_config is None:
+        config_path = path_utils.get_config_path()
+        process_file_path = os.path.join(config_path, 'process.yaml')
+        with open(process_file_path, 'r') as config_file:
+            _process_config = yaml.safe_load(config_file)
+
+    if os.getenv("PIPELINE_RUN_COST_LIMIT"):
+        try:
+            pipeline_run_cost_limit_string = os.getenv("PIPELINE_RUN_COST_LIMIT")
+            if pipeline_run_cost_limit_string:
+                logger.info(f"Overriding pipeline_run_cost_limit with environment variable: {pipeline_run_cost_limit_string}")
+                pipeline_run_cost_limit = Decimal(pipeline_run_cost_limit_string)
+                _process_config['pipeline_run_cost_limit'] = pipeline_run_cost_limit
+        except (ValueError, InvalidOperation):
+            pass
+    return ProcessConfig(
+        max_pages=_process_config.get('max_pages'),
+        pipeline_run_cost_limit=_process_config.get('pipeline_run_cost_limit')
+    )
 
 def get_role_alias_map(government_type: str) -> Dict[str, str]:
     role_configs = get_role_configs_by_government_type(government_type)

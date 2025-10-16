@@ -254,15 +254,15 @@ def add_storage_cost(
         "total_cost": result.total_cost,
     })
 
-def log_costs(request_id, jurisdiction_id):
+def total_cost_by_request(request_id, jurisdiction_id: str) -> dict[str, Decimal]:
     cost_tracker = get_cost_tracker(jurisdiction_id)
     llm_costs = cost_tracker['llm_costs']
     search_engine_costs = cost_tracker['search_engine_costs']
     storage_costs = cost_tracker['storage_costs']
+    total_costs_search = sum([item['total_cost'] for item in search_engine_costs])
+    total_costs_storage = sum([item['total_cost'] for item in storage_costs])
+    total_costs_llm = sum([item['total_cost'] for item in llm_costs])
 
-    data_path = data_path_utils.get_data_source_municipality_path(jurisdiction_id)
-    costs_file_path = os.path.join(data_path, "costs.json")
-    
     # Group LLM costs by llm_name only
     grouped_llm_costs = {}
     for item in llm_costs:
@@ -285,10 +285,6 @@ def log_costs(request_id, jurisdiction_id):
         grouped_llm_costs[key]['output_cost'] += item['output_cost']
         grouped_llm_costs[key]['total_cost'] += item['total_cost']
 
-    total_costs_search = sum([item['total_cost'] for item in search_engine_costs])
-    total_costs_storage = sum([item['total_cost'] for item in storage_costs])
-    total_costs_llm = sum([item['total_cost'] for item in llm_costs])
-    
     # Build the total_cost_by_request_id array with dynamic LLM columns
     total_cost_row = {
         "timestamp": get_timestamp(),
@@ -298,7 +294,7 @@ def log_costs(request_id, jurisdiction_id):
         "total_costs_search": total_costs_search,
         "total_costs_storage": total_costs_storage,
     }
-    
+
     # Add columns for each LLM in a consistent order
     for llm_name in sorted(grouped_llm_costs.keys()):
         cost_data = grouped_llm_costs[llm_name]
@@ -307,7 +303,19 @@ def log_costs(request_id, jurisdiction_id):
     # Add the grand total at the end
     grand_total = total_costs_llm + total_costs_search + total_costs_storage
     total_cost_row["total_cost"] = grand_total
-    
+    return total_cost_row
+
+def log_costs(request_id, jurisdiction_id):
+    cost_tracker = get_cost_tracker(jurisdiction_id)
+    llm_costs = cost_tracker['llm_costs']
+    search_engine_costs = cost_tracker['search_engine_costs']
+    storage_costs = cost_tracker['storage_costs']
+
+    data_path = data_path_utils.get_data_source_municipality_path(jurisdiction_id)
+    costs_file_path = os.path.join(data_path, "costs.json")
+
+    total_cost_row = total_cost_by_request(request_id, jurisdiction_id)
+
     with open(costs_file_path, mode='w') as file:
         json_object = json.dumps({
             "llm_costs": llm_costs,
