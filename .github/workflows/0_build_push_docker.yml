@@ -40,8 +40,8 @@ jobs:
         if: ${{ github.ref_name == 'main' }}
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: civicpatch/Dockerfile
+          context: ./civicpatch
+          file: ./civicpatch/Dockerfile
           push: true
           tags: |
             ghcr.io/civicpatch/civicpatch-slim:latest
@@ -53,8 +53,8 @@ jobs:
       - name: Build and push (production)
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: civicpatch/Dockerfile
+          context: ./civicpatch
+          file: ./civicpatch/Dockerfile
           push: true
           tags: |
             ghcr.io/civicpatch/civicpatch:latest

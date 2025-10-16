@@ -32,10 +32,12 @@ dependencies = [
     "google-api-python-client (>=2.184.0,<3.0.0)",
     "aiofiles (>=24.1.0,<25.0.0)",
 ]
+
 [tool.poetry]
 packages = [
-    {include = "src"}
+    { include = "src" }
 ]
+
 [tool.poetry.scripts]
 post-install = "setup:post_install"
 [build-system]

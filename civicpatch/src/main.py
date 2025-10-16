@@ -6,13 +6,11 @@ from typing import List, Optional
 from utils.pipeline_utils import get_municipalities_to_scrape
 from pipeline import Pipeline, PipelineStatus, get_pipeline_status_by_jurisdiction_id
 from auth.token_handler import verify_github_action_data_query
-from utils import id_utils, log_utils
+from utils import id_utils
 from schemas import PipelineRequest
 import os
 from utils import data_path_utils
-import json
 from fastapi.responses import RedirectResponse, StreamingResponse
-import time
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="src/static"), name="static")

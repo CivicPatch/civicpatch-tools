@@ -40,16 +40,14 @@ RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
     mkdir -p /tmp/.cache && \
     mkdir -p /tmp/.config
 
-COPY ./pyproject.toml ./poetry.lock ./
-COPY ./src/scripts/docker-entrypoint.sh ./src/scripts/docker-entrypoint.sh
+COPY . .
 
-RUN poetry install --no-root
+RUN poetry install
 
 FROM image-base AS post-install
 
 RUN poetry run playwright install --with-deps chromium
 
-COPY ./src/setup.py /app/src/setup.py
 RUN poetry run post-install
 
 #https://github.com/microsoft/playwright-python/issues/2572
