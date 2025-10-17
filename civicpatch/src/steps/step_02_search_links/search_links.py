@@ -1,28 +1,49 @@
 MAX_RETRIES = 3
 
-from utils.scrape_utils import scrape
-from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
+from typing import Any, Dict, cast 
+from schemas import (
+    PipelineContext, Link, LinkStatus, 
+    PipelineStatus, ResearchMunicipalityStep, 
+    SearchLinksStep, SearchEngineState, SearchLinksStep
+)
 from utils.array_utils import interleave_arrays
 from utils.config_utils import search_keywords
 from utils.request_utils import with_retry
 from utils import log_utils
 from .utils import search, SearchEngineNames
 
-def search_links(context: PipelineContext):
+DEFAULT_SEARCH_LINKS_STEP = SearchLinksStep(
+    search_link_pointer=0,
+    search_engines={
+        "google": SearchEngineState(links=[], status="not_started"),
+        "serpapi": SearchEngineState(links=[], status="not_started"),
+        "brave": SearchEngineState(links=[], status="not_started"),
+        "crawl": SearchEngineState(links=[], status="not_started"),
+    },
+    error=None
+)
+
+def search_links(context: PipelineContext) -> Dict[str, Any]:
     """
     Search for links using multiple search engines and queries.
     """
-    logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
+    logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
     logger.info(f"Step 2: {PipelineStatus.SEARCH_LINKS.value}")
 
-    search_link_pointer = context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_link_pointer"]
+    search_links_step = context.steps.get(PipelineStatus.SEARCH_LINKS)
+    if search_links_step is None:
+        search_links_step = DEFAULT_SEARCH_LINKS_STEP
+    search_links_step = cast(SearchLinksStep, search_links_step)
+    search_link_pointer = search_links_step.search_link_pointer
 
     # Load keyword term groups
-    request_id = context["request_id"]
-    jurisdiction_id = context["jurisdiction_id"]
-    municipality_name = context["name"]
-    municipality_website = context["url"]
-    government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
+    request_id = context.request_id
+    jurisdiction_id = context.jurisdiction_id
+    municipality_name = context.name
+    municipality_website = context.url
+
+    research_municipality_step = cast(ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY])
+    government_type = research_municipality_step.government_type
 
     keyword_term_groups = search_keywords(government_type)
 
@@ -51,31 +72,30 @@ def search_links(context: PipelineContext):
         error_message = str(e)
 
     interleaved_urls = interleave_arrays(urls_found) if status_value == "completed" else []
+    updated_links = context.links.copy()
 
-    updated_links = context["links"][:]
     for url in interleaved_urls:
         # Do not re-add existing link
-        if not any(link["url"] == url for link in context["links"]):
+        if not any(link.url == url for link in updated_links):
             updated_links.append(Link(url=url, status=LinkStatus.PENDING.value))
 
-    result = {
-        "links": [link.model_dump() for link in updated_links],
-        "steps": {
-            **context["steps"],
-            PipelineStatus.SEARCH_LINKS.value: {
-                "search_link_pointer": search_link_pointer + 1,
-                "search_engines": {
-                    **context["steps"][PipelineStatus.SEARCH_LINKS.value]["search_engines"],
-                    search_engine: {
-                        "links": interleaved_urls,
-                        "status": status_value
-                    }
-                }
-            }
-        },
+    updated_search_engines = {
+        **search_links_step.search_engines,
+        search_engine: SearchEngineState(
+            links = interleaved_urls,
+            status = status_value
+        )
     }
-    if status_value == "error":
-        result["error"] = error_message
+
+    result = {
+        "links": updated_links,
+        "result": SearchLinksStep(
+            search_link_pointer=search_link_pointer + 1,
+            search_engines=updated_search_engines,
+            error=error_message
+        )
+    }
+
     return result
 
 def municipality_search(logger, request_id, jurisdiction_id, municipality_name, municipality_website, search_engine, keyword_term: str):

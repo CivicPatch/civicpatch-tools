@@ -4,11 +4,11 @@ from schemas import PipelineContext, PipelineStatus
 from utils.data_path_utils import get_cache_path, get_images_path
 from utils import log_utils
 
-def prepare_pipeline(context: PipelineContext):
+def prepare_pipeline(context: PipelineContext) -> None:
     """
     Prepare the pipeline context for the next steps.
     """
-    jurisdiction_id = context["jurisdiction_id"]
+    jurisdiction_id = context.jurisdiction_id
 
     # Empty log file, if it exists
     logger = log_utils.get_pipeline_logger(jurisdiction_id)
@@ -27,5 +27,3 @@ def prepare_pipeline(context: PipelineContext):
     if os.path.exists(images_path):
         shutil.rmtree(images_path)
     os.makedirs(images_path, exist_ok=True)  # Recreate the folder
-
-    return context

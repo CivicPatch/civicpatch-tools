@@ -73,7 +73,7 @@ def run_pipeline(request: PipelineRequest, background_tasks: BackgroundTasks, wi
         raise Exception("Pipeline already running for this jurisdiction")
 
     if len(errors) == 0:
-        pipeline = Pipeline(pipeline_state=PipelineStatus.INIT)
+        pipeline = Pipeline()
         background_tasks.add_task(pipeline.run, request_id, request)
 
     return request_id, warnings, errors
@@ -132,6 +132,32 @@ async def pipeline_status(jurisdiction_id: str):
     return {"status": pipeline_state, 
             "previous_statuses": previous_statuses, 
             "future_statuses": future_statuses}
+
+@app.get("/api/pipelines/{jurisdiction_id}/start")
+async def start_pipeline(jurisdiction_id: str, background_tasks: BackgroundTasks):
+    request = PipelineRequest(jurisdiction_id=jurisdiction_id)
+    request_id, _warnings, errors = run_pipeline(request, background_tasks)
+
+    if len(errors) > 0:
+        raise HTTPException(
+            status_code=400,
+            detail="; ".join(errors)
+        )
+
+    return {"status": "started", "request_id": request_id}
+
+@app.get("/api/pipelines/{jurisdiction_id}/pause")
+async def pause_pipeline(jurisdiction_id: str, background_tasks: BackgroundTasks):
+    request = PipelineRequest(jurisdiction_id=jurisdiction_id)
+    request_id, _warnings, errors = pause_pipeline(request, background_tasks)
+
+    if len(errors) > 0:
+        raise HTTPException(
+            status_code=400,
+            detail="; ".join(errors)
+        )
+
+    return {"status": "paused", "request_id": request_id}
 
 @app.post("/pipelines/run", include_in_schema=False)
 async def pipelines_run(

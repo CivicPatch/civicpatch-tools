@@ -25,7 +25,7 @@ async def run_pipeline_cli(request: PipelineRequest):
         print("Errors:", errors)
     else:
         print(f"Request ID: {request_id}")
-        pipeline = Pipeline(pipeline_state=PipelineStatus.INIT)
+        pipeline = Pipeline()
         await pipeline.run_async(request_id, request)
 
 if __name__ == "__main__":

@@ -21,7 +21,7 @@ async def test_pipeline_step():
 
     with open(pipeline_context_path, "r") as f:
         context = json.load(f)
-        context["request_id"] = request_id
+        context.request_id = request_id
     with open(pipeline_context_path, "w") as f:
         json.dump(context, f, indent=2)
 

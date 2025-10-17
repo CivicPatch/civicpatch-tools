@@ -1,6 +1,10 @@
-from typing import List, Dict, Any
+from typing import List, Dict, Any, cast
 from utils import people_utils, merge_utils
-from schemas import Person, PipelineStatus, PipelineContext, MissingPerson, FieldComparison, MergeRecordsAcrossLLMsStep
+from schemas import (
+    Person, PipelineStatus, PipelineContext, 
+    MissingPerson, FieldComparison, 
+    MergeRecordsAcrossLLMsStep, MergeRecordsWithinLLMStep, ResearchMunicipalityStep
+)
 from collections import Counter
 from datetime import datetime, timezone
 from difflib import SequenceMatcher
@@ -17,16 +21,16 @@ FIELD_WEIGHTS = {
 }
 FIELDS_TO_CHECK = list(FIELD_WEIGHTS.keys())
 
-def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
+def merge_records_across_llms(context: PipelineContext) -> MergeRecordsAcrossLLMsStep:
     """
     Merge records across all LLMs to produce a unified list of Person objects.
     """
-    jurisdiction_id = context["jurisdiction_id"]
+    jurisdiction_id = context.jurisdiction_id
 
     # Get people_by_llm from the previous step
-    people_by_llm: Dict[str, List[Person]] = context["steps"][PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value]["people_by_llm"]
+    people_by_llm: Dict[str, List[Person]] = cast(MergeRecordsWithinLLMStep, context.steps[PipelineStatus.MERGE_RECORDS_WITHIN_LLM]).people_by_llm
     people_by_llm = {k: [Person.model_validate(p) if isinstance(p, dict) else p for p in v] for k, v in people_by_llm.items()}
-    government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
+    government_type = cast(ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY]).government_type
 
     # Group records across LLMs based on weak ties and names
     groups_by_llm = group_records_across_llms(people_by_llm)
@@ -64,7 +68,6 @@ def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
         if field_comparisons:
             all_disagreements[merged_person.name] = field_comparisons
         
-        # Fix: Pass the correct parameters to check_for_missing_person
         missing_person = check_for_missing_person(
             merged_person.name,
             grouped_people_by_llm,  # Pass the grouped data
@@ -90,8 +93,7 @@ def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
             f"Overall agreement score {overall_agreement_score:.2f}% is below the minimum threshold of {MINIMUM_AGREEMENT_SCORE}%."
         )
 
-    # Create the final step result
-    step_result = MergeRecordsAcrossLLMsStep(
+    return MergeRecordsAcrossLLMsStep(
         people=sorted_people,
         agreement_score=overall_agreement_score,
         disagreements=all_disagreements,
@@ -99,14 +101,8 @@ def merge_records_across_llms(context: PipelineContext) -> Dict[str, Any]:
         validation_errors=validation_errors,
     )
 
-    return {
-        "steps": {
-            **context["steps"],
-            PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value: step_result.model_dump()
-        }
-    }
 
-def check_for_missing_person(person_name: str, grouped_people_by_llm: Dict[str, List[Person]], all_llm_names: List[str]) -> MissingPerson:
+def check_for_missing_person(person_name: str, grouped_people_by_llm: Dict[str, List[Person]], all_llm_names: List[str]) -> MissingPerson | None:
     """
     Check if this person is missing from some LLMs and create MissingPerson if so.
     """
@@ -253,12 +249,12 @@ def merge_group_across_llms(group: List[Person], jurisdiction_id: str) -> Person
         divisions=divisions,
         image=image_counter.most_common(1)[0][0] if image_counter else "",
         cdn_image="",
-        email=merge_field("email", [person.email for person in group]),
-        phone_number=merge_field("phone_number", [person.phone_number for person in group]),
-        website=merge_field("website", [person.website for person in group]),
-        start_date=merge_field("start_date", [person.start_date for person in group]),
-        end_date=merge_field("end_date", [person.end_date for person in group]),
-        sources=sources,
+        email=merge_field("email", [person.email for person in group if person.email]),
+        phone_number=merge_field("phone_number", [person.phone_number for person in group if person.phone_number]),
+        website=merge_field("website", [person.website for person in group if person.website]),
+        start_date=merge_field("start_date", [person.start_date for person in group if person.start_date]),
+        end_date=merge_field("end_date", [person.end_date for person in group if person.end_date]),
+        sources=list(sources),
         jurisdiction_id=jurisdiction_id,
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )
