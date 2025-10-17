@@ -4,6 +4,8 @@ python = "3.12.11" # must be after poetry so the poetry bin is first in PATH
 
 [env]
 _.file = ".env"
+POETRY_VIRTUALENVS_IN_PROJECT = false
+
 #[tasks.pipeline]
 # TODO
 #run = "docker compose run --rm civicpatch poetry run python main.py pipeline --state"
@@ -32,13 +34,23 @@ docker compose -f docker-compose.development.yml up
 # Container must be up (docker compose up)
 [tasks.manual]
 run = """
-curl -X POST http://localhost:8000/api/pipeline \
+curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Seattle city",
-    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/council",
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
     "url": "https://www.seattle.gov/"
   }'
+"""
+
+[tasks.stop]
+run = """
+curl -X POST http://localhost:8000/api/pipelines/state-wa-place-seattle-government/stop
+"""
+
+[tasks.status]
+run = """
+curl -X POST http://localhost:8000/api/pipelines/state-wa-place-seattle-government/status
 """
 
 [tasks.get_m]
@@ -58,7 +70,7 @@ run = "docker compose -f ./docker-compose.development.yml run --rm civicpatch po
 #docker compose -f docker-compose.development.yml run --rm civicpatch poetry run \
 #  python src/scripts/send_costs_to_google_sheets.py {{ option(name="jurisdiction-id") }}
 #"""
-#mise scratch --jurisdiction-id "ocd-jurisdiction/country:us/state:nc/place:greensboro/council"
+#mise scratch --jurisdiction-id "ocd-jurisdiction/country:us/state:nc/place:greensboro/government"
 
 ###############################################
 ## 🚀✨ GITHUB ACTIONS TASKS ✨🚀 
@@ -107,11 +119,6 @@ docker compose -f docker-compose.yml run --rm civicpatch poetry run \
     --url "{{ option(name="url") }}"
 """
 
-[tasks.test-build]
-run = """
- docker build --file Dockerfile.github-actions
-"""
-
 [tasks.test-pipeline-run-cicd]
 run = """
 docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poetry run \
@@ -130,10 +137,13 @@ docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poe
     --url "{{ option(name="url") }}"
 """
 
-#mise pipeline-run \
-#  --jurisdiction-id "ocd-jurisdiction/country:us/state:wa/place:seattle" \
-#  --name "Seattle city" \
-#  --url "https://www.seattle.gov"
+[tasks.cli-test]
+run = """
+mise pipeline-run \
+  --jurisdiction-id "ocd-jurisdiction/country:us/state:wa/place:seattle" \
+  --name "Seattle city" \
+  --url "https://www.seattle.gov"
+"""
 
 [tasks.jurisdiction-id-state]
 run = """
@@ -152,5 +162,19 @@ else:
   attr = attr.title()
 
 print(attr)
+"
+"""
+
+[tasks.jurisdiction_id_slug]
+usage = """
+arg "jurisdiction_id_url" "jurisdiction id" default="ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+"""
+run = """
+docker compose -f docker-compose.development.yml run --rm civicpatch poetry run \
+python -c "
+from utils.id_utils import jurisdiction_id_to_slug 
+jurisdiction_id_url = '{{ arg(name="jurisdiction_id_url") }}'
+jurisdiction_id = jurisdiction_id_to_slug(jurisdiction_id_url)
+print(jurisdiction_id)
 "
 """

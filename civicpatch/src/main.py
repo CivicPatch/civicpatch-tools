@@ -1,10 +1,13 @@
 from fastapi import FastAPI, HTTPException, Depends, Request, BackgroundTasks, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from pipeline_manager import PipelineManager
 from pydantic import BaseModel
 from typing import List, Optional
 from utils.pipeline_utils import get_municipalities_to_scrape
-from pipeline import Pipeline, PipelineStatus, get_pipeline_status_by_jurisdiction_id
+from pipeline import (
+    Pipeline, PipelineStatus,
+)
 from auth.token_handler import verify_github_action_data_query
 from utils import id_utils
 from schemas import PipelineRequest
@@ -15,6 +18,7 @@ from fastapi.responses import RedirectResponse, StreamingResponse
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="src/static"), name="static")
 templates = Jinja2Templates(directory="src/templates")
+pipeline_manager = PipelineManager()
 
 REQUIRED_ENV_VARS = [
     "BRAVE_SEARCH_TOKEN",
@@ -41,75 +45,58 @@ async def search_endpoint(
 ):
     """TODO: Make call to crudder"""
     pass
-    # jurisdiction_ids = get_municipalities_to_scrape(
-    #     state.lower(), 
-    #     num, 
-    #     jurisdiction_ids_to_ignore
-    # )
-    # if len(jurisdiction_ids) == 0:
-    #     raise HTTPException(
-    #         status_code=404,
-    #         detail=f"No municipalities found for state {state}"
-    #     )
-    # return {"jurisdiction_ids": jurisdiction_ids}
 
-def run_pipeline(request: PipelineRequest, background_tasks: BackgroundTasks, with_debug = False):    
-    request_id = id_utils.make_request_id()
-    jurisdiction_id = request.jurisdiction_id
-    jurisdiction_id_obj= id_utils.parse_jurisdiction_id(jurisdiction_id)
-    warnings: List[str] = []
-    errors: List[str] = []
-
-    if not jurisdiction_id_obj:
-        errors.append(f"Invalid jurisdiction_id format: {jurisdiction_id}. Examples of valid formats: 'ocd-jurisdiction/country:us/state:wa/place:seattle/council' or 'ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/council'")
-    if not request.name:
-        warnings.append("Missing 'name' field: A name and legal status (e.g., 'Seattle city') is preferred for search purposess. Substituting with place name jurisdiction_id.")
-    if not request.url:
-        errors.append("Missing 'url' field")
-
-    pipeline_state = get_pipeline_status_by_jurisdiction_id(jurisdiction_id)
-    if not with_debug and pipeline_state is not None:
-        print(f"{jurisdiction_id}/{request_id}: Found existing pipeline with state: {pipeline_state}, cancelling job...")
-        raise Exception("Pipeline already running for this jurisdiction")
-
-    if len(errors) == 0:
-        pipeline = Pipeline()
-        background_tasks.add_task(pipeline.run, request_id, request)
-
-    return request_id, warnings, errors
-
-# Internal usage only
-@app.post("/api/pipeline")
-async def pipeline_endpoint(request: PipelineRequest, background_tasks: BackgroundTasks):
-    """Run pipeline for a specific municipality"""
+# This will ALWAYS start a new pipeline
+@app.post("/api/pipelines")
+async def create_new_pipeline(request: PipelineRequest, background_tasks: BackgroundTasks):
+    """Always create and start a new pipeline for a specific municipality."""
     try:
-        request_id, warnings, errors = run_pipeline(request, background_tasks)
+        # Create a new pipeline
+        request_id, warnings, errors = pipeline_manager.create_pipeline(request)
 
         if len(errors) > 0:
             raise HTTPException(
-                status_code = 400,
+                status_code=400,
                 detail="; ".join(errors)
             )
 
-        response = {
+        # Start the pipeline
+        pipeline_manager.start_pipeline(request.jurisdiction_id, background_tasks)
+
+        return {
             "status": "started",
             "request_id": request_id,
+            "warnings": warnings,
         }
-
-        if len(warnings) > 0:
-            response["warnings"] = warnings
-        return response
 
     except Exception as e:
         raise HTTPException(
             status_code=500,
             detail=str(e)
-        )
-    
-@app.get("/api/pipeline/{jurisdiction_id}/status")
-async def pipeline_status(jurisdiction_id: str):
-    pipeline_state = get_pipeline_status_by_jurisdiction_id(jurisdiction_id)
-    if pipeline_state is None:
+        ) 
+
+# This will only restart the pipeline if it exists    
+# With no pause this is moot
+#@app.post("/api/pipelines/{jurisdiction_id_url}/start")
+#async def start_pipeline_endpoint(jurisdiction_id_url: str, background_tasks: BackgroundTasks):
+#    """Start an existing pipeline."""
+#    print("jurisdicition url = ", jurisdiction_id_url)
+#    jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_url)
+#    print("jurisdicition output = ", jurisdiction_id)
+#    try:
+#        result = pipeline_manager.start_pipeline(jurisdiction_id, background_tasks)
+#        return result
+#    except ValueError as e:
+#        raise HTTPException(
+#            status_code=404,
+#            detail=str(e)
+#        )
+
+@app.get("/api/pipeline/{jurisdiction_id_url}/status")
+async def pipeline_status(jurisdiction_id_url: str):
+    jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_url)
+    pipeline = pipeline_manager.get_pipeline(jurisdiction_id)
+    if pipeline is None:
         raise HTTPException(
             status_code=404,
             detail="Pipeline not found"
@@ -126,38 +113,26 @@ async def pipeline_status(jurisdiction_id: str):
                 PipelineStatus.MAYBE_SEND_TO_GITHUB.value,
                 PipelineStatus.CLEANUP.value,
                 PipelineStatus.DONE.value]
-    previous_statuses = [status for status in statuses if statuses.index(status) < statuses.index(pipeline_state.value)]
-    future_statuses = [status for status in statuses if statuses.index(status) > statuses.index(pipeline_state.value)]
+    previous_statuses = [status for status in statuses if statuses.index(status) < statuses.index(pipeline.context.state.value)]
+    future_statuses = [status for status in statuses if statuses.index(status) > statuses.index(pipeline.context.state.value)]
 
-    return {"status": pipeline_state, 
+    return {"status": pipeline.context.state.value, 
             "previous_statuses": previous_statuses, 
             "future_statuses": future_statuses}
 
-@app.get("/api/pipelines/{jurisdiction_id}/start")
-async def start_pipeline(jurisdiction_id: str, background_tasks: BackgroundTasks):
-    request = PipelineRequest(jurisdiction_id=jurisdiction_id)
-    request_id, _warnings, errors = run_pipeline(request, background_tasks)
+# Too much complexity for now, TODO tear out pausing completely
+#@app.post("/api/pipelines/{jurisdiction_id_url}/pause")
+#async def pause_pipeline(jurisdiction_id_url: str):
+#    jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_url)
+#    pipeline_manager.pause_pipeline(jurisdiction_id)
+#    return {"status": "paused", "jurisdiction_id": jurisdiction_id}
 
-    if len(errors) > 0:
-        raise HTTPException(
-            status_code=400,
-            detail="; ".join(errors)
-        )
+@app.post("/api/pipelines/{jurisdiction_id_url}/stop")
+async def stop_pipeline_endpoint(jurisdiction_id_url: str):
+    jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_url)
+    pipeline_manager.stop_pipeline(jurisdiction_id)
+    return {"status": "stopping", "jurisdiction_id": jurisdiction_id}
 
-    return {"status": "started", "request_id": request_id}
-
-@app.get("/api/pipelines/{jurisdiction_id}/pause")
-async def pause_pipeline(jurisdiction_id: str, background_tasks: BackgroundTasks):
-    request = PipelineRequest(jurisdiction_id=jurisdiction_id)
-    request_id, _warnings, errors = pause_pipeline(request, background_tasks)
-
-    if len(errors) > 0:
-        raise HTTPException(
-            status_code=400,
-            detail="; ".join(errors)
-        )
-
-    return {"status": "paused", "request_id": request_id}
 
 @app.post("/pipelines/run", include_in_schema=False)
 async def pipelines_run(
@@ -167,8 +142,8 @@ async def pipelines_run(
     url: str = Form(...),
 ):
     request = PipelineRequest(jurisdiction_id=jurisdiction_id, name=name, url=url)
-    request_id, _warnings, errors = run_pipeline(request, background_tasks)
-    errors = []
+    # TODO: expose this to frontend?
+    _request_id, _warnings, errors = pipeline_manager.create_pipeline(request)
 
     try:
         if len(errors) > 0:
@@ -177,6 +152,8 @@ async def pipelines_run(
                 status_code = 400,
                 detail="; ".join(errors)
             )
+        
+        pipeline_manager.start_pipeline(jurisdiction_id, background_tasks)
 
         # Redirect to the pipeline request page for this jurisdiction
         jurisdiction_id_url = id_utils.jurisdiction_id_to_slug(jurisdiction_id)

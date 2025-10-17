@@ -31,6 +31,7 @@ dependencies = [
     "loguru (>=0.7.3,<0.8.0)",
     "google-api-python-client (>=2.184.0,<3.0.0)",
     "aiofiles (>=24.1.0,<25.0.0)",
+    "pydantic (>=2.12.3,<3.0.0)",
 ]
 
 [tool.poetry]

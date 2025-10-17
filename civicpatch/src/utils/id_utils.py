@@ -54,6 +54,7 @@ def jurisdiction_id_to_slug(jurisdiction_id: str) -> str:
     if jurisdiction_id_parts.county:
         branch += f"county-{jurisdiction_id_parts.county}-"
     branch += f"place-{jurisdiction_id_parts.place}"
+    branch += f"-{jurisdiction_id_parts.jurisdiction_type}"
     return branch
 
 def jurisdiction_id_to_git_branch(jurisdiction_id: str, request_id: str) -> str:
@@ -70,10 +71,10 @@ def slug_to_jurisdiction_id(slug: str) -> str:
     """
     Converts a slug back to a jurisdiction ID.
     Example:
-      "state-wa-place-seattle"
-      -> "ocd-jurisdiction/country:us/state:wa/place:seattle"
-      "state-il-county-dupage-place-naperville"
-      -> "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville"
+      "state-wa-place-seattle-government"
+      -> "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+      "state-il-county-dupage-place-naperville-government"
+      -> "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government"
     """
     tokens = slug.split('-')
     idx = 0
@@ -90,6 +91,7 @@ def slug_to_jurisdiction_id(slug: str) -> str:
             idx += 2
         else:
             idx += 1  # skip unknown tokens
+    result.append(tokens[-1])  # jurisdiction type
     return "/".join(result)
 
 def git_branch_to_jurisdiction_id(branch: str) -> str:

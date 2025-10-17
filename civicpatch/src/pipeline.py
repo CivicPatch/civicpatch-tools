@@ -24,21 +24,11 @@ from steps.step_07_merge_records_across_llms.merge_records_across_llms import me
 from steps.step_08_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
 from steps.step_09_cleanup.cleanup import cleanup
 
-_pipelines_by_jurisdiction_id: dict[str, PipelineRequest] = {}
-
 class Pipeline:
-    def __init__(self):
-        pass
-
-    def set_state(self, state: PipelineStatus):
-        """
-        Set the pipeline to start at a specific state.
-        """
-        if state in PipelineStatus:
-            self.context.state = state
-            print(f"Pipeline state set to: {state}")
-        else:
-            raise ValueError(f"Invalid pipeline state: {state}")
+    def __init__(self, request_id, pipeline_request: PipelineRequest, remove_callback=None):
+        self.context = self.load_context(request_id, pipeline_request)
+        self.stop_requested = False
+        self.remove_callback = remove_callback
 
     async def save_context(self):
         """Save context asynchronously without blocking"""
@@ -47,8 +37,10 @@ class Pipeline:
         
         async with aiofiles.open(context_file_path, "w") as f:
             # Use jsonable encoder from Pydantic
-            serialized_context = self.context.model_dump_json()
-            await f.write(serialized_context)
+            serialized_context = self.context.model_dump_json(indent=4)
+            await f.write(
+                serialized_context
+            )
 
     def load_context(self, request_id: str, pipeline_request: PipelineRequest) -> PipelineContext:
         """
@@ -59,30 +51,12 @@ class Pipeline:
         context_file_path = data_path_utils.get_pipeline_context_file_path(pipeline_request.jurisdiction_id)
         os.makedirs(os.path.dirname(context_file_path), exist_ok=True)
 
-        if os.path.exists(context_file_path):
-            with open(context_file_path, "r") as f:
-                try:
-                    data = json.load(f)
-                    existing_context = PipelineContext.model_validate(data)
-                    existing_request_id = existing_context.request_id
-                except ValidationError as e:
-                    print(f"Validation error loading PipelineContext: {e}")
-                    # Handle error: log, raise, or fallback to default context
-                    existing_context = None  # or create a default PipelineContext
-                except Exception as e:
-                    print(f"Error loading existing context: {e}")
-                    existing_context = None
-
-                if existing_context and request_id == existing_request_id:
-                    print(f"Found existing request id, loading existing context")
-                    return existing_context
-
         context = PipelineContext(
             request_id=request_id,
             jurisdiction_id=jurisdiction_id,
             name=pipeline_request.name,
             url=pipeline_request.url,
-            state=pipeline_request.state
+            state=pipeline_request.state,
         )
 
         print(f"{jurisdiction_id}/{request_id}: New pipeline context created.")
@@ -91,6 +65,8 @@ class Pipeline:
 
     def cleanup(self):
         log_utils.cleanup_pipeline_logger(self.context.jurisdiction_id)
+        if self.remove_callback:
+            self.remove_callback(self.context.jurisdiction_id)
     
     def get_next_link(self, status: LinkStatus):
         for link in self.context.links:
@@ -110,15 +86,13 @@ class Pipeline:
         """
         return [link for link in self.context.links if link.status == status.value]
     
-    def run(self, request_id, pipeline_request: PipelineRequest):
-        asyncio.run(self.run_async(request_id, pipeline_request))
+    def run(self):
+        asyncio.run(self.run_async())
     
-    async def run_async(self, request_id, pipeline_request: PipelineRequest, with_debug = False):
+    async def run_async(self, with_debug = False):
         """
         Main function to run the pipeline for a given jurisdiction id.
         """
-        self.context = self.load_context(request_id, pipeline_request)
-
         jurisdiction_id = self.context.jurisdiction_id
         logger = log_utils.get_pipeline_logger(jurisdiction_id)
         process_config = config_utils.get_process(logger)
@@ -128,7 +102,11 @@ class Pipeline:
         logger.info(f"Pipeline started at {time.ctime(start_time)}")
 
         try:
-            while self.context.state not in [PipelineStatus.DONE, PipelineStatus.PAUSE]:
+            while self.context.state not in [PipelineStatus.DONE]:
+                if self.stop_requested:
+                    self.context.state = PipelineStatus.DONE
+                    logger.info("Pipeline stop requested. Exiting run loop.")
+
                 if self.context.state == PipelineStatus.INIT:
                     prepare_pipeline(self.context)
                     self.context.state = PipelineStatus.RESEARCH_MUNICIPALITY
@@ -223,8 +201,6 @@ class Pipeline:
                     )
 
                     self.context.state = next_state
-                elif self.context.state == PipelineStatus.PAUSE:
-                    logger.info("Pipeline paused.")
 
                 elif self.context.state == PipelineStatus.MERGE_RECORDS_WITHIN_LLM:
                     result = merge_records_within_llm(self.context)
@@ -249,30 +225,20 @@ class Pipeline:
 
                     #self.context.update(result)
                     self.context.state = PipelineStatus.DONE
-                else:
-                    logger.error(f"Pipeline logic not yet implemented for state: {self.state}")
-                    self.state = PipelineStatus.DONE
+                elif self.context.state == PipelineStatus.DONE:
+                    logger.info("Pipeline is done. Exiting run loop.")
+                    break
 
-                _pipelines_by_jurisdiction_id[jurisdiction_id] = PipelineRequest(
-                    jurisdiction_id=jurisdiction_id,
-                    name=self.context.name,
-                    url=self.context.url,
-                    state=self.context.state
-                )
-                _pipelines_by_jurisdiction_id[jurisdiction_id] = PipelineRequest(
-                    jurisdiction_id=jurisdiction_id,
-                    name=self.context.name,
-                    url=self.context.url,
-                    state=self.context.state
-                )
+                else:
+                    logger.error(f"Pipeline logic not yet implemented for state: {self.context.state}")
+                    self.context.state = PipelineStatus.DONE
                 await self.save_context()
 
             end_time = time.time()
             pipeline_duration = end_time - start_time
             self.context.pipeline_duration_seconds = int(pipeline_duration) 
-            logger.info(f"Pipeline completed successfully in {pipeline_duration:.2f} seconds.")
+            logger.info(f"Pipeline completed in {pipeline_duration:.2f} seconds.")
         finally:
-            _pipelines_by_jurisdiction_id.pop(jurisdiction_id, None)
             self.cleanup()
 
     def process_page_content_step(self, logger):
@@ -350,9 +316,3 @@ class Pipeline:
 
         with open(people_file_path, "w", encoding="utf-8") as f:
             yaml.dump(existing_data, f, default_flow_style=False, sort_keys=False)
-
-def get_pipeline_status_by_jurisdiction_id(jurisdiction_id):
-    pipeline_request = _pipelines_by_jurisdiction_id.get(jurisdiction_id, None)
-    if pipeline_request:
-        return pipeline_request.state
-    return None

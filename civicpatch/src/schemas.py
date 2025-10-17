@@ -57,7 +57,6 @@ class PipelineStatus(Enum):
     CLEANUP = "CLEANUP"
     RETRY = "RETRY"
     DONE = "DONE"
-    PAUSE = "PAUSE"
 
 class RawLLMPerson(BaseModel):
     name: str
