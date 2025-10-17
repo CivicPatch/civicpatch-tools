@@ -25,8 +25,8 @@ async def run_pipeline_cli(request: PipelineRequest):
         print("Errors:", errors)
     else:
         print(f"Request ID: {request_id}")
-        pipeline = Pipeline()
-        await pipeline.run_async(request_id, request)
+        pipeline = Pipeline(request_id, request)
+        await pipeline.run_async()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run pipeline for a municipality")
