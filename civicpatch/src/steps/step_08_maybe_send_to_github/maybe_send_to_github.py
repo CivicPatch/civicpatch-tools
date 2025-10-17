@@ -10,7 +10,7 @@ from utils import id_utils, log_utils, cost_utils
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
 
 def maybe_send_to_github(context: PipelineContext):
-  logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
+  logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
   logger.info(f"Step 5: {PipelineStatus.MAYBE_SEND_TO_GITHUB.value}")
 
   # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
@@ -18,8 +18,8 @@ def maybe_send_to_github(context: PipelineContext):
   CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
   CRUDDER_URL = os.getenv("CRUDDER_URL", "https://crudder.civicpatch.org")
   CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/api/github_intake"
-  request_id = context["request_id"]
-  jurisdiction_id = context["jurisdiction_id"]
+  request_id = context.request_id
+  jurisdiction_id = context.jurisdiction_id
   logger.info(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
 
   try:
@@ -36,7 +36,7 @@ def maybe_send_to_github(context: PipelineContext):
         }
       }
 
-    zip_file_path = zip_files(context["request_id"], context["jurisdiction_id"])
+    zip_file_path = zip_files(context.request_id, context.jurisdiction_id)
     file_size_bytes = os.path.getsize(zip_file_path)
     logger.info(f"Created zip file at {zip_file_path}, size: {file_size_bytes} bytes")
     cost_utils.add_storage_cost(
@@ -55,8 +55,8 @@ def maybe_send_to_github(context: PipelineContext):
 
     # Add metadata in the request body
     data = {
-       "request_id": context["request_id"],
-       "jurisdiction_id": context["jurisdiction_id"],
+       "request_id": context.request_id,
+       "jurisdiction_id": context.jurisdiction_id,
     } 
 
     response = with_retry(

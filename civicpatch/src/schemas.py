@@ -1,5 +1,5 @@
-from typing import Dict, List, Optional, TypeAlias, Any
-from pydantic import BaseModel
+from typing import Dict, List, Optional, TypeAlias, Union
+from pydantic import BaseModel, Field
 from decimal import Decimal
 from enum import Enum
 
@@ -27,8 +27,8 @@ class SearchEngineState(BaseModel):
 class ProgressState(BaseModel):
     required_data: int
     current_data: int
-    has_target_role: bool # Depends on the configs; might not have one. If so true by default
-    has_target_divisions: bool # Depends on municipal research. If none, true by default
+    has_target_role: bool = False # Depends on the configs; might not have one. If so true by default
+    has_target_divisions: bool = False # Depends on municipal research. If none, true by default
 
 class LinkStatus(Enum):
     PENDING = "pending"
@@ -99,8 +99,14 @@ class ResearchMunicipalityStep(BaseModel):
     notes: Optional[str] = None
 
 class SearchLinksStep(BaseModel):
+    search_link_pointer: int  # Index of the next search engine to use
     search_engines: Dict[str, SearchEngineState]  # e.g., "google": SearchEngineState
-    links: List[Link]
+    error: Optional[str] = None
+
+class PreprocessPageContentStep(BaseModel):
+    elapsed_times: List[int] = []
+    total_elapsed_time_seconds: int = 0
+    average_elapsed_time_seconds: int = 0
 
 class ProcessPageContentStep(BaseModel):
     raw_records_by_llm: RecordsByLLM
@@ -136,16 +142,33 @@ class PipelineRequest(BaseModel):
     jurisdiction_id: str # Format: ocd-jurisdiction/country:us/state:wa/place:seattle
                          # OR ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville, for cousubs
     url: str
+    state: PipelineStatus = PipelineStatus.INIT
 
 class PipelineContext(BaseModel):
     request_id: str
     jurisdiction_id: str
     name: str # Name of municipality + lsad (ex: Naperville township)
     url: str # Municipality url. Without it we can't scrape anything.
-    links: List[Link]  # TODO: move to SEARCH_LINKS
-    names: Dict[str, List[str]]  # Canonical names to names found while scraping
-    progress: ProgressState
-    steps: Dict[str, Any]
+    state: PipelineStatus = PipelineStatus.INIT
+    links: List[Link] = []
+    names: Dict[str, List[str]] = {}  # Canonical names to names found while scraping
+    progress: ProgressState = ProgressState(required_data=0, current_data=0, has_target_role=True, has_target_divisions=True)
+    steps: Dict[PipelineStatus, Union[
+        ResearchMunicipalityStep,
+        SearchLinksStep,
+        PreprocessPageContentStep,
+        ProcessPageContentStep,
+        MergeRecordsWithinLLMStep,
+        MergeRecordsAcrossLLMsStep,
+    ]] = Field(default_factory=dict)
+    pipeline_duration_seconds: Optional[int] = None
+
+
+DEFAULT_SEARCH_LINKS_STEP = SearchLinksStep(
+    search_link_pointer=0,
+    search_engines={},
+    error=None
+)
 
 class PipelineCompletePayload(BaseModel):
     pipeline_context: PipelineContext

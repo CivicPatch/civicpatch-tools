@@ -11,7 +11,8 @@ from schemas import (
   ProcessPageContentStep,
   OtherNamesByCanonicalName,
   ResearchMunicipalityStep,
-  ResearchedPerson
+  ResearchedPerson,
+  ProgressState
 )
 from utils import (
     merge_utils, 
@@ -21,7 +22,7 @@ from utils import (
     people_utils,
     log_utils
 )
-from typing import List, Any, Dict, Tuple
+from typing import List, Any, Dict, Tuple, cast
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 import services.openai.llm as openai_llm
@@ -55,6 +56,19 @@ IGNORE_WEBSITES = [
     "youtube.com"
 ]
 
+DEFAULT_PROCESS_PAGE_CONTENT_STEP = ProcessPageContentStep(
+    records_by_llm={
+        "google_gemini": {},
+        "openai": {},
+        "together_ai": {}
+    },
+    raw_records_by_llm={
+        "google_gemini": {},
+        "openai": {},
+        "together_ai": {}
+    }
+)
+
 def process_page_content(
     context: PipelineContext,
     page_to_process: Link
@@ -62,13 +76,13 @@ def process_page_content(
     """
     Process the preprocessed data to extract relevant information.
     """
-    logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
-    logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process['url']}")
+    logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
+    logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
-    request_id = context["request_id"]
-    jurisdiction_id = context["jurisdiction_id"]
+    request_id = context.request_id
+    jurisdiction_id = context.jurisdiction_id
     municipality_research: ResearchMunicipalityStep = ResearchMunicipalityStep.model_validate(
-        context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]
+        cast(ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY])
     )
     government_type = municipality_research.government_type
 
@@ -79,19 +93,21 @@ def process_page_content(
     people_hint: List[ResearchedPerson] = municipality_research.elected_officials
 
     cache_path = data_path_utils.get_cache_path(jurisdiction_id)
-    content_file_path = os.path.join(cache_path, page_to_process["folder_name"], "preprocessed.md")
+    content_file_path = os.path.join(cache_path, page_to_process.folder_name, "preprocessed.md")
     with open(content_file_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    source_url = page_to_process["url"]
+    source_url = page_to_process.url
 
     responses = process_with_llms(source_url, request_id, jurisdiction_id, government_type, content, people_hint)
 
-    updated_processed_data: ProcessPageContentStep = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]
+    updated_processed_data = context.steps.get(PipelineStatus.PROCESS_PAGE_CONTENT, DEFAULT_PROCESS_PAGE_CONTENT_STEP)
     if not isinstance(updated_processed_data, ProcessPageContentStep):
         updated_processed_data = ProcessPageContentStep.model_validate(updated_processed_data)
 
-    names: Dict[str, List[str]] = context["names"]
+    updated_processed_data = cast(ProcessPageContentStep, updated_processed_data)
+
+    names: Dict[str, List[str]] = context.names
     updated_names, updated_records_by_llm = update_records_by_llm(
         names, updated_processed_data.records_by_llm, responses
     )
@@ -108,7 +124,7 @@ def process_page_content(
     target_divisions = get_target_divisions(divisions_with_geo, people_hint)
 
     updated_progress = calculate_progress(
-        context["progress"].copy(), 
+        context.progress, 
         updated_processed_data.records_by_llm, 
         roles,
         target_role, 
@@ -116,12 +132,11 @@ def process_page_content(
     )
 
     updated_links = []
-    for link in context["links"]:
-        if link["url"] == page_to_process["url"]:
+    for link in context.links:
+        if link.url == page_to_process.url:
             # Update the status/content for this link
-            updated_links.append({**link, "status": LinkStatus.DONE.value})
-        else:
-            updated_links.append(link)
+            link.status = LinkStatus.DONE.value
+        updated_links.append(link)
 
     updated_links = update_website_links(logger, roles, updated_links, updated_processed_data.records_by_llm)
 
@@ -129,10 +144,8 @@ def process_page_content(
         "links": updated_links,
         "progress": updated_progress,
         "names": updated_names,
-        "steps": {
-            **context["steps"],
-            PipelineStatus.PROCESS_PAGE_CONTENT.value: updated_processed_data.model_dump()
-        }
+        "result": updated_processed_data
+            # PipelineStatus.PROCESS_PAGE_CONTENT.value: updated_processed_data.model_dump()
     }
 
 def normalize_record(record: LLMPerson, government_type: str) -> LLMPerson:
@@ -230,12 +243,12 @@ def process_with_llms(
     return responses
 
 def calculate_progress(
-    progress: Dict[str, Any],
+    progress: ProgressState,
     updated_records_by_llm: RecordsByLLM,
     roles: List[str],
     target_role: str,
     target_divisions: List[str]
-) -> Dict[str, Any]:
+) -> ProgressState:
     """
     Update the progress based on the processed data.
     """
@@ -273,14 +286,14 @@ def calculate_progress(
 
     
     # Following are only true if at least 2 LLMs found enough data
-    progress["has_target_role"] = len(target_role_found_with_an_llm) >= 2
-    progress["has_target_divisions"] = len(divisions_found_with_an_llm) >= 2
+    progress.has_target_role = len(target_role_found_with_an_llm) >= 2
+    progress.has_target_divisions = len(divisions_found_with_an_llm) >= 2
 
     sorted_lengths = sorted(llm_people_found_lengths, reverse=True)
     if len(sorted_lengths) > 1:
-        progress["current_data"] = sorted_lengths[1]
+        progress.current_data = sorted_lengths[1]
     else:
-        progress["current_data"] = 0
+        progress.current_data = 0
 
     return progress
 
@@ -310,19 +323,19 @@ def update_website_links(logger, roles, existing_links: List[Link], records_by_l
     found_websites = extract_websites_from_processed_data(logger, roles, records_by_llm)
 
     for website in found_websites:
-        existing_link = next((link for link in updated_links if link["url"] == website), None)
+        existing_link = next((link for link in updated_links if link.url == website), None)
         if existing_link:
-            if existing_link["status"] == LinkStatus.PENDING.value:
+            if existing_link.status == LinkStatus.PENDING.value:
                 # Move link to the front if it already exists
                 updated_links.remove(existing_link)
                 updated_links.insert(0, existing_link)
         else:
-            new_link: Link = {
-                "url": website,
-                "status": LinkStatus.PENDING.value,
-                "folder_name": url_utils.format_url_to_folder(website),
-                "is_profile_page": True
-            }
+            new_link: Link = Link(
+                url=website,
+                status=LinkStatus.PENDING.value,
+                folder_name=url_utils.format_url_to_folder(website),
+                is_profile_page=True
+            )
             # Add to the front of the list
             updated_links.insert(0, new_link)
 

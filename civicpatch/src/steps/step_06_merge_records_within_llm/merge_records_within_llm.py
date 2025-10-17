@@ -1,18 +1,19 @@
-from typing import Dict, List
+from typing import Dict, List, cast
 from schemas import (
-    LLMPerson, Person, PipelineStatus, RecordsByLLM, PipelineContext
+    LLMPerson, Person, PipelineStatus, 
+    RecordsByLLM, PipelineContext, MergeRecordsWithinLLMStep,
+    ProcessPageContentStep
 )
 from collections import Counter
-from utils import merge_utils, people_utils
+from utils import merge_utils
 
-def merge_records_within_llm(context: PipelineContext):
+def merge_records_within_llm(context: PipelineContext) -> MergeRecordsWithinLLMStep:
     """
     Consolidate records within each LLM to produce a unified list of Person objects.
     """
-    jurisdiction_id = context["jurisdiction_id"]
-    records_by_llm: RecordsByLLM = context["steps"][PipelineStatus.PROCESS_PAGE_CONTENT.value]["records_by_llm"]
+    jurisdiction_id = context.jurisdiction_id
+    records_by_llm: RecordsByLLM = cast(ProcessPageContentStep, context.steps[PipelineStatus.PROCESS_PAGE_CONTENT]).records_by_llm
     records_by_llm = { k: {name: [LLMPerson.model_validate(p) if isinstance(p, dict) else p for p in v] for name, v in people.items()} for k, people in records_by_llm.items() } if isinstance(records_by_llm, dict) else records_by_llm
-    government_type = context["steps"][PipelineStatus.RESEARCH_MUNICIPALITY.value]["government_type"]
 
     # Flatten the records so that we can later group by last name 
     # and merge weakly tied records
@@ -31,16 +32,7 @@ def merge_records_within_llm(context: PipelineContext):
         people_by_llm[llm] = merged_people
 
     # Format to dict
-    people_by_llm = {k: [person.model_dump() for person in v] for k, v in people_by_llm.items()}
-
-    return {
-        "steps": {
-            **context["steps"],
-            PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value: {
-                "people_by_llm": people_by_llm
-            }
-        }
-    }
+    return MergeRecordsWithinLLMStep(people_by_llm=people_by_llm)
 
 def group_by_last_name(llm_people_list: List[LLMPerson]) -> Dict[str, List[LLMPerson]]:
     """

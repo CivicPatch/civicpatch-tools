@@ -32,7 +32,8 @@ def test_pipeline_run(mock_report, mock_submit, mock_validate, mock_process, moc
     mock_submit.return_value = {"logs": []}
 
     # Initialize the pipeline
-    pipeline = Pipeline(state=PipelineState.COLLECT)
+    pipeline = Pipeline()
+    pipeline.set_state(PipelineState.INIT)
 
     # Run the pipeline
     pipeline.run(state="wa", geoid="5363000")

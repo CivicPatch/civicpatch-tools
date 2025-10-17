@@ -1,5 +1,5 @@
 from typing import List
-from schemas import PipelineContext, PipelineStatus, ResearchMunicipalityStep, ResearchedPerson
+from schemas import PipelineContext, PipelineStatus, ResearchMunicipalityStep, ResearchedPerson, ProgressState
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 from utils import config_utils, people_utils, log_utils
@@ -10,13 +10,15 @@ def research_municipality(context: PipelineContext):
     """
     Research the municipality to gather necessary data for further processing.
     """
-    logger = log_utils.get_pipeline_logger(context["jurisdiction_id"])
+    logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
     logger.info(f"Step 1: {PipelineStatus.RESEARCH_MUNICIPALITY.value}")
-    request_id = context["request_id"]
-    jurisdiction_id = context["jurisdiction_id"]
-    municipality_name = context["name"]
+    request_id = context.request_id
+    jurisdiction_id = context.jurisdiction_id
+    municipality_name = context.name
     prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_id, municipality_name)
     response = google_gemini_llm.run_prompt(request_id, jurisdiction_id, prompt, with_search=True)
+    if not response:
+        raise ValueError("No response from LLM")
     people = response.get("people", [])
     government_type = response.get("government_type", "mayor_council")
 
@@ -40,12 +42,10 @@ def research_municipality(context: PipelineContext):
     )
 
     return {
-        "progress": {
-            "required_data": max(MINIMUM_ELECTED_OFFICIALS_NUM, len(target_people)),
-            "current_data": 0,  # Default current data count
-        },
-        "steps": {
-            **context["steps"],
-            PipelineStatus.RESEARCH_MUNICIPALITY.value: result.model_dump()
-        }
+        "progress": ProgressState(
+            required_data=max(MINIMUM_ELECTED_OFFICIALS_NUM, len(target_people)),
+            current_data=0,  # Default current data count
+        ),
+        "result": result
+            # PipelineStatus.RESEARCH_MUNICIPALITY.value: result.model_dump()
     }

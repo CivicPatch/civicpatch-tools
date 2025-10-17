@@ -1,7 +1,5 @@
-
-
 from typing import List, Dict, Tuple
-from schemas import LLMPerson, PeopleByName, OtherNamesByCanonicalName
+from schemas import LLMPerson, Person, PeopleByName, OtherNamesByCanonicalName
 from nameparser import HumanName
 from Levenshtein import distance as levenshtein_distance
 from copy import deepcopy
@@ -36,7 +34,7 @@ def last_name(name: str) -> str:
     parsed_name = HumanName(name)
     return parsed_name.last
 
-def has_name_overlap(record1: LLMPerson, record2: LLMPerson) -> bool:
+def has_name_overlap(record1: LLMPerson | Person, record2: LLMPerson | Person) -> bool:
     """
     Check if two records have the same last names.
     """
@@ -136,7 +134,7 @@ def group_people_by_name(
 
     return name_map, people_by_name
 
-def is_weakly_tied(record1: LLMPerson, record2: LLMPerson) -> bool:
+def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool:
     """
     Determine if two records are weakly tied based on shared attributes.
     """
