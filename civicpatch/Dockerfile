@@ -20,11 +20,12 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_HOME="/opt/poetry" \
     PATH="/opt/poetry/bin:$PATH" \
+    POETRY_VIRTUALENVS_IN_PROJECT=false \
     # DEBUG="pw:browser" \
-    XDG_CACHE_HOME="/app/tmp/.cache" \
-    XDG_CONFIG_HOME="/app/tmp/.config" 
+    XDG_CACHE_HOME="/tmp/.cache" \
+    XDG_CONFIG_HOME="/tmp/.config" 
 
-RUN mkdir -p /app/tmp
+WORKDIR /app
 
 # Needed especially for post-install step
 # cache files are 8GB
@@ -32,10 +33,6 @@ RUN pip config set global.no-cache-dir true
 
 RUN python3 -m venv $POETRY_HOME && \
     $POETRY_HOME/bin/pip install "poetry==2.1.3"
-
-WORKDIR /app
-
-# COPY ./utils /app/utils
 
 RUN useradd -m -s /bin/bash civicpatch_user
 

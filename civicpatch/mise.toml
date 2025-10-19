@@ -4,11 +4,8 @@ python = "3.12.11" # must be after poetry so the poetry bin is first in PATH
 
 [env]
 _.file = ".env"
-POETRY_VIRTUALENVS_IN_PROJECT = false
+POETRY_VIRTUALENVS_IN_PROJECT = true
 
-#[tasks.pipeline]
-# TODO
-#run = "docker compose run --rm civicpatch poetry run python main.py pipeline --state"
 #[tasks.unit]
 #run = "docker compose run --rm civicpatch poetry run pytest -s tests/unit"
 #[tasks.integration]
@@ -26,8 +23,6 @@ run = "docker compose -f docker-compose.development.yml exec civicpatch bash"
 
 [tasks.dev]
 run = """
-UID=$(id -u) \
-GID=$(id -g) \
 docker compose -f docker-compose.development.yml up
 """
 
@@ -60,7 +55,7 @@ curl -X GET "http://localhost:8000/api/search?state=wa&num=10"
 
 [tasks.scratch]
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_filter_content.py"
-run = "docker compose -f ./docker-compose.development.yml run --rm civicpatch poetry run python src/scripts/test_pipeline_step.py"
+run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run python src/scripts/test_pipeline_step.py"
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/utils/test_people_utils.py"
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_filter_content.py"
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/unit/steps/step_04_preprocess_page_content/test_entity_extraction.py"
