@@ -25,10 +25,13 @@ from steps.step_08_maybe_send_to_github.maybe_send_to_github import maybe_send_t
 from steps.step_09_cleanup.cleanup import cleanup
 
 class Pipeline:
-    def __init__(self, request_id, pipeline_request: PipelineRequest, remove_callback=None):
-        self.context = self.load_context(request_id, pipeline_request)
+    def __init__(self, request_id, pipeline_request: PipelineRequest, remove_callback, debug_state=None):
+        self.context = self.load_context(request_id, pipeline_request, debug_state)
         self.stop_requested = False
         self.remove_callback = remove_callback
+
+    def set_state(self, new_state: PipelineStatus):
+        self.context.state = new_state
 
     async def save_context(self):
         """Save context asynchronously without blocking"""
@@ -36,20 +39,35 @@ class Pipeline:
         context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
         
         async with aiofiles.open(context_file_path, "w") as f:
-            # Use jsonable encoder from Pydantic
             serialized_context = self.context.model_dump_json(indent=4)
             await f.write(
                 serialized_context
             )
 
-    def load_context(self, request_id: str, pipeline_request: PipelineRequest) -> PipelineContext:
+    def load_from_context_file(self, jurisdiction_id: str):
+        context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
+
+        with open(context_file_path, "r") as f:
+            context_data = json.load(f)
+            context = PipelineContext.model_validate(context_data)
+            return context
+
+
+    def load_context(self, request_id: str, pipeline_request: PipelineRequest, debug_state) -> PipelineContext:
         """
         Always create a new pipeline context and overwrite any existing file.
         """  
         # Ensure the directory exists
         jurisdiction_id = pipeline_request.jurisdiction_id
-        context_file_path = data_path_utils.get_pipeline_context_file_path(pipeline_request.jurisdiction_id)
+        context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
         os.makedirs(os.path.dirname(context_file_path), exist_ok=True)
+
+        if debug_state is not None:
+            existing_context = self.load_from_context_file(jurisdiction_id)
+            if existing_context:
+                print(f"{jurisdiction_id}/{request_id}: Loaded existing pipeline context for debugging.")
+                existing_context.state = debug_state
+                return existing_context
 
         context = PipelineContext(
             request_id=request_id,
@@ -226,8 +244,7 @@ class Pipeline:
                     #self.context.update(result)
                     self.context.state = PipelineStatus.DONE
                 elif self.context.state == PipelineStatus.DONE:
-                    logger.info("Pipeline is done. Exiting run loop.")
-                    break
+                    logger.info("Pipeline is done.")
 
                 else:
                     logger.error(f"Pipeline logic not yet implemented for state: {self.context.state}")
@@ -280,7 +297,7 @@ class Pipeline:
         cost_limit = process_config.pipeline_run_cost_limit
         if current_total_cost >= cost_limit:
             logger.error(f"Cost limit of ${cost_limit} reached. Current cost: ${current_total_cost:.2f}. Moving to next step.")
-            return PipelineStatus.PAUSE
+            return PipelineStatus.DONE
 
         has_target_role = self.context.progress.has_target_role
         has_target_divisions = self.context.progress.has_target_divisions
@@ -297,22 +314,23 @@ class Pipeline:
         logger.info(f"Not enough data processed yet, collecting more data... {processed_count}/{max_pages_with_required_data}")
         return PipelineStatus.SCRAPE_PAGE
     
-    def save_data(self, found_serialized_people: List[Person]):
+    def save_data(self, people: List[Person]):
         """
-        Save the processed people data to a file.
+        Save the processed people data to a file as JSON.
         """ 
         jurisdiction_id = self.context.jurisdiction_id
         jurisdiction_type = id_utils.parse_jurisdiction_id(jurisdiction_id).jurisdiction_type
 
+        serialized_people = [person.model_dump() for person in people]
+
         existing_data = data_path_utils.get_people(jurisdiction_id)
-        existing_data[jurisdiction_type] = found_serialized_people
+        existing_data[jurisdiction_type] = serialized_people
+
         people_file_path = data_path_utils.get_people_file_path(jurisdiction_id)
+
+        # Ensure the directory exists
         if not os.path.exists(people_file_path):
-            # Ensure the directory exists
             os.makedirs(os.path.dirname(people_file_path), exist_ok=True)
 
-            with open(people_file_path, "w", encoding="utf-8") as f:
-                existing_data = {jurisdiction_type: found_serialized_people}
-
         with open(people_file_path, "w", encoding="utf-8") as f:
-            yaml.dump(existing_data, f, default_flow_style=False, sort_keys=False)
+            json.dump(existing_data, f, indent=4)

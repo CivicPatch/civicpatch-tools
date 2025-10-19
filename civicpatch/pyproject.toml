@@ -32,11 +32,21 @@ dependencies = [
     "google-api-python-client (>=2.184.0,<3.0.0)",
     "aiofiles (>=24.1.0,<25.0.0)",
     "pydantic (>=2.12.3,<3.0.0)",
+    "asyncio (>=4.0.0,<5.0.0)",
+    "pyright (>=1.1.406,<2.0.0)",
 ]
 
 [tool.poetry]
 packages = [
     { include = "src" }
+]
+
+[tool.pyright]
+include = ["src"]
+pythonVersion = "3.11"
+pythonPlatform = "Linux"
+executionEnvironments = [
+  { root = "src" }
 ]
 
 [tool.poetry.scripts]

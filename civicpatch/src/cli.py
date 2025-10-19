@@ -1,9 +1,12 @@
 import argparse
 import asyncio
 from typing import List
+from pipeline_manager import PipelineManager
 from utils import id_utils
 from schemas import PipelineRequest, PipelineStatus
 from pipeline import Pipeline
+
+pipeline_manager = PipelineManager()
 
 async def run_pipeline_cli(request: PipelineRequest):
     request_id = id_utils.make_request_id()
@@ -25,7 +28,12 @@ async def run_pipeline_cli(request: PipelineRequest):
         print("Errors:", errors)
     else:
         print(f"Request ID: {request_id}")
-        pipeline = Pipeline(request_id, request)
+        pipeline = Pipeline(
+            request_id, 
+            request, 
+            remove_callback=None, 
+            debug_state = PipelineStatus.MAYBE_SEND_TO_GITHUB 
+        )
         await pipeline.run_async()
 
 if __name__ == "__main__":

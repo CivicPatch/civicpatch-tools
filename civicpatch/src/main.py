@@ -75,23 +75,6 @@ async def create_new_pipeline(request: PipelineRequest, background_tasks: Backgr
             detail=str(e)
         ) 
 
-# This will only restart the pipeline if it exists    
-# With no pause this is moot
-#@app.post("/api/pipelines/{jurisdiction_id_url}/start")
-#async def start_pipeline_endpoint(jurisdiction_id_url: str, background_tasks: BackgroundTasks):
-#    """Start an existing pipeline."""
-#    print("jurisdicition url = ", jurisdiction_id_url)
-#    jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_url)
-#    print("jurisdicition output = ", jurisdiction_id)
-#    try:
-#        result = pipeline_manager.start_pipeline(jurisdiction_id, background_tasks)
-#        return result
-#    except ValueError as e:
-#        raise HTTPException(
-#            status_code=404,
-#            detail=str(e)
-#        )
-
 @app.get("/api/pipeline/{jurisdiction_id_url}/status")
 async def pipeline_status(jurisdiction_id_url: str):
     jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_url)
@@ -119,13 +102,6 @@ async def pipeline_status(jurisdiction_id_url: str):
     return {"status": pipeline.context.state.value, 
             "previous_statuses": previous_statuses, 
             "future_statuses": future_statuses}
-
-# Too much complexity for now, TODO tear out pausing completely
-#@app.post("/api/pipelines/{jurisdiction_id_url}/pause")
-#async def pause_pipeline(jurisdiction_id_url: str):
-#    jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_url)
-#    pipeline_manager.pause_pipeline(jurisdiction_id)
-#    return {"status": "paused", "jurisdiction_id": jurisdiction_id}
 
 @app.post("/api/pipelines/{jurisdiction_id_url}/stop")
 async def stop_pipeline_endpoint(jurisdiction_id_url: str):
