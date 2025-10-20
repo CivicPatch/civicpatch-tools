@@ -1,6 +1,6 @@
 import os
 from typing import List
-import utils.scrape_utils as scrape_utils
+import steps.step_03_scrape_page.scrape_utils as scrape_utils
 from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
 import utils.data_path_utils as data_path_utils
 import utils.url_utils as url_utils

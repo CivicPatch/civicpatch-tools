@@ -1,9 +1,31 @@
 import os
 import yaml
 from typing import Any, List, Dict
-from schemas import Person
-import utils.path_utils
 from utils import id_utils
+
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+def get_data_path():
+    """
+    Returns the absolute path to the 'data' directory.
+    """
+    data_path = os.path.join(ROOT_DIR, "data")
+
+    if not os.path.exists(data_path):
+        raise FileNotFoundError(f"'data' directory not found at {data_path}")
+
+    return data_path
+
+def get_data_source_path():
+    """
+    Returns the absolute path to the 'data_source' directory.
+    """
+    data_source_path = os.path.join(ROOT_DIR, "data_source")
+
+    if not os.path.exists(data_source_path):
+        raise FileNotFoundError(f"'data_source' directory not found at {data_source_path}")
+
+    return data_source_path
 
 def get_pipeline_context_file_path(jurisdiction_id: str):
     """

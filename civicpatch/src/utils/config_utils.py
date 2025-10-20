@@ -1,6 +1,5 @@
 import os
 import yaml
-import utils.path_utils as path_utils
 from typing import Dict, List
 from decimal import Decimal, InvalidOperation
 from schemas import ProcessConfig
@@ -9,6 +8,16 @@ _divisions_config = None
 _government_types_config = None
 _crawl_config = None
 _process_config = None
+
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+def get_config_path():
+    """
+    Returns the absolute path to the configuration file.
+    """
+    config_path = os.path.join(ROOT_DIR, "config")
+
+    return config_path
 
 def get_divisions():
     global _divisions_config

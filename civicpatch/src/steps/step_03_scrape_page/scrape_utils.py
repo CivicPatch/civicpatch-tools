@@ -3,7 +3,7 @@ import hashlib
 import json
 from unittest import result
 from playwright.async_api import async_playwright, Page
-from typing import TypedDict
+from typing import TypedDict, cast
 
 IMAGE_URL_BLACKLIST = ["https://google.com"]
 IMAGE_EXT_BLACKLIST = [".svg", ".gif"]
@@ -39,7 +39,7 @@ async def scrape(logger, website_url, options=None):
         context = await browser.new_context() 
         page = await context.new_page()
 
-        for wait_until in ["networkidle", "domcontentloaded"]:
+        for wait_until in ["load", "domcontentloaded"]:
             try:
                 await page.goto(website_url, wait_until=wait_until)
                 break
@@ -138,58 +138,84 @@ async def html_relative_to_absolute_urls(page: Page):
         }
     """, base_url)
 
-async def download_images(logger, page: Page, image_dir: str):
+def is_valid_image(src: str | None) -> bool:
     """
-    Captures screenshots of images from the current page using Playwright,
-    renames them with hashed strings, and saves a mapping of original URLs to hashed strings in a JSON file.
+    Checks if the image source is valid based on blacklists and other criteria.
 
     Args:
-        page (Page): The Playwright page object.
-        image_dir (str): Directory to save the captured images.
-    """
-    os.makedirs(image_dir, exist_ok=True)
+        src (str): The image source URL.
 
-    image_elements = await page.query_selector_all("img")
+    Returns:
+        bool: True if the image is valid, False otherwise.
+    """
+    if not src:
+        return False
+    if any(src.endswith(ext) for ext in IMAGE_EXT_BLACKLIST):
+        return False
+    if any(blacklisted in src for blacklisted in IMAGE_URL_BLACKLIST):
+        return False
+    return True
+
+async def download_images(logger, page: Page, image_dir: str):
+    """
+    Downloads images from the current page using a fallback strategy:
+    1. Direct download by URL.
+    2. Download as data URL.
+    3. Screenshot the image as a last resort.
+    """
+    import aiohttp
+    import base64
+    from urllib.parse import urljoin
+
+    os.makedirs(image_dir, exist_ok=True)
     image_map = {}
 
-    for img in image_elements:
-        src = None
+    for img in await page.query_selector_all("img"):
         try:
-            if not await img.is_visible():
-                raise ImageError("Image is not visible")
             src = await img.get_attribute("src")
-            if not src:
-                raise ImageError("No src in image")
-            
-            if any(src.endswith(ext) for ext in IMAGE_EXT_BLACKLIST):
-                raise ImageError("Image is under blacklisted")
-
+            if not is_valid_image(src):
+                logger.info(f"Skipping blacklisted or invalid image: {src}")
+                continue
+            src = urljoin(page.url, src)
             image_hash = hash_string(src)
-            file_name = f"{image_hash}.png"
-            file_path = os.path.join(image_dir, file_name)
+            file_path = os.path.join(image_dir, f"{image_hash}.png")
 
+            # Fallback 1: Direct download by URL
+            if not src.startswith("data:"):
+                logger.info(f"Attempting direct download for image: {src}")
+                async with aiohttp.ClientSession() as session:
+                    async with session.get(src) as response:
+                        if response.status == 200:
+                            with open(file_path, "wb") as f:
+                                f.write(await response.read())
+                            logger.info(f"Image downloaded directly: {file_path}")
+                            image_map[src] = file_path
+                            continue
+                        else:
+                            logger.warning(f"Failed direct download for {src}: HTTP {response.status}")
+
+            # Fallback 2: Download as data URL
+            if src.startswith("data:"):
+                logger.info(f"Attempting to decode data URL for image")
+                header, encoded = src.split(",", 1)
+                with open(file_path, "wb") as f:
+                    f.write(base64.b64decode(encoded))
+                logger.info(f"Image saved from data URL: {file_path}")
+                image_map[src] = file_path
+                continue
+
+            # Fallback 3: Screenshot the image
+            logger.info(f"Attempting to screenshot image: {src}")
             await img.screenshot(path=file_path)
+            logger.info(f"Image captured via screenshot: {file_path}")
+            image_map[src] = file_path
 
-            image_map[src] = file_name
         except Exception as e:
-            if src is not None:
-                logger.warning(f"Failed to capture image {src}: {e}")
+            logger.warning(f"Failed to process image: {src if src else 'None'} - {e}")
 
-            await page.evaluate("""(img) => {
-                if (img && img.parentNode) {
-                    img.parentNode.removeChild(img);
-                }
-            }""", img)
-
+    # Save the image map
     map_file_path = os.path.join(image_dir, "image_map.json")
-
-    # Append to existing map if it exists, otherwise create new
-    if os.path.exists(map_file_path):
-        with open(map_file_path, "r") as f:
-            existing_map = json.load(f)
-        existing_map.update(image_map)
-        image_map = existing_map
-
     with open(map_file_path, "w") as f:
         json.dump(image_map, f, indent=4)
+    logger.info(f"Image map saved to {map_file_path}")
 
