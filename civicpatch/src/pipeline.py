@@ -67,6 +67,7 @@ class Pipeline:
 
         if pipeline_request.state != PipelineStatus.INIT:
             existing_context = self.load_from_context_file(jurisdiction_id)
+            existing_context.request_id = request_id
             if existing_context:
                 print(f"{jurisdiction_id}/{request_id}: Loaded existing pipeline context for debugging.")
                 existing_context.state = pipeline_request.state
