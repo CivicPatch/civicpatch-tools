@@ -160,6 +160,7 @@ def run_prompt(request_id, jurisdiction_id: str, prompt, content="", response_sc
         usage = completion.usage
         
         cost_utils.add_llm_cost(
+            logger,
             request_id,
             jurisdiction_id, 
             "together_ai", 

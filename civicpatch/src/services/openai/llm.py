@@ -41,6 +41,7 @@ def run_prompt(request_id, jurisdiction_id: str, prompt, response_schema, conten
         output_tokens_num = usage.completion_tokens
 
         cost_utils.add_llm_cost(
+            logger,
             request_id,
             jurisdiction_id, 
             "openai", 

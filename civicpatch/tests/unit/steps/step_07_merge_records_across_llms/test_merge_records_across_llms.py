@@ -1,4 +1,4 @@
-from civicpatch.src.steps.step_07_merge_records_across_llms.merge_records_across_llms import merge_people_across_llms
+from steps.step_07_merge_records_across_llms.merge_records_across_llms import merge_people_across_llms
 import pytest
 from schemas import Person, Disagreement, MissingPerson, PipelineStatus, PipelineContext
 from steps.step_07_merge_records_across_llms import (

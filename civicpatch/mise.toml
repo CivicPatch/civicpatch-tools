@@ -10,9 +10,6 @@ POETRY_VIRTUALENVS_IN_PROJECT = true
 #run = "docker compose run --rm civicpatch poetry run pytest -s tests/unit"
 #[tasks.integration]
 #run = "docker compose run --rm civicpatch poetry run pytest -s tests/integration"
-#[tasks.inttest]
-#run = "docker compose run --rm civicpatch xvfb-run -a poetry run pytest -s -vv tests/integration/services/together_ai/test_llm.py"
-
 ###################################################
 ## 🚀✨ DEVELOPMENT TASKS ✨🚀 
 ###################################################
@@ -20,6 +17,13 @@ POETRY_VIRTUALENVS_IN_PROJECT = true
 run = "docker compose -f docker-compose.development.yml run --rm civicpatch"
 [tasks.containsh]
 run = "docker compose -f docker-compose.development.yml exec civicpatch bash"
+
+[tasks.devinttest]
+# run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/integration/services/together_ai/test_llm.py"
+run = """
+docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m integration tests/integration
+"""
+
 
 [tasks.dev]
 run = """
