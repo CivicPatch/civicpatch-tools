@@ -42,11 +42,11 @@ LLMS = [
         "service": openai_llm,
         "prompt": openai_prompt,
     },
-    {
-        "name": "together_ai",
-        "service": together_ai_llm,  # Placeholder for Together AI service
-        "prompt": together_ai_prompt,  # Placeholder for Together AI prompt
-    }
+    #{
+    #    "name": "together_ai",
+    #    "service": together_ai_llm,  # Placeholder for Together AI service
+    #    "prompt": together_ai_prompt,  # Placeholder for Together AI prompt
+    #}
 ]
 IGNORE_WEBSITES = [
     "facebook.com",
@@ -60,12 +60,12 @@ DEFAULT_PROCESS_PAGE_CONTENT_STEP = ProcessPageContentStep(
     records_by_llm={
         "google_gemini": {},
         "openai": {},
-        "together_ai": {}
+        #"together_ai": {}
     },
     raw_records_by_llm={
         "google_gemini": {},
         "openai": {},
-        "together_ai": {}
+        #"together_ai": {}
     }
 )
 

@@ -63,8 +63,11 @@ def generate_review_comment(pipeline_context: PipelineContext, people: List[Pers
         for person_name, person_disagreements in disagreements_by_person.items():
             markdown.append(f"### {person_name}\n")
             
-            markdown.append("| Field | Disagreement Score | gemini | openai | together_ai | final_value |")
-            markdown.append("| ----- | ------------------ | ------ | ------ | ----------- | ----------- |")
+            #markdown.append("| Field | Disagreement Score | gemini | openai | together_ai | final_value |")
+            #markdown.append("| ----- | ------------------ | ------ | ------ | ----------- | ----------- |")
+
+            markdown.append("| Field | Disagreement Score | gemini | openai | final_value |")
+            markdown.append("| ----- | ------------------ | ------ | ------ | ----------- |")
 
             for disagreement in person_disagreements:
                 field = disagreement.field
@@ -78,16 +81,17 @@ def generate_review_comment(pipeline_context: PipelineContext, people: List[Pers
                 # If a value is unique (doesn't match others), it should be bold
                 gemini_value = llm_values.get("google_gemini", "")
                 openai_value = llm_values.get("openai", "")
-                together_value = llm_values.get("together_ai", "")
+                # together_value = llm_values.get("together_ai", "")
                 
                 # Bold values that don't match the final value
                 if len(unique_values) > 1:
                     gemini_value = f"**{gemini_value}**" if gemini_value != final_value else gemini_value
                     openai_value = f"**{openai_value}**" if openai_value != final_value else openai_value
-                    together_value = f"**{together_value}**" if together_value != final_value else together_value
+                    # together_value = f"**{together_value}**" if together_value != final_value else together_value
 
-                markdown.append(f"| {field} | {score:.2f} | {gemini_value} | {openai_value} | {together_value} | {final_value} |")
-            
+                # markdown.append(f"| {field} | {score:.2f} | {gemini_value} | {openai_value} | {together_value} | {final_value} |")
+                markdown.append(f"| {field} | {score:.2f} | {gemini_value} | {openai_value} | {final_value} |")
+
             markdown.append("\n---\n")
 
     return "\n".join(markdown)
