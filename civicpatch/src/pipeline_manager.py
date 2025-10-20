@@ -69,5 +69,4 @@ class PipelineManager:
             raise ValueError(f"No pipeline found for jurisdiction {jurisdiction_id}.")
         
         pipeline.stop_requested = True  # Set stop flag
-        self.remove_pipeline(jurisdiction_id)
         return {"status": "stopping", "jurisdiction_id": jurisdiction_id}
