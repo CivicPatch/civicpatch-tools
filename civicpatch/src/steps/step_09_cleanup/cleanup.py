@@ -1,10 +1,10 @@
 import os
 import shutil
 import json
-from typing import List
+from typing import List, cast
 
 from utils.data_path_utils import get_data_source_municipality_path
-from schemas import PipelineContext, PipelineStatus, Person
+from schemas import PipelineContext, PipelineStatus, Person, MergeRecordsAcrossLLMsStep
 from utils import url_utils, log_utils, cost_utils
 
 def cleanup(context: PipelineContext):
@@ -17,7 +17,8 @@ def cleanup(context: PipelineContext):
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
-    people_data = context["steps"][PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value]["people"]
+    merge_records_step = cast(MergeRecordsAcrossLLMsStep,context.steps[PipelineStatus.MERGE_RECORDS_ACROSS_LLMS])
+    people_data = merge_records_step.people
     people = [Person.parse_obj(person) for person in people_data]
 
     if os.path.exists(cache_dir):
@@ -26,7 +27,6 @@ def cleanup(context: PipelineContext):
     if os.path.exists(images_dir):
         # Only keep images that are referenced by people
         cleanup_images(logger, request_id, jurisdiction_id, images_dir, people)
-    return {}
 
 def cleanup_cache(cache_dir: str, people_list: List[Person]):
     # Clear out any page urls are not under sources or website urls

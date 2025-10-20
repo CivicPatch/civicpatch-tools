@@ -136,6 +136,11 @@ class MergeRecordsAcrossLLMsStep(BaseModel):
     missing_people: List[MissingPerson] = []  # Now properly typed with MissingPerson class
     validation_errors: List[str] = []
 
+class MaybeSendToGitHubStep(BaseModel):
+    status: str
+    response_status_code: Optional[int] = None
+    response_text: Optional[str] = None
+
 class PipelineRequest(BaseModel):
     name: str # Human-readable name -- typically this would include the lsad (ex: Naperville township)
     jurisdiction_id: str # Format: ocd-jurisdiction/country:us/state:wa/place:seattle
@@ -159,6 +164,7 @@ class PipelineContext(BaseModel):
         ProcessPageContentStep,
         MergeRecordsWithinLLMStep,
         MergeRecordsAcrossLLMsStep,
+        MaybeSendToGitHubStep,
     ]] = Field(default_factory=dict)
     pipeline_duration_seconds: Optional[int] = None
 

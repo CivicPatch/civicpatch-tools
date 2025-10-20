@@ -3,8 +3,7 @@ import json
 from pydantic.json import pydantic_encoder
 from schemas import PipelineContext, PipelineRequest, PipelineStatus, LinkStatus, ProcessConfig, SearchEngineStatus, Link, Person, SearchLinksStep
 from pydantic import ValidationError
-from typing import List
-import yaml
+from typing import List, cast
 import time
 import asyncio
 import aiofiles
@@ -25,8 +24,8 @@ from steps.step_08_maybe_send_to_github.maybe_send_to_github import maybe_send_t
 from steps.step_09_cleanup.cleanup import cleanup
 
 class Pipeline:
-    def __init__(self, request_id, pipeline_request: PipelineRequest, remove_callback, debug_state=None):
-        self.context = self.load_context(request_id, pipeline_request, debug_state)
+    def __init__(self, request_id, pipeline_request: PipelineRequest, remove_callback):
+        self.context = self.load_context(request_id, pipeline_request)
         self.stop_requested = False
         self.remove_callback = remove_callback
 
@@ -37,12 +36,16 @@ class Pipeline:
         """Save context asynchronously without blocking"""
         jurisdiction_id = self.context.jurisdiction_id
         context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
-        
-        async with aiofiles.open(context_file_path, "w") as f:
-            serialized_context = self.context.model_dump_json(indent=4)
-            await f.write(
-                serialized_context
-            )
+
+        print("Saving pipeline context to", context_file_path) 
+        print("self.context set to", self.context.model_dump_json()[:50])
+        try:
+            async with aiofiles.open(context_file_path, "w") as f:
+                serialized_context = self.context.model_dump_json(indent=4)
+                print("serialized_context:", serialized_context[:50])
+                await f.write(serialized_context)
+        except Exception as e:
+            print(f"Exception in save_context: {e}")
 
     def load_from_context_file(self, jurisdiction_id: str):
         context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
@@ -53,7 +56,7 @@ class Pipeline:
             return context
 
 
-    def load_context(self, request_id: str, pipeline_request: PipelineRequest, debug_state) -> PipelineContext:
+    def load_context(self, request_id: str, pipeline_request: PipelineRequest) -> PipelineContext:
         """
         Always create a new pipeline context and overwrite any existing file.
         """  
@@ -62,19 +65,18 @@ class Pipeline:
         context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
         os.makedirs(os.path.dirname(context_file_path), exist_ok=True)
 
-        if debug_state is not None:
+        if pipeline_request.state != PipelineStatus.INIT:
             existing_context = self.load_from_context_file(jurisdiction_id)
             if existing_context:
                 print(f"{jurisdiction_id}/{request_id}: Loaded existing pipeline context for debugging.")
-                existing_context.state = debug_state
+                existing_context.state = pipeline_request.state
                 return existing_context
 
         context = PipelineContext(
             request_id=request_id,
             jurisdiction_id=jurisdiction_id,
             name=pipeline_request.name,
-            url=pipeline_request.url,
-            state=pipeline_request.state,
+            url=pipeline_request.url
         )
 
         print(f"{jurisdiction_id}/{request_id}: New pipeline context created.")
@@ -144,6 +146,9 @@ class Pipeline:
                             search_engines={},
                             error=None
                         )
+                    else:
+                        search_link_state = self.context.steps[PipelineStatus.SEARCH_LINKS]
+                        search_link_state = cast(SearchLinksStep, search_link_state)
                     search_link_pointer = search_link_state.search_link_pointer
 
                     if search_link_pointer >= len(SearchEngineNames):
@@ -232,20 +237,15 @@ class Pipeline:
                     self.context.state = PipelineStatus.CLEANUP
 
                 elif self.context.state == PipelineStatus.CLEANUP:
-                    #result = cleanup(self.context)
+                    result = cleanup(self.context)
 
-                    #self.context.update(result)
                     self.context.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
                 elif self.context.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
                     cost_utils.log_costs(self.context.request_id, self.context.jurisdiction_id)
-                    #result = maybe_send_to_github(self.context)
+                    result = maybe_send_to_github(self.context)
 
-                    #self.context.update(result)
                     self.context.state = PipelineStatus.DONE
-                elif self.context.state == PipelineStatus.DONE:
-                    logger.info("Pipeline is done.")
-
                 else:
                     logger.error(f"Pipeline logic not yet implemented for state: {self.context.state}")
                     self.context.state = PipelineStatus.DONE
@@ -254,6 +254,7 @@ class Pipeline:
             end_time = time.time()
             pipeline_duration = end_time - start_time
             self.context.pipeline_duration_seconds = int(pipeline_duration) 
+            await self.save_context()
             logger.info(f"Pipeline completed in {pipeline_duration:.2f} seconds.")
         finally:
             self.cleanup()

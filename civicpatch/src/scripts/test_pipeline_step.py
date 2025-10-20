@@ -11,15 +11,15 @@ pipeline_manager = PipelineManager()
 async def test_pipeline_step():
     #jurisdiction_id = "ocd_jurisdiction/country:us/state:nc/place:greensboro/government"
     jurisdiction_id = "ocd_jurisdiction/country:us/state:wa/place:seattle/government"
-    pipeline_status = PipelineStatus.MERGE_RECORDS_ACROSS_LLMS
     # Note: need to generate a unique request id
     # if you are testing PR creation
     pipeline_manager.create_pipeline(
         PipelineRequest(
             jurisdiction_id=jurisdiction_id,
             name="Seattle city",
-            url="https://seattle.gov/council"
-        ), debug_state=pipeline_status)
+            url="https://seattle.gov/council",
+            state=PipelineStatus.MAYBE_SEND_TO_GITHUB
+        ))
     pipeline_manager.start_pipeline(jurisdiction_id)
 
 if __name__ == "__main__":

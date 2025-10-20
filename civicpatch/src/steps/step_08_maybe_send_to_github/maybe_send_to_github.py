@@ -1,7 +1,7 @@
 import os
 import requests
 import zipfile
-from schemas import PipelineContext, PipelineStatus
+from schemas import PipelineContext, PipelineStatus, MaybeSendToGitHubStep
 
 from utils.request_utils import with_retry
 from utils.data_path_utils import get_data_source_municipality_path, get_people_file_path
@@ -9,7 +9,7 @@ from utils import id_utils, log_utils, cost_utils
 
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
 
-def maybe_send_to_github(context: PipelineContext):
+def maybe_send_to_github(context: PipelineContext) -> MaybeSendToGitHubStep:
   logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
   logger.info(f"Step 5: {PipelineStatus.MAYBE_SEND_TO_GITHUB.value}")
 
@@ -27,14 +27,9 @@ def maybe_send_to_github(context: PipelineContext):
       logger.error("CRUDDER_SHARED_TOKEN is not set, skipping github workflow dispatch.")
       logger.error(f"Generate api key from CRUDDER at {CRUDDER_URL}")
 
-      return {
-        "steps": {
-          **context["steps"],
-          PipelineStatus.MAYBE_SEND_TO_GITHUB.value: {
-              "status": "skipped"
-          }
-        }
-      }
+      return MaybeSendToGitHubStep(
+        status="skipped_no_token"
+      )
 
     zip_file_path = zip_files(context.request_id, context.jurisdiction_id)
     file_size_bytes = os.path.getsize(zip_file_path)
@@ -70,27 +65,24 @@ def maybe_send_to_github(context: PipelineContext):
         )
     )
 
-    return {
-      "steps": {
-        **context["steps"],
-        PipelineStatus.MAYBE_SEND_TO_GITHUB.value: {
-            "status": "completed" if response.status_code == 200 else "failed",
-            "response_status_code": response.status_code,
-            "response_text": response.text
-        }
-      }
-    }
+    if not response:
+      logger.error("Failed to get a response from Crudder after retries.")
+      return MaybeSendToGitHubStep(
+        status="failed_no_response"
+      )
+    
+    return MaybeSendToGitHubStep(
+        status="completed",
+        response_status_code=response.status_code,
+        response_text=response.text
+    )
+
   except Exception as e:
     logger.error(f"Error sending to Crudder: {e}")
-    return {
-      "steps": {
-        **context["steps"],
-        PipelineStatus.MAYBE_SEND_TO_GITHUB.value: {
-            "status": "failed",
-            "error": str(e)
-        }
-      }
-    }
+    return MaybeSendToGitHubStep(
+        status="failed",
+        response_text=str(e)
+    )
 
 def zip_files(request_id, jurisdiction_id):
     data_municipality_file = get_people_file_path(jurisdiction_id)

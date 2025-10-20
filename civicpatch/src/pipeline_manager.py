@@ -10,12 +10,11 @@ class PipelineManager:
     def __init__(self):
         self._pipelines: dict[str, Pipeline] = {}
 
-    def add_pipeline(self, pipeline_request: PipelineRequest, debug_state: PipelineStatus | None = None):
+    def add_pipeline(self, pipeline_request: PipelineRequest):
         pipeline = Pipeline(
             request_id=id_utils.make_request_id(),
             pipeline_request=pipeline_request,
             remove_callback=self.remove_pipeline,  # Pass the callback
-            debug_state=debug_state
         )
         self._pipelines[pipeline_request.jurisdiction_id] = pipeline
 
@@ -26,7 +25,7 @@ class PipelineManager:
         if jurisdiction_id in self._pipelines:
             del self._pipelines[jurisdiction_id]
 
-    def create_pipeline(self, pipeline_request: PipelineRequest, debug_state: PipelineStatus | None = None):
+    def create_pipeline(self, pipeline_request: PipelineRequest):
         """Create a new pipeline without starting it."""
         request_id = id_utils.make_request_id()
         jurisdiction_id = pipeline_request.jurisdiction_id
@@ -45,7 +44,7 @@ class PipelineManager:
         if len(errors) > 0:
             return request_id, warnings, errors
 
-        self.add_pipeline(pipeline_request, debug_state)
+        self.add_pipeline(pipeline_request)
 
         print(f"New pipeline for jurisdiction {jurisdiction_id} created.")
 
