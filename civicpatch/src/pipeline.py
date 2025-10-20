@@ -37,12 +37,9 @@ class Pipeline:
         jurisdiction_id = self.context.jurisdiction_id
         context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
 
-        print("Saving pipeline context to", context_file_path) 
-        print("self.context set to", self.context.model_dump_json()[:50])
         try:
             async with aiofiles.open(context_file_path, "w") as f:
                 serialized_context = self.context.model_dump_json(indent=4)
-                print("serialized_context:", serialized_context[:50])
                 await f.write(serialized_context)
         except Exception as e:
             print(f"Exception in save_context: {e}")
@@ -238,12 +235,18 @@ class Pipeline:
                     self.context.state = PipelineStatus.CLEANUP
 
                 elif self.context.state == PipelineStatus.CLEANUP:
+                    end_time = time.time()
+                    pipeline_duration = end_time - start_time
+                    self.context.pipeline_duration_seconds = int(pipeline_duration) 
                     result = cleanup(self.context)
 
                     self.context.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
                 elif self.context.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
-                    cost_utils.log_costs(self.context.request_id, self.context.jurisdiction_id)
+                    cost_utils.log_costs(
+                        self.context.request_id, 
+                        self.context.jurisdiction_id
+                    )
                     result = maybe_send_to_github(self.context)
 
                     self.context.state = PipelineStatus.DONE
@@ -252,9 +255,6 @@ class Pipeline:
                     self.context.state = PipelineStatus.DONE
                 await self.save_context()
 
-            end_time = time.time()
-            pipeline_duration = end_time - start_time
-            self.context.pipeline_duration_seconds = int(pipeline_duration) 
             await self.save_context()
             logger.info(f"Pipeline completed in {pipeline_duration:.2f} seconds.")
         finally:

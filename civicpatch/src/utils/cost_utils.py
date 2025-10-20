@@ -1,8 +1,7 @@
 import os
 import json
-from utils import data_path_utils
+from utils import data_path_utils, log_utils
 from decimal import Decimal
-from dataclasses import dataclass
 from datetime import datetime, timezone
 from pydantic import BaseModel
 
@@ -144,6 +143,7 @@ def get_cost_tracker(jurisdiction_id: str):
     return _COSTS_BY_JURISDICTION[jurisdiction_id]
 
 def add_llm_cost(
+        logger: log_utils.PipelineLogger,
         request_id: str,
         jurisdiction_id: str, 
         llm_name: str, 
@@ -192,6 +192,7 @@ def add_llm_cost(
         "output_cost": result.output_cost,
         "total_cost": result.total_cost
     })
+    logger.info(f"LLM Cost added: {result.llm_name} model {result.model} - Input tokens: {input_tokens}, Output tokens: {output_tokens}, Total cost: ${result.total_cost:.2f}")
 
 def add_search_engine_cost(
         request_id: str,
@@ -206,7 +207,6 @@ def add_search_engine_cost(
     #     "total_cost"
     # ]
     result = SearchEngineCost(
-        request_id=request_id,
         jurisdiction_id=jurisdiction_id,
         search_engine_name=search_engine_name,
     )

@@ -1226,14 +1226,14 @@ files = [
 
 [[package]]
 name = "instructor"
-version = "1.10.0"
+version = "1.11.3"
 description = "structured outputs for llm"
 optional = false
 python-versions = "<4.0,>=3.9"
 groups = ["main"]
 files = [
-    {file = "instructor-1.10.0-py3-none-any.whl", hash = "sha256:9c789f0fce915d5498059afb5314530c8a5b22b0283302679148ddae98f732b0"},
-    {file = "instructor-1.10.0.tar.gz", hash = "sha256:887d33e058b913290dbf526b0096b1bb8d7ea1a07d75afecbf716161f959697b"},
+    {file = "instructor-1.11.3-py3-none-any.whl", hash = "sha256:9ecd7a3780a045506165debad2ddcc4a30e1057f06997973185f356b0a42c6e3"},
+    {file = "instructor-1.11.3.tar.gz", hash = "sha256:6f58fea6fadfa228c411ecdedad4662230c456718f4a770a97a806dcb36b3287"},
 ]
 
 [package.dependencies]
