@@ -77,7 +77,7 @@ class PeopleArrayLLMResponseSchema(BaseModel):
     thought: str
 
 class Person(RawLLMPerson):
-    cdn_image: str
+    cdn_image: Optional[str] = None
     jurisdiction_id: str
     sources: List[str] # List of source URLs where information was found
     updated_at: str
