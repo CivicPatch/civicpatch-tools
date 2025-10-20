@@ -1,15 +1,11 @@
-import os
 import json
-import yaml
 import sys
-from collections import Counter
 from typing import List
-from schemas import PipelineContext, Person, MergeRecordsAcrossLLMsStep
+from schemas import PipelineContext, Person, MergeRecordsAcrossLLMsStep, PipelineStatus
 from utils import data_path_utils
 
 def generate_review_comment(pipeline_context: PipelineContext, people: List[Person]) -> str:
-    # Get data from MERGE_RECORDS_ACROSS_LLMS step
-    merge_step: MergeRecordsAcrossLLMsStep = pipeline_context.steps.get("MERGE_RECORDS_ACROSS_LLMS", {})
+    merge_step = pipeline_context.steps[PipelineStatus.MERGE_RECORDS_ACROSS_LLMS]
     merge_step = MergeRecordsAcrossLLMsStep.model_validate(merge_step)
 
     agreement_score = merge_step.agreement_score
