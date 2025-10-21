@@ -1,5 +1,5 @@
 import pytest
-from schemas import LLMPerson, LLMDataPoint, Person, PipelineStatus
+from schemas import LLMPerson, Person, PipelineStatus
 from steps.step_06_merge_records_within_llm.merge_records_within_llm import (
     merge_field, merge_roles, merge_divisions, merge_llm_people_to_person, merge_records_within_llm
 )
@@ -7,25 +7,23 @@ from utils.config_utils import get_role_alias_map, get_division_alias_map
 
 def make_llm_person(name, roles=None, divisions=None, phone=None, email=None, website=None):
     """Helper function to create LLMPerson objects for testing"""
-    dp = lambda val: LLMDataPoint(data=val, llm_confidence=1.0, llm_confidence_reason="test")
     return LLMPerson(
         name=name,
-        roles=[dp(r) for r in (roles or [])],
-        divisions=[dp(d) for d in (divisions or [])],
-        phone_number=dp(phone) if phone else None,
-        email=dp(email) if email else None,
-        website=dp(website) if website else None,
+        roles=[{"data": r} for r in (roles or [])],
+        divisions=[{"data": d} for d in (divisions or [])],
+        phone_number={"data": phone} if phone else None,
+        email={"data": email} if email else None,
+        website={"data": website} if website else None,
         start_date=None,
         end_date=None
     )
 
 def test_merge_field():
-    """Test merging single value fields with confidence scores"""
-    dp = lambda val, conf: LLMDataPoint(data=val, llm_confidence=conf, llm_confidence_reason="test")
+    """Test merging single value fields"""
     p1 = make_llm_person("Alice")
-    p1.phone_number = dp("555-1234", 0.8)
+    p1.phone_number = {"data": "555-1234"}
     p2 = make_llm_person("Alice")
-    p2.phone_number = dp("555-1234", 0.9)
+    p2.phone_number = {"data": "555-1234"}
     result = merge_field([p1, p2], "phone_number")
     assert result == "555-1234"
 

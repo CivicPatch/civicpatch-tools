@@ -1,20 +1,22 @@
 import os
 from unittest.mock import patch
-from schemas import LLMPerson, LLMDataPoint, LinkStatus, PipelineStatus, ProcessPageContentStep
+from schemas import LLMPerson, LinkStatus, PipelineStatus, ProcessPageContentStep
 from steps.step_05_process_page_content.process_page_content import process_page_content
 from utils.url_utils import format_url_to_folder
 
 def make_llm_person(name, roles=None, phone=None, email=None, website=None):
-    dp = lambda val: LLMDataPoint(data=val, llm_confidence=1.0, llm_confidence_reason="test")
+    """
+    Helper function to create an LLMPerson object for testing.
+    """
     return LLMPerson(
         name=name,
-        roles=[dp(r) for r in (roles or [])],
+        roles=[{"data": r} for r in (roles or [])],
         divisions=[],
-        phone_number=dp(phone) if phone else dp(None),
-        email=dp(email) if email else dp(None),
-        website=dp(website) if website else dp(None),
-        start_date=dp(None),
-        end_date=dp(None)
+        phone_number={"data": phone} if phone else None,
+        email={"data": email} if email else None,
+        website={"data": website} if website else None,
+        start_date=None,
+        end_date=None
     )
 
 @patch("utils.data_path_utils.get_cache_path")
@@ -56,19 +58,9 @@ def test_process_page_content_basic(
         "people": [
             {
                 "name": "Alice Johnson",
-                "roles": [
-                    {
-                        "data": "council member",
-                        "llm_confidence": 0.9,
-                        "llm_confidence_reason": "High confidence"
-                    }
-                ],
+                "roles": [{"data": "council member"}],
                 "divisions": [],
-                "phone_number": {
-                    "data": "123",
-                    "llm_confidence": 0.8,
-                    "llm_confidence_reason": "Moderate confidence"
-                },
+                "phone_number": {"data": "123"},
                 "email": None,
                 "website": None,
                 "start_date": None,
@@ -81,19 +73,9 @@ def test_process_page_content_basic(
         "people": [
             {
                 "name": "Bob Smith",
-                "roles": [
-                    {
-                        "data": "mayor",
-                        "llm_confidence": 0.95,
-                        "llm_confidence_reason": "Very high confidence"
-                    }
-                ],
+                "roles": [{"data": "mayor"}],
                 "divisions": [],
-                "phone_number": {
-                    "data": "456",
-                    "llm_confidence": 0.85,
-                    "llm_confidence_reason": "High confidence"
-                },
+                "phone_number": {"data": "456"},
                 "email": None,
                 "website": None,
                 "start_date": None,

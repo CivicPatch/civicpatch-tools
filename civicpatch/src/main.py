@@ -4,9 +4,8 @@ from fastapi.templating import Jinja2Templates
 from pipeline_manager import PipelineManager
 from pydantic import BaseModel
 from typing import List, Optional
-from utils.pipeline_utils import get_municipalities_to_scrape
 from pipeline import (
-    Pipeline, PipelineStatus,
+    PipelineStatus,
 )
 from auth.token_handler import verify_github_action_data_query
 from utils import id_utils
