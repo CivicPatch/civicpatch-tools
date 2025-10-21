@@ -232,22 +232,22 @@ class Pipeline:
                     result = merge_records_across_llms(self.context)
                     self.save_data(result.people)
                     self.context.steps[PipelineStatus.MERGE_RECORDS_ACROSS_LLMS] = result
-                    self.context.state = PipelineStatus.CLEANUP
-
-                elif self.context.state == PipelineStatus.CLEANUP:
-                    end_time = time.time()
-                    pipeline_duration = end_time - start_time
-                    self.context.pipeline_duration_seconds = int(pipeline_duration) 
-                    result = cleanup(self.context)
-
                     self.context.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
                 elif self.context.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
+                    end_time = time.time()
+                    pipeline_duration = end_time - start_time
+                    self.context.pipeline_duration_seconds = int(pipeline_duration) 
+                    logger.info(f"Pipeline completed in {pipeline_duration:.2f} seconds.")
                     cost_utils.log_costs(
                         self.context.request_id, 
                         self.context.jurisdiction_id
                     )
                     result = maybe_send_to_github(self.context)
+
+                    self.context.state = PipelineStatus.CLEANUP
+                elif self.context.state == PipelineStatus.CLEANUP:
+                    result = cleanup(self.context)
 
                     self.context.state = PipelineStatus.DONE
                 else:
@@ -255,8 +255,6 @@ class Pipeline:
                     self.context.state = PipelineStatus.DONE
                 await self.save_context()
 
-            await self.save_context()
-            logger.info(f"Pipeline completed in {pipeline_duration:.2f} seconds.")
         finally:
             self.cleanup()
 

@@ -1,7 +1,7 @@
 import os
 import yaml
 from typing import Any, List, Dict
-from utils import id_utils
+from utils import id_utils, data_path_utils
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -31,7 +31,7 @@ def get_pipeline_context_file_path(jurisdiction_id: str):
     """
     Returns the absolute path to the pipeline file.
     """
-    data_source_path = utils.path_utils.get_data_source_path()
+    data_source_path = data_path_utils.get_data_source_path()
     folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
     pipeline_file_path = os.path.join(data_source_path,folder_path, 'pipeline_context.json')
 
@@ -41,7 +41,7 @@ def get_pipeline_context_file_path(jurisdiction_id: str):
 # File names will always end in place__<place_name>.yml
 # It used to end in people.yml
 def get_people_file_path(jurisdiction_id):
-    data_path = utils.path_utils.get_data_path()
+    data_path = data_path_utils.get_data_path()
     folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
 
     people_file_path = os.path.join(data_path, f"{folder_path}.yml")
@@ -74,7 +74,7 @@ def get_people_from_jurisdiction_type(jurisdiction_id: str) -> List[Any]:
 
 def get_cache_path(jurisdiction_id: str):
     folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
-    data_source_path = utils.path_utils.get_data_source_path()
+    data_source_path = data_path_utils.get_data_source_path()
     cache_path = os.path.join(data_source_path, folder_path, 'cache')
 
     if not os.path.exists(cache_path):
@@ -83,7 +83,7 @@ def get_cache_path(jurisdiction_id: str):
     return cache_path
 
 def get_images_path(jurisdiction_id):
-    data_source_path = utils.path_utils.get_data_source_path()
+    data_source_path = data_path_utils.get_data_source_path()
     folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
     images_path = os.path.join(data_source_path, folder_path, 'images')
     if not os.path.exists(images_path):
@@ -92,11 +92,11 @@ def get_images_path(jurisdiction_id):
     return images_path
 
 def get_data_municipality_path(jurisdiction_id: str):
-    data_path = utils.path_utils.get_data_path()
+    data_path = data_path_utils.get_data_path()
     folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
     return os.path.join(data_path, folder_path)
 
 def get_data_source_municipality_path(jurisdiction_id: str):
-    data_source_path = utils.path_utils.get_data_source_path()
+    data_source_path = data_path_utils.get_data_source_path()
     folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
     return os.path.join(data_source_path, folder_path)
