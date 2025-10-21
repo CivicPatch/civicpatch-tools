@@ -14,15 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Set up ruby
-        uses: actions/setup-ruby@v1
-    
-      - name: Install dependencies
-        run: |
-          cd civpatch
-          bundle install
+      - name: Set up mise
+        uses: 
+
+      - uses: Pull docker image
 
       - name: Run unit tests
         run: |
@@ -33,11 +30,7 @@ jobs:
         env:
           GOOGLE_GEMINI_TOKEN: ${{ secrets.TEST_GOOGLE_GEMINI_TOKEN }}
           OPENAI_TOKEN: ${{ secrets.TEST_OPENAI_TOKEN }}
-        if: >
-          github.event_name == 'workflow_dispatch' ||
-          contains(join(github.event.commits.*.modified, '\n') , 'civpatch/lib/services/') ||
-          contains(join(github.event.commits.*.added, '\n') , 'civpatch/lib/services/') ||
-          contains(join(github.event.commits.*.removed, '\n') , 'civpatch/lib/services/')
+        if: |
         run:
           cd civpatch
           bundle exec rake test:integration
