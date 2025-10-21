@@ -70,10 +70,10 @@ def cleanup_images(logger, request_id, jurisdiction_id, images_dir: str, people_
 
         image_file_path = os.path.join(images_dir, image_file)
         if os.path.isfile(image_file_path):
-            if image_file not in images_to_keep:
+            if image_file_path not in images_to_keep:
                 os.remove(image_file_path)
             else:
-                images_found.add(image_file)
+                images_found.add(image_file_path)
                 cost_utils.add_storage_cost(
                     request_id=request_id,
                     jurisdiction_id=jurisdiction_id,
@@ -82,6 +82,6 @@ def cleanup_images(logger, request_id, jurisdiction_id, images_dir: str, people_
 
     missing_images = images_to_keep - images_found
     if len(missing_images) > 0:
-        logger.error("Missing images that were expected to be found:", missing_images)
+        logger.error(f"Missing images that were expected to be found: {missing_images}")
 
     return {}
