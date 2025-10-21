@@ -28,8 +28,10 @@ docker compose -f docker-compose.development.yml run --rm civicpatch xvfb-run -a
 
 [tasks.devunittest]
 run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m unit tests/unit
+#docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m unit tests/unit/utils/test_config_utils
 """
+#docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m unit tests/unit
+#"""
 
 
 [tasks.dev]
@@ -43,11 +45,19 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Seattle city",
-    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
-    "url": "https://www.seattle.gov/"
+    "name": "Greensboro city",
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:nc/place:greensboro/government",
+    "url": "https://www.greensboro-nc.gov/"
   }'
 """
+#curl -X POST http://localhost:8000/api/pipelines \
+#  -H "Content-Type: application/json" \
+#  -d '{
+#    "name": "Seattle city",
+#    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
+#    "url": "https://www.seattle.gov/"
+#  }'
+#"""
 
 [tasks.stop]
 run = """

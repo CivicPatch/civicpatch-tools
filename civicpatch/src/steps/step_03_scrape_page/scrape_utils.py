@@ -176,7 +176,7 @@ async def download_images(logger, page: Page, image_dir: str):
         try:
             src = await img.get_attribute("src")
             if not is_valid_image(src):
-                logger.info(f"Skipping blacklisted or invalid image: {src}")
+                logger.debug(f"Skipping blacklisted or invalid image: {src}")
                 continue
             src = urljoin(page.url, src)
             image_hash = hash_string(src)
@@ -184,13 +184,13 @@ async def download_images(logger, page: Page, image_dir: str):
 
             # Fallback 1: Direct download by URL
             try:
-                logger.info(f"Attempting direct download for image: {src}")
+                logger.debug(f"Attempting direct download for image: {src}")
                 async with aiohttp.ClientSession() as session:
                     async with session.get(src) as response:
                         if response.status == 200:
                             with open(file_path, "wb") as f:
                                 f.write(await response.read())
-                            logger.info(f"Image downloaded directly: {file_path}")
+                            logger.debug(f"Image downloaded directly: {file_path}")
                             image_map[src] = file_path
                             continue
                         else:
@@ -200,7 +200,7 @@ async def download_images(logger, page: Page, image_dir: str):
 
             # Fallback 2: Visit the link in the browser and screenshot it
             try:
-                logger.info(f"Attempting to visit and screenshot image: {src}")
+                logger.debug(f"Attempting to visit and screenshot image: {src}")
                 new_page = await page.context.new_page()
                 await new_page.goto(src, wait_until="load")
                 await new_page.screenshot(path=file_path)
@@ -213,7 +213,7 @@ async def download_images(logger, page: Page, image_dir: str):
 
             # Fallback 3: Create a canvas and load the image into it
             try:
-                logger.info(f"Attempting to create a canvas and load image: {src}")
+                logger.debug(f"Attempting to create a canvas and load image: {src}")
                 canvas_script = """
                 (src) => {
                     return new Promise((resolve, reject) => {
@@ -236,7 +236,7 @@ async def download_images(logger, page: Page, image_dir: str):
                 header, encoded = data_url.split(",", 1)
                 with open(file_path, "wb") as f:
                     f.write(base64.b64decode(encoded))
-                logger.info(f"Image saved from canvas: {file_path}")
+                logger.debug(f"Image saved from canvas: {file_path}")
                 image_map[src] = file_path
                 continue
             except Exception as e:
@@ -244,9 +244,9 @@ async def download_images(logger, page: Page, image_dir: str):
 
             # Fallback 4: Screenshot the image element
             try:
-                logger.info(f"Attempting to screenshot image element: {src}")
+                logger.debug(f"Attempting to screenshot image element: {src}")
                 await img.screenshot(path=file_path)
-                logger.info(f"Image captured via element screenshot: {file_path}")
+                logger.debug(f"Image captured via element screenshot: {file_path}")
                 image_map[src] = file_path
             except Exception as e:
                 logger.warning(f"Failed to screenshot image element: {src} - {e}")
@@ -258,5 +258,4 @@ async def download_images(logger, page: Page, image_dir: str):
     map_file_path = os.path.join(image_dir, "image_map.json")
     with open(map_file_path, "w") as f:
         json.dump(image_map, f, indent=4)
-    logger.info(f"Image map saved to {map_file_path}")
 

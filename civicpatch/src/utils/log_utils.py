@@ -28,11 +28,12 @@ class PipelineLogger:
         if LOG_LEVEL == "DEBUG":
             self._write("DEBUG", message)
 
+    def warning(self, message: str):
+        if LOG_LEVEL == "DEBUG":
+            self._write("WARNING", message)
+    
     def info(self, message: str):
         self._write("INFO", message)
-
-    def warning(self, message: str):
-        self._write("WARNING", message)
 
     def error(self, message: str):
         self._write("ERROR", message)

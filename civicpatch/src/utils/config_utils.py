@@ -3,6 +3,7 @@ import yaml
 from typing import Dict, List
 from decimal import Decimal, InvalidOperation
 from schemas import ProcessConfig
+from utils import data_path_utils
 
 _divisions_config = None
 _government_types_config = None
@@ -22,7 +23,7 @@ def get_config_path():
 def get_divisions():
     global _divisions_config
     if _divisions_config is None:
-        config_path = path_utils.get_config_path()
+        config_path = get_config_path()
         divisions_file_path = os.path.join(config_path, 'divisions.yaml')
         with open(divisions_file_path, 'r') as config_file:
             config_data = yaml.safe_load(config_file)
@@ -45,7 +46,7 @@ def get_division_alias_map() -> Dict[str, str]:
 def get_government_types():
     global _government_types_config
     if _government_types_config is None:
-        config_path = path_utils.get_config_path()
+        config_path = get_config_path()
         government_types_file_path = os.path.join(config_path, 'government_types.yaml')
         with open(government_types_file_path, 'r') as config_file:
             config_data = yaml.safe_load(config_file)
@@ -94,20 +95,24 @@ def get_head_of_government_role(government_type: str) -> str:
 def get_role_configs_by_government_type(government_type: str) -> List[Dict[str, List[str]]]:
     """
     Returns a list of role configurations associated with a specific government type from the configuration file.
-    
-    Args:
-        government_type: The type of government (e.g., "mayor_council", "commission").
-    
-    Returns:
-        List of role configurations associated with the specified government type.
     """
     government_types = get_government_types()
-    return government_types.get(government_type, {}).get('roles', [])
+    roles = government_types.get(government_type, {}).get('roles', [])
+
+    # Ensure each role is a dictionary with a string `role` and a list `aliases`
+    normalized_roles = []
+    for role_entry in roles:
+        if isinstance(role_entry, dict):
+            normalized_roles.append(role_entry)
+        elif isinstance(role_entry, str):
+            normalized_roles.append({"role": role_entry, "aliases": []})
+
+    return normalized_roles
 
 def get_crawl():
     global _crawl_config
     if _crawl_config is None:
-        config_path = path_utils.get_config_path()
+        config_path = get_config_path()
         crawl_file_path = os.path.join(config_path, 'crawl.yaml')
         with open(crawl_file_path, 'r') as config_file:
             _crawl_config = yaml.safe_load(config_file)
@@ -117,7 +122,7 @@ def search_keywords(government_type: str) -> Dict[str, List[str]]:
     """
     Returns the search keywords from the configuration file.
     """
-    config_path = path_utils.get_config_path()
+    config_path = get_config_path()
     government_types_file_path = os.path.join(config_path, 'government_types.yaml')
     with open(government_types_file_path, 'r') as config_file:
         config = yaml.safe_load(config_file)
@@ -130,7 +135,7 @@ def get_process(logger) -> ProcessConfig:
     # You can override certain properties
     global _process_config
     if _process_config is None:
-        config_path = path_utils.get_config_path()
+        config_path = get_config_path()
         process_file_path = os.path.join(config_path, 'process.yaml')
         with open(process_file_path, 'r') as config_file:
             _process_config = yaml.safe_load(config_file)
@@ -152,11 +157,21 @@ def get_process(logger) -> ProcessConfig:
 def get_role_alias_map(government_type: str) -> Dict[str, str]:
     role_configs = get_role_configs_by_government_type(government_type)
     alias_map = {}
+
     for entry in role_configs:
-        canonical = entry["role"]
-        alias_map[canonical.lower()] = canonical
-        for alias in entry.get("aliases", []):
-            alias_map[alias.lower()] = canonical
+        role_entry = entry.get("role", "")
+        canonical_role = role_entry if isinstance(role_entry, str) else " ".join(role_entry).strip()
+        if not canonical_role:
+            continue
+
+        # Add the canonical role to the alias map (case-insensitive)
+        alias_map[canonical_role.lower()] = canonical_role
+
+        # Add each alias to the alias map, pointing to the canonical role
+        aliases = entry.get("aliases", [])
+        for alias in aliases:
+            alias_map[alias.lower()] = canonical_role
+
     return alias_map
 
 def get_context_keywords(government_type: str) -> List[str]:

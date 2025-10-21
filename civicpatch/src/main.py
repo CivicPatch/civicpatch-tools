@@ -13,6 +13,8 @@ from schemas import PipelineRequest
 import os
 from utils import data_path_utils
 from fastapi.responses import RedirectResponse, StreamingResponse
+import traceback
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="src/static"), name="static")
@@ -69,6 +71,11 @@ async def create_new_pipeline(request: PipelineRequest, background_tasks: Backgr
         }
 
     except Exception as e:
+        # Log the stack trace for debugging
+        stack_trace = traceback.format_exc()
+        print(f"Error: {e}")
+        print(f"Stack Trace: {stack_trace}")
+
         raise HTTPException(
             status_code=500,
             detail=str(e)
@@ -84,23 +91,17 @@ async def pipeline_status(jurisdiction_id_url: str):
             detail="Pipeline not found"
         )
     
-    statuses = [PipelineStatus.INIT.value, 
-                PipelineStatus.RESEARCH_MUNICIPALITY.value, 
-                PipelineStatus.SEARCH_LINKS.value, 
-                PipelineStatus.SCRAPE_PAGE.value,
-                PipelineStatus.PREPROCESS_PAGE_CONTENT.value,
-                PipelineStatus.PROCESS_PAGE_CONTENT.value,
-                PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value,
-                PipelineStatus.MERGE_RECORDS_ACROSS_LLMS.value,
-                PipelineStatus.MAYBE_SEND_TO_GITHUB.value,
-                PipelineStatus.CLEANUP.value,
-                PipelineStatus.DONE.value]
-    previous_statuses = [status for status in statuses if statuses.index(status) < statuses.index(pipeline.context.state.value)]
-    future_statuses = [status for status in statuses if statuses.index(status) > statuses.index(pipeline.context.state.value)]
+    statuses = list(PipelineStatus)  # Use the enum directly
+    current_state = pipeline.context.state  # This should already be a PipelineStatus instance
 
-    return {"status": pipeline.context.state.value, 
-            "previous_statuses": previous_statuses, 
-            "future_statuses": future_statuses}
+    previous_statuses = [status.value for status in statuses if statuses.index(status) < statuses.index(current_state)]
+    future_statuses = [status.value for status in statuses if statuses.index(status) > statuses.index(current_state)]
+
+    return {
+        "status": current_state.value,  # Return the string value of the current state
+        "previous_statuses": previous_statuses,
+        "future_statuses": future_statuses,
+    }
 
 @app.post("/api/pipelines/{jurisdiction_id_url}/stop")
 async def stop_pipeline_endpoint(jurisdiction_id_url: str):
@@ -166,3 +167,15 @@ async def stream_pipeline_context(jurisdiction_id_url: str):
 async def index(request: Request):
     missing = [var for var in REQUIRED_ENV_VARS if not os.getenv(var)]
     return templates.TemplateResponse("index.html", {"request": request, "missing_env": missing})
+
+#@app.exception_handler(Exception)
+#async def exception_handler(request: Request, exc: Exception):
+#    stack_trace = traceback.format_exc()
+#    return JSONResponse(
+#        status_code=500,
+#        content={
+#            "detail": str(exc),
+#            "stack_trace": stack_trace
+#        },
+#    )
+#
