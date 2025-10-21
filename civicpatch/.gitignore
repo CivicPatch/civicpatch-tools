@@ -5,7 +5,10 @@ tmp/
 crudder_data/*
 !crudder_data/README.md
 
-*.png
-*.jpg
 *.zip
-data_source/**/images/*
+
+# Allow .png and .jpg files under tests/
+!tests/**/*.png
+
+# Explicitly ignore images under data/
+data/**/*.png
