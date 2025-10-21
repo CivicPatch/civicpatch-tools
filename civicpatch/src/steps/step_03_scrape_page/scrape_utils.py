@@ -4,6 +4,7 @@ import json
 from unittest import result
 from playwright.async_api import async_playwright, Page
 from typing import TypedDict
+import aiofiles
 
 IMAGE_URL_BLACKLIST = ["https://google.com"]
 IMAGE_EXT_BLACKLIST = [".svg", ".gif"]
@@ -63,7 +64,7 @@ async def scrape(logger, website_url, options=None):
 
         if options and options.get('image_directory'):
             # Download images if the option is set
-            await download_images(logger, page, options.get('image_directory'))
+            await download_images(browser, logger, page, options.get('image_directory'))
 
         content = await page.content()
         await browser.close()
@@ -156,11 +157,11 @@ def is_valid_image(src: str | None) -> bool:
         return False
     return True
 
-async def download_images(logger, page: Page, image_dir: str):
+async def download_images(browser, logger, page: Page, image_dir: str):
     """
     Downloads images from the current page using a fallback strategy:
     1. Direct download by URL.
-    2. Visit the link in the browser and screenshot it.
+    2. Intercept and save images in the same browser session (one by one).
     3. Create a canvas and load the image into it.
     4. Screenshot the image element as a last resort.
     """
@@ -182,36 +183,17 @@ async def download_images(logger, page: Page, image_dir: str):
             image_hash = hash_string(src)
             file_path = os.path.join(image_dir, f"{image_hash}.png")
 
-            # Fallback 1: Direct download by URL
+            # Try downloading images directly
             try:
-                logger.debug(f"Attempting direct download for image: {src}")
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(src) as response:
-                        if response.status == 200:
-                            with open(file_path, "wb") as f:
-                                f.write(await response.read())
-                            logger.debug(f"Image downloaded directly: {file_path}")
-                            image_map[src] = file_path
-                            continue
-                        else:
-                            logger.warning(f"Failed direct download for {src}: HTTP {response.status}")
+                logger.debug(f"Attempting to intercept and save image for: {src}")
+                intercepted_image_path = await load_and_save_image(page, image_dir, src, logger)
+                if intercepted_image_path:
+                    image_map[src] = intercepted_image_path
+                    continue
             except Exception as e:
-                logger.warning(f"Direct download failed for {src}: {e}")
+                logger.warning(f"Failed to intercept and save image for {src}: {e}")
 
-            # Fallback 2: Visit the link in the browser and screenshot it
-            try:
-                logger.debug(f"Attempting to visit and screenshot image: {src}")
-                new_page = await page.context.new_page()
-                await new_page.goto(src, wait_until="load")
-                await new_page.screenshot(path=file_path)
-                await new_page.close()
-                logger.info(f"Image captured via browser screenshot: {file_path}")
-                image_map[src] = file_path
-                continue
-            except Exception as e:
-                logger.warning(f"Failed to visit and screenshot image: {src} - {e}")
-
-            # Fallback 3: Create a canvas and load the image into it
+            # Fallback 2: Create a canvas and load the image into it
             try:
                 logger.debug(f"Attempting to create a canvas and load image: {src}")
                 canvas_script = """
@@ -242,7 +224,7 @@ async def download_images(logger, page: Page, image_dir: str):
             except Exception as e:
                 logger.warning(f"Failed to create canvas for image: {src} - {e}")
 
-            # Fallback 4: Screenshot the image element
+            # Fallback 3: Screenshot the image element
             try:
                 logger.debug(f"Attempting to screenshot image element: {src}")
                 await img.screenshot(path=file_path)
@@ -253,9 +235,61 @@ async def download_images(logger, page: Page, image_dir: str):
 
         except Exception as e:
             logger.warning(f"Failed to process image: {src} - {e}")
+            await remove_image_from_dom(page, img, logger)
 
     # Save the image map
     map_file_path = os.path.join(image_dir, "image_map.json")
     with open(map_file_path, "w") as f:
         json.dump(image_map, f, indent=4)
+
+async def remove_image_from_dom(page: Page, img, logger):
+    await page.evaluate("""(img) => {
+            if (img && img.parentNode) {
+                img.parentNode.removeChild(img);
+            }
+        }""", img)
+
+async def load_and_save_image(page: Page, image_dir: str, img_url: str, logger):
+    """
+    Loads an image directly from the given URL and saves it to the specified directory.
+
+    Args:
+        page (Page): The Playwright page object.
+        image_dir (str): Directory to save the image.
+        img_url (str): The URL of the image to load and save.
+        logger: Logger for debugging.
+
+    Returns:
+        str: The file path of the saved image, or None if the image could not be saved.
+    """
+    import aiohttp
+    from urllib.parse import urljoin
+
+    os.makedirs(image_dir, exist_ok=True)
+
+    try:
+        # Resolve the full URL in case it's relative
+        full_url = urljoin(page.url, img_url)
+        logger.debug(f"Loading image from URL: {full_url}")
+
+        # Fetch the image data
+        async with aiohttp.ClientSession() as session:
+            async with session.get(full_url) as response:
+                if response.status == 200:
+                    # Generate a unique filename for the image
+                    image_hash = hash_string(full_url)
+                    file_path = os.path.join(image_dir, f"{image_hash}.png")
+
+                    # Save the image data to disk
+                    async with aiofiles.open(file_path, "wb") as f:
+                        await f.write(await response.read())
+
+                    logger.info(f"Image saved: {file_path}")
+                    return file_path
+                else:
+                    logger.warning(f"Failed to load image {full_url}: HTTP {response.status}")
+    except Exception as e:
+        logger.warning(f"Error loading image {img_url}: {e}")
+
+    return None
 
