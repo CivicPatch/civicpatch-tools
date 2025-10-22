@@ -166,7 +166,7 @@ class PipelineContext(BaseModel):
         MergeRecordsAcrossLLMsStep,
         MaybeSendToGitHubStep,
     ]] = Field(default_factory=dict)
-    pipeline_duration_seconds: Optional[int] = None
+    pipeline_duration: Optional[int] = None
 
 
 DEFAULT_SEARCH_LINKS_STEP = SearchLinksStep(

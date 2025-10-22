@@ -115,7 +115,7 @@ def process_page_content(
 
     for llm, people_by_name in updated_records_by_llm.items():
         for name, people in people_by_name.items():
-            normalized_people = [normalize_record(person, government_type) for person in people]
+            normalized_people = [normalize_record(logger, person, government_type) for person in people]
             updated_processed_data.records_by_llm[llm][name] = normalized_people
             updated_processed_data.raw_records_by_llm[llm][name] = people  # Keep raw records as is
 
@@ -148,12 +148,12 @@ def process_page_content(
             # PipelineStatus.PROCESS_PAGE_CONTENT.value: updated_processed_data.model_dump()
     }
 
-def normalize_record(record: LLMPerson, government_type: str) -> LLMPerson:
+def normalize_record(logger, record: LLMPerson, government_type: str) -> LLMPerson:
     """
     Normalize roles and divisions in an LLMPerson record.
     """
-    normalized_roles = people_utils.normalize_roles(government_type, record.roles)
-    normalized_divisions = people_utils.normalize_divisions(record.divisions)
+    normalized_roles = people_utils.normalize_roles(logger, government_type, record.roles)
+    normalized_divisions = people_utils.normalize_divisions(logger, record.divisions)
 
     try:
         phone_number = phonenumbers.parse(record.phone_number, "US") if record.phone_number else None

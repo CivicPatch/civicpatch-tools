@@ -24,7 +24,7 @@ def get_divisions():
     global _divisions_config
     if _divisions_config is None:
         config_path = get_config_path()
-        divisions_file_path = os.path.join(config_path, 'divisions.yaml')
+        divisions_file_path = os.path.join(config_path, 'divisions.yml')
         with open(divisions_file_path, 'r') as config_file:
             config_data = yaml.safe_load(config_file)
         _divisions_config = config_data.get('divisions', {})
@@ -47,11 +47,24 @@ def get_government_types():
     global _government_types_config
     if _government_types_config is None:
         config_path = get_config_path()
-        government_types_file_path = os.path.join(config_path, 'government_types.yaml')
+        government_types_file_path = os.path.join(config_path, 'government_types.yml')
         with open(government_types_file_path, 'r') as config_file:
             config_data = yaml.safe_load(config_file)
         _government_types_config = config_data.get('government_types', {})
     return _government_types_config
+
+def get_government_types_alias_map() -> Dict[str, str]:
+    """
+    Build a mapping from all aliases to their canonical government type.
+    """
+    government_types_config = get_government_types()
+
+    alias_map = {}
+    for canonical, entry in government_types_config.items():
+        alias_map[canonical.lower()] = canonical
+        for alias in entry.get("aliases", []):
+            alias_map[alias.lower()] = canonical
+    return alias_map
 
 def get_roles_by_government_type(government_type: str) -> List[str]:
     """
@@ -113,7 +126,7 @@ def get_crawl():
     global _crawl_config
     if _crawl_config is None:
         config_path = get_config_path()
-        crawl_file_path = os.path.join(config_path, 'crawl.yaml')
+        crawl_file_path = os.path.join(config_path, 'crawl.yml')
         with open(crawl_file_path, 'r') as config_file:
             _crawl_config = yaml.safe_load(config_file)
     return _crawl_config
@@ -123,7 +136,7 @@ def search_keywords(government_type: str) -> Dict[str, List[str]]:
     Returns the search keywords from the configuration file.
     """
     config_path = get_config_path()
-    government_types_file_path = os.path.join(config_path, 'government_types.yaml')
+    government_types_file_path = os.path.join(config_path, 'government_types.yml')
     with open(government_types_file_path, 'r') as config_file:
         config = yaml.safe_load(config_file)
         government_types_config = config.get('government_types', {})
@@ -136,7 +149,7 @@ def get_process(logger) -> ProcessConfig:
     global _process_config
     if _process_config is None:
         config_path = get_config_path()
-        process_file_path = os.path.join(config_path, 'process.yaml')
+        process_file_path = os.path.join(config_path, 'process.yml')
         with open(process_file_path, 'r') as config_file:
             _process_config = yaml.safe_load(config_file)
 

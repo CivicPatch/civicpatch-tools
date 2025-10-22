@@ -5,7 +5,7 @@ module Services
     class GoogleGeminiPrompts
       def self.research_municipality(state, municipality_entry)
         municipality_name = municipality_entry["name"]
-        government_types = Core::CityManager.government_types
+        # government_types = Core::CityManager.government_types
 
         %(
         Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
@@ -18,16 +18,15 @@ module Services
         1. Determine the government type of the city. Available government types:
            - **mayor_council**: A government with a Mayor and a City Council.
            - **mayor_commission**: A government with Commissioners (and optionally a Mayor).
+           - **select_board**: A government with a Select Board (and optionally a Mayor).
+           - **aldermen**: A government with Aldermen (and optionally a Mayor).
 
-           Use the presence of roles like "Council Member" or "Commissioner" to determine the government type. Refer to the following government types for guidance:
-           #{government_types}
-
-        2. Identify the total number of elected officials in the local government, including the Mayor (if applicable).
+        2. Identify the elected officials in the local government, including the Mayor (if applicable).
 
         3. Create a JSON object with the following structure:
            ```json
            {
-             "government_type": "mayor_council" or "mayor_commission",
+             "government_type": string,
              "people": [
                {
                  "name": "Full name of the official or null if uncertain",

@@ -2,12 +2,14 @@ from typing import List, Dict, Any, cast
 from utils import people_utils, merge_utils
 from schemas import (
     Person, PipelineStatus, PipelineContext, 
-    MissingPerson, FieldComparison, 
-    MergeRecordsAcrossLLMsStep, MergeRecordsWithinLLMStep, ResearchMunicipalityStep
+    MissingPerson,
+    MergeRecordsAcrossLLMsStep, 
+    MergeRecordsWithinLLMStep, ResearchMunicipalityStep
 )
 from collections import Counter
 from datetime import datetime, timezone
-from difflib import SequenceMatcher
+from . import comparison_utils
+import json
 
 MINIMUM_AGREEMENT_SCORE = 80
 FIELD_WEIGHTS = {
@@ -28,28 +30,45 @@ def merge_records_across_llms(context: PipelineContext) -> MergeRecordsAcrossLLM
     jurisdiction_id = context.jurisdiction_id
 
     # Get people_by_llm from the previous step
-    people_by_llm: Dict[str, List[Person]] = cast(MergeRecordsWithinLLMStep, context.steps[PipelineStatus.MERGE_RECORDS_WITHIN_LLM]).people_by_llm
-    people_by_llm = {k: [Person.model_validate(p) if isinstance(p, dict) else p for p in v] for k, v in people_by_llm.items()}
-    government_type = cast(ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY]).government_type
+    people_by_llm: Dict[str, List[Person]] = cast(
+        MergeRecordsWithinLLMStep, context.steps[PipelineStatus.MERGE_RECORDS_WITHIN_LLM]
+        ).people_by_llm
+    #people_by_llm = {
+    #    k: [Person.model_validate(p) if isinstance(p, dict) else p for p in v] for k, v in people_by_llm.items()
+    #    }
+    government_type = cast(
+        ResearchMunicipalityStep, 
+        context.steps[PipelineStatus.RESEARCH_MUNICIPALITY]
+        ).government_type
 
     # Group records across LLMs based on weak ties and names
     groups_by_llm = group_records_across_llms(people_by_llm)
-
+    # Convert to JSON-serializable format for pretty printing
+    #groups_json = []
+    #for group in groups_by_llm:
+    #    group_json = {}
+    #    for llm, people in group.items():
+    #        group_json[llm] = [person.model_dump() for person in people]
+    #    groups_json.append(group_json)
+    
+    #print("after grouped by:", json.dumps(groups_json, indent=2, default=str))
+    
     # Merge each group and collect disagreements
     merged_people = []
     all_disagreements = {}  # Dict[person_name, List[FieldComparison]]
     missing_people = []
 
-    for grouped_people_by_llm in groups_by_llm:
-        # Fix: Check if the group is empty
-        if not grouped_people_by_llm:
-            continue
-            
+    for grouped_identities_by_llm in groups_by_llm:
         # Merge the group
+        print("merging group:", grouped_identities_by_llm)
         merged_person = merge_group_across_llms(
-            [person for llm_people in grouped_people_by_llm.values() for person in llm_people],
+            [person for llm_people 
+             in grouped_identities_by_llm.values() 
+             for person in llm_people
+             ],
             jurisdiction_id
         )
+        print("merged peroson", merged_person)
 
         # Skip person if no roles after merge
         if len(merged_person.roles) == 0:
@@ -58,10 +77,11 @@ def merge_records_across_llms(context: PipelineContext) -> MergeRecordsAcrossLLM
         merged_people.append(merged_person)
         
         # Collect field-by-field disagreements for this person
-        field_comparisons = collect_field_comparisons(
+        field_comparisons = comparison_utils.collect_field_comparisons(
             merged_person,
-            grouped_people_by_llm,  # Pass the grouped data directly
-            FIELDS_TO_CHECK
+            grouped_identities_by_llm,  # Pass the grouped data directly
+            FIELDS_TO_CHECK,
+            FIELD_WEIGHTS
         )
         
         # Store disagreements if any exist
@@ -70,14 +90,16 @@ def merge_records_across_llms(context: PipelineContext) -> MergeRecordsAcrossLLM
         
         missing_person = check_for_missing_person(
             merged_person.name,
-            grouped_people_by_llm,  # Pass the grouped data
+            grouped_identities_by_llm,  # Pass the grouped data
             list(people_by_llm.keys())  # Pass all LLM names
         )
         if missing_person:
             missing_people.append(missing_person)
 
     # Calculate overall agreement score (include missing people in the calculation)
-    overall_agreement_score = calculate_overall_agreement_score(
+    overall_agreement_score = comparison_utils.calculate_overall_agreement_score(
+        FIELD_WEIGHTS,
+        FIELDS_TO_CHECK,
         all_disagreements, 
         missing_people, 
         len(people_by_llm), 
@@ -119,52 +141,6 @@ def check_for_missing_person(person_name: str, grouped_people_by_llm: Dict[str, 
     
     return None
 
-def collect_field_comparisons(
-    merged_person: Person,
-    grouped_people_by_llm: Dict[str, List[Person]],  # This is now directly from the group
-    fields: List[str]
-) -> List[FieldComparison]:
-    """
-    Compare each llm's value against the final merged value.
-    Returns only fields that have disagreements.
-    """
-    comparisons = []
-    
-    for field in fields:
-        merged_value = getattr(merged_person, field)
-        
-        # Collect values from each llm
-        llm_values = {}
-        has_disagreement = False
-
-        for llm, people in grouped_people_by_llm.items():
-            if not people:
-                llm_values[llm] = "(missing)"
-                has_disagreement = True
-                continue
-            
-            llm_value = getattr(people[0], field)  # Take first person (should be only one after within-LLM merge)
-            if isinstance(llm_value, list):
-                llm_values[llm] = ", ".join(llm_value) if llm_value else "(empty)"
-            else:
-                llm_values[llm] = str(llm_value) if llm_value else "(empty)"
-
-            # Compare original values before string conversion
-            if llm_value and not values_match(llm_value, merged_value):
-                has_disagreement = True
-        
-        # Only add to comparisons if there's disagreement
-        if has_disagreement:
-            # Convert merged_value to string format for output
-            merged_str = ", ".join(merged_value) if isinstance(merged_value, list) else (str(merged_value) if merged_value else "(empty)")
-            comparisons.append(FieldComparison(
-                field=field,
-                merged_value=merged_str,
-                llm_values=llm_values,
-                disagreement_score=calculate_disagreement_score(field, merged_str, llm_values)
-            ))
-    
-    return comparisons
 
 def group_records_across_llms(people_by_llm: Dict[str, List[Person]]) -> List[Dict[str, List[Person]]]:
     """
@@ -227,7 +203,7 @@ def merge_group_across_llms(group: List[Person], jurisdiction_id: str) -> Person
     role_counter = Counter(role for person in group for role in person.roles)
     division_counter = Counter(div for person in group for div in person.divisions)
 
-    roles = [role for role, count in role_counter.items() if count > 1]  # Include roles present in more than one source
+    roles = [role for role, count in role_counter.items()] 
     divisions = [div for div, count in division_counter.items() if count > 1]  # Include divisions present in more than one source
 
     # For single-value fields, take the most common non-empty value across all sources
@@ -282,87 +258,3 @@ def merge_field(field: str, values: List[str]) -> Any:
 
     return most_common_value
 
-def values_match(value1, value2):
-    """Helper to compare values case-insensitively, handling both strings and lists."""
-    if isinstance(value1, list) and isinstance(value2, list):
-        # Convert lists to sets of lowercase strings for comparison
-        set1 = {str(item).lower() for item in value1}
-        set2 = {str(item).lower() for item in value2}
-        return bool(set1 & set2)  # Return True if any items match
-    elif isinstance(value1, str) and isinstance(value2, str):
-        # Compare strings case-insensitively
-        return value1.lower() == value2.lower()
-    else:
-        return value1 == value2
-
-def calculate_disagreement_score(field_name: str, merged_value: str, llm_values: Dict[str, str]) -> float:
-    """
-    Calculate disagreement score based on field type and values.
-    """
-    # Skip empty or missing values
-    valid_values = [v for v in llm_values.values() if v not in ["(empty)", "(missing)"]]
-    if not valid_values:
-        return 0.0
-
-    # Handle list fields (roles, divisions)
-    if field_name in ["roles", "divisions"]:
-        if merged_value in ["", "(empty)"]:
-            empty_count = sum(1 for v in llm_values.values() if v in ["", "(empty)"])
-            if empty_count > 1:
-                return 0.0
-
-        value_sets = [set(v.lower().split(", ")) for v in valid_values]
-        merged_set = set(merged_value.lower().split(", "))
-        for value_set in value_sets:
-            if value_set & merged_set:
-                return 0.0
-        return FIELD_WEIGHTS.get(field_name, 1.0)
-
-    # Handle string fields
-    else:
-        if merged_value in ["", "(empty)"]:
-            empty_count = sum(1 for v in llm_values.values() if v in ["", "(empty)"])
-            if empty_count > 1:
-                return 0.0
-
-        match_count = sum(1 for v in valid_values if v.lower() == merged_value.lower())
-        if match_count >= 2:
-            return 0.0
-        else:
-            max_similarity = max(SequenceMatcher(None, v.lower(), merged_value.lower()).ratio() for v in valid_values)
-            disagreement_score = 1.0 - max_similarity
-            return disagreement_score * FIELD_WEIGHTS.get(field_name, 1.0)
-
-
-def calculate_overall_agreement_score(
-    all_disagreements: Dict[str, List[FieldComparison]],
-    missing_people: List[MissingPerson],
-    total_llms: int,
-    total_people: int
-) -> float:
-    # Calculate total disagreement score
-    total_disagreement = 0.0
-    for person_disagreements in all_disagreements.values():
-        for field_comparison in person_disagreements:
-            field_weight = FIELD_WEIGHTS.get(field_comparison.field, 1.0)
-            total_disagreement += field_comparison.disagreement_score * field_weight
-
-    # Normalize disagreement score
-    disagreement_weight = 0.5
-    total_weight = sum(FIELD_WEIGHTS.get(field, 1.0) for field in FIELDS_TO_CHECK)
-    disagreement = (total_disagreement / (total_weight * total_llms)) * disagreement_weight if total_weight > 0 else 0.0
-
-    # Calculate missing people penalty
-    missing_penalty = 0.0
-    if missing_people:
-        for missing_person in missing_people:
-            missing_ratio = len(missing_person.missing_from_llms) / total_llms
-            missing_penalty += missing_ratio
-        missing_penalty = missing_penalty / total_people  # Normalize by total people
-    missing_penalty = missing_penalty * (1 - disagreement_weight)  # Weight the missing penalty
-
-    # Final score: 1 - (normalized_disagreement + missing_penalty)
-    agreement_score = 1.0 - (disagreement + missing_penalty)
-
-    # Convert to percentage and clamp between 0 and 100
-    return max(0.0, min(100.0, round(agreement_score * 100, 2)))
