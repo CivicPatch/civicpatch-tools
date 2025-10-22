@@ -242,7 +242,8 @@ class Pipeline:
                 elif self.context.state == PipelineStatus.MAYBE_SEND_TO_GITHUB:
                     end_time = time.time()
                     pipeline_duration = end_time - start_time
-                    self.context.pipeline_duration_seconds = int(pipeline_duration) 
+                    self.context.pipeline_duration = int(pipeline_duration) 
+                    logger.info(f"Pipeline completed in {self.context.pipeline_duration} seconds.")
                     cost_utils.log_costs(
                         self.context.request_id, 
                         self.context.jurisdiction_id
@@ -255,7 +256,6 @@ class Pipeline:
                     self.context.state = PipelineStatus.DONE
                 await self.save_context()
 
-            logger.info(f"Pipeline completed in {self.context.pipeline_duration_seconds:.2f} seconds.")
         finally:
             self.cleanup()
 
@@ -297,7 +297,7 @@ class Pipeline:
 
         cost_limit = process_config.pipeline_run_cost_limit
         if current_total_cost >= cost_limit:
-            logger.error(f"Cost limit of ${cost_limit} reached. Current cost: ${current_total_cost:.2f}. Moving to next step.")
+            logger.error(f"Cost limit of ${cost_limit} reached. Current cost: ${current_total_cost:.2f}. Stopping pipeline.")
             return PipelineStatus.DONE
 
         has_target_role = self.context.progress.has_target_role

@@ -58,7 +58,7 @@ def upload_images_to_cdn(jurisdiction_id: str):
         else:
             print(f"No image mapping found for {person.name} or image is missing.")
 
-    # Update people.yaml with CDN URLs
+    # Update people with CDN URLs
     with open(people_file_path, 'w') as f:
         existing_data[jurisdiction_type] = [person.model_dump() for person in people]
         yaml.dump(existing_data, f, sort_keys=False)  

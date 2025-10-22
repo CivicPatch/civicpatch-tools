@@ -86,7 +86,7 @@ def normalize_remaining_text(text: str) -> str:
     # Otherwise return original text
     return text
 
-def normalize_roles(government_type: str, roles: List[str]) -> List[str]:
+def normalize_roles(logger, government_type: str, roles: List[str]) -> List[str]:
     """
     Normalize roles using configured aliases.
     """
@@ -99,23 +99,11 @@ def normalize_roles(government_type: str, roles: List[str]) -> List[str]:
     for role in roles:
         role = str(role).strip().lower()
 
-        # 1. Exact match to a role key
-        if role in role_aliases:
-            seen.add(role)
-            continue
-
-        # 2. Exact match to an alias
-        for role_key, alias_roles in role_aliases.items():
-            if role in alias_roles:
-                seen.add(role_key)
-                break
+        direct_match = role_aliases.get(role)
+        if direct_match:
+            seen.add(direct_match)
         else:
-            # 3. Whole phrase match (word boundaries) to a role key
-            for role_key in role_aliases:
-                pattern = r'\b' + re.escape(role_key) + r'\b'
-                if re.search(pattern, role):
-                    seen.add(role_key)
-                    break
+            logger.warning(f"Role '{role}' not found in aliases for government type '{government_type}'. Keeping original.")
 
     return [r.title() for r in seen]
 

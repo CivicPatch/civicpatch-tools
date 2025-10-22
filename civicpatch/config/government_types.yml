@@ -55,36 +55,39 @@ government_types:
         - about
   mayor_council:
     head_of_government: mayor
+    aliases:
+      - council_manager # Typically weak mayor but they have the same roles so...
+      - council-manager
     roles:
       - role: mayor
       - role: mayor pro tempore
         aliases: 
         - mayor pro-tem
         - mayor pro tem
-      - role: chair
-        aliases:
-        - council chair
-        - council chairman
-        - council chairwoman
-        - chairman
-        - chairwoman
-        - town council chair
-      - role: vice chair
-        aliases:
-        - council vice chair
-        - council vice chairman
-        - council vice chairwoman
-        - council vice-chair
-        - council vice-chairman
-        - council vice-chairwoman
-        - vice-chair
-        - vice-chairman
-        - vice-chairwoman
-        - vice chairman
-        - vice chairwoman
-        - vice-chairman
-        - vice-chairwoman
-      - role: chair pro tem
+      #- role: chair
+      #  aliases:
+      #  - council chair
+      #  - council chairman
+      #  - council chairwoman
+      #  - chairman
+      #  - chairwoman
+      #  - town council chair
+      #- role: vice chair
+      #  aliases:
+      #  - council vice chair
+      #  - council vice chairman
+      #  - council vice chairwoman
+      #  - council vice-chair
+      #  - council vice-chairman
+      #  - council vice-chairwoman
+      #  - vice-chair
+      #  - vice-chairman
+      #  - vice-chairwoman
+      #  - vice chairman
+      #  - vice chairwoman
+      #  - vice-chairman
+      #  - vice-chairwoman
+      #- role: chair pro tem
       - role: assistant mayor
       - role: deputy mayor
       - role: vice mayor
