@@ -244,14 +244,14 @@ government_types:
         - mayor pro-tem
         - mayor pro tem
       - role: deputy mayor
-      - role: chair
-        aliases:
-        - chairman
-        - chairwoman
-      - role: vice chair
-        aliases: 
-          - vice chairwoman
-          - vice chairman
+      #- role: chair
+      #  aliases:
+      #  - chairman
+      #  - chairwoman
+      #- role: vice chair
+      #  aliases: 
+      #    - vice chairwoman
+      #    - vice chairman
       - role: alderperson
         aliases:
         - vice president board of aldermen

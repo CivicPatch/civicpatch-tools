@@ -1,7 +1,7 @@
 import os
 import shutil
 import json
-from typing import List, cast
+from typing import List, cast, Dict
 
 from utils.data_path_utils import get_data_source_municipality_path
 from schemas import PipelineContext, PipelineStatus, Person, MergeRecordsAcrossLLMsStep
@@ -27,6 +27,12 @@ def cleanup(context: PipelineContext):
     if os.path.exists(images_dir):
         # Only keep images that are referenced by people
         cleanup_images(logger, request_id, jurisdiction_id, images_dir, people)
+
+    updated_names = cleanup_names_config(context.names)
+
+    return {
+        "names": updated_names
+    }
 
 def cleanup_cache(cache_dir: str, people_list: List[Person]):
     # Clear out any page urls are not under sources or website urls
@@ -85,3 +91,12 @@ def cleanup_images(logger, request_id, jurisdiction_id, images_dir: str, people_
         logger.error(f"Missing images that were expected to be found: {missing_images}")
 
     return {}
+
+
+def cleanup_names_config(names_config: Dict[str, List[str]]) -> dict:
+    # Remove any names that are empty or only whitespace
+    cleaned_names_config = {}
+    for key, names_list in names_config.items():
+        if len(names_list) > 1:
+            cleaned_names_config[key] = names_list
+    return cleaned_names_config

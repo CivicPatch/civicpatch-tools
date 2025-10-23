@@ -37,6 +37,13 @@ def get_pipeline_context_file_path(jurisdiction_id: str):
 
     return pipeline_file_path
 
+def get_config_file_path(jurisdiction_id: str):
+    data_source_path = data_path_utils.get_data_source_path()
+    folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
+    config_file_path = os.path.join(data_source_path, folder_path, 'config.yml')
+
+    return config_file_path
+
 # Need a better name for this...
 # File names will always end in place__<place_name>.yml
 # It used to end in people.yml

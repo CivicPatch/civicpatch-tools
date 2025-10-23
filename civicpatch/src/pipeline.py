@@ -1,9 +1,8 @@
+from datetime import datetime, timezone
 import os
 import json
-from pydantic.json import pydantic_encoder
 from schemas import PipelineContext, PipelineRequest, PipelineStatus, LinkStatus, ProcessConfig, SearchEngineStatus, Link, Person, SearchLinksStep
-from pydantic import ValidationError
-from typing import List, cast
+from typing import List, cast, Dict
 import time
 import asyncio
 import aiofiles
@@ -39,8 +38,9 @@ class Pipeline:
 
         try:
             async with aiofiles.open(context_file_path, "w") as f:
-                serialized_context = self.context.model_dump_json(indent=4)
-                await f.write(serialized_context)
+                serialized_context = self.context.model_dump_json(indent=4, ensure_ascii=False)
+                if serialized_context:
+                    await f.write(serialized_context)
         except Exception as e:
             print(f"Exception in save_context: {e}")
 
@@ -236,6 +236,8 @@ class Pipeline:
 
                 elif self.context.state == PipelineStatus.CLEANUP:
                     result = cleanup(self.context)
+                    self.context.names = result["names"]
+                    self.save_configs(result["names"])
 
                     self.context.state = PipelineStatus.MAYBE_SEND_TO_GITHUB
 
@@ -248,7 +250,7 @@ class Pipeline:
                         self.context.request_id, 
                         self.context.jurisdiction_id
                     )
-                    result = maybe_send_to_github(self.context)
+                    # result = maybe_send_to_github(self.context)
 
                     self.context.state = PipelineStatus.DONE
                 else:
@@ -334,4 +336,16 @@ class Pipeline:
             os.makedirs(os.path.dirname(people_file_path), exist_ok=True)
 
         with open(people_file_path, "w", encoding="utf-8") as f:
-            json.dump(existing_data, f, indent=4)
+            json.dump(existing_data, f, ensure_ascii=False, indent=4)
+
+    def save_configs(self, names: Dict[str, List[str]]):
+        jurisdiction_id = self.context.jurisdiction_id
+
+        config_file_path = data_path_utils.get_config_file_path(jurisdiction_id)
+
+        config_data = {
+            "names": names,
+            "last_updated": datetime.now(timezone.utc).isoformat()
+        }
+        with open(config_file_path, "w", encoding="utf-8") as f:
+            json.dump(config_data, f, ensure_ascii=False, indent=4)
