@@ -155,7 +155,6 @@ class PipelineContext(BaseModel):
     url: str # Municipality url. Without it we can't scrape anything.
     state: PipelineStatus = PipelineStatus.INIT
     links: List[Link] = []
-    names: Dict[str, List[str]] = {}  # Canonical names to names found while scraping
     progress: ProgressState = ProgressState(required_data=0, current_data=0, has_target_role=True, has_target_divisions=True)
     steps: Dict[PipelineStatus, Union[
         ResearchMunicipalityStep,
@@ -167,6 +166,10 @@ class PipelineContext(BaseModel):
         MaybeSendToGitHubStep,
     ]] = Field(default_factory=dict)
     pipeline_duration: Optional[int] = None
+
+    # Can be overridden with configs 
+    names: Dict[str, List[str]] = {} # Canonical name to other names found while scraping
+    government_type: Optional[str] = None # Ex: "Mayor-Council", "Council-Manager", etc.
 
 
 DEFAULT_SEARCH_LINKS_STEP = SearchLinksStep(

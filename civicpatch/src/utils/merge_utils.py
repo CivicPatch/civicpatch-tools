@@ -3,93 +3,104 @@ from schemas import LLMPerson, Person, PeopleByName, OtherNamesByCanonicalName
 from nameparser import HumanName
 from Levenshtein import distance as levenshtein_distance
 from copy import deepcopy
+import unicodedata
 
 NAME_SIMILARITY_THRESHOLD = 2
-
 
 def normalize_name(name: str) -> str:
     """
     Normalize a name using nameparser to ensure consistent formatting.
     """
-    parsed_name = HumanName(name)
-    return f"{parsed_name.first} {parsed_name.last}".strip()
+    formatted_name = name.replace('‘', "'")
+    formatted_name = remove_diacritics(formatted_name)
+    return formatted_name
+
+def remove_diacritics(text: str) -> str:
+    """
+    Normalize a string by removing diacritics (accents).
+    """
+    # TODO: May want to do whitelist instead of blacklist
+    return ''.join(
+        char for char in unicodedata.normalize('NFD', text)
+        if unicodedata.category(char) != 'Mn'
+    )
 
 def same_name(record1: LLMPerson, record2: LLMPerson) -> bool:
     """
     Check if two records have the same normalized name.
     """
-    return normalize_name(record1.name) == normalize_name(record2.name)
+
+    return (
+        first_name(record1.name) == first_name(record2.name)) & (
+            last_name(record1.name) == last_name(record2.name)
+        )
 
 def first_name(name: str) -> str:
     """
     Extract the first name from a full name using nameparser.
     """
-    parsed_name = HumanName(name)
-    return parsed_name.first
+    formatted_name = normalize_name(name)
+    human_name = HumanName(formatted_name)
+    return human_name.first
 
 def last_name(name: str) -> str:
     """
     Extract the last name from a full name using nameparser.
     """
-    parsed_name = HumanName(name)
-    return parsed_name.last
+    formatted_name = normalize_name(name)
+    human_name = HumanName(formatted_name)
+    return human_name.last
 
-def has_name_overlap(record1: LLMPerson | Person, record2: LLMPerson | Person) -> bool:
+def has_name_overlap(name1: str, name2: str) -> bool:
     """
     Check if two records have the same last names.
     """
-    parsed_name1 = HumanName(record1.name)
-    parsed_name2 = HumanName(record2.name)
-    surname1 = parsed_name1.last
-    surname2 = parsed_name2.last
-
-    return surname1 == surname2
+    return last_name(name1) == last_name(name2)
 
 
-def are_names_similar(first_name1: str, first_name2: str, threshold: int = NAME_SIMILARITY_THRESHOLD) -> bool:
+def are_names_similar(name1: str, name2: str, threshold: int = NAME_SIMILARITY_THRESHOLD) -> bool:
     """
     Compare two first names using Levenshtein distance and determine if they are similar.
     """
-    return levenshtein_distance(first_name1, first_name2) <= threshold
+    normalized_first_name1 = first_name(name1)
+    normalized_first_name2 = first_name(name2)
+    return levenshtein_distance(normalized_first_name1, normalized_first_name2) <= threshold
 
-
-def find_canonical_name(normalized_name: str, people_by_name: PeopleByName) -> str:
+def find_indexed_name(normalized_name: str, people_by_name: PeopleByName) -> str:
     """
     Find the canonical name in people_by_name that matches the normalized name.
     Match by exact surname and similar first name.
     """
-    parsed_normalized_name = HumanName(normalized_name)
     for existing_name in people_by_name.keys():
-        parsed_existing_name = HumanName(existing_name)
-        if parsed_existing_name.last == parsed_normalized_name.last:  # Exact surname match
-            if are_names_similar(parsed_existing_name.first, parsed_normalized_name.first):
+        if has_name_overlap(normalized_name, existing_name): # Exact surname match
+            if are_names_similar(existing_name, normalized_name):
                 return existing_name
     return normalized_name
 
 
 def update_name_map(
-    name_map: Dict[str, List[str]], canonical_name: str, original_name: str
+    name_map: Dict[str, List[str]], indexed_name: str, original_name: str
 ) -> Dict[str, List[str]]:
     """
     Return an updated name_map with aliases for the canonical name.
     """
     updated_name_map = deepcopy(name_map)  # Create a deep copy to avoid side effects
-    if canonical_name not in updated_name_map:
-        updated_name_map[canonical_name] = []
-    updated_name_map[canonical_name].append(original_name)
+    if indexed_name not in updated_name_map:
+        updated_name_map[indexed_name] = []
+    updated_name_map[indexed_name].append(original_name)
     return updated_name_map
 
 
 def append_to_people_by_name(
-    people_by_name: PeopleByName, canonical_name: str, people_list: List[LLMPerson]
+    people_by_name: PeopleByName, indexed_name: str, people_list: List[LLMPerson]
 ) -> PeopleByName:
     """
     Return an updated people_by_name with the new people appended.
     """
     updated_people_by_name = people_by_name.copy()
-    if canonical_name not in updated_people_by_name:
-        updated_people_by_name[canonical_name] = []
-    updated_people_by_name[canonical_name].extend(people_list)
+    if indexed_name not in updated_people_by_name:
+        updated_people_by_name[indexed_name] = []
+    updated_people_by_name[indexed_name].extend(people_list)
     return updated_people_by_name
 
 
@@ -107,30 +118,30 @@ def group_people_by_name(
     # Process people_to_link
     for person in people_to_link:
         normalized_name = normalize_name(person.name.strip())
-        canonical_name = find_canonical_name(normalized_name, people_by_name)
+        indexed_name = find_indexed_name(normalized_name, people_by_name)
 
-        name_map = update_name_map(name_map, canonical_name, person.name.strip())
+        name_map = update_name_map(name_map, indexed_name, person.name.strip())
 
-        if canonical_name not in linked_people:
-            linked_people[canonical_name] = []
-        linked_people[canonical_name].append(person)
+        if indexed_name not in linked_people:
+            linked_people[indexed_name] = []
+        linked_people[indexed_name].append(person)
 
     # Append linked_people to people_by_name
-    for canonical_name, people_list in linked_people.items():
-        people_by_name = append_to_people_by_name(people_by_name, canonical_name, people_list)
+    for indexed_name, people_list in linked_people.items():
+        people_by_name = append_to_people_by_name(people_by_name, indexed_name, people_list)
 
     # Process names dictionary for aliases
     for key, aliases in names.items():
         normalized_key = normalize_name(key)
-        canonical_name = find_canonical_name(normalized_key, people_by_name)
+        indexed_name = find_indexed_name(normalized_key, people_by_name)
 
-        name_map = update_name_map(name_map, canonical_name, key)
-        if canonical_name in name_map:
-            name_map[canonical_name].extend(aliases)
+        name_map = update_name_map(name_map, indexed_name, key)
+        if indexed_name in name_map:
+            name_map[indexed_name].extend(aliases)
 
     # Deduplicate and sort aliases in name_map for consistent order
-    for canonical_name in name_map:
-        name_map[canonical_name] = sorted(set(name_map[canonical_name]))
+    for indexed_name in name_map:
+        name_map[indexed_name] = sorted(set(name_map[indexed_name]))
 
     return name_map, people_by_name
 
@@ -139,7 +150,7 @@ def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool
     Determine if two records are weakly tied based on shared attributes.
     """
 
-    if not has_name_overlap(record1, record2):
+    if not has_name_overlap(record1.name, record2.name):
         return False
 
     # Check for matching roles

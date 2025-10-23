@@ -10,15 +10,16 @@ pipeline_manager = PipelineManager()
 
 async def test_pipeline_step():
     #jurisdiction_id = "ocd_jurisdiction/country:us/state:nc/place:greensboro/government"
-    jurisdiction_id = "ocd_jurisdiction/country:us/state:wa/place:seattle/government"
+    #jurisdiction_id = "ocd_jurisdiction/country:us/state:wa/place:seattle/government"
+    jurisdiction_id = "ocd_jurisdiction/country:us/state:il/place:chicago/government"
     # Note: need to generate a unique request id
     # if you are testing PR creation
     pipeline_manager.create_pipeline(
         PipelineRequest(
             jurisdiction_id=jurisdiction_id,
-            name="Seattle city",
-            url="https://seattle.gov/council",
-            state=PipelineStatus.MAYBE_SEND_TO_GITHUB
+            name="Chicago city",
+            url="https://chicago.gov",
+            state=PipelineStatus.CLEANUP
         ))
     pipeline_manager.start_pipeline(jurisdiction_id)
 

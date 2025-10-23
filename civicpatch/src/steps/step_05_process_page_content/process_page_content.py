@@ -145,7 +145,6 @@ def process_page_content(
         "progress": updated_progress,
         "names": updated_names,
         "result": updated_processed_data
-            # PipelineStatus.PROCESS_PAGE_CONTENT.value: updated_processed_data.model_dump()
     }
 
 def normalize_record(logger, record: LLMPerson, government_type: str) -> LLMPerson:
@@ -153,7 +152,7 @@ def normalize_record(logger, record: LLMPerson, government_type: str) -> LLMPers
     Normalize roles and divisions in an LLMPerson record.
     """
     normalized_roles = people_utils.normalize_roles(logger, government_type, record.roles)
-    normalized_divisions = people_utils.normalize_divisions(logger, record.divisions)
+    normalized_divisions = people_utils.normalize_divisions(record.divisions)
 
     try:
         phone_number = phonenumbers.parse(record.phone_number, "US") if record.phone_number else None
