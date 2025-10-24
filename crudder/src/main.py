@@ -7,16 +7,22 @@ from fastapi.templating import Jinja2Templates
 from fastapi.security import APIKeyCookie, APIKeyHeader 
 from fastapi_sso.sso.github import GithubSSO
 from fastapi_sso.sso.base import OpenID
+import yaml
 import sqlite3
 from database import maybe_init_db, maybe_insert_user, create_api_key, get_api_keys_for_user, revoke_api_key, get_user_details, get_server_detail_by_active_api_key
 from storage_service import upload_file_to_storage
-from github_service import trigger_github_data_intake_workflow
+import github_service
+from typing import cast, List
+from schemas import Jurisdiction, git_branch_to_jurisdiction_id
 
 from jose import jwt  # pip install python-jose[cryptography]
 import os
 
 # Only purpose is to manage users, their API keys, and move data from 3rd party servers
 # to GitHub Actions.
+# Update 2025/10/24
+    # Goal has expanded to -- whatever the civicpatch servers need to sync data
+    # to and from the open-data repo
 # Ref: https://github.com/tomasvotava/fastapi-sso/blob/master/docs/how-to-guides/use-with-fastapi-security.md
 
 INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8001")
@@ -156,7 +162,7 @@ async def github_intake(
         with_presigned_url=True
     )
 
-    trigger_github_data_intake_workflow(
+    github_service.trigger_github_data_intake_workflow(
         GITHUB_WORKFLOW_TOKEN, 
         server_detail["user_email"], 
         server_detail["server_url"], 
@@ -230,6 +236,31 @@ async def login(provider: str):
     async with sso:
         return await sso.get_login_redirect()
 
+@app.get("/api/jurisdictions/available")
+async def list_available_jurisdictions_endpoint(state: str, num_items: int = 10):
+    # TODO: add auth
+    # TODO; check valid state input
+    jurisdictions_file_content = github_service.get_github_file_contents(
+        GITHUB_WORKFLOW_TOKEN,
+        f"data_source/{state}/jurisdictions.yml"
+    )
+    if jurisdictions_file_content is None:
+        raise HTTPException(status_code=404, detail="Could not find jurisdictions file")
+
+    open_pull_requests = github_service.get_open_pull_requests(GITHUB_WORKFLOW_TOKEN)
+    jurisdictions_data = yaml.safe_load(jurisdictions_file_content)
+    jurisdictions = [
+        Jurisdiction(id=j['id'], name=j['name'], url=j['url'])
+        for j in jurisdictions_data["jurisdictions"]
+    ]
+    open_pull_request_ids = [pr.jurisdiction_id for pr in open_pull_requests]
+
+    filtered_jurisdictions = [
+        j for j in jurisdictions
+        if j.id not in open_pull_request_ids and j.url][:num_items]
+    return {
+        "jurisdictions": filtered_jurisdictions
+    }
 
 @app.get("/auth/logout", include_in_schema=False)
 async def logout():
