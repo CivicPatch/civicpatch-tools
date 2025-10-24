@@ -1,6 +1,7 @@
 # Deployment environment variables
 [env]
 _.file = ".deployment.env"
+PYTHONPATH = "./src"
 
 [tasks.container]
 run = """

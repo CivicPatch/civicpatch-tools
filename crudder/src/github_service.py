@@ -1,6 +1,8 @@
 import requests
+from schemas import PullRequest
+from typing import List
 
-def trigger_github_data_intake_workflow(
+def trigger_github_data_intake_workflow( 
         github_workflow_token, 
         user_email: str, 
         server_url: str, 
@@ -38,3 +40,49 @@ def trigger_github_data_intake_workflow(
         raise Exception(f"Failed to trigger workflow: {response.status_code} - {response.text}")
     
     return True
+
+def get_github_file_contents(
+        github_workflow_token: str,
+        github_file_path: str
+    ) -> str | None:
+    headers = {
+        "Authorization": f"Bearer {github_workflow_token}",
+        "Accept": "application/vnd.github.raw",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+
+    url = f"https://api.github.com/repos/CivicPatch/open-data/contents/{github_file_path}"
+    response = requests.get(
+        url,
+        headers=headers
+    )
+
+    if response.status_code == 200:
+        file_content = response.text
+        return file_content
+    else:
+        print("Error fetching file contents:", response.status_code, response.text)
+        return None
+
+def get_open_pull_requests(github_workflow_token: str) -> List[PullRequest]:
+    headers = {
+        "Authorization": f"Bearer {github_workflow_token}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+
+    params = "state=open&per_page=100"
+    url = f"https://api.github.com/repos/CivicPatch/open-data/pulls?{params}"
+    response = requests.get(
+        url,
+        headers=headers
+    )
+
+    if response.status_code == 200:
+        pull_requests = response.json()
+        return [PullRequest(
+            branch_name=pr["head"]["ref"]
+        ) for pr in pull_requests]
+    else:
+        print("Error fetching pull requests:", response.status_code, response.text)
+        return []
