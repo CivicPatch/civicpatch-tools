@@ -1,7 +1,11 @@
-# Deployment environment variables
+[tools]
+poetry = { version="latest", pyproject="{{ config_root }}/pyproject.toml" }
+python = "3.12" # must be after poetry so the poetry bin is first in PATH
+
 [env]
 _.file = ".deployment.env"
 PYTHONPATH = "./src"
+POETRY_VIRTUALENVS_IN_PROJECT = "true"
 
 [tasks.container]
 run = """

@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
 ENV PYTHONUNBUFFERED=1 \
     POETRY_HOME="/opt/poetry" \
     POETRY_VIRTUALENVS_CREATE=false \
+    POETRY_VIRTUALENVS_IN_PROJECT=false \
     VIRTUAL_ENV="/venv" \
     PYTHONPATH=/app/src
 
