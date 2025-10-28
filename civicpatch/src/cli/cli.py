@@ -1,12 +1,13 @@
 import argparse
 import asyncio
 from typing import List
-from pipeline_manager import PipelineManager
+from pipelines.main import get_pipeline_manager
 from utils import id_utils
 from schemas import PipelineRequest, PipelineStatus
 from pipeline import Pipeline
 
-pipeline_manager = PipelineManager()
+pipeline_manager = get_pipeline_manager()
+
 
 async def run_pipeline_cli(request: PipelineRequest):
     request_id = id_utils.make_request_id()
@@ -17,7 +18,9 @@ async def run_pipeline_cli(request: PipelineRequest):
     if not jurisdiction_id:
         errors.append(f"Invalid jurisdiction_id format: {request.jurisdiction_id}")
     if not request.name:
-        warnings.append("Missing 'name' field: A name and legal status (e.g., 'Seattle city') is preferred for search purposess. Substituting with place name jurisdiction_id.")
+        warnings.append(
+            "Missing 'name' field: A name and legal status (e.g., 'Seattle city') is preferred for search purposess. Substituting with place name jurisdiction_id."
+        )
     if not request.url:
         errors.append("Missing 'url' field")
 
@@ -29,12 +32,13 @@ async def run_pipeline_cli(request: PipelineRequest):
     else:
         print(f"Request ID: {request_id}")
         pipeline = Pipeline(
-            request_id, 
-            request, 
-            remove_callback=None, 
-            debug_state = PipelineStatus.MAYBE_SEND_TO_GITHUB 
+            request_id,
+            request,
+            remove_callback=None,
+            debug_state=PipelineStatus.MAYBE_SEND_TO_GITHUB,
         )
         await pipeline.run_async()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run pipeline for a municipality")
@@ -44,8 +48,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     request = PipelineRequest(
-        jurisdiction_id=args.jurisdiction_id,
-        name=args.name,
-        url=args.url
+        jurisdiction_id=args.jurisdiction_id, name=args.name, url=args.url
     )
     asyncio.run(run_pipeline_cli(request))
