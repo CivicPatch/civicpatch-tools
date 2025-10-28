@@ -7,7 +7,6 @@ from schemas import (
     PipelineStatus,
     LinkStatus,
     ProcessConfig,
-    SearchEngineStatus,
     Link,
     Person,
     SearchLinksStep,
@@ -16,8 +15,6 @@ from typing import List, cast, Dict
 import time
 import asyncio
 import aiofiles
-import json
-import os
 
 from utils import data_path_utils, config_utils, log_utils, cost_utils, id_utils
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
@@ -137,6 +134,7 @@ class Pipeline:
     def run(self):
         asyncio.run(self.run_async())
 
+    # TODO: please simplify logic
     async def run_async(self, with_debug=False):
         """
         Main function to run the pipeline for a given jurisdiction id.
