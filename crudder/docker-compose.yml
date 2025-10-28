@@ -2,11 +2,34 @@ services:
   crudder:
     env_file: .env
     build:
-      context: ..
-      dockerfile: crudder/Dockerfile
+      context: .
+      dockerfile: Dockerfile
       target: development
     restart: unless-stopped
     ports:
       - "8001:8001"
     volumes:
       - .:/app
+    networks:
+      - crudder_net
+
+  crudder_db:
+    image: postgis/postgis:17-3.5
+    restart: always
+    environment:
+      POSTGRES_USER: civicpatch
+      POSTGRES_PASSWORD: development_password
+      POSTGRES_DB: development_db
+    volumes:
+      - crudder_pgdata:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:6000:5432"
+    networks:
+      - crudder_net
+
+volumes:
+  crudder_pgdata:
+
+networks:
+  crudder_net:
+    driver: bridge

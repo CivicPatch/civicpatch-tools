@@ -3,9 +3,11 @@ poetry = { version="latest", pyproject="{{ config_root }}/pyproject.toml" }
 python = "3.12" # must be after poetry so the poetry bin is first in PATH
 
 [env]
-_.file = ".deployment.env"
+# _.file = ".deployment.env"
+_.file = ".env"
 PYTHONPATH = "./src"
 POETRY_VIRTUALENVS_IN_PROJECT = "true"
+
 
 [tasks.container]
 run = """
@@ -67,61 +69,14 @@ finally:
 ## 🚀✨ DATABASE COMMANDS (for development) ✨🚀 ##
 ###################################################
 
-[tasks.gen_schema]
+[tasks.migrate_up]
 run = """
 docker compose run --rm crudder \
-    atlas schema inspect --env local > database_operations/schema.sql \
+    python database_operations/migrate.py up
 """
 
-[tasks.make_baseline]
+[tasks.migrate_down]
 run = """
 docker compose run --rm crudder \
-    atlas migrate diff baseline --env local
-"""
-
-[tasks.migrate]
-run = """
-docker compose run --rm crudder \
-    atlas migrate apply --env local
-"""
-
-[tasks.gen_migrate]
-run = """
-docker compose run --rm crudder \
-    atlas migrate diff --env local {{ arg(name="migration_name") }}
-"""
-
-[tasks.edit_migrate]
-run = """
-docker compose run --rm crudder \
-    atlas migrate edit --env local {{ arg(name="migration_name") }}
-"""
-
-[tasks.migrate_verify]
-run = """
-docker compose run --rm crudder \
-    atlas schema diff --env local \
-    --from "file://database_operations/migrations" \
-    --to "sqlite://data/database.db" \
-    --exclude "atlas_schema_revisions"
-"""
-
-[tasks.migrate_status]
-run = """
-docker compose run --rm crudder \
-    atlas migrate status --env local
-"""
-
-
-[tasks.plan_migrate_down]
-run = """
-docker compose run --rm crudder \
-    atlas migrate down --env local \
-    --dry-run
-"""
-
-[tasks.confirm_migrate_down]
-run = """
-docker compose run --rm crudder \
-    atlas migrate down --env local
+    python database_operations/migrate.py down
 """

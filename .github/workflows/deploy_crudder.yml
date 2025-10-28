@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'crudder/**'
+      - "crudder/**"
   workflow_dispatch:
 
 permissions:
@@ -21,15 +21,15 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-      
+          python-version: "3.12"
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}      
-    
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -40,8 +40,8 @@ jobs:
       - name: Build and push (crudder)
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: crudder/Dockerfile
+          context: ./crudder
+          file: ./crudder/Dockerfile
           push: true
           tags: |
             ghcr.io/civicpatch/crudder:latest
@@ -52,5 +52,4 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_USERNAME: ${{ github.actor }}
           REMOTELAB_WORKFLOW_TOKEN: ${{ secrets.CRUDDER_REMOTELAB_WORKFLOW_TOKEN }}
-        run:
-          ./crudder/scripts/deploy.py
+        run: ./crudder/scripts/deploy.py
