@@ -1,0 +1,67 @@
+{% extends "layouts/base.html" %} {% block content %} {% if not missing_env %}
+<form
+    method="post"
+    action="/pipelines/run"
+    class="card"
+    style="margin-bottom: 2rem"
+>
+    <header>
+        <h3>Run Pipeline</h3>
+    </header>
+    <label>
+        Jurisdiction ID
+        <input
+            type="text"
+            name="jurisdiction_id"
+            placeholder="e.g. ocd-jurisdiction/country:us/state:nc/place:greensboro"
+            required
+        />
+    </label>
+    <label>
+        Name
+        <input
+            type="text"
+            name="name"
+            placeholder="e.g. Greensboro city"
+            required
+        />
+    </label>
+    <label>
+        URL
+        <input
+            type="url"
+            name="url"
+            placeholder="e.g. https://www.greensboro-nc.gov"
+            required
+        />
+    </label>
+    <button type="submit" class="primary">Run Pipeline</button>
+</form>
+{% endif %} {% if missing_env %}
+<article class="card" style="border-left: 5px solid #e53e3e">
+    <header>
+        <h3 style="color: #e53e3e; margin-bottom: 0.5em">
+            ⚠️ Environment Setup Needed
+        </h3>
+    </header>
+    <p>
+        Please set up your <code>.env</code> file in the
+        <code>civicpatch/</code> folder.<br />
+        The following environment variables are missing:
+    </p>
+    <ul>
+        {% for var in missing_env %}
+        <li><code>{{ var }}</code></li>
+        {% endfor %}
+    </ul>
+</article>
+{% else %}
+<article class="card" style="border-left: 5px solid #38a169">
+    <header>
+        <h3 style="color: #38a169; margin-bottom: 0.5em">
+            ✅ Environment Ready
+        </h3>
+    </header>
+    <p>Your environment is all set up!</p>
+</article>
+{% endif %} {% endblock %}

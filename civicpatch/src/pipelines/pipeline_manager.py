@@ -1,10 +1,10 @@
 from typing import List
-from pipeline import Pipeline
-from schemas import PipelineRequest, PipelineStatus
+from pipelines.pipeline import Pipeline
+from schemas import PipelineRequest
 from fastapi import BackgroundTasks
-from utils import id_utils, data_path_utils
-import os
+from utils import id_utils
 import asyncio
+
 
 class PipelineManager:
     def __init__(self):
@@ -20,7 +20,7 @@ class PipelineManager:
 
     def get_pipeline(self, jurisdiction_id: str) -> Pipeline | None:
         return self._pipelines.get(jurisdiction_id)
-    
+
     def remove_pipeline(self, jurisdiction_id: str):
         if jurisdiction_id in self._pipelines:
             del self._pipelines[jurisdiction_id]
@@ -37,7 +37,9 @@ class PipelineManager:
         if not jurisdiction_id_obj:
             errors.append(f"Invalid jurisdiction_id format: {jurisdiction_id}.")
         if not pipeline_request.name:
-            warnings.append("Missing 'name' field. Substituting with place name jurisdiction_id.")
+            warnings.append(
+                "Missing 'name' field. Substituting with place name jurisdiction_id."
+            )
         if not pipeline_request.url:
             errors.append("Missing 'url' field.")
 
@@ -50,23 +52,25 @@ class PipelineManager:
 
         return request_id, warnings, errors
 
-    def start_pipeline(self, jurisdiction_id: str, background_tasks: BackgroundTasks | None = None):
+    def start_pipeline(
+        self, jurisdiction_id: str, background_tasks: BackgroundTasks | None = None
+    ):
         """Start an existing pipeline."""
         pipeline = self.get_pipeline(jurisdiction_id)
         if not pipeline:
             raise ValueError(f"No pipeline found for jurisdiction {jurisdiction_id}.")
-        
+
         pipeline.stop_requested = False  # Reset stop flag
         if background_tasks:
             background_tasks.add_task(pipeline.run)
         else:
             asyncio.create_task(pipeline.run_async())
         return {"status": "started", "jurisdiction_id": jurisdiction_id}
-    
+
     def stop_pipeline(self, jurisdiction_id: str):
         pipeline = self.get_pipeline(jurisdiction_id)
         if not pipeline:
             raise ValueError(f"No pipeline found for jurisdiction {jurisdiction_id}.")
-        
+
         pipeline.stop_requested = True  # Set stop flag
         return {"status": "stopping", "jurisdiction_id": jurisdiction_id}

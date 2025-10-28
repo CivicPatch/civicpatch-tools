@@ -1,16 +1,13 @@
-{% extends "base.html" %}
-
-{% block title %}Pipeline Request{% endblock %}
-
-{% block content %}
-  <article class="card">
+{% extends "layouts/base.html" %} {% block title %}Pipeline Request{% endblock
+%} {% block content %}
+<article class="card">
     <header>
-      <h2>Pipeline Request Details</h2>
+        <h2>Pipeline Request Details</h2>
     </header>
     <div id="pipeline-content">Loading...</div>
-  </article>
-  <script src="/static/js/pipeline_request.js"></script>
-  <script>
+</article>
+<script src="/static/js/pipeline_request.js"></script>
+<script>
     startContextPolling("{{ jurisdiction_id_url }}");
-  </script>
+</script>
 {% endblock %}
