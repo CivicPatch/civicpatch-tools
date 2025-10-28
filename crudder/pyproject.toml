@@ -16,7 +16,9 @@ dependencies = [
     "pytest (>=8.4.1,<9.0.0)",
     "pytest-asyncio (>=1.2.0,<2.0.0)",
     "boto3 (>=1.40.35,<2.0.0)",
-    "python-lsp-server[all] (>=1.13.1,<2.0.0)"
+    "python-lsp-server[all] (>=1.13.1,<2.0.0)",
+    "psycopg[pool] (>=3.2.12,<4.0.0)",
+    "asyncio (>=4.0.0,<5.0.0)",
 ]
 
 [tool.poetry]

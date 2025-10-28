@@ -1,90 +1,93 @@
-from auth import hash_string
+import hmac
+import hashlib
+from psycopg_pool import AsyncConnectionPool
+import os
 
-def maybe_init_db(db_connection, db_cursor):
-    db_cursor.execute("""
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            email TEXT NOT NULL,
-            provider TEXT NOT NULL,
-            provider_user_id TEXT NOT NULL,
-            server_url TEXT,
-            UNIQUE(provider, provider_user_id)
-        )
-    """)
-    db_cursor.execute("""
-        CREATE TABLE IF NOT EXISTS api_keys (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            provider TEXT NOT NULL DEFAULT 'github',
-            provider_user_id TEXT NOT NULL,
-            api_key_suffix TEXT NOT NULL,
-            api_key_hash TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            revoked_at TIMESTAMP,
-            FOREIGN KEY (provider, provider_user_id) REFERENCES users(provider, provider_user_id)
-        )
-    """)
-    db_cursor.execute("""
-        CREATE TABLE IF NOT EXISTS logs (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            api_key_id INTEGER,
-            action TEXT NOT NULL,
-            type TEXT NOT NULL,
-            timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (api_key_id) REFERENCES api_keys(id)
-        )
-    """)
-    db_connection.commit()
+CRUDDER_DB_URL = os.getenv("CRUDDER_DB_URL")
+pool = AsyncConnectionPool(CRUDDER_DB_URL, open=False)
 
-def maybe_insert_user(db_connection, db_cursor, provider, provider_user_id, email):
-  db_cursor.execute("""
-      INSERT OR IGNORE INTO users (provider, provider_user_id, email)
-      VALUES (?, ?, ?)
-  """, (provider, provider_user_id, email))
-  db_connection.commit()
 
-def create_api_key(db_connection, db_cursor, provider, provider_user_id, database_hash_key):
+def hash_string(string: str, hash_key: str) -> str:
+    return hmac.new(hash_key.encode(), string.encode(), hashlib.sha512).hexdigest()
+
+
+async def maybe_insert_user(provider, provider_user_id, email):
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            INSERT INTO users (provider, provider_user_id, email)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (provider, provider_user_id) DO UPDATE
+            SET email = EXCLUDED.email
+        """,
+            (provider, provider_user_id, email),
+        )
+
+
+async def create_api_key(provider, provider_user_id, database_hash_key):
     import secrets
+
     api_key = secrets.token_urlsafe(32)
     # Hash the API key before storing
     api_key_hash = hash_string(api_key, database_hash_key)
     api_key_suffix = api_key[-4:]
 
-    db_cursor.execute("""
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
         INSERT INTO api_keys (provider, provider_user_id, api_key_hash, api_key_suffix)
-        VALUES (?, ?, ?, ?)
-    """, (provider, provider_user_id, api_key_hash, api_key_suffix))
-    db_connection.commit()
-    return api_key
+        VALUES (%s, %s, %s, %s)
+    """,
+            (provider, provider_user_id, api_key_hash, api_key_suffix),
+        )
+        return api_key
 
-def revoke_api_key(db_connection, db_cursor, api_key_id):
-    db_cursor.execute("""
+
+async def revoke_api_key(api_key_id):
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
         UPDATE api_keys SET revoked_at = CURRENT_TIMESTAMP
-        WHERE id = ?
-    """, (api_key_id,))
-    db_connection.commit()
+        WHERE id = %s
+    """,
+            (api_key_id,),
+        )
 
-def get_api_keys_for_user(db_cursor, provider, provider_user_id):
-    db_cursor.execute("""
+
+async def get_api_keys_for_user(provider, provider_user_id):
+    data = []
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
         SELECT id, api_key_suffix, created_at, revoked_at FROM api_keys
-        WHERE provider_user_id = ? AND provider = ?
-    """, (provider_user_id, provider))
-    rows = db_cursor.fetchall()
-    return [
-        {
-            "id": row[0],
-            "suffix": row[1],
-            "created_at": row[2],
-            "revoked_at": row[3],
-        }
-        for row in rows
-    ]
+        WHERE provider_user_id = %s AND provider = %s
+    """,
+            (provider_user_id, provider),
+        )
+        rows = await cur.fetchall()
 
-def get_user_details(db_cursor, provider, provider_user_id):
-    db_cursor.execute("""
+        for row in rows:
+            data.append(
+                {
+                    "id": row[0],
+                    "suffix": row[1],
+                    "created_at": row[2],
+                    "revoked_at": row[3],
+                }
+            )
+    return data
+
+
+async def get_user_details(provider, provider_user_id):
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
         SELECT server_url, email FROM users
-        WHERE provider_user_id = ? AND provider = ?
-    """, (provider_user_id, provider))
-    row = db_cursor.fetchone()
+        WHERE provider_user_id = %s AND provider = %s
+    """,
+            (provider_user_id, provider),
+        )
+        row = await cur.fetchone()
     if row:
         return {
             "server_url": row[0],
@@ -92,27 +95,74 @@ def get_user_details(db_cursor, provider, provider_user_id):
         }
     return None
 
-def is_active_api_key(db_cursor, database_hash_key, api_key) -> bool:
+
+async def user_is_approved(user_provider, provider_user_id) -> bool:
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT EXISTS (
+                SELECT 1
+                FROM users
+                WHERE provider = %s
+                  AND provider_user_id = %s
+                  AND is_approved = TRUE
+            ) AS is_user_approved;
+            """,
+            (user_provider, provider_user_id),
+        )
+        row = await cur.fetchone()
+        return row[0] if row else False
+
+
+async def is_active_api_key(database_hash_key, api_key) -> bool:
     candidate_api_key_hash = hash_string(api_key, database_hash_key)
-    db_cursor.execute("""
-        SELECT id FROM api_keys
-        WHERE api_key_hash = ? AND revoked_at IS NULL
-    """, (candidate_api_key_hash,))
-    row = db_cursor.fetchone()
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+        SELECT ak.id
+        FROM api_keys ak
+        JOIN users u
+        ON ak.provider = u.provider
+        AND ak.provider_user_id = u.provider_user_id
+        WHERE ak.api_key_hash = %s
+        AND ak.revoked_at IS NULL
+        AND u.is_approved = TRUE;
+    """,
+            (candidate_api_key_hash),
+        )
+        row = await cur.fetchone()
     return row is not None
 
-def get_server_detail_by_active_api_key(db_cursor, database_hash_key, api_key):
+
+async def get_server_detail_by_active_api_key(db_cursor, database_hash_key, api_key):
     candidate_api_key_hash = hash_string(api_key, database_hash_key)
-    db_cursor.execute("""
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
         SELECT u.email, u.server_url
         FROM users u
         JOIN api_keys k ON u.provider = k.provider AND u.provider_user_id = k.provider_user_id
-        WHERE k.api_key_hash = ? AND k.revoked_at IS NULL
-    """, (candidate_api_key_hash,))
-    row = db_cursor.fetchone()
+        WHERE k.api_key_hash = %s AND k.revoked_at IS NULL
+    """,
+            (candidate_api_key_hash,),
+        )
+        row = await cur.fetchone()
     if row:
         return {
             "user_email": row[0],
             "server_url": row[1],
         }
     return None
+
+
+async def update_user_detail(server_url, user_provider, user_provider_id):
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE users
+            SET server_url = %s
+            WHERE provider = %s
+            AND provider_user_id = %s
+            """,
+            (server_url, user_provider, user_provider_id),
+        )

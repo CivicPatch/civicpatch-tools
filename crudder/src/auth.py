@@ -1,14 +1,8 @@
-import hmac
-import hashlib
 import os
 from database import get_server_detail_by_active_api_key
 from typing import Any, Tuple
 
 DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
-
-
-def hash_string(string: str, hash_key: str) -> str:
-    return hmac.new(hash_key.encode(), string.encode(), hashlib.sha512).hexdigest()
 
 
 def is_authorized(db_cursor, api_key: str) -> Tuple[Any, str]:

@@ -1,5 +1,6 @@
 import os
 import datetime
+from contextlib import asynccontextmanager
 from fastapi import (
     FastAPI,
     Request,
@@ -16,14 +17,15 @@ from fastapi.security import APIKeyCookie, APIKeyHeader
 from fastapi_sso.sso.github import GithubSSO
 from fastapi_sso.sso.base import OpenID
 import yaml
-import sqlite3
 from database import (
-    maybe_init_db,
+    pool,
     maybe_insert_user,
     create_api_key,
     get_api_keys_for_user,
     revoke_api_key,
     get_user_details,
+    update_user_detail,
+    user_is_approved,
 )
 from storage_service import upload_file_to_storage
 import github_service
@@ -42,12 +44,8 @@ from jose import jwt  # pip install python-jose[cryptography]
 INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8001")
 GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID")
 GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
-GITHUB_CALLBACK_URL = os.getenv(
-    "GITHUB_CALLBACK_URL", f"{INSTANCE_URL}/auth/github/callback"
-)
-APPROVED_GITHUB_PROVIDER_USER_IDS = os.getenv(
-    "APPROVED_GITHUB_PROVIDER_USER_IDS", ""
-).split(",")
+GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/auth/github/callback"
+
 MAINTAINER_EMAIL = os.getenv("MAINTAINER_EMAIL")
 APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT")
 GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
@@ -59,13 +57,11 @@ STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
 STORAGE_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY_ID")
 STORAGE_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_ACCESS_KEY")
 
-db_connection = sqlite3.connect("data/database.db")
-db_cursor = db_connection.cursor()
-maybe_init_db(db_connection, db_cursor)
+# db_connection = sqlite3.connect("data/database.db")
+# db_cursor = db_connection.cursor()
 
 if not all(
     [
-        APPROVED_GITHUB_PROVIDER_USER_IDS,
         MAINTAINER_EMAIL,
         GITHUB_CLIENT_ID,
         GITHUB_CLIENT_SECRET,
@@ -81,7 +77,6 @@ if not all(
     missing_vars = [
         var
         for var, val in {
-            "APPROVED_GITHUB_PROVIDER_USER_IDS": APPROVED_GITHUB_PROVIDER_USER_IDS,
             "MAINTAINER_EMAIL": MAINTAINER_EMAIL,
             "GITHUB_CLIENT_ID": GITHUB_CLIENT_ID,
             "GITHUB_CLIENT_SECRET": GITHUB_CLIENT_SECRET,
@@ -104,10 +99,19 @@ github_sso = GithubSSO(
     redirect_uri=GITHUB_CALLBACK_URL,
 )
 
+
+@asynccontextmanager
+async def lifespan(instance: FastAPI):
+    await pool.open()
+    yield
+    await pool.close()
+
+
 app = FastAPI(
     title="Crudder API",
     description="A starter FastAPI application for CRUD operations.",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -135,9 +139,9 @@ async def home(request: Request):
     try:
         user = await get_logged_user(request.cookies.get("token"))
         provider_user_id = user.id
-        api_keys = get_api_keys_for_user(db_cursor, user.provider, provider_user_id)
-        approved_user = user and user.id in APPROVED_GITHUB_PROVIDER_USER_IDS
-        user_details = get_user_details(db_cursor, user.provider, provider_user_id)
+        api_keys = await get_api_keys_for_user(user.provider, provider_user_id)
+        approved_user = await user_is_approved(user.provider, provider_user_id)
+        user_details = await get_user_details(user.provider, provider_user_id)
     except HTTPException:
         user = None
         api_keys = []
@@ -175,7 +179,7 @@ async def github_intake(
         raise HTTPException(status_code=401, detail="Missing Authorization header")
 
     api_key = authorization.strip()
-    server_detail, error_string = is_authorized(db_cursor, api_key)
+    server_detail, error_string = is_authorized(api_key)
     if error_string:
         raise HTTPException(status_code=401, detail=error_string)
 
@@ -222,7 +226,7 @@ async def api_keys_page(request: Request):
         # Fetch user's API keys from database
         provider_user_id = user.id
 
-        api_keys = get_api_keys_for_user(db_cursor, "github", provider_user_id)
+        api_keys = await get_api_keys_for_user("github", provider_user_id)
 
         return templates.TemplateResponse(
             request=request,
@@ -233,36 +237,27 @@ async def api_keys_page(request: Request):
         return RedirectResponse(url="/", status_code=302)
 
 
-def can_create_api_key(provider, provider_user_id, approved_github_user_ids):
-    if provider != "github":
-        return False
-    return provider_user_id in approved_github_user_ids
-
-
 @app.post("/api_keys", include_in_schema=False)
 async def post_api_keys(request: Request, user: OpenID = Depends(get_logged_user)):
     """Create new API key"""
     provider = user.provider
     provider_user_id = user.id
 
-    if not can_create_api_key(
-        provider, provider_user_id, APPROVED_GITHUB_PROVIDER_USER_IDS
-    ):
+    approved_user = await user_is_approved(user.provider, provider_user_id)
+    if not approved_user:
         raise HTTPException(
             status_code=403,
             detail="You are not authorized to create an API key. Please contact the maintainer.",
         )
 
-    api_key = create_api_key(
-        db_connection, db_cursor, provider, provider_user_id, DATABASE_HASH_KEY
-    )
+    api_key = await create_api_key(provider, provider_user_id, DATABASE_HASH_KEY)
 
     return {"api_key": api_key}
 
 
 @app.delete("/api_keys/{api_key_id}", include_in_schema=False)
 async def delete_api_key(request: Request, api_key_id: str):
-    revoke_api_key(db_connection, db_cursor, api_key_id)
+    await revoke_api_key(api_key_id)
 
 
 @app.get("/auth/{provider}/login", include_in_schema=False)
@@ -340,9 +335,7 @@ async def login_callback(request: Request, provider: str):
         key=JWT_SECRET_KEY,
         algorithm="HS256",
     )
-    maybe_insert_user(
-        db_connection, db_cursor, openid.provider, openid.id, openid.email
-    )
+    await maybe_insert_user(openid.provider, openid.id, openid.email)
 
     response = RedirectResponse(url="/", status_code=302)
     response.set_cookie(
@@ -357,15 +350,12 @@ async def login_callback(request: Request, provider: str):
 
 
 @app.post("/user_details", include_in_schema=False)
-async def update_user_detail(
+async def update_user_detail_endpoint(
     request: Request,
     server_url: str = Form(...),
     user: OpenID = Depends(get_logged_user),
 ):
     # Update the user's server_url in the database
-    db_cursor.execute(
-        "UPDATE users SET server_url = ? WHERE provider = ? AND provider_user_id = ?",
-        (server_url, user.provider, user.id),
-    )
-    db_connection.commit()
+    await update_user_detail(server_url, user.provider, user.id)
+
     return RedirectResponse(url="/", status_code=302)
