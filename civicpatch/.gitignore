@@ -12,3 +12,5 @@ crudder_data/*
 
 # Explicitly ignore images under data/
 data/**/*.png
+
+node_modules

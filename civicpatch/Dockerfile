@@ -1,4 +1,4 @@
-FROM python:3.12.11-slim-trixie AS image-base 
+FROM python:3.12.11-slim-trixie AS image-base
 
 RUN apt-get update && apt-get install -y \
     curl \
@@ -23,7 +23,7 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=false \
     # DEBUG="pw:browser" \
     XDG_CACHE_HOME="/tmp/.cache" \
-    XDG_CONFIG_HOME="/tmp/.config" 
+    XDG_CONFIG_HOME="/tmp/.config"
 
 WORKDIR /app
 
@@ -63,6 +63,9 @@ ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
 # DEVELOPMENT IMAGE
 FROM post-install AS development
 
+ENV CIVICPATCH_ENV="development" \
+    CIVICPATCH_WEBDEV_PORT="8002"
+
 USER root
 RUN apt-get update && apt-get install -y \
     vim \
@@ -76,8 +79,18 @@ EXPOSE 8000
 
 CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
 
+#FROM node:24-alpine
+#
+#WORKDIR /app
+#
+#COPY --chown=civicpatch_user:civicpatch_user .src/frontend /app
+#RUN npm install
+#RUN
+
 # PRODUCTION IMAGE
 FROM post-install AS production
+
+ENV CIVICPATCH_ENV="production"
 
 WORKDIR /app
 

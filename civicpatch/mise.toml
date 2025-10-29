@@ -1,6 +1,7 @@
 [tools]
 poetry = { version="latest", pyproject="{{ config_root }}/pyproject.toml" }
 python = "3.12.11" # must be after poetry so the poetry bin is first in PATH
+node = "24.11.0"
 
 [env]
 _.file = ".env"
@@ -18,6 +19,8 @@ PYTHONPATH = "./src"
 run = "docker compose -f docker-compose.development.yml run --rm civicpatch"
 [tasks.containsh]
 run = "docker compose -f docker-compose.development.yml exec civicpatch bash"
+[tasks.containsh-fe]
+run = "docker compose -f docker-compose.development.yml exec civicpatch-frontend sh"
 
 [tasks.devinttest]
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/integration/services/together_ai/test_llm.py"
