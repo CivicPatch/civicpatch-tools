@@ -79,13 +79,13 @@ EXPOSE 8000
 
 CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
 
-#FROM node:24-alpine
-#
-#WORKDIR /app
-#
-#COPY --chown=civicpatch_user:civicpatch_user .src/frontend /app
-#RUN npm install
-#RUN
+FROM node:24-alpine as production-build
+
+WORKDIR /app
+
+COPY --chown=civicpatch_user:civicpatch_user ./src/frontend /app
+RUN npm install
+RUN npm run build # outputs dist
 
 # PRODUCTION IMAGE
 FROM post-install AS production
@@ -93,6 +93,10 @@ FROM post-install AS production
 ENV CIVICPATCH_ENV="production"
 
 WORKDIR /app
+
+FROM production-build AS production
+
+COPY --from=production-build /app/dist/. /app/src/frontend/dist
 
 USER civicpatch_user
 EXPOSE 8000
