@@ -1,0 +1,30 @@
+<!doctype html>
+
+<html>
+    <head>
+        <title>{% block title %}civicpatch tool{% endblock %}</title>
+        <link
+            href="{{ url_for('static', path='/pico.min.css') }}"
+            rel="stylesheet"
+        />
+        <link
+            href="{{ url_for('static', path='/styles.css') }}"
+            rel="stylesheet"
+        />
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <main class="container" style="max-width: 1200px; margin-top: 2rem">
+            {% block content %}{% endblock %}
+        </main>
+        {% if is_production %}
+        <!-- Production: bundled files (Rollup) -->
+        <script type="module" src="/dist/components.js"></script>
+        {% else %}
+        <!-- Hot reload script -->
+        {{ hot_reload.script(url_for('hot-reload')) | safe }}
+        <!-- Development: web-dev-server handles module resolution -->
+        <script type="module" src="/dev-modules/components/main.js"></script>
+        {% endif %}
+    </body>
+</html>

@@ -1,4 +1,16 @@
 services:
+  civicpatch-frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    volumes:
+      - ./src/frontend:/app
+      - /app/node_modules
+    ports:
+      - "8002:8002"
+    networks:
+      - civicpatch_net
+
   civicpatch:
     environment:
       - PIPELINE_RUN_COST_LIMIT
@@ -34,6 +46,12 @@ services:
       - ./data:/app/data
       - ./data_source:/app/data_source
       - .:/app
+    networks:
+      - civicpatch_net
 
 volumes:
   exclude:
+
+networks:
+  civicpatch_net:
+    driver: bridge

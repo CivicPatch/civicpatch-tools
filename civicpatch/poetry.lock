@@ -181,6 +181,22 @@ typing_extensions = {version = ">=4.5", markers = "python_version < \"3.13\""}
 trio = ["trio (>=0.26.1)"]
 
 [[package]]
+name = "arel"
+version = "0.4.0"
+description = "Browser hot reload for Python ASGI web apps"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "arel-0.4.0-py3-none-any.whl", hash = "sha256:7b1fe5d10c06a6f231cfeec79e48888176931b86f0ae6e432196845edf818109"},
+    {file = "arel-0.4.0.tar.gz", hash = "sha256:08b2f72f767a84825a649891eb30f20f89c0de6aa67134939691ee0012aafc73"},
+]
+
+[package.dependencies]
+starlette = "==0.*"
+watchfiles = ">=0.18,<2.0"
+
+[[package]]
 name = "asyncio"
 version = "4.0.0"
 description = "Deprecated backport of asyncio; use the stdlib package instead"
@@ -4402,4 +4418,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.14"
-content-hash = "327b0d2033766b89fb6b848c761f3fe662760237c3d87bf05af279f82136d5eb"
+content-hash = "a66c80bc1c4d2153dd8015e3d10d1775c63c39b2f905b497c9e1766fdb5acd8c"
