@@ -10,7 +10,7 @@ class HelloWorld extends LitElement {
   `;
   // Define the component's template
   render() {
-    return html`<p>Hello, World! This is a Lit component.</p>`;
+    return html`<p>lit component</p>`;
   }
 }
 

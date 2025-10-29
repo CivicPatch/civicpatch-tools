@@ -11,7 +11,7 @@ from routers.api import router as api_router
 from routers.frontend import get_router as get_frontend_router
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="src/frontend/static"), name="static")
+app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
 
 
 civicpatch_webdev_port = os.getenv("CIVICPATCH_WEBDEV_PORT", 8002)
