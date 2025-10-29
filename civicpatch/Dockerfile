@@ -94,7 +94,7 @@ ENV CIVICPATCH_ENV="production"
 
 WORKDIR /app
 
-FROM production-build AS production
+FROM post-install AS production
 
 COPY --from=production-build /app/dist/. /app/src/frontend/dist
 
