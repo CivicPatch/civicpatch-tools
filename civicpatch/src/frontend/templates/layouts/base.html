@@ -3,6 +3,7 @@
 <html>
     <head>
         <title>{% block title %}civicpatch tool{% endblock %}</title>
+
         <link
             href="{{ url_for('frontend', path='/css/pico.min.css') }}"
             rel="stylesheet"
@@ -11,10 +12,12 @@
             href="{{ url_for('frontend', path='/css/styles.css') }}"
             rel="stylesheet"
         />
+
         {% block head %}{% endblock %}
     </head>
     <body>
         <main class="container" style="max-width: 1200px; margin-top: 2rem">
+            <civ-map></civ-map>
             {% block content %}{% endblock %}
         </main>
 
@@ -22,13 +25,17 @@
         <!-- Production: bundled files (Rollup) -->
         <script
             type="module"
-            src="{{ url_for('frontend', path='/dist/main.js') }}"
+            src="{{ url_for('frontend', path='/dist/bundle.js') }}"
         ></script>
         {% else %}
         <!-- Hot reload script -->
         {{ hot_reload.script(url_for('hot-reload')) | safe }}
-        <!-- Development: web-dev-server handles module resolution -->
-        <script type="module" src="/dev-modules/components/main.js"></script>
+        <!-- Development: rollup handles module resolution -->
+        <script
+            type="module"
+            src="{{ url_for('frontend', path='/build/bundle.js') }}"
+        ></script>
+        <!--<script type="module" src="/dev-modules/build/bundle.js"></script>-->
         {% endif %}
     </body>
 </html>

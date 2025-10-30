@@ -1,17 +1,23 @@
 {
   "type": "module",
   "dependencies": {
-    "lit": "^3.3.1"
+    "@rollup/plugin-image": "^3.0.3",
+    "haunted": "^6.1.0",
+    "leaflet": "^1.9.4",
+    "leaflet.locatecontrol": "^0.85.1",
+    "lit-html": "^3.3.1"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.9",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@web/dev-server": "^0.4.6",
+    "@web/dev-server-rollup": "^0.6.4",
     "rollup": "^4.52.5",
     "rollup-plugin-copy": "^3.5.0"
   },
   "scripts": {
-    "start": "web-dev-server",
+    "start": "rollup -c -w",
     "build": "rollup -c"
   }
 }
