@@ -2,12 +2,11 @@ services:
   civicpatch-frontend:
     build:
       context: .
-      dockerfile: Dockerfile.development
+      dockerfile: Dockerfile
+      target: development-fe
     volumes:
       - ./src/frontend:/app
-      - /app/node_modules
-    ports:
-      - "8002:8002"
+      - /app/src/frontend/node_modules
     networks:
       - civicpatch_net
 

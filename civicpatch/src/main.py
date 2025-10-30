@@ -22,7 +22,6 @@ templates = Jinja2Templates(directory="src/frontend/templates")
 templates.env.globals["is_production"] = is_production
 
 if not is_production:
-    print("RELOAD SET??")
     hot_reload = arel.HotReload(paths=[arel.Path(".")])
     app.add_websocket_route("/hot-reload", route=hot_reload, name="hot-reload")
     app.add_event_handler("startup", hot_reload.startup)
@@ -34,28 +33,25 @@ app.include_router(get_frontend_router(templates), tags=["frontend"])
 
 
 # Proxy to web-dev-server in development
-@app.get("/dev-modules/{path:path}")
-async def dev_proxy(path: str):
-    """Proxy requests to web-dev-server to avoid CORS"""
-    if is_production:
-        return Response(status_code=404)
-
-    async with httpx.AsyncClient() as client:
-        try:
-            url = f"http://civicpatch-frontend:{civicpatch_webdev_port}/{path}"
-
-            # url = f"http://localhost:{civicpatch_webdev_port}/{path}"
-            print("url to access", url)
-
-            response = await client.get(url)
-            return Response(
-                content=response.content,
-                status_code=response.status_code,
-                media_type=response.headers.get("content-type"),
-            )
-        except httpx.RequestError as err:
-            print("err", err)
-            return Response(status_code=502)
+# @app.get("/dev-modules/{path:path}")
+# async def dev_proxy(path: str):
+#    """Proxy requests to web-dev-server to avoid CORS"""
+#    if is_production:
+#        return Response(status_code=404)
+#
+#    async with httpx.AsyncClient() as client:
+#        try:
+#            url = f"http://civicpatch-frontend:{civicpatch_webdev_port}/{path}"
+#
+#            response = await client.get(url)
+#            return Response(
+#                content=response.content,
+#                status_code=response.status_code,
+#                media_type=response.headers.get("content-type"),
+#            )
+#        except httpx.RequestError as err:
+#            print("err", err)
+#            return Response(status_code=502)
 
 
 # @app.exception_handler(Exception)

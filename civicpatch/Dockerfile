@@ -1,3 +1,6 @@
+# ==========================================
+# Stage: image-base
+# ==========================================
 FROM python:3.12.11-slim-trixie AS image-base
 
 RUN apt-get update && apt-get install -y \
@@ -48,6 +51,10 @@ COPY --chown=civicpatch_user:civicpatch_user . /app
 
 RUN poetry install
 
+# ==========================================
+# Stage: post-install
+# ==========================================
+
 FROM image-base AS post-install
 
 RUN poetry run playwright install --with-deps chromium
@@ -56,9 +63,28 @@ COPY --chown=civicpatch_user:civicpatch_user src/setup.py /app/src/setup.py
 RUN poetry run post-install
 
 USER civicpatch_user
+ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
 
 #https://github.com/microsoft/playwright-python/issues/2572
-ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
+
+# ==========================================
+# Stage: development-fe
+# ==========================================
+
+FROM node:24-alpine AS development-fe
+
+ENV NODE_ENV="development"
+WORKDIR /app
+
+COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/package.json ./src/frontend/package-lock.json /app
+RUN npm install
+COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/. /app
+
+CMD ["npm", "run", "start"]
+
+# ==========================================
+# Stage: development
+# ==========================================
 
 # DEVELOPMENT IMAGE
 FROM post-install AS development
@@ -79,13 +105,15 @@ EXPOSE 8000
 
 CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
 
-FROM node:24-alpine as production-build
+FROM node:24-alpine AS production-build
 
+ENV NODE_ENV="production"
 WORKDIR /app
 
-COPY --chown=civicpatch_user:civicpatch_user ./src/frontend /app
+COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/package.json ./src/frontend/package-lock.json /app
 RUN npm install
-RUN npm run build # outputs dist
+
+CMD ["npm", "run", "start"]
 
 # PRODUCTION IMAGE
 FROM post-install AS production
@@ -93,8 +121,6 @@ FROM post-install AS production
 ENV CIVICPATCH_ENV="production"
 
 WORKDIR /app
-
-FROM post-install AS production
 
 COPY --from=production-build /app/dist/. /app/src/frontend/dist
 
