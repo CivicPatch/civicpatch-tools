@@ -102,6 +102,12 @@ github_sso = GithubSSO(
     redirect_uri=GITHUB_CALLBACK_URL,
 )
 
+VALID_STATES = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga",
+                "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md",
+                "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj",
+                "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc",
+                "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"]
+
 
 @asynccontextmanager
 async def lifespan(instance: FastAPI):
@@ -182,7 +188,7 @@ async def github_intake(
         raise HTTPException(status_code=401, detail="Missing Authorization header")
 
     api_key = authorization.strip()
-    server_detail, error_string = is_authorized(api_key)
+    server_detail, error_string = await is_authorized(api_key)
     if error_string:
         raise HTTPException(status_code=401, detail=error_string)
 
@@ -280,14 +286,18 @@ async def login(provider: str):
 @app.get("/api/jurisdictions/available")
 async def list_available_jurisdictions_endpoint(
     state: str,
-    num_items: int = 10,
+    num_jurisdictions: int = 10,
     authorization: str = Security(api_key_header),
 ):
-    if not authorization:
+    if not authorization and not authorization.strip():
         raise HTTPException(status_code=401, detail="Missing Authorization header")
+    
+    if state.lower() not in VALID_STATES:
+        raise HTTPException(status_code=400, detail="Invalid state parameter")
 
-    # TODO: add auth
-    # TODO; check valid state input
+    server_detail, error_string = await is_authorized(authorization)
+    if error_string:
+        raise HTTPException(status_code=401, detail=error_string)
     jurisdictions_file_content = github_service.get_github_file_contents(
         GITHUB_WORKFLOW_TOKEN, f"data_source/{state}/jurisdictions.yml"
     )
@@ -304,7 +314,7 @@ async def list_available_jurisdictions_endpoint(
 
     filtered_jurisdictions = [
         j for j in jurisdictions if j.id not in open_pull_request_ids and j.url
-    ][:num_items]
+    ][:num_jurisdictions]
     return {"jurisdictions": filtered_jurisdictions}
 
 

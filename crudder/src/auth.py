@@ -5,10 +5,8 @@ from typing import Any, Tuple
 DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
 
 
-def is_authorized(db_cursor, api_key: str) -> Tuple[Any, str]:
-    server_detail = get_server_detail_by_active_api_key(
-        db_cursor, DATABASE_HASH_KEY, api_key
-    )
+async def is_authorized(api_key: str) -> Tuple[Any, str]:
+    server_detail = await get_server_detail_by_active_api_key(api_key)
 
     if not server_detail:
         return None, "Invalid or inactive API key"

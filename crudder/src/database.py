@@ -4,6 +4,8 @@ from psycopg_pool import AsyncConnectionPool
 import os
 
 CRUDDER_DB_URL = os.getenv("CRUDDER_DB_URL")
+DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
+
 pool = AsyncConnectionPool(CRUDDER_DB_URL, open=False)
 
 
@@ -115,7 +117,8 @@ async def user_is_approved(user_provider, provider_user_id) -> bool:
 
 
 async def is_active_api_key(database_hash_key, api_key) -> bool:
-    candidate_api_key_hash = hash_string(api_key, database_hash_key)
+    candidate_api_key = api_key.strip()
+    candidate_api_key_hash = hash_string(candidate_api_key, database_hash_key)
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -134,8 +137,8 @@ async def is_active_api_key(database_hash_key, api_key) -> bool:
     return row is not None
 
 
-async def get_server_detail_by_active_api_key(db_cursor, database_hash_key, api_key):
-    candidate_api_key_hash = hash_string(api_key, database_hash_key)
+async def get_server_detail_by_active_api_key(api_key):
+    candidate_api_key_hash = hash_string(api_key, DATABASE_HASH_KEY)
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
