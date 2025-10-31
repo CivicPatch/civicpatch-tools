@@ -19,5 +19,8 @@
   "scripts": {
     "start": "rollup -c -w",
     "build": "rollup -c"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.52.5"
   }
 }
