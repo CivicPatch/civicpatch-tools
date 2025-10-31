@@ -1,7 +1,6 @@
 {
   "type": "module",
   "dependencies": {
-    "@rollup/plugin-image": "^3.0.3",
     "haunted": "^6.1.0",
     "leaflet": "^1.9.4",
     "leaflet.locatecontrol": "^0.85.1",
@@ -9,6 +8,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.9",
+    "@rollup/plugin-image": "^3.0.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@web/dev-server": "^0.4.6",
