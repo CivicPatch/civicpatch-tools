@@ -1,12 +1,43 @@
+import os
 import argparse
 import asyncio
+import requests
 from typing import List
 from pipelines.main import get_pipeline_manager
 from utils import id_utils
 from schemas import PipelineRequest, PipelineStatus
-from pipeline import Pipeline
+from pipelines.pipeline import Pipeline
 
 pipeline_manager = get_pipeline_manager()
+
+CRUDDER_URL = os.getenv("CRUDDER_URL")
+CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
+
+print(f"CRUDDER_URL: {CRUDDER_URL}")
+print(f"CRUDDER_SHARED_TOKEN: {CRUDDER_SHARED_TOKEN}")
+
+async def get_available_jurisdictions_by_population_cli(num_jurisdictions: str, state: str):
+    """
+    Fetch available jurisdictions filtered by state and output them as JSON for compatibility with jq.
+    """
+    j_endpoint = f"{CRUDDER_URL}/api/jurisdictions/available?num_jurisdictions={num_jurisdictions}&state={state}"
+    headers = {
+        "Authorization": CRUDDER_SHARED_TOKEN
+    }
+    response = requests.get(j_endpoint, headers=headers)
+
+    if response.status_code != 200:
+        print(f"Error: Failed to fetch jurisdictions (status code: {response.status_code})")
+        print(f"Error Message: {response.json().get('detail', 'No detail provided')}")
+        return
+
+    data = response.json()
+    jurisdictions = data.get("jurisdictions", [])
+    output = {"jurisdictions": jurisdictions}
+
+    # Print the JSON output for jq compatibility
+    print(output)
+    return output
 
 
 async def run_pipeline_cli(request: PipelineRequest):
@@ -19,7 +50,7 @@ async def run_pipeline_cli(request: PipelineRequest):
         errors.append(f"Invalid jurisdiction_id format: {request.jurisdiction_id}")
     if not request.name:
         warnings.append(
-            "Missing 'name' field: A name and legal status (e.g., 'Seattle city') is preferred for search purposess. Substituting with place name jurisdiction_id."
+            "Missing 'name' field: A name and legal status (e.g., 'Seattle city') is preferred for search purposes. Substituting with place name jurisdiction_id."
         )
     if not request.url:
         errors.append("Missing 'url' field")
@@ -35,19 +66,53 @@ async def run_pipeline_cli(request: PipelineRequest):
             request_id,
             request,
             remove_callback=None,
-            debug_state=PipelineStatus.MAYBE_SEND_TO_GITHUB,
         )
         await pipeline.run_async()
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run pipeline for a municipality")
-    parser.add_argument("--jurisdiction-id", required=True, help="Jurisdiction ID")
-    parser.add_argument("--name", required=True, help="Name of the municipality")
-    parser.add_argument("--url", required=True, help="URL of the city council page")
+def main():
+    parser = argparse.ArgumentParser(description="CLI for managing pipelines and jurisdictions")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    # Subcommand: get_juds
+    get_juds_parser = subparsers.add_parser(
+        "get_juds", help="Get available jurisdictions by population and state"
+    )
+    get_juds_parser.add_argument(
+        "--num-jurisdictions",
+        required=True,
+        help="Number of jurisdictions to fetch",
+    )
+    get_juds_parser.add_argument(
+        "--state",
+        required=True,
+        help="State to filter jurisdictions by",
+    )
+
+    # Subcommand: run_pipeline
+    run_pipeline_parser = subparsers.add_parser(
+        "run_pipeline", help="Run a pipeline for a municipality"
+    )
+    run_pipeline_parser.add_argument(
+        "--jurisdiction-id", required=True, help="Jurisdiction ID"
+    )
+    run_pipeline_parser.add_argument(
+        "--name", required=True, help="Name of the municipality"
+    )
+    run_pipeline_parser.add_argument(
+        "--url", required=True, help="URL of the city council page"
+    )
+
     args = parser.parse_args()
 
-    request = PipelineRequest(
-        jurisdiction_id=args.jurisdiction_id, name=args.name, url=args.url
-    )
-    asyncio.run(run_pipeline_cli(request))
+    if args.command == "get_juds":
+        asyncio.run(get_available_jurisdictions_by_population_cli(args.num_jurisdictions, args.state))
+    elif args.command == "run_pipeline":
+        request = PipelineRequest(
+            jurisdiction_id=args.jurisdiction_id, name=args.name, url=args.url
+        )
+        asyncio.run(run_pipeline_cli(request))
+
+
+if __name__ == "__main__":
+    main()
