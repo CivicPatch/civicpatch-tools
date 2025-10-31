@@ -68,7 +68,7 @@ ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
 #https://github.com/microsoft/playwright-python/issues/2572
 
 # ==========================================
-# Stage: development-fe
+# Companion Stage: development-fe
 # ==========================================
 
 FROM node:24-alpine AS development-fe
@@ -83,7 +83,7 @@ COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/. /app
 CMD ["npm", "run", "start"]
 
 # ==========================================
-# Stage: development
+# Final Stage: development
 # ==========================================
 
 # DEVELOPMENT IMAGE
@@ -105,15 +105,25 @@ EXPOSE 8000
 
 CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
 
+# ==========================================
+# Stage: production-fe
+# ==========================================
+
 FROM node:24-alpine AS production-build
 
 ENV NODE_ENV="production"
 WORKDIR /app
 
-COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/package.json ./src/frontend/package-lock.json /app
+RUN ls -la
+COPY ./src/frontend/package.json ./src/frontend/package-lock.json /app
 RUN npm install
+COPY ./src/frontend/. /app
 
-CMD ["npm", "run", "start"]
+RUN ["npm", "run", "build"]
+
+# ==========================================
+# Final Stage: production
+# ==========================================
 
 # PRODUCTION IMAGE
 FROM post-install AS production
