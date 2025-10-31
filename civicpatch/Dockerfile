@@ -71,9 +71,10 @@ ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
 # Companion Stage: development-fe
 # ==========================================
 
-FROM node:24-alpine AS development-fe
+FROM node:24-slim AS development-fe
 
-ENV NODE_ENV="development"
+ENV NODE_ENV="development" \
+    BUILD_ENV="development"
 WORKDIR /app
 
 COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/package.json ./src/frontend/package-lock.json /app
@@ -109,9 +110,10 @@ CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
 # Stage: production-fe
 # ==========================================
 
-FROM node:24-alpine AS production-build
+FROM node:24-slim AS production-build
 
-ENV NODE_ENV="production"
+ENV NODE_ENV="development" \
+    BUILD_ENV="production"
 WORKDIR /app
 
 RUN ls -la

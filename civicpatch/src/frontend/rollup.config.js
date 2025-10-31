@@ -3,7 +3,7 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import image from "@rollup/plugin-image";
 
-const devMode = process.env.NODE_ENV === "development";
+const devMode = process.env.BUILD_ENV === "development";
 console.log(`${devMode ? "development" : "production"} mode bundle`);
 
 // The main JavaScript bundle for modern browsers that support
