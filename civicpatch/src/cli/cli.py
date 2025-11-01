@@ -5,7 +5,8 @@ import requests
 from typing import List
 from pipelines.main import get_pipeline_manager
 from utils import id_utils
-from schemas import PipelineRequest, PipelineStatus
+import json
+from schemas import PipelineRequest
 from pipelines.pipeline import Pipeline
 
 pipeline_manager = get_pipeline_manager()
@@ -36,7 +37,7 @@ async def get_available_jurisdictions_by_population_cli(
     output = {"jurisdictions": jurisdictions}
 
     # Print the JSON output for jq compatibility
-    print(output)
+    print(json.dumps(output))
     return output
 
 
