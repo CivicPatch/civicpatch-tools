@@ -13,21 +13,21 @@ pipeline_manager = get_pipeline_manager()
 CRUDDER_URL = os.getenv("CRUDDER_URL")
 CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
 
-print(f"CRUDDER_URL: {CRUDDER_URL}")
-print(f"CRUDDER_SHARED_TOKEN: {CRUDDER_SHARED_TOKEN}")
 
-async def get_available_jurisdictions_by_population_cli(num_jurisdictions: str, state: str):
+async def get_available_jurisdictions_by_population_cli(
+    num_jurisdictions: str, state: str
+):
     """
     Fetch available jurisdictions filtered by state and output them as JSON for compatibility with jq.
     """
     j_endpoint = f"{CRUDDER_URL}/api/jurisdictions/available?num_jurisdictions={num_jurisdictions}&state={state}"
-    headers = {
-        "Authorization": CRUDDER_SHARED_TOKEN
-    }
+    headers = {"Authorization": CRUDDER_SHARED_TOKEN}
     response = requests.get(j_endpoint, headers=headers)
 
     if response.status_code != 200:
-        print(f"Error: Failed to fetch jurisdictions (status code: {response.status_code})")
+        print(
+            f"Error: Failed to fetch jurisdictions (status code: {response.status_code})"
+        )
         print(f"Error Message: {response.json().get('detail', 'No detail provided')}")
         return
 
@@ -71,7 +71,9 @@ async def run_pipeline_cli(request: PipelineRequest):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="CLI for managing pipelines and jurisdictions")
+    parser = argparse.ArgumentParser(
+        description="CLI for managing pipelines and jurisdictions"
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # Subcommand: get_juds
@@ -106,7 +108,11 @@ def main():
     args = parser.parse_args()
 
     if args.command == "get_juds":
-        asyncio.run(get_available_jurisdictions_by_population_cli(args.num_jurisdictions, args.state))
+        asyncio.run(
+            get_available_jurisdictions_by_population_cli(
+                args.num_jurisdictions, args.state
+            )
+        )
     elif args.command == "run_pipeline":
         request = PipelineRequest(
             jurisdiction_id=args.jurisdiction_id, name=args.name, url=args.url

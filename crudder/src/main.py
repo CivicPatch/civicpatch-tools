@@ -102,11 +102,58 @@ github_sso = GithubSSO(
     redirect_uri=GITHUB_CALLBACK_URL,
 )
 
-VALID_STATES = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga",
-                "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md",
-                "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj",
-                "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc",
-                "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"]
+VALID_STATES = [
+    "al",
+    "ak",
+    "az",
+    "ar",
+    "ca",
+    "co",
+    "ct",
+    "de",
+    "fl",
+    "ga",
+    "hi",
+    "id",
+    "il",
+    "in",
+    "ia",
+    "ks",
+    "ky",
+    "la",
+    "me",
+    "md",
+    "ma",
+    "mi",
+    "mn",
+    "ms",
+    "mo",
+    "mt",
+    "ne",
+    "nv",
+    "nh",
+    "nj",
+    "nm",
+    "ny",
+    "nc",
+    "nd",
+    "oh",
+    "ok",
+    "or",
+    "pa",
+    "ri",
+    "sc",
+    "sd",
+    "tn",
+    "tx",
+    "ut",
+    "vt",
+    "va",
+    "wa",
+    "wv",
+    "wi",
+    "wy",
+]
 
 
 @asynccontextmanager
@@ -231,7 +278,6 @@ async def github_intake(
 async def api_keys_page(request: Request):
     try:
         user = await get_logged_user(request.cookies.get("token"))
-        print(user)
         # Fetch user's API keys from database
         provider_user_id = user.id
 
@@ -291,7 +337,7 @@ async def list_available_jurisdictions_endpoint(
 ):
     if not authorization and not authorization.strip():
         raise HTTPException(status_code=401, detail="Missing Authorization header")
-    
+
     if state.lower() not in VALID_STATES:
         raise HTTPException(status_code=400, detail="Invalid state parameter")
 
