@@ -79,7 +79,7 @@ WORKDIR /app
 
 COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/package.json ./src/frontend/package-lock.json /app
 RUN npm install
-COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/. /app
+COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/  /app
 
 CMD ["npm", "run", "start"]
 
@@ -119,7 +119,7 @@ WORKDIR /app
 RUN ls -la
 COPY ./src/frontend/package.json ./src/frontend/package-lock.json /app
 RUN npm install
-COPY ./src/frontend/. /app
+COPY ./src/frontend/ /app
 
 RUN ["npm", "run", "build"]
 
