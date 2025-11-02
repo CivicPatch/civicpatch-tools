@@ -16,4 +16,3 @@ class HelloWorld extends LitElement {
 
 // Register the component as a custom element
 customElements.define("hello-world", HelloWorld);
-console.log("test 1");
