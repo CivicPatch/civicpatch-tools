@@ -2,6 +2,7 @@ import terser from "@rollup/plugin-terser";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import image from "@rollup/plugin-image";
+import css from "rollup-plugin-import-css";
 
 const devMode = process.env.BUILD_ENV === "development";
 console.log(`${devMode ? "development" : "production"} mode bundle`);
@@ -20,6 +21,7 @@ const config = {
     nodeResolve(),
     image(),
     commonjs(),
+    css(),
     terser({
       ecma: 2020,
       mangle: { toplevel: true },

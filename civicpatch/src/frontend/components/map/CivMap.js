@@ -4,6 +4,11 @@ import { useEffect, useState, component } from "haunted";
 
 import { Map, TileLayer, Marker, Icon } from "leaflet";
 import { LocateControl } from "leaflet.locatecontrol";
+import { Geocoder, geocoders } from "leaflet-control-geocoder";
+
+import leafletStyles from "leaflet/dist/leaflet.css";
+import locateStyles from "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
+import geocoderStyles from "leaflet-control-geocoder/dist/Control.Geocoder.css";
 
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 
@@ -26,10 +31,12 @@ function CivMap({ latlng }) {
 
     mapInstance.addEventListener("locationerror", handleLocationError);
     mapInstance.addEventListener("locationfound", handleLocationFound);
+    mapInstance.addEventListener("markgeocode", handleAddressResult);
 
     return () => {
       mapInstance.removeEventListener("locationerror", handleLocationError);
       mapInstance.removeEventListener("locationfound", handleLocationFound);
+      mapInstance.removeEventListener("markgeocode", handleAddressResult);
     };
   }, [mapInstance]);
 
@@ -52,6 +59,10 @@ function CivMap({ latlng }) {
     setHomeLatlng(event.latlng);
   };
 
+  const handleAddressResult = (event) => {
+    console.log("event", event);
+  };
+
   const setupMap = (el) => {
     if (!el || mapInstance) return;
 
@@ -71,11 +82,15 @@ function CivMap({ latlng }) {
       drawMarker: false,
       drawCircle: false,
     }).addTo(newMapInstance);
+    let _gc = new Geocoder({
+      geocoder: new geocoders.Nominatim(),
+      defaultMarkGeocode: false,
+    }).addTo(newMapInstance);
 
     setMapInstance(newMapInstance);
     // Fix issue with stylesheet not loading
     // https://stackoverflow.com/questions/21405189/leaflet-map-shows-up-grey
-    window.dispatchEvent(new Event("resize"));
+    // window.dispatchEvent(new Event("resize"));
   };
 
   const moveMarker = (markerLatlng) => {
@@ -97,16 +112,8 @@ function CivMap({ latlng }) {
   };
 
   return html`
-    <link
-      rel="stylesheet"
-      href="https://cdn.skypack.dev/leaflet/dist/leaflet.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.skypack.dev/leaflet.locatecontrol/dist/L.Control.Locate.min.css"
-    />
     <style>
-      .map-container {
+      ${leafletStyles} ${locateStyles} ${geocoderStyles} .map-container {
         height: 400px;
       }
 
