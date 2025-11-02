@@ -2,7 +2,7 @@ import { html } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 import { useEffect, useState, component } from "haunted";
 
-import { Map, TileLayer, Marker, Icon } from "leaflet";
+import { Map, TileLayer, Marker, Icon, Control } from "leaflet";
 import { LocateControl } from "leaflet.locatecontrol";
 import { Geocoder, geocoders } from "leaflet-control-geocoder";
 
@@ -20,32 +20,39 @@ const DEFAULT_LOCATION = {
 // https://leafletjs.com/reference.html#latlng
 function CivMap({ latlng }) {
   const [mapInstance, setMapInstance] = useState(null);
-  const [homeLatlng, setHomeLatlng] = useState(
-    latlng ? latlng : DEFAULT_LOCATION,
-  );
+  const [homeLatlng, setHomeLatlng] = useState(latlng || DEFAULT_LOCATION);
   const [currentLatlng, setCurrentLatlng] = useState(null);
   const [marker, setMarker] = useState(null);
+  const [controls, setControls] = useState({ gc: null });
 
   useEffect(() => {
     if (!mapInstance) return;
 
-    mapInstance.addEventListener("locationerror", handleLocationError);
-    mapInstance.addEventListener("locationfound", handleLocationFound);
-    mapInstance.addEventListener("markgeocode", handleAddressResult);
+    mapInstance.on("locationerror", handleLocationError);
+    mapInstance.on("locationfound", handleLocationFound);
+    mapInstance.on("locationactivate", handleLocationFound);
+    mapInstance.on("click", handleClick);
 
     return () => {
-      mapInstance.removeEventListener("locationerror", handleLocationError);
-      mapInstance.removeEventListener("locationfound", handleLocationFound);
-      mapInstance.removeEventListener("markgeocode", handleAddressResult);
+      mapInstance.off("locationerror", handleLocationError);
+      mapInstance.off("locationfound", handleLocationFound);
+      mapInstance.off("locationactivate", handleLocationFound);
+      mapInstance.off("click", handleClick);
+
+      if (controls.gc) {
+        controls.gc.off("markgeocode", handleAddressResult);
+      }
+      mapInstance.remove();
     };
   }, [mapInstance]);
 
   useEffect(() => {
-    console.log("what is", currentLatlng, mapInstance);
     if (!currentLatlng || !mapInstance) return;
 
+    if (controls.lc) {
+      controls.lc.stop();
+    }
     moveMarker(currentLatlng);
-    // mapInstance.flyTo(currentLatlng, 4);
   }, [currentLatlng, mapInstance]);
 
   const handleLocationError = (event) => {
@@ -54,19 +61,23 @@ function CivMap({ latlng }) {
   };
 
   const handleLocationFound = (event) => {
-    console.info("Found location: ", event.latlng);
+    console.log("setting location found...", event);
     setCurrentLatlng(event.latlng);
     setHomeLatlng(event.latlng);
   };
 
   const handleAddressResult = (event) => {
-    console.log("event", event);
+    if (event?.geocode?.center) {
+      if (event.geocode.center.lat && event.geocode.center.lng) {
+        setCurrentLatlng(event.geocode.center);
+      }
+    }
   };
 
   const setupMap = (el) => {
     if (!el || mapInstance) return;
 
-    let newMapInstance = new Map(el); // .setView([51.505, -0.09], 13);
+    let newMapInstance = new Map(el, { zoomControl: false }); // .setView([51.505, -0.09], 13);
 
     let urlTemplate = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     newMapInstance.addLayer(new TileLayer(urlTemplate, { minZoom: 3 }));
@@ -77,20 +88,41 @@ function CivMap({ latlng }) {
       newMapInstance.locate();
     }
 
+    let _gc = new Geocoder({
+      geocoder: new geocoders.Nominatim({
+        geocodingQueryParams: {
+          countrycodes: "US",
+        },
+      }),
+      defaultMarkGeocode: false,
+      position: "topleft",
+    })
+      .on("markgeocode", handleAddressResult)
+      .addTo(newMapInstance);
+
     let _lc = new LocateControl({
       keepCurrentZoomLevel: true,
       drawMarker: false,
       drawCircle: false,
+      position: "bottomright",
+      setView: false,
+      clickBehavior: {
+        inView: "stop",
+        outOfView: "stop",
+        inViewNotFollowing: "stop",
+      },
     }).addTo(newMapInstance);
-    let _gc = new Geocoder({
-      geocoder: new geocoders.Nominatim(),
-      defaultMarkGeocode: false,
+
+    let _zoom = new Control.Zoom({
+      position: "bottomright",
     }).addTo(newMapInstance);
 
     setMapInstance(newMapInstance);
-    // Fix issue with stylesheet not loading
-    // https://stackoverflow.com/questions/21405189/leaflet-map-shows-up-grey
-    // window.dispatchEvent(new Event("resize"));
+    setControls({ gc: _gc, lc: _lc });
+  };
+
+  const handleClick = (e) => {
+    setCurrentLatlng(e.latlng);
   };
 
   const moveMarker = (markerLatlng) => {
