@@ -37,6 +37,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: development
+      # target: image-base
     restart: unless-stopped
     ports:
       - "8000:8000"
@@ -47,6 +48,8 @@ services:
       - .:/app
     networks:
       - civicpatch_net
+    # temporary
+    # network_mode: host
 
 volumes:
   exclude:

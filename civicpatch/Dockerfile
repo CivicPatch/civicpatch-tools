@@ -63,7 +63,6 @@ COPY --chown=civicpatch_user:civicpatch_user src/setup.py /app/src/setup.py
 RUN poetry run post-install
 
 USER civicpatch_user
-ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
 
 #https://github.com/microsoft/playwright-python/issues/2572
 
@@ -104,6 +103,7 @@ WORKDIR /app
 USER civicpatch_user
 EXPOSE 8000
 
+ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
 CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
 
 # ==========================================
@@ -140,4 +140,5 @@ USER civicpatch_user
 EXPOSE 8000
 # # Keep the container running
 # CMD ["tail", "-f", "/dev/null"]
+ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
 CMD ["fastapi", "run", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]

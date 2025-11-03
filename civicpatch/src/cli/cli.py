@@ -37,8 +37,9 @@ async def get_available_jurisdictions_by_population_cli(
     output = {"jurisdictions": jurisdictions}
 
     # Print the JSON output for jq compatibility
-    print(json.dumps(output))
-    return output
+    formatted_output = json.dumps(output)
+    print(formatted_output)
+    return formatted_output
 
 
 async def run_pipeline_cli(request: PipelineRequest):
