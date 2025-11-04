@@ -29,7 +29,7 @@ async def get_available_jurisdictions_by_population_cli(
         print(
             f"Error: Failed to fetch jurisdictions (status code: {response.status_code})"
         )
-        print(f"Error Message: {response.json().get('detail', 'No detail provided')}")
+        print(f"Error Message: {response.text}")
         return
 
     data = response.json()
