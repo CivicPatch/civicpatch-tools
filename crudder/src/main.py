@@ -345,7 +345,7 @@ async def list_available_jurisdictions_endpoint(
     if error_string:
         raise HTTPException(status_code=401, detail=error_string)
     jurisdictions_file_content = github_service.get_github_file_contents(
-        GITHUB_WORKFLOW_TOKEN, f"data_source/{state}/jurisdictions.yml"
+        GITHUB_WORKFLOW_TOKEN, f"data_source/{state}/government_progress.yml"
     )
     if jurisdictions_file_content is None:
         raise HTTPException(status_code=404, detail="Could not find jurisdictions file")
@@ -353,13 +353,18 @@ async def list_available_jurisdictions_endpoint(
     open_pull_requests = github_service.get_open_pull_requests(GITHUB_WORKFLOW_TOKEN)
     jurisdictions_data = yaml.safe_load(jurisdictions_file_content)
     jurisdictions = [
-        Jurisdiction(id=j["id"], name=j["name"], url=j["url"])
-        for j in jurisdictions_data["jurisdictions"]
+        Jurisdiction(
+            id=j["jurisdiction"]["id"],
+            name=j["jurisdiction"]["name"],
+            url=j["jurisdiction"]["url"],
+        )
+        for j in jurisdictions_data["jurisdictions_by_id"].values()
+        if j["jurisdiction"].get("url") and not j.get("updated_at")
     ]
     open_pull_request_ids = [pr.jurisdiction_id for pr in open_pull_requests]
 
     filtered_jurisdictions = [
-        j for j in jurisdictions if j.id not in open_pull_request_ids and j.url
+        j for j in jurisdictions if j.id not in open_pull_request_ids
     ][:num_jurisdictions]
     return {"jurisdictions": filtered_jurisdictions}
 

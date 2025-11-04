@@ -160,6 +160,7 @@ def state_name(jurisdiction_id: str) -> str:
         "ca": "California",
         "co": "Colorado",
         "ct": "Connecticut",
+        "dc": "Washington, D.C.",
         "de": "Delaware",
         "fl": "Florida",
         "ga": "Georgia",
