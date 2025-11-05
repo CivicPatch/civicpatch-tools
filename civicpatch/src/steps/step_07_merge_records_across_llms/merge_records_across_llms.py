@@ -33,9 +33,7 @@ def merge_records_across_llms(context: PipelineContext) -> MergeRecordsAcrossLLM
     people_by_llm: Dict[str, List[Person]] = cast(
         MergeRecordsWithinLLMStep, context.steps[PipelineStatus.MERGE_RECORDS_WITHIN_LLM]
         ).people_by_llm
-    #people_by_llm = {
-    #    k: [Person.model_validate(p) if isinstance(p, dict) else p for p in v] for k, v in people_by_llm.items()
-    #    }
+    
     government_type = cast(
         ResearchMunicipalityStep, 
         context.steps[PipelineStatus.RESEARCH_MUNICIPALITY]
@@ -43,15 +41,6 @@ def merge_records_across_llms(context: PipelineContext) -> MergeRecordsAcrossLLM
 
     # Group records across LLMs based on weak ties and names
     groups_by_llm = group_records_across_llms(people_by_llm)
-    # Convert to JSON-serializable format for pretty printing
-    #groups_json = []
-    #for group in groups_by_llm:
-    #    group_json = {}
-    #    for llm, people in group.items():
-    #        group_json[llm] = [person.model_dump() for person in people]
-    #    groups_json.append(group_json)
-    
-    #print("after grouped by:", json.dumps(groups_json, indent=2, default=str))
     
     # Merge each group and collect disagreements
     merged_people = []
@@ -60,7 +49,6 @@ def merge_records_across_llms(context: PipelineContext) -> MergeRecordsAcrossLLM
 
     for grouped_identities_by_llm in groups_by_llm:
         # Merge the group
-        print("merging group:", grouped_identities_by_llm)
         merged_person = merge_group_across_llms(
             [person for llm_people 
              in grouped_identities_by_llm.values() 
@@ -68,7 +56,6 @@ def merge_records_across_llms(context: PipelineContext) -> MergeRecordsAcrossLLM
              ],
             jurisdiction_id
         )
-        print("merged peroson", merged_person)
 
         # Skip person if no roles after merge
         if len(merged_person.roles) == 0:

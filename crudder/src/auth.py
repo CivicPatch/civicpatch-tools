@@ -13,13 +13,13 @@ async def is_authorized(api_key: str) -> Tuple[Any, str]:
 
     if not server_detail["user_email"]:
         return (
-            None,
+            server_detail,
             "No user email associated with the provided API key. Do you have an active API key & user email?",
         )
 
     if not server_detail["server_url"]:
         return (
-            None,
+            server_detail,
             "No server URL associated with the provided API key. Please set your CivicPatch Server URL in the user details page.",
         )
-    return None, ""
+    return server_detail, ""
