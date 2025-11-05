@@ -341,7 +341,7 @@ async def list_available_jurisdictions_endpoint(
     if state.lower() not in VALID_STATES:
         raise HTTPException(status_code=400, detail="Invalid state parameter")
 
-    server_detail, error_string = await is_authorized(authorization)
+    _server_detail, error_string = await is_authorized(authorization)
     if error_string:
         raise HTTPException(status_code=401, detail=error_string)
     jurisdictions_file_content = github_service.get_github_file_contents(
