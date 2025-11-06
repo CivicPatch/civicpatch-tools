@@ -1,45 +1,17 @@
-import os
 import argparse
 import asyncio
-import requests
+import os
 from typing import List
+
 from pipelines.main import get_pipeline_manager
-from utils import id_utils
-import json
-from schemas import PipelineRequest
 from pipelines.pipeline import Pipeline
+from schemas import PipelineRequest
+from utils import id_utils
 
 pipeline_manager = get_pipeline_manager()
 
 CRUDDER_URL = os.getenv("CRUDDER_URL")
 CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
-
-
-async def get_available_jurisdictions_by_population_cli(
-    num_jurisdictions: str, state: str
-):
-    """
-    Fetch available jurisdictions filtered by state and output them as JSON for compatibility with jq.
-    """
-    j_endpoint = f"{CRUDDER_URL}/api/jurisdictions/available?num_jurisdictions={num_jurisdictions}&state={state}"
-    headers = {"Authorization": CRUDDER_SHARED_TOKEN}
-    response = requests.get(j_endpoint, headers=headers)
-
-    if response.status_code != 200:
-        print(
-            f"Error: Failed to fetch jurisdictions (status code: {response.status_code})"
-        )
-        print(f"Error Message: {response.text}")
-        return
-
-    data = response.json()
-    jurisdictions = data.get("jurisdictions", [])
-    output = {"jurisdictions": jurisdictions}
-
-    # Print the JSON output for jq compatibility
-    formatted_output = json.dumps(output)
-    print(formatted_output)
-    return formatted_output
 
 
 async def run_pipeline_cli(request: PipelineRequest):
@@ -109,17 +81,13 @@ def main():
 
     args = parser.parse_args()
 
-    if args.command == "get_juds":
-        asyncio.run(
-            get_available_jurisdictions_by_population_cli(
-                args.num_jurisdictions, args.state
-            )
-        )
-    elif args.command == "run_pipeline":
+    if args.command == "run_pipeline":
         request = PipelineRequest(
             jurisdiction_id=args.jurisdiction_id, name=args.name, url=args.url
         )
         asyncio.run(run_pipeline_cli(request))
+    else:
+        print(f"cli command not available: {args.command}")
 
 
 if __name__ == "__main__":
