@@ -1,0 +1,136 @@
+import pytest
+from utils.id_utils import (  # Replace `your_module` with the actual module name
+    parse_jurisdiction_id,
+    jurisdiction_id_to_folder,
+    jurisdiction_id_to_slug,
+    jurisdiction_id_to_git_branch,
+    slug_to_jurisdiction_id,
+    git_branch_to_jurisdiction_id,
+)
+
+pytestmark = pytest.mark.unit
+
+
+# Mock class for JurisdictionId
+class JurisdictionId:
+    def __init__(
+        self,
+        country,
+        state,
+        county=None,
+        place_label=None,
+        place=None,
+        jurisdiction_type=None,
+    ):
+        self.country = country
+        self.state = state
+        self.county = county
+        self.place_label = place_label
+        self.place = place
+        self.jurisdiction_type = jurisdiction_type
+
+    def __eq__(self, other):
+        return (
+            self.country == other.country
+            and self.state == other.state
+            and self.county == other.county
+            and self.place_label == other.place_label
+            and self.place == other.place
+            and self.jurisdiction_type == other.jurisdiction_type
+        )
+
+
+# Tests for parse_jurisdiction_id
+def test_parse_jurisdiction_id_valid():
+    jurisdiction_id = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+    expected = JurisdictionId(
+        country="us",
+        state="wa",
+        county=None,
+        place_label="place",
+        place="seattle",
+        jurisdiction_type="government",
+    )
+    assert parse_jurisdiction_id(jurisdiction_id) == expected
+
+
+def test_parse_jurisdiction_id_with_county():
+    jurisdiction_id = (
+        "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government"
+    )
+    expected = JurisdictionId(
+        country="us",
+        state="il",
+        county="dupage",
+        place_label="place",
+        place="naperville",
+        jurisdiction_type="government",
+    )
+    assert parse_jurisdiction_id(jurisdiction_id) == expected
+
+
+def test_parse_jurisdiction_id_invalid_format():
+    jurisdiction_id = "invalid-format"
+    assert parse_jurisdiction_id(jurisdiction_id) is None
+
+
+# Tests for jurisdiction_id_to_folder
+def test_jurisdiction_id_to_folder():
+    jurisdiction_id = (
+        "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/council"
+    )
+    expected = "il/county_dupage__place_naperville"
+    assert jurisdiction_id_to_folder(jurisdiction_id) == expected
+
+
+# Tests for jurisdiction_id_to_slug
+def test_jurisdiction_id_to_slug():
+    jurisdiction_id = (
+        "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/council"
+    )
+    expected = "state_il__county_dupage__place_naperville__council"
+    assert jurisdiction_id_to_slug(jurisdiction_id) == expected
+
+
+# Tests for jurisdiction_id_to_git_branch
+def test_jurisdiction_id_to_git_branch():
+    jurisdiction_id = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+    request_id = "2025-09-25-1a2b"
+    expected = "2025-09-25-1a2b__state_wa__place_seattle__government"
+    assert jurisdiction_id_to_git_branch(jurisdiction_id, request_id) == expected
+
+
+# Tests for slug_to_jurisdiction_id
+def test_slug_to_jurisdiction_id():
+    slug = "state_ca__county_marin__special_district_marin_city_community_services_district__governing_board"
+    expected = "ocd-jurisdiction/country:us/state:ca/county:marin/special_district:marin_city_community_services_district/governing_board"
+    assert slug_to_jurisdiction_id(slug) == expected
+
+
+def test_slug_to_jurisdiction_id_invalid():
+    slug = "invalid_slug_format"
+    with pytest.raises(ValueError, match="Slug must start with 'state'."):
+        slug_to_jurisdiction_id(slug)
+
+
+# Tests for git_branch_to_jurisdiction_id
+def test_git_branch_to_jurisdiction_id():
+    branch = "2025-09-25-1a2b__state_wa__place_seattle__government"
+    expected = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+    assert git_branch_to_jurisdiction_id(branch) == expected
+
+
+def test_git_branch_to_jurisdiction_id_with_county():
+    branch = "2025-09-25-1a2b__state_il__county_dupage__place_naperville__government"
+    expected = (
+        "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government"
+    )
+    assert git_branch_to_jurisdiction_id(branch) == expected
+
+
+def test_git_branch_to_jurisdiction_id_invalid():
+    branch = "invalid_branch_format"
+    with pytest.raises(
+        ValueError, match="Branch name format invalid: invalid_branch_format"
+    ):
+        git_branch_to_jurisdiction_id(branch)
