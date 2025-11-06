@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, model_validator
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
@@ -27,7 +29,92 @@ class Jurisdiction(BaseModel):
     url: str | None
 
 
-def git_branch_to_jurisdiction_id(branch: str, KNOWN_PLACE_KEYS: list[str]) -> str:
+class JurisdictionId(BaseModel):
+    country: str
+    state: str
+    county: Optional[str] = None
+    place_label: str = "place"
+    place: str
+    jurisdiction_type: str
+
+
+def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId | None:
+    """
+    Parses a jurisdiction ID in the format
+        "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+    OR
+        "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government"
+    and returns a JurisdictionId object.
+
+    Returns None if the format is invalid.
+    """
+    try:
+        components = jurisdiction_id.split("/")
+        result = {}
+        country_part = components[1]
+        result["country"] = country_part.split(":")[1]
+
+        state_part = components[2]
+        result["state"] = state_part.split(":")[1]
+
+        substate_part = components[3]
+        substate_label, substate_name = substate_part.split(":")
+        if substate_label == "county":
+            result["county"] = substate_name
+            place_label, place_name = components[4].split(":")
+            result["place_label"] = place_label
+            result["place"] = place_name
+        else:
+            result["place_label"] = substate_label
+            result["place"] = substate_name
+
+        # Last component MUST contain the jurisdiction type
+        # Which has no ":"
+        jurisdiction_type = components[-1]
+        if ":" in jurisdiction_type:
+            return None
+
+        if "country" not in result or "state" not in result:
+            return None
+
+        return JurisdictionId(
+            country=result["country"],
+            state=result["state"],
+            county=result.get("county", None),
+            place_label=result["place_label"],
+            place=result["place"],
+            jurisdiction_type=jurisdiction_type,
+        )
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
+
+def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:
+    """
+    Converts a jurisdiction ID to a reversible, human-friendly folder name.
+    Example:
+      {
+        country: "us",
+        state: "il",
+        county: "dupage", (optional)
+        place: "naperville_test",
+        jurisdiction_type: "council"
+      }
+      -> "il/county_dupage__place_naperville"
+    """
+
+    jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
+
+    folder = f"{jurisdiction_id_parts.state}/"
+    if jurisdiction_id_parts.county:
+        folder += f"county_{jurisdiction_id_parts.county}__"
+    folder += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}"
+
+    return folder
+
+
+def git_branch_to_jurisdiction_id(branch: str) -> str:
     """
     Converts a git branch name back to a jurisdiction ID.
 
