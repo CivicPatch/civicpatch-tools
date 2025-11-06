@@ -1,41 +1,43 @@
-import os
 import datetime
+import os
 from contextlib import asynccontextmanager
+from typing import List
+import people_service
+
+import yaml
 from fastapi import (
+    Body,
+    Depends,
     FastAPI,
+    Form,
+    HTTPException,
     Request,
     Security,
-    HTTPException,
-    Depends,
-    Form,
     UploadFile,
-    Body,
 )
 from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.security import APIKeyCookie, APIKeyHeader
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.security import APIKeyCookie, APIKeyHeader
-from fastapi_sso.sso.github import GithubSSO
 from fastapi_sso.sso.base import OpenID
-import yaml
+from fastapi_sso.sso.github import GithubSSO
+from jose import jwt  # pip install python-jose[cryptography]
+
+import github_service
+from auth import is_authorized
 from database import (
-    pool,
-    maybe_insert_user,
+    add_representatives,
     create_api_key,
     get_api_keys_for_user,
-    revoke_api_key,
     get_user_details,
+    maybe_insert_user,
+    pool,
+    revoke_api_key,
     update_user_detail,
     user_is_approved,
-    add_representatives,
 )
-from storage_service import upload_file_to_storage
-import github_service
 from schemas import Jurisdiction, Representative
-from auth import is_authorized
-from typing import List
-
-from jose import jwt  # pip install python-jose[cryptography]
+from storage_service import upload_file_to_storage
 
 # Only purpose is to manage users, their API keys, and move data from 3rd party servers
 # to GitHub Actions.
@@ -371,6 +373,20 @@ async def list_available_jurisdictions_endpoint(
     ][:num_jurisdictions]
     return {"jurisdictions": filtered_jurisdictions}
 
+#@app.get("/api/jurisdictions/{jurisdiction_ocdid}/people")
+#async def get_jurisdiction_people_endpoint(
+#    jurisdiction_ocdid: str,
+#    authorization: str = Security(api_key_header),
+#)
+#    if not authorization and not authorization.strip():
+#        raise HTTPException(status_code=401, detail="Missing Authorization header")
+#
+#    _server_detail, error_string = await is_authorized(authorization)
+#    if error_string:
+#        raise HTTPException(status_code=403, detail=error_string)
+
+
+
 
 @app.post("/api/jurisdictions/{jurisdiction_ocdid}/people")
 async def update_jurisdiction_people_endpoint(
@@ -384,9 +400,8 @@ async def update_jurisdiction_people_endpoint(
     if error_string:
         raise HTTPException(status_code=403, detail=error_string)
 
-    await add_representatives(jurisdiction_ocdid)
-
-    pass
+    people = people_service.get_people_from_repo(jurisdiction_ocdid)
+    await add_representatives(jurisdiction_ocdid, people)
 
 
 @app.get("/auth/logout", include_in_schema=False)
