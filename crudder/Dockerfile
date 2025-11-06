@@ -13,7 +13,8 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_CREATE=false \
     POETRY_VIRTUALENVS_IN_PROJECT=false \
     VIRTUAL_ENV="/venv" \
-    PYTHONPATH=/app/src
+    PYTHONPATH=/app/src \
+    PROJECT_NAME="crudder"
 
 # Add Poetry and virtual env to PATH
 ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"
@@ -25,10 +26,12 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 RUN python -m venv $VIRTUAL_ENV
 
 WORKDIR /app
-COPY pyproject.toml poetry.lock ./
+COPY $PROJECT_NAME/pyproject.toml $PROJECT_NAME/poetry.lock ./
 RUN poetry install --no-root
 
-COPY . /app
+COPY $PROJECT_NAME /app
+COPY civicpatch/src/schemas.py /app/src/civicpatch/schemas.py
+COPY civicpatch/src/utils/id_utils.py /app/src/civicpatch/id_utils.py
 
 RUN useradd -m -s /bin/bash civicpatch_user
 RUN chown -R civicpatch_user:civicpatch_user /app

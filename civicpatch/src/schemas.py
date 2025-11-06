@@ -1,21 +1,13 @@
-from typing import Dict, List, Optional, TypeAlias, Union
-from pydantic import BaseModel, Field
 from decimal import Decimal
 from enum import Enum
+from typing import Dict, List, Optional, TypeAlias, Union
+
+from pydantic import BaseModel, Field
 
 
 class ProcessConfig(BaseModel):
     max_pages: int
     pipeline_run_cost_limit: Decimal  # in USD
-
-
-class JurisdictionId(BaseModel):
-    country: str
-    state: str
-    county: Optional[str] = None
-    place_label: str = "place"
-    place: str
-    jurisdiction_type: str
 
 
 class SearchEngineStatus(Enum):

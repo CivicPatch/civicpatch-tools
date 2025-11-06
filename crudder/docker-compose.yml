@@ -2,14 +2,16 @@ services:
   crudder:
     env_file: .env
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: crudder/Dockerfile
       target: development
     restart: unless-stopped
     ports:
       - "8001:8001"
     volumes:
-      - .:/app
+      - ./:/app
+      - ../civicpatch/src/schemas.py:/app/src/civicpatch/schemas.py:ro
+      - ../civicpatch/src/utils/id_utils.py:/app/src/civicpatch/id_utils.py:ro
     networks:
       - civicpatch_net
 

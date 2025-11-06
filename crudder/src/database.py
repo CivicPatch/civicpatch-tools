@@ -1,9 +1,11 @@
-import hmac
 import hashlib
-from psycopg_pool import AsyncConnectionPool
+import hmac
 import os
 from typing import List
-from schemas import Representative
+
+from psycopg_pool import AsyncConnectionPool
+
+from schemas import Person
 
 CRUDDER_DB_URL = os.getenv("CRUDDER_DB_URL")
 DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
@@ -173,22 +175,43 @@ async def update_user_detail(server_url, user_provider, user_provider_id):
         )
 
 
-async def add_representatives(
-    jurisdiction_ocdid: str, representatives: List[Representative]
-):
-    rows_to_insert = []
-    for r in representatives:
-        name = r["name"]
-        rows_to_insert.append((jurisdiction_ocdid, name, r))
+async def add_jurisdiction_people(representatives: List[Person]):
+    """
+    Adds representatives to the database.
+    Each representative must have a 'jurisdiction_ocdid' field.
+    Deletes existing people for each jurisdiction before inserting new ones.
+    """
+    if not representatives:
+        return
 
+    # Group people by jurisdiction_ocdid
+    jurisdictions_map = {}
+    for r in representatives:
+        jurisdiction_ocdid = r.jurisdiction_id
+        if not jurisdiction_ocdid:
+            raise ValueError(f"Person missing jurisdiction_ocdid: {r}")
+
+        if jurisdiction_ocdid not in jurisdictions_map:
+            jurisdictions_map[jurisdiction_ocdid] = []
+        jurisdictions_map[jurisdiction_ocdid].append(r)
+
+    # Prepare queries
     delete_query = """
         DELETE FROM people
         WHERE jurisdiction_ocdid = %s
     """
     insert_query = """
-        INSERT INTO people (jurisdiction_ocdid, name, r)
+        INSERT INTO people (jurisdiction_ocdid, name, data)
         VALUES (%s, %s, %s)
     """
+
     async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(delete_query, (jurisdiction_ocdid))
-        await cur.executemany(insert_query, rows_to_insert)
+        for jurisdiction_ocdid, reps in jurisdictions_map.items():
+            # Delete existing people for this jurisdiction
+            await cur.execute(delete_query, (jurisdiction_ocdid,))
+
+            # Prepare rows to insert for this jurisdiction
+            rows_to_insert = [(jurisdiction_ocdid, rep.name, rep.model_dump_json()) for rep in reps]
+
+            # Insert new people
+            await cur.executemany(insert_query, rows_to_insert)

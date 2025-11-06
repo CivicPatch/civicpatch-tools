@@ -1,8 +1,6 @@
 import datetime
 import os
 from contextlib import asynccontextmanager
-from typing import List
-import people_service
 
 import yaml
 from fastapi import (
@@ -24,9 +22,10 @@ from fastapi_sso.sso.github import GithubSSO
 from jose import jwt  # pip install python-jose[cryptography]
 
 import github_service
+import people_service
 from auth import is_authorized
 from database import (
-    add_representatives,
+    add_jurisdiction_people,
     create_api_key,
     get_api_keys_for_user,
     get_user_details,
@@ -36,7 +35,7 @@ from database import (
     update_user_detail,
     user_is_approved,
 )
-from schemas import Jurisdiction, Representative
+from schemas import Jurisdiction
 from storage_service import upload_file_to_storage
 
 # Only purpose is to manage users, their API keys, and move data from 3rd party servers
@@ -373,11 +372,12 @@ async def list_available_jurisdictions_endpoint(
     ][:num_jurisdictions]
     return {"jurisdictions": filtered_jurisdictions}
 
-#@app.get("/api/jurisdictions/{jurisdiction_ocdid}/people")
-#async def get_jurisdiction_people_endpoint(
+
+# @app.get("/api/jurisdictions/{jurisdiction_ocdid}/people")
+# async def get_jurisdiction_people_endpoint(
 #    jurisdiction_ocdid: str,
 #    authorization: str = Security(api_key_header),
-#)
+# )
 #    if not authorization and not authorization.strip():
 #        raise HTTPException(status_code=401, detail="Missing Authorization header")
 #
@@ -386,11 +386,9 @@ async def list_available_jurisdictions_endpoint(
 #        raise HTTPException(status_code=403, detail=error_string)
 
 
-
-
-@app.post("/api/jurisdictions/{jurisdiction_ocdid}/people")
+@app.post("/api/jurisdictions/people")
 async def update_jurisdiction_people_endpoint(
-    jurisdiction_ocdid: str,
+    people_filepath: str = Body(..., embed=True),
     authorization: str = Security(api_key_header),
 ):
     if not authorization and not authorization.strip():
@@ -400,8 +398,12 @@ async def update_jurisdiction_people_endpoint(
     if error_string:
         raise HTTPException(status_code=403, detail=error_string)
 
-    people = people_service.get_people_from_repo(jurisdiction_ocdid)
-    await add_representatives(jurisdiction_ocdid, people)
+    print("slug:", people_filepath)
+    people = people_service.get_people_from_repo(people_filepath)
+
+    if people is None:
+        raise HTTPException(status_code=404, detail="Could not find people at people filepath")
+    await add_jurisdiction_people(people)
 
 
 @app.get("/auth/logout", include_in_schema=False)
