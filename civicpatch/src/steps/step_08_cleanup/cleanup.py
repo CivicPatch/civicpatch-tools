@@ -7,17 +7,21 @@ from utils.data_path_utils import get_data_source_municipality_path
 from schemas import PipelineContext, PipelineStatus, Person, MergeRecordsAcrossLLMsStep
 from utils import url_utils, log_utils, cost_utils
 
+
 def cleanup(context: PipelineContext):
     # Remove files under data_source/cache and data_source/images
     jurisdiction_id = context.jurisdiction_id
     logger = log_utils.get_pipeline_logger(jurisdiction_id)
-    logger.info(f"Step 9: {PipelineStatus.CLEANUP.value}")
+    logger.info(f"Step 8: {PipelineStatus.CLEANUP.value}")
     request_id = context.request_id
     data_source_dir = get_data_source_municipality_path(jurisdiction_id)
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
-    merge_records_step = cast(MergeRecordsAcrossLLMsStep,context.steps[PipelineStatus.MERGE_RECORDS_ACROSS_LLMS])
+    merge_records_step = cast(
+        MergeRecordsAcrossLLMsStep,
+        context.steps[PipelineStatus.MERGE_RECORDS_ACROSS_LLMS],
+    )
     people_data = merge_records_step.people
     people = [Person.parse_obj(person) for person in people_data]
 
@@ -30,9 +34,8 @@ def cleanup(context: PipelineContext):
 
     updated_names = cleanup_names_config(context.names)
 
-    return {
-        "names": updated_names
-    }
+    return {"names": updated_names}
+
 
 def cleanup_cache(cache_dir: str, people_list: List[Person]):
     # Clear out any page urls are not under sources or website urls
@@ -52,7 +55,10 @@ def cleanup_cache(cache_dir: str, people_list: List[Person]):
             if folder not in pages_to_keep:
                 shutil.rmtree(folder_path)
 
-def cleanup_images(logger, request_id, jurisdiction_id, images_dir: str, people_list: List[Person]):
+
+def cleanup_images(
+    logger, request_id, jurisdiction_id, images_dir: str, people_list: List[Person]
+):
     # Clear out any images that are not under image
     images_to_keep = set()
     image_map_file_path = os.path.join(images_dir, "image_map.json")
@@ -83,7 +89,7 @@ def cleanup_images(logger, request_id, jurisdiction_id, images_dir: str, people_
                 cost_utils.add_storage_cost(
                     request_id=request_id,
                     jurisdiction_id=jurisdiction_id,
-                    file_size_bytes=os.path.getsize(image_file_path)
+                    file_size_bytes=os.path.getsize(image_file_path),
                 )
 
     missing_images = images_to_keep - images_found

@@ -22,7 +22,7 @@ templates = Jinja2Templates(directory="src/frontend/templates")
 templates.env.globals["is_production"] = is_production
 
 if not is_production:
-    hot_reload = arel.HotReload(paths=[arel.Path(".")])
+    hot_reload = arel.HotReload(paths=[arel.Path("src/frontend")])
     app.add_websocket_route("/hot-reload", route=hot_reload, name="hot-reload")
     app.add_event_handler("startup", hot_reload.startup)
     app.add_event_handler("shutdown", hot_reload.shutdown)

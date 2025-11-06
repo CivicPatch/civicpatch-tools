@@ -56,4 +56,4 @@ volumes:
 
 networks:
   civicpatch_net:
-    driver: bridge
+    name: civicpatch_net

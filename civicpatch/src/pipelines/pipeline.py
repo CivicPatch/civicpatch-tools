@@ -16,7 +16,7 @@ import time
 import asyncio
 import aiofiles
 
-from utils import data_path_utils, config_utils, log_utils, cost_utils, id_utils
+from utils import data_path_utils, config_utils, log_utils, cost_utils
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from steps.step_01_research_municipality.research_municipality import (
     research_municipality,
@@ -34,8 +34,8 @@ from steps.step_06_merge_records_within_llm.merge_records_within_llm import (
 from steps.step_07_merge_records_across_llms.merge_records_across_llms import (
     merge_records_across_llms,
 )
-from steps.step_08_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
-from steps.step_09_cleanup.cleanup import cleanup
+from steps.step_08_cleanup.cleanup import cleanup
+from steps.step_09_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
 
 
 class Pipeline:
@@ -378,26 +378,16 @@ class Pipeline:
 
     def save_data(self, people: List[Person]):
         """
-        Save the processed people data to a file as JSON.
+        Save the processed people data to a file.
         """
         jurisdiction_id = self.context.jurisdiction_id
-        jurisdiction_type = id_utils.parse_jurisdiction_id(
-            jurisdiction_id
-        ).jurisdiction_type
-
         serialized_people = [person.model_dump() for person in people]
-
-        existing_data = data_path_utils.get_people(jurisdiction_id)
-        existing_data[jurisdiction_type] = serialized_people
 
         people_file_path = data_path_utils.get_people_file_path(jurisdiction_id)
 
-        # Ensure the directory exists
-        if not os.path.exists(people_file_path):
-            os.makedirs(os.path.dirname(people_file_path), exist_ok=True)
-
-        with open(people_file_path, "w", encoding="utf-8") as f:
-            json.dump(existing_data, f, ensure_ascii=False, indent=4)
+        data_path_utils.update_people_for_jurisdiction(
+            people_file_path, jurisdiction_id, serialized_people
+        )
 
     def save_configs(self, names: Dict[str, List[str]]):
         jurisdiction_id = self.context.jurisdiction_id

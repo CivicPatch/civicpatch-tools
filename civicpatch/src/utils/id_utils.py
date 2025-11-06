@@ -1,7 +1,9 @@
-import re
 import uuid
 from datetime import datetime
 from schemas import JurisdictionId
+
+KNOWN_PLACE_KEYS = ["place", "special_district"]
+
 
 def make_request_id():
     date_str = datetime.utcnow().strftime("%Y-%m-%d")
@@ -11,119 +13,55 @@ def make_request_id():
 
 def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId | None:
     """
-    Parses a jurisdiction ID in the format 
-        "ocd-jurisdiction/country:us/state:wa/place:seattle"
+    Parses a jurisdiction ID in the format
+        "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
     OR
-        "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville"
+        "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government"
     and returns a JurisdictionId object.
 
     Returns None if the format is invalid.
     """
-    components = jurisdiction_id.split("/")
-    result = {}
+    try:
+        components = jurisdiction_id.split("/")
+        result = {}
+        country_part = components[1]
+        result["country"] = country_part.split(":")[1]
 
-    for component in components:
-        if ":" in component:
-            key, value = component.split(":", 1)
-            result[key] = value.lower()
-    
-    # Last component MUST contain the jurisdiction type
-    # Which has no ":"
-    jurisdiction_type = components[-1]
-    if ":" in jurisdiction_type:
-        return None
-    
-    if (
-        "country" not in result or 
-        "state" not in result or
-        "place" not in result
-    ):
-        return None
+        state_part = components[2]
+        result["state"] = state_part.split(":")[1]
 
-    return JurisdictionId(
-        country=result["country"],
-        state=result["state"],
-        county=result.get("county"),
-        place=result["place"],
-        jurisdiction_type=jurisdiction_type
-    )
-
-def jurisdiction_id_to_slug(jurisdiction_id: str) -> str:
-    jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
-    branch = f"state-{jurisdiction_id_parts.state}-"
-    if jurisdiction_id_parts.county:
-        branch += f"county-{jurisdiction_id_parts.county}-"
-    branch += f"place-{jurisdiction_id_parts.place}"
-    branch += f"-{jurisdiction_id_parts.jurisdiction_type}"
-    return branch
-
-def jurisdiction_id_to_git_branch(jurisdiction_id: str, request_id: str) -> str:
-    """
-    Converts a jurisdiction ID to a reversible, human-friendly git branch name.
-    Example:
-      "ocd-jurisdiction/country:us/state:wa/place:seattle"
-      -> "2025-09-25-1a2b-state-wa-place-seattle"
-    """
-    slug = jurisdiction_id_to_slug(jurisdiction_id)
-    return f"{request_id}-{slug}"
-
-def slug_to_jurisdiction_id(slug: str) -> str:
-    """
-    Converts a slug back to a jurisdiction ID.
-    Example:
-      "state-wa-place-seattle-government"
-      -> "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
-      "state-il-county-dupage-place-naperville-government"
-      -> "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government"
-    """
-    tokens = slug.split('-')
-    idx = 0
-    result = ["ocd-jurisdiction/country:us"]
-    while idx < len(tokens):
-        if tokens[idx] == "state":
-            result.append(f"state:{tokens[idx+1]}")
-            idx += 2
-        elif tokens[idx] == "county":
-            result.append(f"county:{tokens[idx+1]}")
-            idx += 2
-        elif tokens[idx] == "place":
-            result.append(f"place:{tokens[idx+1]}")
-            idx += 2
+        substate_part = components[3]
+        substate_label, substate_name = substate_part.split(":")
+        if substate_label == "county":
+            result["county"] = substate_name
+            place_label, place_name = components[4].split(":")
+            result["place_label"] = place_label
+            result["place"] = place_name
         else:
-            idx += 1  # skip unknown tokens
-    result.append(tokens[-1])  # jurisdiction type
-    return "/".join(result)
+            result["place_label"] = substate_label
+            result["place"] = substate_name
 
-def git_branch_to_jurisdiction_id(branch: str) -> str:
-    """
-    Converts a git branch name back to a jurisdiction ID.
-    Example:
-      "2025-09-25-1a2b-state-wa-place-seattle"
-      -> "ocd-jurisdiction/country:us/state:wa/place:seattle"
-      "2025-09-25-1a2b-state-il-county-dupage-place-naperville"
-      -> "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville"
-    """
-    # Remove request_id prefix
-    parts = branch.split('-', 3)
-    if len(parts) < 4:
-        raise ValueError("Branch name format invalid: {branch}")
-    rest = parts[3]  # e.g. "state-wa-place-seattle" or "state-il-county-dupage-place-naperville"
-    tokens = rest.split('-')
-    idx = 0
-    result = ["ocd-jurisdiction/country:us"]
-    while idx < len(tokens):
-        if tokens[idx] == "state":
-            result.append(f"state:{tokens[idx+1]}")
-            idx += 2
-        elif tokens[idx] == "county":
-            result.append(f"county:{tokens[idx+1]}")
-            idx += 2
-        elif tokens[idx] == "place":
-            result.append(f"place:{tokens[idx+1]}")
-            idx += 2
-        else:
-            idx += 1  # skip unknown tokens
-    return "/".join(result)
+        # Last component MUST contain the jurisdiction type
+        # Which has no ":"
+        jurisdiction_type = components[-1]
+        if ":" in jurisdiction_type:
+            return None
+
+        if "country" not in result or "state" not in result:
+            return None
+
+        return JurisdictionId(
+            country=result["country"],
+            state=result["state"],
+            county=result.get("county", None),
+            place_label=result["place_label"],
+            place=result["place"],
+            jurisdiction_type=jurisdiction_type,
+        )
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
 
 def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:
     """
@@ -133,7 +71,7 @@ def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:
         country: "us",
         state: "il",
         county: "dupage", (optional)
-        place: "naperville",
+        place: "naperville_test",
         jurisdiction_type: "council"
       }
       -> "il/county_dupage__place_naperville"
@@ -144,9 +82,163 @@ def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:
     folder = f"{jurisdiction_id_parts.state}/"
     if jurisdiction_id_parts.county:
         folder += f"county_{jurisdiction_id_parts.county}__"
-    folder += f"place_{jurisdiction_id_parts.place}"
+    folder += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}"
 
     return folder
+
+
+def jurisdiction_id_to_slug(jurisdiction_id: str) -> str:
+    jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
+    branch = f"state_{jurisdiction_id_parts.state}__"
+    if jurisdiction_id_parts.county:
+        branch += f"county_{jurisdiction_id_parts.county}__"
+    branch += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}__"
+    branch += f"{jurisdiction_id_parts.jurisdiction_type}"
+    return branch.lower()
+
+
+def jurisdiction_id_to_git_branch(jurisdiction_id: str, request_id: str) -> str:
+    """
+    Converts a jurisdiction ID to a reversible, human-friendly git branch name.
+    Example:
+      "ocd-jurisdiction/country:us/state:wa/place:seattle"
+      -> "2025-09-25-1a2b-state-wa-place-seattle"
+    """
+    slug = jurisdiction_id_to_slug(jurisdiction_id)
+    return f"{request_id}__{slug}".lower()
+
+
+def slug_to_jurisdiction_id(slug: str) -> str:
+    """
+    Converts a slug back to a jurisdiction ID.
+
+    Example:
+        "state_ca__county_marin__place_seattle__government"
+        -> "ocd-jurisdiction/country:us/state:ca/county:marin/place:seattle/government"
+    """
+    # Split the slug by hierarchy delimiter
+    tokens = slug.split("__")
+    result = ["ocd-jurisdiction/country:us"]
+
+    # State is always the first key
+    if tokens[0].startswith("state_"):
+        state_value = tokens[0].split("_", 1)[1]
+        result.append(f"state:{state_value}")
+    else:
+        raise ValueError("Slug must start with 'state'.")
+
+    # County is optional
+    idx = 1
+    if idx < len(tokens) and tokens[idx].startswith("county_"):
+        county_value = tokens[idx].split("_", 1)[1]
+        result.append(f"county:{county_value}")
+        idx += 1
+
+    # Process the place key (must be in KNOWN_PLACE_KEYS)
+    if (
+        idx < len(tokens) - 1
+    ):  # Ensure there's at least one more token for the jurisdiction type
+        token = tokens[idx]
+        for key in KNOWN_PLACE_KEYS:
+            if token.startswith(f"{key}_"):
+                # Extract the value by removing the matched key and the `_`
+                value = token[len(key) + 1 :]
+                result.append(f"{key}:{value}")
+                idx += 1
+                break
+        else:
+            raise ValueError(f"Unknown place key in token: {token}")
+
+    # The last token is the jurisdiction type
+    if idx == len(tokens) - 1:
+        result.append(tokens[idx])
+    else:
+        raise ValueError(
+            "Invalid slug format: too many segments or missing jurisdiction type."
+        )
+
+    return "/".join(result)
+
+    # The last token is the jurisdiction type
+    if idx == len(tokens) - 1:
+        result.append(tokens[idx])
+    else:
+        raise ValueError(
+            "Invalid slug format: too many segments or missing jurisdiction type."
+        )
+
+    return "/".join(result)
+
+    # The last token is the jurisdiction type
+    if idx == len(tokens) - 1:
+        result.append(tokens[idx])
+    else:
+        raise ValueError(
+            "Invalid slug format: too many segments or missing jurisdiction type."
+        )
+
+    return "/".join(result)
+
+
+def git_branch_to_jurisdiction_id(branch: str) -> str:
+    """
+    Converts a git branch name back to a jurisdiction ID.
+
+    Example:
+        "2025-09-25-1a2b__state_wa__place_seattle__government"
+        -> "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
+        "2025-09-25-1a2b__state_il__county_dupage__place_naperville__government"
+        -> "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/government"
+        "2025-09-25-1a2b__state_ca__county_marin__special_district__marin_city_community_services_district__governing_board"
+        -> "ocd-jurisdiction/country:us/state:ca/county:marin/special_district:marin_city_community_services_district/governing_board"
+    """
+    # Remove request_id prefix
+    parts = branch.split("__", 1)
+    if len(parts) < 2:
+        raise ValueError(f"Branch name format invalid: {branch}")
+
+    # Extract the jurisdiction part of the branch name
+    rest = parts[1]  # e.g., "state_wa__place_seattle__government"
+    tokens = rest.split("__")
+
+    result = ["ocd-jurisdiction/country:us"]
+    idx = 0
+
+    # State is always the first key
+    if idx < len(tokens) and tokens[idx].startswith("state_"):
+        state_value = tokens[idx].split("_", 1)[1]
+        result.append(f"state:{state_value}")
+        idx += 1
+    else:
+        raise ValueError("Branch must start with 'state'.")
+
+    # County is optional
+    if idx < len(tokens) and tokens[idx].startswith("county_"):
+        county_value = tokens[idx].split("_", 1)[1]
+        result.append(f"county:{county_value}")
+        idx += 1
+
+    # Process the place key (must be in KNOWN_PLACE_KEYS)
+    if idx < len(tokens) and any(
+        tokens[idx].startswith(f"{key}_") for key in KNOWN_PLACE_KEYS
+    ):
+        key, value = tokens[idx].split("_", 1)
+        if key in KNOWN_PLACE_KEYS:
+            result.append(f"{key}:{value}")
+            idx += 1
+        else:
+            raise ValueError(f"Unknown place key: {key}")
+
+    # The last token is the jurisdiction type
+    if idx == len(tokens) - 1:
+        result.append(tokens[idx])
+    else:
+        raise ValueError(
+            "Invalid branch format: too many segments or missing jurisdiction type."
+        )
+
+    return "/".join(result).lower()
+
 
 def state_name(jurisdiction_id: str) -> str:
     jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
@@ -203,7 +295,7 @@ def state_name(jurisdiction_id: str) -> str:
         "wa": "Washington",
         "wv": "West Virginia",
         "wi": "Wisconsin",
-        "wy": "Wyoming"
+        "wy": "Wyoming",
     }
 
     return state_names.get(state, "Unknown")
