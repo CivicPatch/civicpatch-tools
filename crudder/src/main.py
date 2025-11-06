@@ -9,6 +9,7 @@ from fastapi import (
     Depends,
     Form,
     UploadFile,
+    Body,
 )
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -26,11 +27,13 @@ from database import (
     get_user_details,
     update_user_detail,
     user_is_approved,
+    add_representatives,
 )
 from storage_service import upload_file_to_storage
 import github_service
-from schemas import Jurisdiction
+from schemas import Jurisdiction, Representative
 from auth import is_authorized
+from typing import List
 
 from jose import jwt  # pip install python-jose[cryptography]
 
@@ -367,6 +370,23 @@ async def list_available_jurisdictions_endpoint(
         j for j in jurisdictions if j.id not in open_pull_request_ids
     ][:num_jurisdictions]
     return {"jurisdictions": filtered_jurisdictions}
+
+
+@app.post("/api/jurisdictions/{jurisdiction_ocdid}/people")
+async def update_jurisdiction_people_endpoint(
+    jurisdiction_ocdid: str,
+    authorization: str = Security(api_key_header),
+):
+    if not authorization and not authorization.strip():
+        raise HTTPException(status_code=401, detail="Missing Authorization header")
+
+    _server_detail, error_string = await is_authorized(authorization)
+    if error_string:
+        raise HTTPException(status_code=403, detail=error_string)
+
+    await add_representatives(jurisdiction_ocdid)
+
+    pass
 
 
 @app.get("/auth/logout", include_in_schema=False)

@@ -2,6 +2,8 @@ import hmac
 import hashlib
 from psycopg_pool import AsyncConnectionPool
 import os
+from typing import List
+from schemas import Representative
 
 CRUDDER_DB_URL = os.getenv("CRUDDER_DB_URL")
 DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
@@ -169,3 +171,24 @@ async def update_user_detail(server_url, user_provider, user_provider_id):
             """,
             (server_url, user_provider, user_provider_id),
         )
+
+
+async def add_representatives(
+    jurisdiction_ocdid: str, representatives: List[Representative]
+):
+    rows_to_insert = []
+    for r in representatives:
+        name = r["name"]
+        rows_to_insert.append((jurisdiction_ocdid, name, r))
+
+    delete_query = """
+        DELETE FROM people
+        WHERE jurisdiction_ocdid = %s
+    """
+    insert_query = """
+        INSERT INTO people (jurisdiction_ocdid, name, r)
+        VALUES (%s, %s, %s)
+    """
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(delete_query, (jurisdiction_ocdid))
+        await cur.executemany(insert_query, rows_to_insert)
