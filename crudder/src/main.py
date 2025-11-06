@@ -349,7 +349,7 @@ async def list_available_jurisdictions_endpoint(
     if error_string:
         raise HTTPException(status_code=401, detail=error_string)
     jurisdictions_file_content = github_service.get_github_file_contents(
-        GITHUB_WORKFLOW_TOKEN, f"data_source/{state}/government_progress.yml"
+        f"data_source/{state}/government_progress.yml"
     )
     if jurisdictions_file_content is None:
         raise HTTPException(status_code=404, detail="Could not find jurisdictions file")
@@ -402,7 +402,9 @@ async def update_jurisdiction_people_endpoint(
     people = people_service.get_people_from_repo(people_filepath)
 
     if people is None:
-        raise HTTPException(status_code=404, detail="Could not find people at people filepath")
+        raise HTTPException(
+            status_code=404, detail="Could not find people at people filepath"
+        )
     await add_jurisdiction_people(people)
 
 
