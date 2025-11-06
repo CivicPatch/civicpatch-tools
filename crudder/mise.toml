@@ -65,6 +65,13 @@ finally:
 '
 """
 
+[tasks.add_people_test]
+run = """
+    curl -X POST "http://localhost:8001/api/jurisdictions/people" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: $CRUDDER_SHARED_TOKEN" \
+      -d '{"people_filepath": "data/wa/place_seattle.yml"}'
+"""
 ###################################################
 ## 🚀✨ DATABASE COMMANDS (for development) ✨🚀 ##
 ###################################################

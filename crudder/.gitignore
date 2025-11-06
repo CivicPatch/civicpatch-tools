@@ -1,3 +1,4 @@
 .ropeproject
 .pytest_cache
 .venv
+src/civicpatch/*

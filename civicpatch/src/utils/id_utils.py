@@ -1,8 +1,19 @@
 import uuid
 from datetime import datetime
-from schemas import JurisdictionId
+from typing import Optional
+
+from pydantic import BaseModel
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
+
+
+class JurisdictionId(BaseModel):
+    country: str
+    state: str
+    county: Optional[str] = None
+    place_label: str = "place"
+    place: str
+    jurisdiction_type: str
 
 
 def make_request_id():
@@ -108,76 +119,80 @@ def jurisdiction_id_to_git_branch(jurisdiction_id: str, request_id: str) -> str:
     return f"{request_id}__{slug}".lower()
 
 
-def slug_to_jurisdiction_id(slug: str) -> str:
+def _parse_slug_to_parts(slug: str, include_jurisdiction_type: bool) -> list[str]:
     """
-    Converts a slug back to a jurisdiction ID.
+    Helper function to parse slug components into OCD jurisdiction parts.
 
-    Example:
-        "state_ca__county_marin__place_seattle__government"
-        -> "ocd-jurisdiction/country:us/state:ca/county:marin/place:seattle/government"
+    Args:
+        slug: The slug to parse (e.g., "state_ca__county_marin__place_seattle__government")
+        include_jurisdiction_type: Whether to include the final jurisdiction type segment
+
+    Returns:
+        List of jurisdiction parts to be joined with "/"
     """
-    # Split the slug by hierarchy delimiter
     tokens = slug.split("__")
     result = ["ocd-jurisdiction/country:us"]
 
     # State is always the first key
-    if tokens[0].startswith("state_"):
-        state_value = tokens[0].split("_", 1)[1]
-        result.append(f"state:{state_value}")
-    else:
+    if not tokens[0].startswith("state_"):
         raise ValueError("Slug must start with 'state'.")
 
-    # County is optional
+    state_value = tokens[0].split("_", 1)[1]
+    result.append(f"state:{state_value}")
+
     idx = 1
+
+    # County is optional
     if idx < len(tokens) and tokens[idx].startswith("county_"):
         county_value = tokens[idx].split("_", 1)[1]
         result.append(f"county:{county_value}")
         idx += 1
 
+    # Determine expected number of remaining tokens
+    expected_remaining = 2 if include_jurisdiction_type else 1
+
     # Process the place key (must be in KNOWN_PLACE_KEYS)
-    if (
-        idx < len(tokens) - 1
-    ):  # Ensure there's at least one more token for the jurisdiction type
+    if idx < len(tokens) and (len(tokens) - idx) >= expected_remaining:
         token = tokens[idx]
+        place_found = False
+
         for key in KNOWN_PLACE_KEYS:
             if token.startswith(f"{key}_"):
-                # Extract the value by removing the matched key and the `_`
                 value = token[len(key) + 1 :]
                 result.append(f"{key}:{value}")
                 idx += 1
+                place_found = True
                 break
-        else:
+
+        if not place_found:
             raise ValueError(f"Unknown place key in token: {token}")
 
-    # The last token is the jurisdiction type
-    if idx == len(tokens) - 1:
-        result.append(tokens[idx])
-    else:
+    # Handle the jurisdiction type if required
+    if include_jurisdiction_type:
+        if idx == len(tokens) - 1:
+            result.append(tokens[idx])
+        else:
+            raise ValueError(
+                "Invalid slug format: too many segments or missing jurisdiction type."
+            )
+    elif idx != len(tokens):
         raise ValueError(
-            "Invalid slug format: too many segments or missing jurisdiction type."
+            f"Invalid slug format: expected {idx} tokens but got {len(tokens)}."
         )
 
-    return "/".join(result)
+    return result
 
-    # The last token is the jurisdiction type
-    if idx == len(tokens) - 1:
-        result.append(tokens[idx])
-    else:
-        raise ValueError(
-            "Invalid slug format: too many segments or missing jurisdiction type."
-        )
 
-    return "/".join(result)
+def slug_to_jurisdiction_id(slug: str) -> str:
+    """
+    Converts a slug back to a full jurisdiction ID.
 
-    # The last token is the jurisdiction type
-    if idx == len(tokens) - 1:
-        result.append(tokens[idx])
-    else:
-        raise ValueError(
-            "Invalid slug format: too many segments or missing jurisdiction type."
-        )
-
-    return "/".join(result)
+    Example:
+        "state_ca__county_marin__place_seattle__government"
+        -> "ocd-jurisdiction/country:us/state:ca/county:marin/place:seattle/government"
+    """
+    parts = _parse_slug_to_parts(slug, include_jurisdiction_type=True)
+    return "/".join(parts)
 
 
 def git_branch_to_jurisdiction_id(branch: str) -> str:
@@ -192,52 +207,13 @@ def git_branch_to_jurisdiction_id(branch: str) -> str:
         "2025-09-25-1a2b__state_ca__county_marin__special_district__marin_city_community_services_district__governing_board"
         -> "ocd-jurisdiction/country:us/state:ca/county:marin/special_district:marin_city_community_services_district/governing_board"
     """
-    # Remove request_id prefix
+    # Remove request_id prefix to get the slug
     parts = branch.split("__", 1)
     if len(parts) < 2:
         raise ValueError(f"Branch name format invalid: {branch}")
 
-    # Extract the jurisdiction part of the branch name
-    rest = parts[1]  # e.g., "state_wa__place_seattle__government"
-    tokens = rest.split("__")
-
-    result = ["ocd-jurisdiction/country:us"]
-    idx = 0
-
-    # State is always the first key
-    if idx < len(tokens) and tokens[idx].startswith("state_"):
-        state_value = tokens[idx].split("_", 1)[1]
-        result.append(f"state:{state_value}")
-        idx += 1
-    else:
-        raise ValueError("Branch must start with 'state'.")
-
-    # County is optional
-    if idx < len(tokens) and tokens[idx].startswith("county_"):
-        county_value = tokens[idx].split("_", 1)[1]
-        result.append(f"county:{county_value}")
-        idx += 1
-
-    # Process the place key (must be in KNOWN_PLACE_KEYS)
-    if idx < len(tokens) and any(
-        tokens[idx].startswith(f"{key}_") for key in KNOWN_PLACE_KEYS
-    ):
-        key, value = tokens[idx].split("_", 1)
-        if key in KNOWN_PLACE_KEYS:
-            result.append(f"{key}:{value}")
-            idx += 1
-        else:
-            raise ValueError(f"Unknown place key: {key}")
-
-    # The last token is the jurisdiction type
-    if idx == len(tokens) - 1:
-        result.append(tokens[idx])
-    else:
-        raise ValueError(
-            "Invalid branch format: too many segments or missing jurisdiction type."
-        )
-
-    return "/".join(result).lower()
+    slug = parts[1]  # e.g., "state_wa__place_seattle__government"
+    return slug_to_jurisdiction_id(slug).lower()
 
 
 def state_name(jurisdiction_id: str) -> str:
