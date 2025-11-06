@@ -11,7 +11,7 @@ services:
     volumes:
       - .:/app
     networks:
-      - crudder_net
+      - civicpatch_net
 
   crudder_db:
     image: postgis/postgis:17-3.5
@@ -25,11 +25,11 @@ services:
     ports:
       - "127.0.0.1:6000:5432"
     networks:
-      - crudder_net
+      - civicpatch_net
 
 volumes:
   crudder_pgdata:
 
 networks:
-  crudder_net:
-    driver: bridge
+  civicpatch_net:
+    external: true

@@ -1,5 +1,6 @@
 import os
 import psycopg
+from psycopg.rows import dict_row
 
 # CONFIG
 DATABASE_URL = os.getenv(
@@ -37,7 +38,8 @@ def apply_migration(conn, version, filepath):
 
 
 def rollback_last_migration(conn):
-    with conn.cursor() as cur:
+    with conn.cursor(row_factory=dict_row) as cur:
+        # Fetch the most recent migration
         cur.execute(
             "SELECT version FROM schema_migrations ORDER BY applied_at DESC LIMIT 1"
         )
@@ -45,16 +47,26 @@ def rollback_last_migration(conn):
         if not row:
             print("No migrations to rollback.")
             return
+
+        # Extract the version from the row
         version = row["version"]
         down_path = os.path.join(MIGRATIONS_DIR, f"{version}.down.sql")
+
+        # Check if the rollback file exists
         if not os.path.exists(down_path):
             print(f"No rollback file found for {version}")
             return
+
+        # Execute the rollback SQL
         print(f"Rolling back {version}...")
         with open(down_path, "r", encoding="utf-8") as f:
             sql = f.read()
         cur.execute(sql)
+
+        # Remove the migration record from the schema_migrations table
         cur.execute("DELETE FROM schema_migrations WHERE version = %s", (version,))
+
+    # Commit the transaction
     conn.commit()
 
 
