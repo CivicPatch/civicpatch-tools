@@ -26,10 +26,9 @@ services:
       - "127.0.0.1:6000:5432"
     networks:
       - civicpatch_net
-
 volumes:
   crudder_pgdata:
 
 networks:
   civicpatch_net:
-    external: true
+    driver: bridge

@@ -51,9 +51,6 @@ services:
     # temporary
     # network_mode: host
 
-volumes:
-  exclude:
-
 networks:
   civicpatch_net:
-    name: civicpatch_net
+    driver: bridge
