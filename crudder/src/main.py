@@ -1,6 +1,7 @@
 import datetime
 import os
 from contextlib import asynccontextmanager
+import urllib
 
 import yaml
 from fastapi import (
@@ -34,7 +35,8 @@ from database import (
     revoke_api_key,
     update_user_detail,
     user_is_approved,
-    get_jurisdiction_states
+    get_jurisdiction_states,
+    search_jurisdictions
 )
 from github_sync_service import GitDatabaseSync
 from schemas import Jurisdiction
@@ -394,22 +396,30 @@ async def get_jurisdiction_states_endpoint(
 @app.get("/api/jurisdictions/{state}/search")
 async def get_jurisdictions_search_endpoint(
     state: str,
-    # TODO: impl
     limit: int = 0,
     skip: int = 0,
     authorization: str = Security(api_key_header),
 ):
-    # TODO: impl
-    jurisdictions = []
+    total_items, jurisdictions = await search_jurisdictions(state, limit, skip)
+
+    next_skip = skip + len(jurisdictions)
+    next_link = ""
+
+    if next_skip < total_items:
+        # Construct the next link URL (URL-encode the state if necessary, though usually not for path vars)
+        query_params = urllib.parse.urlencode({"limit": limit, "skip": next_skip})
+        next_link = f"/api/jurisdictions/{state}/search?{query_params}"
+
+    self_query_params = urllib.parse.urlencode({"limit": limit, "skip": skip})
+    self_link = f"/api/jurisdictions/{state}/search?{self_query_params}"
 
     return {
-        "total_items": len(jurisdictions),
+        "total_items": total_items,
         "skip": skip,
         "limit": limit,
         "data": jurisdictions,
-        "links": {"next": "", "self": ""},  # TODO!
+        "links": {"next": next_link, "self": self_link},  # TODO!
     }
-
 
 @app.get("/api/jurisdictions/{jurisdiction_ocdid_slug}/people")
 async def get_jurisdiction_people_endpoint(

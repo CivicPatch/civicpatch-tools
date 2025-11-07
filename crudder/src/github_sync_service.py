@@ -219,6 +219,7 @@ class GitDatabaseSync:
                             jurisdiction_id,
                             state_abbreviation,
                             rel_path,
+                            json.dumps(record),
                             commit_hash
                         )
                     )
@@ -227,10 +228,11 @@ class GitDatabaseSync:
                     return False
 
                 query = """
-                INSERT INTO jurisdictions (jurisdiction_ocdid, state, file_path, updated_at, git_commit)
-                VALUES (%s, %s, %s, CURRENT_TIMESTAMP, %s)
+                INSERT INTO jurisdictions (jurisdiction_ocdid, state, file_path, data, updated_at, git_commit)
+                VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, %s)
                 ON CONFLICT (jurisdiction_ocdid)
                 DO UPDATE SET
+                    data = EXCLUDED.data,
                     updated_at = CURRENT_TIMESTAMP,
                     git_commit = EXCLUDED.git_commit;
                 """
