@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 
 import yaml
 from fastapi import (
-    Body,
+    BackgroundTasks,
     Depends,
     FastAPI,
     Form,
@@ -22,12 +22,12 @@ from fastapi_sso.sso.github import GithubSSO
 from jose import jwt  # pip install python-jose[cryptography]
 
 import github_service
-import people_service
 from auth import is_authorized
+from civicpatch import id_utils
 from database import (
-    add_jurisdiction_people,
     create_api_key,
     get_api_keys_for_user,
+    get_jurisdiction_people,
     get_user_details,
     maybe_insert_user,
     pool,
@@ -35,6 +35,7 @@ from database import (
     update_user_detail,
     user_is_approved,
 )
+from github_sync_service import GitDatabaseSync
 from schemas import Jurisdiction
 from storage_service import upload_file_to_storage
 
@@ -373,22 +374,8 @@ async def list_available_jurisdictions_endpoint(
     return {"jurisdictions": filtered_jurisdictions}
 
 
-# @app.get("/api/jurisdictions/{jurisdiction_ocdid}/people")
-# async def get_jurisdiction_people_endpoint(
-#    jurisdiction_ocdid: str,
-#    authorization: str = Security(api_key_header),
-# )
-#    if not authorization and not authorization.strip():
-#        raise HTTPException(status_code=401, detail="Missing Authorization header")
-#
-#    _server_detail, error_string = await is_authorized(authorization)
-#    if error_string:
-#        raise HTTPException(status_code=403, detail=error_string)
-
-
-@app.post("/api/jurisdictions/people")
-async def update_jurisdiction_people_endpoint(
-    people_filepath: str = Body(..., embed=True),
+@app.get("/api/jurisdictions/states")
+async def get_jurisdiction_states_endpoint(
     authorization: str = Security(api_key_header),
 ):
     if not authorization and not authorization.strip():
@@ -398,14 +385,69 @@ async def update_jurisdiction_people_endpoint(
     if error_string:
         raise HTTPException(status_code=403, detail=error_string)
 
-    print("slug:", people_filepath)
-    people = people_service.get_people_from_repo(people_filepath)
+    states = ["wa"]
 
-    if people is None:
-        raise HTTPException(
-            status_code=404, detail="Could not find people at people filepath"
-        )
-    await add_jurisdiction_people(people)
+    return {"total_items": len(states), "data": states}
+
+
+@app.get("/api/jurisdictions/{state}/search")
+async def get_jurisdictions_search_endpoint(
+    state: str,
+    # TODO: impl
+    limit: int = 0,
+    skip: int = 0,
+    authorization: str = Security(api_key_header),
+):
+    # TODO: impl
+    jurisdictions = []
+
+    return {
+        "total_items": len(jurisdictions),
+        "skip": skip,
+        "limit": limit,
+        "data": jurisdictions,
+        "links": {"next": "", "self": ""},  # TODO!
+    }
+
+
+@app.get("/api/jurisdictions/{jurisdiction_ocdid_slug}/people")
+async def get_jurisdiction_people_endpoint(
+    jurisdiction_ocdid_slug: str,
+    authorization: str = Security(api_key_header),
+):
+    if not authorization and not authorization.strip():
+        raise HTTPException(status_code=401, detail="Missing Authorization header")
+
+    _server_detail, error_string = await is_authorized(authorization)
+    if error_string:
+        raise HTTPException(status_code=403, detail=error_string)
+
+    jurisdiction_ocdid = id_utils.slug_to_jurisdiction_id(jurisdiction_ocdid_slug)
+    people = await get_jurisdiction_people(jurisdiction_ocdid)
+
+    return {
+        "total_items": len(people),
+        "data": people,
+    }
+
+
+# TODO: rbac perms needed
+@app.post("/api/people/sync")
+async def sync_people_endpoint(
+    background_tasks: BackgroundTasks,
+    authorization: str = Security(api_key_header),
+):
+    if not authorization and not authorization.strip():
+        raise HTTPException(status_code=401, detail="Missing Authorization header")
+
+    _server_detail, error_string = await is_authorized(authorization)
+    if error_string:
+        raise HTTPException(status_code=403, detail=error_string)
+
+    syncer = GitDatabaseSync()
+    background_tasks.add_task(syncer.sync)
+
+    return {"status": "running"}
 
 
 @app.get("/auth/logout", include_in_schema=False)
