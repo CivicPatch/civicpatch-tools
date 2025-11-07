@@ -1,0 +1,24 @@
+name: "[crudder] open-data sync"
+
+on:
+  workflow_dispatch:
+
+  # ⏱️ Adds a scheduled cron job trigger
+  schedule:
+    # Schedule Calculation:
+    # Target Time: 9:00 AM PST
+    # PST is UTC-8, so UTC time is 9:00 AM + 8 hours = 17:00 (5 PM) UTC.
+    - cron: "0 17 * * *"
+
+jobs:
+  open-data-sync:
+    runs-on: ubuntu-latest
+    env:
+      CRUDDER_URL: ${{ vars.CRUDDER_URL }}
+      CRUDDER_SHARED_TOKEN: ${{ vars.CRUDDER_SHARED_TOKEN }}
+    steps:
+      - name: Trigger sync with open-data
+        run: |
+          curl -X POST "$CRUDDER_URL/api/od_sync" \
+          -H "Content-Type: application/json" \
+          -H "Authorization: $CRUDDER_SHARED_TOKEN"
