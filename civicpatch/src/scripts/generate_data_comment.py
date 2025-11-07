@@ -1,9 +1,8 @@
-import os
-import yaml
 import sys
 from typing import List
+
 from schemas import Person
-from utils import data_path_utils, id_utils
+from utils import data_path_utils
 
 
 def generate_data_comment(people: List[Person]) -> str:
