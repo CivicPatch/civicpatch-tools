@@ -190,3 +190,16 @@ async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
         people_data = []
     people = [Person(**d_item) for d_item in people_data]
     return people
+
+async def get_jurisdiction_states() -> List[str]:
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT DISTINCT state from jurisdictions
+            ORDER by state;
+            """,
+        )
+        results = await cur.fetchall()
+        unique_states = [row[0] for row in results]
+
+    return unique_states
