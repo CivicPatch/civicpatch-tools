@@ -65,9 +65,9 @@ finally:
 '
 """
 
-[tasks.sync_people]
+[tasks.od_sync]
 run = """
-    curl -X POST "http://localhost:8001/api/people/sync" \
+    curl -X POST "http://localhost:8001/api/od_sync" \
       -H "Content-Type: application/json" \
       -H "Authorization: $CRUDDER_SHARED_TOKEN"
 """
