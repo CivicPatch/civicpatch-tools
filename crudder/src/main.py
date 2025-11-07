@@ -34,6 +34,7 @@ from database import (
     revoke_api_key,
     update_user_detail,
     user_is_approved,
+    get_jurisdiction_states
 )
 from github_sync_service import GitDatabaseSync
 from schemas import Jurisdiction
@@ -385,7 +386,7 @@ async def get_jurisdiction_states_endpoint(
     if error_string:
         raise HTTPException(status_code=403, detail=error_string)
 
-    states = ["wa"]
+    states = await get_jurisdiction_states()
 
     return {"total_items": len(states), "data": states}
 
