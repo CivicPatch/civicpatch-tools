@@ -103,7 +103,6 @@ def get_people_from_jurisdiction_type(jurisdiction_id: str) -> List[Any]:
     with open(people_file_path, "r") as file:
         data = yaml.safe_load(file)
 
-    print("data is now", data)
     data_from_jurisdiction_type = [
         p for p in data if p.get("jurisdiction_id") == jurisdiction_id
     ]
