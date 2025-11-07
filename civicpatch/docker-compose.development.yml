@@ -32,6 +32,10 @@ services:
       - GOOGLE_SHEETS_PRIVATE_KEY
       - GOOGLE_SHEETS_CLIENT_EMAIL
       - GOOGLE_SHEETS_TOKEN_URI
+
+      - STORAGE_ENDPOINT
+      - STORAGE_ACCESS_KEY_ID
+      - STORAGE_SECRET_ACCESS_KEY
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
     build:
       context: .
