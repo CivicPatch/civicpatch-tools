@@ -432,7 +432,7 @@ async def get_jurisdiction_people_endpoint(
 
 
 # TODO: rbac perms needed
-@app.post("/api/people/sync")
+@app.post("/api/od_sync")
 async def sync_people_endpoint(
     background_tasks: BackgroundTasks,
     authorization: str = Security(api_key_header),
