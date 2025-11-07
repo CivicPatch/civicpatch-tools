@@ -84,7 +84,10 @@ def get_open_pull_requests(github_workflow_token: str) -> List[PullRequest]:
 
     if response.status_code == 200:
         pull_requests = response.json()
-        return [PullRequest(branch_name=pr["head"]["ref"]) for pr in pull_requests]
+        valid_pull_requests = [
+            PullRequest(branch_name=pr["head"]["ref"]) for pr in pull_requests
+        ]
+        return [pr for pr in valid_pull_requests if pr.jurisdiction_id]
     else:
         print("Error fetching pull requests:", response.status_code, response.text)
         return []

@@ -19,8 +19,12 @@ class PullRequest(BaseModel):
 
     @model_validator(mode="after")
     def set_jurisdiction_id(self):
-        if not self.jurisdiction_id and self.branch_name:
-            self.jurisdiction_id = git_branch_to_jurisdiction_id(self.branch_name)
+        try:
+            if not self.jurisdiction_id and self.branch_name:
+                self.jurisdiction_id = git_branch_to_jurisdiction_id(self.branch_name)
+        except Exception:
+            print(f"git branch does not match jurisdiciton id format: {self.branch_name}")
+            self.jursiction_id = ""
         return self
 
 
