@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     # For postgres
     libpq-dev gcc \
+    git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -32,6 +33,7 @@ RUN poetry install --no-root
 COPY $PROJECT_NAME /app
 COPY civicpatch/src/schemas.py /app/src/civicpatch/schemas.py
 COPY civicpatch/src/utils/id_utils.py /app/src/civicpatch/id_utils.py
+RUN mkdir -p /app/git_data
 
 RUN useradd -m -s /bin/bash civicpatch_user
 RUN chown -R civicpatch_user:civicpatch_user /app
