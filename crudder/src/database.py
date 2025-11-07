@@ -203,3 +203,48 @@ async def get_jurisdiction_states() -> List[str]:
         unique_states = [row[0] for row in results]
 
     return unique_states
+
+
+async def search_jurisdictions(state: str, limit: int = 100, skip: int = 0):
+    """
+    Retrieves a paginated list of jurisdictions and the total count for a given state.
+
+    Returns: A tuple (total_count, list_of_jurisdictions)
+    """
+    if limit <= 0:
+        limit = 100 # Set a default reasonable limit if 0 is passed
+
+    try:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute(
+                """
+                SELECT COUNT(*) FROM jurisdictions WHERE state = %s;
+                """,
+                (state.lower(),)
+            )
+            total_count = (await cur.fetchone())[0]
+
+            await cur.execute(
+                """
+                SELECT data
+                FROM jurisdictions
+                WHERE state = %s
+                ORDER BY jurisdiction_ocdid  -- Always use ORDER BY with LIMIT/OFFSET
+                LIMIT %s OFFSET %s;
+                """,
+                (state.lower(), limit, skip)
+            )
+
+            # Fetch all matching records
+            results = await cur.fetchall()
+
+            # Process the results
+            jurisdictions = []
+            for row in results:
+                jurisdictions.append(row[0])
+
+            return total_count, jurisdictions
+
+    except Exception as e:
+        print(f"Database error in get_jurisdictions: {e}")
+        return 0, []

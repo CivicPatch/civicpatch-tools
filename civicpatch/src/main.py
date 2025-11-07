@@ -1,11 +1,11 @@
 import os
+
 import arel
-from fastapi import FastAPI, Response
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-import httpx
-# import traceback
 
+# import traceback
 # from auth.token_handler import verify_github_action_data_query
 from routers.api import router as api_router
 from routers.frontend import get_router as get_frontend_router
