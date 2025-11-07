@@ -24,7 +24,7 @@ class PullRequest(BaseModel):
                 self.jurisdiction_id = git_branch_to_jurisdiction_id(self.branch_name)
         except Exception:
             print(f"git branch does not match jurisdiciton id format: {self.branch_name}")
-            self.jursiction_id = ""
+            self.jurisdiction_id = ""
         return self
 
 
