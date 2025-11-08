@@ -1,4 +1,4 @@
-import { component, useState, useMemo } from 'haunted';
+import { component, useState, useEffect, useMemo } from 'haunted';
 import { html } from 'lit-html';
 import { ref } from "lit-html/directives/ref.js";
 
@@ -16,12 +16,18 @@ const debounce = (func, delay) => {
 };
 
 // --- Component Definition ---
-function AutocompleteSelect({ options = [], label = 'Search' }) {
-  const [inputValue, setInputValue] = useState('');
+function AutocompleteSelect({ disabled, options = [], label = 'Search', inputValue = '' }) {
+  console.log("am i disabled?", disabled);
   const [selectedItem, setSelectedItem] = useState(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isListOpen, setIsListOpen] = useState(false);
   const [inputElement, setInputElement] = useState(null);
+
+  useEffect(() => {
+    if (!inputValue) {
+      setSelectedItem(null);
+    }
+  }, [inputValue])
 
   // --- External Fetch Trigger Logic ---
   const triggerParentFetch = (input) => {
@@ -38,7 +44,6 @@ function AutocompleteSelect({ options = [], label = 'Search' }) {
 
   // --- Selection Logic ---
   const selectItem = (item) => {
-    setInputValue(item.label);
     setSelectedItem(item);
     setIsListOpen(false);
     if (inputElement) inputElement.focus();
@@ -59,7 +64,6 @@ function AutocompleteSelect({ options = [], label = 'Search' }) {
   // --- Handlers ---
   const handleInput = (e) => {
     const value = e.target.value;
-    setInputValue(value);
     setSelectedItem(null);
     
     this.dispatchEvent(new CustomEvent('input-change', { 
@@ -93,7 +97,6 @@ function AutocompleteSelect({ options = [], label = 'Search' }) {
         break;
       case 'Escape':
         setIsListOpen(false);
-        if (selectedItem) setInputValue(selectedItem.label);
         break;
     }
   };
@@ -183,19 +186,6 @@ function AutocompleteSelect({ options = [], label = 'Search' }) {
         color: var(--pico-primary-inverse);
       }
 
-      /* Visually hidden label for accessibility */
-      .visually-hidden {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-
       /* Selected item display */
       .autocomplete-selected {
         display: block;
@@ -214,6 +204,7 @@ function AutocompleteSelect({ options = [], label = 'Search' }) {
           aria-autocomplete="both" 
           aria-expanded=${isListOpen ? 'true' : 'false'}
           aria-label=${label}
+          ?disabled=${disabled}
           .value=${inputValue}
           @input=${handleInput}
           @keydown=${handleKeyDown}
