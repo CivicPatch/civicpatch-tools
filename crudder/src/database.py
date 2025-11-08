@@ -174,6 +174,7 @@ async def update_user_detail(server_url, user_provider, user_provider_id):
             (server_url, user_provider, user_provider_id),
         )
 
+
 async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -181,7 +182,7 @@ async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
                 SELECT data FROM people
                 WHERE jurisdiction_ocdid = %s
             """,
-            (jurisdiction_ocdid,)
+            (jurisdiction_ocdid,),
         )
         row = await cur.fetchone()
     if row:
@@ -190,6 +191,7 @@ async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
         people_data = []
     people = [Person(**d_item) for d_item in people_data]
     return people
+
 
 async def get_jurisdiction_states() -> List[str]:
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -212,36 +214,38 @@ async def search_jurisdictions(state: str, limit: int = 100, skip: int = 0):
     Returns: A tuple (total_count, list_of_jurisdictions)
     """
     if limit <= 0:
-        limit = 100 # Set a default reasonable limit if 0 is passed
+        limit = 100  # Set a default reasonable limit if 0 is passed
 
+    print("searching...")
     try:
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
                 """
                 SELECT COUNT(*) FROM jurisdictions WHERE state = %s;
                 """,
-                (state.lower(),)
+                (state.lower(),),
             )
             total_count = (await cur.fetchone())[0]
 
             await cur.execute(
                 """
-                SELECT data
+                SELECT jurisdiction_ocdid_slug, data
                 FROM jurisdictions
                 WHERE state = %s
                 ORDER BY jurisdiction_ocdid  -- Always use ORDER BY with LIMIT/OFFSET
                 LIMIT %s OFFSET %s;
                 """,
-                (state.lower(), limit, skip)
+                (state.lower(), limit, skip),
             )
 
             # Fetch all matching records
             results = await cur.fetchall()
+            print("waht are ", results)
 
             # Process the results
             jurisdictions = []
             for row in results:
-                jurisdictions.append(row[0])
+                jurisdictions.append({"jurisdiction_ocdid_slug": row[0], **row[1]})
 
             return total_count, jurisdictions
 

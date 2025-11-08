@@ -6,6 +6,7 @@ function CivSelectJurisdiction() {
   const [jurisdictions, setJurisdictions] = useState([]);
   const [selectedState, setSelectedState] = useState("");
   const [selectedJurisdiction, setSelectedJurisdiction] = useState("");
+  const [jurisdictionInputValue, setJurisdictionInputValue] = useState("");
 
   const isInitialMount = useRef(true);
 
@@ -28,6 +29,7 @@ function CivSelectJurisdiction() {
   useEffect(() => {
     setJurisdictions([]);
     setSelectedJurisdiction("");
+    setJurisdictionInputValue("");
 
     if (!selectedState) return;
     
@@ -39,9 +41,11 @@ function CivSelectJurisdiction() {
 
   const handleInputChange = (state, jurisdiction) => {
     // Dispatch a custom event with the selected state and jurisdiction
+
+    const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
     this.dispatchEvent(
       new CustomEvent("select-jurisdiction-change", {
-        detail: { state, jurisdiction },
+        detail: { state, jurisdiction: jurisdiction_data },
         bubbles: true,
         composed: true,
       })
@@ -51,20 +55,16 @@ function CivSelectJurisdiction() {
   const handleSubmitClick = (e) => {
     e.preventDefault();
 
-
-    this.dispatchEvent(
-      new CustomEvent("select-jurisdiction-submit", {
-        detail: { state: selectedState, jurisdiction: selectedJurisdiction },
-        bubbles: true,
-        composed: true,
-      })
-    );
+    const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
+    const jurisdiction_ocdid_slug = jurisdiction_data["jurisdiction_ocdid_slug"];
+    window.location.href = `/jurisdictions/${jurisdiction_ocdid_slug}`;
   }
 
-  const canSubmit = !!selectedJurisdiction
-
   return html`
-    <form class="grid" style="grid-template-columns: 2fr; gap: 1rem;">
+    <form 
+      class="grid" 
+      style="grid-template-columns: 2fr; gap: 1rem;"
+    >
       <label for="state-select" class="visually-hidden">State:</label>
       <select
         id="state-select"
@@ -77,37 +77,28 @@ function CivSelectJurisdiction() {
           (state) => html`<option value=${state}>${state}</option>`
         )}
       </select>
-
-      <label for="jurisdiction-select" class="visually-hidden">Jurisdiction:</label>
-      <select
-        id="jurisdiction-select"
-        .value=${selectedJurisdiction}
-        @change=${(e) => setSelectedJurisdiction(e.target.value)}
-        required
-      >
-        <option value="">Select a jurisdiction</option>
-        ${jurisdictions.map(
-          (jur) => html`<option value=${jur.id}>${jur.name}</option>`
-        )}
-      </select>
       <civ-autocomplete-select
         id="jurisdiction-autocomplete"
+        .disabled=${!selectedState}
+        .inputValue=${jurisdictionInputValue}
         .options=${jurisdictions.map(jur => ({ label: jur.name, value: jur.id }))}
         @fetch-suggestions=${(e) => {
           const query = e.detail.query.toLowerCase();
           console.log("suggestions needed for query:", query);
         }}
         @input-change=${(e) => {
-          const item = e.detail.item;
-          console.log("Autocomplete input change:", item);
+          const value = e.detail.value;
+          console.log("Autocomplete input change:", value);
+          setJurisdictionInputValue(value)
         }}
         @item-selected=${(e) => setSelectedJurisdiction(e.detail.value)}
       ></civ-autocomplete-select>
-
+      <!-- comment out submit button for now.
       <button 
         type="submit" 
         @click=${handleSubmitClick} 
-        ?disabled=${!canSubmit}>Submit</button>
+        ?disabled=${!selectedJurisdiction}>Submit</button>
+      -->
     </form>
   `;
 }

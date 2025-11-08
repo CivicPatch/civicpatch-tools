@@ -18,15 +18,24 @@ const DEFAULT_LOCATION = {
 };
 
 // https://leafletjs.com/reference.html#latlng
-function CivMap({ latlng }) {
+function CivMap({ canmove = true, latlngstring }) {
+  const canMove = canmove === "true" || canmove === true;
+  const latlngstringToLatLng = (latlngstring) => {
+    if (!latlngstring) return null;
+    const [lat, lng] = latlngstring.split(",").map(Number);
+    return { lat, lng };
+  }
+
   const [mapInstance, setMapInstance] = useState(null);
-  const [homeLatlng, setHomeLatlng] = useState(latlng || DEFAULT_LOCATION);
-  const [currentLatlng, setCurrentLatlng] = useState(null);
+  const [homeLatlng, setHomeLatlng] = useState(latlngstringToLatLng(latlngstring) || DEFAULT_LOCATION);
+  const [currentLatlng, setCurrentLatlng] = useState(latlngstringToLatLng(latlngstring));
   const [marker, setMarker] = useState(null);
   const [controls, setControls] = useState({ gc: null });
+  
 
   useEffect(() => {
     if (!mapInstance) return;
+    if (!canMove) return;
 
     mapInstance.on("locationerror", handleLocationError);
     mapInstance.on("locationfound", handleLocationFound);
@@ -75,42 +84,44 @@ function CivMap({ latlng }) {
 
   const setupMap = (el) => {
     if (!el || mapInstance) return;
+    let _gc, _lc;
 
     let newMapInstance = new Map(el, { zoomControl: false }); // .setView([51.505, -0.09], 13);
 
     let urlTemplate = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
     newMapInstance.addLayer(new TileLayer(urlTemplate, { minZoom: 3 }));
 
-    if (latlng) {
-      setCurrentLatlng(latlng);
-    } else {
+    if (!currentLatlng) {
       newMapInstance.locate();
     }
 
-    let _gc = new Geocoder({
-      geocoder: new geocoders.Nominatim({
-        geocodingQueryParams: {
-          countrycodes: "US",
-        },
-      }),
-      defaultMarkGeocode: false,
-      position: "topleft",
-    })
-      .on("markgeocode", handleAddressResult)
-      .addTo(newMapInstance);
+    if (canMove) {
+      _gc = new Geocoder({
+        geocoder: new geocoders.Nominatim({
+          geocodingQueryParams: {
+            countrycodes: "US",
+          },
+        }),
+        defaultMarkGeocode: false,
+        position: "topleft",
+      })
+        .on("markgeocode", handleAddressResult)
+        .addTo(newMapInstance);
+    
 
-    let _lc = new LocateControl({
-      keepCurrentZoomLevel: true,
-      drawMarker: false,
-      drawCircle: false,
-      position: "bottomright",
-      setView: false,
-      clickBehavior: {
-        inView: "stop",
-        outOfView: "stop",
-        inViewNotFollowing: "stop",
-      },
-    }).addTo(newMapInstance);
+      _lc = new LocateControl({
+        keepCurrentZoomLevel: true,
+        drawMarker: false,
+        drawCircle: false,
+        position: "bottomright",
+        setView: false,
+        clickBehavior: {
+          inView: "stop",
+          outOfView: "stop",
+          inViewNotFollowing: "stop",
+        },
+      }).addTo(newMapInstance);
+    }
 
     let _zoom = new Control.Zoom({
       position: "bottomright",
@@ -159,5 +170,5 @@ function CivMap({ latlng }) {
 }
 customElements.define(
   "civ-map",
-  component(CivMap, { observedAttributes: ["latlng"] }),
+  component(CivMap, { observedAttributes: ["latlngstring", "canmove"] }),
 );

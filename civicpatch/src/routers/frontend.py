@@ -37,6 +37,18 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             "pages/index.html", {"request": request, "missing_env": missing}
         )
 
+    @router.get("/jurisdictions/{jurisdiction_ocdid_slug}", include_in_schema=False)
+    async def jurisdiction_page(
+        request: Request, 
+        jurisdiction_ocdid_slug: str):
+
+        return templates.TemplateResponse(
+            "pages/jurisdiction.html",
+            {
+                "request": request,
+            }
+        )
+
     @router.post("/pipelines/run", include_in_schema=False)
     async def pipelines_run(
         background_tasks: BackgroundTasks,
