@@ -388,7 +388,11 @@ async def get_jurisdiction_states_endpoint(
     if error_string:
         raise HTTPException(status_code=403, detail=error_string)
 
+<<<<<<< Updated upstream
     states = await get_jurisdiction_states()
+=======
+    people = people_service.get_people_from_repo(people_filepath)
+>>>>>>> Stashed changes
 
     return {"total_items": len(states), "data": states}
 
