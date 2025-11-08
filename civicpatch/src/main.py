@@ -1,7 +1,8 @@
 import os
 
 import arel
-from fastapi import FastAPI
+import httpx
+from fastapi import FastAPI, Request, Response, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -9,6 +10,9 @@ from fastapi.templating import Jinja2Templates
 # from auth.token_handler import verify_github_action_data_query
 from routers.api import router as api_router
 from routers.frontend import get_router as get_frontend_router
+
+CRUDDER_URL = os.getenv("CRUDDER_URL", "http://localhost:8001")
+CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
 
 app = FastAPI()
 app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
@@ -31,27 +35,35 @@ if not is_production:
 app.include_router(api_router, prefix="/api", tags=["api"])
 app.include_router(get_frontend_router(templates), tags=["frontend"])
 
+@app.api_route(
+    "/api/crudder/{path:path}",
+    methods=["GET", "POST", "PUT", "DELETE", "PATCH"],
+)
+async def proxy_to_crudder(path: str, request: Request):
+    # Inject Authorization header from env var
+    if not CRUDDER_SHARED_TOKEN:
+        raise HTTPException(status_code=500, detail="Missing CRUDDER_SHARED_TOKEN")
 
-# Proxy to web-dev-server in development
-# @app.get("/dev-modules/{path:path}")
-# async def dev_proxy(path: str):
-#    """Proxy requests to web-dev-server to avoid CORS"""
-#    if is_production:
-#        return Response(status_code=404)
-#
-#    async with httpx.AsyncClient() as client:
-#        try:
-#            url = f"http://civicpatch-frontend:{civicpatch_webdev_port}/{path}"
-#
-#            response = await client.get(url)
-#            return Response(
-#                content=response.content,
-#                status_code=response.status_code,
-#                media_type=response.headers.get("content-type"),
-#            )
-#        except httpx.RequestError as err:
-#            print("err", err)
-#            return Response(status_code=502)
+    method = request.method
+    url = f"{CRUDDER_URL}/api/{path}"
+    headers = dict(request.headers)
+    headers.pop("host", None)
+    headers["Authorization"] = f"{CRUDDER_SHARED_TOKEN}"  # Inject token
+
+    data = await request.body()
+    async with httpx.AsyncClient() as client:
+        resp = await client.request(
+            method,
+            url,
+            headers=headers,
+            content=data if method in ["POST", "PUT", "PATCH"] else None,
+            params=dict(request.query_params),
+        )
+    return Response(
+        content=resp.content,
+        status_code=resp.status_code,
+        media_type=resp.headers.get("content-type"),
+    )
 
 
 # @app.exception_handler(Exception)
@@ -64,4 +76,3 @@ app.include_router(get_frontend_router(templates), tags=["frontend"])
 #            "stack_trace": stack_trace
 #        },
 #    )
-#
