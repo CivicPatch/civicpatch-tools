@@ -2,13 +2,15 @@ name: "[crudder] open-data sync"
 
 on:
   workflow_dispatch:
-
   # ⏱️ Adds a scheduled cron job trigger
   schedule:
     # Schedule Calculation:
     # Target Time: 9:00 AM PST
     # PST is UTC-8, so UTC time is 9:00 AM + 8 hours = 17:00 (5 PM) UTC.
     - cron: "0 17 * * *"
+
+permissions:
+  contents: read
 
 jobs:
   open-data-sync:
