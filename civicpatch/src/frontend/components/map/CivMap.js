@@ -61,7 +61,6 @@ function CivMap({ latlng }) {
   };
 
   const handleLocationFound = (event) => {
-    console.log("setting location found...", event);
     setCurrentLatlng(event.latlng);
     setHomeLatlng(event.latlng);
   };

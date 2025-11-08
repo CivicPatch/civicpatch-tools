@@ -1,4 +1,11 @@
 {% extends "layouts/base.html" %} {% block content %} {% if not missing_env %}
+
+<header>
+    <h3>Run Pipeline</h3>
+</header>
+
+<civ-pipeline-form></civ-pipeline-form>
+    <!--
 <form
     method="post"
     action="/pipelines/run"
@@ -8,7 +15,6 @@
     <header>
         <h3>Run Pipeline</h3>
     </header>
-    <hello-world></hello-world>
 
     <label>
         Jurisdiction ID
@@ -39,6 +45,7 @@
     </label>
     <button type="submit" class="primary">Run Pipeline</button>
 </form>
+-->
 {% endif %} {% if missing_env %}
 <article class="card" style="border-left: 5px solid #e53e3e">
     <header>

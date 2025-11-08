@@ -1,7 +1,7 @@
 import datetime
 import os
-from contextlib import asynccontextmanager
 import urllib
+from contextlib import asynccontextmanager
 
 import yaml
 from fastapi import (
@@ -29,14 +29,14 @@ from database import (
     create_api_key,
     get_api_keys_for_user,
     get_jurisdiction_people,
+    get_jurisdiction_states,
     get_user_details,
     maybe_insert_user,
     pool,
     revoke_api_key,
+    search_jurisdictions,
     update_user_detail,
     user_is_approved,
-    get_jurisdiction_states,
-    search_jurisdictions
 )
 from github_sync_service import GitDatabaseSync
 from schemas import Jurisdiction
@@ -388,11 +388,7 @@ async def get_jurisdiction_states_endpoint(
     if error_string:
         raise HTTPException(status_code=403, detail=error_string)
 
-<<<<<<< Updated upstream
     states = await get_jurisdiction_states()
-=======
-    people = people_service.get_people_from_repo(people_filepath)
->>>>>>> Stashed changes
 
     return {"total_items": len(states), "data": states}
 
@@ -410,7 +406,6 @@ async def get_jurisdictions_search_endpoint(
     next_link = ""
 
     if next_skip < total_items:
-        # Construct the next link URL (URL-encode the state if necessary, though usually not for path vars)
         query_params = urllib.parse.urlencode({"limit": limit, "skip": next_skip})
         next_link = f"/api/jurisdictions/{state}/search?{query_params}"
 
@@ -424,6 +419,7 @@ async def get_jurisdictions_search_endpoint(
         "data": jurisdictions,
         "links": {"next": next_link, "self": self_link},  # TODO!
     }
+
 
 @app.get("/api/jurisdictions/{jurisdiction_ocdid_slug}/people")
 async def get_jurisdiction_people_endpoint(

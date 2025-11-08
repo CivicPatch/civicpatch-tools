@@ -5,3 +5,105 @@
         Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
         "Segoe UI Symbol";
 }
+
+main.container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/** TODO: move this elsewhere **/
+/** Autocomplete Select Styles **/
+.autocomplete-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Input and button container */
+.autocomplete-wrapper fieldset.grid {
+  margin-bottom: 0;
+  gap: 0;
+}
+
+.autocomplete-input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-bottom: 0;
+}
+
+.autocomplete-toggle {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 0.5rem 0.75rem;
+  min-width: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+/* Dropdown list */
+.autocomplete-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--pico-background-color);
+  border: var(--pico-border-width) solid var(--pico-muted-border-color);
+  border-radius: var(--pico-border-radius);
+  margin-top: 0.25rem;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 99;
+  box-shadow: var(--pico-box-shadow);
+  list-style: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+}
+
+.autocomplete-option {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid var(--pico-muted-border-color);
+  transition: background-color 0.1s ease;
+  list-style: none;
+}
+
+.autocomplete-option:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-option:hover,
+.autocomplete-option.active {
+  background-color: var(--pico-secondary-background);
+}
+
+.autocomplete-option[aria-selected="true"] {
+  background-color: var(--pico-primary-background);
+  color: var(--pico-primary-inverse);
+}
+
+/* Selected item display */
+.autocomplete-selected {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--pico-muted-color);
+}
+
+/* Optional: No results message */
+.autocomplete-no-results {
+  padding: 0.75rem 1rem;
+  color: var(--pico-muted-color);
+  text-align: center;
+  font-style: italic;
+}
