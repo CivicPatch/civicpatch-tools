@@ -34,9 +34,7 @@ function CivSelectJurisdiction() {
     if (!selectedState) return;
     
     // Fetch jurisdictions for selected state (no auth header needed)
-    fetch(`/api/crudder/jurisdictions/${selectedState}/search?limit=100`)
-      .then((res) => res.json())
-      .then((data) => setJurisdictions(data.data || []));
+    handleJurisdictionSuggestions("");
   }, [selectedState]);
 
   const handleInputChange = (state, jurisdiction) => {
@@ -52,6 +50,14 @@ function CivSelectJurisdiction() {
     );
   }
 
+  const handleJurisdictionSuggestions = (query) => {
+    fetch(`/api/crudder/jurisdictions/${selectedState}/search?search_string=${encodeURIComponent(query)}&limit=50`)
+      .then((res) => res.json())
+      .then((data) => {
+        setJurisdictions(data.data || []);
+      }); 
+  }
+
   const handleSubmitClick = (e) => {
     e.preventDefault();
 
@@ -62,6 +68,7 @@ function CivSelectJurisdiction() {
 
   const jurisdictionLink = () => {
     if (!selectedJurisdiction) return "";
+    if (!jurisdictions) return "";
     const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
     const jurisdiction_ocdid_slug = jurisdiction_data["jurisdiction_ocdid_slug"];
     return `/jurisdictions/${jurisdiction_ocdid_slug}`;
@@ -71,6 +78,7 @@ function CivSelectJurisdiction() {
     <form 
       class="grid" 
       style="grid-template-columns: 2fr; gap: 1rem;"
+      onsubmit="return false;"
     >
       <label for="state-select" class="visually-hidden">State:</label>
       <select
@@ -91,7 +99,7 @@ function CivSelectJurisdiction() {
         .options=${jurisdictions.map(jur => ({ label: jur.name, value: jur.id }))}
         @fetch-suggestions=${(e) => {
           const query = e.detail.query.toLowerCase();
-          console.log("suggestions needed for query:", query);
+          handleJurisdictionSuggestions(query);
         }}
         @input-change=${(e) => {
           const value = e.detail.value;

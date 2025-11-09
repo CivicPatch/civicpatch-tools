@@ -220,7 +220,7 @@ async def get_jurisdiction(jurisdiction_ocdid: str):
         return row[0]
     return None
 
-async def search_jurisdictions(state: str, limit: int = 100, skip: int = 0):
+async def search_jurisdictions(state: str, search_string = "", limit: int = 100, skip: int = 0):
     """
     Retrieves a paginated list of jurisdictions and the total count for a given state.
 
@@ -229,25 +229,34 @@ async def search_jurisdictions(state: str, limit: int = 100, skip: int = 0):
     if limit <= 0:
         limit = 100  # Set a default reasonable limit if 0 is passed
 
+    where_clauses = ["state = %s"]
+    params = [state.lower()]
+
+    if search_string:
+        where_clauses.append("LOWER(data->>'name') LIKE %s")
+        params.append(f"%{search_string.lower()}%")
+
+    where_condition = " AND ".join(where_clauses)
+
     try:
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
-                """
-                SELECT COUNT(*) FROM jurisdictions WHERE state = %s;
+                f"""
+                SELECT COUNT(*) FROM jurisdictions WHERE {where_condition};
                 """,
-                (state.lower(),),
+                params,
             )
             total_count = (await cur.fetchone())[0]
 
             await cur.execute(
-                """
+                f"""
                 SELECT jurisdiction_ocdid_slug, data
                 FROM jurisdictions
-                WHERE state = %s
+                WHERE {where_condition}
                 ORDER BY jurisdiction_ocdid  -- Always use ORDER BY with LIMIT/OFFSET
                 LIMIT %s OFFSET %s;
                 """,
-                (state.lower(), limit, skip),
+                (*params, limit, skip),
             )
 
             # Fetch all matching records
