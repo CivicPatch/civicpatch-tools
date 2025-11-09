@@ -1,4 +1,6 @@
 {% extends "layouts/base.html" %} {% block title %}Jurisdiction{% endblock %} 
 {% block content %}
-<civ-jurisdiction-dashboard></civ-jurisdiction-dashboard>
+<civ-jurisdiction-dashboard
+    jurisdiction_ocdid_slug="{{ jurisdiction_ocdid_slug }}"
+></civ-jurisdiction-dashboard>
 {% endblock %}

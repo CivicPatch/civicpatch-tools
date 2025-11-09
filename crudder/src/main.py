@@ -37,6 +37,7 @@ from database import (
     search_jurisdictions,
     update_user_detail,
     user_is_approved,
+    get_jurisdiction
 )
 from github_sync_service import GitDatabaseSync
 from schemas import Jurisdiction
@@ -391,6 +392,24 @@ async def get_jurisdiction_states_endpoint(
     states = await get_jurisdiction_states()
 
     return {"total_items": len(states), "data": states}
+
+@app.get("/api/jurisdictions/{jurisdiction_ocdid_slug}")
+async def get_jurisdiction_data_endpoint(
+    jurisdiction_ocdid_slug: str,
+    authorization: str = Security(api_key_header),
+):
+    if not authorization and not authorization.strip():
+        raise HTTPException(status_code=401, detail="Missing Authorization header")
+
+    _server_detail, error_string = await is_authorized(authorization)
+    if error_string:
+        raise HTTPException(status_code=403, detail=error_string)
+
+    jurisdiction_ocdid = id_utils.slug_to_jurisdiction_id(jurisdiction_ocdid_slug)
+    jurisdiction_data = await get_jurisdiction(jurisdiction_ocdid)
+
+
+    return {"data": jurisdiction_data}
 
 
 @app.get("/api/jurisdictions/{state}/search")
