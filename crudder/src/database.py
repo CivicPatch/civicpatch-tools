@@ -206,6 +206,19 @@ async def get_jurisdiction_states() -> List[str]:
 
     return unique_states
 
+async def get_jurisdiction(jurisdiction_ocdid: str):
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT data FROM jurisdictions
+            WHERE jurisdiction_ocdid = %s;
+            """,
+            (jurisdiction_ocdid,),
+        )
+        row = await cur.fetchone()
+    if row:
+        return row[0]
+    return None
 
 async def search_jurisdictions(state: str, limit: int = 100, skip: int = 0):
     """
@@ -216,7 +229,6 @@ async def search_jurisdictions(state: str, limit: int = 100, skip: int = 0):
     if limit <= 0:
         limit = 100  # Set a default reasonable limit if 0 is passed
 
-    print("searching...")
     try:
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
@@ -240,7 +252,6 @@ async def search_jurisdictions(state: str, limit: int = 100, skip: int = 0):
 
             # Fetch all matching records
             results = await cur.fetchall()
-            print("waht are ", results)
 
             # Process the results
             jurisdictions = []

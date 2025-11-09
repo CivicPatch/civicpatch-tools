@@ -46,6 +46,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             "pages/jurisdiction.html",
             {
                 "request": request,
+                "jurisdiction_ocdid_slug": jurisdiction_ocdid_slug,
             }
         )
 

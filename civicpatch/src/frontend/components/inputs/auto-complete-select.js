@@ -17,7 +17,6 @@ const debounce = (func, delay) => {
 
 // --- Component Definition ---
 function AutocompleteSelect({ disabled, options = [], label = 'Search', inputValue = '' }) {
-  console.log("am i disabled?", disabled);
   const [selectedItem, setSelectedItem] = useState(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isListOpen, setIsListOpen] = useState(false);

@@ -60,6 +60,13 @@ function CivSelectJurisdiction() {
     window.location.href = `/jurisdictions/${jurisdiction_ocdid_slug}`;
   }
 
+  const jurisdictionLink = () => {
+    if (!selectedJurisdiction) return "";
+    const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
+    const jurisdiction_ocdid_slug = jurisdiction_data["jurisdiction_ocdid_slug"];
+    return `/jurisdictions/${jurisdiction_ocdid_slug}`;
+  }
+
   return html`
     <form 
       class="grid" 
@@ -99,6 +106,9 @@ function CivSelectJurisdiction() {
         @click=${handleSubmitClick} 
         ?disabled=${!selectedJurisdiction}>Submit</button>
       -->
+      <a href="${jurisdictionLink()}" ?hidden=${!selectedJurisdiction}>
+        Go to jurisdiction page
+      </a>
     </form>
   `;
 }
