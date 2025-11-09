@@ -14,6 +14,8 @@ services:
       - ../civicpatch/src/utils/id_utils.py:/app/src/civicpatch/id_utils.py:ro
     networks:
       - civicpatch_net
+    depends_on:
+      - crudder_db
 
   crudder_db:
     image: postgis/postgis:17-3.5

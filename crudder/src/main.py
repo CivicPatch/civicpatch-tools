@@ -415,11 +415,20 @@ async def get_jurisdiction_data_endpoint(
 @app.get("/api/jurisdictions/{state}/search")
 async def get_jurisdictions_search_endpoint(
     state: str,
+    search_string: str = "",
     limit: int = 0,
     skip: int = 0,
     authorization: str = Security(api_key_header),
 ):
-    total_items, jurisdictions = await search_jurisdictions(state, limit, skip)
+    if not authorization and not authorization.strip():
+        raise HTTPException(status_code=401, detail="Missing Authorization header")
+
+    _server_detail, error_string = await is_authorized(authorization)
+    if error_string:
+        raise HTTPException(status_code=403, detail=error_string)
+
+
+    total_items, jurisdictions = await search_jurisdictions(state, search_string, limit, skip)
 
     next_skip = skip + len(jurisdictions)
     next_link = ""
