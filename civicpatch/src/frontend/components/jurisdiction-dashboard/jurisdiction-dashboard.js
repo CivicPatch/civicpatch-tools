@@ -32,9 +32,6 @@ function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
         setPeople(peopleData);
     }
 
-    console.log("jurisdiction dashboard data:", data);
-    console.log("jurisdiction dashboard people:", people);
-
     return html`
         <div style="display: flex; flex-direction: column; gap: 2rem;">
           <div class="grid">
