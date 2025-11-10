@@ -4,6 +4,7 @@ import { html } from "lit-html";
 function CivSelectJurisdiction() {
   const [states, setStates] = useState([]);
   const [jurisdictions, setJurisdictions] = useState([]);
+  const [jurisdictionsMetadata, setJurisdictionsMetadata] = useState({});
   const [selectedState, setSelectedState] = useState("");
   const [selectedJurisdiction, setSelectedJurisdiction] = useState("");
   const [jurisdictionInputValue, setJurisdictionInputValue] = useState("");
@@ -28,6 +29,7 @@ function CivSelectJurisdiction() {
 
   useEffect(() => {
     setJurisdictions([]);
+    setJurisdictionsMetadata({});
     setSelectedJurisdiction("");
     setJurisdictionInputValue("");
 
@@ -50,11 +52,21 @@ function CivSelectJurisdiction() {
     );
   }
 
-  const handleJurisdictionSuggestions = (query) => {
-    fetch(`/api/crudder/jurisdictions/${selectedState}/search?search_string=${encodeURIComponent(query)}&limit=50`)
+  const handleJurisdictionSuggestions = (detail) => {
+    const query = detail.query || "";
+    const page = detail.page || 1;
+    const pageSize = detail.pageSize || 25;
+    fetch(`/api/crudder/jurisdictions/${selectedState}/search?search_string=${encodeURIComponent(query)}&limit=${pageSize}&page=${page}`)
       .then((res) => res.json())
       .then((data) => {
         setJurisdictions(data.data || []);
+        setJurisdictionsMetadata({
+          total_items: data.total_items,
+          total_pages: data.total_pages,
+          page: data.page,
+          limit: data.limit,
+          links: data.links
+        })
       }); 
   }
 
@@ -97,9 +109,11 @@ function CivSelectJurisdiction() {
         .disabled=${!selectedState}
         .inputValue=${jurisdictionInputValue}
         .options=${jurisdictions.map(jur => ({ label: jur.name, value: jur.id }))}
+        .optionsMetadata=${jurisdictionsMetadata}
+        .pageSize=${25}
         @fetch-suggestions=${(e) => {
-          const query = e.detail.query.toLowerCase();
-          handleJurisdictionSuggestions(query);
+          const detail = e.detail;
+          handleJurisdictionSuggestions(detail);
         }}
         @input-change=${(e) => {
           const value = e.detail.value;

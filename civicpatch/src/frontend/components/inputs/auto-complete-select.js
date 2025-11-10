@@ -16,11 +16,18 @@ const debounce = (func, delay) => {
 };
 
 // --- Component Definition ---
-function AutocompleteSelect({ disabled, options = [], label = 'Search', inputValue = '' }) {
+function AutocompleteSelect({ 
+  disabled, 
+  optionsMetadata = {},
+  options = [], 
+  label = 'Search', inputValue = '',
+  pageSize = 25,
+}) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isListOpen, setIsListOpen] = useState(false);
   const [inputElement, setInputElement] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (!inputValue) {
@@ -28,15 +35,15 @@ function AutocompleteSelect({ disabled, options = [], label = 'Search', inputVal
     }
   }, [inputValue])
 
-  // --- External Fetch Trigger Logic ---
-  const triggerParentFetch = (input) => {
+  const triggerParentFetch = (input, page = 1) => {
     const query = input || '';
     this.dispatchEvent(new CustomEvent('fetch-suggestions', { 
-      detail: { query }, 
+      detail: { query, page, pageSize }, 
       bubbles: true, 
       composed: true 
     }));
     setActiveIndex(-1);
+    setCurrentPage(page);
   };
 
   const debouncedFetch = useMemo(() => debounce(triggerParentFetch, 300), []);
@@ -45,6 +52,7 @@ function AutocompleteSelect({ disabled, options = [], label = 'Search', inputVal
   const selectItem = (item) => {
     setSelectedItem(item);
     setIsListOpen(false);
+    setCurrentPage(1);
     if (inputElement) inputElement.focus();
     
     this.dispatchEvent(new CustomEvent('item-selected', { 
@@ -60,10 +68,32 @@ function AutocompleteSelect({ disabled, options = [], label = 'Search', inputVal
     }));
   };
 
+  const hasPrevPage = optionsMetadata?.links?.prev;
+  const hasNextPage = optionsMetadata?.links?.next;
+
+  const handlePrevPage = (e) => {
+    e.preventDefault();
+
+    if (hasPrevPage) {
+      triggerParentFetch(inputValue, currentPage - 1);
+    }
+  }
+
+
+  const handleNextPage = (e) => {
+    e.preventDefault();
+
+    if (hasNextPage) {
+      triggerParentFetch(inputValue, currentPage + 1);
+    }
+  }
+
+
   // --- Handlers ---
   const handleInput = (e) => {
     const value = e.target.value;
     setSelectedItem(null);
+    setCurrentPage(1);
     
     this.dispatchEvent(new CustomEvent('input-change', { 
       detail: { value, item: null }, 
@@ -114,13 +144,11 @@ function AutocompleteSelect({ disabled, options = [], label = 'Search', inputVal
 
   return html`
     <style>
-      /* Autocomplete Select Component - Pico CSS Styles */
       .autocomplete-wrapper {
         position: relative;
         width: 100%;
       }
 
-      /* Input and button container */
       .autocomplete-wrapper fieldset.grid {
         margin-bottom: 0;
         gap: 0;
@@ -143,7 +171,6 @@ function AutocompleteSelect({ disabled, options = [], label = 'Search', inputVal
         margin-bottom: 0;
       }
 
-      /* Dropdown list */
       .autocomplete-dropdown {
         position: absolute;
         top: 100%;
@@ -153,13 +180,18 @@ function AutocompleteSelect({ disabled, options = [], label = 'Search', inputVal
         border: var(--pico-border-width) solid var(--pico-muted-border-color);
         border-radius: var(--pico-border-radius);
         margin-top: 0.25rem;
-        max-height: 300px;
-        overflow-y: auto;
+        max-height: 400px;
         z-index: 99;
         box-shadow: var(--pico-box-shadow);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .autocomplete-options {
+        flex: 1;
+        overflow-y: auto;
         list-style: none;
-        margin-left: 0;
-        margin-right: 0;
+        margin: 0;
         padding: 0;
       }
 
@@ -185,15 +217,45 @@ function AutocompleteSelect({ disabled, options = [], label = 'Search', inputVal
         color: var(--pico-primary-inverse);
       }
 
-      /* Selected item display */
+      .autocomplete-pagination {
+        border-top: 1px solid var(--pico-muted-border-color);
+        padding: 0.75rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--pico-card-background-color);
+        border-radius: 0 0 var(--pico-border-radius) var(--pico-border-radius);
+      }
+
+      .autocomplete-pagination-info {
+        font-size: 0.875rem;
+        color: var(--pico-muted-color);
+      }
+
+      .autocomplete-pagination-controls {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .autocomplete-pagination button {
+        padding: 0.25rem 0.75rem;
+        font-size: 0.875rem;
+        margin: 0;
+      }
+
+      .autocomplete-pagination button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
       .autocomplete-selected {
         display: block;
         margin-top: 0.5rem;
         color: var(--pico-muted-color);
       }
-    </style>
+    </style> 
 
-    <label class="visually-hidden">${label}</label>
+        <label class="visually-hidden">${label}</label>
     <div class="autocomplete-wrapper">
       <fieldset class="grid" role="group">
         <input 
@@ -203,7 +265,6 @@ function AutocompleteSelect({ disabled, options = [], label = 'Search', inputVal
           aria-autocomplete="both" 
           aria-expanded=${isListOpen ? 'true' : 'false'}
           aria-label=${label}
-          ?disabled=${disabled}
           .value=${inputValue}
           @input=${handleInput}
           @keydown=${handleKeyDown}
@@ -234,23 +295,51 @@ function AutocompleteSelect({ disabled, options = [], label = 'Search', inputVal
       </fieldset>
       
       ${isListOpen && options.length > 0 ? html`
-        <ul 
-          role="listbox" 
-          aria-label=${label}
-          class="autocomplete-dropdown"
-        >
-          ${options.map((item, index) => html`
-            <li 
-              role="option"
-              aria-selected=${index === activeIndex ? 'true' : 'false'}
-              @mousedown=${(e) => { e.preventDefault(); handleSuggestionClick(item); }}
-              @mouseover=${() => setActiveIndex(index)}
-              class="autocomplete-option ${index === activeIndex ? 'active' : ''}"
-            >
-              ${item.label}
-            </li>
-          `)}
-        </ul>
+        <div class="autocomplete-dropdown">
+          <ul 
+            role="listbox" 
+            aria-label=${label}
+            class="autocomplete-options"
+          >
+            ${options.map((item, index) => html`
+              <li 
+                role="option"
+                aria-selected=${index === activeIndex ? 'true' : 'false'}
+                @mousedown=${(e) => { e.preventDefault(); handleSuggestionClick(item); }}
+                @mouseover=${() => setActiveIndex(index)}
+                class="autocomplete-option ${index === activeIndex ? 'active' : ''}"
+              >
+                ${item.label}
+              </li>
+            `)}
+          </ul>
+          
+          ${optionsMetadata?.total_items > pageSize ? html`
+            <div class="autocomplete-pagination">
+              <span class="autocomplete-pagination-info">
+                Showing ${optionsMetadata?.page}-${optionsMetadata?.total_pages} of ${optionsMetadata?.total_items}
+              </span>
+              <div class="autocomplete-pagination-controls">
+                <button 
+                  type="button"
+                  @mousedown=${handlePrevPage}
+                  ?disabled=${!hasPrevPage}
+                  aria-label="Previous page"
+                >
+                  Previous
+                </button>
+                <button 
+                  type="button"
+                  @mousedown=${handleNextPage}
+                  ?disabled=${!hasNextPage}
+                  aria-label="Next page"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          ` : ''}
+        </div>
       ` : ''}
       
       ${selectedItem ? html`<small class="autocomplete-selected">Selected: ${selectedItem.label}</small>` : ''}
