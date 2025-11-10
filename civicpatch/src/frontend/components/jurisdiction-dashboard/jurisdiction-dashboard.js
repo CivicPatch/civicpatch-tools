@@ -27,30 +27,7 @@ function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
         setData(jurisdictionData);
         setPeople(peopleData);
         setPipelineStatus(pipelineStatusData);
-    }
-
-    const fetchJurisdictionData = async (ocdid) => {
-        const response = await fetch(`/api/crudder/jurisdictions/${ocdid}`);
-        const result = await response.json();
-        return result.data;
-    }
-
-    const fetchPeopleData = async (ocdid) => {
-        const response = await fetch(`/api/crudder/jurisdictions/${ocdid}/people`);
-        const result = await response.json();
-        return result.data;
-    }
-
-    const fetchPipelineStatus = async (ocdid_slug) => {
-        const response = await fetch(`/api/pipelines/${ocdid_slug}/status`);
-        if (!response.ok) {
-          return null
-        }
-
-        const result = await response.json();
-        return result.data;
-
-    }
+    } 
 
     const connectStream = useCallback(() => {
         console.log('Attempting to connect to SSE stream...');
@@ -117,17 +94,37 @@ function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
     //}, [eventSource]);
 
 
-    // --- 3. useEffect for Cleanup Only ---
-    // This runs ONLY when the component unmounts (cleanup) or if eventSource changes
     useEffect(() => {
-        // Return a cleanup function
         return () => {
             if (eventSource) {
                 eventSource.close();
                 console.log('Stream closed on component unmount.');
             }
         };
-    }, [eventSource]); // Dependency on eventSource ensures cleanup happens correctly
+    }, [eventSource]);
+
+    const fetchJurisdictionData = async (ocdid) => {
+        const response = await fetch(`/api/crudder/jurisdictions/${ocdid}`);
+        const result = await response.json();
+        return result.data;
+    }
+
+    const fetchPeopleData = async (ocdid) => {
+        const response = await fetch(`/api/crudder/jurisdictions/${ocdid}/people`);
+        const result = await response.json();
+        return result.data;
+    }
+
+    const fetchPipelineStatus = async (ocdid_slug) => {
+        const response = await fetch(`/api/pipelines/${ocdid_slug}/status`);
+        if (!response.ok) {
+          return null
+        }
+
+        const result = await response.json();
+        return result.data;
+
+    }
 
     const handleScrapeClick = async () => {
       setPipelineStatusIsLoading(true);
