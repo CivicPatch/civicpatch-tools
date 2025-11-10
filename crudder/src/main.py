@@ -417,7 +417,7 @@ async def get_jurisdictions_search_endpoint(
     state: str,
     search_string: str = "",
     limit: int = 0,
-    skip: int = 0,
+    page: int = 1,
     authorization: str = Security(api_key_header),
 ):
     if not authorization and not authorization.strip():
@@ -427,25 +427,37 @@ async def get_jurisdictions_search_endpoint(
     if error_string:
         raise HTTPException(status_code=403, detail=error_string)
 
+    skip = (page - 1) * limit
 
     total_items, jurisdictions = await search_jurisdictions(state, search_string, limit, skip)
 
+
     next_skip = skip + len(jurisdictions)
     next_link = ""
+    prev_link = ""
+
+    if page > 1:
+        query_params = urllib.parse.urlencode({"limit": limit, "page": page - 1})
+        prev_link = f"/api/jurisdictions/{state}/search?{query_params}"
 
     if next_skip < total_items:
-        query_params = urllib.parse.urlencode({"limit": limit, "skip": next_skip})
+        query_params = urllib.parse.urlencode({"limit": limit, "page": page + 1})
         next_link = f"/api/jurisdictions/{state}/search?{query_params}"
 
-    self_query_params = urllib.parse.urlencode({"limit": limit, "skip": skip})
+    self_query_params = urllib.parse.urlencode({"limit": limit, "page": page})
     self_link = f"/api/jurisdictions/{state}/search?{self_query_params}"
 
     return {
         "total_items": total_items,
-        "skip": skip,
+        "page": page,
+        "total_pages": (total_items + limit - 1) // limit if limit > 0 else 1,
         "limit": limit,
         "data": jurisdictions,
-        "links": {"next": next_link, "self": self_link},  # TODO!
+        "links": {
+            "prev": prev_link, 
+            "next": next_link, 
+            "self": self_link
+            },  # TODO!
     }
 
 
