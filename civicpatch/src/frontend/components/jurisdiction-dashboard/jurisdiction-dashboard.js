@@ -1,15 +1,33 @@
-import { component, useEffect, useState } from 'haunted';
+import { component, useEffect, useState, useCallback } from 'haunted';
 import { html } from 'lit-html';
 
 function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
     const [data, setData] = useState(null);
     const [people, setPeople] = useState([]);
 
+    const [pipelineStatus, setPipelineStatus] = useState({});
+    const [pipelineStatusIsLoading, setPipelineStatusIsLoading] = useState(false);
+    const [eventSource, setEventSource] = useState(null);
+    const [isConnected, setIsConnected] = useState(false);
+
+    const [error, setError] = useState(null);
+
     useEffect(() => {
         if (!jurisdiction_ocdid_slug) return;
 
-        fetchData()
+        fetchData();
     }, [])
+
+    const fetchData = async () => {
+        const [pipelineStatusData, jurisdictionData, peopleData] = await Promise.all([
+            fetchPipelineStatus(jurisdiction_ocdid_slug),
+            fetchJurisdictionData(jurisdiction_ocdid_slug),
+            fetchPeopleData(jurisdiction_ocdid_slug),
+        ]);
+        setData(jurisdictionData);
+        setPeople(peopleData);
+        setPipelineStatus(pipelineStatusData);
+    }
 
     const fetchJurisdictionData = async (ocdid) => {
         const response = await fetch(`/api/crudder/jurisdictions/${ocdid}`);
@@ -23,14 +41,123 @@ function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
         return result.data;
     }
 
-    const fetchData = async () => {
-        const [jurisdictionData, peopleData] = await Promise.all([
-            fetchJurisdictionData(jurisdiction_ocdid_slug),
-            fetchPeopleData(jurisdiction_ocdid_slug),
-        ]);
-        setData(jurisdictionData);
-        setPeople(peopleData);
+    const fetchPipelineStatus = async (ocdid_slug) => {
+        const response = await fetch(`/api/pipelines/${ocdid_slug}/status`);
+        if (!response.ok) {
+          return null
+        }
+
+        const result = await response.json();
+        return result.data;
+
     }
+
+    const connectStream = useCallback(() => {
+        console.log('Attempting to connect to SSE stream...');
+        if (eventSource) {
+            console.log('Stream is already active or being closed.');
+            return;
+        }
+
+        const sseUrl = `/api/sse/pipelines/${jurisdiction_ocdid_slug}/status`;
+        
+        try {
+            const newEventSource = new EventSource(sseUrl);
+            setEventSource(newEventSource); // Store the instance in state
+            setError(null);
+
+            newEventSource.onopen = () => {
+                console.log('✅ SSE connection established.');
+                setIsConnected(true);
+                setPipelineStatus(prev => ({ ...prev, status: 'CONNECTED', message: 'Waiting for updates...' }));
+            };
+
+            newEventSource.onmessage = (event) => {
+                try {
+                    const update = JSON.parse(event.data);
+                    
+                    // Update the state with the new status
+                    setPipelineStatus(update.data); 
+
+                    if (update.data.status === 'DONE') {
+                        // Close if the pipeline is finished
+                        newEventSource.close();
+                        setEventSource(null); 
+                        setIsConnected(false);
+                        console.log('Stream closed: Pipeline finished.');
+                    }
+                } catch (e) {
+                    console.error('Error parsing JSON from SSE stream:', e);
+                    setError('Error processing update.');
+                }
+            };
+
+            newEventSource.onerror = (e) => {
+                console.error('❌ SSE Error occurred.', e);
+                setIsConnected(false);
+                setError('Connection lost or failed.');
+                // Note: EventSource will attempt to reconnect automatically
+            };
+
+        } catch (e) {
+            console.error('Failed to initialize EventSource:', e);
+            setError('Failed to initialize connection.');
+        }
+    }, [eventSource, setEventSource]); // Dependency on eventSource to avoid multiple connections
+
+    // --- 2. Disconnect Handler Function ---
+    //const disconnectStream = useCallback(() => {
+    //    if (eventSource) {
+    //        eventSource.close();
+    //        setEventSource(null);
+    //        setIsConnected(false);
+    //        setPipelineStatus({ status: 'DISCONNECTED', message: 'Monitoring manually stopped.' });
+    //        console.log('Stream manually closed.');
+    //    }
+    //}, [eventSource]);
+
+
+    // --- 3. useEffect for Cleanup Only ---
+    // This runs ONLY when the component unmounts (cleanup) or if eventSource changes
+    useEffect(() => {
+        // Return a cleanup function
+        return () => {
+            if (eventSource) {
+                eventSource.close();
+                console.log('Stream closed on component unmount.');
+            }
+        };
+    }, [eventSource]); // Dependency on eventSource ensures cleanup happens correctly
+
+    const handleScrapeClick = async () => {
+      setPipelineStatusIsLoading(true);
+      const body = {
+        "name": data.name,
+        "jurisdiction_id": data.id,
+        "url": data.url
+      }
+      const response = await fetch(
+        `/api/pipelines/${jurisdiction_ocdid_slug}`, 
+        { 
+          headers: { 'Content-Type': 'application/json' },
+          method: 'POST', 
+          body: JSON.stringify(body) 
+        }
+      );
+      connectStream()
+    }
+
+    const canStartScrape = () => {
+      if (
+        !pipelineStatus || 
+        !pipelineStatusIsLoading) {
+        return true;
+      }
+
+      return false;
+    }
+
+    console.log('Rendering with pipelineStatus:', pipelineStatus);
 
     return html`
         <div style="display: flex; flex-direction: column; gap: 2rem;">
@@ -58,12 +185,30 @@ function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
                       <a href="${data.url}" target="_blank" role="button" class="secondary">
                         Visit Official Website
                       </a>
+
+                      <hr/>
+
+                      <p>Last Updated: ${data.updated_at ? new Date(data.updated_at).toLocaleString() : 'N/A'}</p>
+                      <button 
+                        @click=${handleScrapeClick}
+                        ?disabled=${!canStartScrape()}
+                        class="primary">Start Scrape</button>
                 ` : html`
                   <p>Loading jurisdiction data...</p>
                 `
               }
               </div>
           </div>
+
+          ${
+            isConnected ? html`
+              <div class="status-banner success">
+                <strong>Pipeline Status:</strong> ${pipelineStatus?.status} <br/>
+                <small>${pipelineStatus.message || ''}</small>
+              </div>
+            ` : null
+          }
+           
           <civ-people-list
             .local=${people} 
           ></civ-people-list>

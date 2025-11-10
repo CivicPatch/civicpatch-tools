@@ -483,7 +483,7 @@ async def sync_people_endpoint(
     if error_string:
         raise HTTPException(status_code=403, detail=error_string)
 
-    syncer = GitDatabaseSync()
+    syncer = GitDatabaseSync(pool)
     background_tasks.add_task(syncer.sync)
 
     return {"status": "running"}
