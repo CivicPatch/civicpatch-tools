@@ -28,6 +28,7 @@ from civicpatch import id_utils
 from database import (
     create_api_key,
     get_api_keys_for_user,
+    get_jurisdiction,
     get_jurisdiction_people,
     get_jurisdiction_states,
     get_user_details,
@@ -37,7 +38,6 @@ from database import (
     search_jurisdictions,
     update_user_detail,
     user_is_approved,
-    get_jurisdiction
 )
 from github_sync_service import GitDatabaseSync
 from schemas import Jurisdiction
@@ -354,7 +354,7 @@ async def list_available_jurisdictions_endpoint(
     if error_string:
         raise HTTPException(status_code=401, detail=error_string)
     jurisdictions_file_content = github_service.get_github_file_contents(
-        f"data_source/{state}/government_progress.yml"
+        f"data_source/{state}/jurisdictions_metadata.yml"
     )
     if jurisdictions_file_content is None:
         raise HTTPException(status_code=404, detail="Could not find jurisdictions file")
@@ -393,6 +393,7 @@ async def get_jurisdiction_states_endpoint(
 
     return {"total_items": len(states), "data": states}
 
+
 @app.get("/api/jurisdictions/{jurisdiction_ocdid_slug}")
 async def get_jurisdiction_data_endpoint(
     jurisdiction_ocdid_slug: str,
@@ -407,7 +408,6 @@ async def get_jurisdiction_data_endpoint(
 
     jurisdiction_ocdid = id_utils.slug_to_jurisdiction_id(jurisdiction_ocdid_slug)
     jurisdiction_data = await get_jurisdiction(jurisdiction_ocdid)
-
 
     return {"data": jurisdiction_data}
 
@@ -429,8 +429,9 @@ async def get_jurisdictions_search_endpoint(
 
     skip = (page - 1) * limit
 
-    total_items, jurisdictions = await search_jurisdictions(state, search_string, limit, skip)
-
+    total_items, jurisdictions = await search_jurisdictions(
+        state, search_string, limit, skip
+    )
 
     next_skip = skip + len(jurisdictions)
     next_link = ""
@@ -453,11 +454,7 @@ async def get_jurisdictions_search_endpoint(
         "total_pages": (total_items + limit - 1) // limit if limit > 0 else 1,
         "limit": limit,
         "data": jurisdictions,
-        "links": {
-            "prev": prev_link, 
-            "next": next_link, 
-            "self": self_link
-            },  # TODO!
+        "links": {"prev": prev_link, "next": next_link, "self": self_link},  # TODO!
     }
 
 
