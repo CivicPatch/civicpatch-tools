@@ -155,6 +155,8 @@ def is_valid_image(src: str | None) -> bool:
         return False
     if any(blacklisted in src for blacklisted in IMAGE_URL_BLACKLIST):
         return False
+    if src.startswith("data:"):
+        return False
     return True
 
 async def download_images(browser, logger, page: Page, image_dir: str):
