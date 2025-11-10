@@ -41,7 +41,6 @@ function CivSelectJurisdiction() {
 
   const handleInputChange = (state, jurisdiction) => {
     // Dispatch a custom event with the selected state and jurisdiction
-
     const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
     this.dispatchEvent(
       new CustomEvent("select-jurisdiction-change", {
@@ -81,9 +80,10 @@ function CivSelectJurisdiction() {
   const jurisdictionLink = () => {
     if (!selectedJurisdiction) return "";
     if (!jurisdictions) return "";
+    console.log("what is", selectedJurisdiction)
     const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
-    const jurisdiction_ocdid_slug = jurisdiction_data["jurisdiction_ocdid_slug"];
-    return `/jurisdictions/${jurisdiction_ocdid_slug}`;
+    const jurisdiction_ocdid_slug = jurisdiction_data ? jurisdiction_data["jurisdiction_ocdid_slug"] : "";
+    return jurisdiction_ocdid_slug ? `/jurisdictions/${jurisdiction_ocdid_slug}` : "";
   }
 
   return html`
@@ -116,9 +116,9 @@ function CivSelectJurisdiction() {
           handleJurisdictionSuggestions(detail);
         }}
         @input-change=${(e) => {
-          const value = e.detail.value;
-          console.log("Autocomplete input change:", value);
+          const {value, item} = e.detail;
           setJurisdictionInputValue(value)
+          setSelectedJurisdiction(item ? item.value : "");
         }}
         @item-selected=${(e) => setSelectedJurisdiction(e.detail.value)}
       ></civ-autocomplete-select>
