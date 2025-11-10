@@ -30,6 +30,7 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
 
     content_type = (
         f"First, determine if the content contains relevant information about {target_text}.\n"
+        "Do not include people whose terms have ended.\n"
         "If not, return an empty JSON array `[]`."
     )
 
