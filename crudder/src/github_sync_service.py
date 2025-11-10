@@ -13,7 +13,6 @@ from datetime import datetime
 from pathlib import Path
 
 import yaml
-from psycopg_pool import AsyncConnectionPool
 
 # Configuration
 REPO_URL = "https://github.com/CivicPatch/open-data.git"
@@ -33,12 +32,11 @@ JURISDICTION_FILES_PATTERN = (
 if not CRUDDER_DB_URL:
     raise ValueError("CRUDDER_DB_URL environment variable is not set.")
 
-# Create a separate pool for this script (not shared with web app)
-sync_pool = AsyncConnectionPool(CRUDDER_DB_URL, open=False)
 
 
 class GitDatabaseSync:
-    def __init__(self, repo_url=REPO_URL, repo_path=REPO_PATH):
+    def __init__(self, pool, repo_url=REPO_URL, repo_path=REPO_PATH):
+        self.pool = pool
         self.repo_url = repo_url
         self.repo_path = Path(repo_path)
 
@@ -148,7 +146,7 @@ class GitDatabaseSync:
 
     async def get_last_synced_commit(self):
         """Get the last commit that was synced. Assumes sync_log table exists."""
-        async with sync_pool.connection() as conn, conn.cursor() as cur:
+        async with self.pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
                 "SELECT git_commit FROM sync_log ORDER BY sync_time DESC LIMIT 1"
             )
@@ -182,7 +180,7 @@ class GitDatabaseSync:
                 print(f"Skipping {file_path}: 'jurisdiction_id' missing in data.")
                 return False
 
-            async with sync_pool.connection() as conn:
+            async with self.pool.connection() as conn:
                 async with conn.transaction():
                     await conn.execute(
                         """
@@ -232,7 +230,7 @@ class GitDatabaseSync:
             path_parts = rel_path.split(os.sep)
             state_abbreviation = path_parts[1]
 
-            async with sync_pool.connection() as conn, conn.cursor() as cur:
+            async with self.pool.connection() as conn, conn.cursor() as cur:
                 async with conn.transaction():
                     values_list = []
 
@@ -241,6 +239,8 @@ class GitDatabaseSync:
                         jurisdiction_id = record.get("jurisdiction_id")
                         jurisdiction_ocdid_slug = record.get("jurisdiction_ocdid_slug")
                         data = record.get("jurisdiction")
+                        data["updated_at"] = record.get("updated_at")
+
                         if not jurisdiction_id:
                             print(
                                 f"  Warning: Skipping record in {file_path}. 'id' key not found."
@@ -291,7 +291,7 @@ class GitDatabaseSync:
         start_time = datetime.now()
 
         # Ensure pool is open
-        await sync_pool.open()
+        await self.pool.open()
 
         try:
             # Get last synced commit
@@ -355,7 +355,7 @@ class GitDatabaseSync:
             duration = (datetime.now() - start_time).total_seconds()
 
             # Log sync
-            async with sync_pool.connection() as conn:
+            async with self.pool.connection() as conn:
                 await conn.execute(
                     """
                     INSERT INTO sync_log (files_updated, git_commit, sync_time)
@@ -383,7 +383,7 @@ class GitDatabaseSync:
 
             # Try to log the failure
             try:
-                async with sync_pool.connection() as conn:
+                async with self.pool.connection() as conn:
                     await conn.execute(
                         """
                         INSERT INTO sync_log (git_commit, duration_seconds, status, error)
@@ -401,7 +401,7 @@ class GitDatabaseSync:
                 pass  # Don't fail if logging fails
 
         finally:
-            await sync_pool.close()
+            await self.pool.close()
 
 
 async def main():
