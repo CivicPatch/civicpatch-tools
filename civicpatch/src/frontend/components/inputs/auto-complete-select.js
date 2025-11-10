@@ -35,6 +35,12 @@ function AutocompleteSelect({
     }
   }, [inputValue])
 
+  useEffect(() => {
+    if (activeIndex >= 0) {
+      scrollToActiveItem(activeIndex);
+    }
+  }, [activeIndex])
+
   const triggerParentFetch = (input, page = 1) => {
     const query = input || '';
     this.dispatchEvent(new CustomEvent('fetch-suggestions', { 
@@ -128,6 +134,20 @@ function AutocompleteSelect({
         setIsListOpen(false);
         break;
     }
+  };
+
+    // Scroll active item into view
+  const scrollToActiveItem = (index) => {
+    // Use setTimeout to ensure DOM has updated
+    setTimeout(() => {
+      const activeItem = this.querySelector(`.autocomplete-option[aria-selected="true"]`);
+      if (activeItem) {
+        activeItem.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'nearest' 
+        });
+      }
+    }, 0);
   };
 
   const handleButtonClick = () => {
