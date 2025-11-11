@@ -2,7 +2,7 @@ import os
 
 import arel
 import httpx
-from fastapi import FastAPI, Request, Response, HTTPException
+from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -18,7 +18,7 @@ app = FastAPI()
 app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
 
 
-civicpatch_webdev_port = os.getenv("CIVICPATCH_WEBDEV_PORT", 8002)
+# civicpatch_webdev_port = os.getenv("CIVICPATCH_WEBDEV_PORT", 8002)
 civicpatch_env = os.getenv("CIVICPATCH_ENV", "development")
 is_production = civicpatch_env == "production"
 
@@ -34,6 +34,7 @@ if not is_production:
 
 app.include_router(api_router, prefix="/api", tags=["api"])
 app.include_router(get_frontend_router(templates), tags=["frontend"])
+
 
 @app.api_route(
     "/api/crudder/{path:path}",

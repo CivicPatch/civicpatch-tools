@@ -89,8 +89,7 @@ CMD ["npm", "run", "start"]
 # DEVELOPMENT IMAGE
 FROM post-install AS development
 
-ENV CIVICPATCH_ENV="development" \
-    CIVICPATCH_WEBDEV_PORT="8002"
+ENV CIVICPATCH_ENV="development"
 
 USER root
 RUN apt-get update && apt-get install -y \

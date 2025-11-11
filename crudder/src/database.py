@@ -1,7 +1,8 @@
 import hashlib
 import hmac
 import os
-from typing import List
+import secrets
+from typing import List, cast
 
 from psycopg_pool import AsyncConnectionPool
 
@@ -30,12 +31,10 @@ async def maybe_insert_user(provider, provider_user_id, email):
         )
 
 
-async def create_api_key(provider, provider_user_id, database_hash_key):
-    import secrets
-
+async def create_api_key(provider, provider_user_id):
     api_key = secrets.token_urlsafe(32)
     # Hash the API key before storing
-    api_key_hash = hash_string(api_key, database_hash_key)
+    api_key_hash = hash_string(api_key, cast(str, DATABASE_HASH_KEY))
     api_key_suffix = api_key[-4:]
 
     async with pool.connection() as conn:

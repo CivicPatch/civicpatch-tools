@@ -33,7 +33,6 @@ if not CRUDDER_DB_URL:
     raise ValueError("CRUDDER_DB_URL environment variable is not set.")
 
 
-
 class GitDatabaseSync:
     def __init__(self, pool, repo_url=REPO_URL, repo_path=REPO_PATH):
         self.pool = pool

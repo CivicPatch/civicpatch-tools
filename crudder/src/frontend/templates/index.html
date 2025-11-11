@@ -17,9 +17,9 @@
       {% if user %}
         <p>Welcome, {{user.first_name or user.display_name or user.email}}</p> 
 
-        {% include 'snippets/api_keys.html' %}
+        {% include 'partials/api_keys.html' %}
 
-        {% include 'snippets/user_details.html' %}
+        {% include 'partials/user_details.html' %}
 
         {% if not approved_user %}
           <p class="color: #AF291D;"><strong>Your account is not yet approved by the maintainer. Please contact the <a href="mailto:{{ maintainer_email }}">{{ maintainer_email }}</a> to get approved.
