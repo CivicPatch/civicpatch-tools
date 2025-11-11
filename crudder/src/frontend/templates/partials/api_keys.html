@@ -97,7 +97,7 @@
             return;
         }
         try {
-            const response = await fetch(`/api_keys/${keyId}`, {
+            const response = await fetch(`/api/api_keys/${keyId}`, {
                 method: "DELETE",
             });
             if (response.ok) {
@@ -110,7 +110,7 @@
 
     async function createApiKey() {
         try {
-            const response = await fetch("/api_keys", {
+            const response = await fetch("/api/api_keys", {
                 method: "POST",
             });
             if (response.ok) {
