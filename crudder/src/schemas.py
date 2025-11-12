@@ -32,3 +32,9 @@ class Jurisdiction(BaseModel):
     id: str
     name: str
     url: str | None
+
+class Identity(BaseModel):
+    provider: str
+    provider_user_id: str
+    email: str | None
+    role: str | None

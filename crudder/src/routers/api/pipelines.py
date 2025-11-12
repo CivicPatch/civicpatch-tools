@@ -3,7 +3,7 @@ import os
 from fastapi import APIRouter, Form, HTTPException, Security, UploadFile
 
 import github_service
-import services.auth as AuthService
+import services.auth_service as AuthService
 from storage_service import upload_file_to_storage
 
 STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")

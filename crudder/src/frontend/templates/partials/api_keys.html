@@ -97,11 +97,18 @@
             return;
         }
         try {
+            const csrf = getCsrfCookie();
             const response = await fetch(`/api/api_keys/${keyId}`, {
                 method: "DELETE",
+                credentials: "include", // send cookies
+                headers: {
+                    "x-csrf-token": csrf
+                }
             });
             if (response.ok) {
                 window.location.reload();
+            } else {
+                console.error("Failed to revoke key:", response.status);
             }
         } catch (error) {
             console.error("Error revoking key:", error);
@@ -110,17 +117,51 @@
 
     async function createApiKey() {
         try {
+            const csrf = getCsrfCookie();
             const response = await fetch("/api/api_keys", {
                 method: "POST",
+                credentials: "include", // send cookies
+                headers: {
+                    "Accept": "application/json",
+                    "x-csrf-token": csrf
+                }
             });
             if (response.ok) {
                 const data = await response.json();
                 showApiKeyModal(data.api_key);
+            } else {
+                console.error("Failed to create key:", response.status);
             }
         } catch (error) {
             console.error("Error creating key:", error);
         }
     }
+
+    // Read CSRF token cookie (csrf_token)
+    function getCsrfCookie() {
+        const name = 'csrf_token=';
+        const parts = document.cookie.split(';');
+        for (let i = 0; i < parts.length; i++) {
+            let c = parts[i].trim();
+            if (c.indexOf(name) === 0) return decodeURIComponent(c.substring(name.length));
+        }
+        return '';
+    }
+
+    // Inject a hidden CSRF input into any plain HTML forms on the page so server-side form handlers receive it
+    document.addEventListener('DOMContentLoaded', function () {
+        const csrf = getCsrfCookie();
+        if (!csrf) return;
+        for (const form of document.forms) {
+            if (!form.querySelector('input[name="csrf_token"]')) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'csrf_token';
+                input.value = csrf;
+                form.appendChild(input);
+            }
+        }
+    });
 
     function showApiKeyModal(apiKey) {
         const modal = document.getElementById("apiKeyModal");

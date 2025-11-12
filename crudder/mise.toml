@@ -67,7 +67,7 @@ finally:
 
 [tasks.od_sync]
 run = """
-    curl -X POST "http://localhost:8001/api/od_sync" \
+    curl -X POST "http://localhost:8001/api/admin/od_sync" \
       -H "Content-Type: application/json" \
       -H "Authorization: $CRUDDER_SHARED_TOKEN"
 """
