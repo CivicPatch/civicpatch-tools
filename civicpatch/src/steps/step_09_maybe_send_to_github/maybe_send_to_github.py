@@ -1,14 +1,15 @@
 import os
-import requests
 import zipfile
-from schemas import PipelineContext, PipelineStatus, MaybeSendToGitHubStep
 
-from utils.request_utils import with_retry
+import requests
+
+from schemas import MaybeSendToGitHubStep, PipelineContext, PipelineStatus
+from utils import cost_utils, id_utils, log_utils
 from utils.data_path_utils import (
     get_data_source_municipality_path,
     get_people_file_path,
 )
-from utils import id_utils, log_utils, cost_utils
+from utils.request_utils import with_retry
 
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
 
@@ -21,7 +22,7 @@ def maybe_send_to_github(context: PipelineContext) -> MaybeSendToGitHubStep:
     # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
     CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
     CRUDDER_URL = os.getenv("CRUDDER_URL", "https://crudder.civicpatch.org")
-    CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/api/github_intake"
+    CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/api/pipelines/github_intake"
     request_id = context.request_id
     jurisdiction_id = context.jurisdiction_id
     logger.info(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
