@@ -1,11 +1,11 @@
 import os
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 import database
-from utils.auth import get_logged_user
+from utils.auth import get_user
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
@@ -13,10 +13,16 @@ JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 def get_router(templates: Jinja2Templates):
     router = APIRouter()
 
-    @router.get("/", response_class=HTMLResponse, include_in_schema=False)
-    async def api_keys_page(request: Request):
+    @router.get(
+        "/", 
+        response_class=HTMLResponse,
+        include_in_schema=False
+    )
+    async def api_keys_page(
+        request: Request,
+        user = Depends(get_user)
+    ):
         try:
-            user = await get_logged_user(request.cookies.get("token"))
             # Fetch user's API keys from database
             provider_user_id = user.id
 

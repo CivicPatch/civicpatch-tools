@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Security
 import civicpatch.id_utils
 import database
 import github_service
-import services.auth as AuthService
+import services.auth_service as AuthService
 from schemas import Jurisdiction
 
 VALID_STATES = [

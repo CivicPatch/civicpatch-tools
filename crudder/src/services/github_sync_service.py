@@ -399,10 +399,6 @@ class GitDatabaseSync:
             except:
                 pass  # Don't fail if logging fails
 
-        finally:
-            await self.pool.close()
-
-
 async def main():
     syncer = GitDatabaseSync(REPO_URL, REPO_PATH)
     await syncer.sync()
