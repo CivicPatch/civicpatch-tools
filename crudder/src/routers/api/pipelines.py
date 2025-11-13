@@ -19,6 +19,7 @@ def get_router(api_key_header):
         "/github_intake",
         summary="Upload zip file containing municipal data",
         description="Accepts a zip file containing municipal data and processes it",
+        include_in_schema=False
     )
     async def github_intake(
         file: UploadFile,

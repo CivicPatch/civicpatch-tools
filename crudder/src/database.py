@@ -249,19 +249,54 @@ async def get_jurisdiction_states() -> List[str]:
 
     return unique_states
 
-async def get_jurisdiction(jurisdiction_ocdid: str):
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-            SELECT data FROM jurisdictions
-            WHERE jurisdiction_ocdid = %s;
-            """,
-            (jurisdiction_ocdid,),
-        )
-        row = await cur.fetchone()
-    if row:
-        return row[0]
-    return None
+async def get_jurisdiction(jurisdiction_ocdid: str, with_geom: bool = False):
+    """
+    Fetch a jurisdiction's data. If with_geom is True, attempt to join the geo table
+    (on jurisdictions.data->>'geoid' = geo.geoid) and return the centroid (center)
+    and the raw geo JSON (if available).
+
+    Returns:
+      - when with_geom=False: the jurisdiction data JSON (or None)
+      - when with_geom=True: {"data": <json>, "center": {"lat":..,"lng":..} | None, "geojson": <geojson> | None} or None
+    """
+    try:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            if with_geom:
+                await cur.execute(
+                    """
+                    SELECT
+                        j.data,
+                        ST_X(ST_Centroid(g.geom)) AS lon,
+                        ST_Y(ST_Centroid(g.geom)) AS lat
+                    FROM jurisdictions j
+                    LEFT JOIN geo g ON j.data->>'geoid' = g.geoid
+                    WHERE j.jurisdiction_ocdid = %s
+                    LIMIT 1;
+                    """,
+                    (jurisdiction_ocdid,),
+                )
+                row = await cur.fetchone()
+                if not row:
+                    return None
+                data, lon, lat = row[0], row[1], row[2]
+                center = {"lat": float(lat), "lng": float(lon)} if lon is not None and lat is not None else None
+                return {"data": data, "geo_center": center}
+            else:
+                await cur.execute(
+                    """
+                    SELECT data FROM jurisdictions
+                    WHERE jurisdiction_ocdid = %s
+                    LIMIT 1;
+                    """,
+                    (jurisdiction_ocdid,),
+                )
+                row = await cur.fetchone()
+                if not row:
+                    return None
+                return { "data": row[0] }
+    except Exception as e:
+        print(f"Error in get_jurisdiction: {e}")
+        return None
 
 
 async def get_jurisdiction_geom(jurisdiction_ocdid: str):

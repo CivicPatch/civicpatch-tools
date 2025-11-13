@@ -1,7 +1,9 @@
 import { component, useEffect, useState, useCallback } from 'haunted';
 import { html } from 'lit-html';
 
-function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
+const DEFAULT_CENTER = "30.24171,-91.991044";
+
+function JurisdictionDashboard({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
     const [data, setData] = useState(null);
     const [people, setPeople] = useState([]);
 
@@ -22,7 +24,7 @@ function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
         const [pipelineStatusData, jurisdictionData, peopleData] = await Promise.all([
             fetchPipelineStatus(jurisdiction_ocdid_slug),
             fetchJurisdictionData(jurisdiction_ocdid_slug),
-            fetchPeopleData(jurisdiction_ocdid_slug),
+            fetchPeopleData(jurisdiction_ocdid),
         ]);
         setData(jurisdictionData);
         setPeople(peopleData);
@@ -104,15 +106,20 @@ function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
     }, [eventSource]);
 
     const fetchJurisdictionData = async (ocdid) => {
-        const response = await fetch(`/api/crudder/jurisdictions/${ocdid}`);
+        const response = await fetch(
+          `/api/crudder/jurisdictions/${ocdid}?with_geom=true`);
         const result = await response.json();
-        return result.data;
+        return {
+          data: result.data,
+          geo_center: result.geo_center
+        };
     }
 
     const fetchPeopleData = async (ocdid) => {
-        const response = await fetch(`/api/crudder/jurisdictions/${ocdid}/people`);
-        const result = await response.json();
-        return result.data;
+      const encodedOcdid = encodeURIComponent(ocdid);
+      const response = await fetch(`/api/crudder/people?jurisdiction_ocdid=${encodedOcdid}`);
+      const result = await response.json();
+      return result.data;
     }
 
     const fetchPipelineStatus = async (ocdid_slug) => {
@@ -129,9 +136,9 @@ function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
     const handleScrapeClick = async () => {
       setPipelineStatusIsLoading(true);
       const body = {
-        "name": data.name,
-        "jurisdiction_id": data.id,
-        "url": data.url
+        "name": data.data.name,
+        "jurisdiction_id": data.data.id,
+        "url": data.data.url
       }
       const response = await fetch(
         `/api/pipelines/${jurisdiction_ocdid_slug}`, 
@@ -162,7 +169,7 @@ function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
               <div>
                   <civ-map
                     canmove="false"
-                    latlngstring="30.24171,-91.991044"
+                    .latlng=${data && data.geo_center ? { lat: data.geo_center.lat, lng: data.geo_center.lng } : null}
                   ></civ-map>
               </div>
 
@@ -170,22 +177,22 @@ function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
               ${
                 data ? html`
                       <header>
-                        <h2>${data.name}</h2>
-                        <small>Population: ${data.population.toLocaleString()}</small>
+                        <h2>${data.data.name}</h2>
+                        <small>Population: ${data.data.population.toLocaleString()}</small>
                       </header>
 
                       <p>
-                        <strong>Jurisdiction ID:</strong> ${data.id} <br/>
-                        <strong>Website:</strong> ${data.url}
+                        <strong>Jurisdiction ID:</strong> ${data.data.id} <br/>
+                        <strong>Website:</strong> ${data.data.url}
                       </p>
 
-                      <a href="${data.url}" target="_blank" role="button" class="secondary">
+                      <a href="${data.data.url}" target="_blank" role="button" class="secondary">
                         Visit Official Website
                       </a>
 
                       <hr/>
 
-                      <p>Last Updated: ${data.updated_at ? new Date(data.updated_at).toLocaleString() : 'N/A'}</p>
+                      <p>Last Updated: ${data.data.updated_at ? new Date(data.data.updated_at).toLocaleString() : 'N/A'}</p>
                       <button 
                         @click=${handleScrapeClick}
                         ?disabled=${!canStartScrape()}
@@ -215,5 +222,5 @@ function JurisdictionDashboard({ jurisdiction_ocdid_slug }) {
 
 customElements.define(
     'civ-jurisdiction-dashboard', 
-    component(JurisdictionDashboard, { useShadowDOM: false, observedAttributes: ['jurisdiction_ocdid_slug'] })
+    component(JurisdictionDashboard, { useShadowDOM: false, observedAttributes: ['jurisdiction_ocdid', 'jurisdiction_ocdid_slug'] })
 );

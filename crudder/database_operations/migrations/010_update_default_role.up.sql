@@ -1,0 +1,12 @@
+BEGIN;
+
+ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'unverified';
+
+COMMIT;
+
+BEGIN;
+
+ALTER TABLE users
+    ALTER COLUMN role SET DEFAULT 'unverified';
+
+COMMIT;
