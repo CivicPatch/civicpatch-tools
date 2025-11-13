@@ -2,6 +2,7 @@ import hashlib
 import hmac
 import os
 import secrets
+import math
 from typing import List, cast
 
 from psycopg_pool import AsyncConnectionPool
@@ -287,7 +288,6 @@ async def get_jurisdiction_geom(jurisdiction_ocdid: str):
         print(f"Error in get_jurisdiction_geom: {e}")
         return None
 
-
 async def get_people_by_geo(lat: float, long: float):
     """Find people for jurisdictions whose geo polygons intersect the given point.
 
@@ -334,6 +334,62 @@ async def get_people_by_geo(lat: float, long: float):
     except Exception as e:
         print(f"Error in get_people_by_geo: {e}")
         return []
+    
+async def get_geojson_by_latlong(lat: float, long: float, zoom: int = None):
+    """Return multiple GeoJSON geometries from geo for polygons near the given point.
+    Includes jurisdiction_ocdid from jurisdictions. If zoom is provided a radius is computed
+    (meters) to limit the neighborhood. Results are ordered by distance for performance.
+    Note: does not enforce a hard result limit — caller should supply reasonable zoom.
+    """
+    # compute a buffer in meters based on zoom and latitude; fallback to ~1km when zoom not provided
+    if zoom is None:
+        buffer_m = 1000.0
+    else:
+        # meters per pixel at given latitude for WebMercator approximation
+        meters_per_pixel = 156543.03392 * math.cos(math.radians(lat)) / (2 ** zoom)
+        # use a neighborhood of ~512 pixels (tunable) but enforce a sensible min
+        buffer_m = max(50.0, meters_per_pixel * 512.0)
+
+    try:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute(
+                """
+                SELECT
+                    j.jurisdiction_ocdid,
+                    g.geoid,
+                    ST_AsGeoJSON(g.geom)::json AS geojson,
+                    ST_Distance(
+                        g.geom::geography,
+                        ST_SetSRID(ST_Point(%s, %s), 4326)::geography
+                    ) AS distance_m
+                FROM geo g
+                JOIN jurisdictions j ON j.data->>'geoid' = g.geoid
+                WHERE ST_DWithin(
+                    g.geom::geography,
+                    ST_SetSRID(ST_Point(%s, %s), 4326)::geography,
+                    %s
+                )
+                ORDER BY distance_m;
+                """,
+                (long, lat, long, lat, buffer_m),
+            )
+            rows = await cur.fetchall()
+
+            results = []
+            for row in rows:
+                results.append(
+                    {
+                        "jurisdiction_ocdid": row[0],
+                        "geoid": row[1],
+                        "geojson": row[2],
+                        "distance_m": row[3],
+                    }
+                )
+
+            return {"results": results, "buffer_m": buffer_m}
+    except Exception as e:
+        print(f"Error in get_geojson_by_latlong: {e}")
+        return {"results": [], "buffer_m": buffer_m if 'buffer_m' in locals() else None}
 
 async def search_jurisdictions(state: str, search_string = "", limit: int = 100, skip: int = 0):
     """
