@@ -1,6 +1,7 @@
 import os
-import yaml
 import urllib
+
+import yaml
 from fastapi import APIRouter, HTTPException, Security
 
 import civicpatch.id_utils
@@ -65,24 +66,14 @@ VALID_STATES = [
 GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
 
 
-def get_router(api_key_header) -> APIRouter:
+def get_router() -> APIRouter:
     router = APIRouter()
 
     @router.get("/available")
     async def list_available_jurisdictions_endpoint(
         state: str,
         num_jurisdictions: int = 10,
-        authorization: str = Security(api_key_header),
     ):
-        if not authorization and not authorization.strip():
-            raise HTTPException(status_code=401, detail="Missing Authorization header")
-
-        if state.lower() not in VALID_STATES:
-            raise HTTPException(status_code=400, detail="Invalid state parameter")
-
-        _server_detail, error_string = await AuthService.is_authorized(authorization)
-        if error_string:
-            raise HTTPException(status_code=401, detail=error_string)
         jurisdictions_file_content = github_service.get_github_file_contents(
             f"data_source/{state}/jurisdictions_metadata.yml"
         )
@@ -113,15 +104,7 @@ def get_router(api_key_header) -> APIRouter:
 
     @router.get("/states")
     async def get_jurisdiction_states_endpoint(
-        authorization: str = Security(api_key_header),
     ):
-        if not authorization and not authorization.strip():
-            raise HTTPException(status_code=401, detail="Missing Authorization header")
-
-        _server_detail, error_string = await AuthService.is_authorized(authorization)
-        if error_string:
-            raise HTTPException(status_code=403, detail=error_string)
-
         states = await database.get_jurisdiction_states()
 
         return {"total_items": len(states), "data": states}
@@ -129,15 +112,7 @@ def get_router(api_key_header) -> APIRouter:
     @router.get("/{jurisdiction_ocdid_slug}")
     async def get_jurisdiction_data_endpoint(
         jurisdiction_ocdid_slug: str,
-        authorization: str = Security(api_key_header),
     ):
-        if not authorization and not authorization.strip():
-            raise HTTPException(status_code=401, detail="Missing Authorization header")
-
-        _server_detail, error_string = await AuthService.is_authorized(authorization)
-        if error_string:
-            raise HTTPException(status_code=403, detail=error_string)
-
         jurisdiction_ocdid = civicpatch.id_utils.slug_to_jurisdiction_id(
             jurisdiction_ocdid_slug
         )
@@ -151,15 +126,7 @@ def get_router(api_key_header) -> APIRouter:
         search_string: str = "",
         limit: int = 0,
         page: int = 1,
-        authorization: str = Security(api_key_header),
     ):
-        if not authorization and not authorization.strip():
-            raise HTTPException(status_code=401, detail="Missing Authorization header")
-
-        _server_detail, error_string = await AuthService.is_authorized(authorization)
-        if error_string:
-            raise HTTPException(status_code=403, detail=error_string)
-
         skip = (page - 1) * limit
 
         total_items, jurisdictions = await database.search_jurisdictions(
@@ -193,15 +160,7 @@ def get_router(api_key_header) -> APIRouter:
     @router.get("/{jurisdiction_ocdid_slug}/people")
     async def get_jurisdiction_people_endpoint(
         jurisdiction_ocdid_slug: str,
-        authorization: str = Security(api_key_header),
     ):
-        if not authorization and not authorization.strip():
-            raise HTTPException(status_code=401, detail="Missing Authorization header")
-
-        _server_detail, error_string = await AuthService.is_authorized(authorization)
-        if error_string:
-            raise HTTPException(status_code=403, detail=error_string)
-
         jurisdiction_ocdid = civicpatch.id_utils.slug_to_jurisdiction_id(
             jurisdiction_ocdid_slug
         )
@@ -211,5 +170,17 @@ def get_router(api_key_header) -> APIRouter:
             "total_items": len(people),
             "data": people,
         }
+
+    @router.get("/{jurisdiction_ocdid_slug}/geom")
+    async def get_jurisdiction_geom_endpoint(
+        jurisdiction_ocdid_slug: str,
+    ):
+        jurisdiction_ocdid = civicpatch.id_utils.slug_to_jurisdiction_id(
+            jurisdiction_ocdid_slug
+        )
+        geom = await database.get_jurisdiction_geom(jurisdiction_ocdid)
+        if geom is None:
+            raise HTTPException(status_code=404, detail="Geometry not found")
+        return {"data": geom}
 
     return router

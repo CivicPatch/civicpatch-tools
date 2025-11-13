@@ -1,7 +1,7 @@
 from typing import Optional, List
 import os
 from fastapi import HTTPException, Security, Header, Request, Depends, Cookie
-from fastapi.security import APIKeyCookie
+from fastapi.security import APIKeyCookie, APIKeyHeader
 from fastapi_sso.sso.base import OpenID
 from jose import jwt, JWTError
 import time
@@ -12,6 +12,7 @@ from schemas import Identity
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 API_COOKIE = APIKeyCookie(name="token", auto_error=False)
+API_HEADER = APIKeyHeader(name="Authorization", auto_error=False)
 
 JWT_AUDIENCE = os.getenv("JWT_AUDIENCE")
 JWT_ISSUER = os.getenv("JWT_ISSUER")
@@ -21,7 +22,7 @@ UNSAFE_METHODS = {"POST", "PUT", "PATCH", "DELETE"}
 
 async def get_user(
     request: Request,
-    authorization: Optional[str] = Header(None),
+    authorization: Optional[str] = Security(API_HEADER),
     cookie: Optional[str] = Security(API_COOKIE),
 ) -> Identity:
     """Authenticate from Authorization: Bearer <token> or from cookie 'token'.
@@ -131,7 +132,7 @@ async def get_user_by_cookie(request, token: str) -> Identity:
 
 async def get_optional_user(
     request: Request,
-    authorization: Optional[str] = Header(None),
+    authorization: Optional[str] = Security(API_HEADER),
     cookie: Optional[str] = Security(API_COOKIE),
     #csrf_token: Optional[str] = Header(None, alias="x-csrf-token"),
     #csrf_cookie: Optional[str] = Cookie(None, alias="csrf_token"),
