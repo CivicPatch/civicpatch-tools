@@ -22,7 +22,7 @@ def get_router(api_key_header):
     )
     async def github_intake(
         file: UploadFile,
-        authorization: str = Security(api_key_header),
+        authoriation: str = Security(api_key_header),
         request_id: str = Form(...),
         jurisdiction_id: str = Form(...),
     ):

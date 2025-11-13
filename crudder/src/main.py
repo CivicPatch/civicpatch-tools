@@ -22,6 +22,7 @@ from schemas import Identity
 import routers.api.admin as api_admin_router
 import routers.api.api_keys as api_keys_router
 import routers.api.jurisdictions as api_jurisdictions_router
+import routers.api.people as api_people_router
 import routers.api.pipelines as api_pipelines_router
 import routers.api.user as api_user_router
 from database import (
@@ -234,9 +235,15 @@ app.include_router(
     dependencies=[Depends(require_role("admin"))]
 )
 app.include_router(
-    api_jurisdictions_router.get_router(api_key_header),
+    api_jurisdictions_router.get_router(),
     prefix="/api/jurisdictions",
-    tags=["api"],
+    tags=["jurisdictions"],
+    dependencies=[Depends(require_role("member", "admin"))]
+)
+app.include_router(
+    api_people_router.get_router(),
+    prefix="/api/people",
+    tags=["people"],
     dependencies=[Depends(require_role("member", "admin"))]
 )
 app.include_router(
@@ -245,7 +252,6 @@ app.include_router(
     tags=["pipelines"],
     dependencies=[Depends(require_role("member", "admin"))]
 )
-# TODO: set up auth!!!
 app.include_router(
     api_keys_router.get_router(), 
     prefix="/api/api_keys", 

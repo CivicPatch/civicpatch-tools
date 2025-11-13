@@ -262,6 +262,79 @@ async def get_jurisdiction(jurisdiction_ocdid: str):
         return row[0]
     return None
 
+
+async def get_jurisdiction_geom(jurisdiction_ocdid: str):
+    """Return the GeoJSON geometry for the given jurisdiction_ocdid by resolving the jurisdiction's geoid
+    and returning the corresponding geo.geom as GeoJSON (parsed JSON).
+    """
+    print("trying to find geom for", jurisdiction_ocdid)
+    try:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            await cur.execute(
+                """
+                SELECT ST_AsGeoJSON(g.geom)::json FROM geo g
+                JOIN jurisdictions j ON j.data->>'geoid' = g.geoid
+                WHERE j.jurisdiction_ocdid = %s
+                LIMIT 1
+                """,
+                (jurisdiction_ocdid,),
+            )
+            row = await cur.fetchone()
+            if not row:
+                return None
+            return row[0]
+    except Exception as e:
+        print(f"Error in get_jurisdiction_geom: {e}")
+        return None
+
+
+async def get_people_by_geo(lat: float, long: float):
+    """Find people for jurisdictions whose geo polygons intersect the given point.
+
+    This uses a single JOIN query with LATERAL jsonb_array_elements to return one person
+    JSON per row, which we then parse into Person objects.
+    """
+    try:
+        async with pool.connection() as conn, conn.cursor() as cur:
+            # Use ST_Intersects as the single spatial predicate
+            await cur.execute(
+                """
+                SELECT j.jurisdiction_ocdid, j.data, per.person
+                FROM geo g
+                JOIN jurisdictions j ON j.data->>'geoid' = g.geoid
+                JOIN people p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
+                CROSS JOIN LATERAL jsonb_array_elements(p.data) AS per(person)
+                WHERE ST_Intersects(g.geom, ST_SetSRID(ST_Point(%s, %s), 4326))
+                """,
+                (long, lat),
+            )
+            rows = await cur.fetchall()
+
+            if not rows:
+                print(f"get_people_by_geo: no matching geo rows for point ({lat},{long})")
+                return {"jurisdiction_ocdid": "", "people": []}
+
+            # Since only one jurisdiction is expected, pick the first matched jurisdiction
+            first_jurisdiction = rows[0][0]
+            people_list = []
+            for (jurisdiction_ocdid, _jurisdiction_data, person_json) in rows:
+                try:
+                    person_obj = Person(**person_json)
+                except Exception:
+                    person_obj = person_json
+                people_list.append(person_obj)
+
+            if any(r[0] != first_jurisdiction for r in rows):
+                print(
+                    f"Warning: multiple jurisdictions matched point; using first {first_jurisdiction}"
+                )
+            # primary predicate is ST_Intersects
+
+            return {"jurisdiction_ocdid": first_jurisdiction, "people": people_list}
+    except Exception as e:
+        print(f"Error in get_people_by_geo: {e}")
+        return []
+
 async def search_jurisdictions(state: str, search_string = "", limit: int = 100, skip: int = 0):
     """
     Retrieves a paginated list of jurisdictions and the total count for a given state.

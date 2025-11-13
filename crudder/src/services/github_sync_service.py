@@ -24,9 +24,8 @@ CRUDDER_DB_URL = os.getenv("CRUDDER_DB_URL")
 DATA_FILES_PATTERN = (
     "data/**/*.yml"  # Matches people files (e.g., data/us/tx/person.yml)
 )
-JURISDICTION_FILES_PATTERN = (
-    "data_source/**/jurisdictions_metadata.yml"  # Fixed: was jurisdictions_metadata.yml
-)
+JURISDICTION_FILES_PATTERN = "data_source/**/jurisdictions_metadata.yml"
+MAP_FILES_PATTERN = "data/**/.maps/*.geojson"
 
 # Check for required environment variable before attempting to create pool
 if not CRUDDER_DB_URL:
@@ -101,6 +100,7 @@ class GitDatabaseSync:
             files = []
             files.extend(list(self.repo_path.rglob(DATA_FILES_PATTERN)))
             files.extend(list(self.repo_path.rglob(JURISDICTION_FILES_PATTERN)))
+            files.extend(list(self.repo_path.rglob(MAP_FILES_PATTERN)))
             return files
 
         # Get diff between commits - NO CHECKOUT NEEDED
@@ -138,7 +138,18 @@ class GitDatabaseSync:
                 jurisdiction_base_dir
             ) and path.endswith("jurisdictions_metadata.yml")
 
+            # Filter for MAP files (.geojson directly under a .maps directory)
+            is_map_file = False
+            maps_segment = f"{os.sep}.maps{os.sep}"
+            if maps_segment in path and path.endswith(".geojson"):
+                # Ensure the file is directly inside the .maps directory (no further subdirs)
+                remainder = path.split(maps_segment, 1)[1]
+                if os.sep not in remainder:
+                    is_map_file = True
+
             if is_people_file or is_jurisdiction_file:
+                files.append(full_path)
+            elif is_map_file:
                 files.append(full_path)
 
         return files
@@ -284,6 +295,102 @@ class GitDatabaseSync:
             print(f"Error updating JURISDICTION file {file_path}: {e}")
             return False
 
+    async def update_geo_in_db(self, file_path, commit_hash, use_git_show=True):
+        """Update a GEOJSON file into the geo table. Handles FeatureCollection and Feature objects."""
+        try:
+            # Read content from git history or filesystem
+            if use_git_show:
+                rel_path = str(file_path.relative_to(self.repo_path))
+                content = self.get_file_content_at_commit(rel_path, commit_hash)
+                if content is None:
+                    return False
+                data = json.loads(content)
+            else:
+                with open(file_path, "r") as f:
+                    data = json.load(f)
+                rel_path = str(file_path.relative_to(self.repo_path))
+
+            # Normalize to list of features
+            features = []
+            if data.get("type") == "FeatureCollection":
+                features = data.get("features", [])
+            elif data.get("type") == "Feature":
+                features = [data]
+            else:
+                # Some geojson files may be a single geometry + properties
+                print(f"Skipping {file_path}: not a Feature/FeatureCollection.")
+                return False
+
+            if not features:
+                print(f"Skipping {file_path}: no features found.")
+                return False
+
+            values_list = []
+            for feat in features:
+                props = feat.get("properties", {}) or {}
+                geoid = props.get("geoid") or props.get("GEOID")
+                # geometry as GeoJSON text
+                geom_obj = feat.get("geometry")
+                if not geoid or not geom_obj:
+                    print(
+                        f"  Warning: Skipping feature without geoid or geometry in {file_path}."
+                    )
+                    continue
+
+                statefp = props.get("STATEFP")
+                name = props.get("NAME")
+                funcstat = props.get("FUNCSTAT")
+                typ = props.get("type")
+
+                meta = props
+
+                values_list.append(
+                    (
+                        geoid,
+                        json.dumps(geom_obj),
+                        json.dumps(meta),
+                        statefp,
+                        name,
+                        funcstat,
+                        typ,
+                        rel_path,
+                        commit_hash,
+                    )
+                )
+
+            if not values_list:
+                return False
+
+            # Upsert all features
+            async with self.pool.connection() as conn, conn.cursor() as cur:
+                async with conn.transaction():
+                    query = """
+                    INSERT INTO geo (geoid, geom, meta, statefp, name, funcstat, type, file_path, git_commit)
+                    VALUES (%s, ST_SetSRID(ST_GeomFromGeoJSON(%s), 4326), %s, %s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (geoid)
+                    DO UPDATE SET
+                        geom = EXCLUDED.geom,
+                        meta = EXCLUDED.meta,
+                        statefp = EXCLUDED.statefp,
+                        name = EXCLUDED.name,
+                        funcstat = EXCLUDED.funcstat,
+                        type = EXCLUDED.type,
+                        file_path = EXCLUDED.file_path,
+                        git_commit = EXCLUDED.git_commit,
+                        updated_at = CURRENT_TIMESTAMP;
+                    """
+
+                    await cur.executemany(query, values_list)
+
+            print(
+                f"  Successfully processed {len(values_list)} geo features from {rel_path} in bulk."
+            )
+            return True
+
+        except Exception as e:
+            print(f"Error updating GEO file {file_path}: {e}")
+            return False
+
     async def sync(self):
         """Main sync process"""
         print(f"=== Starting sync at {datetime.now()} ===")
@@ -335,6 +442,10 @@ class GitDatabaseSync:
                     # Dispatch based on filename/path structure
                     if file_path.name == "jurisdictions_metadata.yml":
                         updated = await self.update_jurisdiction_in_db(
+                            file_path, new_commit, use_git_show
+                        )
+                    elif file_path.suffix == ".geojson" or ".maps" in str(file_path):
+                        updated = await self.update_geo_in_db(
                             file_path, new_commit, use_git_show
                         )
                     else:
@@ -399,8 +510,10 @@ class GitDatabaseSync:
             except:
                 pass  # Don't fail if logging fails
 
+
 async def main():
-    syncer = GitDatabaseSync(REPO_URL, REPO_PATH)
+    # No pool available when run as a standalone script; pass None for pool
+    syncer = GitDatabaseSync(None, repo_url=REPO_URL, repo_path=REPO_PATH)
     await syncer.sync()
 
 
