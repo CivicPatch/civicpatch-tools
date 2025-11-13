@@ -42,10 +42,14 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         request: Request, 
         jurisdiction_ocdid_slug: str):
 
+        print("Rendering jurisdiction page for:", jurisdiction_ocdid_slug)
+        print("id:", id_utils.slug_to_jurisdiction_id(jurisdiction_ocdid_slug))
+
         return templates.TemplateResponse(
             "pages/jurisdiction.html",
             {
                 "request": request,
+                "jurisdiction_ocdid": id_utils.slug_to_jurisdiction_id(jurisdiction_ocdid_slug),
                 "jurisdiction_ocdid_slug": jurisdiction_ocdid_slug,
             }
         )

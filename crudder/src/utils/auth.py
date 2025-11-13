@@ -144,7 +144,7 @@ async def get_optional_user(
         return None
 
 
-def require_role(*allowed_roles: str):
+def require_any_role(*allowed_roles: str):
     """
     Factory that returns a dependency callable. Use in routes as:
       current_user = Depends(require_role("admin"))

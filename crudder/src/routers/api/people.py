@@ -4,10 +4,11 @@ import database
 def get_router() -> APIRouter:
     router = APIRouter()
 
-    @router.get("/")
+    @router.get("")
     async def list_people_endpoint(
         jurisdiction_ocdid: str,
     ):
+        print("getting people for...", jurisdiction_ocdid)
         people = await database.get_jurisdiction_people(jurisdiction_ocdid)
         return {
             "data": people

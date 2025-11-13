@@ -148,13 +148,25 @@ def get_router() -> APIRouter:
     @router.get("/{jurisdiction_ocdid_slug}")
     async def get_jurisdiction_data_endpoint(
         jurisdiction_ocdid_slug: str,
+        with_geom: bool = False,
     ):
         jurisdiction_ocdid = civicpatch.id_utils.slug_to_jurisdiction_id(
             jurisdiction_ocdid_slug
         )
-        jurisdiction_data = await database.get_jurisdiction(jurisdiction_ocdid)
+        jurisdiction_data = await database.get_jurisdiction(jurisdiction_ocdid, with_geom)
 
-        return {"data": jurisdiction_data}
+        if jurisdiction_data is None:
+            raise HTTPException(status_code=404, detail="Jurisdiction not found")
+
+        response = {
+            "data": jurisdiction_data["data"],
+        }
+
+        if with_geom:
+            response["geo_center"] = jurisdiction_data.get("geo_center")
+
+        return response
+
 
     @router.get("/{state}/search")
     async def get_jurisdictions_search_endpoint(
@@ -191,20 +203,6 @@ def get_router() -> APIRouter:
             "limit": limit,
             "data": jurisdictions,
             "links": {"prev": prev_link, "next": next_link, "self": self_link},  # TODO!
-        }
-
-    @router.get("/{jurisdiction_ocdid_slug}/people")
-    async def get_jurisdiction_people_endpoint(
-        jurisdiction_ocdid_slug: str,
-    ):
-        jurisdiction_ocdid = civicpatch.id_utils.slug_to_jurisdiction_id(
-            jurisdiction_ocdid_slug
-        )
-        people = await database.get_jurisdiction_people(jurisdiction_ocdid)
-
-        return {
-            "total_items": len(people),
-            "data": people,
         }
 
     @router.get("/{jurisdiction_ocdid_slug}/geom")

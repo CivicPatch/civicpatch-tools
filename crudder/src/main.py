@@ -1,22 +1,15 @@
 import os
 from contextlib import asynccontextmanager
-import secrets
-import time
-from jose import jwt
-import datetime
 
 from fastapi import (
     FastAPI,
-    HTTPException,
     Request,
     Depends,
 )
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse
 from fastapi.security import APIKeyHeader
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi_sso import GithubSSO
-from typing import cast
 from schemas import Identity
 
 import routers.api.admin as api_admin_router
@@ -25,15 +18,14 @@ import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.people as api_people_router
 import routers.api.pipelines as api_pipelines_router
 import routers.api.user as api_user_router
+from routers.auth import get_router as auth_router
 from database import (
     get_api_keys_for_user,
     get_user_details,
     pool,
     user_is_approved,
-    maybe_insert_user
 )
-import database
-from utils.auth import require_role, get_optional_user
+from utils.auth import require_any_role, get_optional_user
 
 # Only purpose is to manage users, their API keys, and move data from 3rd party servers
 # to GitHub Actions.
@@ -97,12 +89,6 @@ if not all(
     print(f"Missing environment variables: {', '.join(missing_vars)}")
     raise ValueError("One or more required environment variables are not set.")
 
-github_sso = GithubSSO(
-    client_id=GITHUB_CLIENT_ID,
-    client_secret=GITHUB_CLIENT_SECRET,
-    redirect_uri=GITHUB_CALLBACK_URL,
-)
-
 api_key_header = APIKeyHeader(name="Authorization", auto_error=False)
 
 is_production = APP_ENVIRONMENT.lower() == "production"
@@ -154,113 +140,51 @@ async def home(
         },
     )
 
-@app.get("/auth/{provider}/login", include_in_schema=False)
-async def login(provider: str):
-    match provider:
-        case "github":
-            sso = github_sso
-        case _:
-            raise HTTPException(
-                status_code=400, detail="Unsupported provider: {provider}"
-            )
-
-    async with sso:
-        return await sso.get_login_redirect()
-
-@app.get("/auth/logout", include_in_schema=False)
-async def logout():
-    """Forget the user's session."""
-    response = RedirectResponse(url="/")
-    response.delete_cookie(key="token")
-    response.delete_cookie(key="csrf_token")
-    return response
-
-@app.get("/auth/{provider}/callback", include_in_schema=False)
-async def login_callback(request: Request, provider: str):
-    match provider:
-        case "github":
-            sso = github_sso
-        case _:
-            raise HTTPException(status_code=400, detail="Unsupported provider")
-
-    """Process login and redirect the user to the protected endpoint."""
-    async with sso:
-        openid = await sso.verify_and_process(request)
-        if not openid:
-            raise HTTPException(status_code=401, detail="Authentication failed")
-    # Create a JWT with the user's OpenID
-    expiration = datetime.datetime.now(
-        tz=datetime.timezone.utc
-    ) + datetime.timedelta(days=1)
-    
-    await maybe_insert_user(openid.provider, openid.id, openid.email)
-    user = await database.get_user(openid.provider, openid.id)
-    token = jwt.encode(
-        {
-            "pld": openid.model_dump(), 
-            "exp": expiration, 
-            "sub": openid.id, 
-            "role": user.get("role") if user else None
-        },
-        key=cast(str, JWT_SECRET_KEY),
-        algorithm="HS256",
-    )
-    response = RedirectResponse(url="/", status_code=302)
-    response.set_cookie(
-        key="token",
-        value=token,
-        expires=expiration,
-        httponly=True,
-        secure=is_production,
-        samesite="lax",
-    )
-    # Create a signed CSRF token (stateless) and set it as a readable cookie
-    csrf_payload = {"sub": openid.id, "iat": int(time.time()), "nonce": secrets.token_urlsafe(8)}
-    csrf_signed = jwt.encode(csrf_payload, key=cast(str, JWT_SECRET_KEY), algorithm="HS256")
-
-    response.set_cookie(
-        key="csrf_token",
-        value=csrf_signed,
-        expires=expiration,
-        httponly=False,
-        samesite="lax",
-        secure=is_production,
-    )
-    return response    
-
 app.include_router(
     api_admin_router.get_router(api_key_header, pool),
     prefix="/api/admin",
     tags=["admin"],
-    dependencies=[Depends(require_role("admin"))]
+    dependencies=[Depends(require_any_role("admin"))]
 )
 app.include_router(
     api_jurisdictions_router.get_router(),
     prefix="/api/jurisdictions",
     tags=["jurisdictions"],
-    dependencies=[Depends(require_role("member", "admin"))]
+    dependencies=[Depends(require_any_role("member", "admin", "unverified"))]
 )
+
 app.include_router(
     api_people_router.get_router(),
     prefix="/api/people",
     tags=["people"],
-    dependencies=[Depends(require_role("member", "admin"))]
+    dependencies=[Depends(require_any_role("member", "admin", "unverified"))]
 )
+
 app.include_router(
     api_pipelines_router.get_router(api_key_header),
     prefix="/api/pipelines",
     tags=["pipelines"],
-    dependencies=[Depends(require_role("member", "admin"))]
+    dependencies=[Depends(require_any_role("member", "admin", "unverified"))]
 )
+
+# Allow you to create your api keys, even unverified
+# Mostly for civicpatch users who need to contribute data
 app.include_router(
     api_keys_router.get_router(), 
     prefix="/api/api_keys", 
     tags=["api_keys"],
-    dependencies=[Depends(require_role("member", "admin"))]
+    dependencies=[Depends(require_any_role("member", "admin", "unverified"))]
 )
+
 app.include_router(
     api_user_router.get_router(), 
     prefix="/api/user", 
     tags=["user"],
-    dependencies=[Depends(require_role("member", "admin"))]
+    dependencies=[Depends(require_any_role("member", "admin", "unverified"))]
+)
+
+app.include_router(
+    auth_router(is_production),
+    prefix="/auth",
+    tags=["auth"],
 )

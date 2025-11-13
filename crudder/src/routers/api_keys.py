@@ -14,7 +14,7 @@ def get_router(templates: Jinja2Templates):
     router = APIRouter()
 
     @router.get(
-        "/", 
+        "", 
         response_class=HTMLResponse,
         include_in_schema=False
     )

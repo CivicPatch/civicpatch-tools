@@ -39,12 +39,10 @@ function CivSelectJurisdiction() {
     handleJurisdictionSuggestions("");
   }, [selectedState]);
 
-  const handleInputChange = (state, jurisdiction) => {
-    // Dispatch a custom event with the selected state and jurisdiction
-    const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
+  const handleInputChange = (state, jurisdictionOcdid) => {
     this.dispatchEvent(
       new CustomEvent("select-jurisdiction-change", {
-        detail: { state, jurisdiction: jurisdiction_data },
+        detail: { state, jurisdiction_ocdid: jurisdictionOcdid },
         bubbles: true,
         composed: true,
       })
@@ -80,7 +78,6 @@ function CivSelectJurisdiction() {
   const jurisdictionLink = () => {
     if (!selectedJurisdiction) return "";
     if (!jurisdictions) return "";
-    console.log("what is", selectedJurisdiction)
     const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
     const jurisdiction_ocdid_slug = jurisdiction_data ? jurisdiction_data["jurisdiction_ocdid_slug"] : "";
     return jurisdiction_ocdid_slug ? `/jurisdictions/${jurisdiction_ocdid_slug}` : "";
