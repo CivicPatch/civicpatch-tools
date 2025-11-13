@@ -108,6 +108,42 @@ def get_router() -> APIRouter:
         states = await database.get_jurisdiction_states()
 
         return {"total_items": len(states), "data": states}
+    
+    @router.get("/geojson")
+    async def get_geojson_by_point_endpoint(
+        lat: float,
+        long: float,
+        zoom: int | None = None,
+    ):
+        """
+        Return a GeoJSON FeatureCollection of matching geometries near the given point.
+        Each Feature includes properties.jurisdiction_ocdid and properties.geoid.
+        The optional zoom parameter narrows the search radius for client tiled requests.
+        """
+        try:
+            results = await database.get_geojson_by_latlong(lat, long, zoom)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail="Database error")
+
+        features = []
+        for item in results.get("results", []):
+            features.append(
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "jurisdiction_ocdid": item.get("jurisdiction_ocdid"),
+                        "geoid": item.get("geoid"),
+                        "distance_m": item.get("distance_m"),
+                    },
+                    "geometry": item.get("geojson"),
+                }
+            )
+
+        return {
+            "type": "FeatureCollection",
+            "features": features,
+            "buffer_m": results.get("buffer_m"),
+        }
 
     @router.get("/{jurisdiction_ocdid_slug}")
     async def get_jurisdiction_data_endpoint(

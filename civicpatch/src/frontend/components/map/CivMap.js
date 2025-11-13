@@ -2,7 +2,7 @@ import { html } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 import { useEffect, useState, component } from "haunted";
 
-import { Map, TileLayer, Marker, Icon, Control } from "leaflet";
+import { Map, TileLayer, Marker, Icon, Control, geoJSON, map } from "leaflet";
 import { LocateControl } from "leaflet.locatecontrol";
 import { Geocoder, geocoders } from "leaflet-control-geocoder";
 
@@ -18,7 +18,8 @@ const DEFAULT_LOCATION = {
 };
 
 // https://leafletjs.com/reference.html#latlng
-function CivMap({ canmove = true, latlngstring }) {
+function CivMap({ canmove = true, latlngstring, geojson = null }) {
+  console.log("geojson prop:", geojson);
   const canMove = canmove === "true" || canmove === true;
   const latlngstringToLatLng = (latlngstring) => {
     if (!latlngstring) return null;
@@ -31,7 +32,7 @@ function CivMap({ canmove = true, latlngstring }) {
   const [currentLatlng, setCurrentLatlng] = useState(latlngstringToLatLng(latlngstring));
   const [marker, setMarker] = useState(null);
   const [controls, setControls] = useState({ gc: null });
-  
+  const [geoJsonLayer, setGeoJsonLayer] = useState(null);
 
   useEffect(() => {
     if (!mapInstance) return;
@@ -40,12 +41,14 @@ function CivMap({ canmove = true, latlngstring }) {
     mapInstance.on("locationerror", handleLocationError);
     mapInstance.on("locationfound", handleLocationFound);
     mapInstance.on("locationactivate", handleLocationFound);
+    mapInstance.on("zoomend", handleMapChange);
     mapInstance.on("click", handleClick);
 
     return () => {
       mapInstance.off("locationerror", handleLocationError);
       mapInstance.off("locationfound", handleLocationFound);
       mapInstance.off("locationactivate", handleLocationFound);
+      mapInstance.off("zoomend", handleMapChange);
       mapInstance.off("click", handleClick);
 
       if (controls.gc) {
@@ -62,6 +65,7 @@ function CivMap({ canmove = true, latlngstring }) {
       controls.lc.stop();
     }
     moveMarker(currentLatlng);
+    handleMapChange({ latlng: currentLatlng });
   }, [currentLatlng, mapInstance]);
 
   const handleLocationError = (event) => {
@@ -79,7 +83,7 @@ function CivMap({ canmove = true, latlngstring }) {
       if (event.geocode.center.lat && event.geocode.center.lng) {
         setCurrentLatlng(event.geocode.center);
       }
-    }
+    } 
   };
 
   const setupMap = (el) => {
@@ -153,6 +157,31 @@ function CivMap({ canmove = true, latlngstring }) {
     mapInstance.setView(currentLatlng, 12);
   };
 
+//  const handleZoomChange = (e) => {
+//    console.log("event zoom changed", e);
+//    const newZoom = mapInstance.getZoom();
+//    console.log("new zoom level", newZoom);
+//    // emitMapChange({ zoom: newZoom });
+//  }
+//
+//  const handleLocationChange = (latlng) => {
+//    moveMarker(latlng);
+//
+//    // Emit combined map-change instead of separate "on-location-change"
+//    emitMapChange({ latlng });
+//  };
+
+  const handleMapChange = ({ latlng }) => {
+    if (!mapInstance) return;
+    this.dispatchEvent(
+        new CustomEvent("on-map-change", {
+          detail: { zoom: mapInstance.getZoom(), latlng: latlng || currentLatlng },
+          bubbles: true,
+          composed: true,
+        })
+      );
+  }
+
   return html`
     <style>
       ${leafletStyles} ${locateStyles} ${geocoderStyles} .map-container {
@@ -170,5 +199,5 @@ function CivMap({ canmove = true, latlngstring }) {
 }
 customElements.define(
   "civ-map",
-  component(CivMap, { observedAttributes: ["latlngstring", "canmove"] }),
+  component(CivMap, { observedAttributes: ["latlngstring", "canmove", "geojson"] }),
 );
