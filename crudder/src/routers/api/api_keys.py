@@ -8,9 +8,7 @@ from schemas import Identity
 def get_router():
     router = APIRouter()
 
-    # TODO: create api key
-    #
-    @router.post("/", include_in_schema=False)
+    @router.post("", include_in_schema=False)
     async def create_api_key_endpoint(
         request: Request,
         user: Identity = Depends(get_user)
