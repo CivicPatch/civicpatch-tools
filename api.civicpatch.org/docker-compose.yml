@@ -1,9 +1,9 @@
 services:
-  crudder:
+  api.civicpatch.org:
     env_file: .env
     build:
       context: ..
-      dockerfile: crudder/Dockerfile
+      dockerfile: api.civicpatch.org/Dockerfile
       target: development
     restart: unless-stopped
     ports:
@@ -15,9 +15,9 @@ services:
     networks:
       - civicpatch_net
     depends_on:
-      - crudder_db
+      - api.civicpatch.org_db
 
-  crudder_db:
+  api.civicpatch.org_db:
     image: postgis/postgis:17-3.5
     restart: always
     environment:

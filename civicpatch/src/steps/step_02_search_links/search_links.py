@@ -16,8 +16,8 @@ DEFAULT_SEARCH_LINKS_STEP = SearchLinksStep(
     search_link_pointer=0,
     search_engines={
         "google": SearchEngineState(links=[], status="not_started"),
-        "serpapi": SearchEngineState(links=[], status="not_started"),
-        "brave": SearchEngineState(links=[], status="not_started"),
+        #"serpapi": SearchEngineState(links=[], status="not_started"),
+        #"brave": SearchEngineState(links=[], status="not_started"),
         "crawl": SearchEngineState(links=[], status="not_started"),
     },
     error=None

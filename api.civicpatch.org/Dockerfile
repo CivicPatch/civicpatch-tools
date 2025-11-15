@@ -15,7 +15,7 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=false \
     VIRTUAL_ENV="/venv" \
     PYTHONPATH=/app/src \
-    PROJECT_NAME="crudder"
+    PROJECT_NAME="api.civicpatch.org"
 
 # Add Poetry and virtual env to PATH
 ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"

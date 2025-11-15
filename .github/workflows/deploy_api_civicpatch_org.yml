@@ -1,11 +1,11 @@
-name: Build & Deploy Crudder
+name: Build & Deploy api.civicpatch.org
 
 on:
   push:
     branches:
       - main
     paths:
-      - "crudder/**"
+      - "api.civicpatch.org/**"
   workflow_dispatch:
 
 permissions:
@@ -37,19 +37,19 @@ jobs:
         id: date
         run: echo "date-tag=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
-      - name: Build and push (crudder)
+      - name: Build and push (api.civicpatch.org)
         uses: docker/build-push-action@v6
         with:
           context: ./
-          file: ./crudder/Dockerfile
+          file: ./api.civicpatch.org/Dockerfile
           push: true
           tags: |
             ghcr.io/civicpatch/crudder:latest
             ghcr.io/civicpatch/crudder:${{ steps.date.outputs.date-tag }}
 
-      - name: Deploy Crudder to production
+      - name: Deploy api.ciivcpatch.org to production
         env:
           DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_USERNAME: ${{ github.actor }}
           REMOTELAB_WORKFLOW_TOKEN: ${{ secrets.CRUDDER_REMOTELAB_WORKFLOW_TOKEN }}
-        run: ./crudder/scripts/deploy.py
+        run: ./api.civicpatch.org/scripts/deploy.py

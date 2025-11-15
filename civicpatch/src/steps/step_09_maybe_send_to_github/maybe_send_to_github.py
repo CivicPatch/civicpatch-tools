@@ -21,7 +21,7 @@ def maybe_send_to_github(context: PipelineContext) -> MaybeSendToGitHubStep:
     # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
     # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
     CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
-    CRUDDER_URL = os.getenv("CRUDDER_URL", "https://crudder.civicpatch.org")
+    CRUDDER_URL = os.getenv("CRUDDER_URL", "https://api.civicpatch.org")
     CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/api/pipelines/github_intake"
     request_id = context.request_id
     jurisdiction_id = context.jurisdiction_id
@@ -80,7 +80,7 @@ def maybe_send_to_github(context: PipelineContext) -> MaybeSendToGitHubStep:
         )
 
     except Exception as e:
-        logger.error(f"Error sending to Crudder: {e}")
+        logger.error(f"Error sending to api.civicpatch.org: {e}")
         return MaybeSendToGitHubStep(status="failed", response_text=str(e))
 
 

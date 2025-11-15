@@ -37,10 +37,10 @@ app.include_router(get_frontend_router(templates), tags=["frontend"])
 
 
 @app.api_route(
-    "/api/crudder/{path:path}",
+    "/api/api_proxy/{path:path}",
     methods=["GET", "POST", "PUT", "DELETE", "PATCH"],
 )
-async def proxy_to_crudder(path: str, request: Request):
+async def proxy_to_api_civicpatch_org_endpoint(path: str, request: Request):
     # Inject Authorization header from env var
     if not CRUDDER_SHARED_TOKEN:
         raise HTTPException(status_code=500, detail="Missing CRUDDER_SHARED_TOKEN")
