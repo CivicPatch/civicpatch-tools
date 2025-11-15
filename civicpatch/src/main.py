@@ -60,10 +60,19 @@ async def proxy_to_crudder(path: str, request: Request):
             content=data if method in ["POST", "PUT", "PATCH"] else None,
             params=dict(request.query_params),
         )
+
+    response_headers = dict(resp.headers)
+
+    # CRITICAL: Remove headers that prevent double-decompression
+    # httpx decompressed the content, so we must remove the encoding header
+    response_headers.pop("content-encoding", None)
+    response_headers.pop("transfer-encoding", None)
+
     return Response(
         content=resp.content,
         status_code=resp.status_code,
-        media_type=resp.headers.get("content-type"),
+        media_type=response_headers.get("content-type"),
+        headers=response_headers,
     )
 
 
