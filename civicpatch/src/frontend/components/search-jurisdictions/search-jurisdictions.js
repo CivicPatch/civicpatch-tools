@@ -16,7 +16,7 @@ function SearchJurisdictions() {
     );
 
     fetch(
-      `/api/crudder/people?jurisdiction_ocdid=${selectedJurisdictionOcdidEncoded}`,
+      `/api/api_proxy/people?jurisdiction_ocdid=${selectedJurisdictionOcdidEncoded}`,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -39,7 +39,7 @@ function SearchJurisdictions() {
     if (!latlng || !zoom) return;
     console.log("Map Change - LatLng:", latlng, "Zoom:", zoom);
     fetch(
-      `/api/crudder/jurisdictions/geojson?lat=${latlng.lat}&long=${latlng.lng}&zoom=${zoom}`,
+      `/api/api_proxy/jurisdictions/geojson?lat=${latlng.lat}&long=${latlng.lng}&zoom=${zoom}`,
     )
       .then((response) => response.json())
       .then((data) => {

@@ -107,7 +107,7 @@ function JurisdictionDashboard({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) 
 
     const fetchJurisdictionData = async (ocdid) => {
         const response = await fetch(
-          `/api/crudder/jurisdictions/${ocdid}?with_geom=true`);
+          `/api/api_proxy/jurisdictions/${ocdid}?with_geom=true`);
         const result = await response.json();
         return {
           data: result.data,
@@ -117,7 +117,7 @@ function JurisdictionDashboard({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) 
 
     const fetchPeopleData = async (ocdid) => {
       const encodedOcdid = encodeURIComponent(ocdid);
-      const response = await fetch(`/api/crudder/people?jurisdiction_ocdid=${encodedOcdid}`);
+      const response = await fetch(`/api/api_proxy/people?jurisdiction_ocdid=${encodedOcdid}`);
       const result = await response.json();
       return result.data;
     }

@@ -10,7 +10,7 @@ To see the entire set of data, check the [open-data](https://github.com/CivicPat
 - [civicpatch](./civicpatch/README.md)
   The main project. Scrapes websites for contact information on elected officials.
   Scrape jobs are run on either GitHub Actions or by volunteers running scrapes on their own servers.
-- [crudder](./crudder/README.md)
+- [api.civicpatch.org](./api.civicpatch.org/README.md)
   Helper project that sits civicpatch volunteer servers & GitHub Actions.
 
 ## Summary
@@ -31,12 +31,12 @@ graph TD
         PROCESS --> ZIP[Create ZIP Payload]
     end
     
-    %% Data flow to crudder
+    %% Data flow to api.civicpatch.org
     CP1 --> SCRAPE
     CP2 --> SCRAPE
-    ZIP -->|zip payload| C[crudder.civicpatch.org]
+    ZIP -->|zip payload| C[api.civicpatch.org.civicpatch.org]
     
-    %% Simplified: crudder sends to open-data, which auto-processes
+    %% Simplified: api.civicpatch.org sends to open-data, which auto-processes
     C -->|sends data| OD[open-data repo<br/>auto-processes & creates PR]
     
     %% Final data available

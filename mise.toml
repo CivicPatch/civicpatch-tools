@@ -6,6 +6,6 @@ dive = "0.13.1"
 [env]
 _.file = [
     "civicpatch/.env",
-    "crudder/.env"
+    "api.civicpatch.org/.env"
 ]
 

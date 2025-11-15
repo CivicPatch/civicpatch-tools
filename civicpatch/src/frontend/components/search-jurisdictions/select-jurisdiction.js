@@ -22,7 +22,7 @@ function CivSelectJurisdiction() {
 
   useEffect(() => {
     // Fetch states from backend proxy (no auth header needed)
-    fetch("/api/crudder/jurisdictions/states")
+    fetch("/api/api_proxy/jurisdictions/states")
       .then((res) => res.json())
       .then((data) => setStates(data.data || []));
   }, []);
@@ -53,7 +53,7 @@ function CivSelectJurisdiction() {
     const query = detail.query || "";
     const page = detail.page || 1;
     const pageSize = detail.pageSize || 25;
-    fetch(`/api/crudder/jurisdictions/${selectedState}/search?search_string=${encodeURIComponent(query)}&limit=${pageSize}&page=${page}`)
+    fetch(`/api/api_proxy/jurisdictions/${selectedState}/search?search_string=${encodeURIComponent(query)}&limit=${pageSize}&page=${page}`)
       .then((res) => res.json())
       .then((data) => {
         setJurisdictions(data.data || []);

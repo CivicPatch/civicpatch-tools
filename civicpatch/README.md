@@ -77,7 +77,7 @@ docker compose build
 ```
 
 ### CRUDDER_SHARED_TOKEN
-1. Go to crudder.civicpatch.org and generate an API token.
+1. Go to api.civicpatch.org and generate an API token.
 2. Email the repo maintainer (michelle@civicpatch.org) about your new account. Provide the following details:
   - provider
   - provider_user_id
