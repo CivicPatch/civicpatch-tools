@@ -104,6 +104,8 @@ EXPOSE 8000
 
 ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
 CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
+# Tmp change
+# CMD ["fastapi", "run", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
 
 # ==========================================
 # Stage: production-fe

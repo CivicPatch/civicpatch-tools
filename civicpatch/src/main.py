@@ -49,6 +49,7 @@ async def proxy_to_crudder(path: str, request: Request):
     url = f"{CRUDDER_URL}/api/{path}"
     headers = dict(request.headers)
     headers.pop("host", None)
+    headers.pop("accept-encoding", None)
     headers["Authorization"] = f"{CRUDDER_SHARED_TOKEN}"  # Inject token
 
     data = await request.body()
