@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
-const BUCKET = "civicpatch";
+const BUCKET = "civicpatch-components";
 const REGION = 'auto';
 const ENDPOINT = process.env.STORAGE_ENDPOINT;
 
@@ -41,6 +41,6 @@ async function uploadFolder(folderPath, prefix = '') {
   const distFolder = path.join(process.cwd(), 'dist'); // your build folder
   console.log('Uploading from:', path.join(process.cwd(), 'dist'));
 
-  await uploadFolder(distFolder, 'dist');
+  await uploadFolder(distFolder);
 })();
 
