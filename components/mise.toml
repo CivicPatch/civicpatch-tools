@@ -1,2 +1,6 @@
 [tools]
 node="24"
+
+[env]
+_.file = { path = ".env" }
+BUILD_ENV="development"
