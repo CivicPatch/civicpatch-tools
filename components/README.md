@@ -6,3 +6,4 @@ Web components shared by both civicpatch.org and self hosted civicpatch servers.
 
 - mise install
 - npm install
+- npm run start
