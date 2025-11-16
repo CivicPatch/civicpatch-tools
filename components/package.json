@@ -9,11 +9,13 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.9",
+    "@rollup/plugin-html": "^2.0.0",
     "@rollup/plugin-image": "^3.0.3",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@web/dev-server": "^0.4.6",
     "concurrently": "^9.2.1",
+    "eta": "^4.4.1",
     "express": "^5.1.0",
     "http-proxy-middleware": "^3.0.5",
     "koa-proxies": "^0.12.4",
@@ -23,9 +25,10 @@
   },
   "scripts": {
     "start-rollup": "BUILD_ENV=development rollup -c -w",
-    "start-wds": "web-dev-server --node-resolve --open --watch --port 9000 --app-index index.dev.html",
-    "start": "concurrently \"npm:start-rollup\" \"npm:start-wds\"",
-    "build": "rollup -c"
+    "start-wds": "web-dev-server --node-resolve --open --watch --port 9000 --app-index build/index.html --root-dir build",
+    "start": "node build-index.js & concurrently \"npm:start-rollup\" \"npm:start-wds\"",
+    "build-index": "node ./build-index.js",
+    "build": "node build-index.js production & BUILD_ENV=production rollup -c"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.52.5"
