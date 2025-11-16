@@ -1,0 +1,32 @@
+name: Build & Deploy components 
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "components/**"
+  workflow_dispatch:
+
+permissions: packages: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Build dist folder
+        working-directory: ./components
+        run: |
+          npm run build
+
+      - name: Push dist folder to cdn.civicpatch.org
+        working-directory: ./components
+        env:
+          STORAGE_ENDPOINT: ${{ secrets.STORAGE_ENDPOINT }}
+          STORAGE_ACCESS_KEY_ID: ${{ secrets.STORAGE_ACCESS_KEY_ID }}
+          STORAGE_SECRET_ACCESS_KEY: ${{ secrets.STORAGE_SECRET_ACCESS_KEY }}
+        run: |
+          npm run deploy
