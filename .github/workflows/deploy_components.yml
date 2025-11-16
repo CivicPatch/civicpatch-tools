@@ -8,7 +8,8 @@ on:
       - "components/**"
   workflow_dispatch:
 
-permissions: packages: read
+permissions: 
+  packages: read
 
 jobs:
   deploy:
