@@ -1,0 +1,28 @@
+{
+  "name": "components",
+  "version": "1.0.0",
+  "description": "Web components shared by both civicpatch.org and self hosted civicpatch servers.",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "haunted": "^6.1.0",
+    "leaflet": "^1.9.4",
+    "leaflet-control-geocoder": "^3.3.1",
+    "leaflet.locatecontrol": "^0.85.1",
+    "lit-html": "^3.3.1"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-image": "^3.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.53.2",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-import-css": "^4.1.2"
+  }
+}
