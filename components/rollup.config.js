@@ -9,7 +9,7 @@ console.log(`${devMode ? "development" : "production"} mode bundle`);
 
 // The main JavaScript bundle for modern browsers that support
 // JavaScript modules and other ES2015+ features.
-const config = {
+const config = [{
   input: "./src/index.js",
   watch: "./src/**",
   output: {
@@ -38,7 +38,7 @@ const config = {
   // plugins: [minifyHTML(), copy(copyConfig), resolve()],
   // plugins: [copy(copyConfig), resolve()],
   // preserveEntrySignatures: false,
-};
+}];
 
 //if (process.env.NODE_ENV !== "development") {
 //  config.plugins.push(terser());
