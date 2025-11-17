@@ -44,6 +44,7 @@ async def proxy_to_api_civicpatch_org_endpoint(path: str, request: Request):
     # Inject Authorization header from env var
     if not CRUDDER_SHARED_TOKEN:
         raise HTTPException(status_code=500, detail="Missing CRUDDER_SHARED_TOKEN")
+    print(f"Proxying request to {CRUDDER_URL}: {request.method} /{path}")
 
     method = request.method
     url = f"{CRUDDER_URL}/api/{path}"

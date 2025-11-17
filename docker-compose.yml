@@ -5,10 +5,10 @@ services:
       service: civicpatch
     networks:
       - civicpatch_net
-  api.civicpatch.org:
+  api_civicpatch_org:
     extends:
       file: api.civicpatch.org/docker-compose.yml
-      service: api.civicpatch.org
+      service: api_civicpatch_org
     networks:
       - civicpatch_net
   civicpatch-frontend:
@@ -17,10 +17,10 @@ services:
       service: civicpatch-frontend
     networks:
       - civicpatch_net
-  api.civicpatch.org_db:
+  api_civicpatch_org_db:
     extends:
       file: api.civicpatch.org/docker-compose.yml
-      service: api.civicpatch.org_db
+      service: api_civicpatch_org_db
     networks:
       - civicpatch_net
 

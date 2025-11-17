@@ -76,7 +76,7 @@ ENV NODE_ENV="development" \
     BUILD_ENV="development"
 WORKDIR /app
 
-COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/package.json ./src/frontend/package-lock.json /app
+COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/package* /app
 RUN npm install
 COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/  /app
 

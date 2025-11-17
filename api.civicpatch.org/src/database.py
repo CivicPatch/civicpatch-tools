@@ -154,7 +154,6 @@ async def user_is_approved(user_provider, provider_user_id) -> bool:
                 FROM users
                 WHERE provider = %s
                   AND provider_user_id = %s
-                  AND is_approved = TRUE
             ) AS is_user_approved;
             """,
             (user_provider, provider_user_id),

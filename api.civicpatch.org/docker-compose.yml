@@ -1,5 +1,5 @@
 services:
-  api.civicpatch.org:
+  api_civicpatch_org:
     env_file: .env
     build:
       context: ..
@@ -15,9 +15,9 @@ services:
     networks:
       - civicpatch_net
     depends_on:
-      - api.civicpatch.org_db
+      - api_civicpatch_org_db
 
-  api.civicpatch.org_db:
+  api_civicpatch_org_db:
     image: postgis/postgis:17-3.5
     restart: always
     environment:
