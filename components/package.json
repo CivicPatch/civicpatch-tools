@@ -20,6 +20,7 @@
     "express": "^5.1.0",
     "http-proxy-middleware": "^3.0.5",
     "koa-proxies": "^0.12.4",
+    "mime-types": "^3.0.1",
     "rollup": "^4.52.5",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-import-css": "^4.1.1"
