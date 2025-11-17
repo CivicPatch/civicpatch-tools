@@ -23,6 +23,7 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
+          cache-dependency-path: ./components/package-lock.json
 
       - name: Install dependencies
         working-directory: ./components
