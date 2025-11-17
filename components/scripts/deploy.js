@@ -2,8 +2,9 @@
 import fs from 'fs';
 import path from 'path';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import mime from 'mime-types';
 
-const BUCKET = "civicpatch";
+const BUCKET = "civicpatch-components";
 const REGION = 'auto';
 const ENDPOINT = process.env.STORAGE_ENDPOINT;
 
@@ -27,10 +28,12 @@ async function uploadFolder(folderPath, prefix = '') {
       console.log("finished upload")
     } else {
       const body = fs.readFileSync(filePath);
+      const contentType = mime.lookup(filePath) || 'application/octet-stream';
       await client.send(new PutObjectCommand({
         Bucket: BUCKET,
         Key: path.join(prefix, file),
-        Body: body
+        Body: body,
+        ContentType: contentType
       }));
       console.log(`Uploaded ${path.join(prefix, file)}`);
     }
@@ -41,6 +44,6 @@ async function uploadFolder(folderPath, prefix = '') {
   const distFolder = path.join(process.cwd(), 'dist'); // your build folder
   console.log('Uploading from:', path.join(process.cwd(), 'dist'));
 
-  await uploadFolder(distFolder, 'dist');
+  await uploadFolder(distFolder, '');
 })();
 
