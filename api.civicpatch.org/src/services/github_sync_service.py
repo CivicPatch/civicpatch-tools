@@ -58,7 +58,12 @@ class GitDatabaseSync:
 
         # If directory didn't exist, or was just removed:
         print(f"Cloning repository from {self.repo_url}...")
-        subprocess.run(["git", "clone", self.repo_url, str(self.repo_path)], check=True)
+        subprocess.run([
+            "git", "clone", 
+            "--single-branch", "--branch", "main",
+            self.repo_url, 
+            str(self.repo_path)
+        ], check=True)
         return "cloned"
 
     def get_current_commit(self):
@@ -406,12 +411,7 @@ class GitDatabaseSync:
             # Clone or pull repo (synchronous git operations)
             clone_status = self.clone_or_pull()
 
-            if clone_status != "cloned":
-                print("Pulling latest changes from main branch...")
-                subprocess.run(
-                    ["git", "-C", str(self.repo_path), "pull", "origin", "main"],
-                    check=True,
-                )
+            # No need for additional pull since clone_or_pull handles both cases
 
             # Get current commit
             new_commit = self.get_current_commit()

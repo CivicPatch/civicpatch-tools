@@ -82,7 +82,6 @@ async def get_user_by_cookie(request, token: str) -> Identity:
     if request.method.upper() in UNSAFE_METHODS:
         # Prefer header (AJAX), fall back to form field for plain HTML forms
         csrf_token = request.headers.get("x-csrf-token")
-        print("found csrf token", csrf_token)
         if not csrf_token:
             form = await request.form()
             print("founda form")
