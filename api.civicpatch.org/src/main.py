@@ -113,6 +113,20 @@ app.mount("/static", StaticFiles(directory="src/frontend/static"), name="static"
 
 templates = Jinja2Templates(directory="src/frontend/templates")
 
+if is_production:
+    allowed_origins = [
+        "https://civicpatch.org",
+        "https://api.civicpatch.org"
+        "https://components.civicpatch.org",
+    ]
+else:
+    allowed_origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+)
+
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
 async def home(
     request: Request,
