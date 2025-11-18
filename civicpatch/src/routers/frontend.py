@@ -26,8 +26,8 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         "GOOGLE_GEMINI_TOKEN",
         "OPENAI_TOKEN",
         #"TOGETHER_AI_TOKEN",
-        "CRUDDER_SHARED_TOKEN",
-        "CRUDDER_URL",
+        "API_CIVICPATCH_ORG_TOKEN",
+        "API_CIVICPATCH_ORG_URL",
     ]
 
     @router.get("/")

@@ -24,8 +24,8 @@ Roles and divisions are standardized via the rules listed under [./config](./con
 2. Copy the files from [civicpatch/examples/setup_project](./examples/setup_project/) onto your computer
 2. Set up the necessary environment variables under a new `civicpatch/.env` file.
    See [.env.example] for the necessary variables.
-   You will need to collaborate with the crudder maintainer to use the `CRUDDER_SHARED_TOKEN`.
-   See: [CRUDDER_SHARED_TOKEN](#crudder_shared_token)
+   You will need to collaborate with the crudder maintainer to use the `API_CIVICPATCH_ORG_TOKEN`.
+   See: [API_CIVICPATCH_ORG_TOKEN](#API_CIVICPATCH_ORG_TOKEN)
 3. Under the `civicpatch` directory, run:
   a. (with powershell), run: `docker pull ghcr.io/civicpatch/civicpatch:latest`
     This may take a while.
@@ -37,8 +37,8 @@ Roles and divisions are standardized via the rules listed under [./config](./con
 2. Copy the files from [civicpatch/examples/setup_project](./examples/setup_project/) onto your computer
 2. Set up the necessary environment variables under a new `civicpatch/.env` file.
    See [.env.example] for the necessary variables.
-   You will need to collaborate with the crudder maintainer to use the `CRUDDER_SHARED_TOKEN`.
-   See: [CRUDDER_SHARED_TOKEN](#crudder_shared_token)
+   You will need to collaborate with the crudder maintainer to use the `API_CIVICPATCH_ORG_TOKEN`.
+   See: [API_CIVICPATCH_ORG_TOKEN](#API_CIVICPATCH_ORG_TOKEN)
 3. Under the `civicpatch` directory, run:
   a. (with a terminal), run: `docker pull ghcr.io/civicpatch/civicpatch:latest`
     This may take a while.
@@ -53,8 +53,8 @@ Roles and divisions are standardized via the rules listed under [./config](./con
   2.a. Run mise install under the `civicpatch` directory
 3. Set up the necessar environment variables under a new `civicpatch/.env` file.
    See [.env.example] for the necessary variables.
-   You will need to collaborate with the crudder maintainer to use the `CRUDDER_SHARED_TOKEN`.
-   See: [CRUDDER_SHARED_TOKEN](#crudder_shared_token)
+   You will need to collaborate with the crudder maintainer to use the `API_CIVICPATCH_ORG_TOKEN`.
+   See: [API_CIVICPATCH_ORG_TOKEN](#API_CIVICPATCH_ORG_TOKEN)
 4. Under the `civicpatch/` directory, run `mise dev`. This will take a while if it's the first time.
 5. You're done. yOpen up a browser at `http://localhost:8000`
 
@@ -76,7 +76,7 @@ mise container poetry add <package>
 docker compose build
 ```
 
-### CRUDDER_SHARED_TOKEN
+### API_CIVICPATCH_ORG_TOKEN
 1. Go to api.civicpatch.org and generate an API token.
 2. Email the repo maintainer (michelle@civicpatch.org) about your new account. Provide the following details:
   - provider
@@ -93,7 +93,7 @@ docker compose build
     - Verify you can reach this page:
       https://example.example-name.ts.net/docs
     - Update `CivicPatch Server URL` to `https://fedora.dropbear-minnow.ts.net`
-    - Generate the API key. This is your `CRUDDER_SHARED_TOKEN`
+    - Generate the API key. This is your `API_CIVICPATCH_ORG_TOKEN`
     - Update your environment variables and restart your server.
 ## TODOS
 
