@@ -22,6 +22,13 @@
 
         {% if is_production %}
         <!-- Production: bundled files (Rollup) -->
+        <script type="importmap">
+            {
+                "imports": {
+                    "@components": "https://components.civicpatch.org/bundle.js"
+                }
+            }
+        </script>
         <script
             type="module"
             src="{{ url_for('frontend', path='/dist/bundle.js') }}"
@@ -30,10 +37,19 @@
         <!-- Hot reload script -->
         {{ hot_reload.script(url_for('hot-reload')) | safe }}
         <!-- Development: rollup handles module resolution -->
+        <script type="importmap">
+            {
+                "imports": {
+                    "@components": "{{ url_for('frontend', path='/cdn/bundle.js') }}"
+                }
+            }
+        </script>
         <script
             type="module"
             src="{{ url_for('frontend', path='/build/bundle.js') }}"
         ></script>
+
+
         <!--<script type="module" src="/dev-modules/build/bundle.js"></script>-->
         {% endif %}
     </body>

@@ -7,7 +7,6 @@ services:
     volumes:
       - ./src/frontend:/app
       - /app/node_modules
-      - ../components/build:/app/cdn:ro
     networks:
       - civicpatch_net
 
@@ -50,6 +49,7 @@ services:
     volumes:
       - ./data:/app/data
       - ./data_source:/app/data_source
+      - ../components/build:/app/src/frontend/cdn:ro
       - .:/app
     networks:
       - civicpatch_net
