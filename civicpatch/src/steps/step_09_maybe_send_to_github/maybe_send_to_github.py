@@ -22,7 +22,7 @@ def maybe_send_to_github(context: PipelineContext) -> MaybeSendToGitHubStep:
     # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
     CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
     CRUDDER_URL = os.getenv("CRUDDER_URL", "https://api.civicpatch.org")
-    CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/api/pipelines/github_intake"
+    CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/api/internal/pipelines/github_intake"
     request_id = context.request_id
     jurisdiction_id = context.jurisdiction_id
     logger.info(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
