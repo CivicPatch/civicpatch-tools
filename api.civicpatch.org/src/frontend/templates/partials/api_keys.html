@@ -98,7 +98,7 @@
         }
         try {
             const csrf = getCsrfCookie();
-            const response = await fetch(`/api/api_keys/${keyId}`, {
+            const response = await fetch(`/api/internal/api_keys/${keyId}`, {
                 method: "DELETE",
                 credentials: "include", // send cookies
                 headers: {
@@ -118,7 +118,7 @@
     async function createApiKey() {
         try {
             const csrf = getCsrfCookie();
-            const response = await fetch("/api/api_keys", {
+            const response = await fetch("/api/internal/api_keys", {
                 method: "POST",
                 credentials: "include", // send cookies
                 headers: {

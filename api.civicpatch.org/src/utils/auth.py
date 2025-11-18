@@ -8,7 +8,7 @@ import time
 from typing import cast, Annotated
 import database
 from http import cookies as _cookies
-from schemas import Identity
+from schemas import Identity, RouteCategory, UserRole, ApiKeyType
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 API_COOKIE = APIKeyCookie(name="token", auto_error=False)
@@ -161,6 +161,56 @@ def require_any_role(*allowed_roles: str):
             print("allowed_roles", allowed_roles)
             if role not in allowed_roles:
                 raise HTTPException(status_code=403, detail="Insufficient permissions")
+        return user
+
+    return _dependency
+
+def get_api_key_type(
+    authorization: Optional[str] = Security(API_HEADER),
+    cookie: Optional[str] = Security(API_COOKIE),
+):
+    """Determine the API key type used for authentication."""
+    token = None
+    if authorization:
+        token = authorization.strip()
+        if token.startswith("pk_"):
+            return ApiKeyType.WIDGET_KEY  # Widget/component key
+        else:
+            return ApiKeyType.SERVER_KEY  # General server key
+    elif cookie:
+        token = cookie
+        return ApiKeyType.INTERNAL_SERVER_KEY # Server generated key
+
+    if not token:
+        raise HTTPException(status_code=401, detail="Missing authentication token")
+    
+
+def require_route_access(category: RouteCategory):
+    """
+    Factory that returns a dependency for route category access control
+    """
+    ROUTE_PERMISSIONS = {
+        RouteCategory.COMPONENT_API: { #/api/jurisdictions, /api/people
+            UserRole.ADMIN: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY],
+            UserRole.MEMBER: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY], 
+            UserRole.UNVERIFIED: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY]
+        },
+        RouteCategory.ADMIN_ONLY: { # /api/admin
+            UserRole.ADMIN: [ApiKeyType.SERVER_KEY]
+        },
+        RouteCategory.INTERNAL_API: { # /api/internal -- includes github_intake
+            UserRole.ADMIN: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY],
+            UserRole.MEMBER: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY],
+            UserRole.UNVERIFIED: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY]
+        },
+        
+    }
+
+    async def _dependency(user: Identity = Depends(get_user), api_key_type: ApiKeyType = Depends(get_api_key_type)):
+        role = user.role
+        allowed_key_types = ROUTE_PERMISSIONS.get(category, {}).get(role, [])
+        if api_key_type not in allowed_key_types:
+            raise HTTPException(status_code=403, detail="Insufficient permissions for this route")
         return user
 
     return _dependency
