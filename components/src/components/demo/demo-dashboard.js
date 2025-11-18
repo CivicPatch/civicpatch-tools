@@ -1,15 +1,34 @@
 import { html, css } from 'lit';
 import { component, useState, useEffect } from 'haunted';
 import { useApi } from '../../hooks/use-api.js';
-import { apiConfig } from '../../api-config.js';
 
-// Import other components to include them in the dashboard
-import '../example.js';
-import '../map.js';
-import './demo-api-config.js';
+// Tab configuration with HTML templates
+const TAB_CONFIG = [
+  {
+    id: 'config',
+    label: 'API Config',
+    title: 'API Configuration',
+    description: 'Configure your API settings to connect to CivicPatch services.',
+    template: html`<demo-api-config></demo-api-config>`,
+  },
+  {
+    id: 'example',
+    label: 'Example Data',
+    title: 'Example API Data',
+    description: 'This component demonstrates fetching data from the CivicPatch API.',
+    template: html`<my-example></my-example>`,
+  },
+  {
+    id: 'map',
+    label: 'Map',
+    title: 'Interactive Map',
+    description: 'Explore geographical data with our interactive mapping component.',
+    template: html`<civ-map canmove="true"></civ-map>`,
+  }
+];
 
 function DemoDashboard() {
-  const [activeTab, setActiveTab] = useState('config');
+  const [activeTab, setActiveTab] = useState(TAB_CONFIG[0].id);
   const { baseUrl } = useApi();
 
   const styles = css`
@@ -23,18 +42,30 @@ function DemoDashboard() {
     }
     
     .status-indicator.connected {
-      background-color: var(--pico-color-green-500, #28a745);
+      background-color: var(--pico-color-green-500);
     }
     
     .status-indicator.disconnected {
-      background-color: var(--pico-color-amber-500, #ffc107);
+      background-color: var(--pico-color-amber-500);
     }
     
-    /* Tab styling with proper contrast */
+    /* API Status styling */
+    .api-status {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    
+    .api-status small {
+      color: var(--pico-muted-color);
+    }
+    
+    /* Tab styling with better contrast */
     .nav-tabs {
       display: flex;
       margin-bottom: 0;
-      border-bottom: 1px solid var(--pico-muted-border-color, #dee2e6);
+      border-bottom: 2px solid var(--pico-color-slate-200);
       list-style: none;
       padding: 0;
     }
@@ -44,107 +75,61 @@ function DemoDashboard() {
     }
     
     .nav-tab {
-      padding: 0.75rem 1rem;
-      border: 1px solid transparent;
-      border-bottom: none;
-      background-color: var(--pico-card-background-color, #f8f9fa);
-      color: var(--pico-muted-color, #6c757d);
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: transparent;
+      color: var(--pico-color-azure-50);
       cursor: pointer;
-      border-radius: 0.375rem 0.375rem 0 0;
-      margin-right: 0.125rem;
+      border-radius: 0.5rem 0.5rem 0 0;
+      margin-right: 0.25rem;
       font-weight: 500;
-      transition: all 150ms ease;
+      transition: all 200ms ease;
+      border-bottom: 3px solid transparent;
     }
     
     .nav-tab:hover {
-      background-color: var(--pico-secondary-hover, #e9ecef);
-      color: var(--pico-color, #212529);
+      background-color: var(--pico-color-slate-100);
+      color: var(--pico-color-slate-800);
+      border-bottom-color: var(--pico-color-blue-300);
     }
     
     .nav-tab.active {
-      background-color: var(--pico-background-color, #fff);
-      color: #F0F1F3;
-      border-color: var(--pico-muted-border-color, #dee2e6);
-      border-bottom-color: var(--pico-background-color, #fff);
+      background-color: var(--pico-color-azure-500);
+      color: var(--pico-color-azure-50);
+      border-bottom-color: var(--pico-color-azure-850);
       font-weight: 600;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
     
     .tab-content {
-      padding-top: 1rem;
+      padding-top: 1.5rem;
+      border-radius: 0 0 0.5rem 0.5rem;
+      min-height: 400px;
+    }
+    
+    /* Make child components blend with background */
+    .tab-content article {
+      background-color: var(--pico-background-color, #f8f9fa);
     }
   `;
 
+  const renderComponent = (config) => {
+    return config.template;
+  };
+
   const renderTabContent = () => {
-    switch (activeTab) {
-      case 'config':
-        return html`
-          <div class="content-section active">
-            <hgroup>
-              <h2>API Configuration</h2>
-              <p>Configure your API settings to connect to CivicPatch services.</p>
-            </hgroup>
-            <demo-api-config></demo-api-config>
-          </div>
-        `;
-      
-      case 'example':
-        return html`
-          <div class="content-section active">
-            <hgroup>
-              <h2>Example API Data</h2>
-              <p>This component demonstrates fetching data from the CivicPatch API.</p>
-            </hgroup>
-            <my-example></my-example>
-          </div>
-        `;
-      
-      case 'map':
-        return html`
-          <div class="content-section active">
-            <hgroup>
-              <h2>Interactive Map</h2>
-              <p>Explore geographical data with our interactive mapping component.</p>
-            </hgroup>
-            <article>
-              <div class="map-container">
-                <civ-map canmove="true"></civ-map>
-              </div>
-            </article>
-          </div>
-        `;
-      
-      case 'overview':
-        return html`
-          <div class="content-section active">
-            <hgroup>
-              <h2>Component Overview</h2>
-              <p>A comprehensive view of all available components in the CivicPatch toolkit.</p>
-            </hgroup>
-            
-            <div class="grid">
-              <article>
-                <header><strong>API Configuration</strong></header>
-                <demo-api-config></demo-api-config>
-              </article>
-              
-              <article>
-                <header><strong>Example Data</strong></header>
-                <my-example></my-example>
-              </article>
-            </div>
-            
-            <article>
-              <header><strong>Interactive Map</strong></header>
-              <div class="map-container">
-                <civ-map canmove="true"></civ-map>
-              </div>
-            </article>
-          </div>
-        `;
-      
-      default:
-        return html`<p><em>Select a tab to view content</em></p>`;
-    }
+    const activeConfig = TAB_CONFIG.find(tab => tab.id === activeTab);
+    if (!activeConfig) return html`<p><em>Tab not found</em></p>`;
+
+    return html`
+      <div class="content-section active">
+        <hgroup>
+          <h2>${activeConfig.title}</h2>
+          <p>${activeConfig.description}</p>
+        </hgroup>
+        ${renderComponent(activeConfig)}
+      </div>
+    `;
   };
 
   return html`
@@ -156,57 +141,27 @@ function DemoDashboard() {
           <p>Interactive demonstration of CivicPatch web components</p>
         </hgroup>
         
-        <details role="status" ${baseUrl ? 'open' : ''}>
-          <summary>
-            <span class="status-indicator ${baseUrl ? 'connected' : 'disconnected'}"></span>
-            API Status: ${baseUrl ? `Connected to ${baseUrl}` : 'Not configured'}
-          </summary>
-          ${!baseUrl ? html`<p><small>Configure your API settings in the API Config tab to get started.</small></p>` : ''}
-        </details>
+        <div class="api-status">
+          <span class="status-indicator ${baseUrl ? 'connected' : 'disconnected'}"></span>
+          <span>API Status: ${baseUrl ? `Connected to ${baseUrl}` : 'Not configured'}</span>
+          ${!baseUrl ? html`<small> - Configure your API settings in the API Config tab to get started.</small>` : ''}
+        </div>
       </header>
       
       <nav>
         <ul class="nav-tabs" role="tablist">
-          <li>
-            <button 
-              class="nav-tab ${activeTab === 'config' ? 'active' : ''}"
-              role="tab"
-              aria-selected="${activeTab === 'config'}"
-              @click=${() => setActiveTab('config')}
-            >
-              API Config
-            </button>
-          </li>
-          <li>
-            <button 
-              class="nav-tab ${activeTab === 'example' ? 'active' : ''}"
-              role="tab"
-              aria-selected="${activeTab === 'example'}"
-              @click=${() => setActiveTab('example')}
-            >
-              Example Data
-            </button>
-          </li>
-          <li>
-            <button 
-              class="nav-tab ${activeTab === 'map' ? 'active' : ''}"
-              role="tab"
-              aria-selected="${activeTab === 'map'}"
-              @click=${() => setActiveTab('map')}
-            >
-              Map
-            </button>
-          </li>
-          <li>
-            <button 
-              class="nav-tab ${activeTab === 'overview' ? 'active' : ''}"
-              role="tab"
-              aria-selected="${activeTab === 'overview'}"
-              @click=${() => setActiveTab('overview')}
-            >
-              Overview
-            </button>
-          </li>
+          ${TAB_CONFIG.map(tab => html`
+            <li>
+              <button 
+                class="nav-tab ${activeTab === tab.id ? 'active' : ''}"
+                role="tab"
+                aria-selected="${activeTab === tab.id}"
+                @click=${() => setActiveTab(tab.id)}
+              >
+                ${tab.label}
+              </button>
+            </li>
+          `)}
         </ul>
       </nav>
       

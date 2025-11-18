@@ -19,7 +19,7 @@ function MyExample() {
   }, [baseUrl]);
 
   return html`
-    <div style="font-family: sans-serif; border: 1px solid #ccc; padding: 1rem;">
+    <div>
       <h3>Example Component (tbd: replace with others)</h3>
       <div>
         <strong>Data from proxy:</strong>
