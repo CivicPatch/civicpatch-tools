@@ -3,6 +3,7 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import image from "@rollup/plugin-image";
 import css from "rollup-plugin-import-css";
+import alias from "@rollup/plugin-alias";
 
 const devMode = process.env.BUILD_ENV === "development";
 console.log(`${devMode ? "development" : "production"} mode bundle`);
@@ -11,13 +12,26 @@ console.log(`${devMode ? "development" : "production"} mode bundle`);
 // JavaScript modules and other ES2015+ features.
 const config = {
   input: "./components/main.js",
-  watch: "./components/**",
+  watch: {
+    include: "./components/**",
+    clearScreen: false
+  },
   output: {
     file: devMode ? "./build/bundle.js" : "./dist/bundle.js",
     format: "es",
     sourcemap: devMode ? "inline" : false,
   },
   plugins: [
+    alias({
+      entries: [
+        {
+          find: '@components',
+          replacement: devMode 
+            ? './cdn/bundle.js'  // Local in dev
+            : 'https://components.civicpatch.org/bundle.js'  // CDN in prod
+        }
+      ]
+    }),
     nodeResolve(),
     image(),
     commonjs(),

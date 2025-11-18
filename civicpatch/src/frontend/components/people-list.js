@@ -3,13 +3,7 @@ import { html } from "lit-html";
 
 function PeopleList({ local = [] }) {
     const people = local;
-
-    // Helper: Formats array items (Divisions)
-    const formatArray = (arr) => arr && arr.length > 0
-        ? arr.map(item => html`<span class="badge" style="margin-right: 0.25rem;">${item}</span>`)
-        : html`<small>N/A</small>`;
-
-    // Helper: Formats Sources as [1], [2], [3]
+    
     const formatSources = (sources) => {
         if (!sources || sources.length === 0) {
             return html`<small>No Sources</small>`;
@@ -68,7 +62,7 @@ function PeopleList({ local = [] }) {
                         </td>
 
                         <td data-label="Divisions">
-                            ${formatArray(person.divisions)}
+                            ${person.divisions && person.divisions.join(' | ')}
                         </td>
                         
                         <td data-label="Contact">
