@@ -1,8 +1,27 @@
 from pydantic import BaseModel, model_validator
+from enum import Enum
 
 from civicpatch.id_utils import git_branch_to_jurisdiction_id
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
+
+
+class ApiKeyType(str, Enum):
+    WIDGET_KEY = "widget_key"      # TODO: Implement
+    SERVER_KEY = "server_key"      # For internal server operations
+    INTERNAL_SERVER_KEY = "internal_key"
+
+
+class UserRole(str, Enum):
+    ADMIN = "admin"
+    MEMBER = "member" 
+    UNVERIFIED = "unverified"
+
+
+class RouteCategory(str, Enum):
+    COMPONENT_API = "component_api"    # Widget/component routes (was public_widget)
+    INTERNAL_API = "internal_api"      # Internal server operations  
+    ADMIN_ONLY = "admin_only"         # Admin-only routes
 
 
 class Person(BaseModel):

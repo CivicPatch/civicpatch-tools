@@ -11,7 +11,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.security import APIKeyHeader
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from schemas import Identity
+from schemas import Identity, RouteCategory
 
 import routers.api.admin as api_admin_router
 import routers.api.api_keys as api_keys_router
@@ -26,7 +26,7 @@ from database import (
     pool,
     user_is_approved,
 )
-from utils.auth import require_any_role, get_optional_user
+from utils.auth import require_route_access, get_optional_user
 
 # Only purpose is to manage users, their API keys, and move data from 3rd party servers
 # to GitHub Actions.
@@ -159,43 +159,43 @@ app.include_router(
     api_admin_router.get_router(api_key_header, pool),
     prefix="/api/admin",
     tags=["admin"],
-    dependencies=[Depends(require_any_role("admin"))]
+    dependencies=[Depends(require_route_access(RouteCategory.ADMIN_ONLY))],
 )
 app.include_router(
     api_jurisdictions_router.get_router(),
     prefix="/api/jurisdictions",
     tags=["jurisdictions"],
-    dependencies=[Depends(require_any_role("member", "admin", "unverified"))]
+    dependencies=[Depends(require_route_access(RouteCategory.COMPONENT_API))]
 )
 
 app.include_router(
     api_people_router.get_router(),
     prefix="/api/people",
     tags=["people"],
-    dependencies=[Depends(require_any_role("member", "admin", "unverified"))]
+    dependencies=[Depends(require_route_access(RouteCategory.COMPONENT_API))]
 )
 
 app.include_router(
     api_pipelines_router.get_router(api_key_header),
-    prefix="/api/pipelines",
+    prefix="/api/internal/pipelines",
     tags=["pipelines"],
-    dependencies=[Depends(require_any_role("member", "admin", "unverified"))]
+    dependencies=[Depends(require_route_access(RouteCategory.INTERNAL_API))]
 )
 
 # Allow you to create your api keys, even unverified
 # Mostly for civicpatch users who need to contribute data
 app.include_router(
     api_keys_router.get_router(), 
-    prefix="/api/api_keys", 
+    prefix="/api/internal/api_keys", 
     tags=["api_keys"],
-    dependencies=[Depends(require_any_role("member", "admin", "unverified"))]
+    dependencies=[Depends(require_route_access(RouteCategory.INTERNAL_API))]
 )
 
 app.include_router(
     api_user_router.get_router(), 
-    prefix="/api/user", 
+    prefix="/api/internal/user", 
     tags=["user"],
-    dependencies=[Depends(require_any_role("member", "admin", "unverified"))]
+    dependencies=[Depends(require_route_access(RouteCategory.INTERNAL_API))]
 )
 
 app.include_router(
