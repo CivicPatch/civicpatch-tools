@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { component, useState, useEffect } from 'haunted';
-import { useApi } from '../hooks/use-api.js';
-import { apiConfig } from '../api-config.js';
+import { useApi } from '../../hooks/use-api.js';
+import { apiConfig } from '../../api-config.js';
 
 function DemoApiConfig() {
   const [token, setToken] = useState(sessionStorage.getItem('authToken') || '');

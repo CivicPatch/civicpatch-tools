@@ -2,27 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Web Components Playground</title>
-  <style>
-    body { font-family: sans-serif; padding: 2rem; }
-    section { margin-bottom: 2rem; }
-    h2 { margin-bottom: 0.5rem; }
-    .example { border: 1px solid #ccc; padding: 1rem; margin-bottom: 0.5rem; }
-  </style>
+  <title>CivicPatch Components Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/pico.min.css">
+  <style>
+    body { 
+      margin: 0; 
+      padding: 0; 
+      background-color: #f8f9fa;
+    }
+    demo-dashboard {
+      display: block;
+      width: 100%;
+      min-height: 100vh;
+    }
+  </style>
 </head>
 <body>
-
-  <h1>Components</h1>
-
-  <section>
-    <div class="example">
-        <demo-api-config></demo-api-config>
-    </div>
-    <div class="example">
-      <my-example></my-example>
-    </div>
-  </section>
+  <demo-dashboard></demo-dashboard>
   <script type="module" src="./bundle.js"></script>
 </body>
 </html>

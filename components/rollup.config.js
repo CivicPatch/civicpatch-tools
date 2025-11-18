@@ -18,7 +18,7 @@ const config = [{
     sourcemap: devMode ? "inline" : false,
   },
   plugins: [
-    nodeResolve(),
+    nodeResolve({ browser: true }),
     image(),
     commonjs(),
     css(),
@@ -35,13 +35,6 @@ const config = [{
       output: { quote_style: 1 },
     }),
   ],
-  // plugins: [minifyHTML(), copy(copyConfig), resolve()],
-  // plugins: [copy(copyConfig), resolve()],
-  // preserveEntrySignatures: false,
 }];
-
-//if (process.env.NODE_ENV !== "development") {
-//  config.plugins.push(terser());
-//}
 
 export default config;

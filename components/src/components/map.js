@@ -20,12 +20,14 @@ import geocoderStyles from "leaflet-control-geocoder/dist/Control.Geocoder.css";
 
 import markerIconPng from "leaflet/dist/images/marker-icon.png";
 
+const DEFAULT_LOCATION = { lat: 47.60813, lng: -122.335167 }; // Seattle, WA
+
 // https://leafletjs.com/reference.html#latlng
 function CivMap({ latlng, canmove = true, geojson = null }) {
   const canMove = canmove === "true" || canmove === true;
 
   const [mapInstance, setMapInstance] = useState(null);
-  const [homeLatlng, setHomeLatlng] = useState(latlng);
+  const [homeLatlng, setHomeLatlng] = useState(latlng || DEFAULT_LOCATION);
   const [currentLatlng, setCurrentLatlng] = useState(latlng);
   const [marker, setMarker] = useState(null);
   const [controls, setControls] = useState({ gc: null });

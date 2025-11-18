@@ -1,4 +1,4 @@
-import { html, render } from 'lit';
+import { html } from 'lit';
 import { component, useState, useEffect } from 'haunted';
 import { useApi } from '../hooks/use-api.js'
 
