@@ -1,35 +1,39 @@
 import { html, css } from 'lit';
-import { component, useState, useEffect } from 'haunted';
+import { component, useState } from 'haunted';
 import { useApi } from '../../hooks/use-api.js';
+import { registerCivMap } from '../map.js';
 
-// Tab configuration with HTML templates
+registerCivMap();
+
+// Lazy loading configuration
 const TAB_CONFIG = [
   {
     id: 'config',
     label: 'API Config',
     title: 'API Configuration',
     description: 'Configure your API settings to connect to CivicPatch services.',
-    template: html`<demo-api-config></demo-api-config>`,
+    loader: () => import('./demo-api-config.js').then(() => html`<demo-api-config></demo-api-config>`),
   },
   {
     id: 'example',
     label: 'Example Data',
     title: 'Example API Data',
     description: 'This component demonstrates fetching data from the CivicPatch API.',
-    template: html`<my-example></my-example>`,
+    loader: () => import('../example.js').then(() => html`<my-example></my-example>`),
   },
   {
     id: 'map',
     label: 'Map',
     title: 'Interactive Map',
     description: 'Explore geographical data with our interactive mapping component.',
-    template: html`<civ-map canmove="true"></civ-map>`,
+    loader: () => import('../map.js').then(() => html`<civ-map canmove="true"></civ-map>`),
   }
 ];
 
 function DemoDashboard() {
-  const [activeTab, setActiveTab] = useState(TAB_CONFIG[0].id);
   const { baseUrl } = useApi();
+  const [loadedComponents, setLoadedComponents] = useState(new Set());
+  const [componentTemplates, setComponentTemplates] = useState(new Map());
 
   const styles = css`
     /* Minimal styles to complement Pico CSS */
@@ -61,75 +65,37 @@ function DemoDashboard() {
       color: var(--pico-muted-color);
     }
     
-    /* Tab styling with better contrast */
-    .nav-tabs {
-      display: flex;
-      margin-bottom: 0;
-      border-bottom: 2px solid var(--pico-color-slate-200);
-      list-style: none;
-      padding: 0;
+    .loading {
+      padding: 2rem;
+      text-align: center;
+      color: var(--pico-muted-color);
     }
-    
-    .nav-tabs li {
-      margin: 0;
-    }
-    
-    .nav-tab {
-      padding: 0.5rem 1rem;
-      border: none;
-      background-color: transparent;
-      color: var(--pico-color-azure-50);
-      cursor: pointer;
-      border-radius: 0.5rem 0.5rem 0 0;
-      margin-right: 0.25rem;
-      font-weight: 500;
-      transition: all 200ms ease;
-      border-bottom: 3px solid transparent;
-    }
-    
-    .nav-tab:hover {
-      background-color: var(--pico-color-slate-100);
-      color: var(--pico-color-slate-800);
-      border-bottom-color: var(--pico-color-blue-300);
-    }
-    
-    .nav-tab.active {
-      background-color: var(--pico-color-azure-500);
-      color: var(--pico-color-azure-50);
-      border-bottom-color: var(--pico-color-azure-850);
-      font-weight: 600;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    }
-    
-    .tab-content {
-      padding-top: 1.5rem;
-      border-radius: 0 0 0.5rem 0.5rem;
-      min-height: 400px;
-    }
-    
-    /* Make child components blend with background */
-    .tab-content article {
-      background-color: var(--pico-background-color, #f8f9fa);
+
+    header {
+      margin-bottom: 2rem;
     }
   `;
 
-  const renderComponent = (config) => {
-    return config.template;
+  const handleAccordionToggle = async (event, section) => {
+    if (event.target.open && !loadedComponents.has(section.id)) {
+      try {
+        const template = await section.loader();
+        setComponentTemplates(prev => new Map(prev).set(section.id, template));
+        setLoadedComponents(prev => new Set(prev).add(section.id));
+      } catch (error) {
+        console.error(`Failed to load component ${section.id}:`, error);
+        setComponentTemplates(prev => new Map(prev).set(section.id, 
+          html`<p class="error">Failed to load component</p>`
+        ));
+      }
+    }
   };
 
-  const renderTabContent = () => {
-    const activeConfig = TAB_CONFIG.find(tab => tab.id === activeTab);
-    if (!activeConfig) return html`<p><em>Tab not found</em></p>`;
-
-    return html`
-      <div class="content-section active">
-        <hgroup>
-          <h2>${activeConfig.title}</h2>
-          <p>${activeConfig.description}</p>
-        </hgroup>
-        ${renderComponent(activeConfig)}
-      </div>
-    `;
+  const renderComponent = (section) => {
+    if (!loadedComponents.has(section.id)) {
+      return html`<div class="loading">Loading component...</div>`;
+    }
+    return componentTemplates.get(section.id) || html`<div class="loading">Loading...</div>`;
   };
 
   return html`
@@ -148,26 +114,18 @@ function DemoDashboard() {
         </div>
       </header>
       
-      <nav>
-        <ul class="nav-tabs" role="tablist">
-          ${TAB_CONFIG.map(tab => html`
-            <li>
-              <button 
-                class="nav-tab ${activeTab === tab.id ? 'active' : ''}"
-                role="tab"
-                aria-selected="${activeTab === tab.id}"
-                @click=${() => setActiveTab(tab.id)}
-              >
-                ${tab.label}
-              </button>
-            </li>
-          `)}
-        </ul>
-      </nav>
-      
-      <section class="tab-content" role="tabpanel">
-        ${renderTabContent()}
-      </section>
+      ${TAB_CONFIG.map(section => html`
+        <details 
+          ${section.id === 'config' ? 'open' : ''} 
+          @toggle=${(e) => handleAccordionToggle(e, section)}
+        >
+          <summary role="button" class="outline">${section.title}</summary>
+          <article>
+            <p>${section.description}</p>
+            ${renderComponent(section)}
+          </article>
+        </details>
+      `)}
     </main>
   `;
 }

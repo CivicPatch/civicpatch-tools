@@ -256,7 +256,12 @@ const handleFeatureClick = (e) => {
     </div>
   `;
 }
-customElements.define(
-  "civ-map",
-  component(CivMap, {observedAttributes: ["canmove"] }),
-);
+
+export function registerCivMap() {
+  if (!customElements.get("civ-map")) {
+    customElements.define(
+      "civ-map",
+      component(CivMap, {observedAttributes: ["canmove"] }),
+    );
+  }
+}
