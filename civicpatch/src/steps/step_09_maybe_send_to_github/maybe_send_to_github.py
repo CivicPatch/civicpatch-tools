@@ -20,19 +20,19 @@ def maybe_send_to_github(context: PipelineContext) -> MaybeSendToGitHubStep:
 
     # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
     # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
-    CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
-    CRUDDER_URL = os.getenv("CRUDDER_URL", "https://api.civicpatch.org")
-    CRUDDER_UPLOAD_URL = f"{CRUDDER_URL}/api/internal/pipelines/github_intake"
+    API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
+    API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "https://api.civicpatch.org")
+    CRUDDER_UPLOAD_URL = f"{API_CIVICPATCH_ORG_URL}/api/internal/pipelines/github_intake"
     request_id = context.request_id
     jurisdiction_id = context.jurisdiction_id
     logger.info(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
 
     try:
-        if not CRUDDER_SHARED_TOKEN:
+        if not API_CIVICPATCH_ORG_TOKEN:
             logger.error(
-                "CRUDDER_SHARED_TOKEN is not set, skipping github workflow dispatch."
+                "API_CIVICPATCH_ORG_TOKEN is not set, skipping github workflow dispatch."
             )
-            logger.error(f"Generate api key from CRUDDER at {CRUDDER_URL}")
+            logger.error(f"Generate api key from CRUDDER at {API_CIVICPATCH_ORG_URL}")
 
             return MaybeSendToGitHubStep(status="skipped_no_token")
 
@@ -44,7 +44,7 @@ def maybe_send_to_github(context: PipelineContext) -> MaybeSendToGitHubStep:
         cost_utils.add_storage_cost(request_id, jurisdiction_id, file_size_bytes)
 
         headers = {
-            "Authorization": CRUDDER_SHARED_TOKEN,
+            "Authorization": API_CIVICPATCH_ORG_TOKEN,
         }
 
         files = {

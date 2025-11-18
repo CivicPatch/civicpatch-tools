@@ -11,8 +11,8 @@ from fastapi.templating import Jinja2Templates
 from routers.api import router as api_router
 from routers.frontend import get_router as get_frontend_router
 
-CRUDDER_URL = os.getenv("CRUDDER_URL", "http://localhost:8001")
-CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
+API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "http://localhost:8001")
+API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
 
 app = FastAPI()
 app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
@@ -42,16 +42,16 @@ app.include_router(get_frontend_router(templates), tags=["frontend"])
 )
 async def proxy_to_api_civicpatch_org_endpoint(path: str, request: Request):
     # Inject Authorization header from env var
-    if not CRUDDER_SHARED_TOKEN:
-        raise HTTPException(status_code=500, detail="Missing CRUDDER_SHARED_TOKEN")
-    print(f"Proxying request to {CRUDDER_URL}: {request.method} /{path}")
+    if not API_CIVICPATCH_ORG_TOKEN:
+        raise HTTPException(status_code=500, detail="Missing API_CIVICPATCH_ORG_TOKEN")
+    print(f"Proxying request to {API_CIVICPATCH_ORG_URL}: {request.method} /{path}")
 
     method = request.method
-    url = f"{CRUDDER_URL}/api/{path}"
+    url = f"{API_CIVICPATCH_ORG_URL}/api/{path}"
     headers = dict(request.headers)
     headers.pop("host", None)
     headers.pop("accept-encoding", None)
-    headers["Authorization"] = f"{CRUDDER_SHARED_TOKEN}"  # Inject token
+    headers["Authorization"] = f"{API_CIVICPATCH_ORG_TOKEN}"  # Inject token
 
     data = await request.body()
     async with httpx.AsyncClient() as client:

@@ -10,8 +10,8 @@ from utils import id_utils
 
 pipeline_manager = get_pipeline_manager()
 
-CRUDDER_URL = os.getenv("CRUDDER_URL")
-CRUDDER_SHARED_TOKEN = os.getenv("CRUDDER_SHARED_TOKEN")
+API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL")
+API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
 
 
 async def run_pipeline_cli(request: PipelineRequest):
