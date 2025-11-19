@@ -103,7 +103,7 @@ async def lifespan(instance: FastAPI):
 
 
 app = FastAPI(
-    title="Crudder API",
+    title="CivicPatch API",
     description="A starter FastAPI application for CRUD operations.",
     version="1.0.0",
     lifespan=lifespan,
