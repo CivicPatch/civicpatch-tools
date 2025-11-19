@@ -139,14 +139,21 @@ def normalize_divisions(divisions: List[str]) -> List[str]:
     normalized = []
 
     for division in divisions:
+        # Skip None or empty values
+        if division is None or division == "":
+            continue
+            
         division = str(division).strip()
         if not division:
             continue
 
-        # Clean parenthetical content
+        # Clean parenthetical content and hash symbols
         clean_division = (
             division.split("(")[0].strip() if "(" in division else division.strip()
         )
+        # Remove hash symbols and normalize spacing
+        clean_division = clean_division.replace("#", "").replace("  ", " ").strip()
+        
         words = clean_division.split()
 
         if not words:
