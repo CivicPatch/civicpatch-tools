@@ -29,7 +29,7 @@ function DemoApiConfig() {
           class="contrast"
           .value=${baseUrl}
           @input=${(e) => setBaseUrl(e.target.value)}
-          placeholder="https://api.civicpatch.org/api or /api/api_proxy"
+          placeholder="https://api.civicpatch.org or /api/api_proxy"
         />
       </label>
       <label>

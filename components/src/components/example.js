@@ -12,7 +12,7 @@ function MyExample() {
         return;
     }
      
-    fetch(`${baseUrl}/jurisdictions/states`, { headers })
+    fetch(`${baseUrl}/api/jurisdictions/states`, { headers })
       .then((res) => res.json())
       .then(setData)
       .catch(console.error);

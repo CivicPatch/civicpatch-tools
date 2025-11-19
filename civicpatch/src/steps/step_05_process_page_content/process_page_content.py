@@ -304,7 +304,7 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     people = [LLMPerson.model_validate(r) if not isinstance(r, LLMPerson) else r for r in records]
 
     has_contact = any(
-        bool(p.phone_number) or bool(p.email) or bool(p.website)
+        sum([bool(p.phone_number), bool(p.email), bool(p.website)]) >= 2
         for p in people
     )
     # Case-insensitive role match
@@ -327,6 +327,7 @@ def update_website_links(logger, roles, existing_links: List[Link], records_by_l
             if existing_link.status == LinkStatus.PENDING.value:
                 # Move link to the front if it already exists
                 updated_links.remove(existing_link)
+                existing_link.is_profile_page = True
                 updated_links.insert(0, existing_link)
         else:
             new_link: Link = Link(
