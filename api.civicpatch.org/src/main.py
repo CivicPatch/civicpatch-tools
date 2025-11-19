@@ -26,7 +26,7 @@ from database import (
     pool,
     user_is_approved,
 )
-from utils.auth import require_route_access, get_optional_user
+from utils.auth import require_route_access, get_optional_user, require_route_access_optional
 
 # Only purpose is to manage users, their API keys, and move data from 3rd party servers
 # to GitHub Actions.
@@ -165,14 +165,14 @@ app.include_router(
     api_jurisdictions_router.get_router(),
     prefix="/api/jurisdictions",
     tags=["jurisdictions"],
-    dependencies=[Depends(require_route_access(RouteCategory.COMPONENT_API))]
+    dependencies=[Depends(require_route_access_optional(RouteCategory.COMPONENT_API))]
 )
 
 app.include_router(
     api_people_router.get_router(),
     prefix="/api/people",
     tags=["people"],
-    dependencies=[Depends(require_route_access(RouteCategory.COMPONENT_API))]
+    dependencies=[Depends(require_route_access_optional(RouteCategory.COMPONENT_API))]
 )
 
 app.include_router(
