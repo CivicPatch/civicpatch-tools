@@ -16,10 +16,13 @@ divisions:
       - city-wide
       - at large
       - city wide
+      - city
   position:
     aliases:
       - council position
       - position council
+      - posn
+      - pos.
   seat:
     aliases:
       - council seat
