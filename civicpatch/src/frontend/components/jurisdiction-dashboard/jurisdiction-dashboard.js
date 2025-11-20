@@ -161,7 +161,11 @@ function JurisdictionDashboard({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) 
       return false;
     }
 
-    console.log('Rendering with pipelineStatus:', pipelineStatus);
+    const scrapeStatus = data?.data?.updated_at ?
+        `Scraped` :
+        `Unscraped`;
+
+    console.log('Rendering with pipelineStatus: wooot', pipelineStatus);
 
     return html`
         <div style="display: flex; flex-direction: column; gap: 2rem;">
@@ -177,26 +181,33 @@ function JurisdictionDashboard({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) 
               ${
                 data ? html`
                       <header>
-                        <h2>${data.data.name}</h2>
-                        <small>Population: ${data.data.population.toLocaleString()}</small>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                          <h2 style="margin-bottom: 0">${data.data.name}</h2>
+                          <span style="font-size: 1.75rem">Status: ${scrapeStatus}</span>
+                        </div>
                       </header>
+                      <hr />
 
                       <p>
                         <strong>Jurisdiction ID:</strong> ${data.data.id} <br/>
-                        <strong>Website:</strong> ${data.data.url}
+                        <strong>Website:</strong> ${data.data.url} <br/>
+                        <strong>Geoid:</strong> ${data.data.geoid} <br/>
+                        <small>Population: ${data.data.population.toLocaleString()}</small> <br />
                       </p>
 
-                      <a href="${data.data.url}" target="_blank" role="button" class="secondary">
-                        Visit Official Website
-                      </a>
-
+                      <h3>Scrape History</h3>
                       <hr/>
+                      <civ-scrape-history
+                        .jurisdiction_ocdid_slug=${jurisdiction_ocdid_slug}
+                      ></civ-scrape-history>
 
-                      <p>Last Updated: ${data.data.updated_at ? new Date(data.data.updated_at).toLocaleString() : 'N/A'}</p>
+
+                      <p>Last Scraped: ${data.data.updated_at ? new Date(data.data.updated_at).toLocaleString() : 'N/A'}</p>
+
                       <button 
                         @click=${handleScrapeClick}
                         ?disabled=${!canStartScrape()}
-                        class="primary">Start Scrape</button>
+                        class="primary">Scrape Data for Jurisdiction</button>
                 ` : html`
                   <p>Loading jurisdiction data...</p>
                 `
@@ -212,7 +223,8 @@ function JurisdictionDashboard({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) 
               </div>
             ` : null
           }
-           
+          
+          <h2>Elected Representatives</h2>
           <civ-people-list
             .local=${people} 
           ></civ-people-list>
