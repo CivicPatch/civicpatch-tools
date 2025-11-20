@@ -13,6 +13,15 @@ permissions:
   packages: write
 
 jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Run unit tests
+        working-directory: ./civicpatch
+        run: |
+          docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m unit tests/unit
   build-and-push-docker-image:
     runs-on: ubuntu-latest
     steps:
