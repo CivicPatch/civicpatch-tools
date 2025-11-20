@@ -30,11 +30,12 @@ docker compose -f docker-compose.development.yml run --rm civicpatch xvfb-run -a
 """
 
 [tasks.devunittest]
-run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vm unit tests/unit/utils/test_people_utils.py
-"""
-#docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m unit tests/unit
+#run = """
+#docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vm unit tests/unit/utils/test_people_utils.py
 #"""
+run = """
+docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m unit tests/unit
+"""
 
 
 [tasks.dev]

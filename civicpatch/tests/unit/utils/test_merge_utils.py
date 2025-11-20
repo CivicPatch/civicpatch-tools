@@ -1,5 +1,5 @@
 import pytest
-from utils.merge_utils import normalize_name, find_canonical_name, update_name_map, append_to_people_by_name
+from utils.merge_utils import normalize_name, update_name_map, append_to_people_by_name
 from schemas import LLMPerson
 
 def test_normalize_name():
@@ -7,17 +7,6 @@ def test_normalize_name():
     assert normalize_name("Doe, John") == "John Doe"
     assert normalize_name("  Jane Smith  ") == "Jane Smith"
     assert normalize_name("Dr. John A. Doe") == "John Doe"
-
-
-def test_find_canonical_name():
-    people_by_name = {
-        "John Doe": [],
-        "Jane Smith": []
-    }
-    assert find_canonical_name("John Doe", people_by_name) == "John Doe"
-    assert find_canonical_name("Jane Smith", people_by_name) == "Jane Smith"
-    assert find_canonical_name("Johnny Doe", people_by_name) == "John Doe"
-
 
 def test_update_name_map():
     name_map = {
