@@ -3,31 +3,19 @@ import asyncio
 import os
 from typing import List
 
-from pipelines.main import get_pipeline_manager
+from pipelines.pipeline_manager import PipelineManager
 from pipelines.pipeline import Pipeline
 from schemas import PipelineRequest
 from utils import id_utils
 
-pipeline_manager = get_pipeline_manager()
+pipeline_manager = PipelineManager()
 
 API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL")
 API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
 
 
 async def run_pipeline_cli(request: PipelineRequest):
-    request_id = id_utils.make_request_id()
-    jurisdiction_id = id_utils.parse_jurisdiction_id(request.jurisdiction_id)
-    warnings: List[str] = []
-    errors: List[str] = []
-
-    if not jurisdiction_id:
-        errors.append(f"Invalid jurisdiction_id format: {request.jurisdiction_id}")
-    if not request.name:
-        warnings.append(
-            "Missing 'name' field: A name and legal status (e.g., 'Seattle city') is preferred for search purposes. Substituting with place name jurisdiction_id."
-        )
-    if not request.url:
-        errors.append("Missing 'url' field")
+    request_id, warnings, errors = await pipeline_manager.create_start_pipeline(request)
 
     for warning in warnings:
         print(f"Warning: {warning}")
@@ -36,13 +24,6 @@ async def run_pipeline_cli(request: PipelineRequest):
         print("Errors:", errors)
     else:
         print(f"Request ID: {request_id}")
-        pipeline = Pipeline(
-            request_id,
-            request,
-            remove_callback=None,
-        )
-        await pipeline.run_async()
-
 
 def main():
     parser = argparse.ArgumentParser(
