@@ -174,6 +174,8 @@ class PipelineRequest(BaseModel):
     url: str
     state: PipelineStatus = PipelineStatus.INIT
 
+    source_urls: Optional[List[str]] = None
+
 
 class PipelineContext(BaseModel):
     request_id: str

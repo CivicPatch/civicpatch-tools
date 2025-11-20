@@ -3,12 +3,24 @@ from pipelines.pipeline import Pipeline
 from schemas import PipelineRequest
 from fastapi import BackgroundTasks
 from utils import id_utils
+
+from urllib.parse import urlparse
 import asyncio
 
 
 class PipelineManager:
+    _instance = None
+    _initialized = False
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
     def __init__(self):
-        self._pipelines: dict[str, Pipeline] = {}
+        if not self._initialized:
+            self._pipelines: dict[str, Pipeline] = {}
+            self._initialized = True
 
     def add_pipeline(self, request_id, pipeline_request: PipelineRequest):
         pipeline = Pipeline(
@@ -43,6 +55,14 @@ class PipelineManager:
         if not pipeline_request.url:
             errors.append("Missing 'url' field.")
 
+        # Check all webpage_urls, if present, are valid URLs
+        if pipeline_request.source_urls:
+            for url in pipeline_request.source_urls:
+                parse_url = urlparse(url)
+                is_valid_url = all([parse_url.scheme, parse_url.netloc])
+                if not is_valid_url:
+                    errors.append(f"Invalid URL in source_urls: {url}") 
+
         if len(errors) > 0:
             return request_id, warnings, errors
 
@@ -56,16 +76,42 @@ class PipelineManager:
         self, jurisdiction_id: str, background_tasks: BackgroundTasks | None = None
     ):
         """Start an existing pipeline."""
+        errors = []
         pipeline = self.get_pipeline(jurisdiction_id)
         if not pipeline:
-            raise ValueError(f"No pipeline found for jurisdiction {jurisdiction_id}.")
+            errors.append(f"No pipeline found for jurisdiction {jurisdiction_id}.")
+            return errors
 
         pipeline.stop_requested = False  # Reset stop flag
-        if background_tasks:
+        
+        if background_tasks:  # FastAPI context
             background_tasks.add_task(pipeline.run)
-        else:
-            asyncio.create_task(pipeline.run_async())
-        return {"status": "started", "jurisdiction_id": jurisdiction_id}
+        # For CLI, don't start here - let the caller await it directly
+        
+        return errors
+
+    async def create_start_pipeline(
+        self,
+        pipeline_request: PipelineRequest,
+        background_tasks: BackgroundTasks | None = None,
+    ):
+        """Create and start a new pipeline."""
+        request_id, warnings, errors = self.create_pipeline(pipeline_request)
+        if len(errors) > 0:
+            return request_id, warnings, errors
+
+        # Both contexts use start_pipeline for setup
+        errors = self.start_pipeline(pipeline_request.jurisdiction_id, background_tasks)
+        
+        # CLI context: await the pipeline execution
+        if not background_tasks:
+            pipeline = self.get_pipeline(pipeline_request.jurisdiction_id)
+            if pipeline:
+                await pipeline.run_async()
+            else:
+                errors.extend([f"Pipeline not found for {pipeline_request.jurisdiction_id}"])
+        
+        return request_id, warnings, errors
 
     def stop_pipeline(self, jurisdiction_id: str):
         pipeline = self.get_pipeline(jurisdiction_id)

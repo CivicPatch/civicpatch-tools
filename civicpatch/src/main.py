@@ -6,10 +6,13 @@ from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+
 # import traceback
 # from auth.token_handler import verify_github_action_data_query
-from routers.api import router as api_router
+from routers.api import get_router as get_api_router
 from routers.frontend import get_router as get_frontend_router
+
+from pipelines.pipeline_manager import PipelineManager
 
 API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "http://localhost:8001")
 API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
@@ -17,13 +20,13 @@ API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
 app = FastAPI()
 app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
 
-
-# civicpatch_webdev_port = os.getenv("CIVICPATCH_WEBDEV_PORT", 8002)
 civicpatch_env = os.getenv("CIVICPATCH_ENV", "development")
 is_production = civicpatch_env == "production"
 
 templates = Jinja2Templates(directory="src/frontend/templates")
 templates.env.globals["is_production"] = is_production
+
+pipeline_manager = PipelineManager()
 
 if not is_production:
     hot_reload = arel.HotReload(paths=[arel.Path("src/frontend")])
@@ -32,8 +35,8 @@ if not is_production:
     app.add_event_handler("shutdown", hot_reload.shutdown)
     templates.env.globals["hot_reload"] = hot_reload
 
-app.include_router(api_router, prefix="/api", tags=["api"])
-app.include_router(get_frontend_router(templates), tags=["frontend"])
+app.include_router(get_api_router(pipeline_manager), prefix="/api", tags=["api"])
+app.include_router(get_frontend_router(templates, pipeline_manager), tags=["frontend"])
 
 
 @app.api_route(

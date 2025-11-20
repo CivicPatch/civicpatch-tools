@@ -12,10 +12,8 @@ from fastapi.templating import Jinja2Templates
 from schemas import PipelineRequest
 from utils import id_utils, data_path_utils
 from pipelines.pipeline_manager import PipelineManager
-from pipelines.main import get_pipeline_manager
 
-
-def get_router(templates: Jinja2Templates) -> APIRouter:
+def get_router(templates: Jinja2Templates, pipeline_manager: PipelineManager) -> APIRouter:
     router = APIRouter()
 
     REQUIRED_ENV_VARS = [
@@ -60,7 +58,6 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         jurisdiction_id: str = Form(...),
         name: str = Form(...),
         url: str = Form(...),
-        pipeline_manager: PipelineManager = Depends(get_pipeline_manager),
     ):
         request = PipelineRequest(jurisdiction_id=jurisdiction_id, name=name, url=url)
         # TODO: expose this to frontend?
