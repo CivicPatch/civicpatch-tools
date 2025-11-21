@@ -141,9 +141,24 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
     return result.data;
   };
 
-  const handleScrapeClick = (event) => {
-    console.log("handlescing scrape clik...");
+  const handleScrapeModalClick = (event) => {
     scrapeModal.openModal();
+  };
+
+  const handleScrapeStartClick = async (details) => {
+    setPipelineStatusIsLoading(true);
+    const body = {
+      name: data.data.name,
+      jurisdiction_id: data.data.id,
+      url: details.data.url || data.data.url,
+      source_urls: details.data.sourceUrls,
+    };
+    const response = await fetch(`/api/pipelines`, {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+    connectStream();
   };
 
   const canStartScrape = !pipelineStatus && !pipelineStatusIsLoading;
@@ -200,13 +215,13 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
                 </p>
 
                 <civ-scrape-modal
+                  .onStartScrape=${handleScrapeStartClick}
                   .url=${data.data.url}
                   .modalProps=${scrapeModal.modalProps}
                 ></civ-scrape-modal>
 
                 <button
-                  @click=${handleScrapeClick}
-                  .onStartScrape="$()"
+                  @click=${handleScrapeModalClick}
                   ?disabled=${!canStartScrape}
                   class="primary"
                 >

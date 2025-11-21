@@ -182,6 +182,7 @@ class PipelineContext(BaseModel):
     jurisdiction_id: str
     name: str  # Name of municipality + lsad (ex: Naperville township)
     url: str  # Municipality url. Without it we can't scrape anything.
+    source_urls: Optional[List[str]] = None
     state: PipelineStatus = PipelineStatus.INIT
     links: List[Link] = []
     progress: ProgressState = ProgressState(

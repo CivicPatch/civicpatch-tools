@@ -1,27 +1,34 @@
 MAX_RETRIES = 3
 
-from typing import Any, Dict, cast 
+from typing import Any, Dict, cast
+
 from schemas import (
-    PipelineContext, Link, LinkStatus, 
-    PipelineStatus, ResearchMunicipalityStep, 
-    SearchLinksStep, SearchEngineState, SearchLinksStep
+    Link,
+    LinkStatus,
+    PipelineContext,
+    PipelineStatus,
+    ResearchMunicipalityStep,
+    SearchEngineState,
+    SearchLinksStep,
 )
+from utils import log_utils
 from utils.array_utils import interleave_arrays
 from utils.config_utils import search_keywords
 from utils.request_utils import with_retry
-from utils import log_utils
-from .utils import search, SearchEngineNames
+
+from .utils import SearchEngineNames, search
 
 DEFAULT_SEARCH_LINKS_STEP = SearchLinksStep(
     search_link_pointer=0,
     search_engines={
         "google": SearchEngineState(links=[], status="not_started"),
-        #"serpapi": SearchEngineState(links=[], status="not_started"),
-        #"brave": SearchEngineState(links=[], status="not_started"),
+        # "serpapi": SearchEngineState(links=[], status="not_started"),
+        # "brave": SearchEngineState(links=[], status="not_started"),
         "crawl": SearchEngineState(links=[], status="not_started"),
     },
-    error=None
+    error=None,
 )
+
 
 def search_links(context: PipelineContext) -> Dict[str, Any]:
     """
@@ -42,7 +49,9 @@ def search_links(context: PipelineContext) -> Dict[str, Any]:
     municipality_name = context.name
     municipality_website = context.url
 
-    research_municipality_step = cast(ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY])
+    research_municipality_step = cast(
+        ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY]
+    )
     government_type = research_municipality_step.government_type
 
     keyword_term_groups = search_keywords(government_type)
@@ -52,13 +61,21 @@ def search_links(context: PipelineContext) -> Dict[str, Any]:
     search_engine = SearchEngineNames[search_link_pointer]
 
     if not search_engine:
-        return {} # TODO set failure
+        return {}  # TODO set failure
 
     def search_all_keywords():
         urls_found = []
         for keyword_term in keyword_term_groups:
             logger.info(f"Searching for keyword term: {keyword_term}")
-            urls_for_term = municipality_search(logger, request_id, jurisdiction_id, municipality_name, municipality_website, search_engine, keyword_term)
+            urls_for_term = municipality_search(
+                logger,
+                request_id,
+                jurisdiction_id,
+                municipality_name,
+                municipality_website,
+                search_engine,
+                keyword_term,
+            )
             urls_found.append(urls_for_term)
         return urls_found
 
@@ -71,7 +88,9 @@ def search_links(context: PipelineContext) -> Dict[str, Any]:
         status_value = "error"
         error_message = str(e)
 
-    interleaved_urls = interleave_arrays(urls_found) if status_value == "completed" else []
+    interleaved_urls = (
+        interleave_arrays(urls_found) if status_value == "completed" else []
+    )
     updated_links = context.links.copy()
 
     for url in interleaved_urls:
@@ -81,10 +100,7 @@ def search_links(context: PipelineContext) -> Dict[str, Any]:
 
     updated_search_engines = {
         **search_links_step.search_engines,
-        search_engine: SearchEngineState(
-            links = interleaved_urls,
-            status = status_value
-        )
+        search_engine: SearchEngineState(links=interleaved_urls, status=status_value),
     }
 
     result = {
@@ -92,13 +108,22 @@ def search_links(context: PipelineContext) -> Dict[str, Any]:
         "result": SearchLinksStep(
             search_link_pointer=search_link_pointer + 1,
             search_engines=updated_search_engines,
-            error=error_message
-        )
+            error=error_message,
+        ),
     }
 
     return result
 
-def municipality_search(logger, request_id, jurisdiction_id, municipality_name, municipality_website, search_engine, keyword_term: str):
+
+def municipality_search(
+    logger,
+    request_id,
+    jurisdiction_id,
+    municipality_name,
+    municipality_website,
+    search_engine,
+    keyword_term: str,
+):
     """
     Search for a single keyword term using multiple search engines with fallback logic.
     """
@@ -116,13 +141,15 @@ def municipality_search(logger, request_id, jurisdiction_id, municipality_name, 
         jurisdiction_id=jurisdiction_id,
         municipality_name=municipality_name,
         municipality_website=municipality_website,
-        search_query=keyword_with_type
+        search_query=keyword_with_type,
     )
 
     if not results:
         raise Exception(f"No results found with {search_engine}")
 
-    logger.info(f"Search successful with {search_engine}. Found {len(results)} results.")
+    logger.info(
+        f"Search successful with {search_engine}. Found {len(results)} results."
+    )
     urls.extend(results)
 
     return urls  # Return results immediately on success
