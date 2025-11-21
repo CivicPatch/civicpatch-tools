@@ -69,83 +69,137 @@ DEFAULT_PROCESS_PAGE_CONTENT_STEP = ProcessPageContentStep(
     }
 )
 
-def process_page_content(
-    context: PipelineContext,
-    page_to_process: Link
-) -> Dict[str, Any]:
-    """
-    Process the preprocessed data to extract relevant information.
-    """
+def process_page_content(context: PipelineContext, page_to_process: Link) -> Dict[str, Any]:
+    """Process a single page to extract people and government information."""
     logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
     logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
-    request_id = context.request_id
-    jurisdiction_id = context.jurisdiction_id
-    municipality_research: ResearchMunicipalityStep = ResearchMunicipalityStep.model_validate(
-        cast(ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY])
+    # Setup processing context
+    setup_data = _get_setup_data(context)
+    
+    # Read content and process with LLMs
+    content = _read_preprocessed_content(context.jurisdiction_id, page_to_process)
+    llm_responses = process_with_llms(
+        page_to_process.url, 
+        context.request_id, 
+        context.jurisdiction_id,
+        setup_data.government_type,
+        content,
+        setup_data.people_hint
     )
-    government_type = municipality_research.government_type
-
-    # Only care about collecting divisions that have geographic areas
-    divisions = config_utils.get_divisions()
-    divisions_with_geo = [d for d, v in divisions.items() if v.get("has_geographic_area", False)]
-
-    people_hint: List[ResearchedPerson] = municipality_research.elected_officials
-
-    cache_path = data_path_utils.get_cache_path(jurisdiction_id)
-    content_file_path = os.path.join(cache_path, page_to_process.folder_name, "preprocessed.md")
-    with open(content_file_path, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    source_url = page_to_process.url
-
-    responses = process_with_llms(source_url, request_id, jurisdiction_id, government_type, content, people_hint)
-
-    updated_processed_data = context.steps.get(PipelineStatus.PROCESS_PAGE_CONTENT, DEFAULT_PROCESS_PAGE_CONTENT_STEP)
-    if not isinstance(updated_processed_data, ProcessPageContentStep):
-        updated_processed_data = ProcessPageContentStep.model_validate(updated_processed_data)
-
-    updated_processed_data = cast(ProcessPageContentStep, updated_processed_data)
-
-    names: Dict[str, List[str]] = context.names
-    updated_names, updated_records_by_llm = update_records_by_llm(
-        names, updated_processed_data.records_by_llm, responses
-    )
-    updated_processed_data.raw_records_by_llm = updated_records_by_llm
-
-    for llm, people_by_name in updated_records_by_llm.items():
-        for name, people in people_by_name.items():
-            normalized_people = [normalize_record(logger, person, government_type) for person in people]
-            updated_processed_data.records_by_llm[llm][name] = normalized_people
-            updated_processed_data.raw_records_by_llm[llm][name] = people  # Keep raw records as is
-
-    roles = config_utils.get_roles_by_government_type(government_type)
-    target_role = config_utils.get_head_of_government_role(government_type)
-    target_divisions = get_target_divisions(divisions_with_geo, people_hint)
-
+    
+    # Update all data structures
+    updated_step_data = _update_step_data(context, llm_responses)
     updated_progress = calculate_progress(
-        context.progress, 
-        updated_processed_data.records_by_llm, 
-        roles,
-        target_role, 
-        target_divisions
+        context.progress,
+        updated_step_data.records_by_llm,
+        setup_data.roles,
+        setup_data.target_role,
+        setup_data.target_divisions
     )
-
-    updated_links = []
-    for link in context.links:
-        if link.url == page_to_process.url:
-            # Update the status/content for this link
-            link.status = LinkStatus.DONE.value
-        updated_links.append(link)
-
-    updated_links = update_website_links(logger, roles, updated_links, updated_processed_data.records_by_llm)
+    updated_links = _update_links(context.links, page_to_process, logger, setup_data.roles, updated_step_data.records_by_llm)
 
     return {
         "links": updated_links,
         "progress": updated_progress,
-        "names": updated_names,
-        "result": updated_processed_data
+        "names": updated_step_data.names,
+        "result": updated_step_data.step_data
     }
+
+# Helper dataclass for setup data
+from dataclasses import dataclass
+
+@dataclass
+class ProcessingSetup:
+    government_type: str
+    people_hint: List[ResearchedPerson]
+    roles: List[str]
+    target_role: str
+    target_divisions: List[str]
+
+@dataclass
+class UpdatedStepData:
+    names: Dict[str, List[str]]
+    step_data: ProcessPageContentStep
+    #records_by_llm: ??
+
+
+def _get_setup_data(context: PipelineContext) -> ProcessingSetup:
+    """Extract all setup data needed for processing."""
+    municipality_research = ResearchMunicipalityStep.model_validate(
+        cast(ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY])
+    )
+    
+    divisions = config_utils.get_divisions()
+    divisions_with_geo = [d for d, v in divisions.items() if v.get("has_geographic_area", False)]
+    
+    roles = config_utils.get_roles_by_government_type(municipality_research.government_type)
+    target_role = config_utils.get_head_of_government_role(municipality_research.government_type)
+    target_divisions = get_target_divisions(divisions_with_geo, municipality_research.elected_officials)
+    
+    return ProcessingSetup(
+        government_type=municipality_research.government_type,
+        people_hint=municipality_research.elected_officials,
+        roles=roles,
+        target_role=target_role,
+        target_divisions=target_divisions
+    )
+
+
+def _read_preprocessed_content(jurisdiction_id: str, page_to_process: Link) -> str:
+    """Read the preprocessed markdown content."""
+    cache_path = data_path_utils.get_cache_path(jurisdiction_id)
+    content_file_path = os.path.join(cache_path, page_to_process.folder_name, "preprocessed.md")
+    
+    with open(content_file_path, "r", encoding="utf-8") as f:
+        return f.read()
+
+
+def _update_step_data(context: PipelineContext, llm_responses: Dict[str, List[LLMPerson]]) -> UpdatedStepData:
+    """Update and normalize all processed records."""
+    # Get current step data
+    current_step_data = context.steps.get(PipelineStatus.PROCESS_PAGE_CONTENT, DEFAULT_PROCESS_PAGE_CONTENT_STEP)
+    if not isinstance(current_step_data, ProcessPageContentStep):
+        current_step_data = ProcessPageContentStep.model_validate(current_step_data)
+    
+    # Update names and records
+    updated_names, updated_records_by_llm = update_records_by_llm(
+        context.names, 
+        current_step_data.records_by_llm, 
+        llm_responses
+    )
+    
+    # Store raw and normalized records
+    current_step_data.raw_records_by_llm = updated_records_by_llm
+    
+    # Normalize all records
+    government_type = cast(ResearchMunicipalityStep, 
+                          context.steps[PipelineStatus.RESEARCH_MUNICIPALITY]).government_type
+    logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
+    
+    for llm, people_by_name in updated_records_by_llm.items():
+        for name, people in people_by_name.items():
+            normalized_people = [normalize_record(logger, person, government_type) for person in people]
+            current_step_data.records_by_llm[llm][name] = normalized_people
+            current_step_data.raw_records_by_llm[llm][name] = people
+    
+    return UpdatedStepData(
+        names=updated_names,
+        step_data=current_step_data
+    )
+
+
+def _update_links(context_links: List[Link], processed_page: Link, logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[Link]:
+    """Update processed page status and add new website links."""
+    # Mark processed page as done
+    updated_links = []
+    for link in context_links:
+        if link.url == processed_page.url:
+            link.status = LinkStatus.DONE.value
+        updated_links.append(link)
+    
+    # Add any new website links found
+    return update_website_links(logger, roles, updated_links, records_by_llm)
 
 def normalize_record(logger, record: LLMPerson, government_type: str) -> LLMPerson:
     """
@@ -324,19 +378,19 @@ def update_website_links(logger, roles, existing_links: List[Link], records_by_l
     for website in found_websites:
         existing_link = next((link for link in updated_links if link.url == website), None)
         if existing_link:
+            # Only update if status is PENDING - don't re-add to list
             if existing_link.status == LinkStatus.PENDING.value:
-                # Move link to the front if it already exists
                 updated_links.remove(existing_link)
                 existing_link.is_profile_page = True
                 updated_links.insert(0, existing_link)
         else:
+            # Only add if it's a completely new link
             new_link: Link = Link(
                 url=website,
                 status=LinkStatus.PENDING.value,
                 folder_name=url_utils.format_url_to_folder(website),
                 is_profile_page=True
             )
-            # Add to the front of the list
             updated_links.insert(0, new_link)
 
     return updated_links

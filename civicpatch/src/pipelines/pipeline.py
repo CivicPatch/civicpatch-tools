@@ -1,22 +1,22 @@
-from datetime import datetime, timezone
-import os
+import asyncio
 import json
+import os
+import time
+from datetime import datetime, timezone
+from typing import Dict, List, cast
+
+import aiofiles
+
 from schemas import (
+    Link,
+    LinkStatus,
+    Person,
     PipelineContext,
     PipelineRequest,
     PipelineStatus,
-    LinkStatus,
     ProcessConfig,
-    Link,
-    Person,
     SearchLinksStep,
 )
-from typing import List, cast, Dict
-import time
-import asyncio
-import aiofiles
-
-from utils import data_path_utils, config_utils, log_utils, cost_utils
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from steps.step_01_research_municipality.research_municipality import (
     research_municipality,
@@ -36,6 +36,7 @@ from steps.step_07_merge_records_across_llms.merge_records_across_llms import (
 )
 from steps.step_08_cleanup.cleanup import cleanup
 from steps.step_09_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
+from utils import config_utils, cost_utils, data_path_utils, log_utils
 
 
 class Pipeline:
@@ -102,6 +103,7 @@ class Pipeline:
             jurisdiction_id=jurisdiction_id,
             name=pipeline_request.name,
             url=pipeline_request.url,
+            source_urls=pipeline_request.source_urls,
         )
 
         print(f"{jurisdiction_id}/{request_id}: New pipeline context created.")
@@ -160,11 +162,18 @@ class Pipeline:
                 elif self.context.state == PipelineStatus.RESEARCH_MUNICIPALITY:
                     result = research_municipality(self.context)
                     self.context.progress = result["progress"]
-                    self.context.steps[PipelineStatus.RESEARCH_MUNICIPALITY] = result[
-                        "result"
-                    ]
+                    self.context.steps[PipelineStatus.RESEARCH_MUNICIPALITY] = result["result"]
 
-                    self.context.state = PipelineStatus.SEARCH_LINKS
+                    if self.context.source_urls and len(self.context.source_urls) > 0:
+                        logger.info("Source URLs provided, skipping link search.")
+                        self.context.links = [
+                            Link(url=sl, status=LinkStatus.PENDING.value)
+                            for sl in self.context.source_urls
+                        ]
+                        self.context.state = PipelineStatus.SCRAPE_PAGE
+                    else:
+                        logger.info("Source URLs not found, googling for links.")
+                        self.context.state = PipelineStatus.SEARCH_LINKS
 
                 elif self.context.state == PipelineStatus.SEARCH_LINKS:
                     if PipelineStatus.SEARCH_LINKS not in self.context.steps:

@@ -2,7 +2,12 @@ import { component, useState } from "haunted";
 import { html } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 
-function ScrapeModal({ url = "", sourceUrls = [], modalProps = {} }) {
+function ScrapeModal({
+  onStartScrape,
+  url = "",
+  sourceUrls = [],
+  modalProps = {},
+}) {
   const [scrapeScope, setScrapeScope] = useState("top-level-url");
   const [currentUrl, setCurrentUrl] = useState(url);
   const [currentSourceUrls, setCurrentSourceUrls] = useState(sourceUrls);
@@ -62,18 +67,23 @@ function ScrapeModal({ url = "", sourceUrls = [], modalProps = {} }) {
       : currentSourceUrlsValid();
 
   const submitScrape = () => {
-    this.dispatchEvent(
-      new CustomEvent("start-scrape", {
-        detail: {
-          scope: scrapeScope,
-          url: scrapeScope === "top-level-url" ? currentUrl : null,
-          sourceUrls:
-            scrapeScope === "specific-urls" ? currentSourceUrls : null,
+    let data = {};
+    if (scrapeScope == "top-level-url") {
+      data = {
+        scrapeScope,
+        data: {
+          url: currentUrl,
         },
-        bubbles: true,
-        composed: true,
-      }),
-    );
+      };
+    } else {
+      data = {
+        scrapeScope,
+        data: {
+          sourceUrls: currentSourceUrls,
+        },
+      };
+    }
+    onStartScrape(data);
   };
 
   return html`
@@ -149,7 +159,6 @@ function ScrapeModal({ url = "", sourceUrls = [], modalProps = {} }) {
           <button @click=${modalProps.onClose} class="secondary">Cancel</button>
           <button
             @click=${() => {
-              console.log("Starting scrape with scope:", scrapeScope);
               submitScrape();
               modalProps.onClose();
             }}

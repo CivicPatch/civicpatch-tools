@@ -99,7 +99,6 @@ docker compose build
 ## Code Style
 
 ### Frontend Components
-
 - Callbacks vs events
   - When events can be handled in various ways, or when handling is optional
   - Callbacks when something **must** be dealt with
