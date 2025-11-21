@@ -1,5 +1,6 @@
 import os
 import copy
+from dataclasses import dataclass
 from schemas import (
   PipelineContext, 
   Link, 
@@ -27,9 +28,23 @@ import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 import services.openai.llm as openai_llm
 import services.openai.prompts as openai_prompt
-import services.together_ai.llm as together_ai_llm
-import services.together_ai.prompts as together_ai_prompt
+#import services.together_ai.llm as together_ai_llm
+#import services.together_ai.prompts as together_ai_prompt
 import phonenumbers
+
+@dataclass
+class ProcessingSetup:
+    government_type: str
+    people_hint: List[ResearchedPerson]
+    roles: List[str]
+    target_role: str
+    target_divisions: List[str]
+
+@dataclass
+class UpdatedStepData:
+    names: Dict[str, List[str]]
+    step_data: ProcessPageContentStep
+    records_by_llm: RecordsByLLM
 
 LLMS = [
     {
@@ -70,15 +85,12 @@ DEFAULT_PROCESS_PAGE_CONTENT_STEP = ProcessPageContentStep(
 )
 
 def process_page_content(context: PipelineContext, page_to_process: Link) -> Dict[str, Any]:
-    """Process a single page to extract people and government information."""
     logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
     logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
-    # Setup processing context
-    setup_data = _get_setup_data(context)
+    setup_data = get_setup_data(context)
     
-    # Read content and process with LLMs
-    content = _read_preprocessed_content(context.jurisdiction_id, page_to_process)
+    content = read_preprocessed_content(context.jurisdiction_id, page_to_process)
     llm_responses = process_with_llms(
         page_to_process.url, 
         context.request_id, 
@@ -88,8 +100,7 @@ def process_page_content(context: PipelineContext, page_to_process: Link) -> Dic
         setup_data.people_hint
     )
     
-    # Update all data structures
-    updated_step_data = _update_step_data(context, llm_responses)
+    updated_step_data = update_step_data(context, llm_responses)
     updated_progress = calculate_progress(
         context.progress,
         updated_step_data.records_by_llm,
@@ -97,7 +108,7 @@ def process_page_content(context: PipelineContext, page_to_process: Link) -> Dic
         setup_data.target_role,
         setup_data.target_divisions
     )
-    updated_links = _update_links(context.links, page_to_process, logger, setup_data.roles, updated_step_data.records_by_llm)
+    updated_links = update_links(context.links, page_to_process, logger, setup_data.roles, updated_step_data.records_by_llm)
 
     return {
         "links": updated_links,
@@ -106,26 +117,7 @@ def process_page_content(context: PipelineContext, page_to_process: Link) -> Dic
         "result": updated_step_data.step_data
     }
 
-# Helper dataclass for setup data
-from dataclasses import dataclass
-
-@dataclass
-class ProcessingSetup:
-    government_type: str
-    people_hint: List[ResearchedPerson]
-    roles: List[str]
-    target_role: str
-    target_divisions: List[str]
-
-@dataclass
-class UpdatedStepData:
-    names: Dict[str, List[str]]
-    step_data: ProcessPageContentStep
-    #records_by_llm: ??
-
-
-def _get_setup_data(context: PipelineContext) -> ProcessingSetup:
-    """Extract all setup data needed for processing."""
+def get_setup_data(context: PipelineContext) -> ProcessingSetup:
     municipality_research = ResearchMunicipalityStep.model_validate(
         cast(ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY])
     )
@@ -146,7 +138,7 @@ def _get_setup_data(context: PipelineContext) -> ProcessingSetup:
     )
 
 
-def _read_preprocessed_content(jurisdiction_id: str, page_to_process: Link) -> str:
+def read_preprocessed_content(jurisdiction_id: str, page_to_process: Link) -> str:
     """Read the preprocessed markdown content."""
     cache_path = data_path_utils.get_cache_path(jurisdiction_id)
     content_file_path = os.path.join(cache_path, page_to_process.folder_name, "preprocessed.md")
@@ -155,26 +147,23 @@ def _read_preprocessed_content(jurisdiction_id: str, page_to_process: Link) -> s
         return f.read()
 
 
-def _update_step_data(context: PipelineContext, llm_responses: Dict[str, List[LLMPerson]]) -> UpdatedStepData:
+def update_step_data(context: PipelineContext, llm_responses: Dict[str, List[LLMPerson]]) -> UpdatedStepData:
     """Update and normalize all processed records."""
-    # Get current step data
     current_step_data = context.steps.get(PipelineStatus.PROCESS_PAGE_CONTENT, DEFAULT_PROCESS_PAGE_CONTENT_STEP)
     if not isinstance(current_step_data, ProcessPageContentStep):
         current_step_data = ProcessPageContentStep.model_validate(current_step_data)
     
-    # Update names and records
     updated_names, updated_records_by_llm = update_records_by_llm(
         context.names, 
         current_step_data.records_by_llm, 
         llm_responses
     )
     
-    # Store raw and normalized records
     current_step_data.raw_records_by_llm = updated_records_by_llm
     
-    # Normalize all records
     government_type = cast(ResearchMunicipalityStep, 
                           context.steps[PipelineStatus.RESEARCH_MUNICIPALITY]).government_type
+    
     logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
     
     for llm, people_by_name in updated_records_by_llm.items():
@@ -185,11 +174,12 @@ def _update_step_data(context: PipelineContext, llm_responses: Dict[str, List[LL
     
     return UpdatedStepData(
         names=updated_names,
-        step_data=current_step_data
+        step_data=current_step_data,
+        records_by_llm=current_step_data.records_by_llm
     )
 
 
-def _update_links(context_links: List[Link], processed_page: Link, logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[Link]:
+def update_links(context_links: List[Link], processed_page: Link, logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[Link]:
     """Update processed page status and add new website links."""
     # Mark processed page as done
     updated_links = []

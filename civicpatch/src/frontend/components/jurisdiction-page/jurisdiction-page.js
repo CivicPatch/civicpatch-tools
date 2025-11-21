@@ -195,9 +195,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
                   <strong>Jurisdiction ID:</strong> ${data.data.id} <br />
                   <strong>Website:</strong> ${data.data.url} <br />
                   <strong>Geoid:</strong> ${data.data.geoid} <br />
-                  <small
-                    >Population: ${data.data.population.toLocaleString()}</small
-                  >
+                  <strong>Population: ${data.data.population.toLocaleString()}</strong>
                   <br />
                 </p>
 
