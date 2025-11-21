@@ -72,23 +72,27 @@ class PipelineManager:
 
         return request_id, warnings, errors
 
-    def start_pipeline(
-        self, jurisdiction_id: str, background_tasks: BackgroundTasks | None = None
+    async def start_pipeline(
+        self,
+        request_id: str,
+        pipeline_request: PipelineRequest,
+        background_tasks: BackgroundTasks,
     ):
-        """Start an existing pipeline."""
         errors = []
-        pipeline = self.get_pipeline(jurisdiction_id)
+        warnings = []
+        pipeline = self.get_pipeline(pipeline_request.jurisdiction_id)
         if not pipeline:
-            errors.append(f"No pipeline found for jurisdiction {jurisdiction_id}.")
-            return errors
+            errors.append(f"No pipeline found for jurisdiction {pipeline_request.jurisdiction_id}.")
+            return request_id, warnings, errors
 
         pipeline.stop_requested = False  # Reset stop flag
-        
-        if background_tasks:  # FastAPI context
+
+        if background_tasks:
             background_tasks.add_task(pipeline.run)
-        # For CLI, don't start here - let the caller await it directly
-        
-        return errors
+        else:
+            await pipeline.run_async()
+
+        return request_id, warnings, errors
 
     async def create_start_pipeline(
         self,
@@ -96,20 +100,14 @@ class PipelineManager:
         background_tasks: BackgroundTasks | None = None,
     ):
         """Create and start a new pipeline."""
+        errors = []
         request_id, warnings, errors = self.create_pipeline(pipeline_request)
         if len(errors) > 0:
             return request_id, warnings, errors
 
-        # Both contexts use start_pipeline for setup
-        errors = self.start_pipeline(pipeline_request.jurisdiction_id, background_tasks)
-        
-        # CLI context: await the pipeline execution
-        if not background_tasks:
-            pipeline = self.get_pipeline(pipeline_request.jurisdiction_id)
-            if pipeline:
-                await pipeline.run_async()
-            else:
-                errors.extend([f"Pipeline not found for {pipeline_request.jurisdiction_id}"])
+        request_id, warnings, errors = await self.start_pipeline(
+            request_id, pipeline_request, background_tasks
+        )
         
         return request_id, warnings, errors
 

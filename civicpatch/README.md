@@ -95,10 +95,11 @@ docker compose build
     - Update `CivicPatch Server URL` to `https://fedora.dropbear-minnow.ts.net`
     - Generate the API key. This is your `API_CIVICPATCH_ORG_TOKEN`
     - Update your environment variables and restart your server.
-## TODOS
 
-- [ ] 
-- [ ] Add logger for each step
-  - [ ] collect
-- [ ] Update token variables on github
-- [ ] Add logger for search engine costs
+## Code Style
+
+### Frontend Components
+
+- Callbacks vs events
+  - When events can be handled in various ways, or when handling is optional
+  - Callbacks when something **must** be dealt with
