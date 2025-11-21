@@ -1,5 +1,5 @@
 import { component } from "haunted";
-import { html, css } from "lit-html";
+import { html } from "lit-html";
 
 function ScrapeHistory({ scrapes = [] }) {
 
