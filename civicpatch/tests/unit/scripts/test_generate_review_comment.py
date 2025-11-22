@@ -74,22 +74,23 @@ def test_generate_review_comment_with_missing_llm_values():
     # | email | 0.50 | john@city.gov | (missing) | john@city.gov |
     assert "(missing)" in comment, "Expected '(missing)' to appear in the comment for LLMs without values"
     
-    # Verify that empty strings don't appear in the table for LLM values
-    # Check that there isn't a pattern like "| | |" which would indicate empty cells
+    # Verify that the openai column shows "(missing)" and not an empty string
     lines = comment.split("\n")
     for line in lines:
         if line.strip().startswith("| email"):
             # This is the data row for the email field
-            # It should contain "(missing)" and not have empty cells
+            # Parse the columns
             parts = [p.strip() for p in line.split("|")]
-            # parts should be: ['', 'email', '0.50', 'john@city.gov', '(missing)', 'john@city.gov', '']
-            # or: ['', 'email', '0.50', 'john@city.gov', '**john@city.gov**', 'john@city.gov', '']
-            # The openai column should not be empty
-            assert len(parts) > 4, f"Expected at least 5 columns in line: {line}"
-            openai_column = parts[4]  # The openai column (0-indexed: '', field, score, gemini, openai, final)
+            # Expected format: ['', 'field', 'score', 'gemini', 'openai', 'final', '']
+            assert len(parts) >= 6, f"Expected at least 6 columns in line: {line}"
+            
+            # Column indices: 0='', 1=field, 2=score, 3=gemini, 4=openai, 5=final, 6=''
+            OPENAI_COLUMN_INDEX = 4
+            openai_column = parts[OPENAI_COLUMN_INDEX]
+            
             assert openai_column != "", f"Expected openai column to not be empty, got: {parts}"
-            assert "(missing)" in openai_column or "john@city.gov" in openai_column, \
-                f"Expected openai column to contain '(missing)' or a value, got: {openai_column}"
+            assert "(missing)" in openai_column, \
+                f"Expected openai column to contain '(missing)', got: {openai_column}"
 
 
 def test_generate_review_comment_with_all_llms_present():
