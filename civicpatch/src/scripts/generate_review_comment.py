@@ -79,9 +79,9 @@ def generate_review_comment(pipeline_context: PipelineContext, people: List[Pers
                 unique_values = set(llm_values.values())
                 
                 # If a value is unique (doesn't match others), it should be bold
-                gemini_value = llm_values.get("google_gemini", "")
-                openai_value = llm_values.get("openai", "")
-                # together_value = llm_values.get("together_ai", "")
+                gemini_value = llm_values.get("google_gemini", "(missing)")
+                openai_value = llm_values.get("openai", "(missing)")
+                # together_value = llm_values.get("together_ai", "(missing)")
                 
                 # Bold values that don't match the final value
                 if len(unique_values) > 1:
