@@ -50,6 +50,10 @@ class GitDatabaseSync:
                 subprocess.run(
                     ["git", "-C", str(self.repo_path), "fetch", "origin"], check=True
                 )
+                # Update the local branch to match the fetched origin/main
+                subprocess.run(
+                    ["git", "-C", str(self.repo_path), "reset", "--hard", "origin/main"], check=True
+                )
                 return "fetched"
             else:
                 # Directory exists but is not a valid repo (e.g., partial clone)
