@@ -128,7 +128,7 @@ WORKDIR /app
 RUN ls -la
 COPY ${PROJECT_NAME}/src/frontend/package*.json /app
 RUN npm install
-COPY ${PROECT_NAME}/src/frontend/ /app
+COPY ${PROJECT_NAME}/src/frontend/ /app
 
 RUN ["npm", "run", "build"]
 
