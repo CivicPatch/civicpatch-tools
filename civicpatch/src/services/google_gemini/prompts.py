@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import List
-from utils import id_utils, config_utils
+from shared.utils import config_utils
+from shared.utils import id_utils
 from schemas import ResearchedPerson
 
 def research_municipality_prompt(jurisdiction_id: str, municipality_name: str):

@@ -1,10 +1,10 @@
 import os
 from typing import List
+from shared.utils import data_path_utils
 import steps.step_03_scrape_page.scrape_utils as scrape_utils
 from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
-import utils.data_path_utils as data_path_utils
 import utils.url_utils as url_utils
-from utils import data_path_utils, log_utils, url_utils
+from utils import log_utils, url_utils
 
 async def scrape_page(context: PipelineContext, link_to_scrape: Link) -> List[Link]:
     """

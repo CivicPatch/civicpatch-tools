@@ -31,8 +31,7 @@ COPY $PROJECT_NAME/pyproject.toml $PROJECT_NAME/poetry.lock ./
 RUN poetry install --no-root
 
 COPY $PROJECT_NAME /app
-COPY civicpatch/src/schemas.py /app/src/civicpatch/schemas.py
-COPY civicpatch/src/utils/id_utils.py /app/src/civicpatch/id_utils.py
+COPY shared /app/src/shared
 RUN mkdir -p /app/git_data
 
 RUN useradd -m -s /bin/bash civicpatch_user

@@ -2,7 +2,7 @@ from typing import List
 from pipelines.pipeline import Pipeline
 from schemas import PipelineRequest
 from fastapi import BackgroundTasks
-from utils import id_utils
+from shared.utils import id_utils
 
 from urllib.parse import urlparse
 import asyncio

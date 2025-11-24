@@ -1,0 +1,3 @@
+data_output_types:
+  meetings: "/meeting$"
+  local: ".*"

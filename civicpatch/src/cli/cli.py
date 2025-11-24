@@ -6,7 +6,6 @@ from typing import List
 from pipelines.pipeline_manager import PipelineManager
 from pipelines.pipeline import Pipeline
 from schemas import PipelineRequest
-from utils import id_utils
 
 pipeline_manager = PipelineManager()
 

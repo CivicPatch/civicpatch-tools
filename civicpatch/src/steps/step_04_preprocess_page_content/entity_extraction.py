@@ -1,7 +1,7 @@
 import spacy
 import re
 from spacy.matcher import PhraseMatcher
-import utils.config_utils as config_utils
+import shared.utils.config_utils as config_utils
 
 # Global variables
 _nlp = None

@@ -1,7 +1,7 @@
 import os
 import shutil
 from schemas import PipelineContext, PipelineStatus
-from utils.data_path_utils import get_cache_path, get_images_path
+from shared.utils.data_path_utils import get_cache_path, get_images_path
 from utils import log_utils
 
 def prepare_pipeline(context: PipelineContext) -> None:

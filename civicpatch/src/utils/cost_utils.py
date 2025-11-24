@@ -1,6 +1,7 @@
 import os
 import json
-from utils import data_path_utils, log_utils
+from shared.utils import data_path_utils
+from utils import log_utils
 from decimal import Decimal
 from datetime import datetime, timezone
 from pydantic import BaseModel
@@ -311,7 +312,7 @@ def log_costs(request_id, jurisdiction_id):
     search_engine_costs = cost_tracker['search_engine_costs']
     storage_costs = cost_tracker['storage_costs']
 
-    data_path = data_path_utils.get_data_source_municipality_path(jurisdiction_id)
+    data_path = data_path_utils.get_data_source_path_for_jurisdiction_id(jurisdiction_id)
     costs_file_path = os.path.join(data_path, "costs.json")
 
     total_cost_row = total_cost_by_request(request_id, jurisdiction_id)

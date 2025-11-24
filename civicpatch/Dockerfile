@@ -26,7 +26,8 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=false \
     # DEBUG="pw:browser" \
     XDG_CACHE_HOME="/tmp/.cache" \
-    XDG_CONFIG_HOME="/tmp/.config"
+    XDG_CONFIG_HOME="/tmp/.config" \
+    PROJECT_NAME="civicpatch"
 
 WORKDIR /app
 
@@ -46,8 +47,13 @@ RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
     chown -R root:root /tmp/.X11-unix
 
 RUN chown -R civicpatch_user:civicpatch_user /app/tmp/.cache /app/tmp/.config
-COPY --chown=civicpatch_user:civicpatch_user pyproject.toml poetry.lock ./
-COPY --chown=civicpatch_user:civicpatch_user . /app
+COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
+
+# Copy the shared folder from parent directory
+COPY --chown=civicpatch_user:civicpatch_user shared /app/src/shared
+
+# Copy the rest of the application
+COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME} /app
 
 RUN poetry install
 
@@ -59,7 +65,7 @@ FROM image-base AS post-install
 
 RUN poetry run playwright install --with-deps chromium
 
-COPY --chown=civicpatch_user:civicpatch_user src/setup.py /app/src/setup.py
+COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/setup.py /app/src/setup.py
 RUN poetry run post-install
 
 USER civicpatch_user
@@ -73,12 +79,13 @@ USER civicpatch_user
 FROM node:24-slim AS development-fe
 
 ENV NODE_ENV="development" \
-    BUILD_ENV="development"
+    BUILD_ENV="development" \
+    PROJECT_NAME="civicpatch"
 WORKDIR /app
 
-COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/package* /app
+COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/frontend/package* /app
 RUN npm install
-COPY --chown=civicpatch_user:civicpatch_user ./src/frontend/  /app
+COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/frontend/  /app
 
 CMD ["npm", "run", "start"]
 
@@ -118,9 +125,9 @@ ENV NODE_ENV="development" \
 WORKDIR /app
 
 RUN ls -la
-COPY ./src/frontend/package.json ./src/frontend/package-lock.json /app
+COPY ${PROJECT_NAME}/src/frontend/package*.json /app
 RUN npm install
-COPY ./src/frontend/ /app
+COPY ${PROECT_NAME}/src/frontend/ /app
 
 RUN ["npm", "run", "build"]
 

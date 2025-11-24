@@ -2,12 +2,11 @@ import os
 import urllib
 
 import yaml
-from fastapi import APIRouter, HTTPException, Security
+from fastapi import APIRouter, HTTPException
 
-import civicpatch.id_utils
 import database
 import github_service
-import services.auth_service as AuthService
+# import services.auth_service as AuthService
 from schemas import Jurisdiction
 
 VALID_STATES = [
@@ -145,14 +144,11 @@ def get_router() -> APIRouter:
             "buffer_m": results.get("buffer_m"),
         }
 
-    @router.get("/{jurisdiction_ocdid_slug}")
+    @router.get("/{jurisdiction_ocdid}")
     async def get_jurisdiction_data_endpoint(
-        jurisdiction_ocdid_slug: str,
+        jurisdiction_ocdid: str,
         with_geom: bool = False,
     ):
-        jurisdiction_ocdid = civicpatch.id_utils.slug_to_jurisdiction_id(
-            jurisdiction_ocdid_slug
-        )
         jurisdiction_data = await database.get_jurisdiction(jurisdiction_ocdid, with_geom)
 
         if jurisdiction_data is None:
@@ -205,16 +201,14 @@ def get_router() -> APIRouter:
             "links": {"prev": prev_link, "next": next_link, "self": self_link},  # TODO!
         }
 
-    @router.get("/{jurisdiction_ocdid_slug}/geom")
-    async def get_jurisdiction_geom_endpoint(
-        jurisdiction_ocdid_slug: str,
-    ):
-        jurisdiction_ocdid = civicpatch.id_utils.slug_to_jurisdiction_id(
-            jurisdiction_ocdid_slug
-        )
-        geom = await database.get_jurisdiction_geom(jurisdiction_ocdid)
-        if geom is None:
-            raise HTTPException(status_code=404, detail="Geometry not found")
-        return {"data": geom}
+    # TODO: is anyone using this?
+    #@router.get("/{jurisdiction_ocdid}/geom")
+    #async def get_jurisdiction_geom_endpoint(
+    #    jurisdiction_ocdid: str,
+    #):
+    #    geom = await database.get_jurisdiction_geom(jurisdiction_ocdid)
+    #    if geom is None:
+    #        raise HTTPException(status_code=404, detail="Geometry not found")
+    #    return {"data": geom}
 
     return router

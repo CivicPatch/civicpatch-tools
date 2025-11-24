@@ -13,7 +13,7 @@ from schemas import (
 )
 from utils import log_utils
 from utils.array_utils import interleave_arrays
-from utils.config_utils import search_keywords
+from shared.utils.config_utils import search_keywords
 from utils.request_utils import with_retry
 
 from .utils import SearchEngineNames, search

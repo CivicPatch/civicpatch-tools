@@ -4,12 +4,6 @@ from typing import Dict, List, Optional, TypeAlias, Union
 
 from pydantic import BaseModel, Field
 
-
-class ProcessConfig(BaseModel):
-    max_pages: int
-    pipeline_run_cost_limit: Decimal  # in USD
-
-
 class SearchEngineStatus(Enum):
     NOT_STARTED = "not_started"
     PROCESSING = "processing"

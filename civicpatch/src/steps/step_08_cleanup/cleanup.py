@@ -3,7 +3,7 @@ import shutil
 import json
 from typing import List, cast, Dict
 
-from utils.data_path_utils import get_data_source_municipality_path
+from shared.utils.data_path_utils import get_data_source_path_for_jurisdiction_id
 from schemas import PipelineContext, PipelineStatus, Person, MergeRecordsAcrossLLMsStep
 from utils import url_utils, log_utils, cost_utils
 
@@ -14,7 +14,7 @@ def cleanup(context: PipelineContext):
     logger = log_utils.get_pipeline_logger(jurisdiction_id)
     logger.info(f"Step 8: {PipelineStatus.CLEANUP.value}")
     request_id = context.request_id
-    data_source_dir = get_data_source_municipality_path(jurisdiction_id)
+    data_source_dir = get_data_source_path_for_jurisdiction_id(jurisdiction_id)
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 

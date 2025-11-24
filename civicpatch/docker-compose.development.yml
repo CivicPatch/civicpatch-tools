@@ -1,8 +1,8 @@
 services:
   civicpatch-frontend:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: civicpatch/Dockerfile
       target: development-fe
     volumes:
       - ./src/frontend:/app
@@ -38,8 +38,8 @@ services:
       - STORAGE_SECRET_ACCESS_KEY
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: civicpatch/Dockerfile
       target: development
       # target: image-base
     restart: unless-stopped
@@ -50,6 +50,7 @@ services:
       - ./data:/app/data
       - ./data_source:/app/data_source
       - ../components/build:/app/src/frontend/cdn:ro
+      - ../shared:/app/src/shared:ro
       - .:/app
     networks:
       - civicpatch_net

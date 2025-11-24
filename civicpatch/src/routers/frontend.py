@@ -10,7 +10,8 @@ from fastapi import (
 from fastapi.responses import RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 from schemas import PipelineRequest
-from utils import id_utils, data_path_utils
+from shared.utils import data_path_utils
+from shared.utils import id_utils
 from pipelines.pipeline_manager import PipelineManager
 
 def get_router(templates: Jinja2Templates, pipeline_manager: PipelineManager) -> APIRouter:

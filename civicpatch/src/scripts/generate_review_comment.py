@@ -2,7 +2,7 @@ import json
 import sys
 from typing import List
 from schemas import PipelineContext, Person, MergeRecordsAcrossLLMsStep, PipelineStatus
-from utils import data_path_utils
+from shared.utils import data_path_utils
 
 def generate_review_comment(pipeline_context: PipelineContext, people: List[Person]) -> str:
     merge_step = pipeline_context.steps[PipelineStatus.MERGE_RECORDS_ACROSS_LLMS]
@@ -112,7 +112,7 @@ def main():
         jurisdiction_id = sys.argv[1]
         # It should be defined in the dockerfile
         pipeline_context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
-        serialized_people = data_path_utils.get_people_from_jurisdiction_type(jurisdiction_id)
+        serialized_people = data_path_utils.get_data_from_jurisdiction_type(jurisdiction_id)
         people = [Person(**person) for person in serialized_people]
 
         pipeline_context = load_pipeline_context_from_json(pipeline_context_file_path)
