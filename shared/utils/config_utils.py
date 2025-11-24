@@ -10,7 +10,7 @@ _government_types_config = None
 _crawl_config = None
 _process_config = None
 
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def get_config_path():
     """

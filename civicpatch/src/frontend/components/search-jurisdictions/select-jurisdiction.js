@@ -80,7 +80,7 @@ function CivSelectJurisdiction() {
     if (!jurisdictions) return "";
 
     const jurisdictionOcdidFormatted = encodeURIComponent(selectedJurisdiction)
-    return jurisdictionOcdidFormatted ? `/jurisdictions/${jurisdictionOcdidFormatted}` : "";
+    return jurisdictionOcdidFormatted ? `/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdidFormatted}` : "";
   }
 
   return html`
