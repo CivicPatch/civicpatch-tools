@@ -1,10 +1,10 @@
 import unittest
 from unittest.mock import patch
-from utils.config_utils import get_role_alias_map
+from shared.utils.config_utils import get_role_alias_map
 
 class TestGetRoleAliasMap(unittest.TestCase):
 
-    @patch('utils.config_utils.get_role_configs_by_government_type')
+    @patch('shared.utils.config_utils.get_role_configs_by_government_type')
     def test_basic_functionality(self, mock_get_role_configs):
         mock_get_role_configs.return_value = [
             {"role": ["Mayor"], "aliases": ["Head of City", "City Leader"]},
@@ -22,14 +22,14 @@ class TestGetRoleAliasMap(unittest.TestCase):
         }
         self.assertEqual(result, expected)
 
-    @patch('utils.config_utils.get_role_configs_by_government_type')
+    @patch('shared.utils.config_utils.get_role_configs_by_government_type')
     def test_empty_configuration(self, mock_get_role_configs):
         mock_get_role_configs.return_value = []
 
         result = get_role_alias_map("mayor_council")
         self.assertEqual(result, {})
 
-    @patch('utils.config_utils.get_role_configs_by_government_type')
+    @patch('shared.utils.config_utils.get_role_configs_by_government_type')
     def test_case_insensitivity(self, mock_get_role_configs):
         mock_get_role_configs.return_value = [
             {"role": ["Mayor"], "aliases": ["Head of City"]}
@@ -40,7 +40,7 @@ class TestGetRoleAliasMap(unittest.TestCase):
         self.assertEqual(result["head of city"], "Mayor")
         self.assertEqual(result["HEAD OF CITY".lower()], "Mayor")
 
-    @patch('utils.config_utils.get_role_configs_by_government_type')
+    @patch('shared.utils.config_utils.get_role_configs_by_government_type')
     def test_multiple_aliases(self, mock_get_role_configs):
         mock_get_role_configs.return_value = [
             {"role": ["Mayor"], "aliases": ["Head of City", "City Leader", "Chief"]}
