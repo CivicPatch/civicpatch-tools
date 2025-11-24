@@ -121,7 +121,8 @@ CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
 FROM node:24-slim AS production-build
 
 ENV NODE_ENV="development" \
-    BUILD_ENV="production"
+    BUILD_ENV="production" \
+    PROJECT_NAME="civicpatch"
 WORKDIR /app
 
 RUN ls -la
