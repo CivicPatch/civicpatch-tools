@@ -3,7 +3,7 @@ from schemas import LLMPerson, Person, PipelineStatus
 from steps.step_06_merge_records_within_llm.merge_records_within_llm import (
     merge_field, merge_roles, merge_divisions, merge_llm_people_to_person, merge_records_within_llm
 )
-from utils.config_utils import get_role_alias_map, get_division_alias_map
+from shared.utils.config_utils import get_role_alias_map, get_division_alias_map
 
 def make_llm_person(name, roles=None, divisions=None, phone=None, email=None, website=None):
     """Helper function to create LLMPerson objects for testing"""

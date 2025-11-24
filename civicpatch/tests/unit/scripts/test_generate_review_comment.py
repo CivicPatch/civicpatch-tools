@@ -4,13 +4,12 @@ from typing import List
 
 from scripts.generate_review_comment import generate_review_comment
 from schemas import (
-    Person, PipelineContext, PipelineStatus,
+    Person, PipelineStatus,
     MergeRecordsAcrossLLMsStep, FieldComparison
 )
 from tests.factories.pipeline_context import pipeline_context_factory
 
 pytestmark = pytest.mark.unit
-
 
 def create_person(name: str, roles: List[str], email: str = "") -> Person:
     """Helper to create a Person with minimal required fields"""
