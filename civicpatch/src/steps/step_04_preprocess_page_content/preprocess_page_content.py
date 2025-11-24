@@ -2,8 +2,9 @@ import os
 import time
 from markdownify import markdownify as md
 from schemas import PipelineContext, Link, LinkStatus, PipelineStatus, PreprocessPageContentStep, ResearchMunicipalityStep
+from shared.utils import data_path_utils
 from steps.step_04_preprocess_page_content.filter_content import filter_content
-from utils import data_path_utils, log_utils
+from utils import log_utils
 from typing import cast
 
 DEFAULT_PREPROCESS_PAGE_CONTENT_STEP = PreprocessPageContentStep(

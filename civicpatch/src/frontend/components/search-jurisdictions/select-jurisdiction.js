@@ -78,9 +78,9 @@ function CivSelectJurisdiction() {
   const jurisdictionLink = () => {
     if (!selectedJurisdiction) return "";
     if (!jurisdictions) return "";
-    const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
-    const jurisdiction_ocdid_slug = jurisdiction_data ? jurisdiction_data["jurisdiction_ocdid_slug"] : "";
-    return jurisdiction_ocdid_slug ? `/jurisdictions/${jurisdiction_ocdid_slug}` : "";
+
+    const jurisdictionOcdidFormatted = encodeURIComponent(selectedJurisdiction)
+    return jurisdictionOcdidFormatted ? `/jurisdictions/${jurisdictionOcdidFormatted}` : "";
   }
 
   return html`

@@ -14,9 +14,10 @@ from schemas import (
     PipelineContext,
     PipelineRequest,
     PipelineStatus,
-    ProcessConfig,
     SearchLinksStep,
 )
+from shared.utils import config_utils, data_path_utils
+from shared.schemas import ProcessConfig
 from steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
 from steps.step_01_research_municipality.research_municipality import (
     research_municipality,
@@ -36,7 +37,7 @@ from steps.step_07_merge_records_across_llms.merge_records_across_llms import (
 )
 from steps.step_08_cleanup.cleanup import cleanup
 from steps.step_09_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
-from utils import config_utils, cost_utils, data_path_utils, log_utils
+from utils import cost_utils, log_utils
 
 
 class Pipeline:
@@ -390,12 +391,10 @@ class Pipeline:
         Save the processed people data to a file.
         """
         jurisdiction_id = self.context.jurisdiction_id
-        serialized_people = [person.model_dump() for person in people]
+        serialized_data = [person.model_dump() for person in people]
 
-        people_file_path = data_path_utils.get_people_file_path(jurisdiction_id)
-
-        data_path_utils.update_people_for_jurisdiction(
-            people_file_path, jurisdiction_id, serialized_people
+        data_path_utils.update_data_for_jurisdiction(
+            jurisdiction_id, serialized_data
         )
 
     def save_configs(self, names: Dict[str, List[str]]):

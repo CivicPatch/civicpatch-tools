@@ -1,8 +1,7 @@
 import pytest
-from utils.id_utils import (  # Replace `your_module` with the actual module name
+from shared.utils.id_utils import (  # Replace `your_module` with the actual module name
     parse_jurisdiction_id,
     jurisdiction_id_to_folder,
-    jurisdiction_id_to_slug,
     jurisdiction_id_to_git_branch,
     slug_to_jurisdiction_id,
     git_branch_to_jurisdiction_id,
@@ -71,7 +70,9 @@ def test_parse_jurisdiction_id_with_county():
 
 def test_parse_jurisdiction_id_invalid_format():
     jurisdiction_id = "invalid-format"
-    assert parse_jurisdiction_id(jurisdiction_id) is None
+    # Should throw a ValueError
+    with pytest.raises(ValueError, match="Invalid jurisdiction ID format"):
+        parse_jurisdiction_id(jurisdiction_id)
 
 
 # Tests for jurisdiction_id_to_folder
@@ -79,17 +80,8 @@ def test_jurisdiction_id_to_folder():
     jurisdiction_id = (
         "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/council"
     )
-    expected = "il/county_dupage__place_naperville"
+    expected = "il/local/county_dupage__place_naperville__council"
     assert jurisdiction_id_to_folder(jurisdiction_id) == expected
-
-
-# Tests for jurisdiction_id_to_slug
-def test_jurisdiction_id_to_slug():
-    jurisdiction_id = (
-        "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/council"
-    )
-    expected = "state_il__county_dupage__place_naperville__council"
-    assert jurisdiction_id_to_slug(jurisdiction_id) == expected
 
 
 # Tests for jurisdiction_id_to_git_branch

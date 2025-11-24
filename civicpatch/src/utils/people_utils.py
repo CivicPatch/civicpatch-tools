@@ -1,6 +1,6 @@
 # from schemas import People
 from typing import List, Dict, Any
-import utils.config_utils as config_utils
+import shared.utils.config_utils as config_utils
 from schemas import Person, ResearchedPerson
 
 

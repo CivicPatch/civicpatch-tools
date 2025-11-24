@@ -15,10 +15,9 @@ from schemas import (
   ResearchedPerson,
   ProgressState
 )
+from shared.utils import config_utils, data_path_utils
 from utils import (
     merge_utils, 
-    data_path_utils, 
-    config_utils, 
     url_utils, 
     people_utils,
     log_utils

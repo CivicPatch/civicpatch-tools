@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List
 from schemas import ResearchedPerson
-import utils.config_utils as config_utils
+import shared.utils.config_utils as config_utils
 
 def municipality_officials_prompt(government_type: str, people_hint: List[ResearchedPerson]):
     """

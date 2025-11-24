@@ -2,7 +2,8 @@ from typing import List, Dict
 from schemas import PipelineContext, PipelineStatus, ResearchMunicipalityStep, ResearchedPerson, ProgressState
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
-from utils import config_utils, people_utils, log_utils
+from shared.utils import config_utils
+from utils import people_utils, log_utils
 
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
 

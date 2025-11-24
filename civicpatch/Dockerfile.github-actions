@@ -23,7 +23,8 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_VIRTUALENVS_IN_PROJECT=false \
     # DEBUG="pw:browser" \
     XDG_CACHE_HOME="/tmp/.cache" \
-    XDG_CONFIG_HOME="/tmp/.config" 
+    XDG_CONFIG_HOME="/tmp/.config" \
+    PROJECT_NAME="civicpatch"
 
 WORKDIR /app
 
@@ -39,7 +40,8 @@ RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
     mkdir -p /tmp/.cache && \
     mkdir -p /tmp/.config
 
-COPY . .
+COPY shared /app/src/shared
+COPY ${PROJECT_NAME} .
 
 RUN poetry install
 

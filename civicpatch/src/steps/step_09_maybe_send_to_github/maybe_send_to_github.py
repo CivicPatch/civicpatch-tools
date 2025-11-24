@@ -4,10 +4,11 @@ import zipfile
 import requests
 
 from schemas import MaybeSendToGitHubStep, PipelineContext, PipelineStatus
-from utils import cost_utils, id_utils, log_utils
-from utils.data_path_utils import (
-    get_data_source_municipality_path,
-    get_people_file_path,
+from utils import cost_utils, log_utils
+from shared.utils import id_utils
+from shared.utils.data_path_utils import (
+    get_data_source_path_for_jurisdiction_id,
+    get_data_file_path,
 )
 from utils.request_utils import with_retry
 
@@ -85,8 +86,8 @@ def maybe_send_to_github(context: PipelineContext) -> MaybeSendToGitHubStep:
 
 
 def zip_files(request_id, jurisdiction_id):
-    data_municipality_file = get_people_file_path(jurisdiction_id)
-    data_source_municipality_path = get_data_source_municipality_path(jurisdiction_id)
+    data_municipality_file = get_data_file_path(jurisdiction_id)
+    data_source_municipality_path = get_data_source_path_for_jurisdiction_id(jurisdiction_id)
 
     git_branch_name = id_utils.jurisdiction_id_to_git_branch(
         jurisdiction_id, request_id

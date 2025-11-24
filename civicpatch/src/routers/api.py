@@ -7,11 +7,11 @@ from fastapi import APIRouter, BackgroundTasks, Body, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 
 from pipelines.pipeline import (
-    PipelineStatus,
+    PipelineStatus
 )
 from pipelines.pipeline_manager import PipelineManager
 from schemas import PipelineRequest
-from utils import id_utils
+from shared.utils import id_utils
 
 
 def get_router(pipeline_manager: PipelineManager) -> APIRouter:

@@ -3,7 +3,7 @@ import os
 import sys
 import json
 from services import google_sheets_service
-from utils import data_path_utils
+from shared.utils import data_path_utils
 
 GOOGLE_SHEETS_SPREADSHEET_ID = os.getenv("GOOGLE_SHEETS_SPREADSHEET_ID", "")
 GOOGLE_SHEETS_PRIVATE_KEY = os.getenv("GOOGLE_SHEETS_PRIVATE_KEY", "")
@@ -16,7 +16,7 @@ SEARCH_ENGINES_SHEET_NAME = "Cost Search Engines"
 STORAGE_SHEET_NAME = "Cost Storage"
 
 def send_costs_to_google_sheets(jurisdiction_id: str):
-    data_source_path = data_path_utils.get_data_source_municipality_path(jurisdiction_id)
+    data_source_path = data_path_utils.get_data_source_path_for_jurisdiction_id(jurisdiction_id)
     costs_file_path = os.path.join(data_source_path, "costs.json")
 
     with open(costs_file_path, "r") as f:

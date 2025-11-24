@@ -7,7 +7,8 @@ import yaml
 from botocore.client import Config
 
 from schemas import Person
-from utils import data_path_utils, id_utils
+from shared.utils import data_path_utils
+from shared.utils import id_utils
 
 STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
 STORAGE_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY_ID")
@@ -20,9 +21,9 @@ def upload_images_to_cdn(jurisdiction_id: str):
     image_path = data_path_utils.get_images_path(jurisdiction_id)
     image_map_file_path = os.path.join(image_path, "image_map.json")
 
-    people_file_path = data_path_utils.get_people_file_path(jurisdiction_id)
+    people_file_path = data_path_utils.get_data_file_path(jurisdiction_id)
 
-    serialized_people = data_path_utils.get_people_from_jurisdiction_type(
+    serialized_people = data_path_utils.get_data(
         jurisdiction_id
     )
 

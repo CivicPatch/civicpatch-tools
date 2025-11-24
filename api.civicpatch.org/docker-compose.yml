@@ -10,8 +10,7 @@ services:
       - "8001:8001"
     volumes:
       - ./:/app
-      - ../civicpatch/src/schemas.py:/app/src/civicpatch/schemas.py:ro
-      - ../civicpatch/src/utils/id_utils.py:/app/src/civicpatch/id_utils.py:ro
+      - ../shared:/app/src/shared:ro
     networks:
       - civicpatch_net
     depends_on:

@@ -1,19 +1,9 @@
 import uuid
+import re
 from datetime import datetime
-from typing import Optional
-
-from pydantic import BaseModel
+from ..schemas import JurisdictionId
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
-
-
-class JurisdictionId(BaseModel):
-    country: str
-    state: str
-    county: Optional[str] = None
-    place_label: str = "place"
-    place: str
-    jurisdiction_type: str
 
 
 def make_request_id():
@@ -21,8 +11,18 @@ def make_request_id():
     short_id = str(uuid.uuid4())[:4]
     return f"{date_str}-{short_id}"
 
+def _jurisdiction_id_to_output_type(jurisdiction_id: str) -> str:
+    data_config = get_data_config()
+    data_output_types = data_config.get("data_output_types", {})
 
-def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId | None:
+    # See: ./config/data.yml
+    for output_type, pattern in data_output_types.items():
+        if re.search(pattern, jurisdiction_id):
+            return output_type
+    
+    return "local"
+
+def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId:
     """
     Parses a jurisdiction ID in the format
         "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
@@ -56,10 +56,12 @@ def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId | None:
         # Which has no ":"
         jurisdiction_type = components[-1]
         if ":" in jurisdiction_type:
-            return None
+            raise ValueError("Invalid jurisdiction type format: contains ':'")
 
         if "country" not in result or "state" not in result:
-            return None
+            raise ValueError("Missing required jurisdiction components: country or state")
+        
+        output_type = _jurisdiction_id_to_output_type(jurisdiction_id)
 
         return JurisdictionId(
             country=result["country"],
@@ -68,10 +70,11 @@ def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId | None:
             place_label=result["place_label"],
             place=result["place"],
             jurisdiction_type=jurisdiction_type,
+            output_type=output_type
         )
     except Exception as e:
         print(f"Error: {e}")
-        return None
+        raise ValueError(f"Invalid jurisdiction ID format: {jurisdiction_id}, error: {e}")
 
 
 def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:
@@ -83,30 +86,21 @@ def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:
         state: "il",
         county: "dupage", (optional)
         place: "naperville_test",
-        jurisdiction_type: "council"
+        jurisdiction_type: "government",
+        output_type: "local"
+
       }
-      -> "il/county_dupage__place_naperville"
+      -> "il/local/county_dupage__place_naperville__government"
     """
 
     jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
 
-    folder = f"{jurisdiction_id_parts.state}/"
+    folder = f"{jurisdiction_id_parts.state}/{jurisdiction_id_parts.output_type}/"
     if jurisdiction_id_parts.county:
         folder += f"county_{jurisdiction_id_parts.county}__"
-    folder += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}"
+    folder += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}__{jurisdiction_id_parts.jurisdiction_type}"
 
     return folder
-
-
-def jurisdiction_id_to_slug(jurisdiction_id: str) -> str:
-    jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
-    branch = f"state_{jurisdiction_id_parts.state}__"
-    if jurisdiction_id_parts.county:
-        branch += f"county_{jurisdiction_id_parts.county}__"
-    branch += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}__"
-    branch += f"{jurisdiction_id_parts.jurisdiction_type}"
-    return branch.lower()
-
 
 def jurisdiction_id_to_git_branch(jurisdiction_id: str, request_id: str) -> str:
     """
@@ -115,17 +109,21 @@ def jurisdiction_id_to_git_branch(jurisdiction_id: str, request_id: str) -> str:
       "ocd-jurisdiction/country:us/state:wa/place:seattle"
       -> "2025-09-25-1a2b-state-wa-place-seattle"
     """
-    slug = jurisdiction_id_to_slug(jurisdiction_id)
+    jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
+    branch = f"state_{jurisdiction_id_parts.state}__"
+    if jurisdiction_id_parts.county:
+        branch += f"county_{jurisdiction_id_parts.county}__"
+    branch += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}__{jurisdiction_id_parts.jurisdiction_type}"
+    slug = branch.lower()
     return f"{request_id}__{slug}".lower()
 
 
-def _parse_slug_to_parts(slug: str, include_jurisdiction_type: bool) -> list[str]:
+def _parse_slug_to_parts(slug: str) -> list[str]:
     """
     Helper function to parse slug components into OCD jurisdiction parts.
 
     Args:
         slug: The slug to parse (e.g., "state_ca__county_marin__place_seattle__government")
-        include_jurisdiction_type: Whether to include the final jurisdiction type segment
 
     Returns:
         List of jurisdiction parts to be joined with "/"
@@ -149,7 +147,7 @@ def _parse_slug_to_parts(slug: str, include_jurisdiction_type: bool) -> list[str
         idx += 1
 
     # Determine expected number of remaining tokens
-    expected_remaining = 2 if include_jurisdiction_type else 1
+    expected_remaining = 2
 
     # Process the place key (must be in KNOWN_PLACE_KEYS)
     if idx < len(tokens) and (len(tokens) - idx) >= expected_remaining:
@@ -167,17 +165,11 @@ def _parse_slug_to_parts(slug: str, include_jurisdiction_type: bool) -> list[str
         if not place_found:
             raise ValueError(f"Unknown place key in token: {token}")
 
-    # Handle the jurisdiction type if required
-    if include_jurisdiction_type:
-        if idx == len(tokens) - 1:
-            result.append(tokens[idx])
-        else:
-            raise ValueError(
-                "Invalid slug format: too many segments or missing jurisdiction type."
-            )
-    elif idx != len(tokens):
+    if idx == len(tokens) - 1:
+        result.append(tokens[idx])
+    else:
         raise ValueError(
-            f"Invalid slug format: expected {idx} tokens but got {len(tokens)}."
+            "Invalid slug format: too many segments or missing jurisdiction type."
         )
 
     return result
@@ -191,7 +183,7 @@ def slug_to_jurisdiction_id(slug: str) -> str:
         "state_ca__county_marin__place_seattle__government"
         -> "ocd-jurisdiction/country:us/state:ca/county:marin/place:seattle/government"
     """
-    parts = _parse_slug_to_parts(slug, include_jurisdiction_type=True)
+    parts = _parse_slug_to_parts(slug)
     return "/".join(parts)
 
 

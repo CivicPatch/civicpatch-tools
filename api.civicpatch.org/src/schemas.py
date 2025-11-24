@@ -1,7 +1,7 @@
 from pydantic import BaseModel, model_validator
 from enum import Enum
 
-from civicpatch.id_utils import git_branch_to_jurisdiction_id
+import shared.utils.id_utils
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
 
@@ -40,7 +40,7 @@ class PullRequest(BaseModel):
     def set_jurisdiction_id(self):
         try:
             if not self.jurisdiction_id and self.branch_name:
-                self.jurisdiction_id = git_branch_to_jurisdiction_id(self.branch_name)
+                self.jurisdiction_id = shared.utils.id_utils.git_branch_to_jurisdiction_id(self.branch_name)
         except Exception:
             print(f"git branch does not match jurisdiciton id format: {self.branch_name}")
             self.jurisdiction_id = ""

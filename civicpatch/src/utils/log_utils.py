@@ -1,5 +1,5 @@
 import os
-from utils import data_path_utils
+from shared.utils import data_path_utils
 import threading
 from datetime import datetime
 
@@ -48,7 +48,7 @@ class PipelineLogger:
 
 
 def get_pipeline_log_path(jurisdiction_id: str) -> str:
-    data_source_municipality_path = data_path_utils.get_data_source_municipality_path(jurisdiction_id)
+    data_source_municipality_path = data_path_utils.get_data_source_path_for_jurisdiction_id(jurisdiction_id)
     os.makedirs(data_source_municipality_path, exist_ok=True)
     return f"{data_source_municipality_path}/pipeline.log"
 

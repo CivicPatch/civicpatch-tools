@@ -2,9 +2,9 @@ import os
 import yaml
 from typing import Dict, List
 from decimal import Decimal, InvalidOperation
-from schemas import ProcessConfig
-from utils import data_path_utils
+from shared.schemas import ProcessConfig
 
+_data_config = None
 _divisions_config = None
 _government_types_config = None
 _crawl_config = None
@@ -19,6 +19,16 @@ def get_config_path():
     config_path = os.path.join(ROOT_DIR, "config")
 
     return config_path
+
+def get_data_config():
+    global _data_config
+    if _data_config is None:
+        config_path = get_config_path()
+        data_file_path = os.path.join(config_path, 'data.yml')
+        with open(data_file_path, 'r') as config_file:
+            config_data = yaml.safe_load(config_file)
+        _data_config = config_data.get('data', {})
+    return _data_config
 
 def get_divisions():
     global _divisions_config
