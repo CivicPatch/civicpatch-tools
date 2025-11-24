@@ -112,8 +112,9 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
   }, [eventSource]);
 
   const fetchJurisdictionData = async (ocdid) => {
+    const jurisdictionOcdidFormatted = encodeURIComponent(ocdid)
     const response = await fetch(
-      `/api/api_proxy/jurisdictions/${ocdid}?with_geom=true`,
+      `/api/api_proxy/jurisdictions?jurisdiction_ocdid=${jurisdiction_ocdid}&with_geom=true`,
     );
     const result = await response.json();
     return {

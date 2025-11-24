@@ -1,7 +1,8 @@
 import uuid
 import re
 from datetime import datetime
-from ..schemas import JurisdictionId
+from shared.schemas import JurisdictionId
+from shared.utils import config_utils
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
 
@@ -12,7 +13,7 @@ def make_request_id():
     return f"{date_str}-{short_id}"
 
 def _jurisdiction_id_to_output_type(jurisdiction_id: str) -> str:
-    data_config = get_data_config()
+    data_config = config_utils.get_data_config()
     data_output_types = data_config.get("data_output_types", {})
 
     # See: ./config/data.yml
@@ -116,6 +117,32 @@ def jurisdiction_id_to_git_branch(jurisdiction_id: str, request_id: str) -> str:
     branch += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}__{jurisdiction_id_parts.jurisdiction_type}"
     slug = branch.lower()
     return f"{request_id}__{slug}".lower()
+
+
+def jurisdiction_id_to_slug(jurisdiction_id: str) -> str:
+    """
+    Converts a jurisdiction ID to a slug.
+
+    Example:
+        "ocd-jurisdiction/country:us/state:ca/county:marin/place:seattle/government"
+        -> "state_ca__county_marin__place_seattle__government"
+    """
+    jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
+
+    # Start with the state
+    slug = f"state_{jurisdiction_id_parts.state}"
+
+    # Add county if it exists
+    if jurisdiction_id_parts.county:
+        slug += f"__county_{jurisdiction_id_parts.county}"
+
+    # Add place or special district
+    slug += f"__{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}"
+
+    # Add the jurisdiction type
+    slug += f"__{jurisdiction_id_parts.jurisdiction_type}"
+
+    return slug
 
 
 def _parse_slug_to_parts(slug: str) -> list[str]:

@@ -36,20 +36,20 @@ def get_router(templates: Jinja2Templates, pipeline_manager: PipelineManager) ->
             "pages/index.html", {"request": request, "missing_env": missing}
         )
 
-    @router.get("/jurisdictions/{jurisdiction_ocdid_slug}", include_in_schema=False)
+    @router.get("/jurisdictions", include_in_schema=False)
     async def jurisdiction_page(
         request: Request, 
-        jurisdiction_ocdid_slug: str):
+        jurisdiction_ocdid: str
+    ):
 
-        print("Rendering jurisdiction page for:", jurisdiction_ocdid_slug)
-        print("id:", id_utils.slug_to_jurisdiction_id(jurisdiction_ocdid_slug))
+        print("Rendering jurisdiction page for:", jurisdiction_ocdid)
 
         return templates.TemplateResponse(
             "pages/jurisdiction.html",
             {
                 "request": request,
-                "jurisdiction_ocdid": id_utils.slug_to_jurisdiction_id(jurisdiction_ocdid_slug),
-                "jurisdiction_ocdid_slug": jurisdiction_ocdid_slug,
+                "jurisdiction_ocdid": jurisdiction_ocdid,
+                "jurisdiction_ocdid_slug": id_utils.jurisdiction_id_to_slug(jurisdiction_ocdid),
             }
         )
 
@@ -62,14 +62,14 @@ def get_router(templates: Jinja2Templates, pipeline_manager: PipelineManager) ->
     ):
         request = PipelineRequest(jurisdiction_id=jurisdiction_id, name=name, url=url)
         # TODO: expose this to frontend?
-        _request_id, _warnings, errors = pipeline_manager.create_pipeline(request)
+        request_id, _warnings, errors = pipeline_manager.create_pipeline(request)
 
         try:
             if len(errors) > 0:
                 # TODO: point to error template
                 raise HTTPException(status_code=400, detail="; ".join(errors))
 
-            pipeline_manager.start_pipeline(jurisdiction_id, background_tasks)
+            await pipeline_manager.start_pipeline(request_id, request, background_tasks)
 
             # Redirect to the pipeline request page for this jurisdiction
             jurisdiction_id_url = id_utils.jurisdiction_id_to_slug(jurisdiction_id)

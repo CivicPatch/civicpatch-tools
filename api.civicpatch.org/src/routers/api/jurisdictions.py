@@ -2,7 +2,7 @@ import os
 import urllib
 
 import yaml
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Query
 
 import database
 import github_service
@@ -67,6 +67,25 @@ GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
 
 def get_router() -> APIRouter:
     router = APIRouter()
+
+    @router.get("")
+    async def get_jurisdiction_data_endpoint(
+        jurisdiction_ocdid: str = Query(..., description="The OCD ID of the jurisdiction"),
+        with_geom: bool = False,
+    ):
+        jurisdiction_data = await database.get_jurisdiction(jurisdiction_ocdid, with_geom)
+
+        if jurisdiction_data is None:
+            raise HTTPException(status_code=404, detail="Jurisdiction not found")
+
+        response = {
+            "data": jurisdiction_data["data"],
+        }
+
+        if with_geom:
+            response["geo_center"] = jurisdiction_data.get("geo_center")
+
+        return response
 
     @router.get("/available")
     async def list_available_jurisdictions_endpoint(
@@ -143,27 +162,7 @@ def get_router() -> APIRouter:
             "features": features,
             "buffer_m": results.get("buffer_m"),
         }
-
-    @router.get("/{jurisdiction_ocdid}")
-    async def get_jurisdiction_data_endpoint(
-        jurisdiction_ocdid: str,
-        with_geom: bool = False,
-    ):
-        jurisdiction_data = await database.get_jurisdiction(jurisdiction_ocdid, with_geom)
-
-        if jurisdiction_data is None:
-            raise HTTPException(status_code=404, detail="Jurisdiction not found")
-
-        response = {
-            "data": jurisdiction_data["data"],
-        }
-
-        if with_geom:
-            response["geo_center"] = jurisdiction_data.get("geo_center")
-
-        return response
-
-
+ 
     @router.get("/{state}/search")
     async def get_jurisdictions_search_endpoint(
         state: str,
