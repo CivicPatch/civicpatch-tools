@@ -80,7 +80,7 @@ def test_jurisdiction_id_to_folder():
     jurisdiction_id = (
         "ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville/council"
     )
-    expected = "il/local/county_dupage__place_naperville__council"
+    expected = "il/local/county_dupage__place_naperville"
     assert jurisdiction_id_to_folder(jurisdiction_id) == expected
 
 
