@@ -200,16 +200,3 @@ print(attr)
 "
 """
 
-[tasks.jurisdiction_id_slug]
-usage = """
-arg "jurisdiction_id_url" "jurisdiction id" default="ocd-jurisdiction/country:us/state:wa/place:seattle/government"
-"""
-run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch poetry run \
-python -c "
-from utils.id_utils import jurisdiction_id_to_slug
-jurisdiction_id_url = '{{ arg(name="jurisdiction_id_url") }}'
-jurisdiction_id = jurisdiction_id_to_slug(jurisdiction_id_url)
-print(jurisdiction_id)
-"
-"""
