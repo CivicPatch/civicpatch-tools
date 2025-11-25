@@ -74,8 +74,7 @@ def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId:
             output_type=output_type
         )
     except Exception as e:
-        print(f"Error: {e}")
-        raise ValueError(f"Invalid jurisdiction ID format: {jurisdiction_id}, error: {e}")
+        raise ValueError(f"Invalid jurisdiction ID format: {jurisdiction_id}, error: {e}") from e
 
 
 def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:

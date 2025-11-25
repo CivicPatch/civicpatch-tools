@@ -5,6 +5,7 @@ civicpatch/data/
 civicpatch/data_source/
 !civicpatch/data/.gitkeep
 !civicpatch/data_source/.gitkeep
+api.civicpatch.org/git_data
 data/
 !data/.gitkeep
 data_source/

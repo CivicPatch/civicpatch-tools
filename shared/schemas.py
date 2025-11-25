@@ -1,4 +1,4 @@
-from pydantic import BaseModel, computed_field
+from pydantic import BaseModel
 from typing import Optional
 from decimal import Decimal
 
@@ -15,17 +15,3 @@ class JurisdictionId(BaseModel):
     place: str
     jurisdiction_type: str
     output_type: str
-    
-    @computed_field
-    @property
-    def partial_file_path(self) -> str:
-        """
-        Converts jurisdiction components to a reversible, human-friendly folder path.
-        Example: "il/local/county_dupage__place_naperville__government"
-        """
-        file_path = f"{self.state}/{self.output_type}/"
-        if self.county:
-            file_path += f"county_{self.county}__"
-        file_path += f"{self.place_label}_{self.place}__{self.jurisdiction_type}.yml"
-        
-        return file_path
