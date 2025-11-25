@@ -4,7 +4,7 @@ import { useModal } from "../hooks/useModal.js";
 
 const DEFAULT_CENTER = "30.24171,-91.991044";
 
-function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
+function JurisdictionPage({ jurisdiction_ocdid }) {
   const [data, setData] = useState(null);
   const [people, setPeople] = useState([]);
 
@@ -18,7 +18,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
   const scrapeModal = useModal(false);
 
   useEffect(() => {
-    if (!jurisdiction_ocdid_slug) return;
+    if (!jurisdiction_ocdid) return;
 
     fetchData();
   }, []);
@@ -26,8 +26,8 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
   const fetchData = async () => {
     const [pipelineStatusData, jurisdictionData, peopleData] =
       await Promise.all([
-        fetchPipelineStatus(jurisdiction_ocdid_slug),
-        fetchJurisdictionData(jurisdiction_ocdid_slug),
+        fetchPipelineStatus(jurisdiction_ocdid),
+        fetchJurisdictionData(jurisdiction_ocdid),
         fetchPeopleData(jurisdiction_ocdid),
       ]);
     setData(jurisdictionData);
@@ -42,7 +42,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
       return;
     }
 
-    const sseUrl = `/api/sse/pipelines/${jurisdiction_ocdid_slug}/status`;
+    const sseUrl = `/api/sse/pipelines/status?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`;
 
     try {
       const newEventSource = new EventSource(sseUrl);
@@ -114,7 +114,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
   const fetchJurisdictionData = async (ocdid) => {
     const jurisdictionOcdidFormatted = encodeURIComponent(ocdid)
     const response = await fetch(
-      `/api/api_proxy/jurisdictions?jurisdiction_ocdid=${jurisdiction_ocdid}&with_geom=true`,
+      `/api/api_proxy/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdidFormatted}&with_geom=true`,
     );
     const result = await response.json();
     return {
@@ -132,8 +132,8 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
     return result.data;
   };
 
-  const fetchPipelineStatus = async (ocdid_slug) => {
-    const response = await fetch(`/api/pipelines/${ocdid_slug}/status`);
+  const fetchPipelineStatus = async (ocdid) => {
+    const response = await fetch(`/api/pipelines/status?jurisdiction_ocdid=${encodeURIComponent(ocdid)}`);
     if (!response.ok) {
       return null;
     }
@@ -154,7 +154,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
       url: details.data.url || data.data.url,
       source_urls: details.data.sourceUrls,
     };
-    const response = await fetch(`/api/pipelines`, {
+    const _response = await fetch(`/api/pipelines`, {
       headers: { "Content-Type": "application/json" },
       method: "POST",
       body: JSON.stringify(body),
@@ -193,7 +193,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
                 <hr />
 
                 <p>
-                  <strong>Jurisdiction ID:</strong> ${data.data.id} <br />
+                  <strong>Jurisdiction OCDID:</strong> ${data.data.id} <br />
                   <strong>Website:</strong> ${data.data.url} <br />
                   <strong>Geoid:</strong> ${data.data.geoid} <br />
                   <strong>Population:</strong> ${data.data.population.toLocaleString()}
@@ -203,7 +203,7 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
                 <h3>Scrape History</h3>
                 <hr />
                 <civ-scrape-history
-                  .jurisdiction_ocdid_slug=${jurisdiction_ocdid_slug}
+                  .scrapes=${[]}
                 ></civ-scrape-history>
 
                 <p>
@@ -247,9 +247,9 @@ function JurisdictionPage({ jurisdiction_ocdid, jurisdiction_ocdid_slug }) {
 }
 
 customElements.define(
-  "civ-jurisdiction-dashboard",
+  "civ-jurisdiction-page",
   component(JurisdictionPage, {
     useShadowDOM: false,
-    observedAttributes: ["jurisdiction_ocdid", "jurisdiction_ocdid_slug"],
+    observedAttributes: ["jurisdiction_ocdid"],
   }),
 );

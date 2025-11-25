@@ -72,11 +72,10 @@ def get_router(pipeline_manager: PipelineManager) -> APIRouter:
             }
         }
 
-    @router.get("/pipelines/{jurisdiction_id_slug}/status")
+    @router.get("/pipelines/status")
     async def pipeline_status(
-        jurisdiction_id_slug: str,
+        jurisdiction_id: str,
     ):
-        jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_slug)
         pipeline = pipeline_manager.get_pipeline(jurisdiction_id)
         if pipeline is None:
             raise HTTPException(status_code=404, detail="Pipeline not found")
@@ -89,12 +88,11 @@ def get_router(pipeline_manager: PipelineManager) -> APIRouter:
 
         return status_response
 
-    @router.get("/sse/pipelines/{jurisdiction_id_slug}/status")
+    @router.get("/sse/pipelines/status")
     async def sse_pipeline_status(
-        jurisdiction_id_slug: str,
+        jurisdiction_ocdid: str,
     ):
-        jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_slug)
-        pipeline = pipeline_manager.get_pipeline(jurisdiction_id)
+        pipeline = pipeline_manager.get_pipeline(jurisdiction_ocdid)
 
         if pipeline is None:
             raise HTTPException(status_code=404, detail="Pipeline not found")
@@ -138,12 +136,11 @@ def get_router(pipeline_manager: PipelineManager) -> APIRouter:
         # 6. Return the StreamingResponse
         return StreamingResponse(sse_generator(), media_type="text/event-stream")
 
-    @router.post("/pipelines/{jurisdiction_id_url}/stop")
+    @router.post("/pipelines/stop")
     async def stop_pipeline_endpoint(
-        jurisdiction_id_url: str,
+        jurisdiction_ocdid: str,
     ):
-        jurisdiction_id = id_utils.slug_to_jurisdiction_id(jurisdiction_id_url)
-        pipeline_manager.stop_pipeline(jurisdiction_id)
+        pipeline_manager.stop_pipeline(jurisdiction_ocdid)
         return {"status": "stopping", "jurisdiction_id": jurisdiction_id}
 
     return router
