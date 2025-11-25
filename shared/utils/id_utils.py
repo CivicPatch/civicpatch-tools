@@ -90,7 +90,7 @@ def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:
         output_type: "local"
 
       }
-      -> "il/local/county_dupage__place_naperville__government"
+      -> "il/local/county_dupage__place_naperville_test"
     """
 
     jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
@@ -98,7 +98,7 @@ def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:
     folder = f"{jurisdiction_id_parts.state}/{jurisdiction_id_parts.output_type}/"
     if jurisdiction_id_parts.county:
         folder += f"county_{jurisdiction_id_parts.county}__"
-    folder += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}__{jurisdiction_id_parts.jurisdiction_type}"
+    folder += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}"
 
     return folder
 
@@ -116,32 +116,6 @@ def jurisdiction_id_to_git_branch(jurisdiction_id: str, request_id: str) -> str:
     branch += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}__{jurisdiction_id_parts.jurisdiction_type}"
     slug = branch.lower()
     return f"{request_id}__{slug}".lower()
-
-
-def jurisdiction_id_to_slug(jurisdiction_id: str) -> str:
-    """
-    Converts a jurisdiction ID to a slug.
-
-    Example:
-        "ocd-jurisdiction/country:us/state:ca/county:marin/place:seattle/government"
-        -> "state_ca__county_marin__place_seattle__government"
-    """
-    jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
-
-    # Start with the state
-    slug = f"state_{jurisdiction_id_parts.state}"
-
-    # Add county if it exists
-    if jurisdiction_id_parts.county:
-        slug += f"__county_{jurisdiction_id_parts.county}"
-
-    # Add place or special district
-    slug += f"__{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}"
-
-    # Add the jurisdiction type
-    slug += f"__{jurisdiction_id_parts.jurisdiction_type}"
-
-    return slug
 
 
 def _parse_slug_to_parts(slug: str) -> list[str]:
