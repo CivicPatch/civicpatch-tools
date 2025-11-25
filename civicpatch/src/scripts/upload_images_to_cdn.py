@@ -63,7 +63,8 @@ def upload_images_to_cdn(jurisdiction_id: str):
 
     # Update people with CDN URLs
     data_path_utils.update_data_for_jurisdiction(
-        people_file_path, jurisdiction_id, [person.model_dump() for person in people]
+        jurisdiction_id, 
+        [person.model_dump() for person in people]
     )
 
 
