@@ -455,7 +455,7 @@ async def search_jurisdictions(state: str, search_string = "", limit: int = 100,
 
             await cur.execute(
                 f"""
-                SELECT jurisdiction_ocdid_slug, data
+                SELECT jurisdiction_ocdid, data
                 FROM jurisdictions
                 WHERE {where_condition}
                 ORDER BY jurisdiction_ocdid  -- Always use ORDER BY with LIMIT/OFFSET
@@ -470,7 +470,7 @@ async def search_jurisdictions(state: str, search_string = "", limit: int = 100,
             # Process the results
             jurisdictions = []
             for row in results:
-                jurisdictions.append({"jurisdiction_ocdid_slug": row[0], **row[1]})
+                jurisdictions.append({"jurisdiction_ocdid": row[0], **row[1]})
 
             return total_count, jurisdictions
 

@@ -7,6 +7,7 @@ Compatible with existing psycopg_pool AsyncConnectionPool setup
 import asyncio
 import json
 import os
+import re
 import shutil
 import subprocess
 from datetime import datetime
@@ -15,17 +16,25 @@ from pathlib import Path
 import yaml
 
 # Configuration
-REPO_URL = "https://github.com/CivicPatch/open-data.git"
-REPO_PATH = Path("/app/git_data")
-# CRUDDER_DB_URL is expected to be loaded from the environment
-CRUDDER_DB_URL = os.getenv("CRUDDER_DB_URL")
+CONFIG = {
+    "REPO_URL": "https://github.com/CivicPatch/open-data.git",
+    "REPO_PATH": Path("/app/git_data"),
+    "DATA_FILES_PATTERNS": [
+        "data/*/local/*.yml",
+        "data/*/counties/*.yml",
+    ],
+    "JURISDICTION_FILES_PATTERN": "data_source/**/jurisdictions_metadata.yml",
+    "MAP_FILES_PATTERN": "data/**/.maps/*.geojson",
+    "CRUDDER_DB_URL": os.getenv("CRUDDER_DB_URL"),
+}
 
-# --- FILE PATTERNS ---
-DATA_FILES_PATTERN = (
-    "data/**/*.yml"  # Matches people files (e.g., data/us/tx/person.yml)
-)
-JURISDICTION_FILES_PATTERN = "data_source/**/jurisdictions_metadata.yml"
-MAP_FILES_PATTERN = "data/**/.maps/*.geojson"
+# Use config values throughout the file
+REPO_URL = CONFIG["REPO_URL"]
+REPO_PATH = CONFIG["REPO_PATH"]
+DATA_FILES_PATTERNS = CONFIG["DATA_FILES_PATTERNS"]
+JURISDICTION_FILES_PATTERN = CONFIG["JURISDICTION_FILES_PATTERN"]
+MAP_FILES_PATTERN = CONFIG["MAP_FILES_PATTERN"]
+CRUDDER_DB_URL = CONFIG["CRUDDER_DB_URL"]
 
 # Check for required environment variable before attempting to create pool
 if not CRUDDER_DB_URL:
@@ -33,34 +42,39 @@ if not CRUDDER_DB_URL:
 
 
 class GitDatabaseSync:
-    def __init__(self, pool, repo_url=REPO_URL, repo_path=REPO_PATH):
+    def __init__(self, pool, config=CONFIG):
         self.pool = pool
-        self.repo_url = repo_url
-        self.repo_path = Path(repo_path)
+        self.config = config
+        self.repo_url = config["REPO_URL"]
+        self.repo_path = Path(config["REPO_PATH"])
+        self.data_files_patterns = config["DATA_FILES_PATTERNS"]
+        self.jurisdiction_files_pattern = config["JURISDICTION_FILES_PATTERN"]
+        self.map_files_pattern = config["MAP_FILES_PATTERN"]
+
+        # Extract subdirs from patterns like "data/*/local/*.yml"
+        self.people_subdirs = []
+        for pattern in self.data_files_patterns:
+            m = re.match(r"data/\*/([^/]+)/\*\.yml", pattern)
+            if m:
+                self.people_subdirs.append(m.group(1))
 
     def is_valid_git_repo(self):
-        """Checks if the directory contains a valid .git folder"""
         return (self.repo_path / ".git").is_dir()
 
     def clone_or_pull(self):
-        """Clone repo if it doesn't exist or is invalid, otherwise fetch latest"""
         if self.repo_path.exists():
             if self.is_valid_git_repo():
                 print("Fetching latest changes from existing repository...")
                 subprocess.run(
                     ["git", "-C", str(self.repo_path), "fetch", "origin"], check=True
                 )
-                # Update the local branch to match the fetched origin/main
                 subprocess.run(
                     ["git", "-C", str(self.repo_path), "reset", "--hard", "origin/main"], check=True
                 )
                 return "fetched"
             else:
-                # Directory exists but is not a valid repo (e.g., partial clone)
                 print("Repository directory is invalid. Removing and re-cloning...")
                 shutil.rmtree(self.repo_path)
-
-        # If directory didn't exist, or was just removed:
         print(f"Cloning repository from {self.repo_url}...")
         subprocess.run([
             "git", "clone", 
@@ -71,7 +85,6 @@ class GitDatabaseSync:
         return "cloned"
 
     def get_current_commit(self):
-        """Get current commit hash"""
         result = subprocess.run(
             ["git", "-C", str(self.repo_path), "rev-parse", "HEAD"],
             capture_output=True,
@@ -81,7 +94,6 @@ class GitDatabaseSync:
         return result.stdout.strip()
 
     def get_file_content_at_commit(self, rel_path, commit):
-        """Get file content at a specific commit without checking it out"""
         try:
             result = subprocess.run(
                 ["git", "-C", str(self.repo_path), "show", f"{commit}:{rel_path}"],
@@ -91,28 +103,21 @@ class GitDatabaseSync:
             )
             return result.stdout
         except subprocess.CalledProcessError as e:
-            # File might not exist at this commit (deleted file)
             print(f"Could not read {rel_path} at commit {commit}: {e}")
             return None
 
     def get_changed_files(self, old_commit, new_commit):
-        """Get list of changed files between commits that match our patterns"""
-        # Determine the base directory for dynamic path checking
-        people_base_dir = Path(DATA_FILES_PATTERN).parts[0] + os.sep
-        jurisdiction_base_dir = Path(JURISDICTION_FILES_PATTERN).parts[0] + os.sep
-
         if not old_commit:
-            # First sync - use rglob with the patterns
             print(
-                f"First sync - processing files matching {DATA_FILES_PATTERN} and {JURISDICTION_FILES_PATTERN}..."
+                f"First sync - processing files matching {self.data_files_patterns} and {self.jurisdiction_files_pattern}..."
             )
             files = []
-            files.extend(list(self.repo_path.rglob(DATA_FILES_PATTERN)))
-            files.extend(list(self.repo_path.rglob(JURISDICTION_FILES_PATTERN)))
-            files.extend(list(self.repo_path.rglob(MAP_FILES_PATTERN)))
+            for pattern in self.data_files_patterns:
+                files.extend(list(self.repo_path.rglob(pattern)))
+            files.extend(list(self.repo_path.rglob(self.jurisdiction_files_pattern)))
+            files.extend(list(self.repo_path.rglob(self.map_files_pattern)))
             return files
 
-        # Get diff between commits - NO CHECKOUT NEEDED
         result = subprocess.run(
             [
                 "git",
@@ -131,27 +136,24 @@ class GitDatabaseSync:
         changed_paths = result.stdout.strip().split("\n")
         changed_paths = [p for p in changed_paths if p]
 
-        # Filter for files matching either pattern
         files = []
         for path in changed_paths:
             full_path = self.repo_path / path
 
-            # Filter for PEOPLE files (dynamic base dir and yml suffix)
-            is_people_file = path.startswith(people_base_dir) and Path(path).suffix in [
-                ".yml",
-                ".yaml",
-            ]
+            # Use self.people_subdirs instead of hardcoded names
+            is_people_file = (
+                path.startswith("data/")
+                and any(f"/{subdir}/" in path for subdir in self.people_subdirs)
+                and path.endswith(".yml")
+            )
 
-            # Filter for JURISDICTION files (dynamic base dir and specific filename)
             is_jurisdiction_file = path.startswith(
-                jurisdiction_base_dir
+                Path(self.jurisdiction_files_pattern).parts[0] + os.sep
             ) and path.endswith("jurisdictions_metadata.yml")
 
-            # Filter for MAP files (.geojson directly under a .maps directory)
             is_map_file = False
             maps_segment = f"{os.sep}.maps{os.sep}"
             if maps_segment in path and path.endswith(".geojson"):
-                # Ensure the file is directly inside the .maps directory (no further subdirs)
                 remainder = path.split(maps_segment, 1)[1]
                 if os.sep not in remainder:
                     is_map_file = True
@@ -306,99 +308,96 @@ class GitDatabaseSync:
 
     async def update_geo_in_db(self, file_path, commit_hash, use_git_show=True):
         """Update a GEOJSON file into the geo table. Handles FeatureCollection and Feature objects."""
-        try:
-            # Read content from git history or filesystem
-            if use_git_show:
-                rel_path = str(file_path.relative_to(self.repo_path))
-                content = self.get_file_content_at_commit(rel_path, commit_hash)
-                if content is None:
-                    return False
-                data = json.loads(content)
-            else:
-                with open(file_path, "r") as f:
-                    data = json.load(f)
-                rel_path = str(file_path.relative_to(self.repo_path))
-
-            # Normalize to list of features
-            features = []
-            if data.get("type") == "FeatureCollection":
-                features = data.get("features", [])
-            elif data.get("type") == "Feature":
-                features = [data]
-            else:
-                # Some geojson files may be a single geometry + properties
-                print(f"Skipping {file_path}: not a Feature/FeatureCollection.")
+        # Read content from git history or filesystem
+        if use_git_show:
+            rel_path = str(file_path.relative_to(self.repo_path))
+            content = self.get_file_content_at_commit(rel_path, commit_hash)
+            if content is None:
                 return False
+            data = json.loads(content)
+        else:
+            with open(file_path, "r") as f:
+                data = json.load(f)
+            rel_path = str(file_path.relative_to(self.repo_path))
 
-            if not features:
-                print(f"Skipping {file_path}: no features found.")
-                return False
-
-            values_list = []
-            for feat in features:
-                props = feat.get("properties", {}) or {}
-                geoid = props.get("geoid") or props.get("GEOID")
-                # geometry as GeoJSON text
-                geom_obj = feat.get("geometry")
-                if not geoid or not geom_obj:
-                    print(
-                        f"  Warning: Skipping feature without geoid or geometry in {file_path}."
-                    )
-                    continue
-
-                statefp = props.get("STATEFP")
-                name = props.get("NAME")
-                funcstat = props.get("FUNCSTAT")
-                typ = props.get("type")
-
-                meta = props
-
-                values_list.append(
-                    (
-                        geoid,
-                        json.dumps(geom_obj),
-                        json.dumps(meta),
-                        statefp,
-                        name,
-                        funcstat,
-                        typ,
-                        rel_path,
-                        commit_hash,
-                    )
-                )
-
-            if not values_list:
-                return False
-
-            # Upsert all features
-            async with self.pool.connection() as conn, conn.cursor() as cur:
-                async with conn.transaction():
-                    query = """
-                    INSERT INTO geo (geoid, geom, meta, statefp, name, funcstat, type, file_path, git_commit)
-                    VALUES (%s, ST_SetSRID(ST_GeomFromGeoJSON(%s), 4326), %s, %s, %s, %s, %s, %s, %s)
-                    ON CONFLICT (geoid)
-                    DO UPDATE SET
-                        geom = EXCLUDED.geom,
-                        meta = EXCLUDED.meta,
-                        statefp = EXCLUDED.statefp,
-                        name = EXCLUDED.name,
-                        funcstat = EXCLUDED.funcstat,
-                        type = EXCLUDED.type,
-                        file_path = EXCLUDED.file_path,
-                        git_commit = EXCLUDED.git_commit,
-                        updated_at = CURRENT_TIMESTAMP;
-                    """
-
-                    await cur.executemany(query, values_list)
-
-            print(
-                f"  Successfully processed {len(values_list)} geo features from {rel_path} in bulk."
-            )
-            return True
-
-        except Exception as e:
-            print(f"Error updating GEO file {file_path}: {e}")
+        # Normalize to list of features
+        features = []
+        if data.get("type") == "FeatureCollection":
+            features = data.get("features", [])
+        elif data.get("type") == "Feature":
+            features = [data]
+        else:
+            # Some geojson files may be a single geometry + properties
+            print(f"Skipping {file_path}: not a Feature/FeatureCollection.")
             return False
+
+        if not features:
+            print(f"Skipping {file_path}: no features found.")
+            return False
+
+        values_list = []
+        for feat in features:
+            props = feat.get("properties", {}) or {}
+            geoid = props.get("geoid") or props.get("GEOID")
+            # geometry as GeoJSON text
+            geom_obj = feat.get("geometry")
+            if not geoid or not geom_obj:
+                print(
+                    f"  Warning: Skipping feature without geoid or geometry in {file_path}."
+                )
+                continue
+
+            statefp = props.get("STATEFP")
+            name = props.get("NAME")
+            funcstat = props.get("FUNCSTAT")
+            typ = props.get("type")
+
+            meta = props
+
+            values_list.append(
+                (
+                    geoid,
+                    json.dumps(geom_obj),
+                    json.dumps(meta),
+                    statefp,
+                    name,
+                    funcstat,
+                    typ,
+                    rel_path,
+                    commit_hash,
+                )
+            )
+
+        if not values_list:
+            return False
+
+        # Upsert all features
+        async with self.pool.connection() as conn, conn.cursor() as cur:
+            async with conn.transaction():
+                query = """
+                INSERT INTO geo (geoid, geom, meta, statefp, name, funcstat, type, file_path, git_commit)
+                VALUES (%s, ST_SetSRID(ST_GeomFromGeoJSON(%s), 4326), %s, %s, %s, %s, %s, %s, %s)
+                ON CONFLICT (geoid)
+                DO UPDATE SET
+                    geom = EXCLUDED.geom,
+                    meta = EXCLUDED.meta,
+                    statefp = EXCLUDED.statefp,
+                    name = EXCLUDED.name,
+                    funcstat = EXCLUDED.funcstat,
+                    type = EXCLUDED.type,
+                    file_path = EXCLUDED.file_path,
+                    git_commit = EXCLUDED.git_commit,
+                    updated_at = CURRENT_TIMESTAMP;
+                """
+
+                await cur.executemany(query, values_list)
+
+        print(
+            f"  Successfully processed {len(values_list)} geo features from {rel_path} in bulk."
+        )
+
+        return commit_hash
+
 
     async def sync(self):
         """Main sync process"""
@@ -495,29 +494,8 @@ class GitDatabaseSync:
             duration = (datetime.now() - start_time).total_seconds()
             print(f"FATAL SYNC ERROR: {e}")
 
-            # Try to log the failure
-            try:
-                async with self.pool.connection() as conn:
-                    await conn.execute(
-                        """
-                        INSERT INTO sync_log (git_commit, duration_seconds, status, error)
-                        VALUES (%s, %s, %s, %s)
-                        """,
-                        (
-                            new_commit if "new_commit" in locals() else None,
-                            duration,
-                            "failed",
-                            str(e),
-                        ),
-                    )
-                    await conn.commit()
-            except:
-                pass  # Don't fail if logging fails
-
-
 async def main():
-    # No pool available when run as a standalone script; pass None for pool
-    syncer = GitDatabaseSync(None, repo_url=REPO_URL, repo_path=REPO_PATH)
+    syncer = GitDatabaseSync(None, config=CONFIG)
     await syncer.sync()
 
 
