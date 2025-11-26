@@ -10,7 +10,7 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     """
 
     roles = config_utils.get_roles_by_government_type(government_type)
-    division_names = config_utils.get_divisions()
+    division_names = config_utils.get_division_names()
     current_date = datetime.now().strftime("%Y-%m-%d")
 
     maybe_target_people = [p.name for p in (people_hint or []) if p.name]
@@ -41,7 +41,7 @@ You are an expert data extractor focused on accuracy.
 
 Target Person (if applicable): {person_name}
 Target roles: {', '.join(roles)}
-Target divisions: ward, district
+Target divisions: {', '.join(division_names)}
 Current Date: {current_date}
 
 Return a JSON object.

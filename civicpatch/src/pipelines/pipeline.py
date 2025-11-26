@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from typing import Dict, List, cast
 
 import aiofiles
+import yaml
 
 from schemas import (
     Link,
@@ -246,28 +247,12 @@ class Pipeline:
                     ]
 
                     context_progress = self.context.progress
-                    current_data = context_progress.current_data
-                    required_data = context_progress.required_data
-                    minimum_required_data = max(
-                        required_data - 3, 1
-                    )  # At least 1 person
-
-                    logger.info(f"Current data: {current_data}")
-                    logger.info(f"Required data: {required_data}")
-
-                    logger.info(f"Minimum required data: {minimum_required_data}")
-                    logger.info(f"Has target role: {context_progress.has_target_role}")
-                    logger.info(
-                        f"Has target divisions (if available): {context_progress.has_target_divisions}"
-                    )
 
                     next_state = self.get_next_state_for_process_page_content(
                         logger,
                         processed_count,
                         process_config,
-                        current_data,
-                        required_data,
-                        minimum_required_data,
+                        context_progress
                     )
 
                     self.context.state = next_state
@@ -339,9 +324,7 @@ class Pipeline:
         logger,
         processed_count: int,
         process_config: ProcessConfig,
-        current_data: int,
-        required_data: int,
-        minimum_required_data: int,
+        progress
     ) -> PipelineStatus:
         """
         Calculate the next state for the pipeline based on the current progress and processed count.
@@ -349,42 +332,60 @@ class Pipeline:
         request_id = self.context.request_id
         jurisdiction_id = self.context.jurisdiction_id
 
-        current_total_cost = cost_utils.total_cost_by_request(
-            request_id, jurisdiction_id
-        )["total_cost"]
+        logger.info(f"Current data: {progress.current_data}")
+        logger.info(f"Required data: {progress.required_data}")
+
+        logger.info(f"Has target role: {progress.has_target_role}")
+        logger.info(
+            f"Has target divisions (if available): {progress.has_target_divisions}"
+        )
+
+        current_total_cost = self._get_current_total_cost(request_id, jurisdiction_id)
         logger.info(f"Current total cost for this run: ${current_total_cost:.2f}")
 
+        if self._is_cost_limit_reached(current_total_cost, process_config, logger):
+            return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+
+        if progress.current_data >= progress.required_data:
+            if self._has_required_targets(progress):
+                logger.info("Enough data processed, moving to report generation...")
+                return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+
+        if self._is_max_pages_reached(processed_count, process_config, progress, logger):
+            return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+
+        logger.info(
+            f"Not enough data processed yet, collecting more data... {processed_count}/{process_config.max_pages 
+                                                                                        + progress.required_data}"
+        )
+        return PipelineStatus.SCRAPE_PAGE
+
+    def _get_current_total_cost(self, request_id, jurisdiction_id):
+        return cost_utils.total_cost_by_request(request_id, jurisdiction_id)["total_cost"]
+
+    def _is_cost_limit_reached(self, current_total_cost, process_config, logger):
         cost_limit = process_config.pipeline_run_cost_limit
         if current_total_cost >= cost_limit:
             logger.error(
                 f"Cost limit of ${cost_limit} reached. Current cost: ${current_total_cost:.2f}. Stopping pipeline."
             )
-            return PipelineStatus.DONE
+            return True
+        return False
 
-        has_target_role = self.context.progress.has_target_role
-        has_target_divisions = self.context.progress.has_target_divisions
+    def _has_enough_data(self, current_data, minimum_required_data):
+        return current_data >= minimum_required_data
 
-        if (
-            current_data >= minimum_required_data
-            and has_target_role
-            and has_target_divisions
-        ):
-            logger.info("Enough data processed, moving to report generation...")
-            return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
+    def _has_required_targets(self, progress):
+        return progress.has_target_role and progress.has_target_divisions
 
-        max_pages_with_required_data = (
-            process_config.max_pages + required_data
-        )  # Each person might have a profile page
+    def _is_max_pages_reached(self, processed_count, process_config, progress, logger):
+        max_pages_with_required_data = process_config.max_pages + progress.required_data
         if processed_count >= max_pages_with_required_data:
             logger.info(
                 f"Max pages ({max_pages_with_required_data}) reached, moving to next step..."
             )
-            return PipelineStatus.MERGE_RECORDS_WITHIN_LLM
-
-        logger.info(
-            f"Not enough data processed yet, collecting more data... {processed_count}/{max_pages_with_required_data}"
-        )
-        return PipelineStatus.SCRAPE_PAGE
+            return True
+        return False
 
     def save_data(self, people: List[Person]):
         """
@@ -407,4 +408,4 @@ class Pipeline:
             "last_updated": datetime.now(timezone.utc).isoformat(),
         }
         with open(config_file_path, "w", encoding="utf-8") as f:
-            json.dump(config_data, f, ensure_ascii=False, indent=4)
+            yaml.dump(config_data, f, allow_unicode=True, sort_keys=False, indent=4)
