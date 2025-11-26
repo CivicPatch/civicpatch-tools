@@ -40,6 +40,13 @@ def get_divisions():
         _divisions_config = config_data.get('divisions', {})
     return _divisions_config
 
+def get_division_names() -> List[str]:
+    """
+    Returns a list of canonical division names from the configuration file.
+    """
+    divisions_config = get_divisions()
+    return list(divisions_config.keys())
+
 def get_division_alias_map() -> Dict[str, str]:
     """
     Build a mapping from all aliases to their canonical division type.
