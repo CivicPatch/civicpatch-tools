@@ -64,7 +64,7 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     Generate a prompt for extracting municipality officials.
     """
     roles = config_utils.get_roles_by_government_type(government_type)
-    division_names = config_utils.get_divisions()
+    division_names = config_utils.get_division_names()
     current_date = datetime.now().strftime("%Y-%m-%d")
 
     person_name = None
@@ -90,7 +90,7 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     If not, return an empty JSON array `[]`.
 
     Target Roles: {', '.join(roles)}
-    Target Divisions: ward, district
+    Target Divisions:  {', '.join(division_names)}
     Current Date: {current_date}
 
     Return a JSON object with people, each having:

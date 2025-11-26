@@ -48,12 +48,12 @@ docker compose -f docker-compose.development.yml up
 # Container must be up (docker compose up)
 [tasks.manual]
 run = """
-curl -X POST http://localhost:8000/api/pipelines/state_wa__place_bremerton \
+curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Bremerton city",
-    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:bremerton/government",
-    "url": "https://www.bremertonwa.gov/"
+    "name": "Lynnwood city",
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:lynnwood/government",
+    "url": "https://www.lynnwoodwa.gov"
   }'
 """
 #curl -X POST http://localhost:8000/api/pipelines \
