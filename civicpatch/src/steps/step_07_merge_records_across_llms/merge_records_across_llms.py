@@ -30,14 +30,8 @@ def merge_records_across_llms(context: PipelineContext) -> MergeRecordsAcrossLLM
     jurisdiction_id = context.jurisdiction_id
 
     # Get people_by_llm from the previous step
-    people_by_llm: Dict[str, List[Person]] = cast(
-        MergeRecordsWithinLLMStep, context.steps[PipelineStatus.MERGE_RECORDS_WITHIN_LLM]
-        ).people_by_llm
-    
-    government_type = cast(
-        ResearchMunicipalityStep, 
-        context.steps[PipelineStatus.RESEARCH_MUNICIPALITY]
-        ).government_type
+    people_by_llm: Dict[str, List[Person]] = context.merge_records_within_llm_step.people_by_llm
+    government_type = context.research_municipality_step.government_type 
 
     # Group records across LLMs based on weak ties and names
     groups_by_llm = group_records_across_llms(people_by_llm)

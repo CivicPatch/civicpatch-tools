@@ -13,6 +13,8 @@ def normalize_name(name: str) -> str:
     """
     formatted_name = name.replace('‘', "'")
     formatted_name = remove_diacritics(formatted_name)
+    # trim whitespace
+    formatted_name = formatted_name.strip()
     return formatted_name
 
 def remove_diacritics(text: str) -> str:
@@ -52,10 +54,7 @@ def last_name(name: str) -> str:
     return human_name.last
 
 def has_name_overlap(name1: str, name2: str) -> bool:
-    """
-    Check if two records have the same last names.
-    """
-    return last_name(name1) == last_name(name2)
+    return (last_name(name1) == last_name(name2)) or (first_name(name1) == first_name(name2))
 
 
 def are_names_similar(name1: str, name2: str, threshold: int = NAME_SIMILARITY_THRESHOLD) -> bool:
@@ -66,17 +65,46 @@ def are_names_similar(name1: str, name2: str, threshold: int = NAME_SIMILARITY_T
     normalized_first_name2 = first_name(name2)
     return levenshtein_distance(normalized_first_name1, normalized_first_name2) <= threshold
 
-def find_indexed_name(normalized_name: str, people_by_name: PeopleByName) -> str:
+def resolve_from_known_mappings(name: str, known_mappings: OtherNamesByCanonicalName) -> str:
     """
-    Find the canonical name in people_by_name that matches the normalized name.
-    Match by exact surname and similar first name.
+    Check if a name has a canonical form in known mappings (config + runtime).
+    Returns canonical name or original name if no match.
     """
+    if not known_mappings:
+        return name
+        
+    normalized_input = normalize_name(name.strip()).lower()
+    
+    # Check if it's already a canonical name
+    for canonical in known_mappings.keys():
+        if normalize_name(canonical).lower() == normalized_input:
+            return canonical
+    
+    # Check if it's an alias for a canonical name
+    for canonical, aliases in known_mappings.items():
+        for alias in aliases:
+            if normalize_name(alias).lower() == normalized_input:
+                return canonical
+    
+    return name
+
+def find_indexed_name(normalized_name: str, people_by_name: PeopleByName, known_mappings: OtherNamesByCanonicalName = None) -> str:
+    """
+    Find the canonical name that matches the normalized name.
+    Priority: 1) Known mappings (config + runtime), 2) Similarity matching
+    """
+    # Priority 1: Check known mappings (includes both config and runtime discoveries)
+    if known_mappings:
+        canonical = resolve_from_known_mappings(normalized_name, known_mappings)
+        if canonical != normalized_name:
+            return canonical
+    
+    # Priority 2: Existing similarity-based matching
     for existing_name in people_by_name.keys():
-        if has_name_overlap(normalized_name, existing_name): # Exact surname match
+        if has_name_overlap(normalized_name, existing_name):
             if are_names_similar(existing_name, normalized_name):
                 return existing_name
     return normalized_name
-
 
 def update_name_map(
     name_map: Dict[str, List[str]], indexed_name: str, original_name: str
@@ -105,22 +133,23 @@ def append_to_people_by_name(
 
 
 def group_people_by_name(
-    names: OtherNamesByCanonicalName,
+    known_mappings: OtherNamesByCanonicalName,  # Renamed: this is your merged names
     people_by_name: PeopleByName,
     people_to_link: List[LLMPerson]
 ) -> Tuple[OtherNamesByCanonicalName, PeopleByName]:
     """
-    Group people by their canonical names and update aliases.
+    Group people by their canonical names and update mappings.
+    known_mappings contains both config and previously discovered name mappings.
     """
-    name_map: OtherNamesByCanonicalName = {}
+    updated_mappings: OtherNamesByCanonicalName = {}
     linked_people = {}
 
     # Process people_to_link
     for person in people_to_link:
-        normalized_name = normalize_name(person.name.strip())
-        indexed_name = find_indexed_name(normalized_name, people_by_name)
+        normalized_name = normalize_name(person.name)
+        indexed_name = find_indexed_name(normalized_name, people_by_name, known_mappings)
 
-        name_map = update_name_map(name_map, indexed_name, person.name.strip())
+        updated_mappings = update_name_map(updated_mappings, indexed_name, normalized_name)
 
         if indexed_name not in linked_people:
             linked_people[indexed_name] = []
@@ -130,20 +159,20 @@ def group_people_by_name(
     for indexed_name, people_list in linked_people.items():
         people_by_name = append_to_people_by_name(people_by_name, indexed_name, people_list)
 
-    # Process names dictionary for aliases
-    for key, aliases in names.items():
-        normalized_key = normalize_name(key)
-        indexed_name = find_indexed_name(normalized_key, people_by_name)
+    # Process known mappings to ensure they're preserved
+    for canonical, aliases in known_mappings.items():
+        normalized_canonical = normalize_name(canonical)
+        indexed_name = find_indexed_name(normalized_canonical, people_by_name, known_mappings)
 
-        name_map = update_name_map(name_map, indexed_name, key)
-        if indexed_name in name_map:
-            name_map[indexed_name].extend(aliases)
+        updated_mappings = update_name_map(updated_mappings, indexed_name, canonical)
+        if indexed_name in updated_mappings:
+            updated_mappings[indexed_name].extend(aliases)
 
-    # Deduplicate and sort aliases in name_map for consistent order
-    for indexed_name in name_map:
-        name_map[indexed_name] = sorted(set(name_map[indexed_name]))
+    # Deduplicate and sort
+    for indexed_name in updated_mappings:
+        updated_mappings[indexed_name] = sorted(set(updated_mappings[indexed_name]))
 
-    return name_map, people_by_name
+    return updated_mappings, people_by_name
 
 def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool:
     """
@@ -154,8 +183,8 @@ def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool
         return False
 
     # Check for matching roles
-    if set(record1.roles) & set(record2.roles):
-        return True
+    if not (set(record1.roles) & set(record2.roles)):
+        return False
 
     # Check for matching email addresses
     if record1.email and record2.email and record1.email == record2.email: 

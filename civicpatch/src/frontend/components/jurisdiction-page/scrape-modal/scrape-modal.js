@@ -11,6 +11,11 @@ function ScrapeModal({
   const [scrapeScope, setScrapeScope] = useState("top-level-url");
   const [currentUrl, setCurrentUrl] = useState(url);
   const [currentSourceUrls, setCurrentSourceUrls] = useState(sourceUrls);
+  const [nameConfigs, setNameConfigs] = useState({});
+
+  const handleNameConfigsChange = (configs) => {
+    setNameConfigs(configs);
+  };
 
   const handleScopeChange = (event) => {
     setScrapeScope(event.target.value);
@@ -83,6 +88,7 @@ function ScrapeModal({
         },
       };
     }
+    data.identities = nameConfigs;
     onStartScrape(data);
   };
 
@@ -154,6 +160,19 @@ function ScrapeModal({
               )}
               <button @click=${addSourceUrl}>Add URL</button>
             `}
+
+        <details name="override-names" style="margin-top: 1em;">
+          <summary>Name Configs</summary>
+          <p>
+            Some people go by multiple names that aren't easily guessable to be
+            the same identity. Specify alternate names for identities to improve
+            matching.
+          </p>
+          <name-config-form
+            .onChange=${handleNameConfigsChange}
+            .existingNameConfigs=${nameConfigs}
+          ></name-config-form>
+        </details>
 
         <footer>
           <button @click=${modalProps.onClose} class="secondary">Cancel</button>

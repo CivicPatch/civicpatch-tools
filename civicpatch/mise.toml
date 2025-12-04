@@ -36,7 +36,7 @@ docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m u
 
 [tasks.scratchtest]
 run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vm unit tests/unit/utils/test_id_utils.py
+docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vm unit tests/unit/utils/test_merge_utils.py
 """
 
 

@@ -5,7 +5,7 @@ from schemas import PipelineContext, Link, LinkStatus, PipelineStatus, Preproces
 from shared.utils import data_path_utils
 from steps.step_04_preprocess_page_content.filter_content import filter_content
 from utils import log_utils
-from typing import cast
+from typing import List
 
 DEFAULT_PREPROCESS_PAGE_CONTENT_STEP = PreprocessPageContentStep(
     elapsed_times=[],
@@ -13,7 +13,7 @@ DEFAULT_PREPROCESS_PAGE_CONTENT_STEP = PreprocessPageContentStep(
     average_elapsed_time_seconds=0
 )
 
-def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
+def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link) -> tuple[List[Link], PreprocessPageContentStep]:
     """
     Preprocess the scraped HTML content of a page.
     """
@@ -30,7 +30,7 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
 
     output_md = md(output_html)
 
-    government_type = cast(ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY]).government_type
+    government_type = context.research_municipality_step.government_type
     preprocessed_html  = filter_content(logger, output_html, government_type=government_type)
     preprocessed_md = md(preprocessed_html)
 
@@ -53,7 +53,7 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
     else:
         new_status = LinkStatus.PREPROCESSED_NO_CONTENT.value
 
-    updated_links = []
+    updated_links: List[Link] = []
     for link in context.links:
         if link.url == page_to_preprocess.url:
             # Update the status/content for this link
@@ -65,11 +65,9 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
     time_end = time.time()
     elapsed_time = time_end - time_start
 
-    preprocess_page_content_step = context.steps.get(PipelineStatus.PREPROCESS_PAGE_CONTENT)
+    preprocess_page_content_step = context.preprocess_page_content_step
     if preprocess_page_content_step is None:
         preprocess_page_content_step = DEFAULT_PREPROCESS_PAGE_CONTENT_STEP
-        context.steps[PipelineStatus.PREPROCESS_PAGE_CONTENT] = preprocess_page_content_step
-    preprocess_page_content_step = cast(PreprocessPageContentStep, preprocess_page_content_step)
 
     total_elapsed_time_seconds = preprocess_page_content_step.total_elapsed_time_seconds + elapsed_time
 
@@ -83,11 +81,8 @@ def preprocess_page_content(context: PipelineContext, page_to_preprocess: Link):
     logger.info(f"-> Average elapsed time: {average_elapsed_time_seconds:.2f} seconds")
     logger.info(f"-> Total elapsed time: {total_elapsed_time_seconds:.2f} seconds")
 
-    return {
-        "links": updated_links,
-        "result": PreprocessPageContentStep(
-            elapsed_times=elapsed_times,
-            total_elapsed_time_seconds=int(total_elapsed_time_seconds),
-            average_elapsed_time_seconds=int(average_elapsed_time_seconds)
-        )
-    }
+    return updated_links, PreprocessPageContentStep(
+        elapsed_times=elapsed_times,
+        total_elapsed_time_seconds=int(total_elapsed_time_seconds),
+        average_elapsed_time_seconds=int(average_elapsed_time_seconds)
+    )

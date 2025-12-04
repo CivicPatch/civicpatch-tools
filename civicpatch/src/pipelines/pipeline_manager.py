@@ -48,16 +48,16 @@ class PipelineManager:
         jurisdiction_id_obj = id_utils.parse_jurisdiction_id(jurisdiction_id)
         if not jurisdiction_id_obj:
             errors.append(f"Invalid jurisdiction_id format: {jurisdiction_id}.")
-        if not pipeline_request.name:
+        if not pipeline_request.config.name:
             warnings.append(
                 "Missing 'name' field. Substituting with place name jurisdiction_id."
             )
-        if not pipeline_request.url:
+        if not pipeline_request.config.url:
             errors.append("Missing 'url' field.")
 
         # Check all webpage_urls, if present, are valid URLs
-        if pipeline_request.source_urls:
-            for url in pipeline_request.source_urls:
+        if pipeline_request.config.source_urls:
+            for url in pipeline_request.config.source_urls:
                 parse_url = urlparse(url)
                 is_valid_url = all([parse_url.scheme, parse_url.netloc])
                 if not is_valid_url:

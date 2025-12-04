@@ -149,7 +149,6 @@ def add_llm_cost(
         jurisdiction_id: str, 
         llm_name: str, 
         model: str, 
-
         input_tokens: int, 
         output_tokens: int, 
         with_search=False

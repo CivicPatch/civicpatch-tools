@@ -7,7 +7,7 @@ from shared.utils.data_path_utils import get_data_source_path_for_jurisdiction_i
 from schemas import PipelineContext, PipelineStatus, Person, MergeRecordsAcrossLLMsStep
 from utils import url_utils, log_utils, cost_utils
 
-
+# Todo: Should return updated configs
 def cleanup(context: PipelineContext):
     # Remove files under data_source/cache and data_source/images
     jurisdiction_id = context.jurisdiction_id
@@ -18,10 +18,7 @@ def cleanup(context: PipelineContext):
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
-    merge_records_step = cast(
-        MergeRecordsAcrossLLMsStep,
-        context.steps[PipelineStatus.MERGE_RECORDS_ACROSS_LLMS],
-    )
+    merge_records_step = context.merge_records_across_llms_step
     people_data = merge_records_step.people
     people = [Person.parse_obj(person) for person in people_data]
 
@@ -32,9 +29,9 @@ def cleanup(context: PipelineContext):
         # Only keep images that are referenced by people
         cleanup_images(logger, request_id, jurisdiction_id, images_dir, people)
 
-    updated_names = cleanup_names_config(context.names)
+    updated_names = cleanup_names_config(context.identities)
 
-    return {"names": updated_names}
+    return {"identities": updated_names}
 
 
 def cleanup_cache(cache_dir: str, people_list: List[Person]):
