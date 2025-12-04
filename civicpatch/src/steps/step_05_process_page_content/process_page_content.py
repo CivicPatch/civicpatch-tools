@@ -22,7 +22,7 @@ from utils import (
     people_utils,
     log_utils
 )
-from typing import List, Any, Dict, Tuple, cast
+from typing import List, Any, Dict, Tuple, cast, Optional
 import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 import services.openai.llm as openai_llm
@@ -33,17 +33,10 @@ import phonenumbers
 
 @dataclass
 class ProcessingSetup:
-    government_type: str
     people_hint: List[ResearchedPerson]
     roles: List[str]
     target_role: str
     target_divisions: List[str]
-
-@dataclass
-class UpdatedStepData:
-    names: Dict[str, List[str]]
-    step_data: ProcessPageContentStep
-    records_by_llm: RecordsByLLM
 
 LLMS = [
     {
@@ -63,7 +56,7 @@ LLMS = [
     #}
 ]
 IGNORE_WEBSITES = [
-    "facebook.com",
+    "faceboo.com",
     "twitter.com",
     "instagram.com",
     "linkedin.com",
@@ -83,44 +76,82 @@ DEFAULT_PROCESS_PAGE_CONTENT_STEP = ProcessPageContentStep(
     }
 )
 
-def process_page_content(context: PipelineContext, page_to_process: Link) -> Dict[str, Any]:
+def process_page_content(context: PipelineContext, page_to_process: Link) -> ProcessPageContentStep:
     logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
     logger.info(f"Step 5: {PipelineStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
-    setup_data = get_setup_data(context)
+    research_municipality_step = context.research_municipality_step
+    setup_data = get_setup_data(research_municipality_step)
+    
+    # Get current step identities and merge with config
+    current_step = context.process_page_content_step or DEFAULT_PROCESS_PAGE_CONTENT_STEP
+    merged_identities = merge_config_into_names(context.identities, current_step.identities)
     
     content = read_preprocessed_content(context.jurisdiction_id, page_to_process)
     llm_responses = process_with_llms(
         page_to_process.url, 
         context.request_id, 
         context.jurisdiction_id,
-        setup_data.government_type,
+        research_municipality_step.government_type,
         content,
         setup_data.people_hint
     )
     
-    updated_step_data = update_step_data(context, llm_responses)
+    # Process the data functionally without mutations
+    updated_identities, updated_raw_records, updated_records = update_step_data(
+        context.jurisdiction_id,
+        research_municipality_step.government_type, 
+        llm_responses, 
+        merged_identities,
+        current_step.records_by_llm,
+        current_step.raw_records_by_llm
+    )
+    
     updated_progress = calculate_progress(
         context.progress,
-        updated_step_data.records_by_llm,
+        updated_records,
         setup_data.roles,
         setup_data.target_role,
         setup_data.target_divisions
     )
-    updated_links = update_links(context.links, page_to_process, logger, setup_data.roles, updated_step_data.records_by_llm)
-
-    return {
-        "links": updated_links,
-        "progress": updated_progress,
-        "names": updated_step_data.names,
-        "result": updated_step_data.step_data
-    }
-
-def get_setup_data(context: PipelineContext) -> ProcessingSetup:
-    municipality_research = ResearchMunicipalityStep.model_validate(
-        cast(ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY])
-    )
+    updated_links = update_links(context.links, page_to_process, logger, setup_data.roles, updated_records)
     
+    return ProcessPageContentStep(
+        raw_records_by_llm=updated_raw_records,
+        records_by_llm=updated_records,
+        links=updated_links,
+        progress=updated_progress,
+        identities=updated_identities
+    )
+
+def merge_config_into_names(config_identities: Optional[OtherNamesByCanonicalName], runtime_identities: Optional[OtherNamesByCanonicalName]) -> OtherNamesByCanonicalName:
+    """
+    Merge config-based identity mappings with runtime identities.
+    Config takes priority - if there's a conflict, config wins.
+    """
+    # Start with config (priority)
+    merged_identities = copy.deepcopy(config_identities) if config_identities else {}
+    
+    # Add runtime discoveries that don't conflict with config
+    for canonical, variants in (runtime_identities or {}).items():
+        # Check if this canonical name conflicts with any config mapping
+        canonical_in_config = any(
+            canonical.lower().strip() == config_canonical.lower().strip() or
+            canonical.lower().strip() in [v.lower().strip() for v in config_variants]
+            for config_canonical, config_variants in (config_identities or {}).items()
+        )
+        
+        if not canonical_in_config:
+            # No conflict - add the runtime mapping
+            merged_identities[canonical] = variants
+        else:
+            # There's a conflict - config wins, but log it
+            logger = log_utils.get_pipeline_logger("system")
+            logger.info(f"Config identity mapping overriding runtime discovery for: {canonical}")
+    
+    return merged_identities
+
+def get_setup_data(municipality_research: ResearchMunicipalityStep) -> ProcessingSetup: 
     divisions = config_utils.get_divisions()
     divisions_with_geo = [d for d, v in divisions.items() if v.get("has_geographic_area", False)]
     
@@ -129,7 +160,6 @@ def get_setup_data(context: PipelineContext) -> ProcessingSetup:
     target_divisions = get_target_divisions(divisions_with_geo, municipality_research.elected_officials)
     
     return ProcessingSetup(
-        government_type=municipality_research.government_type,
         people_hint=municipality_research.elected_officials,
         roles=roles,
         target_role=target_role,
@@ -146,37 +176,34 @@ def read_preprocessed_content(jurisdiction_id: str, page_to_process: Link) -> st
         return f.read()
 
 
-def update_step_data(context: PipelineContext, llm_responses: Dict[str, List[LLMPerson]]) -> UpdatedStepData:
-    """Update and normalize all processed records."""
-    current_step_data = context.steps.get(PipelineStatus.PROCESS_PAGE_CONTENT, DEFAULT_PROCESS_PAGE_CONTENT_STEP)
-    if not isinstance(current_step_data, ProcessPageContentStep):
-        current_step_data = ProcessPageContentStep.model_validate(current_step_data)
+def update_step_data(
+    jurisdiction_id: str,
+    government_type: str, 
+    llm_responses: Dict[str, List[LLMPerson]], 
+    merged_identities: OtherNamesByCanonicalName,
+    existing_records_by_llm: RecordsByLLM,
+    existing_raw_records_by_llm: RecordsByLLM
+) -> tuple[OtherNamesByCanonicalName, RecordsByLLM, RecordsByLLM]:
+    """Update and normalize all processed records functionally without mutations."""
     
-    updated_names, updated_records_by_llm = update_records_by_llm(
-        context.names, 
-        current_step_data.records_by_llm, 
+    # Update records without mutation
+    updated_identities, updated_raw_records = update_records_by_llm(
+        merged_identities,
+        existing_records_by_llm, 
         llm_responses
     )
     
-    current_step_data.raw_records_by_llm = updated_records_by_llm
+    # Create normalized records from raw records
+    updated_normalized_records = copy.deepcopy(existing_records_by_llm)
+    logger = log_utils.get_pipeline_logger(jurisdiction_id)
     
-    government_type = cast(ResearchMunicipalityStep, 
-                          context.steps[PipelineStatus.RESEARCH_MUNICIPALITY]).government_type
-    
-    logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
-    
-    for llm, people_by_name in updated_records_by_llm.items():
+    for llm, people_by_name in updated_raw_records.items():
+        updated_normalized_records[llm] = {}
         for name, people in people_by_name.items():
             normalized_people = [normalize_record(logger, person, government_type) for person in people]
-            current_step_data.records_by_llm[llm][name] = normalized_people
-            current_step_data.raw_records_by_llm[llm][name] = people
+            updated_normalized_records[llm][name] = normalized_people
     
-    return UpdatedStepData(
-        names=updated_names,
-        step_data=current_step_data,
-        records_by_llm=current_step_data.records_by_llm
-    )
-
+    return updated_identities, updated_raw_records, updated_normalized_records
 
 def update_links(context_links: List[Link], processed_page: Link, logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[Link]:
     """Update processed page status and add new website links."""
@@ -228,24 +255,24 @@ def get_target_divisions(divisions_with_geo: List[str], people_hint: List[Resear
     return list(divisions)
 
 def update_records_by_llm(
-    names: OtherNamesByCanonicalName,
+    identities: OtherNamesByCanonicalName,
     records_by_llm: RecordsByLLM,  # map of llm name to Dict[str, List[LLMPerson]]
     current_responses: Dict[str, List[LLMPerson]]  # map of llm name to List[LLMPerson]
 ) -> Tuple[OtherNamesByCanonicalName, RecordsByLLM]:
     """
     Update the data with the new responses.
     """
-    updated_names = copy.deepcopy(names) if names else {}  # Handle empty names
+    updated_identities = copy.deepcopy(identities) if identities else {}  # Handle empty identities
     updated_records_by_llm = copy.deepcopy(records_by_llm)
     
     for llm_name, llm_people_list in current_responses.items():
         people_by_name = updated_records_by_llm.get(llm_name, {})  # Handle missing LLM data
-        updated_names, updated_people_by_name = merge_utils.group_people_by_name(
-            updated_names, people_by_name, llm_people_list
+        updated_identities, updated_people_by_name = merge_utils.group_people_by_name(
+            updated_identities, people_by_name, llm_people_list
         )
         updated_records_by_llm[llm_name] = updated_people_by_name
 
-    return updated_names, updated_records_by_llm
+    return updated_identities, updated_records_by_llm
 
 def process_with_llms(
     source_url: str,

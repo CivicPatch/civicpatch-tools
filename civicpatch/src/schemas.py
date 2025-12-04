@@ -107,10 +107,14 @@ class ResearchMunicipalityStep(BaseModel):
 
 
 class SearchLinksStep(BaseModel):
-    search_link_pointer: int  # Index of the next search engine to use
-    search_engines: Dict[str, SearchEngineState]  # e.g., "google": SearchEngineState
+    search_link_pointer: int = 0  # Index of the next search engine to use
+    search_engines: Dict[str, SearchEngineState] = {
+        "google": SearchEngineState(links=[], status=SearchEngineStatus.NOT_STARTED.value),
+        # "serpapi": SearchEngineState(links=[], status="not_started"),
+        # "brave": SearchEngineState(links=[], status="not_started"),
+        "crawl": SearchEngineState(links=[], status=SearchEngineStatus.NOT_STARTED.value),
+    }  # e.g., "google": SearchEngineState
     error: Optional[str] = None
-
 
 class PreprocessPageContentStep(BaseModel):
     elapsed_times: List[int] = []
@@ -121,6 +125,11 @@ class PreprocessPageContentStep(BaseModel):
 class ProcessPageContentStep(BaseModel):
     raw_records_by_llm: RecordsByLLM
     records_by_llm: RecordsByLLM
+    links: List[Link] = []
+    progress: ProgressState = ProgressState(
+        required_data=0, current_data=0, has_target_role=True, has_target_divisions=True
+    )
+    identities: OtherNamesByCanonicalName = {}
 
 
 class MergeRecordsWithinLLMStep(BaseModel):
@@ -160,49 +169,43 @@ class MaybeSendToGitHubStep(BaseModel):
     response_status_code: Optional[int] = None
     response_text: Optional[str] = None
 
+class PipelineConfig(BaseModel):
+    url: str  # Municipality url. Without it we can't scrape anything.
+    name: str # Human-readable name
+    source_urls: Optional[List[str]] = None
+    identities: Optional[Dict[str, List[str]]] = None # Canonical name to other names found while scraping
+    
+    # TODO: override in configs
+    government_type: Optional[str] = None  # Ex: "Mayor-Council", "Council-Manager", etc.
 
 class PipelineRequest(BaseModel):
-    name: str  # Human-readable name -- typically this would include the lsad (ex: Naperville township)
     jurisdiction_id: str  # Format: ocd-jurisdiction/country:us/state:wa/place:seattle
     # OR ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville, for cousubs
-    url: str
     state: PipelineStatus = PipelineStatus.INIT
-
-    source_urls: Optional[List[str]] = None
-
+    config: PipelineConfig
 
 class PipelineContext(BaseModel):
     request_id: str
     jurisdiction_id: str
-    name: str  # Name of municipality + lsad (ex: Naperville township)
-    url: str  # Municipality url. Without it we can't scrape anything.
-    source_urls: Optional[List[str]] = None
     state: PipelineStatus = PipelineStatus.INIT
+
+    identities: Dict[str, List[str]] = {} 
     links: List[Link] = []
     progress: ProgressState = ProgressState(
         required_data=0, current_data=0, has_target_role=True, has_target_divisions=True
     )
-    steps: Dict[
-        PipelineStatus,
-        Union[
-            ResearchMunicipalityStep,
-            SearchLinksStep,
-            PreprocessPageContentStep,
-            ProcessPageContentStep,
-            MergeRecordsWithinLLMStep,
-            MergeRecordsAcrossLLMsStep,
-            MaybeSendToGitHubStep,
-        ],
-    ] = Field(default_factory=dict)
     pipeline_duration: Optional[int] = None
 
-    # Can be overridden with configs
-    names: Dict[
-        str, List[str]
-    ] = {}  # Canonical name to other names found while scraping
-    government_type: Optional[str] = (
-        None  # Ex: "Mayor-Council", "Council-Manager", etc.
-    )
+    research_municipality_step: Optional[ResearchMunicipalityStep] = None
+    search_links_step: SearchLinksStep = SearchLinksStep()
+    preprocess_page_content_step: Optional[PreprocessPageContentStep] = None
+    process_page_content_step: Optional[ProcessPageContentStep] = None
+    merge_records_within_llm_step: Optional[MergeRecordsWithinLLMStep] = None
+    merge_records_across_llms_step: Optional[MergeRecordsAcrossLLMsStep] = None
+    maybe_send_to_github_step: Optional[MaybeSendToGitHubStep] = None
+
+    # Can be overridden with data source configs
+    config: PipelineConfig
 
 
 DEFAULT_SEARCH_LINKS_STEP = SearchLinksStep(

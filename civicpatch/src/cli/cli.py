@@ -63,7 +63,11 @@ def main():
 
     if args.command == "run_pipeline":
         request = PipelineRequest(
-            jurisdiction_id=args.jurisdiction_id, name=args.name, url=args.url
+            jurisdiction_id=args.jurisdiction_id, 
+            config={
+                "name": args.name,
+                "url": args.url,
+            }
         )
         asyncio.run(run_pipeline_cli(request))
     else:

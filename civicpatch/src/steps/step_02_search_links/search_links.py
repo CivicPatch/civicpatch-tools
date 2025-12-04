@@ -1,6 +1,4 @@
-MAX_RETRIES = 3
-
-from typing import Any, Dict, cast
+from typing import Any, Dict, cast, List
 
 from schemas import (
     Link,
@@ -11,47 +9,32 @@ from schemas import (
     SearchEngineState,
     SearchLinksStep,
 )
+from shared.utils.config_utils import search_keywords
 from utils import log_utils
 from utils.array_utils import interleave_arrays
-from shared.utils.config_utils import search_keywords
 from utils.request_utils import with_retry
 
 from .utils import SearchEngineNames, search
 
-DEFAULT_SEARCH_LINKS_STEP = SearchLinksStep(
-    search_link_pointer=0,
-    search_engines={
-        "google": SearchEngineState(links=[], status="not_started"),
-        # "serpapi": SearchEngineState(links=[], status="not_started"),
-        # "brave": SearchEngineState(links=[], status="not_started"),
-        "crawl": SearchEngineState(links=[], status="not_started"),
-    },
-    error=None,
-)
+MAX_RETRIES = 3
 
-
-def search_links(context: PipelineContext) -> Dict[str, Any]:
+def search_links(context: PipelineContext) -> tuple[List[Link], SearchLinksStep]:
     """
     Search for links using multiple search engines and queries.
     """
     logger = log_utils.get_pipeline_logger(context.jurisdiction_id)
     logger.info(f"Step 2: {PipelineStatus.SEARCH_LINKS.value}")
 
-    search_links_step = context.steps.get(PipelineStatus.SEARCH_LINKS)
-    if search_links_step is None:
-        search_links_step = DEFAULT_SEARCH_LINKS_STEP
-    search_links_step = cast(SearchLinksStep, search_links_step)
+    search_links_step = context.search_links_step
     search_link_pointer = search_links_step.search_link_pointer
 
     # Load keyword term groups
     request_id = context.request_id
     jurisdiction_id = context.jurisdiction_id
-    municipality_name = context.name
-    municipality_website = context.url
+    municipality_name = context.config.name
+    municipality_website = context.config.url
 
-    research_municipality_step = cast(
-        ResearchMunicipalityStep, context.steps[PipelineStatus.RESEARCH_MUNICIPALITY]
-    )
+    research_municipality_step = context.research_municipality_step
     government_type = research_municipality_step.government_type
 
     keyword_term_groups = search_keywords(government_type)
@@ -103,17 +86,11 @@ def search_links(context: PipelineContext) -> Dict[str, Any]:
         search_engine: SearchEngineState(links=interleaved_urls, status=status_value),
     }
 
-    result = {
-        "links": updated_links,
-        "result": SearchLinksStep(
-            search_link_pointer=search_link_pointer + 1,
-            search_engines=updated_search_engines,
-            error=error_message,
-        ),
-    }
-
-    return result
-
+    return updated_links, SearchLinksStep(
+        search_link_pointer=search_link_pointer + 1,
+        search_engines=updated_search_engines,
+        error=error_message,
+    ),
 
 def municipality_search(
     logger,

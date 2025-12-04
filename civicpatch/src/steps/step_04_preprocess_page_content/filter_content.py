@@ -53,7 +53,7 @@ def filter_node_content(logger, node: Tag, state, government_type):
     now = time.time()
     if now - state["last_progress_time"] >= state["progress_log_interval"]:
         percent = int(100 * state["processed"] / state["total"])
-        logger.info(f"-> Progress: {percent}% ({state['processed']}/{state['total']})")
+        logger.info(f"-> PREPROCESS_PAGE_CONTENT Page Progress: {percent}% ({state['processed']}/{state['total']})")
         state["last_progress_time"] = now
     
     # Handle tables - evaluate the entire table content

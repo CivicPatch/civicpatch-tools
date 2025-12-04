@@ -12,12 +12,15 @@ def merge_records_within_llm(context: PipelineContext) -> MergeRecordsWithinLLMS
     Consolidate records within each LLM to produce a unified list of Person objects.
     """
     jurisdiction_id = context.jurisdiction_id
-    records_by_llm: RecordsByLLM = cast(ProcessPageContentStep, context.steps[PipelineStatus.PROCESS_PAGE_CONTENT]).records_by_llm
+    records_by_llm: RecordsByLLM = context.process_page_content_step.records_by_llm
     records_by_llm = { k: {name: [LLMPerson.model_validate(p) if isinstance(p, dict) else p for p in v] for name, v in people.items()} for k, people in records_by_llm.items() } if isinstance(records_by_llm, dict) else records_by_llm
 
     # Flatten the records so that we can later group by last name 
     # and merge weakly tied records
-    flattened_records_by_llm = {llm: [person for people in people_by_name.values() for person in people] for llm, people_by_name in records_by_llm.items()}
+    flattened_records_by_llm = {
+        llm: [person for people in people_by_name.values() for person in people] 
+                for llm, people_by_name in records_by_llm.items()
+    }
 
     people_by_llm: Dict[str, List[Person]] = {}
 

@@ -149,10 +149,13 @@ function JurisdictionPage({ jurisdiction_ocdid }) {
   const handleScrapeStartClick = async (details) => {
     setPipelineStatusIsLoading(true);
     const body = {
-      name: data.data.name,
       jurisdiction_id: data.data.id,
-      url: details.data.url || data.data.url,
-      source_urls: details.data.sourceUrls,
+      config: {
+        url: details.data.url || data.data.url,
+        name: data.data.name,
+        source_urls: details.data.sourceUrls,
+        identities: details.data.identities
+      }
     };
     const _response = await fetch(`/api/pipelines`, {
       headers: { "Content-Type": "application/json" },

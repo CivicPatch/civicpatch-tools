@@ -7,7 +7,7 @@ from utils import people_utils, log_utils
 
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
 
-def research_municipality(context: PipelineContext):
+def research_municipality(context: PipelineContext) -> tuple[ProgressState, ResearchMunicipalityStep]:
     """
     Research the municipality to gather necessary data for further processing.
     """
@@ -15,7 +15,7 @@ def research_municipality(context: PipelineContext):
     logger.info(f"Step 1: {PipelineStatus.RESEARCH_MUNICIPALITY.value}")
     request_id = context.request_id
     jurisdiction_id = context.jurisdiction_id
-    municipality_name = context.name
+    municipality_name = context.config.name
     prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_id, municipality_name)
     response = google_gemini_llm.run_prompt(request_id, jurisdiction_id, prompt, with_search=True)
     if not response:
@@ -23,7 +23,9 @@ def research_municipality(context: PipelineContext):
     people = response.get("people", [])
     roles_found = [p.get("roles", None) for p in people if p.get("roles")]
     roles_found = [role for person_roles in roles_found for role in person_roles]
-    government_type = match_roles_to_government_type(roles_found, config_utils.get_government_types())
+
+    # Government type can be overridden via config
+    government_type = context.config.government_type or match_roles_to_government_type(roles_found, config_utils.get_government_types())
 
     if not government_type:
         logger.error(f"Could not determine government type for jurisdiction {jurisdiction_id}. Roles found: {roles_found}")
@@ -40,14 +42,10 @@ def research_municipality(context: PipelineContext):
         notes=response.get("notes"),
     )
 
-    return {
-        "progress": ProgressState(
+    return ProgressState(
             required_data=max(MINIMUM_ELECTED_OFFICIALS_NUM, len(target_people)),
             current_data=0,  # Default current data count
-        ),
-        "result": result
-            # PipelineStatus.RESEARCH_MUNICIPALITY.value: result.model_dump()
-    }
+        ), result
 
 def match_roles_to_government_type(roles: List[str], government_types_config: Dict) -> str | None:
     """
