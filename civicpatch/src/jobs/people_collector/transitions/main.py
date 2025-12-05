@@ -202,7 +202,7 @@ async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: Peop
 
 async def maybe_send_to_github_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
     cost_utils.log_costs(
-        context.request_id, context.jurisdiction_id
+        context.request_id, context.data.jurisdiction_id
     )
 
     result = maybe_send_to_github(context)
