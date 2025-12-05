@@ -21,8 +21,9 @@ from jobs.people_collector.steps.step_06_merge_records_within_llm.merge_records_
 from jobs.people_collector.steps.step_07_merge_records_across_llms.merge_records_across_llms import (
     merge_records_across_llms,
 )
-from jobs.people_collector.steps.step_08_cleanup.cleanup import cleanup
-from jobs.people_collector.steps.step_09_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
+from jobs.people_collector.steps.step_08_save_output.save_output import save_output
+from jobs.people_collector.steps.step_09_cleanup.cleanup import cleanup
+from jobs.people_collector.steps.step_10_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
 
 from jobs.people_collector.transitions.process_page_content_transition import next_state_for_process_content_state
 from jobs.people_collector.utils.links import (
@@ -195,10 +196,14 @@ async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: Peop
             })
         })
     })
-    # TODO: save the updated config to file
 
-    next_state = WorkflowStatus.MAYBE_SEND_TO_GITHUB
+    next_state = WorkflowStatus.SAVE_OUTPUT
     return next_context, next_state
+
+async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+    result = save_output(context)
+    next_state = WorkflowStatus.MAYBE_SEND_TO_GITHUB
+    return context, next_state
 
 async def maybe_send_to_github_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
     cost_utils.log_costs(
