@@ -1,6 +1,6 @@
 import os
 import difflib
-from steps.step_04_preprocess_page_content.filter_content import filter_content
+from jobs.people_collector.steps.step_04_preprocess_page_content.filter_content import filter_content
 from markdownify import markdownify as md
 
 def read_fixture(filename, subfolder="with_table"):

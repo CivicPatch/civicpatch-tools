@@ -2,8 +2,10 @@ import pytest
 import os
 import tempfile
 from unittest.mock import patch
-from steps.step_04_preprocess_page_content.preprocess_page_content import preprocess_page_content
-from schemas import PipelineContext, Link, LinkStatus, PipelineStatus
+from jobs.people_collector.steps.step_04_preprocess_page_content.preprocess_page_content import preprocess_page_content
+from jobs.people_collector.schemas import (
+    Link, LinkStatus, WorkflowStatus 
+)
 
 @pytest.fixture
 def mock_context():
@@ -15,7 +17,7 @@ def mock_context():
             {"url": "http://example.com/page2", "folder_name": "page2", "status": LinkStatus.SCRAPED.value},
         ],
         "steps": {
-            PipelineStatus.PREPROCESS_PAGE_CONTENT.value: {
+            WorkflowStatus.PREPROCESS_PAGE_CONTENT.value: {
                 "elapsed_times": [],
                 "total_elapsed_time_seconds": 0,
             }

@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Generic, TypeVar, Optional
+from pydantic import ConfigDict
 
 TData = TypeVar("TData")
 TState = TypeVar("TState")

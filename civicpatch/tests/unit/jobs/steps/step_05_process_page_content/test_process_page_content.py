@@ -1,7 +1,9 @@
 import os
 from unittest.mock import patch
-from schemas import LLMPerson, LinkStatus, PipelineStatus, ProcessPageContentStep
-from steps.step_05_process_page_content.process_page_content import process_page_content
+from jobs.people_collector.schemas import (
+    LLMPerson, LinkStatus, WorkflowStatus, ProcessPageContentStep
+)
+from jobs.people_collector.steps.step_05_process_page_content.process_page_content import process_page_content
 from utils.url_utils import format_url_to_folder
 
 def make_llm_person(name, roles=None, phone=None, email=None, website=None):
@@ -91,11 +93,11 @@ def test_process_page_content_basic(
         "geoid": "5367000",
         "progress": {"current_data": 0},
         "steps": {
-            PipelineStatus.RESEARCH_MUNICIPALITY.value: {
+            WorkflowStatus.RESEARCH_MUNICIPALITY.value: {
                 "government_type": "mayor_council",
                 "elected_officials": [{"name": "Alice Johnson"}]
             },
-            PipelineStatus.PROCESS_PAGE_CONTENT.value: ProcessPageContentStep(
+            WorkflowStatus.PROCESS_PAGE_CONTENT.value: ProcessPageContentStep(
                 records_by_llm={
                     "google_gemini": {
                         "Alice Johnson": [

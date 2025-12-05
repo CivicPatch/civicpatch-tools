@@ -14,7 +14,7 @@ def cleanup(context: PeopleCollectorContext):
     # Remove files under data_source/cache and data_source/images
     jurisdiction_id = context.data.jurisdiction_id
     logger = log_utils.get_workflow_logger(jurisdiction_id)
-    logger.info(f"Step 8: {WorkflowStatus.CLEANUP.value}")
+    logger.info(f"Step 9: {WorkflowStatus.CLEANUP.value}")
     request_id = context.request_id
     data_source_dir = get_data_source_path_for_jurisdiction_id(jurisdiction_id)
     cache_dir = os.path.join(data_source_dir, "cache")

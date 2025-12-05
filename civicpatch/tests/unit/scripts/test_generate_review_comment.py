@@ -3,11 +3,13 @@ from datetime import datetime, timezone
 from typing import List
 
 from scripts.generate_review_comment import generate_review_comment
-from schemas import (
-    Person, PipelineStatus,
-    MergeRecordsAcrossLLMsStep, FieldComparison
+from domain.models import Person
+from jobs.people_collector.schemas import (
+    WorkflowStatus,
+    MergeRecordsAcrossLLMsStep, 
+    FieldComparison
 )
-from tests.factories.pipeline_context import pipeline_context_factory
+from tests.factories.workflow_context import workflow_context_factory
 
 pytestmark = pytest.mark.unit
 
@@ -51,8 +53,8 @@ def test_generate_review_comment_with_missing_llm_values():
     }
     
     # Create pipeline context with disagreements
-    context = pipeline_context_factory({
-        PipelineStatus.MERGE_RECORDS_ACROSS_LLMS: MergeRecordsAcrossLLMsStep(
+    context = workflow_context_factory({
+        WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS: MergeRecordsAcrossLLMsStep(
             people=[john],
             agreement_score=85.0,
             disagreements=disagreements,
@@ -111,8 +113,8 @@ def test_generate_review_comment_with_all_llms_present():
         ]
     }
     
-    context = pipeline_context_factory({
-        PipelineStatus.MERGE_RECORDS_ACROSS_LLMS: MergeRecordsAcrossLLMsStep(
+    context = workflow_context_factory({
+        WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS: MergeRecordsAcrossLLMsStep(
             people=[jane],
             agreement_score=90.0,
             disagreements=disagreements,

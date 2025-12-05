@@ -1,5 +1,5 @@
 import pytest
-from steps.step_04_preprocess_page_content.entity_extraction import extract_data
+from jobs.people_collector.steps.step_04_preprocess_page_content.entity_extraction import extract_data
 
 def test_extract_phone_numbers():
     """Test extraction of phone numbers in various formats"""

@@ -1,11 +1,15 @@
 import json
 import sys
 from typing import List
-from schemas import PipelineContext, Person, MergeRecordsAcrossLLMsStep, PipelineStatus
+from domain.models import Person
+from jobs.people_collector.schemas import (
+    PeopleCollectorContext,
+    MergeRecordsAcrossLLMsStep, 
+)
 from shared.utils import data_path_utils
 
-def generate_review_comment(pipeline_context: PipelineContext, people: List[Person]) -> str:
-    merge_step = pipeline_context.merge_records_across_llms_step
+def generate_review_comment(pipeline_context: PeopleCollectorContext, people: List[Person]) -> str:
+    merge_step = pipeline_context.data.merge_records_across_llms_step
 
     agreement_score = merge_step.agreement_score
     disagreements_by_person = merge_step.disagreements  # Now a Dict[str, List[FieldComparison]]
@@ -95,13 +99,10 @@ def generate_review_comment(pipeline_context: PipelineContext, people: List[Pers
 
     return "\n".join(markdown)
 
-def load_pipeline_context_from_json(filepath: str) -> PipelineContext:
-    """
-    Load a PipelineContext object from a JSON file.
-    """
+def load_pipeline_context_from_json(filepath: str) -> PeopleCollectorContext:
     with open(filepath, "r") as file:
         data = json.load(file)
-        return PipelineContext(**data)
+        return PeopleCollectorContext(**data)
 
 def main():
     if len(sys.argv) != 2:

@@ -1,6 +1,9 @@
 import pytest
-from schemas import LLMPerson, Person, PipelineStatus
-from steps.step_06_merge_records_within_llm.merge_records_within_llm import (
+from domain.models import Person
+from jobs.people_collector.schemas import (
+    LLMPerson, WorkflowStatus 
+)
+from jobs.people_collector.steps.step_06_merge_records_within_llm.merge_records_within_llm import (
     merge_field, merge_roles, merge_divisions, merge_llm_people_to_person, merge_records_within_llm
 )
 from shared.utils.config_utils import get_role_alias_map, get_division_alias_map
@@ -108,10 +111,10 @@ def test_merge_records_within_llm():
     # Create pipeline context
     context = {
         "steps": {
-            PipelineStatus.RESEARCH_MUNICIPALITY.value: {
+            WorkflowStatus.RESEARCH_MUNICIPALITY.value: {
                 "government_type": "mayor_council"
             },
-            PipelineStatus.PROCESS_PAGE_CONTENT.value: {
+            WorkflowStatus.PROCESS_PAGE_CONTENT.value: {
                 "records_by_llm": records_by_llm
             }
         },
@@ -123,7 +126,7 @@ def test_merge_records_within_llm():
 
     # Assert structure
     assert "steps" in result
-    merged_step = result["steps"][PipelineStatus.MERGE_RECORDS_WITHIN_LLM.value]
+    merged_step = result["steps"][WorkflowStatus.MERGE_RECORDS_WITHIN_LLM.value]
     assert "people_by_llm" in merged_step
 
     # Check results
