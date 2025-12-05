@@ -5,9 +5,7 @@ TData = TypeVar("TData")
 TState = TypeVar("TState")
 
 class WorkflowContext(BaseModel, Generic[TData, TState]):
+    model_config = ConfigDict(frozen=True)
     data: TData
     current_state: TState
     request_id: Optional[str] = None
-
-    class Config:
-        allow_mutation = False  # makes it immutable (functional style)
