@@ -110,9 +110,9 @@ USER civicpatch_user
 EXPOSE 8000
 
 ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
-CMD ["fastapi", "dev", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
+CMD ["fastapi", "dev", "src/interfaces/api/main.py", "--port", "8000", "--host", "0.0.0.0"]
 # Tmp change
-# CMD ["fastapi", "run", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
+# CMD ["fastapi", "run", "src/interfaces/api/main.py", "--port", "8000", "--host", "0.0.0.0"]
 
 # ==========================================
 # Stage: production-fe
@@ -150,4 +150,4 @@ EXPOSE 8000
 # # Keep the container running
 # CMD ["tail", "-f", "/dev/null"]
 ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
-CMD ["fastapi", "run", "src/main.py", "--port", "8000", "--host", "0.0.0.0"]
+CMD ["fastapi", "run", "src/interfaces/api/main.py", "--port", "8000", "--host", "0.0.0.0"]

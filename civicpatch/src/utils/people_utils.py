@@ -1,7 +1,8 @@
 # from schemas import People
 from typing import List, Dict, Any
 import shared.utils.config_utils as config_utils
-from schemas import Person, ResearchedPerson
+from domain.models import Person
+from jobs.people_collector.schemas import ResearchedPerson
 
 
 def filter_people_by_roles(role_configs, people: List[ResearchedPerson]):

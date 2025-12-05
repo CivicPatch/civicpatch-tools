@@ -3,9 +3,9 @@ from services.google_gemini.llm import run_prompt
 from unittest.mock import patch
 
 @pytest.mark.integration
-@patch("services.google_gemini.llm.get_pipeline_logger")
+@patch("services.google_gemini.llm.get_workflow_logger")
 def test_run_prompt_with_search(
-    _mock_get_pipeline_logger
+    _mock_get_workflow_logger
 ):
     """
     Integration test for run_prompt with Google Gemini API.

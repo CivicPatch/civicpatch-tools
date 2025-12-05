@@ -2,13 +2,13 @@ import os
 import yaml
 from typing import Dict, List
 from decimal import Decimal, InvalidOperation
-from shared.schemas import ProcessConfig
+from shared.schemas import JobConfig
 
 _data_config = None
 _divisions_config = None
 _government_types_config = None
 _crawl_config = None
-_process_config = None
+_job_config = None
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -161,14 +161,14 @@ def search_keywords(government_type: str) -> Dict[str, List[str]]:
     government_type_config = government_types_config.get(government_type, {})
     return government_type_config.get('keywords', [])
 
-def get_process(logger) -> ProcessConfig:
+def get_job_config(logger) -> JobConfig:
     # You can override certain properties
-    global _process_config
-    if _process_config is None:
+    global _job_config
+    if _job_config is None:
         config_path = get_config_path()
-        process_file_path = os.path.join(config_path, 'process.yml')
+        process_file_path = os.path.join(config_path, 'workflow.yml')
         with open(process_file_path, 'r') as config_file:
-            _process_config = yaml.safe_load(config_file)
+            _job_config = yaml.safe_load(config_file)
 
     if os.getenv("PIPELINE_RUN_COST_LIMIT"):
         try:
@@ -176,12 +176,12 @@ def get_process(logger) -> ProcessConfig:
             if pipeline_run_cost_limit_string:
                 logger.info(f"Overriding pipeline_run_cost_limit with environment variable: {pipeline_run_cost_limit_string}")
                 pipeline_run_cost_limit = Decimal(pipeline_run_cost_limit_string)
-                _process_config['pipeline_run_cost_limit'] = pipeline_run_cost_limit
+                _job_config['pipeline_run_cost_limit'] = pipeline_run_cost_limit
         except (ValueError, InvalidOperation):
             pass
-    return ProcessConfig(
-        max_pages=_process_config.get('max_pages'),
-        pipeline_run_cost_limit=_process_config.get('pipeline_run_cost_limit')
+    return JobConfig(
+        max_pages=_job_config.get('max_pages'),
+        pipeline_run_cost_limit=_job_config.get('pipeline_run_cost_limit')
     )
 
 def get_role_alias_map(government_type: str) -> Dict[str, str]:
