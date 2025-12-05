@@ -5,7 +5,7 @@ import openai
 from typing import List, Dict, Any
 # from langchain.text_splitter import MarkdownHeaderTextSplitter
 from utils.request_utils import with_retry
-from utils.log_utils import get_pipeline_logger
+from utils.log_utils import get_workflow_logger
 from utils import cost_utils
 
 PROMPT_TOKENS=600
@@ -124,7 +124,7 @@ def run_prompt(request_id, jurisdiction_id: str, prompt, content="", response_sc
     """
     Run a prompt against Together AI's API using OpenAI-compatible interface
     """
-    logger = get_pipeline_logger(jurisdiction_id)
+    logger = get_workflow_logger(jurisdiction_id)
     logger.info(f"Running Together AI prompt: {prompt}")
     logger.debug(f"Prompt: \n{prompt}")
     api_key = os.getenv("TOGETHER_AI_TOKEN")

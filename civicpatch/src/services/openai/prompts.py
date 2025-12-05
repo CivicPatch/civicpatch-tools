@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List
-from schemas import ResearchedPerson
+from jobs.people_collector.schemas import ResearchedPerson
 import shared.utils.config_utils as config_utils
 
 def municipality_officials_prompt(government_type: str, people_hint: List[ResearchedPerson]):

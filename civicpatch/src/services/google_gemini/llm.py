@@ -5,7 +5,7 @@ import requests
 import json
 # from google import Gemini
 from utils.request_utils import with_retry
-from utils.log_utils import get_pipeline_logger
+from utils.log_utils import get_workflow_logger
 from utils import cost_utils
 
 BASE_URI = "https://generativelanguage.googleapis.com/v1beta/models"
@@ -33,7 +33,7 @@ def run_prompt(
     """
     Run a prompt against Google Gemini's API
     """
-    logger = get_pipeline_logger(jurisdiction_id)
+    logger = get_workflow_logger(jurisdiction_id)
     logger.info(f"Running Gemini prompt")
     logger.debug(f"Prompt: \n{prompt}")
     api_key = os.getenv("GOOGLE_GEMINI_TOKEN")

@@ -1,5 +1,6 @@
 from typing import List, Dict, Tuple
-from schemas import LLMPerson, Person, PeopleByName, OtherNamesByCanonicalName
+from domain.models import Person
+from jobs.people_collector.schemas import LLMPerson, PeopleByName, OtherNamesByCanonicalName
 from nameparser import HumanName
 from Levenshtein import distance as levenshtein_distance
 from copy import deepcopy

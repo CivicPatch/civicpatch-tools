@@ -3,7 +3,7 @@ import instructor
 import time
 # from openai import OpenAI
 from utils.request_utils import with_retry
-from utils.log_utils import get_pipeline_logger
+from utils.log_utils import get_workflow_logger
 from utils import cost_utils
 
 MODEL = "openai/gpt-4.1-mini"
@@ -14,7 +14,7 @@ def run_prompt(request_id, jurisdiction_id: str, prompt, response_schema, conten
     """
     Run a prompt against OpenAI's API
     """
-    logger = get_pipeline_logger(jurisdiction_id)
+    logger = get_workflow_logger(jurisdiction_id)
     logger.info(f"Running OpenAI prompt")
     logger.debug(f"Prompt: \n{prompt}")
     api_key = os.getenv("OPENAI_TOKEN")

@@ -138,7 +138,7 @@ echo "Running with uid $(id -u):$(id -g)"
 UID=$(id -u) \
 GID=$(id -g) \
 docker compose -f docker-compose.yml run --rm civicpatch poetry run \
-  python src/cli/cli.py \
+  python src/interfaces/cli/main.py \
     --jurisdiction-id "{{ option(name="jurisdiction-id") }}" \
     --name "{{ option(name="name") }}" \
     --url "{{ option(name="url") }}"
@@ -147,7 +147,7 @@ docker compose -f docker-compose.yml run --rm civicpatch poetry run \
 [tasks.test-pipeline-run-cicd]
 run = """
 docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poetry run \
-  python src/cli/cli.py \
+  python src/interfaces/cli/main.py \
     --jurisdiction-id "ocd-jurisdiction/country:us/state:wa/place:seattle" \
     --name "Seattle city" \
     --url "https://www.seattle.gov"
@@ -156,7 +156,7 @@ docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poe
 [tasks.pipeline-run-cicd]
 run = """
 docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poetry run \
-  python src/cli/cli.py \
+  python src/interfaces/cli/main.py \
     run_pipeline \
     --jurisdiction-id "{{ option(name="jurisdiction-id") }}" \
     --name "{{ option(name="name") }}" \
@@ -166,7 +166,7 @@ docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poe
 [tasks.get-juds]
 run = """
 docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poetry run \
-  python src/cli/cli.py \
+  python src/interfaces/cli/main.py \
     get_juds \
     --num-jurisdictions "{{ option(name="num-jurisdictions") }}" \
     --state "{{ option(name="state") }}"

@@ -3,7 +3,7 @@ from typing import Optional
 from decimal import Decimal
 
 
-class ProcessConfig(BaseModel):
+class JobConfig(BaseModel):
     max_pages: int
     pipeline_run_cost_limit: Decimal  # in USD
 
