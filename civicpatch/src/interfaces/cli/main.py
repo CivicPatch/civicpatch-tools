@@ -23,8 +23,9 @@ async def run_pipeline_cli(request: PeopleCollectorJobRequest):
         for warning in warnings:
             print(f"Warning: {warning}")
 
-    start_people_collector(
-        request_id=request.request_id,
+    request_id = id_utils.make_request_id()
+    await start_people_collector(
+        request_id=request_id,
         jurisdiction_id=request.jurisdiction_id,
         config=request.config,
     )
@@ -67,9 +68,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == "run_pipeline":
-        request_id = id_utils.make_request_id()
         request = PeopleCollectorJobRequest(
-            request_id=request_id,
             jurisdiction_id=args.jurisdiction_id, 
             config={
                 "name": args.name,

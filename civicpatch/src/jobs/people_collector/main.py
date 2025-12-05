@@ -30,19 +30,19 @@ def initialize_workflow(request_id, jurisdiction_id: str, config: WorkflowConfig
     )
     return context, logger
 
-def start(request_id: str, jurisdiction_id: str, config: WorkflowConfig) -> PeopleCollectorContext:
+async def start(request_id: str, jurisdiction_id: str, config: WorkflowConfig) -> PeopleCollectorContext:
+    """For cli"""
     context, logger = initialize_workflow(request_id, jurisdiction_id, config)
 
-
-    return asyncio.run(
-        run_workflow(
-            context,
-            logger,
-            TRANSITION_MAP,
-            persist_context
-        )
+    return await run_workflow(
+        context,
+        logger,
+        TRANSITION_MAP,
+        persist_context
     )
+
 def start_in_background(request_id: str, jurisdiction_id: str, config: WorkflowConfig) -> PeopleCollectorContext:
+    """For fastapi"""
     context, logger = initialize_workflow(request_id, jurisdiction_id, config)
 
     def target():

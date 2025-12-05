@@ -134,9 +134,6 @@ docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
 
 [tasks.pipeline-run]
 run = """
-echo "Running with uid $(id -u):$(id -g)"
-UID=$(id -u) \
-GID=$(id -g) \
 docker compose -f docker-compose.yml run --rm civicpatch poetry run \
   python src/interfaces/cli/main.py \
     --jurisdiction-id "{{ option(name="jurisdiction-id") }}" \
@@ -174,10 +171,12 @@ docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poe
 
 [tasks.cli-test]
 run = """
-mise pipeline-run \
-  --jurisdiction-id "ocd-jurisdiction/country:us/state:wa/place:seattle" \
-  --name "Seattle city" \
-  --url "https://www.seattle.gov"
+docker compose -f docker-compose.development.yml run --rm civicpatch poetry run \
+  python src/interfaces/cli/main.py \
+    run_pipeline \
+    --jurisdiction-id "ocd-jurisdiction/country:us/state:wa/place:seattle/government" \
+    --name "Seattle city" \
+    --url "https://www.seattle.gov"
 """
 
 [tasks.jurisdiction-id-state]
