@@ -224,5 +224,6 @@ TRANSITION_MAP = {
   WorkflowStatus.MERGE_RECORDS_WITHIN_LLM: merge_records_within_llm_transition,
   WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS: merge_records_across_llms_transition,
   WorkflowStatus.CLEANUP: cleanup_transition,
+  WorkflowStatus.SAVE_OUTPUT: save_output_transition,
   WorkflowStatus.MAYBE_SEND_TO_GITHUB: maybe_send_to_github_transition,
 }

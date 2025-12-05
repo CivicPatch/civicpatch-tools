@@ -6,7 +6,7 @@ from utils.merge_utils import (
   group_people_by_name
 
 )
-from schemas import LLMPerson
+from jobs.people_collector.schemas import LLMPerson
 
 pytestmark = pytest.mark.unit
 

@@ -1,8 +1,8 @@
 import os
 import pytest
 from unittest.mock import MagicMock, patch, mock_open
-from steps.step_08_cleanup.cleanup import cleanup_images
-from schemas import Person
+from jobs.people_collector.steps.step_09_cleanup.cleanup import cleanup_images
+from domain.models import Person
 
 pytestmark = pytest.mark.unit
 

@@ -19,7 +19,7 @@ GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-
 
 def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_id)
-    logger.info(f"Step 9: {WorkflowStatus.MAYBE_SEND_TO_GITHUB.value}")
+    logger.info(f"Step 10: {WorkflowStatus.MAYBE_SEND_TO_GITHUB.value}")
 
     # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
     # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
