@@ -6,7 +6,7 @@ import boto3
 import yaml
 from botocore.client import Config
 
-from schemas import Person
+from domain.models import Person
 from shared.utils import data_path_utils
 from shared.utils import id_utils
 
