@@ -1,7 +1,7 @@
 import sys
 from typing import List
 
-from schemas import Person
+from domain.models import Person
 from shared.utils import data_path_utils
 
 

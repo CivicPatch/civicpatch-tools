@@ -37,7 +37,7 @@ def workflow_context_factory(
                 url="https://seattle.gov",
             ),
             links=[],
-            jurisdiction_id="seattle_wa",
+            jurisdiction_id="ocd-jurisdiction/country:us/state:wa/place:seattle/government",
             research_municipality_step=default_steps.get(WorkflowStatus.RESEARCH_MUNICIPALITY),
             search_links_step=default_steps.get(WorkflowStatus.SEARCH_LINKS, SearchLinksStep()),
             preprocess_page_content_step=default_steps.get(WorkflowStatus.PREPROCESS_PAGE_CONTENT),
