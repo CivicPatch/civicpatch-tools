@@ -29,9 +29,9 @@ class Person(BaseModel):
     # address: NOTE: not implemented, we are NOT collecting addresses
     roles: List[str] = []
     divisions: List[str] = []
-    phones: List[Optional[str]] = []
-    emails: Optional[str] = []
-    urls: Optional[str] = []
+    phones: List[str] = []
+    emails: List[str] = []
+    urls: List[str] = []
 
     start_date: Optional[str] = None
     end_date: Optional[str] = None

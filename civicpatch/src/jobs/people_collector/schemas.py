@@ -1,7 +1,7 @@
 from pydantic import BaseModel
-from typing import List, Optional, Dict, TypeAlias
+from typing import List, Optional, Dict, TypeAlias, Generic, TypeVar
 from enum import Enum
-from domain.models import Person
+from domain.models import Person, Official
 from domain.workflow_context import WorkflowContext
 
 class SearchEngineStatus(Enum):
@@ -37,8 +37,6 @@ class Link(BaseModel):
     status: str  # LinkStatus value
     folder_name: str = ""
     is_profile_page: bool = False
-
-
 
 class RawLLMPerson(BaseModel):
     name: str
@@ -85,8 +83,9 @@ class WorkflowStatus(Enum):
     PROCESS_PAGE_CONTENT = "PROCESS_PAGE_CONTENT"
     MERGE_RECORDS_WITHIN_LLM = "MERGE_RECORDS_WITHIN_LLM"
     MERGE_RECORDS_ACROSS_LLMS = "MERGE_RECORDS_ACROSS_LLMS"
-    CLEANUP = "CLEANUP"
+    FORMAT_OUTPUT = "FORMAT_OUTPUT",
     SAVE_OUTPUT = "SAVE_OUTPUT"
+    CLEANUP = "CLEANUP"
     MAYBE_SEND_TO_GITHUB = "MAYBE_SEND_TO_GITHUB"
     RETRY = "RETRY"
     DONE = "DONE"
@@ -186,6 +185,7 @@ class PeopleCollectorData(BaseModel):
     merge_records_within_llm_step: Optional[MergeRecordsWithinLLMStep] = None
     merge_records_across_llms_step: Optional[MergeRecordsAcrossLLMsStep] = None
     maybe_send_to_github_step: Optional[MaybeSendToGitHubStep] = None
+    format_output: Optional[List[Official]] = None 
 
     pipeline_duration: Optional[int] = None
 

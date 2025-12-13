@@ -64,9 +64,9 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     image = merge_field(records, "image")
     merged_roles = merge_roles(records)
     merged_divisions = merge_divisions(records)
-    phone_number = merge_field(records, "phone_number")
-    email = merge_field(records, "email")
-    website = merge_field(records, "website")
+    phones = merge_field_to_list(records, "phone_number")
+    emails = merge_field_to_list(records, "email")
+    urls = merge_field_to_list(records, "website")
     start_date = merge_field(records, "start_date")
     end_date = merge_field(records, "end_date")
     sources = [r.source for r in records if r.source]
@@ -77,9 +77,9 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
         divisions=merged_divisions,
         image=image,  # Placeholder for image
         cdn_image="",  # Placeholder for CDN image
-        email=email,
-        phone_number=phone_number,
-        website=website,
+        phones=merge_field(records, "phone_number"),
+        emails=merge_field(records, "email"),
+        urls=merge_field(records, "website"),
         start_date=start_date,
         end_date=end_date,
         sources=sources,
@@ -90,7 +90,7 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
 
 def merge_field(records: List[LLMPerson], field_name: str) -> str:
     """
-    Merge a single-value field (phone, email, website, start_date, end_date) from a list of LLMPerson records.
+    Merge a single-value field (start_date, end_date) from a list of LLMPerson records.
     Prefer non-empty, most frequent value.
 
     If there's a tie, prefer the value that contains either the first name or last name of the person.
@@ -127,6 +127,20 @@ def merge_roles(records: List[LLMPerson]) -> List[str]:
                 unique_roles.add(role)
     return list(unique_roles)
 
+def merge_field_to_list(records: List[LLMPerson], field_name: str) -> List[str]:
+    """
+    Merge a multi-value field (phones, emails, urls) from a list of LLMPerson records.
+    Collect a set of unique values.
+    """
+    unique_values = set()
+    for record in records:
+        field_values = getattr(record, field_name)
+        if field_values:
+            for value in field_values:
+                if value:
+                    unique_values.add(value)
+    return list(unique_values)
+
 def merge_divisions(records: List[LLMPerson]) -> List[str]:
     """
     Collect a set of unique divisions from all records.
@@ -138,6 +152,7 @@ def merge_divisions(records: List[LLMPerson]) -> List[str]:
             if division:
                 unique_divisions.add(division)
     return list(unique_divisions)
+
 
 def merge_records(llm_people_list: List[LLMPerson], jurisdiction_id: str) -> List[Person]:
     """

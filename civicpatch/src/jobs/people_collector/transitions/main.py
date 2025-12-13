@@ -21,9 +21,9 @@ from jobs.people_collector.steps.step_06_merge_records_within_llm.merge_records_
 from jobs.people_collector.steps.step_07_merge_records_across_llms.merge_records_across_llms import (
     merge_records_across_llms,
 )
-from jobs.people_collector.steps.step_08_save_output.save_output import save_output
-from jobs.people_collector.steps.step_09_cleanup.cleanup import cleanup
-from jobs.people_collector.steps.step_10_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
+from jobs.people_collector.steps.step_09_save_output.save_output import save_output
+from jobs.people_collector.steps.step_10_cleanup.cleanup import cleanup
+from jobs.people_collector.steps.step_11_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
 
 from jobs.people_collector.transitions.process_page_content_transition import next_state_for_process_content_state
 from jobs.people_collector.utils.links import (
@@ -184,6 +184,16 @@ async def merge_records_across_llms_transition(_: JobConfig, logger: WorkflowLog
         })
     })
 
+    next_state = WorkflowStatus.FORMAT_OUTPUT
+    return next_context, next_state
+
+async def format_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+    result = format_output(context)
+    next_context = context.copy(update={
+        "data": context.data.copy(update={
+            "format_output_step": result
+        })
+    })
     next_state = WorkflowStatus.CLEANUP
     return next_context, next_state
 
@@ -223,6 +233,7 @@ TRANSITION_MAP = {
   WorkflowStatus.PROCESS_PAGE_CONTENT: process_page_content_transition,
   WorkflowStatus.MERGE_RECORDS_WITHIN_LLM: merge_records_within_llm_transition,
   WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS: merge_records_across_llms_transition,
+  WorkflowStatus.FORMAT_OUTPUT: format_output_transition,
   WorkflowStatus.CLEANUP: cleanup_transition,
   WorkflowStatus.SAVE_OUTPUT: save_output_transition,
   WorkflowStatus.MAYBE_SEND_TO_GITHUB: maybe_send_to_github_transition,

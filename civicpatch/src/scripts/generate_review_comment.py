@@ -17,7 +17,7 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
     missing_people = merge_step.missing_people
 
     # Collect all unique data sources from people.yml
-    all_sources = {source for person in people for source in person.sources}
+    all_sources = {source for person in people for source in person.source_urls}
 
     has_validation_errors = len(validation_errors) > 0
 
