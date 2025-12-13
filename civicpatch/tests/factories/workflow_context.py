@@ -1,4 +1,5 @@
 from typing import Any, Dict, Union
+from domain.models import Official
 from jobs.people_collector.schemas import (
     PeopleCollectorData,
     PeopleCollectorContext, 

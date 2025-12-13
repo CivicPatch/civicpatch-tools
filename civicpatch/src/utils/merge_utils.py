@@ -187,12 +187,14 @@ def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool
     if not (set(record1.roles) & set(record2.roles)):
         return False
 
-    # Check for matching email addresses
-    if record1.email and record2.email and record1.email == record2.email: 
+    # Check for overlapping email addresses
+    email_overlap = set(record1.emails) & set(record2.emails)
+    if email_overlap: 
         return True
 
     # Check for matching websites if available
-    if record1.website and record2.website and record1.website == record2.website:
+    url_overlap = set(record1.urls) & set(record2.urls)
+    if url_overlap:
         return True
 
     return False

@@ -9,16 +9,19 @@ pytestmark = pytest.mark.unit
 # Person factory for creating test instances
 def person_factory(image=None, sources=None, website=None):
     return Person(
-        image=image,
+        name="Test Person",
+
         roles=[],
         divisions=[],
+
+        emails=[],
+        urls=[website] if website else [],
+
         jurisdiction_id="",
-        sources=sources or [],
-        website=website,
+        source_urls=sources or [],
         # Add other attributes as needed with default values
-        name="Test Person",
-        email=None,
         updated_at="",
+        image=image,
     )
 
 @pytest.fixture

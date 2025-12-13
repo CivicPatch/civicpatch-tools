@@ -19,23 +19,25 @@ from tests.factories.workflow_context import workflow_context_factory
 pytestmark = pytest.mark.unit
 
 
-def create_person(name: str, roles: List[str], email: str = "", sources: List[str] = []) -> Person:
+def create_person(name: str, roles: List[str], emails: List[str] = [], source_urls: List[str] = []) -> Person:
     """Helper to create a Person with minimal required fields"""
-    if sources is None:
-        sources = ["test_source"]
+    if source_urls is None:
+        source_urls = ["test_source"]
     
     return Person(
         name=name,
         roles=roles,
         divisions=["City"] if roles else [],
-        email=email,
-        phone_number="",
-        website="",
+
+        emails=emails,
+        phones=[],
+        urls=[],
+
         start_date="",
         end_date="",
         image="",
         cdn_image="",
-        sources=sources,
+        source_urls=source_urls,
         jurisdiction_id="test_city",
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )
@@ -47,16 +49,16 @@ def test_merge_records_across_llms():
     # Create test data with people across different LLMs
     people_by_llm = {
         "gpt4": [
-            create_person("John Smith", ["Mayor"], "john@city.gov", ["city_website"]),
-            create_person("Jane Doe", ["Council Member"], "jane@city.gov", ["city_website"]),
+            create_person("John Smith", ["Mayor"], ["john@city.gov"], ["city_website"]),
+            create_person("Jane Doe", ["Council Member"], ["jane@city.gov"], ["city_website"]),
         ],
         "claude": [
-            create_person("John Smith", ["Mayor"], "john@city.gov", ["news_article"]),  # Same person
-            create_person("Jane Doe", ["Mayor"], "jane@city.gov", ["city_website"]),
+            create_person("John Smith", ["Mayor"], ["john@city.gov"], ["news_article"]),  # Same person
+            create_person("Jane Doe", ["Mayor"], ["jane@city.gov"], ["city_website"]),
         ],
         "gemini": [
-            create_person("John Smith", ["Mayor"], "john.smith@city.gov", ["government_db"]),  # Same person, different email
-            create_person("Alice Green", ["Treasurer"], "alice@city.gov", ["government_db"]),  # Only in gemini - should be removed
+            create_person("John Smith", ["Mayor"], ["john.smith@city.gov"], ["government_db"]),  # Same person, different email
+            create_person("Alice Green", ["Treasurer"], ["alice@city.gov"], ["government_db"]),  # Only in gemini - should be removed
         ]
     }
     

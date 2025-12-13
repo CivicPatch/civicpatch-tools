@@ -16,11 +16,11 @@ MINIMUM_AGREEMENT_SCORE = 80
 FIELD_WEIGHTS = {
     "roles": 1.0,           
     "divisions": 0.8,       
-    "email": 0.5,         
+    "emails": 0.5,         
+    "urls": 0.2,        
+    "phones": 0.2,    
     "start_date": 0.5,      
     "end_date": 0.5,        
-    "website": 0.2,        
-    "phone_number": 0.2,    
 }
 FIELDS_TO_CHECK = list(FIELD_WEIGHTS.keys())
 
@@ -190,11 +190,11 @@ def merge_group_across_llms(group: List[Person], jurisdiction_id: str) -> Person
 
     # For single-value fields, take the most common non-empty value across all sources
     image_counter = Counter(person.image for person in group if person.image)
-    sources = set(
+    source_urls = set(
         ds
         for person in group
-        if person.sources  # Check if sources exists
-        for ds in person.sources  # Flatten the list of data sources
+        if person.source_urls  # Check if sources exists
+        for ds in person.source_urls  # Flatten the list of data sources
     )
 
     # Use the most common name in the group as the canonical name
@@ -203,16 +203,21 @@ def merge_group_across_llms(group: List[Person], jurisdiction_id: str) -> Person
 
     return Person(
         name=canonical_name,
-        roles=roles,
-        divisions=divisions,
-        image=image_counter.most_common(1)[0][0] if image_counter else "",
-        cdn_image="",
-        email=merge_field("email", [person.email for person in group if person.email]),
-        phone_number=merge_field("phone_number", [person.phone_number for person in group if person.phone_number]),
-        website=merge_field("website", [person.website for person in group if person.website]),
+
+        email=merge_field_to_list([person.emails for person in group if person.emails]),
+        phone_number=merge_field_to_list([person.phones for person in group if person.phones]),
+        website=merge_field_to_list([person.urls for person in group if person.urls]),
+        
         start_date=merge_field("start_date", [person.start_date for person in group if person.start_date]),
         end_date=merge_field("end_date", [person.end_date for person in group if person.end_date]),
-        sources=list(sources),
+        
+        roles=roles,
+        divisions=divisions,
+        
+        image=image_counter.most_common(1)[0][0] if image_counter else "",
+        cdn_image="",
+
+        source_urls=list(source_urls),
         jurisdiction_id=jurisdiction_id,
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )
@@ -240,3 +245,16 @@ def merge_field(field: str, values: List[str]) -> Any:
 
     return most_common_value
 
+def merge_field_to_list(records: List[List[str]]) -> List[str]:
+    """
+    Merge a multi-value field (e.g., emails, phones, urls) from a list of lists of strings.
+    Collect unique values and include only those that appear in at least two records.
+    """
+    # Flatten the list of lists and count occurrences of each value
+    all_values = [value for sublist in records for value in sublist]
+    value_counter = Counter(all_values)
+
+    # Keep only values that appear in at least two records
+    merged_values = [value for value, count in value_counter.items() if count >= 2]
+
+    return merged_values

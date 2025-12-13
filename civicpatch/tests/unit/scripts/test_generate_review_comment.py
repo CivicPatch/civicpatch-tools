@@ -19,14 +19,14 @@ def create_person(name: str, roles: List[str], email: str = "") -> Person:
         name=name,
         roles=roles,
         divisions=["City"] if roles else [],
-        email=email,
-        phone_number="",
-        website="",
+        emails=[email],
+        phones=[],
+        urls=[],
         start_date="",
         end_date="",
         image="",
         cdn_image="",
-        sources=["test_source"],
+        source_urls=["test_source"],
         jurisdiction_id="test_city",
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )

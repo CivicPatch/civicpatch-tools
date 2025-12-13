@@ -6,6 +6,7 @@ from jobs.people_collector.schemas import (
   PeopleCollectorData,
   PeopleCollectorContext,
 )
+from domain.models import Official
 from domain.workflow_context import WorkflowContext
 from jobs.people_collector.transitions.main import TRANSITION_MAP
 from shared.utils import data_path_utils
