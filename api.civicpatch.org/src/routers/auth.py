@@ -69,9 +69,9 @@ def get_router(is_production: bool) -> APIRouter:
         token = jwt.encode(
             {
                 "pld": openid.model_dump(), 
-                "exp": expiration, 
-                "sub": openid.id, 
-                "role": user.get("role") if user else None
+                "exp": expiration,
+                "sub": openid.id,
+                "roles": user.get("roles") if user else None
             },
             key=cast(str, JWT_SECRET_KEY),
             algorithm="HS256",

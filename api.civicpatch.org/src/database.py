@@ -87,45 +87,61 @@ async def get_user(provider, provider_user_id):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-        SELECT email, server_url, created_at, role FROM users
-        WHERE provider_user_id = %s AND provider = %s
-    """,
+            SELECT
+                u.email,
+                u.server_url,
+                u.created_at,
+                ARRAY_REMOVE(ARRAY_AGG(r.role), NULL) AS roles
+            FROM users u
+            LEFT JOIN user_roles r
+                ON u.provider = r.provider AND u.provider_user_id = r.provider_user_id
+            WHERE u.provider_user_id = %s AND u.provider = %s
+            GROUP BY u.email, u.server_url, u.created_at
+            """,
             (provider_user_id, provider),
         )
         row = await cur.fetchone()
-    if row:
+        if not row:
+            return None
         return {
             "email": row[0],
             "server_url": row[1],
             "created_at": row[2],
-            "role": row[3],
+            "roles": row[3], 
         }
-    return None
 
 async def get_user_by_api_key(api_key):
     candidate_api_key_hash = hash_string(api_key, DATABASE_HASH_KEY)
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-        SELECT u.provider, u.provider_user_id, u.email, u.server_url, u.created_at, u.role
-        FROM users u
-        JOIN api_keys k ON u.provider = k.provider AND u.provider_user_id = k.provider_user_id
-        WHERE k.api_key_hash = %s AND k.revoked_at IS NULL;
-    """,
+            SELECT
+                u.provider,
+                u.provider_user_id,
+                u.email,
+                u.server_url,
+                u.created_at,
+                ARRAY_REMOVE(ARRAY_AGG(r.role), NULL) AS roles
+            FROM users u
+            JOIN api_keys k ON u.provider = k.provider AND u.provider_user_id = k.provider_user_id
+            LEFT JOIN user_roles r ON u.provider = r.provider AND u.provider_user_id = r.provider_user_id
+            WHERE k.api_key_hash = %s AND k.revoked_at IS NULL
+            GROUP BY u.provider, u.provider_user_id, u.email, u.server_url, u.created_at
+            """,
             (candidate_api_key_hash,),
         )
         row = await cur.fetchone()
-    if row:
+        if not row:
+            return None
+
         return {
             "provider": row[0],
             "provider_user_id": row[1],
             "email": row[2],
             "server_url": row[3],
             "created_at": row[4],
-            "role": row[5],
+            "roles": row[5],
         }
-    return None
-
 
 async def get_user_details(provider, provider_user_id):
     async with pool.connection() as conn, conn.cursor() as cur:

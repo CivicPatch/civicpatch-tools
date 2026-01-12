@@ -58,7 +58,7 @@ async def get_user(
 
     if not JWT_SECRET_KEY:
         raise HTTPException(status_code=500, detail="Server not configured to verify tokens")
-
+    
     try:
         if token_source == "cookie":
             identity = await get_user_by_cookie(request, token)
@@ -69,6 +69,7 @@ async def get_user(
 
     return identity
 
+# Update Identity creation to use roles (list)
 async def get_user_by_api_key(api_key: str) -> Identity:
     user = await database.get_user_by_api_key(api_key)
 
@@ -79,9 +80,10 @@ async def get_user_by_api_key(api_key: str) -> Identity:
         provider=user.get("provider"),
         provider_user_id=user.get("provider_user_id"),
         email=user.get("email"),
-        role=user.get("role")
+        roles=user.get("roles", [])  # <-- pass list of roles
     )
 
+# Update Identity creation to use roles (list)
 async def get_user_by_cookie(request, token: str) -> Identity:
     try: #TODO
         decode_kwargs = {"key": cast(str, JWT_SECRET_KEY), "algorithms": ["HS256"]}
@@ -100,7 +102,6 @@ async def get_user_by_cookie(request, token: str) -> Identity:
         csrf_token = request.headers.get("x-csrf-token")
         if not csrf_token:
             form = await request.form()
-            print("founda form")
             csrf_token = form.get("csrf_token")
 
         csrf_cookie = request.cookies.get("csrf_token")
@@ -128,21 +129,21 @@ async def get_user_by_cookie(request, token: str) -> Identity:
             raise HTTPException(status_code=403, detail="Expired CSRF token")
 
     openid_obj = OpenID(**payload)
-    role = payload.get("role")  # <- read role directly from the token's payload first
+    roles = payload.get("roles")  # <-- expect a list from token payload
 
-    if not role:
+    if not roles:
         provider = payload.get("provider") or getattr(openid_obj, "provider", None)
         provider_user_id = payload.get("sub") or payload.get("id") or getattr(openid_obj, "id", None)
         if provider and provider_user_id:
             user_row = await database.get_user(provider, provider_user_id)
-            if user_row and user_row.get("role"):
-                role = user_row["role"]
+            if user_row and user_row.get("roles"):
+                roles = user_row["roles"]
 
     return Identity(
         provider=openid_obj.provider,
         provider_user_id=openid_obj.id,
         email=openid_obj.email,
-        role=role
+        roles=roles or []
     )
 
 async def get_optional_user(
@@ -166,16 +167,9 @@ def require_any_role(*allowed_roles: str):
     or router dependencies: dependencies=[Depends(require_role("member","admin"))]
     """
     async def _dependency(user: Identity = Depends(get_user)):
-        # read roles from Identity object
-        try:
-            role = user.role
-        except Exception:
-            role = getattr(user, "role", None)
-
+        user_roles = getattr(user, "roles", [])
         if allowed_roles:
-            print("current role", role)
-            print("allowed_roles", allowed_roles)
-            if role not in allowed_roles:
+            if not any(role in allowed_roles for role in user_roles):
                 raise HTTPException(status_code=403, detail="Insufficient permissions")
         return user
 
@@ -218,8 +212,10 @@ def get_api_key_type_from_auth(
 def require_route_access(category: RouteCategory):
     """Factory that returns a dependency for route category access control"""
     async def _dependency(user: Identity = Depends(get_user), api_key_type: ApiKeyType = Depends(get_api_key_type)):
-        role = user.role
-        allowed_key_types = ROUTE_PERMISSIONS.get(category, {}).get(role, [])
+        user_roles = getattr(user, "roles", [])
+        allowed_key_types = []
+        for role in user_roles:
+            allowed_key_types.extend(ROUTE_PERMISSIONS.get(category, {}).get(role, []))
         if api_key_type not in allowed_key_types:
             raise HTTPException(status_code=403, detail="Insufficient permissions for this route")
         return user
