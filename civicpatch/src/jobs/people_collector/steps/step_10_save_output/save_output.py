@@ -21,7 +21,7 @@ def save_output(context: PeopleCollectorContext):
       context.data.jurisdiction_id
   )
 
-  people = context.data.merge_records_across_llms_step.people
+  people = context.data.format_output_step
   save_data_to_file(people, data_file_path)
 
   updated_config = WorkflowConfig(
@@ -40,8 +40,8 @@ def save_data_to_file(people: List[Person], file_path: str):
     # Create parent directories if not exists
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "w") as f:
-        yaml.dump([person.model_dump() for person in people], f)
+        yaml.dump([person.model_dump() for person in people], f, sort_keys=False, allow_unicode=True)
 
 def save_config_to_file(config: WorkflowConfig, file_path: str):
     with open(file_path, "w") as f:
-        yaml.dump(config.model_dump(), f)
+        yaml.dump(config.model_dump(), f, sort_keys=False, allow_unicode=True)

@@ -225,22 +225,23 @@ def normalize_record(logger, record: LLMPerson, government_type: str) -> LLMPers
     normalized_divisions = people_utils.normalize_divisions(record.divisions)
 
     try:
-        phone_number = phonenumbers.parse(record.phone_number, "US") if record.phone_number else None
-        normalized_phone_number = phonenumbers.format_number(phone_number, phonenumbers.PhoneNumberFormat.NATIONAL) if phone_number and phonenumbers.is_valid_number(phone_number) else None
+        phone = phonenumbers.parse(record.phone, "US") if record.phone else None
+        normalized_phone = phonenumbers.format_number(phone, phonenumbers.PhoneNumberFormat.NATIONAL) if phone and phonenumbers.is_valid_number(phone) else None
     except:
-        normalized_phone_number = None
+        logger.warning(f"Failed to parse phone number: {record.phone}")
+        normalized_phone = None
 
     return LLMPerson(
         name=record.name,
         roles=normalized_roles,
         divisions=normalized_divisions,
-        phone_number=normalized_phone_number,
+        phone=normalized_phone,
         email=record.email,
-        website=record.website,
+        url=record.url,
         start_date=record.start_date,
         end_date=record.end_date,
         image=record.image,
-        source=record.source
+        source_url=record.source_url
     )
 
 def get_target_divisions(divisions_with_geo: List[str], people_hint: List[ResearchedPerson]) -> List[str]:
@@ -296,14 +297,15 @@ def process_with_llms(
             content=content
         )
 
-        # Convert LLMPerson to ProcessedLLMPerson
-        people = response.people
+        # Convert RawLLMPerson to LLMPerson
+        formatted_response = cast(PeopleArrayLLMResponseSchema, response)
+        people = formatted_response.people
         processed_people = []
         for p in people:
             p = p.model_dump() 
-            p["source"] = source_url # Add data source URL
-            if p["website"]:
-                p["website"] = url_utils.format_url(p["website"])
+            p["source_url"] = source_url # Add data source URL
+            if p["url"]:
+                p["url"] = url_utils.format_url(p["url"])
             processed_person = LLMPerson.model_validate(p)
             processed_people.append(processed_person)
             
@@ -374,7 +376,7 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     people = [LLMPerson.model_validate(r) if not isinstance(r, LLMPerson) else r for r in records]
 
     has_contact = any(
-        sum([bool(p.phone_number), bool(p.email), bool(p.website)]) >= 2
+        sum([bool(p.phone), bool(p.email), bool(p.url)]) >= 2
         for p in people
     )
     # Case-insensitive role match
@@ -427,11 +429,11 @@ def extract_websites_from_processed_data(logger, roles: List[str], records_by_ll
                 continue
 
             for person_record in person_list:
-                website = person_record.website if person_record.website else None
+                url = person_record.url if person_record.url else None
 
-                if website and website not in found_websites:
-                    # Check if website domain is in ignore list
-                    domain = url_utils.extract_domain(website)
+                if url and url not in found_websites:
+                    # Check if url domain is in ignore list
+                    domain = url_utils.extract_domain(url)
                     if domain and not any(ignore in domain for ignore in IGNORE_WEBSITES):
-                        found_websites.append(website)
+                        found_websites.append(url)
     return found_websites

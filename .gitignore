@@ -28,3 +28,5 @@ vendor/
 output/
 tmp/
 .venv
+
+todo.md

@@ -15,6 +15,8 @@ PYTHONPATH = "./src"
 ###################################################
 ## 🚀✨ DEVELOPMENT TASKS ✨🚀
 ###################################################
+#[tasks.lint]
+#run = "pylint $(git diff --name-only --diff-filter=d HEAD | grep '\.py$')"
 [tasks.container]
 run = "docker compose -f docker-compose.development.yml run --rm civicpatch"
 [tasks.containsh]
@@ -36,7 +38,7 @@ docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m u
 
 [tasks.scratchtest]
 run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vm unit tests/unit/utils/test_merge_utils.py
+docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vm unit tests/unit/jobs/steps/step_06_merge_records_within_llm/test_field_mergers.py
 """
 
 
@@ -51,9 +53,11 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "Lynnwood city",
-    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:lynnwood/government",
-    "url": "https://www.lynnwoodwa.gov"
+    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
+    "config": {
+        "url": "https://www.seattle.gov",
+        "name": "Seattle city"
+    }
   }'
 """
 #curl -X POST http://localhost:8000/api/pipelines \

@@ -98,9 +98,9 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     - image: (String or null) URL to profile image (https://...)
     - roles: (Array of strings) Active municipal roles
     - divisions: (Array of strings) Specific district/ward names
-    - phone_number: (String or null) Formatted phone number
+    - phone: (String or null) Formatted phone number
     - email: (String or null) Email address
-    - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+    - url: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
     - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
     - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
 
@@ -114,7 +114,7 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
         - Extract full names ONLY, not titles.
     - Phone number extraction:
         - Extract phone numbers even when formatted as Markdown link text.
-    - Website extraction:
+    - URL extraction:
         - Extract URLs starting with "http://" or "https://".
     - Email extraction:
         - Extract email addresses found directly in the text or formatted as Markdown link text.

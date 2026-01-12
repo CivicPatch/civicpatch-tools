@@ -5,11 +5,14 @@ from typing import List, cast, Dict
 
 from shared.utils.data_path_utils import get_data_source_path_for_jurisdiction_id
 from jobs.people_collector.schemas import (
-    PeopleCollectorContext, WorkflowStatus, Person, MergeRecordsAcrossLLMsStep
+    PeopleCollectorContext, WorkflowStatus, MergeRecordsAcrossLLMsStep,
+
 )
 from utils import url_utils, log_utils, cost_utils
+from domain.models import Official
 
 # Todo: Should return updated configs
+# TODO: should input things like "Official", etc...
 def cleanup(context: PeopleCollectorContext):
     # Remove files under data_source/cache and data_source/images
     jurisdiction_id = context.data.jurisdiction_id
@@ -20,9 +23,8 @@ def cleanup(context: PeopleCollectorContext):
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
-    merge_records_step = context.data.merge_records_across_llms_step
-    people_data = merge_records_step.people
-    people = [Person.parse_obj(person) for person in people_data]
+    people_data = context.data.format_output_step
+    people = [Official.parse_obj(person) for person in people_data]
 
     if os.path.exists(cache_dir):
         # Only keep cache folders that are referenced by people
@@ -36,15 +38,15 @@ def cleanup(context: PeopleCollectorContext):
     return {"identities": updated_names}
 
 
-def cleanup_cache(cache_dir: str, people_list: List[Person]):
+def cleanup_cache(cache_dir: str, people_list: List[Official]):
     # Clear out any page urls are not under sources or website urls
     pages_to_keep = set()
 
     for person in people_list:
-        for source in person.sources:
+        for source in person.source_urls:
             pages_to_keep.add(source)
-        if person.website:
-            pages_to_keep.add(person.website)
+        if person.urls:
+            pages_to_keep.update(person.urls)
 
     pages_to_keep = set(url_utils.format_url_to_folder(url) for url in pages_to_keep)
 
@@ -56,7 +58,7 @@ def cleanup_cache(cache_dir: str, people_list: List[Person]):
 
 
 def cleanup_images(
-    logger, request_id, jurisdiction_id, images_dir: str, people_list: List[Person]
+    logger, request_id, jurisdiction_id, images_dir: str, people_list: List[Official]
 ):
     # Clear out any images that are not under image
     images_to_keep = set()
