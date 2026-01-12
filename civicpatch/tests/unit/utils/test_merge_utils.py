@@ -32,10 +32,10 @@ def test_update_name_map():
 
 def test_append_to_people_by_name():
     people_by_name = {
-        "John Doe": [LLMPerson(name="John Doe", roles=[], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")]
+        "John Doe": [LLMPerson(name="John Doe", roles=[], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
     }
     new_people = [
-        LLMPerson(name="Johnny Doe", roles=[], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")
+        LLMPerson(name="Johnny Doe", roles=[], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
   
     updated_people_by_name = append_to_people_by_name(people_by_name, "John Doe", new_people)
@@ -53,8 +53,8 @@ def test_group_people_by_name_basic():
     known_mappings = {}
     people_by_name = {}
     people_to_link = [
-        LLMPerson(name="John Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test"),
-        LLMPerson(name="Jane Smith", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")
+        LLMPerson(name="John Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="Jane Smith", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_mappings, updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -74,8 +74,8 @@ def test_group_people_by_name_with_known_mappings():
     }
     people_by_name = {}
     people_to_link = [
-        LLMPerson(name="J. Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test"),
-        LLMPerson(name="Johnny", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")
+        LLMPerson(name="J. Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="Johnny", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_mappings, updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -90,10 +90,10 @@ def test_group_people_by_name_with_existing_people():
     """Test grouping with existing people_by_name"""
     known_mappings = {}
     people_by_name = {
-        "John Doe": [LLMPerson(name="John Doe", roles=["Existing"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")]
+        "John Doe": [LLMPerson(name="John Doe", roles=["Existing"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
     }
     people_to_link = [
-        LLMPerson(name="John Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")
+        LLMPerson(name="John Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_mappings, updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -106,10 +106,10 @@ def test_group_people_by_name_similarity_matching():
     """Test grouping with name similarity matching"""
     known_mappings = {}
     people_by_name = {
-        "John Doe": [LLMPerson(name="John Doe", roles=["Existing"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")]
+        "John Doe": [LLMPerson(name="John Doe", roles=["Existing"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
     }
     people_to_link = [
-        LLMPerson(name="Jon Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")
+        LLMPerson(name="Jon Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_mappings, updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -143,9 +143,9 @@ def test_group_people_by_name_deduplication():
     }
     people_by_name = {}
     people_to_link = [
-        LLMPerson(name="John Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test"),
-        LLMPerson(name="Johnny", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test"),
-        LLMPerson(name="John Doe", roles=["Deputy"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")
+        LLMPerson(name="John Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="Johnny", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="John Doe", roles=["Deputy"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_mappings, updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -176,13 +176,13 @@ def test_group_people_by_name_complex_scenario():
         "John Smith": ["J. Smith"]
     }
     people_by_name = {
-        "Jane Doe": [LLMPerson(name="Jane Doe", roles=["Existing"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")]
+        "Jane Doe": [LLMPerson(name="Jane Doe", roles=["Existing"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
     }
     people_to_link = [
-        LLMPerson(name="John Smith", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test"),
-        LLMPerson(name="J. Smith", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test"),
-        LLMPerson(name="Jane Doe", roles=["Deputy"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test"),
-        LLMPerson(name="Bob Johnson", roles=["Clerk"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")
+        LLMPerson(name="John Smith", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="J. Smith", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="Jane Doe", roles=["Deputy"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="Bob Johnson", roles=["Clerk"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_mappings, updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -208,8 +208,8 @@ def test_group_people_by_name_whitespace_handling():
     known_mappings = {}
     people_by_name = {}
     people_to_link = [
-        LLMPerson(name="  John Doe  ", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test"),
-        LLMPerson(name="John Doe", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source="test")
+        LLMPerson(name="  John Doe  ", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="John Doe", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_mappings, updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)

@@ -42,22 +42,21 @@ class RawLLMPerson(BaseModel):
     name: str
     roles: List[str]
     divisions: List[str]
-    phone_number: Optional[str] = None
+
+    phone: Optional[str] = None
     email: Optional[str] = None
-    website: Optional[str] = None
+    url: Optional[str] = None
+
     start_date: Optional[str] = None
     end_date: Optional[str] = None
     image: Optional[str] = None
-
-
-class LLMPerson(RawLLMPerson):
-    source: str
-
 
 class PeopleArrayLLMResponseSchema(BaseModel):
     people: List[RawLLMPerson]
     thought: str
 
+class LLMPerson(RawLLMPerson):
+    source_url: str
 
 OtherNamesByCanonicalName: TypeAlias = Dict[
     str, List[str]
@@ -67,7 +66,7 @@ RecordsByLLM: TypeAlias = Dict[str, PeopleByName]
 
 class WorkflowConfig(BaseModel):
     url: str  # Municipality url. Without it we can't scrape anything.
-    name: str # Human-readable name
+    name: Optional[str] = None # Human-readable name
     source_urls: Optional[List[str]] = None
     identities: Optional[Dict[str, List[str]]] = None # Canonical name to other names found while scraping
     
@@ -144,12 +143,8 @@ class ProcessPageContentStep(BaseModel):
     )
     identities: OtherNamesByCanonicalName = {}
 
-
 class MergeRecordsWithinLLMStep(BaseModel):
     people_by_llm: Dict[str, List[Person]]  # LLM Names to list of Person records
-
-
-
 
 class MergeRecordsAcrossLLMsStep(BaseModel):
     people: List[Person]
@@ -184,8 +179,8 @@ class PeopleCollectorData(BaseModel):
     process_page_content_step: Optional[ProcessPageContentStep] = None
     merge_records_within_llm_step: Optional[MergeRecordsWithinLLMStep] = None
     merge_records_across_llms_step: Optional[MergeRecordsAcrossLLMsStep] = None
+    format_output_step: Optional[List[Official]] = None 
     maybe_send_to_github_step: Optional[MaybeSendToGitHubStep] = None
-    format_output: Optional[List[Official]] = None 
 
     pipeline_duration: Optional[int] = None
 

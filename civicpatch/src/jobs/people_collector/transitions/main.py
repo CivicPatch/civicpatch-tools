@@ -21,8 +21,9 @@ from jobs.people_collector.steps.step_06_merge_records_within_llm.merge_records_
 from jobs.people_collector.steps.step_07_merge_records_across_llms.merge_records_across_llms import (
     merge_records_across_llms,
 )
-from jobs.people_collector.steps.step_09_save_output.save_output import save_output
-from jobs.people_collector.steps.step_10_cleanup.cleanup import cleanup
+from jobs.people_collector.steps.step_08_format_output.format_output import format_output
+from jobs.people_collector.steps.step_09_cleanup.cleanup import cleanup
+from jobs.people_collector.steps.step_10_save_output.save_output import save_output
 from jobs.people_collector.steps.step_11_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
 
 from jobs.people_collector.transitions.process_page_content_transition import next_state_for_process_content_state
@@ -211,7 +212,7 @@ async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: Peop
     return next_context, next_state
 
 async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
-    result = save_output(context)
+    _result = save_output(context)
     next_state = WorkflowStatus.MAYBE_SEND_TO_GITHUB
     return context, next_state
 

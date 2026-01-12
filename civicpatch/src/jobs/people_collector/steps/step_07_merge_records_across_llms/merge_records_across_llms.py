@@ -5,12 +5,11 @@ from jobs.people_collector.schemas import (
     PeopleCollectorContext, 
     MissingPerson,
     MergeRecordsAcrossLLMsStep, 
-    MergeRecordsWithinLLMStep, ResearchMunicipalityStep
 )
 from collections import Counter
 from datetime import datetime, timezone
-from . import comparison_utils
-import json
+import jobs.people_collector.steps.step_07_merge_records_across_llms.field_mergers as field_mergers
+import jobs.people_collector.steps.step_07_merge_records_across_llms.record_comparison as record_comparison
 
 MINIMUM_AGREEMENT_SCORE = 80
 FIELD_WEIGHTS = {
@@ -59,7 +58,7 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
         merged_people.append(merged_person)
         
         # Collect field-by-field disagreements for this person
-        field_comparisons = comparison_utils.collect_field_comparisons(
+        field_comparisons = record_comparison.collect_field_comparisons(
             merged_person,
             grouped_identities_by_llm,  # Pass the grouped data directly
             FIELDS_TO_CHECK,
@@ -79,7 +78,7 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
             missing_people.append(missing_person)
 
     # Calculate overall agreement score (include missing people in the calculation)
-    overall_agreement_score = comparison_utils.calculate_overall_agreement_score(
+    overall_agreement_score = record_comparison.calculate_overall_agreement_score(
         FIELD_WEIGHTS,
         FIELDS_TO_CHECK,
         all_disagreements, 
@@ -203,58 +202,22 @@ def merge_group_across_llms(group: List[Person], jurisdiction_id: str) -> Person
 
     return Person(
         name=canonical_name,
-
-        email=merge_field_to_list([person.emails for person in group if person.emails]),
-        phone_number=merge_field_to_list([person.phones for person in group if person.phones]),
-        website=merge_field_to_list([person.urls for person in group if person.urls]),
-        
-        start_date=merge_field("start_date", [person.start_date for person in group if person.start_date]),
-        end_date=merge_field("end_date", [person.end_date for person in group if person.end_date]),
         
         roles=roles,
         divisions=divisions,
-        
+
+        emails=field_mergers.merge_field_to_list([person.emails for person in group if person.emails]),
+        phones=field_mergers.merge_field_to_list([person.phones for person in group if person.phones]),
+        urls=field_mergers.merge_field_to_list([person.urls for person in group if person.urls]),
+
+        start_date=field_mergers.merge_field("start_date", [person.start_date for person in group if person.start_date]),
+        end_date=field_mergers.merge_field("end_date", [person.end_date for person in group if person.end_date]),
+
         image=image_counter.most_common(1)[0][0] if image_counter else "",
         cdn_image="",
 
-        source_urls=list(source_urls),
         jurisdiction_id=jurisdiction_id,
+        source_urls=list(source_urls),
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )
 
-def merge_field(field: str, values: List[str]) -> Any:
-    """
-    Merge a list of fields with the following criteria:
-    - If all values are empty, return empty string
-    - If no value has at least 2 occurrences, return empty string
-    - Otherwise, return the most common non-empty value
-    
-    """
-    non_empty_values = [v for v in values if v]
-    if not non_empty_values:
-        return ""
-
-    value_counter = Counter(non_empty_values)
-    most_common_value, count = value_counter.most_common(1)[0]
-    if count < 2:
-        if field in ["website"]:
-            # For website, allow a single occurrence if it's a valid URL
-            if most_common_value.startswith("http://") or most_common_value.startswith("https://"):
-                return most_common_value
-        return ""
-
-    return most_common_value
-
-def merge_field_to_list(records: List[List[str]]) -> List[str]:
-    """
-    Merge a multi-value field (e.g., emails, phones, urls) from a list of lists of strings.
-    Collect unique values and include only those that appear in at least two records.
-    """
-    # Flatten the list of lists and count occurrences of each value
-    all_values = [value for sublist in records for value in sublist]
-    value_counter = Counter(all_values)
-
-    # Keep only values that appear in at least two records
-    merged_values = [value for value, count in value_counter.items() if count >= 2]
-
-    return merged_values

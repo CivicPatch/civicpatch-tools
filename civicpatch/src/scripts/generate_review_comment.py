@@ -111,7 +111,7 @@ def main():
     else:
         jurisdiction_id = sys.argv[1]
         # It should be defined in the dockerfile
-        pipeline_context_file_path = data_path_utils.get_pipeline_context_file_path(jurisdiction_id)
+        pipeline_context_file_path = data_path_utils.get_workflow_context_file_path(jurisdiction_id)
         serialized_people = data_path_utils.get_data(jurisdiction_id)
         people = [Person(**person) for person in serialized_people]
 

@@ -4,7 +4,7 @@ from jobs.people_collector.schemas import (
     LLMPerson, WorkflowStatus 
 )
 from jobs.people_collector.steps.step_06_merge_records_within_llm.merge_records_within_llm import (
-    merge_field, merge_roles, merge_divisions, merge_llm_people_to_person, merge_records_within_llm
+    merge_llm_people_to_person, merge_records_within_llm
 )
 from shared.utils.config_utils import get_role_alias_map, get_division_alias_map
 
@@ -21,41 +21,6 @@ def make_llm_person(name, roles=None, divisions=None, phone=None, email=None, we
         end_date=None
     )
 
-def test_merge_field():
-    """Test merging single value fields"""
-    p1 = make_llm_person("Alice")
-    p1.phone_number = {"data": "555-1234"}
-    p2 = make_llm_person("Alice")
-    p2.phone_number = {"data": "555-1234"}
-    result = merge_field([p1, p2], "phone_number")
-    assert result == "555-1234"
-
-def test_merge_roles():
-    """Test merging roles across records with normalization"""
-    p1 = make_llm_person("Sam", roles=["Council Member", "Mayor"])
-    p2 = make_llm_person("Sam", roles=["Council Member", "Treasurer"])
-    government_type = "mayor_council"
-    result = merge_roles([p1, p2], government_type)
-    role_alias_map = get_role_alias_map(government_type)
-    normalized_roles = {role_alias_map.get(role.lower(), role) for role in ["Council Member", "Mayor", "Treasurer"]}
-    assert set(result) == normalized_roles  # All unique normalized roles
-
-def test_merge_divisions():
-    """Test merging divisions across records with normalization"""
-    p1 = make_llm_person("Dana", divisions=["Ward 1", "Ward 2"])
-    p2 = make_llm_person("Dana", divisions=["Ward 2", "Ward 3"])
-    division_alias_map = get_division_alias_map()
-    result = merge_divisions([p1, p2])
-    normalized_divisions = set()
-    for division in ["Ward 1", "Ward 2", "Ward 3"]:
-        for alias, canonical in division_alias_map.items():
-            if division.lower().startswith(alias):
-                suffix = division[len(alias):].strip()
-                normalized_divisions.add(f"{canonical} {suffix}" if suffix else canonical)
-                break
-        else:
-            normalized_divisions.add(division)
-    assert set(result) == normalized_divisions  # All unique normalized divisions
 
 def test_merge_llm_people_to_person():
     """Test merging multiple LLMPerson records into a single Person with normalized roles and divisions"""

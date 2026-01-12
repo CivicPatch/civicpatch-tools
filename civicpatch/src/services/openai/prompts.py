@@ -55,9 +55,9 @@ Output Field Definitions & Structure:
          "Alderman", "Council Member").
 - divisions: (Array of strings) Specific district/ward and name/number,
           only if specified (e.g., "Ward 1", "District 2").
-- phone_number: (String or null) Formatted phone number
+- phone: (String or null) Formatted phone number
 - email: (String or null) Email address (email@example.com)
-- website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+- url: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
 - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
 - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
 
@@ -82,13 +82,13 @@ Extraction Guidelines:
   - Extract full names only (e.g., "John Smith," not "Mayor John Smith"). Titles belong in the roles field.
   - Ensure extracted data is accurate and relevant to the governing body or target roles.
 - Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style.
-- Contact Details (Phone/Email/Website):
+- Contact Details (Phone/Email/Url):
   - Associate details logically if near the person's name/section.
   - Pick the most relevant contact detail if multiple are present.
   - Phone numbers:
     - Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
   - Markdown Links: Extract email/phone from the VISIBLE TEXT of links like `[TEXT](...)`, ignore the target URL.
-  - `website` data MUST be a valid http/https URL. Prefer profile pages. EXCLUDE mailto:, tel:.
+  - `url` data MUST be a valid http/https URL. Prefer profile pages. EXCLUDE mailto:, tel:.
   - `email` data should ONLY contain email addresses.
 - Term Dates (`start_date`, `end_date`):
   - Extract start_date and end_date in YYYY, YYYY-MM, or YYYY-MM-DD format.

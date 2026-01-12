@@ -10,7 +10,7 @@ from interfaces.schemas import (
     PeopleCollectorJobRequest,
     validate_people_request
 )
-from jobs.people_collector.main import start_in_background as start_people_collector_async
+from jobs.people_collector.main import start as start_people_collector
 from jobs.people_collector.main import stop as stop_people_collector
 from jobs.people_collector.schemas import PeopleCollectorContext, WorkflowStatus
 from shared.utils import id_utils
@@ -28,11 +28,12 @@ def get_router() -> APIRouter:
     ):
         request_id = id_utils.make_request_id()
         warnings, errors = validate_people_request(request)
+
         background_tasks.add_task(
-            start_people_collector_async,
-            request_id=request_id,
-            jurisdiction_id=request.jurisdiction_id,
-            config=request.config,
+            start_people_collector,
+            request_id, 
+            request.jurisdiction_id, 
+            request.config
         )
 
         return {

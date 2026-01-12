@@ -1,3 +1,11 @@
+from typing import List
+from domain.models import person_to_official
+from jobs.people_collector.schemas import (
+  PeopleCollectorContext,
+  WorkflowStatus
+)
+import utils.log_utils as log_utils
+
 from domain.models import (
   Person,
   Official,
@@ -5,7 +13,7 @@ from domain.models import (
 )
 
 def format_output(context: PeopleCollectorContext) -> List[Official]:
-    logger = utils.log_utils.get_workflow_logger(context.data.jurisdiction_id)
+    logger = log_utils.get_workflow_logger(context.data.jurisdiction_id)
     logger.info(f"Step 8: {WorkflowStatus.FORMAT_OUTPUT} Formatting output data.")
 
     people = context.data.merge_records_across_llms_step.people

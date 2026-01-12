@@ -6,6 +6,7 @@ from jobs.people_collector.schemas import (
 )
 from collections import Counter
 from utils import merge_utils
+import jobs.people_collector.steps.step_06_merge_records_within_llm.field_mergers as field_mergers
 
 def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWithinLLMStep:
     """
@@ -61,98 +62,33 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     ]
     
     # Use helper functions to merge fields
-    image = merge_field(records, "image")
-    merged_roles = merge_roles(records)
-    merged_divisions = merge_divisions(records)
-    phones = merge_field_to_list(records, "phone_number")
-    emails = merge_field_to_list(records, "email")
-    urls = merge_field_to_list(records, "website")
-    start_date = merge_field(records, "start_date")
-    end_date = merge_field(records, "end_date")
-    sources = [r.source for r in records if r.source]
+    image = field_mergers.merge_field([r.image for r in records])
+    merged_roles = field_mergers.merge_roles(records)
+    merged_divisions = field_mergers.merge_divisions(records)
+    phones = field_mergers.merge_field_to_list([r.phone for r in records])
+    emails = field_mergers.merge_field_to_list([r.email for r in records])
+    urls = field_mergers.merge_field_to_list([r.url for r in records])
+    start_date = field_mergers.merge_field([r.start_date for r in records])
+    end_date = field_mergers.merge_field([r.end_date for r in records])
+    source_urls = [r.source_url for r in records if r.source_url]
 
     return Person(
         name=canonical_name,
         roles=merged_roles,
         divisions=merged_divisions,
-        image=image,  # Placeholder for image
-        cdn_image="",  # Placeholder for CDN image
-        phones=merge_field(records, "phone_number"),
-        emails=merge_field(records, "email"),
-        urls=merge_field(records, "website"),
+
+        phones=phones,
+        emails=emails,
+        urls=urls,
         start_date=start_date,
         end_date=end_date,
-        sources=sources,
+        
+        image=image,  # Placeholder for image
+        cdn_image="",  # Placeholder for CDN image
         jurisdiction_id=jurisdiction_id,
         updated_at="",  # Placeholder for updated_at
+        source_urls=source_urls,
     )
-
-
-def merge_field(records: List[LLMPerson], field_name: str) -> str:
-    """
-    Merge a single-value field (start_date, end_date) from a list of LLMPerson records.
-    Prefer non-empty, most frequent value.
-
-    If there's a tie, prefer the value that contains either the first name or last name of the person.
-    """
-    values = [
-        getattr(r, field_name)
-        for r in records if getattr(r, field_name)
-    ]
-    if not values:
-        return ""
-    value_counts = Counter(values)
-    most_common = value_counts.most_common(1)[0][0]
-    merged_value = most_common
-
-    # If there's a tie, prefer the value that contains either the first name or last name of the person
-    if len(value_counts) > 1:
-        top_count = value_counts.most_common(1)[0][1]
-        tied_values = [val for val, count in value_counts.items() if count == top_count]
-        if len(tied_values) > 1:
-            first_name = merge_utils.first_name(records[0].name).lower()
-            last_name = merge_utils.last_name(records[0].name).lower()
-            for val in tied_values:
-                if first_name in val.lower() or last_name in val.lower():
-                    merged_value = val
-                    break
-    return merged_value 
-
-
-def merge_roles(records: List[LLMPerson]) -> List[str]:
-    unique_roles = set()
-    for record in records:
-        for role in record.roles:
-            if role:
-                unique_roles.add(role)
-    return list(unique_roles)
-
-def merge_field_to_list(records: List[LLMPerson], field_name: str) -> List[str]:
-    """
-    Merge a multi-value field (phones, emails, urls) from a list of LLMPerson records.
-    Collect a set of unique values.
-    """
-    unique_values = set()
-    for record in records:
-        field_values = getattr(record, field_name)
-        if field_values:
-            for value in field_values:
-                if value:
-                    unique_values.add(value)
-    return list(unique_values)
-
-def merge_divisions(records: List[LLMPerson]) -> List[str]:
-    """
-    Collect a set of unique divisions from all records.
-    """
-
-    unique_divisions = set()
-    for record in records:
-        for division in record.divisions:
-            if division:
-                unique_divisions.add(division)
-    return list(unique_divisions)
-
 
 def merge_records(llm_people_list: List[LLMPerson], jurisdiction_id: str) -> List[Person]:
     """

@@ -38,13 +38,13 @@ def get_data_source_path_for_jurisdiction_id(jurisdiction_id: str):
     folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
     return os.path.join(data_source_path, folder_path)
 
-def get_pipeline_context_file_path(jurisdiction_id: str):
+def get_workflow_context_file_path(jurisdiction_id: str):
     """
     Returns the absolute path to the pipeline file.
     """
     jurisdiction_id_path = get_data_source_path_for_jurisdiction_id(jurisdiction_id)
     return os.path.join(
-        jurisdiction_id_path, "pipeline_context.json"
+        jurisdiction_id_path, "workflow_context.json"
     )
 
 def get_config_file_path(jurisdiction_id: str):
