@@ -9,9 +9,9 @@ PYTHONPATH = "./src"
 POETRY_VIRTUALENVS_IN_PROJECT = "true"
 
 
-[tasks.container]
+[tasks.dev]
 run = """
-docker compose run --rm api.civicpatch.org 
+docker compose run --rm api_civicpatch_org 
 """
 
 [tasks.containsh]
