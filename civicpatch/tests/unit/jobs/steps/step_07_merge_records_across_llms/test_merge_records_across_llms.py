@@ -38,7 +38,7 @@ def create_person(name: str, roles: List[str], emails: List[str] = [], source_ur
         image="",
         cdn_image="",
         source_urls=source_urls,
-        jurisdiction_id="test_city",
+        jurisdiction_ocdid="test_city",
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )
 

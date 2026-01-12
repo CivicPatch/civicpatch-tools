@@ -17,7 +17,7 @@ def person_factory(image=None, sources=None, website=None):
         emails=[],
         urls=[website] if website else [],
 
-        jurisdiction_id="",
+        jurisdiction_ocdid="",
         source_urls=sources or [],
         # Add other attributes as needed with default values
         updated_at="",
@@ -33,7 +33,7 @@ def mock_request_id():
     return "test_request"
 
 @pytest.fixture
-def mock_jurisdiction_id():
+def mock_jurisdiction_ocdid():
     return "test_jurisdiction"
 
 @pytest.fixture
@@ -51,7 +51,7 @@ def mock_images_dir():
 @patch("utils.cost_utils.add_storage_cost")
 def test_cleanup_images_respects_image_map(
     mock_add_storage_cost, mock_remove, mock_open_file, mock_getsize, mock_isfile, mock_listdir,
-    mock_logger, mock_request_id, mock_jurisdiction_id, mock_images_dir
+    mock_logger, mock_request_id, mock_jurisdiction_ocdid, mock_images_dir
 ):
     # Mock inputs
     people_list = [
@@ -70,14 +70,14 @@ def test_cleanup_images_respects_image_map(
     mock_getsize.return_value = 1024
 
     # Call the function
-    cleanup_images(mock_logger, mock_request_id, mock_jurisdiction_id, mock_images_dir, people_list)
+    cleanup_images(mock_logger, mock_request_id, mock_jurisdiction_ocdid, mock_images_dir, people_list)
 
     # Assertions
     mock_listdir.assert_called_once_with(mock_images_dir)
     mock_open_file.assert_called_once_with(os.path.join(mock_images_dir, "image_map.json"), "r")
     mock_add_storage_cost.assert_any_call(
         request_id=mock_request_id,
-        jurisdiction_id=mock_jurisdiction_id,
+        jurisdiction_ocdid=mock_jurisdiction_ocdid,
         file_size_bytes=1024
     )
 
