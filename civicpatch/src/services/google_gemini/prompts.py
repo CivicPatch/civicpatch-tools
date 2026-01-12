@@ -4,20 +4,20 @@ from shared.utils import config_utils
 from shared.utils import id_utils
 from jobs.people_collector.schemas import ResearchedPerson
 
-def research_municipality_prompt(jurisdiction_id: str, municipality_name: str):
+def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str):
     """
     Generate a prompt for researching municipality information.
 
     Args:
-        jurisdiction_id: Identifier for the municipality.
+        jurisdiction_ocdid: Identifier for the municipality.
         municipality_name: Name of the municipality.
 
     Returns:
         A string containing the prompt.
     """
 
-    jurisdiction_id_parts = id_utils.parse_jurisdiction_id(jurisdiction_id)
-    state = jurisdiction_id_parts.state
+    jurisdiction_ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    state = jurisdiction_ocdid_parts.state
     government_type_keys = "- " + "\n- ".join(list(config_utils.get_government_types().keys()))
 
     return f"""

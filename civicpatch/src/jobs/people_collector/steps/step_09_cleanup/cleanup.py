@@ -3,7 +3,7 @@ import shutil
 import json
 from typing import List, cast, Dict
 
-from shared.utils.data_path_utils import get_data_source_path_for_jurisdiction_id
+from shared.utils.data_path_utils import get_data_source_path_for_jurisdiction_ocdid
 from jobs.people_collector.schemas import (
     PeopleCollectorContext, WorkflowStatus, MergeRecordsAcrossLLMsStep,
 
@@ -15,11 +15,11 @@ from domain.models import Official
 # TODO: should input things like "Official", etc...
 def cleanup(context: PeopleCollectorContext):
     # Remove files under data_source/cache and data_source/images
-    jurisdiction_id = context.data.jurisdiction_id
-    logger = log_utils.get_workflow_logger(jurisdiction_id)
+    jurisdiction_ocdid = context.data.jurisdiction_ocdid
+    logger = log_utils.get_workflow_logger(jurisdiction_ocdid)
     logger.info(f"Step 9: {WorkflowStatus.CLEANUP.value}")
     request_id = context.request_id
-    data_source_dir = get_data_source_path_for_jurisdiction_id(jurisdiction_id)
+    data_source_dir = get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
@@ -31,7 +31,7 @@ def cleanup(context: PeopleCollectorContext):
         cleanup_cache(cache_dir, people)
     if os.path.exists(images_dir):
         # Only keep images that are referenced by people
-        cleanup_images(logger, request_id, jurisdiction_id, images_dir, people)
+        cleanup_images(logger, request_id, jurisdiction_ocdid, images_dir, people)
 
     updated_names = cleanup_names_config(context.data.identities)
 
@@ -58,7 +58,7 @@ def cleanup_cache(cache_dir: str, people_list: List[Official]):
 
 
 def cleanup_images(
-    logger, request_id, jurisdiction_id, images_dir: str, people_list: List[Official]
+    logger, request_id, jurisdiction_ocdid, images_dir: str, people_list: List[Official]
 ):
     # Clear out any images that are not under image
     images_to_keep = set()
@@ -89,7 +89,7 @@ def cleanup_images(
                 images_found.add(image_file_path)
                 cost_utils.add_storage_cost(
                     request_id=request_id,
-                    jurisdiction_id=jurisdiction_id,
+                    jurisdiction_ocdid=jurisdiction_ocdid,
                     file_size_bytes=os.path.getsize(image_file_path),
                 )
 

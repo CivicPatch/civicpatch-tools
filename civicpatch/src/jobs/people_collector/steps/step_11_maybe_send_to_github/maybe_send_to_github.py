@@ -9,7 +9,7 @@ from jobs.people_collector.schemas import (
 from utils import cost_utils, log_utils
 from shared.utils import id_utils
 from shared.utils.data_path_utils import (
-    get_data_source_path_for_jurisdiction_id,
+    get_data_source_path_for_jurisdiction_ocdid,
     get_data_file_path,
 )
 from utils.request_utils import with_retry
@@ -18,7 +18,7 @@ GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-
 
 
 def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubStep:
-    logger = log_utils.get_workflow_logger(context.data.jurisdiction_id)
+    logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 10: {WorkflowStatus.MAYBE_SEND_TO_GITHUB.value}")
 
     # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
@@ -27,7 +27,7 @@ def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubSt
     API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "https://api.civicpatch.org")
     CRUDDER_UPLOAD_URL = f"{API_CIVICPATCH_ORG_URL}/api/internal/pipelines/github_intake"
     request_id = context.request_id
-    jurisdiction_id = context.data.jurisdiction_id
+    jurisdiction_ocdid = context.data.jurisdiction_ocdid
     logger.info(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
 
     try:
@@ -39,12 +39,12 @@ def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubSt
 
             return MaybeSendToGitHubStep(status="skipped_no_token")
 
-        zip_file_path = zip_files(context.request_id, context.data.jurisdiction_id)
+        zip_file_path = zip_files(context.request_id, context.data.jurisdiction_ocdid)
         file_size_bytes = os.path.getsize(zip_file_path)
         logger.info(
             f"Created zip file at {zip_file_path}, size: {file_size_bytes} bytes"
         )
-        cost_utils.add_storage_cost(request_id, jurisdiction_id, file_size_bytes)
+        cost_utils.add_storage_cost(request_id, jurisdiction_ocdid, file_size_bytes)
 
         headers = {
             "Authorization": API_CIVICPATCH_ORG_TOKEN,
@@ -61,7 +61,7 @@ def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubSt
         # Add metadata in the request body
         data = {
             "request_id": context.request_id,
-            "jurisdiction_id": context.data.jurisdiction_id,
+            "jurisdiction_ocdid": context.data.jurisdiction_ocdid,
         }
 
         response = with_retry(
@@ -87,12 +87,12 @@ def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubSt
         return MaybeSendToGitHubStep(status="failed", response_text=str(e))
 
 
-def zip_files(request_id, jurisdiction_id):
-    data_municipality_file = get_data_file_path(jurisdiction_id)
-    data_source_municipality_path = get_data_source_path_for_jurisdiction_id(jurisdiction_id)
+def zip_files(request_id, jurisdiction_ocdid):
+    data_municipality_file = get_data_file_path(jurisdiction_ocdid)
+    data_source_municipality_path = get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
 
-    git_branch_name = id_utils.jurisdiction_id_to_git_branch(
-        jurisdiction_id, request_id
+    git_branch_name = id_utils.jurisdiction_ocdid_to_git_branch(
+        jurisdiction_ocdid, request_id
     )
     zip_file_name = f"{git_branch_name}.zip"
     zip_file_path = os.path.join("crudder_data", zip_file_name)

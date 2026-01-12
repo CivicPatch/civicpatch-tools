@@ -24,7 +24,7 @@ MAX_RETRIES = 5
 
 def run_prompt(
         request_id, 
-        jurisdiction_id: str, 
+        jurisdiction_ocdid: str, 
         prompt, 
         response_schema=None, 
         content="", 
@@ -33,7 +33,7 @@ def run_prompt(
     """
     Run a prompt against Google Gemini's API
     """
-    logger = get_workflow_logger(jurisdiction_id)
+    logger = get_workflow_logger(jurisdiction_ocdid)
     logger.info(f"Running Gemini prompt")
     logger.debug(f"Prompt: \n{prompt}")
     api_key = os.getenv("GOOGLE_GEMINI_TOKEN")
@@ -65,7 +65,7 @@ def run_prompt(
         cost_utils.add_llm_cost(
             logger,
             request_id,
-            jurisdiction_id, 
+            jurisdiction_ocdid, 
             "google_gemini", 
             model, 
             input_tokens_num, 

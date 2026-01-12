@@ -13,7 +13,7 @@ from domain.models import (
 )
 
 def format_output(context: PeopleCollectorContext) -> List[Official]:
-    logger = log_utils.get_workflow_logger(context.data.jurisdiction_id)
+    logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 8: {WorkflowStatus.FORMAT_OUTPUT} Formatting output data.")
 
     people = context.data.merge_records_across_llms_step.people

@@ -16,15 +16,15 @@ STORAGE_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_ACCESS_KEY")
 FRIENDLY_STORAGE_HOST = os.getenv("FRIENDLY_STORAGE_HOST", "cdn.civicpatch.org")
 
 
-def upload_images_to_cdn(jurisdiction_id: str):
-    jurisdiction_folder_path = id_utils.jurisdiction_id_to_folder(jurisdiction_id)
-    image_path = data_path_utils.get_images_path(jurisdiction_id)
+def upload_images_to_cdn(jurisdiction_ocdid: str):
+    jurisdiction_folder_path = id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    image_path = data_path_utils.get_images_path(jurisdiction_ocdid)
     image_map_file_path = os.path.join(image_path, "image_map.json")
 
-    people_file_path = data_path_utils.get_data_file_path(jurisdiction_id)
+    people_file_path = data_path_utils.get_data_file_path(jurisdiction_ocdid)
 
     serialized_people = data_path_utils.get_data(
-        jurisdiction_id
+        jurisdiction_ocdid
     )
 
     people = [Person(**person) for person in serialized_people]
@@ -63,7 +63,7 @@ def upload_images_to_cdn(jurisdiction_id: str):
 
     # Update people with CDN URLs
     data_path_utils.update_data_for_jurisdiction(
-        jurisdiction_id, 
+        jurisdiction_ocdid, 
         [person.model_dump() for person in people]
     )
 

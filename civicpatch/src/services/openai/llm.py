@@ -10,11 +10,11 @@ MODEL = "openai/gpt-4.1-mini"
 MAX_RETRIES = 5
 OPENAI_URL = "https://api.openai.com/v1/responses"
 
-def run_prompt(request_id, jurisdiction_id: str, prompt, response_schema, content=""):
+def run_prompt(request_id, jurisdiction_ocdid: str, prompt, response_schema, content=""):
     """
     Run a prompt against OpenAI's API
     """
-    logger = get_workflow_logger(jurisdiction_id)
+    logger = get_workflow_logger(jurisdiction_ocdid)
     logger.info(f"Running OpenAI prompt")
     logger.debug(f"Prompt: \n{prompt}")
     api_key = os.getenv("OPENAI_TOKEN")
@@ -43,7 +43,7 @@ def run_prompt(request_id, jurisdiction_id: str, prompt, response_schema, conten
         cost_utils.add_llm_cost(
             logger,
             request_id,
-            jurisdiction_id, 
+            jurisdiction_ocdid, 
             "openai", 
             MODEL, 
             input_tokens_num, 

@@ -36,14 +36,14 @@ def generate_data_comment(data: List[Official]) -> str:
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python generate_data_comment.py <jurisdiction_id>")
+        print("Usage: python generate_data_comment.py <jurisdiction_ocdid>")
         sys.exit(1)
 
-    jurisdiction_id = sys.argv[1]
+    jurisdiction_ocdid = sys.argv[1]
     try:
         # It should be defined in the dockerfile
         serialized_people = data_path_utils.get_data(
-            jurisdiction_id
+            jurisdiction_ocdid
         )
         people = [Official(**person) for person in serialized_people]
         markdown_table = generate_data_comment(people)

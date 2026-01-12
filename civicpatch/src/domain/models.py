@@ -19,7 +19,7 @@ class Official(BaseModel):
 
     image: Optional[str] = None
 
-    jurisdiction_id: str
+    jurisdiction_ocdid: str
     cdn_image: Optional[str] = None
     source_urls: List[str]  
     updated_at: str
@@ -37,7 +37,7 @@ class Person(BaseModel):
     end_date: Optional[str] = None
     image: Optional[str] = None
 
-    jurisdiction_id: str 
+    jurisdiction_ocdid: str 
     cdn_image: Optional[str] = None
     source_urls: List[str] 
     updated_at: str
@@ -59,7 +59,7 @@ def person_to_official(person: Person) -> Official:
 
         image=person.image or None,
 
-        jurisdiction_id=person.jurisdiction_id,
+        jurisdiction_ocdid=person.jurisdiction_ocdid,
         cdn_image=person.cdn_image or None,
         source_urls=person.source_urls,
         updated_at=person.updated_at,

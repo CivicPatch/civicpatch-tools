@@ -12,18 +12,18 @@ def make_request_id():
     short_id = str(uuid.uuid4())[:4]
     return f"{date_str}-{short_id}"
 
-def _jurisdiction_id_to_output_type(jurisdiction_id: str) -> str:
+def _jurisdiction_ocdid_to_output_type(jurisdiction_ocdid: str) -> str:
     data_config = config_utils.get_data_config()
     data_output_types = data_config.get("data_output_types", {})
 
     # See: ./config/data.yml
     for output_type, pattern in data_output_types.items():
-        if re.search(pattern, jurisdiction_id):
+        if re.search(pattern, jurisdiction_ocdid):
             return output_type
     
     return "local"
 
-def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId:
+def parse_jurisdiction_ocdid(jurisdiction_ocdid: str) -> JurisdictionId:
     """
     Parses a jurisdiction ID in the format
         "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
@@ -34,7 +34,7 @@ def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId:
     Returns None if the format is invalid.
     """
     try:
-        components = jurisdiction_id.split("/")
+        components = jurisdiction_ocdid.split("/")
         result = {}
         country_part = components[1]
         result["country"] = country_part.split(":")[1]
@@ -62,7 +62,7 @@ def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId:
         if "country" not in result or "state" not in result:
             raise ValueError("Missing required jurisdiction components: country or state")
         
-        output_type = _jurisdiction_id_to_output_type(jurisdiction_id)
+        output_type = _jurisdiction_ocdid_to_output_type(jurisdiction_ocdid)
 
         return JurisdictionId(
             country=result["country"],
@@ -74,10 +74,10 @@ def parse_jurisdiction_id(jurisdiction_id: str) -> JurisdictionId:
             output_type=output_type
         )
     except Exception as e:
-        raise ValueError(f"Invalid jurisdiction ID format: {jurisdiction_id}, error: {e}") from e
+        raise ValueError(f"Invalid jurisdiction ID format: {jurisdiction_ocdid}, error: {e}") from e
 
 
-def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:
+def jurisdiction_ocdid_to_folder(jurisdiction_ocdid: str) -> str:
     """
     Converts a jurisdiction ID to a reversible, human-friendly folder name.
     Example:
@@ -93,27 +93,27 @@ def jurisdiction_id_to_folder(jurisdiction_id: str) -> str:
       -> "il/local/county_dupage__place_naperville_test"
     """
 
-    jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
+    jurisdiction_ocdid_parts = parse_jurisdiction_ocdid(jurisdiction_ocdid)
 
-    folder = f"{jurisdiction_id_parts.state}/{jurisdiction_id_parts.output_type}/"
-    if jurisdiction_id_parts.county:
-        folder += f"county_{jurisdiction_id_parts.county}__"
-    folder += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}"
+    folder = f"{jurisdiction_ocdid_parts.state}/{jurisdiction_ocdid_parts.output_type}/"
+    if jurisdiction_ocdid_parts.county:
+        folder += f"county_{jurisdiction_ocdid_parts.county}__"
+    folder += f"{jurisdiction_ocdid_parts.place_label}_{jurisdiction_ocdid_parts.place}"
 
     return folder
 
-def jurisdiction_id_to_git_branch(jurisdiction_id: str, request_id: str) -> str:
+def jurisdiction_ocdid_to_git_branch(jurisdiction_ocdid: str, request_id: str) -> str:
     """
     Converts a jurisdiction ID to a reversible, human-friendly git branch name.
     Example:
       "ocd-jurisdiction/country:us/state:wa/place:seattle"
       -> "2025-09-25-1a2b-state-wa-place-seattle"
     """
-    jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
-    branch = f"state_{jurisdiction_id_parts.state}__"
-    if jurisdiction_id_parts.county:
-        branch += f"county_{jurisdiction_id_parts.county}__"
-    branch += f"{jurisdiction_id_parts.place_label}_{jurisdiction_id_parts.place}__{jurisdiction_id_parts.jurisdiction_type}"
+    jurisdiction_ocdid_parts = parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    branch = f"state_{jurisdiction_ocdid_parts.state}__"
+    if jurisdiction_ocdid_parts.county:
+        branch += f"county_{jurisdiction_ocdid_parts.county}__"
+    branch += f"{jurisdiction_ocdid_parts.place_label}_{jurisdiction_ocdid_parts.place}__{jurisdiction_ocdid_parts.jurisdiction_type}"
     slug = branch.lower()
     return f"{request_id}__{slug}".lower()
 
@@ -175,7 +175,7 @@ def _parse_slug_to_parts(slug: str) -> list[str]:
     return result
 
 
-def slug_to_jurisdiction_id(slug: str) -> str:
+def slug_to_jurisdiction_ocdid(slug: str) -> str:
     """
     Converts a slug back to a full jurisdiction ID.
 
@@ -187,7 +187,7 @@ def slug_to_jurisdiction_id(slug: str) -> str:
     return "/".join(parts)
 
 
-def git_branch_to_jurisdiction_id(branch: str) -> str:
+def git_branch_to_jurisdiction_ocdid(branch: str) -> str:
     """
     Converts a git branch name back to a jurisdiction ID.
 
@@ -205,12 +205,12 @@ def git_branch_to_jurisdiction_id(branch: str) -> str:
         raise ValueError(f"Branch name format invalid: {branch}")
 
     slug = parts[1]  # e.g., "state_wa__place_seattle__government"
-    return slug_to_jurisdiction_id(slug).lower()
+    return slug_to_jurisdiction_ocdid(slug).lower()
 
 
-def state_name(jurisdiction_id: str) -> str:
-    jurisdiction_id_parts = parse_jurisdiction_id(jurisdiction_id)
-    state = jurisdiction_id_parts.state
+def state_name(jurisdiction_ocdid: str) -> str:
+    jurisdiction_ocdid_parts = parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    state = jurisdiction_ocdid_parts.state
 
     state_names = {
         "al": "Alabama",

@@ -162,7 +162,7 @@ class MaybeSendToGitHubStep(BaseModel):
     response_text: Optional[str] = None
 
 class PeopleCollectorData(BaseModel):
-    jurisdiction_id: str
+    jurisdiction_ocdid: str
 
     # Can be overridden with data source configs
     config: WorkflowConfig 

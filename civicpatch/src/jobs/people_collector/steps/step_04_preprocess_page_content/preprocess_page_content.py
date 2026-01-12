@@ -26,12 +26,12 @@ def preprocess_page_content(
     """
     Preprocess the scraped HTML content of a page.
     """
-    logger = log_utils.get_workflow_logger(context.data.jurisdiction_id)
+    logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 4: {WorkflowStatus.PREPROCESS_PAGE_CONTENT.value}: {page_to_preprocess.url}")
-    jurisdiction_id = context.data.jurisdiction_id
+    jurisdiction_ocdid = context.data.jurisdiction_ocdid
 
     time_start = time.time()
-    cache_path = data_path_utils.get_cache_path(jurisdiction_id)
+    cache_path = data_path_utils.get_cache_path(jurisdiction_ocdid)
     output_html_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "original.html")
 
     with open(output_html_file_path, "r", encoding="utf-8") as f:

@@ -195,10 +195,10 @@ class GitDatabaseSync:
                 return False
 
             person = data[0]
-            jurisdiction_ocdid = person.get("jurisdiction_id")
+            jurisdiction_ocdid = person.get("jurisdiction_ocdid")
 
             if not jurisdiction_ocdid:
-                print(f"Skipping {file_path}: 'jurisdiction_id' missing in data.")
+                print(f"Skipping {file_path}: 'jurisdiction_ocdid' missing in data.")
                 return False
 
             async with self.pool.connection() as conn:
@@ -257,12 +257,12 @@ class GitDatabaseSync:
 
                     # Prepare data for all records in a single list of tuples
                     for record in jurisdictions:
-                        jurisdiction_id = record.get("jurisdiction_id")
+                        jurisdiction_ocdid = record.get("jurisdiction_ocdid")
                         jurisdiction_ocdid_slug = record.get("jurisdiction_ocdid_slug")
                         data = record.get("jurisdiction")
                         data["updated_at"] = record.get("updated_at")
 
-                        if not jurisdiction_id:
+                        if not jurisdiction_ocdid:
                             print(
                                 f"  Warning: Skipping record in {file_path}. 'id' key not found."
                             )
@@ -270,7 +270,7 @@ class GitDatabaseSync:
 
                         values_list.append(
                             (
-                                jurisdiction_id,
+                                jurisdiction_ocdid,
                                 jurisdiction_ocdid_slug,
                                 state_abbreviation,
                                 rel_path,

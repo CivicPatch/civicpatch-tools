@@ -113,7 +113,7 @@ def get_router() -> APIRouter:
             for j in jurisdictions_data["jurisdictions_by_id"].values()
             if j["jurisdiction"].get("url") and not j.get("updated_at")
         ]
-        open_pull_request_ids = [pr.jurisdiction_id for pr in open_pull_requests]
+        open_pull_request_ids = [pr.jurisdiction_ocdid for pr in open_pull_requests]
 
         filtered_jurisdictions = [
             j for j in jurisdictions if j.id not in open_pull_request_ids

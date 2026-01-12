@@ -5,7 +5,7 @@ from typing import List
 from urllib.parse import urlparse
 
 class PeopleCollectorJobRequest(BaseModel):
-    jurisdiction_id: str  # Format: ocd-jurisdiction/country:us/state:wa/place:seattle
+    jurisdiction_ocdid: str  # Format: ocd-jurisdiction/country:us/state:wa/place:seattle
     # OR ocd-jurisdiction/country:us/state:il/county:dupage/place:naperville, for cousubs
     state: WorkflowStatus = WorkflowStatus.INIT
     config: WorkflowConfig
@@ -14,12 +14,12 @@ def validate_people_request(request: PeopleCollectorJobRequest) -> tuple[List[st
     warnings = []
     errors = []
 
-    jurisdiction_id_obj = id_utils.parse_jurisdiction_id(request.jurisdiction_id)
-    if not jurisdiction_id_obj:
-        errors.append(f"Invalid jurisdiction_id format: {request.jurisdiction_id}.")
+    jurisdiction_ocdid_obj = id_utils.parse_jurisdiction_ocdid(request.jurisdiction_ocdid)
+    if not jurisdiction_ocdid_obj:
+        errors.append(f"Invalid jurisdiction_ocdid format: {request.jurisdiction_ocdiddid}.")
     if not request.config.name:
         warnings.append(
-            "Missing 'name' field. Substituting with place name from jurisdiction_id."
+            "Missing 'name' field. Substituting with place name from jurisdiction_ocdid."
         )
     if not request.config.url:
         errors.append("Missing 'url' field.")

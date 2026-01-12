@@ -120,11 +120,11 @@ MODELS_BY_TYPE = {
     },
 }
 
-def run_prompt(request_id, jurisdiction_id: str, prompt, content="", response_schema=None, model_type="STANDARD"):
+def run_prompt(request_id, jurisdiction_ocdid: str, prompt, content="", response_schema=None, model_type="STANDARD"):
     """
     Run a prompt against Together AI's API using OpenAI-compatible interface
     """
-    logger = get_workflow_logger(jurisdiction_id)
+    logger = get_workflow_logger(jurisdiction_ocdid)
     logger.info(f"Running Together AI prompt: {prompt}")
     logger.debug(f"Prompt: \n{prompt}")
     api_key = os.getenv("TOGETHER_AI_TOKEN")
@@ -162,7 +162,7 @@ def run_prompt(request_id, jurisdiction_id: str, prompt, content="", response_sc
         cost_utils.add_llm_cost(
             logger,
             request_id,
-            jurisdiction_id, 
+            jurisdiction_ocdid, 
             "together_ai", 
             model, 
             usage.prompt_tokens, 

@@ -32,14 +32,14 @@ def get_router() -> APIRouter:
         background_tasks.add_task(
             start_people_collector,
             request_id, 
-            request.jurisdiction_id, 
+            request.jurisdiction_ocdid, 
             request.config
         )
 
         return {
             "data": {
                 "request_id": request_id,
-                "jurisdiction_id": request.jurisdiction_id,
+                "jurisdiction_ocdid": request.jurisdiction_ocdid,
                 "message": "Workflow started"
             }
         }
@@ -66,9 +66,9 @@ def get_router() -> APIRouter:
 
     @router.get("/pipelines/status")
     async def pipeline_status(
-        jurisdiction_id: str,
+        jurisdiction_ocdid: str,
     ):
-        workflow = get_workflow(jurisdiction_id)
+        workflow = get_workflow(jurisdiction_ocdid)
         if workflow is None:
             raise HTTPException(status_code=404, detail="Workflow not found")
 
@@ -137,6 +137,6 @@ def get_router() -> APIRouter:
             raise HTTPException(status_code=404, detail="Workflow not found")
 
         stop_people_collector(jurisdiction_ocdid) 
-        return {"status": "stopping", "jurisdiction_id": jurisdiction_id}
+        return {"status": "stopping", "jurisdiction_ocdid": jurisdiction_ocdid}
 
     return router

@@ -17,13 +17,13 @@ def research_municipality(context: PeopleCollectorContext) -> tuple[ProgressStat
     """
     Research the municipality to gather necessary data for further processing.
     """
-    logger = log_utils.get_workflow_logger(context.data.jurisdiction_id)
+    logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 1: {WorkflowStatus.RESEARCH_MUNICIPALITY.value}")
     request_id = context.request_id
-    jurisdiction_id = context.data.jurisdiction_id
+    jurisdiction_ocdid = context.data.jurisdiction_ocdid
     municipality_name = context.data.config.name
-    prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_id, municipality_name)
-    response = google_gemini_llm.run_prompt(request_id, jurisdiction_id, prompt, with_search=True)
+    prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_ocdid, municipality_name)
+    response = google_gemini_llm.run_prompt(request_id, jurisdiction_ocdid, prompt, with_search=True)
     if not response:
         raise ValueError("No response from LLM")
     people = response.get("people", [])
@@ -34,7 +34,7 @@ def research_municipality(context: PeopleCollectorContext) -> tuple[ProgressStat
     government_type = context.data.config.government_type or match_roles_to_government_type(roles_found, config_utils.get_government_types())
 
     if not government_type:
-        logger.error(f"Could not determine government type for jurisdiction {jurisdiction_id}. Roles found: {roles_found}")
+        logger.error(f"Could not determine government type for jurisdiction {jurisdiction_ocdid}. Roles found: {roles_found}")
         raise ValueError("Could not determine government type from roles found.")
     
     role_configs = config_utils.get_role_configs_by_government_type(government_type)

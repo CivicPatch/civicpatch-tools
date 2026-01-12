@@ -106,13 +106,13 @@ def load_pipeline_context_from_json(filepath: str) -> PeopleCollectorContext:
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python generate_review_comment.py <jurisdiction_id>")
+        print("Usage: python generate_review_comment.py <jurisdiction_ocdid>")
         sys.exit(1)
     else:
-        jurisdiction_id = sys.argv[1]
+        jurisdiction_ocdid = sys.argv[1]
         # It should be defined in the dockerfile
-        pipeline_context_file_path = data_path_utils.get_workflow_context_file_path(jurisdiction_id)
-        serialized_people = data_path_utils.get_data(jurisdiction_id)
+        pipeline_context_file_path = data_path_utils.get_workflow_context_file_path(jurisdiction_ocdid)
+        serialized_people = data_path_utils.get_data(jurisdiction_ocdid)
         people = [Person(**person) for person in serialized_people]
 
         pipeline_context = load_pipeline_context_from_json(pipeline_context_file_path)

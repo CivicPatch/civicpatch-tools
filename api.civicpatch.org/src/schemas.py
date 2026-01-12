@@ -26,7 +26,7 @@ class RouteCategory(str, Enum):
 
 class Person(BaseModel):
     name: str
-    jurisdiction_id: str
+    jurisdiction_ocdid: str
 
     class Config:
         extra = "allow"
@@ -34,16 +34,16 @@ class Person(BaseModel):
 
 class PullRequest(BaseModel):
     branch_name: str
-    jurisdiction_id: str = ""
+    jurisdiction_ocdid: str = ""
 
     @model_validator(mode="after")
-    def set_jurisdiction_id(self):
+    def set_jurisdiction_ocdid(self):
         try:
-            if not self.jurisdiction_id and self.branch_name:
-                self.jurisdiction_id = shared.utils.id_utils.git_branch_to_jurisdiction_id(self.branch_name)
+            if not self.jurisdiction_ocdid and self.branch_name:
+                self.jurisdiction_ocdid = shared.utils.id_utils.git_branch_to_jurisdiction_ocdid(self.branch_name)
         except Exception:
             print(f"git branch does not match jurisdiciton id format: {self.branch_name}")
-            self.jurisdiction_id = ""
+            self.jurisdiction_ocdid = ""
         return self
 
 
