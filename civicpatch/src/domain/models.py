@@ -53,14 +53,14 @@ def person_to_official(person: Person) -> Official:
         office=Office(
             name=" - ".join(person.roles),
             division_id=person.divisions[0] if person.divisions else None,
-            start_date=person.start_date,
-            end_date=person.end_date,
+            start_date=person.start_date or None,
+            end_date=person.end_date or None,
         ),
-        
-        image=person.image,
+
+        image=person.image or None,
 
         jurisdiction_id=person.jurisdiction_id,
-        cdn_image=person.cdn_image,
+        cdn_image=person.cdn_image or None,
         source_urls=person.source_urls,
         updated_at=person.updated_at,
     )
