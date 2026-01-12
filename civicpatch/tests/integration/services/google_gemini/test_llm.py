@@ -12,7 +12,7 @@ def test_run_prompt_with_search(
     """
     # Define test parameters
     request_id = "test_request_id"
-    jurisdiction_id = "test_jurisdiction_id"
+    jurisdiction_ocdid = "test_jurisdiction_ocdid"
     prompt = """What is the capital of France? Return this in json in the format of 
     {
         "answer": str 
@@ -25,7 +25,7 @@ def test_run_prompt_with_search(
     # Call the function
     response = run_prompt(
         request_id, 
-        jurisdiction_id, 
+        jurisdiction_ocdid, 
         prompt, 
         response_schema, 
         content, 

@@ -16,7 +16,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/depts/mayor/MayorBrandonJohnson/MBJ_UIC_20230515_1.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/depts/mayor.html",
                             "https://www.chicago.gov/city/en/depts/mayor/press_room/press_releases/2025/october/city-property-executive-order.html"
@@ -38,7 +38,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -59,7 +59,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -80,7 +80,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -101,7 +101,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -122,7 +122,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -143,7 +143,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -164,7 +164,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -185,7 +185,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -206,7 +206,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -227,7 +227,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -248,7 +248,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -269,7 +269,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -290,7 +290,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/13.html"
@@ -313,7 +313,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/14.html"
@@ -336,7 +336,7 @@
                         "end_date": "",
                         "image": "https://static.wixstatic.com/media/f3f9c5_06d3f9e4107d40cb8aca5b0b4317799c~mv2.jpeg/v1/crop/x_1414,y_283,w_2672,h_3365/fill/w_281,h_357,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Raymond%20Lopez%20Headshot%202024.jpeg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/15.html",
@@ -361,7 +361,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/16.html"
@@ -383,7 +383,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/17/aldward17.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/17.html"
@@ -405,7 +405,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/18/aldward18.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/18.html"
@@ -427,7 +427,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -448,7 +448,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/20.html"
@@ -470,7 +470,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/21.html"
@@ -492,7 +492,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/22.html"
@@ -514,7 +514,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/23/aldward23.png",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/23.html",
@@ -537,7 +537,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/24.html"
@@ -559,7 +559,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/26.html"
@@ -582,7 +582,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/27/Burnett-Redmond-Walter-Portrait.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/27.html",
@@ -605,7 +605,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/28.html"
@@ -627,7 +627,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/29.html"
@@ -649,7 +649,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/30.html"
@@ -671,7 +671,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/31.html"
@@ -694,7 +694,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/32/aldward32.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/32.html",
@@ -717,7 +717,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/33.html"
@@ -739,7 +739,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/34.html"
@@ -761,7 +761,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/35.html"
@@ -783,7 +783,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/36.html"
@@ -805,7 +805,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/37/aldward37.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/37.html",
@@ -828,7 +828,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/38.html",
@@ -852,7 +852,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/39.html"
@@ -874,7 +874,7 @@
                         "end_date": "",
                         "image": "https://40thward.org/wp-content/uploads/2019/08/40th-ward-town-hall.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/40.html",
@@ -897,7 +897,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/41.html"
@@ -919,7 +919,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/42/aldward42.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/42.html"
@@ -941,7 +941,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/43.html"
@@ -963,7 +963,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/44.html"
@@ -985,7 +985,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/45.html"
@@ -1007,7 +1007,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/46/aldward46.png",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/46.html"
@@ -1029,7 +1029,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/47.html"
@@ -1051,7 +1051,7 @@
                         "end_date": "",
                         "image": "https://images.squarespace-cdn.com/content/v1/6440662e14e59b3037e72c3c/11a75e37-2f35-44d9-ab82-9c6bb7d75de0/leni_manaa-hoppenworth_official_pic.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/48.html",
@@ -1074,7 +1074,7 @@
                         "end_date": "",
                         "image": "https://static.wixstatic.com/media/8afdc9_cfc7880c724a495cb4d12b8894d7098b~mv2_d_2000_1335_s_2.jpg/v1/crop/x_315,y_85,w_1667,h_947/fill/w_921,h_522,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/MariaHadden_081518_0235%20(1).jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/49.html",
@@ -1097,7 +1097,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/50.html"
@@ -1119,7 +1119,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards/19.html"
                         ],
@@ -1140,7 +1140,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/depts/mayor/MayorBrandonJohnson/MBJ_UIC_20230515_1.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/depts/mayor.html",
                             "https://www.chicago.gov/city/en/depts/mayor/press_room/press_releases/2025/october/city-property-executive-order.html"
@@ -1162,7 +1162,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1183,7 +1183,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1204,7 +1204,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1225,7 +1225,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1246,7 +1246,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1267,7 +1267,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1288,7 +1288,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1309,7 +1309,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1330,7 +1330,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1351,7 +1351,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1372,7 +1372,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1393,7 +1393,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1414,7 +1414,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/13.html"
@@ -1436,7 +1436,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/14.html"
@@ -1459,7 +1459,7 @@
                         "end_date": "",
                         "image": "https://static.wixstatic.com/media/f3f9c5_06d3f9e4107d40cb8aca5b0b4317799c~mv2.jpeg/v1/crop/x_1414,y_283,w_2672,h_3365/fill/w_281,h_357,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Raymond%20Lopez%20Headshot%202024.jpeg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/15.html",
@@ -1484,7 +1484,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/16.html"
@@ -1506,7 +1506,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/17/aldward17.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/17.html"
@@ -1528,7 +1528,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/18/aldward18.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/18.html"
@@ -1550,7 +1550,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html"
                         ],
@@ -1571,7 +1571,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/20.html"
@@ -1593,7 +1593,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/21.html"
@@ -1615,7 +1615,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/22.html"
@@ -1637,7 +1637,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/23/aldward23.png",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/23.html",
@@ -1660,7 +1660,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/24.html"
@@ -1682,7 +1682,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/26.html"
@@ -1704,7 +1704,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/27/Burnett-Redmond-Walter-Portrait.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/27.html",
@@ -1727,7 +1727,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/28.html"
@@ -1749,7 +1749,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/29.html"
@@ -1771,7 +1771,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/30.html"
@@ -1793,7 +1793,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/31.html"
@@ -1815,7 +1815,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/32/aldward32.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/32.html",
@@ -1838,7 +1838,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/33.html"
@@ -1860,7 +1860,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/34.html"
@@ -1882,7 +1882,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/35.html"
@@ -1904,7 +1904,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/36.html"
@@ -1926,7 +1926,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/37/aldward37.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/37.html",
@@ -1949,7 +1949,7 @@
                         "end_date": "",
                         "image": "http://www.aldermansposato.com/images/HPnewplaygroundcopy.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/38.html",
@@ -1972,7 +1972,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/39.html"
@@ -1994,7 +1994,7 @@
                         "end_date": "",
                         "image": "https://40thward.org/wp-content/uploads/2019/08/40th-ward-town-hall.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/40.html",
@@ -2017,7 +2017,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/41.html"
@@ -2039,7 +2039,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/42/aldward42.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/42.html"
@@ -2061,7 +2061,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/43.html"
@@ -2083,7 +2083,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/44.html"
@@ -2105,7 +2105,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/45.html"
@@ -2127,7 +2127,7 @@
                         "end_date": "",
                         "image": "https://www.chicago.gov/content/dam/city/about/wards/46/aldward46.png",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/46.html"
@@ -2149,7 +2149,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/47.html"
@@ -2172,7 +2172,7 @@
                         "end_date": "",
                         "image": "https://images.squarespace-cdn.com/content/v1/6440662e14e59b3037e72c3c/11a75e37-2f35-44d9-ab82-9c6bb7d75de0/leni_manaa-hoppenworth_official_pic.jpg",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/48.html",
@@ -2195,7 +2195,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/49.html"
@@ -2217,7 +2217,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards.html",
                             "https://www.chicago.gov/city/en/about/wards/50.html"
@@ -2239,7 +2239,7 @@
                         "end_date": "",
                         "image": "",
                         "cdn_image": "",
-                        "jurisdiction_id": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
+                        "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:il/place:chicago/government",
                         "sources": [
                             "https://www.chicago.gov/city/en/about/wards/19.html"
                         ],

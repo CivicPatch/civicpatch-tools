@@ -14,7 +14,7 @@ def test_run_prompt_integration():
     api_key = os.getenv("TOGETHER_AI_TOKEN")
     assert api_key, "TOGETHER_AI_TOKEN must be set in environment variables for integration testing."
 
-    jurisdiction_id = "ocd-jurisdiction/country:us/state:wa/place:spokane"
+    jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:wa/place:spokane"
 
     # Load content from the fixture file
     current_dir = os.path.dirname(__file__)  # Get the directory of the current file
@@ -86,7 +86,7 @@ def test_run_prompt_integration():
 
     start_time = time.time()
 
-    result = run_prompt(jurisdiction_id, prompt, content=content, response_schema=PeopleArrayLLMResponseSchema)
+    result = run_prompt(jurisdiction_ocdid, prompt, content=content, response_schema=PeopleArrayLLMResponseSchema)
     result = result.model_dump() 
 
     end_time = time.time()

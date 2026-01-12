@@ -53,7 +53,7 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
     "config": {
         "url": "https://www.seattle.gov",
         "name": "Seattle city"
@@ -64,7 +64,7 @@ curl -X POST http://localhost:8000/api/pipelines \
 #  -H "Content-Type: application/json" \
 #  -d '{
 #    "name": "Seattle city",
-#    "jurisdiction_id": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
+#    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle/government",
 #    "url": "https://www.seattle.gov/"
 #  }'
 #"""
@@ -188,14 +188,14 @@ run = """
 docker compose -f docker-compose.slim.yml run --rm civicpatch-slim poetry run \
 python -c "
 import sys
-from utils.id_utils import parse_jurisdiction_id, state_name
-jurisdiction_id = '{{ arg(name="jurisdiction_id") }}'
+from utils.id_utils import parse_jurisdiction_ocdid, state_name
+jurisdiction_ocdid = '{{ arg(name="jurisdiction_ocdid") }}'
 key = '{{ arg(name="key") }}'
 
-parsed = parse_jurisdiction_id(jurisdiction_id)
+parsed = parse_jurisdiction_ocdid(jurisdiction_ocdid)
 attr = getattr(parsed, key, None)
 if key == 'state':
-    attr = state_name(jurisdiction_id)
+    attr = state_name(jurisdiction_ocdid)
 else:
   attr = attr.title()
 
