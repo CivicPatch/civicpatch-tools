@@ -25,7 +25,7 @@ def get_router(api_key_header):
         file: UploadFile,
         authorization: str = Security(api_key_header),
         request_id: str = Form(...),
-        jurisdiction_id: str = Form(...),
+        jurisdiction_ocdid: str = Form(...),
     ):
         if not authorization:
             raise HTTPException(status_code=401, detail="Missing Authorization header")
@@ -44,7 +44,7 @@ def get_router(api_key_header):
             )
 
         # Now you have access to the parameters
-        print(f"Processing intake for {request_id} - {jurisdiction_id}")
+        print(f"Processing intake for {request_id} - {jurisdiction_ocdid}")
 
         zip_file_url = await upload_file_to_storage(
             STORAGE_ENDPOINT,
@@ -60,7 +60,7 @@ def get_router(api_key_header):
             server_detail["user_email"],
             server_detail["server_url"],
             request_id=request_id,
-            jurisdiction_id=jurisdiction_id,
+            jurisdiction_ocdid=jurisdiction_ocdid,
             zip_file_url=zip_file_url,
         )
 
@@ -68,7 +68,7 @@ def get_router(api_key_header):
             "filename": file.filename,
             "status": "uploaded",
             "zip_file_url": zip_file_url,
-            "metadata": {"request_id": request_id, "jurisdiction_id": jurisdiction_id},
+            "metadata": {"request_id": request_id, "jurisdiction_ocdid": jurisdiction_ocdid},
         }
 
     return router

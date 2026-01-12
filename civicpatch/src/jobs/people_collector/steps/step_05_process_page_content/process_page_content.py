@@ -77,7 +77,7 @@ DEFAULT_PROCESS_PAGE_CONTENT_STEP = ProcessPageContentStep(
 )
 
 def process_page_content(context: PeopleCollectorContext, page_to_process: Link) -> ProcessPageContentStep:
-    logger = log_utils.get_workflow_logger(context.data.jurisdiction_id)
+    logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 5: {WorkflowStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
     research_municipality_step = context.data.research_municipality_step
@@ -87,11 +87,11 @@ def process_page_content(context: PeopleCollectorContext, page_to_process: Link)
     current_step = context.data.process_page_content_step or DEFAULT_PROCESS_PAGE_CONTENT_STEP
     merged_identities = merge_config_into_names(context.data.identities, current_step.identities)
     
-    content = read_preprocessed_content(context.data.jurisdiction_id, page_to_process)
+    content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
     llm_responses = process_with_llms(
         page_to_process.url, 
         context.request_id, 
-        context.data.jurisdiction_id,
+        context.data.jurisdiction_ocdid,
         research_municipality_step.government_type,
         content,
         setup_data.people_hint
@@ -99,7 +99,7 @@ def process_page_content(context: PeopleCollectorContext, page_to_process: Link)
     
     # Process the data functionally without mutations
     updated_identities, updated_raw_records, updated_records = update_step_data(
-        context.data.jurisdiction_id,
+        context.data.jurisdiction_ocdid,
         research_municipality_step.government_type, 
         llm_responses, 
         merged_identities,
@@ -167,9 +167,9 @@ def get_setup_data(municipality_research: ResearchMunicipalityStep) -> Processin
     )
 
 
-def read_preprocessed_content(jurisdiction_id: str, page_to_process: Link) -> str:
+def read_preprocessed_content(jurisdiction_ocdid: str, page_to_process: Link) -> str:
     """Read the preprocessed markdown content."""
-    cache_path = data_path_utils.get_cache_path(jurisdiction_id)
+    cache_path = data_path_utils.get_cache_path(jurisdiction_ocdid)
     content_file_path = os.path.join(cache_path, page_to_process.folder_name, "preprocessed.md")
     
     with open(content_file_path, "r", encoding="utf-8") as f:
@@ -177,7 +177,7 @@ def read_preprocessed_content(jurisdiction_id: str, page_to_process: Link) -> st
 
 
 def update_step_data(
-    jurisdiction_id: str,
+    jurisdiction_ocdid: str,
     government_type: str, 
     llm_responses: Dict[str, List[LLMPerson]], 
     merged_identities: OtherNamesByCanonicalName,
@@ -195,7 +195,7 @@ def update_step_data(
     
     # Create normalized records from raw records
     updated_normalized_records = copy.deepcopy(existing_records_by_llm)
-    logger = log_utils.get_workflow_logger(jurisdiction_id)
+    logger = log_utils.get_workflow_logger(jurisdiction_ocdid)
     
     for llm, people_by_name in updated_raw_records.items():
         updated_normalized_records[llm] = {}
@@ -278,7 +278,7 @@ def update_records_by_llm(
 def process_with_llms(
     source_url: str,
     request_id,
-    jurisdiction_id: str,
+    jurisdiction_ocdid: str,
     government_type: str,
     content: str,
     people_hint: List[ResearchedPerson]
@@ -291,7 +291,7 @@ def process_with_llms(
         prompt = llm["prompt"].municipality_officials_prompt(government_type, people_hint)
         response = llm["service"].run_prompt(
             request_id,
-            jurisdiction_id,
+            jurisdiction_ocdid,
             prompt,
             response_schema=PeopleArrayLLMResponseSchema,
             content=content

@@ -15,7 +15,7 @@ SEARCH_SERVICES = {
 
 SearchEngineNames = list(SEARCH_SERVICES.keys())
 
-def search(logger, search_engine: str, request_id, jurisdiction_id, municipality_name, municipality_website, search_query: str):
+def search(logger, search_engine: str, request_id, jurisdiction_ocdid, municipality_name, municipality_website, search_query: str):
     """
     Perform a search using a specific search engine.
     """
@@ -37,7 +37,7 @@ def search(logger, search_engine: str, request_id, jurisdiction_id, municipality
 
     cost_utils.add_search_engine_cost(
         request_id=request_id,
-        jurisdiction_id=jurisdiction_id,
+        jurisdiction_ocdid=jurisdiction_ocdid,
         search_engine_name=search_engine
     )
     return results

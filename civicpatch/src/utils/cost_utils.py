@@ -60,7 +60,7 @@ class LLMCost(BaseModel):
     def timestamp(self) -> str:
         return get_timestamp()
     
-    jurisdiction_id: str
+    jurisdiction_ocdid: str
     llm_name: str
     model: str
     
@@ -107,7 +107,7 @@ class SearchEngineCost(BaseModel):
     def cost_per_1000_requests(self) -> Decimal:
         return search_engine_prices.get(self.search_engine_name, Decimal('0.0'))
 
-    jurisdiction_id: str
+    jurisdiction_ocdid: str
     search_engine_name: str
 
     @property
@@ -126,7 +126,7 @@ class StorageCost(BaseModel):
     def price_per_gb(self) -> Decimal:
         return storage_prices['by_monthly_gb']
 
-    jurisdiction_id: str
+    jurisdiction_ocdid: str
     file_size_bytes: int
 
     @property
@@ -134,19 +134,19 @@ class StorageCost(BaseModel):
         size_in_gb = bytes_to_gb(self.file_size_bytes)
         return size_in_gb * storage_prices['by_monthly_gb']
 
-def get_cost_tracker(jurisdiction_id: str):
-    if jurisdiction_id not in _COSTS_BY_JURISDICTION:
-        _COSTS_BY_JURISDICTION[jurisdiction_id] = {
+def get_cost_tracker(jurisdiction_ocdid: str):
+    if jurisdiction_ocdid not in _COSTS_BY_JURISDICTION:
+        _COSTS_BY_JURISDICTION[jurisdiction_ocdid] = {
             'llm_costs': [],
             'search_engine_costs': [],
             'storage_costs': []
         }
-    return _COSTS_BY_JURISDICTION[jurisdiction_id]
+    return _COSTS_BY_JURISDICTION[jurisdiction_ocdid]
 
 def add_llm_cost(
         logger: log_utils.WorkflowLogger,
         request_id: str,
-        jurisdiction_id: str, 
+        jurisdiction_ocdid: str, 
         llm_name: str, 
         model: str, 
         input_tokens: int, 
@@ -154,7 +154,7 @@ def add_llm_cost(
         with_search=False
 ):
     result = LLMCost(
-        jurisdiction_id=jurisdiction_id,
+        jurisdiction_ocdid=jurisdiction_ocdid,
         llm_name=llm_name,
         model=model,
         input_tokens=input_tokens,
@@ -164,7 +164,7 @@ def add_llm_cost(
 
     # HEADERS = [
     #     "timestamp", 
-    #     "jurisdiction_id", 
+    #     "jurisdiction_ocdid", 
     #     "llm_name", 
     #     "model", 
     #     "model_input_price_per_1m",
@@ -176,11 +176,11 @@ def add_llm_cost(
     #     "output_cost", 
     #     "total_cost"
     # ]
-    cost_tracker = get_cost_tracker(jurisdiction_id)
+    cost_tracker = get_cost_tracker(jurisdiction_ocdid)
     cost_tracker['llm_costs'].append({
         "timestamp": result.timestamp,
         "request_id": request_id,
-        "jurisdiction_id": result.jurisdiction_id,
+        "jurisdiction_ocdid": result.jurisdiction_ocdid,
         "llm_name": result.llm_name,
         "model": result.model,
         "model_input_price_per_1m": llm_model_prices.get(result.llm_name, {}).get(result.model, {}).get('input_cost_per_1m', Decimal('0.0')),
@@ -196,27 +196,27 @@ def add_llm_cost(
 
 def add_search_engine_cost(
         request_id: str,
-        jurisdiction_id: str, 
+        jurisdiction_ocdid: str, 
         search_engine_name: str, 
 ):
     # HEADERS = [
     #     "timestamp", 
-    #     "jurisdiction_id", 
+    #     "jurisdiction_ocdid", 
     #     "search_engine_name", 
     #     "per_1000_requests_price",
     #     "total_cost"
     # ]
     result = SearchEngineCost(
-        jurisdiction_id=jurisdiction_id,
+        jurisdiction_ocdid=jurisdiction_ocdid,
         search_engine_name=search_engine_name,
     )
 
     cost_per_1000_requests = search_engine_prices.get(search_engine_name, Decimal('0.0'))
-    cost_tracker = get_cost_tracker(jurisdiction_id)
+    cost_tracker = get_cost_tracker(jurisdiction_ocdid)
     cost_tracker['search_engine_costs'].append({
         "timestamp": result.timestamp,
         "request_id": request_id,
-        "jurisdiction_id": result.jurisdiction_id,
+        "jurisdiction_ocdid": result.jurisdiction_ocdid,
         "search_engine_name": result.search_engine_name,
         "per_1000_requests_price": cost_per_1000_requests,
         "total_cost": result.total_cost
@@ -227,35 +227,35 @@ def bytes_to_gb(size_bytes: int) -> Decimal:
 
 def add_storage_cost(
         request_id: str,
-        jurisdiction_id: str, 
+        jurisdiction_ocdid: str, 
         file_size_bytes: int
 ):
     
     # HEADERS = [
     #     "timestamp", 
-    #     "jurisdiction_id", 
+    #     "jurisdiction_ocdid", 
     #     "monthly_storage_gb_price"
     #     "storage_gb", 
     #     "image_size_bytes",
     #     "storage_cost"
     # ]
     result = StorageCost(
-        jurisdiction_id=jurisdiction_id,
+        jurisdiction_ocdid=jurisdiction_ocdid,
         file_size_bytes=file_size_bytes
     )
 
-    cost_tracker = get_cost_tracker(jurisdiction_id)
+    cost_tracker = get_cost_tracker(jurisdiction_ocdid)
     cost_tracker['storage_costs'].append({
         "timestamp": result.timestamp,
         "request_id": request_id,
-        "jurisdiction_id": result.jurisdiction_id,
+        "jurisdiction_ocdid": result.jurisdiction_ocdid,
         "monthly_storage_gb_price": storage_prices['by_monthly_gb'],
         "file_size_bytes": result.file_size_bytes,
         "total_cost": result.total_cost,
     })
 
-def total_cost_by_request(request_id, jurisdiction_id: str) -> dict[str, Decimal]:
-    cost_tracker = get_cost_tracker(jurisdiction_id)
+def total_cost_by_request(request_id, jurisdiction_ocdid: str) -> dict[str, Decimal]:
+    cost_tracker = get_cost_tracker(jurisdiction_ocdid)
     llm_costs = cost_tracker['llm_costs']
     search_engine_costs = cost_tracker['search_engine_costs']
     storage_costs = cost_tracker['storage_costs']
@@ -271,7 +271,7 @@ def total_cost_by_request(request_id, jurisdiction_id: str) -> dict[str, Decimal
             grouped_llm_costs[key] = {
                 "timestamp": item['timestamp'],
                 "request_id": item['request_id'],
-                "jurisdiction_id": item['jurisdiction_id'],
+                "jurisdiction_ocdid": item['jurisdiction_ocdid'],
                 "llm_name": item['llm_name'],
                 "input_tokens": 0,
                 "output_tokens": 0,
@@ -289,7 +289,7 @@ def total_cost_by_request(request_id, jurisdiction_id: str) -> dict[str, Decimal
     total_cost_row = {
         "timestamp": get_timestamp(),
         "request_id": request_id,
-        "jurisdiction_id" : jurisdiction_id,
+        "jurisdiction_ocdid" : jurisdiction_ocdid,
         "total_costs_llm": total_costs_llm,
         "total_costs_search": total_costs_search,
         "total_costs_storage": total_costs_storage,
@@ -305,16 +305,16 @@ def total_cost_by_request(request_id, jurisdiction_id: str) -> dict[str, Decimal
     total_cost_row["total_cost"] = grand_total
     return total_cost_row
 
-def log_costs(request_id, jurisdiction_id):
-    cost_tracker = get_cost_tracker(jurisdiction_id)
+def log_costs(request_id, jurisdiction_ocdid):
+    cost_tracker = get_cost_tracker(jurisdiction_ocdid)
     llm_costs = cost_tracker['llm_costs']
     search_engine_costs = cost_tracker['search_engine_costs']
     storage_costs = cost_tracker['storage_costs']
 
-    data_path = data_path_utils.get_data_source_path_for_jurisdiction_id(jurisdiction_id)
+    data_path = data_path_utils.get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
     costs_file_path = os.path.join(data_path, "costs.json")
 
-    total_cost_row = total_cost_by_request(request_id, jurisdiction_id)
+    total_cost_row = total_cost_by_request(request_id, jurisdiction_ocdid)
 
     with open(costs_file_path, mode='w') as file:
         json_object = json.dumps({
@@ -325,6 +325,6 @@ def log_costs(request_id, jurisdiction_id):
         }, indent=4, default=str)
         file.write(json_object)
     
-    _COSTS_BY_JURISDICTION.pop(jurisdiction_id, None)
+    _COSTS_BY_JURISDICTION.pop(jurisdiction_ocdid, None)
 
 

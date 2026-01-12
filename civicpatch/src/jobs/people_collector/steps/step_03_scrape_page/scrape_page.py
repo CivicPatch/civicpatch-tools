@@ -12,19 +12,19 @@ async def scrape_page(context: PeopleCollectorContext, link_to_scrape: Link) -> 
     """
     Scrape pages based on the links found in the previous search step.
     """
-    logger = log_utils.get_workflow_logger(context.data.jurisdiction_id)
+    logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 3: {WorkflowStatus.SCRAPE_PAGE.value}: scraping {link_to_scrape.url}")
-    jurisdiction_id = context.data.jurisdiction_id
+    jurisdiction_ocdid = context.data.jurisdiction_ocdid
 
     try:
-        image_directory = data_path_utils.get_images_path(jurisdiction_id)
+        image_directory = data_path_utils.get_images_path(jurisdiction_ocdid)
         html_content = await scrape_utils.scrape(logger, link_to_scrape.url, { "image_directory": image_directory })
 
         if html_content is None:
             raise ValueError("No HTML content retrieved")
 
         # Save html_content to file under data_source
-        cache_path = data_path_utils.get_cache_path(jurisdiction_id)
+        cache_path = data_path_utils.get_cache_path(jurisdiction_ocdid)
         folder_name = url_utils.format_url_to_folder(link_to_scrape.url)
 
         page_path = os.path.join(cache_path, f"{folder_name}")

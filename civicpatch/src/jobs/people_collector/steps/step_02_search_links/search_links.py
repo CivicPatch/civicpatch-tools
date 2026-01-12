@@ -22,7 +22,7 @@ def search_links(context: PeopleCollectorContext) -> tuple[List[Link], SearchLin
     """
     Search for links using multiple search engines and queries.
     """
-    logger = log_utils.get_workflow_logger(context.data.jurisdiction_id)
+    logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 2: {WorkflowStatus.SEARCH_LINKS.value}")
 
     search_links_step = context.data.search_links_step
@@ -30,7 +30,7 @@ def search_links(context: PeopleCollectorContext) -> tuple[List[Link], SearchLin
 
     # Load keyword term groups
     request_id = context.request_id
-    jurisdiction_id = context.data.jurisdiction_id
+    jurisdiction_ocdid = context.data.jurisdiction_ocdid
     municipality_name = context.data.config.name
     municipality_website = context.data.config.url
 
@@ -53,7 +53,7 @@ def search_links(context: PeopleCollectorContext) -> tuple[List[Link], SearchLin
             urls_for_term = municipality_search(
                 logger,
                 request_id,
-                jurisdiction_id,
+                jurisdiction_ocdid,
                 municipality_name,
                 municipality_website,
                 search_engine,
@@ -95,7 +95,7 @@ def search_links(context: PeopleCollectorContext) -> tuple[List[Link], SearchLin
 def municipality_search(
     logger,
     request_id,
-    jurisdiction_id,
+    jurisdiction_ocdid,
     municipality_name,
     municipality_website,
     search_engine,
@@ -115,7 +115,7 @@ def municipality_search(
         logger,
         search_engine=search_engine,
         request_id=request_id,
-        jurisdiction_id=jurisdiction_id,
+        jurisdiction_ocdid=jurisdiction_ocdid,
         municipality_name=municipality_name,
         municipality_website=municipality_website,
         search_query=keyword_with_type,

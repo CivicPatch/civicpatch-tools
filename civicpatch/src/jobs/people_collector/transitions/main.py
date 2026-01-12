@@ -154,7 +154,7 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
 
     links_processed = get_links_with_status(context.data.links, LinkStatus.DONE)
     current_cost = cost_utils.total_cost_by_request(
-        context.request_id, context.data.jurisdiction_id
+        context.request_id, context.data.jurisdiction_ocdid
     )["total_cost"]
     next_state = next_state_for_process_content_state(
         processed_count=len(links_processed),
@@ -218,7 +218,7 @@ async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: 
 
 async def maybe_send_to_github_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
     cost_utils.log_costs(
-        context.request_id, context.data.jurisdiction_id
+        context.request_id, context.data.jurisdiction_ocdid
     )
 
     result = maybe_send_to_github(context)

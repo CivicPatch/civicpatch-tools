@@ -27,7 +27,7 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
     """
     Merge records across all LLMs to produce a unified list of Person objects.
     """
-    jurisdiction_id = context.data.jurisdiction_id
+    jurisdiction_ocdid = context.data.jurisdiction_ocdid
 
     # Get people_by_llm from the previous step
     people_by_llm: Dict[str, List[Person]] = context.data.merge_records_within_llm_step.people_by_llm
@@ -48,7 +48,7 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
              in grouped_identities_by_llm.values() 
              for person in llm_people
              ],
-            jurisdiction_id
+            jurisdiction_ocdid
         )
 
         # Skip person if no roles after merge
@@ -176,7 +176,7 @@ def group_records_across_llms(people_by_llm: Dict[str, List[Person]]) -> List[Di
 
     return groups
 
-def merge_group_across_llms(group: List[Person], jurisdiction_id: str) -> Person:
+def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Person:
     """
     Merge a group of weakly tied Person objects into a single Person object.
     """
@@ -216,7 +216,7 @@ def merge_group_across_llms(group: List[Person], jurisdiction_id: str) -> Person
         image=image_counter.most_common(1)[0][0] if image_counter else "",
         cdn_image="",
 
-        jurisdiction_id=jurisdiction_id,
+        jurisdiction_ocdid=jurisdiction_ocdid,
         source_urls=list(source_urls),
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )

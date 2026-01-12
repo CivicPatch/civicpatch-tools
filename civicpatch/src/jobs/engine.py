@@ -28,23 +28,23 @@ async def run_workflow(
     """
     ctx = context
     job_config = get_job_config(logger)
-    jurisdiction_id = ctx.data.jurisdiction_id
+    jurisdiction_ocdid = ctx.data.jurisdiction_ocdid
 
-    register_workflow(jurisdiction_id, ctx.current_state)
+    register_workflow(jurisdiction_ocdid, ctx.current_state)
 
     while ctx.current_state != WorkflowStatus.DONE: # Note: all workflow state should include DONE
-        if workflow_stop_requested(jurisdiction_id):
+        if workflow_stop_requested(jurisdiction_ocdid):
           ctx = ctx.copy(update={"current_state": WorkflowStatus.DONE})
           break
 
         transition_fn = transition_map[ctx.current_state]
         ctx, next_state = await transition_fn(job_config, logger, ctx)
         ctx = ctx.copy(update={"current_state": next_state})
-        update_workflow_state(jurisdiction_id, ctx.current_state)
+        update_workflow_state(jurisdiction_ocdid, ctx.current_state)
 
         if persist_fn:
             persist_fn(ctx)
 
-    unregister_workflow(jurisdiction_id)
+    unregister_workflow(jurisdiction_ocdid)
 
     return ctx

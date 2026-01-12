@@ -11,14 +11,14 @@ from shared.utils import data_path_utils
 import yaml
 
 def save_output(context: PeopleCollectorContext):
-  logger = utils.log_utils.get_workflow_logger(context.data.jurisdiction_id)
+  logger = utils.log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
   logger.info(f"Step 8: {WorkflowStatus.CLEANUP} Saving output data and config files.")
 
   data_file_path = data_path_utils.get_data_file_path(
-    context.data.jurisdiction_id
+    context.data.jurisdiction_ocdid
   )
   config_file_path = data_path_utils.get_config_file_path(
-      context.data.jurisdiction_id
+      context.data.jurisdiction_ocdid
   )
 
   people = context.data.format_output_step

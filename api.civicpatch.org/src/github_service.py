@@ -13,7 +13,7 @@ def trigger_github_data_intake_workflow(
     user_email: str,
     server_url: str,
     request_id: str,
-    jurisdiction_id: str,
+    jurisdiction_ocdid: str,
     zip_file_url: str,
 ):
     # Trigger GitHub Actions workflow to pull data from the given URL
@@ -30,7 +30,7 @@ def trigger_github_data_intake_workflow(
             "server_url": server_url,
             "user_email": user_email,
             "request_id": request_id,
-            "jurisdiction_id": jurisdiction_id,
+            "jurisdiction_ocdid": jurisdiction_ocdid,
             "zip_file_url": zip_file_url,
         },
     }
@@ -87,7 +87,7 @@ def get_open_pull_requests(github_workflow_token: str) -> List[PullRequest]:
         valid_pull_requests = [
             PullRequest(branch_name=pr["head"]["ref"]) for pr in pull_requests
         ]
-        return [pr for pr in valid_pull_requests if pr.jurisdiction_id]
+        return [pr for pr in valid_pull_requests if pr.jurisdiction_ocdid]
     else:
         print("Error fetching pull requests:", response.status_code, response.text)
         return []

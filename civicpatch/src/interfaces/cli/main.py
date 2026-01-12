@@ -26,7 +26,7 @@ async def run_pipeline_cli(request: PeopleCollectorJobRequest):
     request_id = id_utils.make_request_id()
     await start_people_collector(
         request_id=request_id,
-        jurisdiction_id=request.jurisdiction_id,
+        jurisdiction_ocdid=request.jurisdiction_ocdid,
         config=request.config,
     )
 
@@ -69,7 +69,7 @@ def main():
 
     if args.command == "run_pipeline":
         request = PeopleCollectorJobRequest(
-            jurisdiction_id=args.jurisdiction_id, 
+            jurisdiction_ocdid=args.jurisdiction_ocdid, 
             config={
                 "name": args.name,
                 "url": args.url,
