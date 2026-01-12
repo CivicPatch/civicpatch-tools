@@ -56,4 +56,4 @@ class Identity(BaseModel):
     provider: str
     provider_user_id: str
     email: str | None
-    role: str | None
+    roles: list[str] | None

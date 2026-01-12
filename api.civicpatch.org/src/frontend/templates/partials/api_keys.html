@@ -1,3 +1,29 @@
+<h2>Your Roles</h2>
+<hr />
+{% if user.roles and user.roles|length > 0 %}
+<p>Different endpoints require different roles. Refer to the 
+    <a href="/docs">API documentation</a> for details.
+</p>
+<p>Contact support if you need additional roles.</p>
+<table>
+    <thead>
+        <tr>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for role in user.roles %}
+        <tr>
+            <td>{{ role }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>You have no roles assigned.</p>
+{% endif %}
+
+
 <h2>Your API Keys</h2>
 <hr />
 <article id="api-keys-list">

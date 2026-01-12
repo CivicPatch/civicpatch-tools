@@ -1,9 +1,9 @@
 BEGIN;
 
 ALTER TABLE users
-    DROP COLUMN role;
+    DROP COLUMN IF EXISTS role;
 
-CREATE TABLE user_roles (
+CREATE TABLE IF NOT EXISTS user_roles (
     provider VARCHAR(50) NOT NULL,
     provider_user_id VARCHAR(255) NOT NULL,
     role VARCHAR(50) NOT NULL,
