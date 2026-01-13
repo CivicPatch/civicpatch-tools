@@ -34,6 +34,10 @@ ROUTE_PERMISSIONS = {
         UserRole.MEMBER: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY],
         UserRole.UNVERIFIED: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY]
     },
+    RouteCategory.JOBS_API: {
+        #UserRole.ADMIN: [ApiKeyType.SERVER_KEY],
+        UserRole.JOBS: [ApiKeyType.SERVER_KEY]
+    }
 }
 
 async def get_user(
@@ -212,6 +216,7 @@ def get_api_key_type_from_auth(
 def require_route_access(category: RouteCategory):
     """Factory that returns a dependency for route category access control"""
     async def _dependency(user: Identity = Depends(get_user), api_key_type: ApiKeyType = Depends(get_api_key_type)):
+        print("what are the api key type and user roles?", api_key_type, user.roles)
         user_roles = getattr(user, "roles", [])
         allowed_key_types = []
         for role in user_roles:

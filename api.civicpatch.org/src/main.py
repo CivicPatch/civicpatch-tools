@@ -18,6 +18,7 @@ import routers.api.api_keys as api_keys_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.people as api_people_router
 import routers.api.pipelines as api_pipelines_router
+import routers.api.jobs as api_jobs_router
 import routers.api.user as api_user_router
 from routers.auth import get_router as auth_router
 from database import (
@@ -182,7 +183,14 @@ app.include_router(
     dependencies=[Depends(require_route_access(RouteCategory.INTERNAL_API))]
 )
 
-# Allow you to create your api keys, even unverified
+app.include_router(
+    api_jobs_router.get_router(api_key_header),
+    prefix="/api/jobs",
+    tags=["jobs"],
+    dependencies=[Depends(require_route_access(RouteCategory.JOBS_API))]
+)
+
+# Allow you to create your api keys
 # Mostly for civicpatch users who need to contribute data
 app.include_router(
     api_keys_router.get_router(), 
