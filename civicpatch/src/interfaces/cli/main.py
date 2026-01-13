@@ -56,7 +56,7 @@ def main():
         "run_pipeline", help="Run a pipeline for a municipality"
     )
     run_pipeline_parser.add_argument(
-        "--jurisdiction-id", required=True, help="Jurisdiction ID"
+        "--jurisdiction-ocdid", required=True, help="Jurisdiction ID"
     )
     run_pipeline_parser.add_argument(
         "--name", required=True, help="Name of the municipality"
