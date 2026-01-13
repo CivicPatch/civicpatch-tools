@@ -1,6 +1,6 @@
 import os
 from typing import List
-from domain.models import Person
+from domain.models import Official
 from jobs.people_collector.schemas import (
   WorkflowStatus,
   WorkflowConfig,
@@ -36,11 +36,11 @@ def save_output(context: PeopleCollectorContext):
   )
   save_config_to_file(updated_config, config_file_path)
 
-def save_data_to_file(people: List[Person], file_path: str):
+def save_data_to_file(people: List[Official], file_path: str):
     # Create parent directories if not exists
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "w") as f:
-        yaml.dump([person.model_dump() for person in people], f, sort_keys=False, allow_unicode=True)
+        yaml.dump([official.model_dump() for official in people], f, sort_keys=False, allow_unicode=True)
 
 def save_config_to_file(config: WorkflowConfig, file_path: str):
     with open(file_path, "w") as f:
