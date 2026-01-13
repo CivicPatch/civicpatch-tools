@@ -5,6 +5,7 @@ import os
 import secrets
 import math
 from typing import List, cast
+from datetime import datetime
 
 from psycopg_pool import AsyncConnectionPool
 
@@ -19,6 +20,11 @@ pool = AsyncConnectionPool(CRUDDER_DB_URL, open=False)
 def hash_string(string: str, hash_key: str) -> str:
     return hmac.new(hash_key.encode(), string.encode(), hashlib.sha512).hexdigest()
 
+
+def to_iso(dt):
+    if dt:
+        return dt.isoformat()
+    return None
 
 async def maybe_insert_user(provider, provider_user_id, email):
     async with pool.connection() as conn:
@@ -548,8 +554,9 @@ async def get_job(request_id: str):
                 "progress": row[1],
                 "arguments_json": row[2],
                 "result_json": row[3],
-                "created_at": row[4],
-                "updated_at": row[5],
+                "pull_request_url": None,  # TODO: implement
+                "created_at": to_iso(row[4]),
+                "updated_at": to_iso(row[5]),
             }
         return {"error": "Job not found"}
     

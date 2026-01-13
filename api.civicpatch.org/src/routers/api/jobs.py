@@ -10,6 +10,33 @@ from database import (
 )
 import shared.utils.id_utils
 
+class GetJobResponse(BaseModel):
+    request_id: str
+    status: str
+    progress: int
+    arguments: dict
+    result: Optional[dict] = None
+    pull_request_url: Optional[str] = None # TODO: implement
+    created_at: str
+    updated_at: str
+
+class GetJobStatusResponse(BaseModel):
+    request_id: str
+    status: str
+    progress: int
+
+class UpdateJobStatusResponse(BaseModel):
+    request_id: str
+    status: str
+    progress: int
+
+class CreateJobResponse(BaseModel):
+    request_id: str
+    status: str
+
+class DeleteJobResponse(BaseModel):
+    request_id: str
+    status: str
 
 def get_router(api_key_header):
     router = APIRouter()
@@ -18,33 +45,37 @@ def get_router(api_key_header):
         "/people/{request_id}",
         summary="Get job and job results, if available",
         description="Retrieve the status of a specific job by its request ID.",
+        response_model=GetJobResponse
     )
     async def get_job_endpoint(request_id: str):
         job = await get_job(request_id)
         if job:
-            return {
-                "request_id": request_id,
-                "status": job['status'],
-                "progress": job['progress'],
-                "arguments": job['arguments_json'],
-                "result": job['result_json'],
-                "created_at": job['created_at'],
-                "updated_at": job['updated_at']
-            }
+            return GetJobResponse(
+                request_id=request_id,
+                status=job['status'],
+                progress=job['progress'],
+                arguments=job['arguments_json'],
+                result=job['result_json'],
+                pull_request_url=job['pull_request_url'],
+                created_at=job['created_at'],
+                updated_at=job['updated_at']
+            )
         else:
             return {"error": "Job not found"}, 404
+
     @router.get(
         "/people/{request_id}/status",
         summary="Get job status and progress",
         description="Retrieve the progress of a specific job by its request ID.",
+        response_model=GetJobStatusResponse
     )
     async def get_job_status_endpoint(request_id: str):
         response = await get_job_status(request_id)
-        return {
-            "request_id": request_id,
-            "status": response['status'],
-            "progress": response['progress']
-        }
+        return GetJobStatusResponse(
+            request_id=request_id,
+            status=response['status'],
+            progress=response['progress']
+        )
 
     class UpdateJobStatusRequest(BaseModel):
         status: str
@@ -61,7 +92,11 @@ def get_router(api_key_header):
         request: UpdateJobStatusRequest
     ):
         await update_job_status(request_id, status=request.status, progress=request.progress)
-        return {"request_id": request_id, "status": request.status, "progress": request.progress}
+        return UpdateJobStatusResponse(
+            request_id=request_id,
+            status=request.status,
+            progress=request.progress
+        )
 
 
     class CreatePeopleJobRequest(BaseModel):
@@ -72,6 +107,7 @@ def get_router(api_key_header):
         "/people",
         summary="Trigger scrape people job",
         description="Trigger a new scrape people job.",
+        response_model=CreateJobResponse
     )
     async def create_people_job_endpoint(
         request: CreatePeopleJobRequest
@@ -97,12 +133,16 @@ def get_router(api_key_header):
             print(f"Error triggering people job: {e}")
             return {"status": "error"}, 500
 
-        return {"request_id": request_id, "status": "started"}
+        return CreateJobResponse(
+            request_id=request_id,
+            status="started"
+        )
 
     @router.delete(
         "/people/{request_id}",
         summary="Cancel a job",
         description="Stop a specific job by its request ID.",
+        response_model=DeleteJobResponse
     )
     async def stop_job_endpoint(request_id: str):
         # Implementation to stop a job
