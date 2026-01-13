@@ -175,14 +175,18 @@ def group_people_by_name(
 
     return updated_mappings, people_by_name
 
-def to_email_set(emails):
+def to_email_set_from_record(record):
+    # Try 'emails' (list or str), then 'email' (str)
+    emails = getattr(record, "emails", None)
+    email = getattr(record, "email", None)
+    result = set()
     if isinstance(emails, str):
-        return {emails}
+        result.add(emails)
     elif isinstance(emails, list):
-        return set(emails)
-    elif emails is None:
-        return set()
-    return set(emails)  # fallback
+        result.update(emails)
+    if isinstance(email, str):
+        result.add(email)
+    return result
 
 def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool:
     """
@@ -197,7 +201,9 @@ def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool
         return False
 
     # Check for overlapping email addresses
-    email_overlap = to_email_set(record1.emails) & to_email_set(record2.emails)
+    # This is kind of ugly
+    # TBD: rework this function
+    email_overlap = to_email_set_from_record(record1) & to_email_set_from_record(record2)
     if email_overlap: 
         return True
 
