@@ -3,8 +3,8 @@ from utils.merge_utils import (
   normalize_name, 
   update_name_map, 
   append_to_people_by_name,
-  group_people_by_name
-
+  group_people_by_name,
+  to_email_set_from_record
 )
 from jobs.people_collector.schemas import LLMPerson
 
@@ -220,3 +220,32 @@ def test_group_people_by_name_whitespace_handling():
     assert len(updated_people[canonical_name]) == 2
     assert "John Doe" in updated_mappings[canonical_name]
     assert "John Doe" in updated_mappings[canonical_name]
+
+def test_to_email_set_from_record():
+    class Dummy:
+        pass
+
+    # Only 'email' as string
+    r1 = Dummy()
+    r1.email = "a@example.com"
+    assert to_email_set_from_record(r1) == {"a@example.com"}
+
+    # Only 'emails' as string
+    r2 = Dummy()
+    r2.emails = "b@example.com"
+    assert to_email_set_from_record(r2) == {"b@example.com"}
+
+    # Only 'emails' as list
+    r3 = Dummy()
+    r3.emails = ["c@example.com", "d@example.com"]
+    assert to_email_set_from_record(r3) == {"c@example.com", "d@example.com"}
+
+    # Both 'email' and 'emails'
+    r4 = Dummy()
+    r4.email = "e@example.com"
+    r4.emails = ["f@example.com"]
+    assert to_email_set_from_record(r4) == {"e@example.com", "f@example.com"}
+
+    # Neither present
+    r5 = Dummy()
+    assert to_email_set_from_record(r5) == set()
