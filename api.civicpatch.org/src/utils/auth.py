@@ -240,22 +240,24 @@ def require_route_access_optional(category: RouteCategory):
         try:
             user = await get_user(request, authorization, cookie)
         except HTTPException:
-            # Re-raise auth errors (invalid keys, etc.) instead of allowing anonymous access
             raise
             
         # If auth is valid, enforce permissions
         api_key_type = get_api_key_type_from_auth(authorization, cookie)
         if not api_key_type:
             return user  # Shouldn't happen if user exists, but handle gracefully
-            
-        role = user.role
-        allowed_key_types = ROUTE_PERMISSIONS.get(category, {}).get(role, [])
-        
+
+        roles = user.roles
+        allowed_key_types = set()
+        for role in roles:
+            allowed_key_types.update(ROUTE_PERMISSIONS.get(category, {}).get(role, []))
+
         if api_key_type not in allowed_key_types:
             raise HTTPException(
                 status_code=403, 
-                detail=f"Insufficient permissions for this route. Role {role} cannot use {api_key_type} for {category}"
+                detail=f"Insufficient permissions for this route. Roles {roles} cannot use {api_key_type} for {category}"
             )
         
         return user
+
     return _dependency
