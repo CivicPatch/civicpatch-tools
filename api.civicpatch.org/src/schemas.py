@@ -14,7 +14,8 @@ class ApiKeyType(str, Enum):
 
 class UserRole(str, Enum):
     ADMIN = "admin"
-    MEMBER = "member" 
+    JOBS = "civicpatch_jobs"
+    MEMBER = "member"
     UNVERIFIED = "unverified"
 
 
@@ -22,6 +23,7 @@ class RouteCategory(str, Enum):
     COMPONENT_API = "component_api"    # Widget/component routes (was public_widget)
     INTERNAL_API = "internal_api"      # Internal server operations  
     ADMIN_ONLY = "admin_only"         # Admin-only routes
+    JOBS_API = "jobs_api"        # Routes for /api/jobs/people
 
 
 class Person(BaseModel):

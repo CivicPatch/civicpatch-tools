@@ -176,29 +176,7 @@ async def user_is_approved(user_provider, provider_user_id) -> bool:
         )
         row = await cur.fetchone()
         return row[0] if row else False
-
-
-async def is_active_api_key(database_hash_key, api_key) -> bool:
-    candidate_api_key = api_key.strip()
-    candidate_api_key_hash = hash_string(candidate_api_key, database_hash_key)
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.execute(
-            """
-        SELECT ak.id
-        FROM api_keys ak
-        JOIN users u
-        ON ak.provider = u.provider
-        AND ak.provider_user_id = u.provider_user_id
-        WHERE ak.api_key_hash = %s
-        AND ak.revoked_at IS NULL
-        AND u.is_approved = TRUE;
-    """,
-            (candidate_api_key_hash),
-        )
-        row = await cur.fetchone()
-    return row is not None
-
-
+    
 async def get_server_detail_by_active_api_key(api_key):
     candidate_api_key_hash = hash_string(api_key, DATABASE_HASH_KEY)
     async with pool.connection() as conn, conn.cursor() as cur:
