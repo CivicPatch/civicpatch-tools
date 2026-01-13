@@ -16,7 +16,7 @@ def get_router(api_key_header):
 
     @router.get(
         "/people/{request_id}",
-        summary="Get job results, if available",
+        summary="Get job and job results, if available",
         description="Retrieve the status of a specific job by its request ID.",
     )
     async def get_job_endpoint(request_id: str):
@@ -54,6 +54,7 @@ def get_router(api_key_header):
         "/people/{request_id}",
         summary="Update job status and progress",
         description="Update status and/or progress of a specific job by its request ID.",
+        include_in_schema=False
     )
     async def patch_job_status_endpoint(
         request_id: str,
