@@ -79,6 +79,13 @@ run = """
       -H "Authorization: $PROD_CRUDDER_SHARED_TOKEN"
 """
 
+[tasks.query_jurisdictions]
+run = """
+    curl -X GET "https://api.civicpatch.org/api/jurisdictions/available?num_jurisdictions=10&state=nj" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: $PROD_CRUDDER_SHARED_TOKEN"
+"""
+
 
 [tasks.get_people]
 run = """
