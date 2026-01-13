@@ -175,6 +175,15 @@ def group_people_by_name(
 
     return updated_mappings, people_by_name
 
+def to_email_set(emails):
+    if isinstance(emails, str):
+        return {emails}
+    elif isinstance(emails, list):
+        return set(emails)
+    elif emails is None:
+        return set()
+    return set(emails)  # fallback
+
 def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool:
     """
     Determine if two records are weakly tied based on shared attributes.
@@ -188,7 +197,7 @@ def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool
         return False
 
     # Check for overlapping email addresses
-    email_overlap = set(record1.emails) & set(record2.emails)
+    email_overlap = to_email_set(record1.emails) & to_email_set(record2.emails)
     if email_overlap: 
         return True
 
