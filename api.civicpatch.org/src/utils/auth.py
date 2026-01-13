@@ -217,12 +217,14 @@ def require_route_access(category: RouteCategory):
     """Factory that returns a dependency for route category access control"""
     async def _dependency(user: Identity = Depends(get_user), api_key_type: ApiKeyType = Depends(get_api_key_type)):
         user_roles = getattr(user, "roles", [])
-        allowed_key_types = []
         for role in user_roles:
-            allowed_key_types.extend(ROUTE_PERMISSIONS.get(category, {}).get(role, []))
-        if api_key_type not in allowed_key_types:
-            raise HTTPException(status_code=403, detail="Insufficient permissions for this route")
-        return user
+            allowed_key_types = ROUTE_PERMISSIONS.get(category, {}).get(role, [])
+            if api_key_type in allowed_key_types:
+                return user
+        raise HTTPException(
+            status_code=403,
+            detail="Insufficient permissions for this route."
+        )
     return _dependency
 
 def require_route_access_optional(category: RouteCategory):
@@ -235,29 +237,27 @@ def require_route_access_optional(category: RouteCategory):
         # If no auth headers provided, allow anonymous access
         if not authorization and not cookie:
             return None
-            
+
         # If auth headers are provided, validate them properly
         try:
             user = await get_user(request, authorization, cookie)
         except HTTPException:
             raise
-            
+
         # If auth is valid, enforce permissions
         api_key_type = get_api_key_type_from_auth(authorization, cookie)
         if not api_key_type:
             return user  # Shouldn't happen if user exists, but handle gracefully
 
-        roles = user.roles
-        allowed_key_types = set()
-        for role in roles:
-            allowed_key_types.update(ROUTE_PERMISSIONS.get(category, {}).get(role, []))
+        for role in user.roles:
+            allowed_key_types = ROUTE_PERMISSIONS.get(category, {}).get(role, [])
+            if api_key_type in allowed_key_types:
+                return user
 
-        if api_key_type not in allowed_key_types:
-            raise HTTPException(
-                status_code=403, 
-                detail=f"Insufficient permissions for this route. Roles {roles} cannot use {api_key_type} for {category}"
-            )
-        
-        return user
+        raise HTTPException(
+            status_code=403,
+            detail=f"Insufficient permissions for this route."
+             # Roles {user.roles} cannot use {api_key_type} for {category}"
+        )
 
     return _dependency

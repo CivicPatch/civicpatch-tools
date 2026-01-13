@@ -14,7 +14,7 @@ class ApiKeyType(str, Enum):
 
 class UserRole(str, Enum):
     ADMIN = "admin"
-    JOBS = "civicpatch_jobs"
+    JOBS = "jobs"
     MEMBER = "member"
     UNVERIFIED = "unverified"
 
