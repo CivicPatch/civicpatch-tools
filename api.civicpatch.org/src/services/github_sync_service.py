@@ -258,7 +258,6 @@ class GitDatabaseSync:
                     # Prepare data for all records in a single list of tuples
                     for record in jurisdictions:
                         jurisdiction_ocdid = record.get("jurisdiction_ocdid")
-                        jurisdiction_ocdid_slug = record.get("jurisdiction_ocdid_slug")
                         data = record.get("jurisdiction")
                         data["updated_at"] = record.get("updated_at")
 
@@ -271,7 +270,6 @@ class GitDatabaseSync:
                         values_list.append(
                             (
                                 jurisdiction_ocdid,
-                                jurisdiction_ocdid_slug,
                                 state_abbreviation,
                                 rel_path,
                                 json.dumps(data),
@@ -283,11 +281,10 @@ class GitDatabaseSync:
                         return False
 
                     query = """
-                    INSERT INTO jurisdictions (jurisdiction_ocdid, jurisdiction_ocdid_slug, state, file_path, data, updated_at, git_commit)
-                    VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, %s)
+                    INSERT INTO jurisdictions (jurisdiction_ocdid, state, file_path, data, updated_at, git_commit)
+                    VALUES (%s, %s, %s, %s, CURRENT_TIMESTAMP, %s)
                     ON CONFLICT (jurisdiction_ocdid)
                     DO UPDATE SET
-                        jurisdiction_ocdid_slug = EXCLUDED.jurisdiction_ocdid_slug,
                         data = EXCLUDED.data,
                         updated_at = CURRENT_TIMESTAMP,
                         git_commit = EXCLUDED.git_commit;

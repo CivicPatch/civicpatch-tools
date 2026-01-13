@@ -7,6 +7,46 @@ from schemas import PullRequest
 
 GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
 
+def trigger_people_job_workflow(
+    request_id: str,
+    jurisdiction_ocdid: str,
+    name: str | None = None,
+    url: str | None = None,
+):
+    headers = {
+        "Authorization": f"Bearer {GITHUB_WORKFLOW_TOKEN}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+
+    data = {
+        "ref": "main",
+        "inputs": {
+            "request_id": request_id,
+            "jurisdiction_ocdid": jurisdiction_ocdid,
+        }
+    }
+
+    if name:
+        data["inputs"]["name"] = name
+    if url:
+        data["inputs"]["url"] = url
+
+    response = requests.post(
+        "https://api.github.com/repos/CivicPatch/server/actions/workflows/data_scrape.yml/dispatches",
+        headers=headers,
+        json=data,
+    )
+
+    print("Response from GitHub API:", response.status_code, response.text)
+
+    if response.status_code != 204:
+        raise Exception(
+            f"Failed to trigger workflow: {response.status_code} - {response.text}"
+        )
+
+    return True
+
 
 def trigger_github_data_intake_workflow(
     github_workflow_token,

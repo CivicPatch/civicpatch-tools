@@ -21,15 +21,34 @@ def hash_string(string: str, hash_key: str) -> str:
 
 async def maybe_insert_user(provider, provider_user_id, email):
     async with pool.connection() as conn:
-        await conn.execute(
+        # Try to insert the user; check if it was newly created
+        result = await conn.execute(
             """
             INSERT INTO users (provider, provider_user_id, email)
             VALUES (%s, %s, %s)
-            ON CONFLICT (provider, provider_user_id) DO UPDATE
-            SET email = EXCLUDED.email
-        """,
+            ON CONFLICT (provider, provider_user_id) DO NOTHING
+            """,
             (provider, provider_user_id, email),
         )
+        # If result.rowcount > 0, the user was newly inserted
+        if result.rowcount > 0:
+            # Insert 'unverified' role for new user
+            await conn.execute(
+                """
+                INSERT INTO user_roles (provider, provider_user_id, role)
+                VALUES (%s, %s, %s)
+                """,
+                (provider, provider_user_id, "unverified"),
+            )
+        else:
+            # User already exists, just update email if needed
+            await conn.execute(
+                """
+                UPDATE users SET email = %s
+                WHERE provider = %s AND provider_user_id = %s
+                """,
+                (email, provider, provider_user_id),
+            )
 
 
 async def create_api_key(provider, provider_user_id):
