@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from typing import Optional
-from github_service import trigger_github_people_scrape_workflow
+from github_service import trigger_people_job_workflow 
 import shared.utils.id_utils
 
 
@@ -36,10 +36,9 @@ def get_router(api_key_header):
         name: Optional[str] = None,
         url: Optional[str] = None
     ):
-        # Implementation to trigger a scrape people job
         try:
             request_id = shared.utils.id_utils.make_request_id()
-            response = trigger_github_people_scrape_workflow(
+            response = trigger_people_job_workflow(
                 request_id=request_id,
                 jurisdiction_ocdid=jurisdiction_ocdid,
                 name=name,
