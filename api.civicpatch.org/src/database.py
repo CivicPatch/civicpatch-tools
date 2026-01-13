@@ -1,3 +1,4 @@
+import json
 import hashlib
 import hmac
 import os
@@ -490,3 +491,89 @@ async def search_jurisdictions(state: str, search_string = "", limit: int = 100,
     except Exception as e:
         print(f"Database error in get_jurisdictions: {e}")
         return 0, []
+
+# Jobs
+
+async def list_jobs():
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT request_id, status, progress, created_at, updated_at FROM jobs
+            ORDER BY created_at DESC;
+            """,
+        )
+        rows = await cur.fetchall()
+        jobs = []
+        for row in rows:
+            jobs.append(
+                {
+                    "request_id": row[0],
+                    "status": row[1],
+                    "progress": row[2],
+                    "created_at": row[3],
+                    "updated_at": row[4],
+                }
+            )
+    return jobs
+
+
+async def create_job(
+        request_id: str, 
+        job_type: str,
+        arguments_json: dict):
+    async with pool.connection() as conn:
+        serialized_arguments = json.dumps(arguments_json)
+        await conn.execute(
+            """
+            INSERT INTO jobs (request_id, job_type, status, progress, arguments_json, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+            """,
+            (request_id, job_type, "pending", 0, serialized_arguments),
+        )
+
+async def get_job(request_id: str):
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT status, progress, arguments_json, result_json, created_at, updated_at FROM jobs
+            WHERE request_id = %s;
+            """,
+            (request_id,),
+        )
+        row = await cur.fetchone()
+        if row:
+            return {
+                "request_id": request_id,
+                "status": row[0],
+                "progress": row[1],
+                "arguments_json": row[2],
+                "result_json": row[3],
+                "created_at": row[4],
+                "updated_at": row[5],
+            }
+        return {"error": "Job not found"}
+    
+async def get_job_status(request_id: str):
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT status, progress FROM jobs
+            WHERE request_id = %s;
+            """,
+            (request_id,),
+        )
+        row = await cur.fetchone()
+        if row:
+            return {"request_id": request_id, "status": row[0], "progress": row[1]}
+        return {"error": "Job not found"}
+
+async def update_job_status(request_id: str, progress: int, status: str = None):
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            UPDATE jobs
+            SET progress = %s, status = %s, updated_at = CURRENT_TIMESTAMP
+            WHERE request_id = %s;
+            """,
+            (progress, status, request_id),
+        )

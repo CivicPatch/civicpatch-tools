@@ -108,6 +108,14 @@ run = """
       -H "Authorization: $CRUDDER_SHARED_TOKEN"
 """
 
+[tasks.create_job]
+run = """
+    curl -X POST "http://localhost:8001/api/jobs/people" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: $CRUDDER_SHARED_TOKEN" \
+      -d '{"jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:seattle", "url": "https://www.seattle.gov/"}'
+"""
+
 ###################################################
 ## 🚀✨ DATABASE COMMANDS (for development) ✨🚀 ##
 ###################################################
