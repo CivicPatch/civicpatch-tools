@@ -72,6 +72,14 @@ run = """
       -H "Authorization: $CRUDDER_SHARED_TOKEN"
 """
 
+[tasks.od_sync_prod]
+run = """
+    curl -X POST "https://api.civicpatch.org/api/admin/od_sync" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: $PROD_CRUDDER_SHARED_TOKEN"
+"""
+
+
 [tasks.get_people]
 run = """
     curl -X GET "http://localhost:8001/api/jurisdictions/state_wa__place_seattle__government/people" \
