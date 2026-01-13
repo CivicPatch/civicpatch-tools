@@ -19,7 +19,7 @@ def generate_data_comment(data: List[Official]) -> str:
     def format_url(url: str) -> str:
         return f"[Link]({url})" if url else "N/A"
 
-    for person in people:
+    for person in data:
         name = person.name
         office_name = person.office.name if person.office.name else "N/A"
         divisions = person.office.division_id if person.office.division_id else "N/A"
