@@ -23,7 +23,7 @@ class RouteCategory(str, Enum):
     COMPONENT_API = "component_api"    # Widget/component routes (was public_widget)
     INTERNAL_API = "internal_api"      # Internal server operations  
     ADMIN_ONLY = "admin_only"         # Admin-only routes
-    JOBS_API = "jobs_api"        # Routes for /api/jobs/people
+    JOBS_API = "jobs_api"        # Routes for /api/v1/jobs/people
 
 
 class Person(BaseModel):

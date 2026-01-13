@@ -164,14 +164,14 @@ app.include_router(
 )
 app.include_router(
     api_jurisdictions_router.get_router(),
-    prefix="/api/jurisdictions",
+    prefix="/api/v1/jurisdictions",
     tags=["jurisdictions"],
     dependencies=[Depends(require_route_access_optional(RouteCategory.COMPONENT_API))]
 )
 
 app.include_router(
     api_people_router.get_router(),
-    prefix="/api/people",
+    prefix="/api/v1/people",
     tags=["people"],
     dependencies=[Depends(require_route_access_optional(RouteCategory.COMPONENT_API))]
 )
@@ -185,7 +185,7 @@ app.include_router(
 
 app.include_router(
     api_jobs_router.get_router(api_key_header),
-    prefix="/api/jobs",
+    prefix="/api/v1/jobs",
     tags=["jobs"],
     dependencies=[Depends(require_route_access(RouteCategory.JOBS_API))]
 )

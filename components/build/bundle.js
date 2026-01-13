@@ -73,7 +73,7 @@ Object.assign(Ie,Be),Object.assign(Xt.Control,{Geocoder:Ie,geocoder:function(t){
     <div class="map-container">
       <div class="map" ${Gt(t=>{if(!t||o)return;let e,i,r=new Xt.Map(t,{zoomControl:!1,zoom:12});r.addLayer(new Xt.TileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png')),h||r.locate(),n&&(e=new Ie({geocoder:new Be.Nominatim({geocodingQueryParams:{countrycodes:'US'}}),defaultMarkGeocode:!1,position:'topleft'}).on('markgeocode',T).addTo(r),i=new ie({keepCurrentZoomLevel:!0,drawMarker:!1,drawCircle:!1,position:'bottomright',setView:!1,clickBehavior:{inView:'stop',outOfView:'stop',inViewNotFollowing:'stop'}}).addTo(r));let a=new Xt.geoJSON,l=new Xt.FeatureGroup([a]).addTo(r);new Xt.Control.Zoom({position:'bottomright'}).addTo(r),s(r),p({gc:e,lc:i}),g({data:a,featureGroup:l})})}></div>
     </div>
-  `}function Ne(){customElements.get('civ-map')||customElements.define('civ-map',Wt($e,{observedAttributes:['canmove']}))}var De=Object.freeze({__proto__:null,registerCivMap:Ne});customElements.define('my-example',Wt(function(){const[t,e]=lt(null),{baseUrl:i,headers:n}=Vt();return at(()=>{i&&fetch(`${i}/api/jurisdictions/states`,{headers:n}).then(t=>t.json()).then(e).catch(console.error)},[i]),w`
+  `}function Ne(){customElements.get('civ-map')||customElements.define('civ-map',Wt($e,{observedAttributes:['canmove']}))}var De=Object.freeze({__proto__:null,registerCivMap:Ne});customElements.define('my-example',Wt(function(){const[t,e]=lt(null),{baseUrl:i,headers:n}=Vt();return at(()=>{i&&fetch(`${i}/api/v1/jurisdictions/states`,{headers:n}).then(t=>t.json()).then(e).catch(console.error)},[i]),w`
     <div>
       <h3>Example Component (tbd: replace with others)</h3>
       <div>

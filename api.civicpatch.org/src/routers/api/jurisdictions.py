@@ -182,14 +182,14 @@ def get_router() -> APIRouter:
 
         if page > 1:
             query_params = urllib.parse.urlencode({"limit": limit, "page": page - 1})
-            prev_link = f"/api/jurisdictions/{state}/search?{query_params}"
+            prev_link = f"/api/v1/jurisdictions/{state}/search?{query_params}"
 
         if next_skip < total_items:
             query_params = urllib.parse.urlencode({"limit": limit, "page": page + 1})
-            next_link = f"/api/jurisdictions/{state}/search?{query_params}"
+            next_link = f"/api/v1/jurisdictions/{state}/search?{query_params}"
 
         self_query_params = urllib.parse.urlencode({"limit": limit, "page": page})
-        self_link = f"/api/jurisdictions/{state}/search?{self_query_params}"
+        self_link = f"/api/v1/jurisdictions/{state}/search?{self_query_params}"
 
         return {
             "total_items": total_items,
