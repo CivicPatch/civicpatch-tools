@@ -1,8 +1,7 @@
 ---
 government_types:
   mayor_commission:
-    head_of_government:
-      - mayor
+    head_of_government: mayor
     roles:
       - role: mayor
       - role: mayor pro tempore

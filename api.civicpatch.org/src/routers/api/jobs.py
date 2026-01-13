@@ -3,6 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 from github_service import trigger_people_job_workflow 
 from database import (
+    get_job,
     get_job_status,
     update_job_status,
     create_job
@@ -19,8 +20,19 @@ def get_router(api_key_header):
         description="Retrieve the status of a specific job by its request ID.",
     )
     async def get_job_endpoint(request_id: str):
-        return {"request_id": request_id, "status": "pending"}
-
+        job = await get_job(request_id)
+        if job:
+            return {
+                "request_id": request_id,
+                "status": job['status'],
+                "progress": job['progress'],
+                "arguments": job['arguments_json'],
+                "result": job['result_json'],
+                "created_at": job['created_at'],
+                "updated_at": job['updated_at']
+            }
+        else:
+            return {"error": "Job not found"}, 404
     @router.get(
         "/people/{request_id}/status",
         summary="Get job status and progress",
