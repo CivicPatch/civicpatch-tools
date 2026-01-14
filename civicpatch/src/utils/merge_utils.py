@@ -175,17 +175,14 @@ def group_people_by_name(
 
     return updated_mappings, people_by_name
 
-def to_email_set_from_record(record):
-    # Try 'emails' (list or str), then 'email' (str)
-    emails = getattr(record, "emails", None)
-    email = getattr(record, "email", None)
+def to_field_set_from_record(record, fields: List[str], ):
     result = set()
-    if isinstance(emails, str):
-        result.add(emails)
-    elif isinstance(emails, list):
-        result.update(emails)
-    if isinstance(email, str):
-        result.add(email)
+    for field in fields:
+        value = getattr(record, field, None)
+        if isinstance(value, str):
+            result.add(value)
+        elif isinstance(value, list):
+            result.update(value)
     return result
 
 def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool:
@@ -203,12 +200,12 @@ def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool
     # Check for overlapping email addresses
     # This is kind of ugly
     # TBD: rework this function
-    email_overlap = to_email_set_from_record(record1) & to_email_set_from_record(record2)
+    email_overlap = to_field_set_from_record(record1, ["emails", "email"]) & to_field_set_from_record(record2, ["emails", "email"])
     if email_overlap: 
         return True
 
     # Check for matching websites if available
-    url_overlap = set(record1.urls) & set(record2.urls)
+    url_overlap = to_field_set_from_record(record1, ["urls", "url"]) & to_field_set_from_record(record2, ["urls", "url"])
     if url_overlap:
         return True
 

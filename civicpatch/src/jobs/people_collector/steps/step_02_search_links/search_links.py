@@ -23,7 +23,7 @@ def search_links(context: PeopleCollectorContext) -> tuple[List[Link], SearchLin
     Search for links using multiple search engines and queries.
     """
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-    logger.info(f"Step 2: {WorkflowStatus.SEARCH_LINKS.value}")
+    logger.info(f"Step 2: {WorkflowStatus.SEARCH_LINKS.value} from website: {context.data.config.url}")
 
     search_links_step = context.data.search_links_step
     search_link_pointer = search_links_step.search_link_pointer

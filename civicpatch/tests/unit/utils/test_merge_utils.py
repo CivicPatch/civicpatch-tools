@@ -4,9 +4,11 @@ from utils.merge_utils import (
   update_name_map, 
   append_to_people_by_name,
   group_people_by_name,
-  to_email_set_from_record
+  to_field_set_from_record,
+  is_weakly_tied
 )
 from jobs.people_collector.schemas import LLMPerson
+from domain.models import Person
 
 pytestmark = pytest.mark.unit
 
@@ -221,31 +223,105 @@ def test_group_people_by_name_whitespace_handling():
     assert "John Doe" in updated_mappings[canonical_name]
     assert "John Doe" in updated_mappings[canonical_name]
 
-def test_to_email_set_from_record():
+def test_to_field_set_from_record():
     class Dummy:
         pass
 
     # Only 'email' as string
     r1 = Dummy()
     r1.email = "a@example.com"
-    assert to_email_set_from_record(r1) == {"a@example.com"}
+    assert to_field_set_from_record(r1, ["email"]) == {"a@example.com"}
 
     # Only 'emails' as string
     r2 = Dummy()
     r2.emails = "b@example.com"
-    assert to_email_set_from_record(r2) == {"b@example.com"}
+    assert to_field_set_from_record(r2, ["emails"]) == {"b@example.com"}
 
     # Only 'emails' as list
     r3 = Dummy()
     r3.emails = ["c@example.com", "d@example.com"]
-    assert to_email_set_from_record(r3) == {"c@example.com", "d@example.com"}
+    assert to_field_set_from_record(r3, ["emails"]) == {"c@example.com", "d@example.com"}
 
     # Both 'email' and 'emails'
     r4 = Dummy()
     r4.email = "e@example.com"
     r4.emails = ["f@example.com"]
-    assert to_email_set_from_record(r4) == {"e@example.com", "f@example.com"}
+    assert to_field_set_from_record(r4, ["email", "emails"]) == {"e@example.com", "f@example.com"}
 
     # Neither present
     r5 = Dummy()
-    assert to_email_set_from_record(r5) == set()
+    assert to_field_set_from_record(r5, ["email", "emails"]) == set()
+
+def test_to_field_set_from_record_urls():
+    class Dummy:
+        pass
+
+    # Only 'url' as string
+    r1 = Dummy()
+    r1.url = "http://example.com"
+    assert to_field_set_from_record(r1, ["url"]) == {"http://example.com"}
+
+    # Only 'urls' as string
+    r2 = Dummy()
+    r2.urls = "http://example.org"
+    assert to_field_set_from_record(r2, ["urls"]) == {"http://example.org"}
+
+    # Only 'urls' as list
+    r3 = Dummy()
+    r3.urls = ["http://example.net", "http://example.edu"]
+    assert to_field_set_from_record(r3, ["urls"]) == {"http://example.net", "http://example.edu"}
+
+    # Both 'url' and 'urls'
+    r4 = Dummy()
+    r4.url = "http://example.gov"
+    r4.urls = ["http://example.info"]
+    assert to_field_set_from_record(r4, ["url", "urls"]) == {"http://example.gov", "http://example.info"}
+
+    # Neither present
+    r5 = Dummy()
+    assert to_field_set_from_record(r5, ["url", "urls"]) == set()
+
+def test_is_weakly_tied_llm_person():
+    class Dummy:
+        pass
+    person1 = Dummy()
+    person1.name = "John Doe"
+    person1.roles = ["Mayor"]
+    person1.email = ["john@example.com"]
+
+    person2 = Dummy()
+    person2.name = "Johnathan Doe"
+    person2.roles = ["Mayor"]
+    person2.email = ["john@example.com"]
+
+    assert is_weakly_tied(person1, person2) == True
+
+def test_is_weakly_tied_person():
+    class Dummy:
+        pass
+
+    person1 = Dummy()
+    person1.name = "Jane Smith"
+    person1.roles = ["Council"]
+    person1.emails = ["jane@example.com"]
+
+    person2 = Dummy()
+    person2.name = "Janet Smith"
+    person2.roles = ["Council"]
+    person2.emails = ["jane@example.com"]
+    assert is_weakly_tied(person1, person2) == True
+
+
+def test_is_not_weakly_tied_different_emails():
+    class Dummy:
+        pass
+    person1 = Dummy()
+    person1.name = "Alice Johnson"
+    person1.roles = ["Council"]
+    person1.emails = ["alice@example.com"]
+
+    person2 = Dummy()
+    person2.name = "Bob Johnson"
+    person2.roles = ["Council"]
+    person2.emails = ["bob@example.com"]
+    assert is_weakly_tied(person1, person2) == False
