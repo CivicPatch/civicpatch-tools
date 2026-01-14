@@ -23,9 +23,8 @@ async def run_pipeline_cli(request: PeopleCollectorJobRequest):
         for warning in warnings:
             print(f"Warning: {warning}")
 
-    request_id = id_utils.make_request_id()
     await start_people_collector(
-        request_id=request_id,
+        request_id=request.request_id,
         jurisdiction_ocdid=request.jurisdiction_ocdid,
         config=request.config,
     )
@@ -64,6 +63,9 @@ def main():
     run_pipeline_parser.add_argument(
         "--url", required=True, help="URL of the city council page"
     )
+    run_pipeline_parser.add_argument(
+        "--request-id" required=False, help="Optional request ID"
+    )
 
     args = parser.parse_args()
 
@@ -73,6 +75,7 @@ def main():
             config={
                 "name": args.name,
                 "url": args.url,
+                "request_id": args.request_id or id_utils.make_request_id()
             }
         )
         asyncio.run(run_pipeline_cli(request))
