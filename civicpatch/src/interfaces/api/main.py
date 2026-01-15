@@ -46,7 +46,7 @@ async def proxy_to_api_civicpatch_org_endpoint(path: str, request: Request):
     print(f"Proxying request to {API_CIVICPATCH_ORG_URL}: {request.method} /{path}")
 
     method = request.method
-    url = f"{API_CIVICPATCH_ORG_URL}/api/{path}"
+    url = f"{API_CIVICPATCH_ORG_URL}/api/v1/{path}"
     headers = dict(request.headers)
     headers.pop("host", None)
     headers.pop("accept-encoding", None)

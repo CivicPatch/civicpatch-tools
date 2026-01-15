@@ -9,10 +9,11 @@ from jobs.people_collector.schemas import (
 import utils.log_utils
 from shared.utils import data_path_utils 
 import yaml
+from services.civicpatch_api import update_people_job_result
 
-def save_output(context: PeopleCollectorContext):
+async def save_output(context: PeopleCollectorContext):
   logger = utils.log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
-  logger.info(f"Step 8: {WorkflowStatus.CLEANUP} Saving output data and config files.")
+  logger.info(f"Step 10: {WorkflowStatus.SAVE_OUTPUT} Saving output data and config files.")
 
   data_file_path = data_path_utils.get_data_file_path(
     context.data.jurisdiction_ocdid
@@ -35,6 +36,7 @@ def save_output(context: PeopleCollectorContext):
     government_type=context.data.research_municipality_step.government_type # Can be updated via research step if config not available
   )
   save_config_to_file(updated_config, config_file_path)
+  await update_people_job_result(logger, context.request_id, people)
 
 def save_data_to_file(people: List[Official], file_path: str):
     # Create parent directories if not exists

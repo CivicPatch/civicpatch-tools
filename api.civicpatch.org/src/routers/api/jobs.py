@@ -1,13 +1,18 @@
-from fastapi import APIRouter
-from typing import Optional
+from fastapi import APIRouter, Depends 
+from fastapi.responses import JSONResponse
+from typing import Optional, Any
 from pydantic import BaseModel
+from schemas import Identity
 from github_service import trigger_people_job_workflow 
 from database import (
     get_job,
     get_job_status,
     update_job_status,
-    create_job
+    register_job,
+    update_job_result,
 )
+import json
+from utils.auth import get_user
 import shared.utils.id_utils
 
 class GetJobResponse(BaseModel):
@@ -15,7 +20,7 @@ class GetJobResponse(BaseModel):
     status: str
     progress: int
     arguments: dict
-    result: Optional[dict] = None
+    result: Optional[Any] = None
     pull_request_url: Optional[str] = None # TODO: implement
     created_at: str
     updated_at: str
@@ -25,18 +30,33 @@ class GetJobStatusResponse(BaseModel):
     status: str
     progress: int
 
+class UpdateJobStatusRequest(BaseModel):
+    status: str
+    progress: Optional[int]
+
 class UpdateJobStatusResponse(BaseModel):
     request_id: str
     status: str
-    progress: int
+    progress: Optional[int] = None
 
 class CreateJobResponse(BaseModel):
     request_id: str
     status: str
 
+class CreatePeopleRegisterJobRequest(BaseModel):
+    request_id: str
+    arguments: dict
+    server_source: Optional[str] = None
+
 class DeleteJobResponse(BaseModel):
     request_id: str
     status: str
+
+class PostJobResultRequest(BaseModel):
+    data: Any
+
+class ErrorResponse(BaseModel):
+    error: str
 
 def get_router(api_key_header):
     router = APIRouter()
@@ -45,10 +65,11 @@ def get_router(api_key_header):
         "/people/{request_id}",
         summary="Get job and job results, if available",
         description="Retrieve the status of a specific job by its request ID.",
-        response_model=GetJobResponse
+        response_model=GetJobResponse | ErrorResponse
     )
     async def get_job_endpoint(request_id: str):
         job = await get_job(request_id)
+        print("job fetched:", job)
         if job:
             return GetJobResponse(
                 request_id=request_id,
@@ -61,7 +82,10 @@ def get_router(api_key_header):
                 updated_at=job['updated_at']
             )
         else:
-            return {"error": "Job not found"}, 404
+            return JSONResponse(
+                content=ErrorResponse(error="Job not found").model_dump(),
+                status_code=404
+            )
 
     @router.get(
         "/people/{request_id}/status",
@@ -77,12 +101,8 @@ def get_router(api_key_header):
             progress=response['progress']
         )
 
-    class UpdateJobStatusRequest(BaseModel):
-        status: str
-        progress: str
-
     @router.patch(
-        "/people/{request_id}",
+        "/people/{request_id}/status",
         summary="Update job status and progress",
         description="Update status and/or progress of a specific job by its request ID.",
         include_in_schema=False
@@ -98,7 +118,6 @@ def get_router(api_key_header):
             progress=request.progress
         )
 
-
     class CreatePeopleJobRequest(BaseModel):
         jurisdiction_ocdid: str
         name: Optional[str] = None
@@ -113,21 +132,12 @@ def get_router(api_key_header):
         request: CreatePeopleJobRequest
     ):
         try:
-            request_id = shared.utils.id_utils.make_request_id()
-            await create_job(
-                request_id,
-                job_type="people",
-                arguments_json={
-                    "jurisdiction_ocdid": request.jurisdiction_ocdid,
-                    "name": request.name,
-                    "url": request.url
-                }
-            )
+            request_id = shared.utils.id_utils.make_request_id() 
             response = trigger_people_job_workflow(
                 request_id=request_id,
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
                 name=request.name,
-                url=request.url
+                url=request.url,
             )
         except Exception as e:
             print(f"Error triggering people job: {e}")
@@ -135,8 +145,42 @@ def get_router(api_key_header):
 
         return CreateJobResponse(
             request_id=request_id,
-            status="started"
+            status="pending"
         )
+    
+    @router.post(
+        "/people/register",
+        summary="Register a new job",
+        description="Register a new job in the system.",
+        include_in_schema=False, # Internally called by every civicpatch server
+    )
+    async def register_people_job_endpoint(
+        request: CreatePeopleRegisterJobRequest,
+        user: Identity = Depends(get_user)
+    ):
+        print(f"Registering job: {request.request_id} by user {user.provider_user_id} from provider {user.provider}")
+        response = await register_job(
+            requested_by_provider=user.provider,
+            requested_by_provider_user_id=user.provider_user_id,
+            request_id=request.request_id,
+            job_type="people",
+            arguments_json=request.arguments,
+            server_source=request.server_source or None
+        )
+        return {"request_id": request.request_id, "status": "pending"}
+
+    @router.post(
+        "/people/{request_id}/result",
+        include_in_schema=False, # Internally called by every civicpatch server
+    )
+    async def post_job_result_endpoint(
+        request_id: str,
+        request: PostJobResultRequest
+    ):
+        serialized_result = request.data
+        await update_job_result(request_id, serialized_result)
+        return {"request_id": request_id}
+
 
     @router.delete(
         "/people/{request_id}",

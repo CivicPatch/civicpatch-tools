@@ -1,7 +1,9 @@
 from jobs.people_collector.schemas import (
   WorkflowStatus,
   PeopleCollectorContext,
-  LinkStatus
+  Link,
+  LinkStatus,
+  ProgressState
 )
 
 from jobs.people_collector.steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
@@ -35,10 +37,20 @@ from jobs.people_collector.utils.links import (
 from shared.schemas import JobConfig
 from utils import cost_utils
 from utils.log_utils import WorkflowLogger
+from services.civicpatch_api import register_people_job, update_people_job_status
 
 
-async def init_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
-    prepare_pipeline(context)
+async def start_job(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+    await prepare_pipeline(context)
+    await register_people_job(
+        logger,
+        context.request_id,
+        {
+            "jurisdiction_ocdid": context.data.jurisdiction_ocdid,
+            "name": context.data.config.name,
+            "url": context.data.config.url
+        }
+    )
     return context, WorkflowStatus.RESEARCH_MUNICIPALITY
 
 async def research_municipality_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
@@ -65,6 +77,13 @@ async def research_municipality_transition(job_config: JobConfig, logger: Workfl
         logger.info("Source URLs not found, using search engine for links.")
         next_state = WorkflowStatus.SEARCH_LINKS
 
+    progress = calculate_progress_percentage(context.data.progress, 1)
+    await update_people_job_status(
+        logger,
+        context.request_id,
+        status="running",
+        progress=progress
+    )
     return next_context, next_state
 
 async def search_links_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
@@ -86,6 +105,13 @@ async def search_links_transition(_: JobConfig, logger: WorkflowLogger, context:
         })
         next_state = WorkflowStatus.SCRAPE_PAGE
 
+    progress = calculate_progress_percentage(context.data.progress, 2)
+    await update_people_job_status(
+        logger,
+        context.request_id,
+        status="running",
+        progress=progress
+    )
     return next_context, next_state
 
 async def scrape_page_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
@@ -110,6 +136,13 @@ async def scrape_page_transition(_: JobConfig, logger: WorkflowLogger, context: 
     else:
         next_state = WorkflowStatus.SCRAPE_PAGE
 
+    progress = calculate_progress_percentage(context.data.progress, 3)
+    await update_people_job_status(
+        logger,
+        context.request_id,
+        status="running",
+        progress=progress
+    )
     return next_context, next_state
 
 async def preprocess_page_content_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
@@ -135,6 +168,14 @@ async def preprocess_page_content_transition(_: JobConfig, logger: WorkflowLogge
         next_state = WorkflowStatus.PROCESS_PAGE_CONTENT
     else:  # link_status == LinkStatus.PREPROCESSED_NO_CONTENT:
         next_state = WorkflowStatus.SCRAPE_PAGE
+    
+    progress = calculate_progress_percentage(context.data.progress, 4)
+    await update_people_job_status(
+        logger,
+        context.request_id,
+        status="running",
+        progress=progress
+    )
     return next_context, next_state
 
 async def process_page_content_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
@@ -162,7 +203,13 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
         job_config=job_config,
         progress=context.data.progress
     )
-
+    progress = calculate_progress_percentage(context.data.progress, 5)
+    await update_people_job_status(
+        logger,
+        context.request_id,
+        status="running",
+        progress=progress
+    )
     return next_context, next_state
 
 async def merge_records_within_llm_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
@@ -172,6 +219,15 @@ async def merge_records_within_llm_transition(_: JobConfig, logger: WorkflowLogg
             "merge_records_within_llm_step": result
         })
     })
+
+    progress = calculate_progress_percentage(context.data.progress, 6)
+    await update_people_job_status(
+        logger,
+        context.request_id,
+        status="running",
+        progress=progress
+    )
+
     next_state = WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS
     return next_context, next_state
 
@@ -185,6 +241,14 @@ async def merge_records_across_llms_transition(_: JobConfig, logger: WorkflowLog
         })
     })
 
+    progress = calculate_progress_percentage(context.data.progress, 7)
+    await update_people_job_status(
+        logger,
+        context.request_id,
+        status="running",
+        progress=progress
+    )
+
     next_state = WorkflowStatus.FORMAT_OUTPUT
     return next_context, next_state
 
@@ -195,6 +259,15 @@ async def format_output_transition(_: JobConfig, logger: WorkflowLogger, context
             "format_output_step": result
         })
     })
+
+    progress = calculate_progress_percentage(context.data.progress, 8)
+    await update_people_job_status(
+        logger,
+        context.request_id,
+        status="running",
+        progress=progress
+    )
+
     next_state = WorkflowStatus.CLEANUP
     return next_context, next_state
 
@@ -208,11 +281,27 @@ async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: Peop
         })
     })
 
+    progress = calculate_progress_percentage(context.data.progress, 9)
+    await update_people_job_status(
+        logger,
+        context.request_id,
+        status="running",
+        progress=progress
+    )
     next_state = WorkflowStatus.SAVE_OUTPUT
     return next_context, next_state
 
 async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
-    _result = save_output(context)
+    _result = await save_output(context)
+
+    progress = calculate_progress_percentage(context.data.progress, 10)
+    await update_people_job_status(
+        logger,
+            context.request_id,
+            status="running",
+            progress=progress
+    )
+
     next_state = WorkflowStatus.MAYBE_SEND_TO_GITHUB
     return context, next_state
 
@@ -221,12 +310,40 @@ async def maybe_send_to_github_transition(_: JobConfig, logger: WorkflowLogger, 
         context.request_id, context.data.jurisdiction_ocdid
     )
 
-    result = maybe_send_to_github(context)
-    next_state = WorkflowStatus.DONE
+    _ = maybe_send_to_github(context)
+
+    progress = calculate_progress_percentage(context.data.progress, 11)
+    await update_people_job_status(
+        logger,
+        context.request_id,
+        status="running",
+        progress=progress
+    ) 
+
+    next_state = WorkflowStatus.FINALIZE
     return context, next_state
 
+async def finalize_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
+    await update_people_job_status(
+        logger,
+        context.request_id,
+        status="completed",
+        progress=100
+    )
+    return context, WorkflowStatus.DONE
+
+# TODO: issue with this is that steps can go backwards, so progress
+# might decrease at certain points. Should fix.
+def calculate_progress_percentage(progress: ProgressState, current_step: int):
+    total_steps = 12
+    data_progress = progress.current_data / progress.required_data if progress.required_data > 0 else 0
+    steps_progress = (current_step + 1) / total_steps
+    combined_progress = data_progress * 0.7 + steps_progress * 0.3
+    progress_percent = int(combined_progress * 100)
+    return progress_percent
+
 TRANSITION_MAP = {
-  WorkflowStatus.INIT: init_transition,
+  WorkflowStatus.INIT: start_job,
   WorkflowStatus.RESEARCH_MUNICIPALITY: research_municipality_transition,
   WorkflowStatus.SEARCH_LINKS: search_links_transition,
   WorkflowStatus.SCRAPE_PAGE: scrape_page_transition,
@@ -238,4 +355,5 @@ TRANSITION_MAP = {
   WorkflowStatus.CLEANUP: cleanup_transition,
   WorkflowStatus.SAVE_OUTPUT: save_output_transition,
   WorkflowStatus.MAYBE_SEND_TO_GITHUB: maybe_send_to_github_transition,
+  WorkflowStatus.FINALIZE: finalize_transition, 
 }

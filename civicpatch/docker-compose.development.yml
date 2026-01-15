@@ -12,6 +12,8 @@ services:
 
   civicpatch:
     environment:
+      - CIVICPATCH_SERVER_SOURCE # most people will not have this set...
+
       - PIPELINE_RUN_COST_LIMIT
 
       - BRAVE_SEARCH_TOKEN

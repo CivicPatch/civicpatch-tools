@@ -1,14 +1,12 @@
 import argparse
 import asyncio
 import os
-from typing import List
 from interfaces.schemas import (
     PeopleCollectorJobRequest,
     validate_people_request
 )
 from jobs.people_collector.main import start as start_people_collector
 from shared.utils import id_utils
-from jobs.people_collector.main import TRANSITION_MAP
 
 API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL")
 API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")

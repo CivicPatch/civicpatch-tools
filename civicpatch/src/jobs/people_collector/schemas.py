@@ -17,12 +17,8 @@ class SearchEngineState(BaseModel):
 class ProgressState(BaseModel):
     required_data: int
     current_data: int
-    has_target_role: bool = (
-        False  # Depends on the configs; might not have one. If so true by default
-    )
-    has_target_divisions: bool = (
-        False  # Depends on municipal research. If none, true by default
-    )
+    has_target_role: bool = False
+    has_target_divisions: bool = False
 
 class LinkStatus(Enum):
     PENDING = "pending"
@@ -87,6 +83,7 @@ class WorkflowStatus(Enum):
     CLEANUP = "CLEANUP"
     MAYBE_SEND_TO_GITHUB = "MAYBE_SEND_TO_GITHUB"
     RETRY = "RETRY"
+    FINALIZE = "FINALIZE"
     DONE = "DONE"
 
 class FieldComparison(BaseModel):
