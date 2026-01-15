@@ -136,12 +136,12 @@ run = """
 
 [tasks.migrate_up]
 run = """
-docker compose run --rm api.civicpatch.org \
+docker compose run --rm api_civicpatch_org \
     python database_operations/migrate.py up
 """
 
 [tasks.migrate_down]
 run = """
-docker compose run --rm api.civicpatch.org \
+docker compose run --rm api_civicpatch_org \
     python database_operations/migrate.py down
 """
