@@ -5,7 +5,7 @@ services:
       context: ..
       dockerfile: api.civicpatch.org/Dockerfile
       target: development
-    restart: unless-stopped
+    # restart: unless-stopped
     ports:
       - "8001:8001"
     volumes:
@@ -18,7 +18,7 @@ services:
 
   api_civicpatch_org_db:
     image: postgis/postgis:17-3.5
-    restart: always
+    # restart: always
     environment:
       POSTGRES_USER: civicpatch
       POSTGRES_PASSWORD: development_password

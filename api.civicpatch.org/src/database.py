@@ -4,8 +4,7 @@ import hmac
 import os
 import secrets
 import math
-from typing import List, cast
-from datetime import datetime
+from typing import List, cast, Optional, Any
 
 from psycopg_pool import AsyncConnectionPool
 
@@ -523,18 +522,44 @@ async def list_jobs():
     return jobs
 
 
-async def create_job(
+async def register_job(
+        requested_by_provider: str,
+        requested_by_provider_user_id: str,
         request_id: str, 
         job_type: str,
-        arguments_json: dict):
+        arguments_json: dict,
+        server_source: Optional[str] = None):
     async with pool.connection() as conn:
         serialized_arguments = json.dumps(arguments_json)
         await conn.execute(
             """
-            INSERT INTO jobs (request_id, job_type, status, progress, arguments_json, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, %s, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+            INSERT INTO jobs (
+                request_id, 
+                requested_by_provider, 
+                requested_by_provider_user_id, 
+                job_type, 
+                status, 
+                progress, 
+                arguments_json, 
+                server_source,
+
+                created_at, updated_at
+            )
+            VALUES (
+                %s, %s, %s, %s, %s, %s, %s, %s,
+                CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+            );
             """,
-            (request_id, job_type, "pending", 0, serialized_arguments),
+            (
+                request_id, 
+                requested_by_provider, 
+                requested_by_provider_user_id, 
+                job_type, 
+                "pending", 
+                0, 
+                serialized_arguments, 
+                server_source
+            ),
         )
 
 async def get_job(request_id: str):
@@ -558,7 +583,7 @@ async def get_job(request_id: str):
                 "created_at": to_iso(row[4]),
                 "updated_at": to_iso(row[5]),
             }
-        return {"error": "Job not found"}
+        return None
     
 async def get_job_status(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -574,13 +599,48 @@ async def get_job_status(request_id: str):
             return {"request_id": request_id, "status": row[0], "progress": row[1]}
         return {"error": "Job not found"}
 
-async def update_job_status(request_id: str, progress: int, status: str = None):
+async def update_job_status(request_id: str, status: str = None, progress: Optional[int] = None):
+    set_clauses = []
+    params = []
+
+    if progress is not None:
+        set_clauses.append("progress = %s")
+        params.append(progress)
+    if status is not None:
+        set_clauses.append("status = %s")
+        params.append(status)
+
+    # Always update updated_at
+    set_clauses.append("updated_at = CURRENT_TIMESTAMP")
+
+    if not set_clauses:
+        # Nothing to update
+        return
+
+    params.append(request_id)
+    set_clause_str = ", ".join(set_clauses)
+
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
-            """
+            f"""
             UPDATE jobs
-            SET progress = %s, status = %s, updated_at = CURRENT_TIMESTAMP
+            SET {set_clause_str}
             WHERE request_id = %s;
             """,
-            (progress, status, request_id),
+            params,
+        )
+
+async def update_job_result(request_id: str, result_json: Any):
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            UPDATE jobs
+            SET result_json = %s,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE request_id = %s;
+            """,
+            (
+                json.dumps(result_json), 
+                request_id
+             ),
         )
