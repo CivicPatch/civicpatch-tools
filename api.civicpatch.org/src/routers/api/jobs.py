@@ -4,6 +4,7 @@ from typing import Optional, Any
 from pydantic import BaseModel
 from schemas import Identity
 from github_service import trigger_people_job_workflow 
+from services.api_service import can_make_api_request
 from database import (
     get_job,
     get_job_status,
@@ -11,7 +12,6 @@ from database import (
     register_job,
     update_job_result,
 )
-import json
 from utils.auth import get_user
 import shared.utils.id_utils
 
@@ -126,11 +126,19 @@ def get_router(api_key_header):
         "/people",
         summary="Trigger scrape people job",
         description="Trigger a new scrape people job.",
-        response_model=CreateJobResponse
+        response_model=CreateJobResponse,
     )
     async def create_people_job_endpoint(
-        request: CreatePeopleJobRequest
+        request: CreatePeopleJobRequest,
+        user: Identity = Depends(get_user)
     ):
+        api_request_allowed, reason = await can_make_api_request(user.provider, user.provider_user_id)
+        if not api_request_allowed:
+            return JSONResponse(
+                content=ErrorResponse(error=reason).model_dump(),
+                status_code=429
+            )
+
         try:
             request_id = shared.utils.id_utils.make_request_id() 
             response = trigger_people_job_workflow(
