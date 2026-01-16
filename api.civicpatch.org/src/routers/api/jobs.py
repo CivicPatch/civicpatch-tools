@@ -4,7 +4,7 @@ from typing import Optional, Any
 from pydantic import BaseModel
 from schemas import Identity
 from github_service import trigger_people_job_workflow 
-from services.api_service import can_make_api_request
+from services.api_service import can_make_api_request, can_call_request_id
 from database import (
     get_job,
     get_job_status,
@@ -113,6 +113,13 @@ def get_router(api_key_header):
         request_id: str,
         request: UpdateJobStatusRequest
     ):
+        can_call_request_id_response = await can_call_request_id(request_id)
+        if not can_call_request_id_response:
+            return JSONResponse(
+                content=ErrorResponse(error="Not authorized to update status for this request ID: " + request_id).model_dump(),
+                status_code=403
+            )
+
         await update_job_status(request_id, status=request.status, progress=request.progress)
         return UpdateJobStatusResponse(
             request_id=request_id,
@@ -185,9 +192,17 @@ def get_router(api_key_header):
     )
     async def post_job_result_endpoint(
         request_id: str,
-        request: PostJobResultRequest
+        request: PostJobResultRequest,
+        user: Identity = Depends(get_user)
     ):
         errors = []
+        can_call_request_id_response = await can_call_request_id(user, request_id)
+        if not can_call_request_id_response:
+            return JSONResponse(
+                content=ErrorResponse(error="Not authorized to post result for this request ID: " + request_id).model_dump(),
+                status_code=403
+            )
+
         if request.data:
             serialized_result = request.data
             result_update = await update_job_result(request_id, serialized_result)
