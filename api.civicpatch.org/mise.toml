@@ -111,10 +111,10 @@ run = """
 
 [tasks.update_job_pull_request_url]
 run = """
-    curl -X POST "http://localhost:8001/api/v1/jobs/people/2026-01-13-9fb4/result" \
+    curl -X POST "http://localhost:8001/api/v1/jobs/people/2026-01-15-ce61/result" \
       -H "Content-Type: application/json" \
       -H "Authorization: $CRUDDER_SHARED_TOKEN" \
-      -d '{"pull_request_url": "https://www.seattle.gov/"}' 
+      -d '{"pull_request_url": "https://www.brandon.gov/"}' 
 """
 
 [tasks.get_job_status]

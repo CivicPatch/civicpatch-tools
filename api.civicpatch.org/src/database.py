@@ -666,6 +666,22 @@ async def update_job_pull_request_url(request_id: str, pull_request_url: str = N
             return False
         return True
 
+async def check_user_owns_request_id(provider: str, provider_user_id: str, request_id: str) -> bool:
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT EXISTS (
+                SELECT 1 FROM jobs
+                WHERE request_id = %s
+                  AND requested_by_provider = %s
+                  AND requested_by_provider_user_id = %s
+            ) AS owns_request;
+            """,
+            (request_id, provider, provider_user_id),
+        )
+        row = await cur.fetchone()
+        return row[0] if row else False
+
 # API usage
 async def get_api_usage_for_user(provider: str, provider_user_id: str):
     # Queries api_usage_limits to get daily_limit
