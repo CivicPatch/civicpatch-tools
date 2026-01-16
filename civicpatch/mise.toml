@@ -53,10 +53,10 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:nj/place:bayonne/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:nj/place:hoboken/government",
     "config": {
-        "url": "https://www.bayonnenj.org",
-        "name": "Bayonne city"
+        "url": "https://www.hobokennj.gov/",
+        "name": "Hoboken city"
     }
   }'
 """
