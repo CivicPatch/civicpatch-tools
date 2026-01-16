@@ -38,6 +38,7 @@ def search_links(context: PeopleCollectorContext) -> tuple[List[Link], SearchLin
     government_type = research_municipality_step.government_type
 
     keyword_term_groups = search_keywords(government_type)
+    logger.info(f"Using government type: {government_type} for keyword selection with keywords: {keyword_term_groups}")
 
     urls_found = []
 
