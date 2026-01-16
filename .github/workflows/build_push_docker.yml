@@ -67,6 +67,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      # Use this image when self hosting, else there are issues
+      # with permissions in running this image in GitHub Actions
       - name: Build and push (production)
         uses: docker/build-push-action@v6
         with:
