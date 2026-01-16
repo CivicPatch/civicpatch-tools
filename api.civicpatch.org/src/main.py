@@ -23,6 +23,7 @@ import routers.api.user as api_user_router
 from routers.auth import get_router as auth_router
 from database import (
     get_api_keys_for_user,
+    get_api_usage_for_user,
     get_user_details,
     pool,
     user_is_approved,
@@ -136,6 +137,7 @@ async def home(
     try:
         provider_user_id = user.provider_user_id
         api_keys = await get_api_keys_for_user(user.provider, provider_user_id)
+        api_usage = await get_api_usage_for_user(user.provider, provider_user_id)
         approved_user = await user_is_approved(user.provider, provider_user_id)
         user_details = await get_user_details(user.provider, provider_user_id)
     except Exception as e:
@@ -150,6 +152,7 @@ async def home(
         context={
             "user": user,
             "api_keys": api_keys,
+            "api_usage": api_usage,
             "approved_user": approved_user,
             "maintainer_email": MAINTAINER_EMAIL,
             "user_details": user_details,
