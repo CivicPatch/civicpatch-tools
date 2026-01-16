@@ -22,5 +22,15 @@ def get_router() -> APIRouter:
         )
 
         return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
-
+    
+    @router.get("/usage")
+    async def get_user_api_usage_endpoint(
+        request: Request,
+        user: OpenID = Depends(get_user),
+    ):
+        usage = await database.get_api_usage_for_user(
+            user.provider, user.provider_user_id
+        )
+        return {"api_usage": usage}
+    
     return router

@@ -644,3 +644,47 @@ async def update_job_result(request_id: str, result_json: Any):
                 request_id
              ),
         )
+
+# API usage
+async def get_api_usage_for_user(provider: str, provider_user_id: str):
+    # Queries api_usage_limits to get daily_limit
+    # Joins with jobs table to count jobs created in the last 24 hours 
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT 
+                ul.daily_limit,
+                COUNT(j.request_id) AS usage_count
+            FROM api_usage_limits ul
+            LEFT JOIN jobs j 
+                ON ul.provider = j.requested_by_provider 
+                AND ul.provider_user_id = j.requested_by_provider_user_id
+                AND j.created_at >= NOW() - INTERVAL '24 hours'
+            WHERE ul.provider = %s AND ul.provider_user_id = %s
+            GROUP BY ul.daily_limit;
+            """,
+            (provider, provider_user_id),
+        )
+        row = await cur.fetchone()
+        if row:
+            return {
+                "daily_limit": row[0],
+                "usage_count": row[1],
+            }
+        else:
+            return {
+                "daily_limit": 0,
+                "usage_count": 0,
+            }
+        
+async def set_daily_limit_for_user(provider: str, provider_user_id: str, daily_limit: int = 100):
+    async with pool.connection() as conn:
+        await conn.execute(
+            """
+            INSERT INTO api_usage_limits (provider, provider_user_id, daily_limit)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (provider, provider_user_id) 
+            DO UPDATE SET daily_limit = EXCLUDED.daily_limit;
+            """,
+            (provider, provider_user_id, daily_limit),
+        )
