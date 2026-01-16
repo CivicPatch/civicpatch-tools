@@ -200,7 +200,7 @@ def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Per
     name_counter = Counter(person.name for person in group)
     canonical_name = name_counter.most_common(1)[0][0]
 
-    return Person(
+    person = Person(
         name=canonical_name,
         
         roles=roles,
@@ -217,7 +217,9 @@ def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Per
         cdn_image="",
 
         jurisdiction_ocdid=jurisdiction_ocdid,
-        source_urls=list(source_urls),
+        source_urls=source_urls,
         updated_at=datetime.now(timezone.utc).isoformat(timespec='seconds')
     )
+
+    return person
 

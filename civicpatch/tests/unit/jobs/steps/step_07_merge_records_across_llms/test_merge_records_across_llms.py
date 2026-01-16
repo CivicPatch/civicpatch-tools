@@ -5,8 +5,6 @@ from typing import Dict, List, Any
 from domain.models import Person
 from jobs.people_collector.steps.step_07_merge_records_across_llms.merge_records_across_llms import (
     merge_records_across_llms,
-    merge_group_across_llms,
-    group_records_across_llms
 )
 from jobs.people_collector.schemas import (
     WorkflowStatus,
@@ -92,4 +90,3 @@ def test_merge_records_across_llms():
     
     john = next(p for p in result.people if p.name == "John Smith")
     assert "Mayor" in john.roles
-

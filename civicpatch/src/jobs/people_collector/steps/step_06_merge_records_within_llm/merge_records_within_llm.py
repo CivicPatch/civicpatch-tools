@@ -2,9 +2,7 @@ from typing import Dict, List, cast
 from jobs.people_collector.schemas import (
     LLMPerson, Person, 
     RecordsByLLM, PeopleCollectorContext, MergeRecordsWithinLLMStep,
-    ProcessPageContentStep
 )
-from collections import Counter
 from utils import merge_utils
 import jobs.people_collector.steps.step_06_merge_records_within_llm.field_mergers as field_mergers
 
@@ -50,6 +48,34 @@ def group_by_last_name(llm_people_list: List[LLMPerson]) -> Dict[str, List[LLMPe
         last_name_groups[last_name].append(person)
     return last_name_groups
 
+def get_source_urls(person_records: list, person: Person) -> list:
+    """
+    For each unique value in the merged fields, include the source_url of the record that contributed it.
+    Only one source_url per unique value, tiebreaking by first record.
+    """
+    field_map = [
+        ('roles', 'roles'),
+        # ('divisions', 'divisions'), # Uncomment if you want divisions
+        ('phones', 'phone'),
+        ('emails', 'email'),
+        # ('urls', 'url'), # Uncomment if you want urls
+    ]
+    merged_values = {plural: set(getattr(person, plural)) for plural, _ in field_map}
+    source_urls = set()
+
+    for plural, singular in field_map:
+        for value in merged_values[plural]:
+            for record in person_records:
+                record_values = getattr(record, singular)
+                values = set(record_values) if isinstance(record_values, list) else {record_values}
+                if value in values:
+                    url = getattr(record, "source_url", None)
+                    if url:
+                        source_urls.add(url)
+                    break  # Tiebreak: only the first record that contributed this value
+
+    return list(source_urls)
+
 def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPerson], jurisdiction_ocdid: str) -> Person:
     """
     Merge a list of LLMPerson objects into a single Person object.
@@ -70,9 +96,8 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     urls = field_mergers.merge_field_to_list([r.url for r in records])
     start_date = field_mergers.merge_field([r.start_date for r in records])
     end_date = field_mergers.merge_field([r.end_date for r in records])
-    source_urls = [r.source_url for r in records if r.source_url]
 
-    return Person(
+    person = Person(
         name=canonical_name,
         roles=merged_roles,
         divisions=merged_divisions,
@@ -87,8 +112,12 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
         cdn_image="",  # Placeholder for CDN image
         jurisdiction_ocdid=jurisdiction_ocdid,
         updated_at="",  # Placeholder for updated_at
-        source_urls=source_urls,
+        source_urls=[], # Placeholder, this gets calculated in the next few lines
     )
+
+    source_urls = get_source_urls(llm_people_list, person)
+    person.source_urls = source_urls
+    return person
 
 def merge_records(llm_people_list: List[LLMPerson], jurisdiction_ocdid: str) -> List[Person]:
     """

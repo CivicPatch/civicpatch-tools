@@ -597,7 +597,7 @@ async def get_job_status(request_id: str):
         row = await cur.fetchone()
         if row:
             return {"request_id": request_id, "status": row[0], "progress": row[1]}
-        return {"error": "Job not found"}
+        return None
 
 async def update_job_status(request_id: str, status: str = None, progress: Optional[int] = None):
     set_clauses = []

@@ -31,12 +31,17 @@ def research_municipality(context: PeopleCollectorContext) -> tuple[ProgressStat
     roles_found = [role for person_roles in roles_found for role in person_roles]
 
     # Government type can be overridden via config
-    government_type = context.data.config.government_type or match_roles_to_government_type(roles_found, config_utils.get_government_types())
+    government_type = context.data.config.government_type or response.get("government_type")
 
-    if not government_type:
-        logger.error(f"Could not determine government type for jurisdiction {jurisdiction_ocdid}. Roles found: {roles_found}")
-        raise ValueError("Could not determine government type from roles found.")
-    
+    # if not government_type:
+    #     logger.info(f"Could not determine government type for jurisdiction {jurisdiction_ocdid}. Roles found: {roles_found}")
+    government_types = config_utils.get_government_types().keys()
+    print("government types are", government_types)
+    if government_type not in government_types:
+        logger.warning(f"invalid government_type: {government_type}, matching government types from roles as fallback")
+        government_type = match_roles_to_government_type(roles_found, config_utils.get_government_types())
+        logger.info(f"setting fallback government_type: {government_type}")
+
     role_configs = config_utils.get_role_configs_by_government_type(government_type)
     researched_people: List[ResearchedPerson] = [ResearchedPerson.model_validate(p) if isinstance(p, dict) else p for p in people]
     target_people = people_utils.filter_people_by_roles(role_configs, researched_people)

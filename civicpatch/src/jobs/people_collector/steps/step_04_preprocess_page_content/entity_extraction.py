@@ -11,6 +11,7 @@ def get_nlp():
     global _nlp
     if _nlp is None:
         _nlp = spacy.load("en_core_web_md")
+        _nlp.max_length = 2000000  # Increase max length if needed
     return _nlp
 
 def extract_keywords(doc, government_type):

@@ -7,6 +7,7 @@ divisions:
       - ward council
   district:
     has_geographic_area: true
+    name: council_district # ocd-diviosion uses council_district
     aliases:
       - council district
       - district council
