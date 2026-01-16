@@ -192,7 +192,7 @@ def add_llm_cost(
         "output_cost": result.output_cost,
         "total_cost": result.total_cost
     })
-    logger.info(f"LLM Cost added: {result.llm_name} model {result.model} - Input tokens: {input_tokens}, Output tokens: {output_tokens}, Total cost: ${result.total_cost:.2f}")
+    logger.info(f"LLM Cost added: {result.llm_name} model {result.model} - Input tokens: {input_tokens}, Output tokens: {output_tokens}, Total cost: ${result.total_cost:.6f}")
 
 def add_search_engine_cost(
         request_id: str,

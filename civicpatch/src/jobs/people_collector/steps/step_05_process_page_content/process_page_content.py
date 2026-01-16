@@ -375,10 +375,11 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     """
     people = [LLMPerson.model_validate(r) if not isinstance(r, LLMPerson) else r for r in records]
 
-    has_contact = any(
-        sum([bool(p.phone), bool(p.email), bool(p.url)]) >= 2
-        for p in people
-    )
+    has_contact = (
+        sum(bool(p.phone) for p in people) +
+        sum(bool(p.email) for p in people) +
+        sum(bool(p.url) for p in people)
+    ) >= 3
     # Case-insensitive role match
     has_role = any(
         any(r and r.strip().lower() in roles for r in p.roles)
@@ -418,14 +419,16 @@ def extract_websites_from_processed_data(logger, roles: List[str], records_by_ll
     Extract website links from the processed data.
     """
     found_websites = []
+    # For each llm source
     for people_by_name in records_by_llm.values():
-        for person_list in people_by_name.values():  # Directly iterate over lists of LLMPerson
+        # For each person identity
+        for person_name, person_list in people_by_name.items():
             # If person already has a role and contact info,
             # ignore adding more websites for the person
             if has_role_and_contact_info(
                 roles, person_list
             ):
-                logger.debug("Skipping adding websites for person with role and contact info")
+                logger.debug(f"Skipping adding websites for person with role and contact info: {person_name}")
                 continue
 
             for person_record in person_list:

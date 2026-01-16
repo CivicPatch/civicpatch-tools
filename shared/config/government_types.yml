@@ -165,6 +165,27 @@ government_types:
         - meet
         - about
   # town_meeting: # Not handling this
+  township_committee:
+    head_of_government: mayor
+    roles:
+      - role: mayor
+      - role: deputy mayor
+      - role: committee member
+        aliases:
+          - township committee member
+          - committeeman
+          - committeewoman
+    keywords:
+      mayor:
+        - mayor and city council
+        - about mayor
+        - meet the mayor
+        - about the mayor
+        - mayor
+        - council president
+        - council manager
+      elected officials:
+          - elected officials
   select_board:
     roles:
       - role: mayor # Optional, not always present

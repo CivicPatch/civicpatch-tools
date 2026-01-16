@@ -67,11 +67,13 @@ def get_router(api_key_header):
         "/people/{request_id}",
         summary="Get job and job results, if available",
         description="Retrieve the status of a specific job by its request ID.",
-        response_model=GetJobResponse | ErrorResponse
+        response_model=GetJobResponse,
+        responses={
+            404: {"model": ErrorResponse, "description": "Job not found"}
+        }
     )
     async def get_job_endpoint(request_id: str):
         job = await get_job(request_id)
-        print("job fetched:", job)
         if job:
             return GetJobResponse(
                 request_id=request_id,
@@ -93,10 +95,19 @@ def get_router(api_key_header):
         "/people/{request_id}/status",
         summary="Get job status and progress",
         description="Retrieve the progress of a specific job by its request ID.",
-        response_model=GetJobStatusResponse
+        response_model=GetJobStatusResponse,
+        responses={
+            404: {"model": ErrorResponse, "description": "Job not found"}
+        }
     )
     async def get_job_status_endpoint(request_id: str):
         response = await get_job_status(request_id)
+        if not response:
+            return JSONResponse(
+                content=ErrorResponse(error="Job not found").model_dump(),
+                status_code=404
+            )
+
         return GetJobStatusResponse(
             request_id=request_id,
             status=response['status'],
@@ -111,9 +122,10 @@ def get_router(api_key_header):
     )
     async def patch_job_status_endpoint(
         request_id: str,
-        request: UpdateJobStatusRequest
+        request: UpdateJobStatusRequest,
+        user: Identity = Depends(get_user)
     ):
-        can_call_request_id_response = await can_call_request_id(request_id)
+        can_call_request_id_response = await can_call_request_id(user, request_id)
         if not can_call_request_id_response:
             return JSONResponse(
                 content=ErrorResponse(error="Not authorized to update status for this request ID: " + request_id).model_dump(),
@@ -136,6 +148,10 @@ def get_router(api_key_header):
         summary="Trigger scrape people job",
         description="Trigger a new scrape people job.",
         response_model=CreateJobResponse,
+        responses={
+            429: {"model": ErrorResponse, "description": "Rate limit exceeded"},
+            500: {"model": ErrorResponse, "description": "Internal server error"}
+        }
     )
     async def create_people_job_endpoint(
         request: CreatePeopleJobRequest,
@@ -157,8 +173,11 @@ def get_router(api_key_header):
                 url=request.url,
             )
         except Exception as e:
-            print(f"Error triggering people job: {e}")
-            return {"status": "error"}, 500
+            print(f"Error triggering people job with GitHub: {e}")
+            return JSONResponse(
+                content=ErrorResponse(error="Failed to trigger people job with GitHub").model_dump(),
+                status_code=500
+            )
 
         return CreateJobResponse(
             request_id=request_id,

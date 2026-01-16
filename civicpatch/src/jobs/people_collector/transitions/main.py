@@ -188,6 +188,7 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
     result = process_page_content(context, page_to_process)
     next_context = context.copy(update={
         "data": context.data.copy(update={
+            "links": result.links,
             "progress": result.progress,
             "process_page_content_step": result
         })

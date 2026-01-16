@@ -70,19 +70,6 @@ def get_government_types():
         _government_types_config = config_data.get('government_types', {})
     return _government_types_config
 
-def get_government_types_alias_map() -> Dict[str, str]:
-    """
-    Build a mapping from all aliases to their canonical government type.
-    """
-    government_types_config = get_government_types()
-
-    alias_map = {}
-    for canonical, entry in government_types_config.items():
-        alias_map[canonical.lower()] = canonical
-        for alias in entry.get("aliases", []):
-            alias_map[alias.lower()] = canonical
-    return alias_map
-
 def get_roles_by_government_type(government_type: str) -> List[str]:
     """
     Returns a list of roles associated with a specific government type from the configuration file.

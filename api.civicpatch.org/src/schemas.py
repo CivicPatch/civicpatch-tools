@@ -33,21 +33,17 @@ class Person(BaseModel):
     class Config:
         extra = "allow"
 
-
 class PullRequest(BaseModel):
     branch_name: str
     jurisdiction_ocdid: str = ""
 
-    @model_validator(mode="after")
-    def set_jurisdiction_ocdid(self):
+    def model_post_init(self, __context):
         try:
             if not self.jurisdiction_ocdid and self.branch_name:
                 self.jurisdiction_ocdid = shared.utils.id_utils.git_branch_to_jurisdiction_ocdid(self.branch_name)
         except Exception:
             print(f"git branch does not match jurisdiciton id format: {self.branch_name}")
             self.jurisdiction_ocdid = ""
-        return self
-
 
 class Jurisdiction(BaseModel):
     id: str
