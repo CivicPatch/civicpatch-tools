@@ -1,3 +1,26 @@
+<h2>API Usage</h2>
+<article style="max-width: 400px; margin-bottom: 2em;">
+  <header style="display: flex; align-items: center; gap: 1em;">
+    <span style="font-size: 2em; color: var(--primary); display: flex; align-items: center;">
+      <svg width="32" height="32" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+      </svg>
+    </span>
+    <div>
+      <strong>Daily Limit:</strong> {{ api_usage.daily_limit }}<br>
+      <strong>Requests Today:</strong> {{ api_usage.usage_count }}
+    </div>
+  </header>
+  <progress value="{{ api_usage.usage_count }}" max="{{ api_usage.daily_limit }}" style="width: 100%; margin: 1em 0;"></progress>
+  <footer>
+    <small>
+      <span style="color: var(--muted-color);">
+        Currently capped at 100 requests/day for <code>/jobs</code> endpoints.
+      </span>
+    </small>
+  </footer>
+</article>
+
 <h2>Your Roles</h2>
 <hr />
 {% if user.roles and user.roles|length > 0 %}

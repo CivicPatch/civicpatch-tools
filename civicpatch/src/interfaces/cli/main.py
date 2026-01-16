@@ -62,7 +62,7 @@ def main():
         "--url", required=True, help="URL of the city council page"
     )
     run_pipeline_parser.add_argument(
-        "--request-id" required=False, help="Optional request ID"
+        "--request-id", required=False, help="Optional request ID"
     )
 
     args = parser.parse_args()
