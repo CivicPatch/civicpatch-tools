@@ -12,7 +12,7 @@ API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL")
 API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
 
 
-async def run_pipeline_cli(request: PeopleCollectorJobRequest):
+async def run_pipeline_cli(request_id: str, request: PeopleCollectorJobRequest):
     warnings, errors = validate_people_request(request)
     if errors:
         print("Errors:", errors)
@@ -22,7 +22,7 @@ async def run_pipeline_cli(request: PeopleCollectorJobRequest):
             print(f"Warning: {warning}")
 
     await start_people_collector(
-        request_id=request.request_id,
+        request_id=request_id,
         jurisdiction_ocdid=request.jurisdiction_ocdid,
         config=request.config,
     )
@@ -73,10 +73,10 @@ def main():
             config={
                 "name": args.name,
                 "url": args.url,
-                "request_id": args.request_id or id_utils.make_request_id()
             }
         )
-        asyncio.run(run_pipeline_cli(request))
+        request_id = args.request_id or id_utils.make_request_id()
+        asyncio.run(run_pipeline_cli(request_id, request))
     else:
         print(f"cli command not available: {args.command}")
 

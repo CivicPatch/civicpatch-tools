@@ -149,9 +149,11 @@ docker compose -f docker-compose.yml run --rm civicpatch poetry run \
 run = """
 docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poetry run \
   python src/interfaces/cli/main.py \
-    --jurisdiction-ocdid "ocd-jurisdiction/country:us/state:wa/place:seattle" \
+    run_pipeline \
+    --jurisdiction-ocdid "ocd-jurisdiction/country:us/state:wa/place:seattle/government" \
     --name "Seattle city" \
-    --url "https://www.seattle.gov"
+    --url "https://www.seattle.gov" \
+    --request-id "blah-example"
 """
 
 [tasks.pipeline-run-cicd]
@@ -162,6 +164,7 @@ docker compose -f docker-compose.github-actions.yml run --rm civicpatch-cicd poe
     --jurisdiction-ocdid "{{ option(name="jurisdiction-ocdid") }}" \
     --name "{{ option(name="name") }}" \
     --url "{{ option(name="url") }}"
+    --request-id "blah-example"
 """
 
 [tasks.get-juds]
