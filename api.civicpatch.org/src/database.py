@@ -632,7 +632,7 @@ async def update_job_status(request_id: str, status: str = None, progress: Optio
 
 async def update_job_result(request_id: str, result_json: Any):
     async with pool.connection() as conn:
-        await conn.execute(
+        result = await conn.execute(
             """
             UPDATE jobs
             SET result_json = %s,
@@ -644,6 +644,27 @@ async def update_job_result(request_id: str, result_json: Any):
                 request_id
              ),
         )
+        if result.rowcount == 0:
+            return False
+        return True
+
+async def update_job_pull_request_url(request_id: str, pull_request_url: str = None):
+    async with pool.connection() as conn:
+        result = await conn.execute(
+            """
+            UPDATE jobs
+            SET pull_request_url = %s,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE request_id = %s;
+            """,
+            (
+                pull_request_url, 
+                request_id
+             ),
+        )
+        if result.rowcount == 0:
+            return False
+        return True
 
 # API usage
 async def get_api_usage_for_user(provider: str, provider_user_id: str):
@@ -660,6 +681,7 @@ async def get_api_usage_for_user(provider: str, provider_user_id: str):
                 ON ul.provider = j.requested_by_provider 
                 AND ul.provider_user_id = j.requested_by_provider_user_id
                 AND j.created_at >= NOW() - INTERVAL '24 hours'
+                AND j.server_source = 'origin_github_server'
             WHERE ul.provider = %s AND ul.provider_user_id = %s
             GROUP BY ul.daily_limit;
             """,

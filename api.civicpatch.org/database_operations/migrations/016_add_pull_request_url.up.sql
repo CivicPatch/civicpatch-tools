@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE jobs
+ADD COLUMN pull_request_url TEXT;
+
+COMMIT;

@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE jobs
+DROP COLUMN IF EXISTS pull_request_url;
+
+COMMIT;
