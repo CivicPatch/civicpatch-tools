@@ -59,9 +59,10 @@ jobs:
           context: .
           file: ./civicpatch/Dockerfile
           push: true
+            #ghcr.io/civicpatch/civicpatch-slim:latest
+            #ghcr.io/civicpatch/civicpatch-slim:${{ steps.date.outputs.date-tag }}
           tags: |
-            ghcr.io/civicpatch/civicpatch-slim:latest
-            ghcr.io/civicpatch/civicpatch-slim:${{ steps.date.outputs.date-tag }}
+            code.wizards.cafe/witch/civicpatch-slim:latest
           target: image-base
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -72,9 +73,10 @@ jobs:
           context: .
           file: ./civicpatch/Dockerfile
           push: true
+            #ghcr.io/civicpatch/civicpatch:latest
+            #ghcr.io/civicpatch/civicpatch:${{ steps.date.outputs.date-tag }}
           tags: |
-            ghcr.io/civicpatch/civicpatch:latest
-            ghcr.io/civicpatch/civicpatch:${{ steps.date.outputs.date-tag }}
+            code.wizards.cafe/witch/civicpatch:latest
           target: production
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -85,6 +87,7 @@ jobs:
           context: .
           file: ./civicpatch/Dockerfile.github-actions
           push: true
-          tags: ghcr.io/civicpatch/civicpatch-github-actions:latest
+          #tags: ghcr.io/civicpatch/civicpatch-github-actions:latest
+          tags: code.wizards.cafe/witch/civicpatch-github-actions:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
