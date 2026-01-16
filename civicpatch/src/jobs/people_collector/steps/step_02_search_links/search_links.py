@@ -87,6 +87,9 @@ def search_links(context: PeopleCollectorContext) -> tuple[List[Link], SearchLin
         search_engine: SearchEngineState(links=interleaved_urls, status=status_value),
     }
 
+    if error_message:
+        logger.error(f"Error during search with {search_engine}: {error_message}")
+
     return updated_links, SearchLinksStep(
         search_link_pointer=search_link_pointer + 1,
         search_engines=updated_search_engines,
@@ -123,6 +126,7 @@ def municipality_search(
     )
 
     if not results:
+        logger.error(f"No results found with {search_engine}")
         raise Exception(f"No results found with {search_engine}")
 
     logger.info(
