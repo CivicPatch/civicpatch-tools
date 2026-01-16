@@ -143,6 +143,7 @@ async def home(
     except Exception as e:
         user = None
         api_keys = []
+        api_usage = {}
         approved_user = False
         user_details = None
 
