@@ -1,7 +1,7 @@
 from jobs.people_collector.schemas import WorkflowStatus, WorkflowConfig
 from pydantic import BaseModel
 from shared.utils import id_utils
-from typing import List
+from typing import List, Optional
 from urllib.parse import urlparse
 
 class PeopleCollectorJobRequest(BaseModel):
