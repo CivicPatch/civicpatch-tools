@@ -11,6 +11,7 @@ from database import (
     update_job_status,
     register_job,
     update_job_result,
+    update_job_pull_request_url
 )
 from utils.auth import get_user
 import shared.utils.id_utils
@@ -53,7 +54,8 @@ class DeleteJobResponse(BaseModel):
     status: str
 
 class PostJobResultRequest(BaseModel):
-    data: Any
+    pull_request_url: Optional[str] = None
+    data: Optional[Any] = None
 
 class ErrorResponse(BaseModel):
     error: str
@@ -185,9 +187,18 @@ def get_router(api_key_header):
         request_id: str,
         request: PostJobResultRequest
     ):
-        serialized_result = request.data
-        await update_job_result(request_id, serialized_result)
-        return {"request_id": request_id}
+        errors = []
+        if request.data:
+            serialized_result = request.data
+            result_update = await update_job_result(request_id, serialized_result)
+            if not result_update:
+                errors.append("Failed to update job result, job may not exist")
+        if request.pull_request_url:
+            pull_request_update = await update_job_pull_request_url(request_id, pull_request_url=request.pull_request_url)
+            if not pull_request_update:
+                errors.append("Failed to update pull request URL, job may not exist")
+        response = {"request_id": request_id, "errors": errors}
+        return response
 
 
     @router.delete(
