@@ -25,8 +25,8 @@ def format_output(context: PeopleCollectorContext) -> List[Official]:
     # TODO: Make this more generic later
     division_configs = get_divisions()
     for i in range(len(data)):
-        division_string = data[i].office.division_id
-        data[i].office.division_id = normalize_division(jurisdiction_ocdid, division_string, division_configs)
+        division_string = data[i].office.division_ocdid
+        data[i].office.division_ocdid = normalize_division(jurisdiction_ocdid, division_string, division_configs)
 
     return data
 

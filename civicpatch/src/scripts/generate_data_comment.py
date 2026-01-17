@@ -22,7 +22,7 @@ def generate_data_comment(data: List[Official]) -> str:
     for person in data:
         name = person.name
         office_name = person.office.name if person.office.name else "N/A"
-        divisions = person.office.division_id if person.office.division_id else "N/A"
+        divisions = person.office.division_ocdid if person.office.division_ocdid else "N/A"
         emails = person.emails if person.emails else "N/A"
         phones = person.phones if person.phones else "N/A"
         urls = ", ".join(format_url(url) for url in person.urls) if person.urls else "N/A"
