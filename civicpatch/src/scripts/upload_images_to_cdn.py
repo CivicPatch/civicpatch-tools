@@ -6,7 +6,7 @@ import boto3
 import yaml
 from botocore.client import Config
 
-from domain.models import Person
+from domain.models import Official
 from shared.utils import data_path_utils
 from shared.utils import id_utils
 
@@ -21,13 +21,11 @@ def upload_images_to_cdn(jurisdiction_ocdid: str):
     image_path = data_path_utils.get_images_path(jurisdiction_ocdid)
     image_map_file_path = os.path.join(image_path, "image_map.json")
 
-    people_file_path = data_path_utils.get_data_file_path(jurisdiction_ocdid)
-
     serialized_people = data_path_utils.get_data(
         jurisdiction_ocdid
     )
 
-    people = [Person(**person) for person in serialized_people]
+    people = [Official(**person) for person in serialized_people]
 
     with open(image_map_file_path) as f:
         image_map = yaml.safe_load(f)
