@@ -72,7 +72,12 @@ async def research_municipality_transition(job_config: JobConfig, logger: Workfl
                 Link(url=sl, status=LinkStatus.PENDING.value)
                 for sl in next_context.data.config.source_urls
             ]
-        next_state = WorkflowStatus.SCRAPE_PAGE
+        
+        if context.links.length == 0:
+            logger.info("No valid source URLs found after processing.")
+            next_state = WorkflowStatus.SEARCH_LINKS
+        else:
+            next_state = WorkflowStatus.SCRAPE_PAGE
     else:
         logger.info("Source URLs not found, using search engine for links.")
         next_state = WorkflowStatus.SEARCH_LINKS
