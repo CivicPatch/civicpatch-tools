@@ -5,7 +5,6 @@ from jobs.people_collector.schemas import (
     LinkStatus,
     PeopleCollectorContext,
     WorkflowStatus,
-    ResearchMunicipalityStep,
     SearchEngineState,
     SearchLinksStep,
 )
@@ -14,11 +13,28 @@ from utils import log_utils
 from utils.array_utils import interleave_arrays
 from utils.request_utils import with_retry
 
-from .utils import SearchEngineNames, search
+from services.google_search import search as google_search
+from services.serp_search import search as serp_search
+from services.brave_search import search as brave_search 
+from utils import cost_utils
+
+from jobs.people_collector.steps.step_02_search_links.crawl import crawl
 
 MAX_RETRIES = 3
+# The order here defines the order of search attempts
+SEARCH_SERVICES = {
+    "google": google_search,
+    #"serpapi": serp_search,
+    #"brave": brave_search,
+    "crawl": crawl
+}
 
-def search_links(context: PeopleCollectorContext) -> tuple[List[Link], SearchLinksStep]:
+SearchEngineNames = list(SEARCH_SERVICES.keys())
+
+# TODO: Half-written with AI, half edited by myself this is so ugly it needs to die in a fire
+# TBD please fix
+
+async def search_links(context: PeopleCollectorContext) -> tuple[List[Link], SearchLinksStep]:
     """
     Search for links using multiple search engines and queries.
     """
@@ -44,27 +60,31 @@ def search_links(context: PeopleCollectorContext) -> tuple[List[Link], SearchLin
 
     search_engine = SearchEngineNames[search_link_pointer]
 
-    if not search_engine:
-        return {}  # TODO set failure
-
-    def search_all_keywords():
+    async def search_all_keywords():
         urls_found = []
-        for keyword_term in keyword_term_groups:
-            logger.info(f"Searching for keyword term: {keyword_term}")
-            urls_for_term = municipality_search(
-                logger,
-                request_id,
-                jurisdiction_ocdid,
-                municipality_name,
-                municipality_website,
-                search_engine,
-                keyword_term,
-            )
-            urls_found.append(urls_for_term)
+
+        if search_engine == "crawl":
+            keys = list(keyword_term_groups.keys())
+            values = [keyword for keywords in keyword_term_groups.values() for keyword in keywords]
+            flattened_keywords = keys + values
+            urls_found = await crawl(logger, flattened_keywords, municipality_website)
+        else:
+            for keyword_term, keywords in keyword_term_groups.items():
+                logger.info(f"Searching for keyword term: {keyword_term}, keywords: {keywords}",)
+                urls_for_term = await municipality_search(
+                    logger,
+                    request_id,
+                    jurisdiction_ocdid,
+                    municipality_name,
+                    municipality_website,
+                    search_engine,
+                    keyword_term,
+                )
+                urls_found.append(urls_for_term)
         return urls_found
 
     try:
-        urls_found = with_retry(logger, MAX_RETRIES, search_all_keywords)
+        urls_found = await with_retry(logger, MAX_RETRIES, search_all_keywords)
         status_value = "completed"
         error_message = None
     except Exception as e:
@@ -96,7 +116,7 @@ def search_links(context: PeopleCollectorContext) -> tuple[List[Link], SearchLin
         error=error_message,
     ),
 
-def municipality_search(
+async def municipality_search(
     logger,
     request_id,
     jurisdiction_ocdid,
@@ -115,7 +135,7 @@ def municipality_search(
     keyword_with_type = f"{municipality_name} {query_keywords}"
 
     # Perform the search
-    results = search(
+    results = await search(
         logger,
         search_engine=search_engine,
         request_id=request_id,
@@ -135,3 +155,34 @@ def municipality_search(
     urls.extend(results)
 
     return urls  # Return results immediately on success
+
+async def search(logger, search_engine: str, request_id, jurisdiction_ocdid, municipality_name, municipality_website, search_query: str):
+    """
+    Perform a search using a specific search engine.
+    """
+    search_service = SEARCH_SERVICES[search_engine]
+
+    logger.info(f"Searching with {search_engine} for {search_query}")
+    keyword_with_type = f"{municipality_name} {search_query}"
+
+    results = await search_service(
+        logger,
+        search_query=keyword_with_type,
+        site_search=municipality_website
+    )
+
+    if not results:
+        raise Exception(f"No results found with {search_engine}")
+
+    results_without_pdfs = [url for url in results if not ".pdf" in url.lower()]
+    results = results_without_pdfs
+
+    for result in results:
+        logger.info(f"-> {result}")
+
+    cost_utils.add_search_engine_cost(
+        request_id=request_id,
+        jurisdiction_ocdid=jurisdiction_ocdid,
+        search_engine_name=search_engine
+    )
+    return results

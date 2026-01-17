@@ -22,7 +22,7 @@ MODEL_FALLBACKS = [
 # Note: CANNOT get flash-lite to extract dates
 MAX_RETRIES = 5
 
-def run_prompt(
+async def run_prompt(
         request_id, 
         jurisdiction_ocdid: str, 
         prompt, 
@@ -78,7 +78,7 @@ def run_prompt(
     for model in MODEL_FALLBACKS:
         try:
             start_time = time.time()
-            result = with_retry(logger, MAX_RETRIES, lambda: execute(model))
+            result = await with_retry(logger, MAX_RETRIES, lambda: execute(model))
             end_time = time.time()
             logger.info(f"gemini {model} LLM call took {end_time - start_time:.2f} seconds")
             return result   

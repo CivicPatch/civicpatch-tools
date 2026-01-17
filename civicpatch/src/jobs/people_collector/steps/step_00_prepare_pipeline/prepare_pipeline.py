@@ -21,8 +21,6 @@ async def prepare_pipeline(context: PeopleCollectorContext) -> None:
     logger = log_utils.get_workflow_logger(jurisdiction_ocdid)
     logger.clear()
 
-    logger.info(f"Step 0: {WorkflowStatus.INIT.value}")
-
     # Create/clear cache folder
     cache_path = get_cache_path(jurisdiction_ocdid)
     if os.path.exists(cache_path):

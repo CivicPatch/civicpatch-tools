@@ -53,10 +53,10 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:nj/county:camden/place:gloucester/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:nj/place:washington/government",
     "config": {
-        "url": "https://www.glotwp.com/",
-        "name": "Gloucester township"
+        "url": "https://www.twp.washington.nj.us/",
+        "name": "Township of Washington"
     }
   }'
 """
