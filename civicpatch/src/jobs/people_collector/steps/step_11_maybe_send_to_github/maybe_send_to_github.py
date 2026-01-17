@@ -17,7 +17,7 @@ from utils.request_utils import with_retry
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
 
 
-def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubStep:
+async def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 11: {WorkflowStatus.MAYBE_SEND_TO_GITHUB.value}")
 
@@ -64,7 +64,7 @@ def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGitHubSt
             "jurisdiction_ocdid": context.data.jurisdiction_ocdid,
         }
 
-        response = with_retry(
+        response = await with_retry(
             logger,
             max_retries=5,
             func=lambda: requests.post(

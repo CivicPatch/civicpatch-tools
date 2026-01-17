@@ -109,7 +109,6 @@ government_types:
           - council member vice president
           - council member vice-president
       - role: council manager
-      - role: trustee
       - role: council member
         aliases:
           - council-member
@@ -156,6 +155,7 @@ government_types:
         - council districts
         - city hall
         - council
+        - municipal directory
       elected officials:
         - elected officials
         - city administration
@@ -185,7 +185,8 @@ government_types:
         - council president
         - council manager
       elected officials:
-          - elected officials
+        - elected officials
+        - municipal directory
   select_board:
     roles:
       - role: mayor # Optional, not always present
@@ -254,6 +255,7 @@ government_types:
         - bios
         - meet
         - about
+        - municipal directory
   aldermen:
     roles:
       - role: mayor # Optional, not always present
@@ -306,3 +308,4 @@ government_types:
         - bios
         - meet
         - about
+        - municipal directory

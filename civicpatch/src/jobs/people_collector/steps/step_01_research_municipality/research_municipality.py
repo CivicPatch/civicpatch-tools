@@ -13,7 +13,7 @@ from utils import people_utils, log_utils
 
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
 
-def research_municipality(context: PeopleCollectorContext) -> tuple[ProgressState, ResearchMunicipalityStep]:
+async def research_municipality(context: PeopleCollectorContext) -> tuple[ProgressState, ResearchMunicipalityStep]:
     """
     Research the municipality to gather necessary data for further processing.
     """
@@ -23,7 +23,7 @@ def research_municipality(context: PeopleCollectorContext) -> tuple[ProgressStat
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     municipality_name = context.data.config.name
     prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_ocdid, municipality_name)
-    response = google_gemini_llm.run_prompt(request_id, jurisdiction_ocdid, prompt, with_search=True)
+    response = await google_gemini_llm.run_prompt(request_id, jurisdiction_ocdid, prompt, with_search=True)
     if not response:
         raise ValueError("No response from LLM")
     people = response.get("people", [])

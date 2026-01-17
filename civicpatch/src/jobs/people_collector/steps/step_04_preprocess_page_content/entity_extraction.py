@@ -14,6 +14,18 @@ def get_nlp():
         _nlp.max_length = 2000000  # Increase max length if needed
     return _nlp
 
+# This belongs under search_links
+def sort_urls_by_keyword_similarity(keywords, urls):
+    nlp = get_nlp()
+    pattern_docs = [nlp(k) for k in keywords]
+    sorted_urls = []
+    for url, text in urls:
+        doc = nlp(f"{url} {text}")
+        score = max(doc.similarity(pattern_doc) for pattern_doc in pattern_docs)
+        sorted_urls.append((url, score))
+
+    return sorted(sorted_urls, key=lambda x: x[1], reverse=True)
+
 def extract_keywords(doc, government_type):
     """Extract keywords using a PhraseMatcher."""
     if not government_type:

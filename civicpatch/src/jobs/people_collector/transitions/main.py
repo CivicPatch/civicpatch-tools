@@ -11,7 +11,7 @@ from jobs.people_collector.steps.step_01_research_municipality.research_municipa
     research_municipality,
 )
 from jobs.people_collector.steps.step_02_search_links.search_links import search_links
-from jobs.people_collector.steps.step_02_search_links.utils import SearchEngineNames
+from jobs.people_collector.steps.step_02_search_links.search_links import SearchEngineNames
 from jobs.people_collector.steps.step_03_scrape_page.scrape_page import scrape_page
 from jobs.people_collector.steps.step_04_preprocess_page_content.preprocess_page_content import (
     preprocess_page_content,
@@ -54,7 +54,7 @@ async def start_job(job_config: JobConfig, logger: WorkflowLogger, context: Peop
     return context, WorkflowStatus.RESEARCH_MUNICIPALITY
 
 async def research_municipality_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
-    progress, result = research_municipality(context)
+    progress, result = await research_municipality(context)
     next_state = WorkflowStatus.SEARCH_LINKS
 
     new_data = context.data.copy(update={
@@ -73,11 +73,7 @@ async def research_municipality_transition(job_config: JobConfig, logger: Workfl
                 for sl in next_context.data.config.source_urls
             ]
         
-        if context.links.length == 0:
-            logger.info("No valid source URLs found after processing.")
-            next_state = WorkflowStatus.SEARCH_LINKS
-        else:
-            next_state = WorkflowStatus.SCRAPE_PAGE
+        next_state = WorkflowStatus.SCRAPE_PAGE
     else:
         logger.info("Source URLs not found, using search engine for links.")
         next_state = WorkflowStatus.SEARCH_LINKS
@@ -101,14 +97,18 @@ async def search_links_transition(_: JobConfig, logger: WorkflowLogger, context:
         logger.info("All search engines have been processed.")
         next_state = WorkflowStatus.MERGE_RECORDS_WITHIN_LLM
     else:
-        links, result = search_links(context)
+        links, result = await search_links(context)
         next_context = context.copy(update={
             "data": context.data.copy(update={
                 "links": links,
                 "search_links_step": result
             })
         })
-        next_state = WorkflowStatus.SCRAPE_PAGE
+        if len(links) == 0:
+            logger.info("No links found, re-running step to try next search engine.")
+            next_state = WorkflowStatus.SEARCH_LINKS
+        else:
+            next_state = WorkflowStatus.SCRAPE_PAGE
 
     progress = calculate_progress_percentage(context.data.progress, 2)
     await update_people_job_status(
@@ -190,7 +190,7 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
         return context, WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS
 
     page_to_process = preprocessed_links[0] 
-    result = process_page_content(context, page_to_process)
+    result = await process_page_content(context, page_to_process)
     next_context = context.copy(update={
         "data": context.data.copy(update={
             "links": result.links,
@@ -316,7 +316,7 @@ async def maybe_send_to_github_transition(_: JobConfig, logger: WorkflowLogger, 
         context.request_id, context.data.jurisdiction_ocdid
     )
 
-    _ = maybe_send_to_github(context)
+    _ = await maybe_send_to_github(context)
 
     progress = calculate_progress_percentage(context.data.progress, 11)
     await update_people_job_status(

@@ -1,15 +1,18 @@
 import time
 import random
+import asyncio
+import inspect
 
 BASE_SLEEP = 2
 
-def with_retry(logger, max_retries, func):
+async def with_retry(logger, max_retries, func, *args, **kwargs):
     """
-    Execute a function with retry logic.
+    Execute a function with retry logic. Supports both sync and async functions.
 
     Args:
         max_retries: Maximum number of retry attempts.
         func: Function to execute, passed as a callable.
+        *args, **kwargs: Arguments to pass to the function.
 
     Returns:
         The result of the function if successful.
@@ -21,12 +24,18 @@ def with_retry(logger, max_retries, func):
 
     while retry_attempts <= max_retries:
         try:
-            return func()
+            if inspect.iscoroutinefunction(func):
+                return await func(*args, **kwargs)
+            else:
+                return func(*args, **kwargs)
         except Exception as e:
             if retry_attempts < max_retries:
                 sleep_time = BASE_SLEEP ** retry_attempts + random.uniform(0, 1)
                 logger.warning(f"{e} - Retrying in {sleep_time:.2f} seconds... (Attempt #{retry_attempts + 1})")
-                time.sleep(sleep_time)
+                if inspect.iscoroutinefunction(func):
+                    await asyncio.sleep(sleep_time)
+                else:
+                    time.sleep(sleep_time)
                 retry_attempts += 1
             else:
                 raise e

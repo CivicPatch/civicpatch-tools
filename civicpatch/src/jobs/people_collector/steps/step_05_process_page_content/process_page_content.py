@@ -76,7 +76,7 @@ DEFAULT_PROCESS_PAGE_CONTENT_STEP = ProcessPageContentStep(
     }
 )
 
-def process_page_content(context: PeopleCollectorContext, page_to_process: Link) -> ProcessPageContentStep:
+async def process_page_content(context: PeopleCollectorContext, page_to_process: Link) -> ProcessPageContentStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 5: {WorkflowStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
@@ -88,7 +88,7 @@ def process_page_content(context: PeopleCollectorContext, page_to_process: Link)
     merged_identities = merge_config_into_names(context.data.identities, current_step.identities)
     
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
-    llm_responses = process_with_llms(
+    llm_responses = await process_with_llms(
         page_to_process.url, 
         context.request_id, 
         context.data.jurisdiction_ocdid,
@@ -275,7 +275,7 @@ def update_records_by_llm(
 
     return updated_identities, updated_records_by_llm
 
-def process_with_llms(
+async def process_with_llms(
     source_url: str,
     request_id,
     jurisdiction_ocdid: str,
@@ -289,7 +289,7 @@ def process_with_llms(
     responses: Dict[str, List[LLMPerson]] = {}
     for llm in LLMS:
         prompt = llm["prompt"].municipality_officials_prompt(government_type, people_hint)
-        response = llm["service"].run_prompt(
+        response = await llm["service"].run_prompt(
             request_id,
             jurisdiction_ocdid,
             prompt,
