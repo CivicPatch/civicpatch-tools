@@ -4,7 +4,7 @@ from enum import Enum
 
 class Office(BaseModel):
     name: str
-    division_id: Optional[str] = None
+    division_ocdid: Optional[str] = None
  
     start_date: Optional[str] = None
     end_date: Optional[str] = None
@@ -52,7 +52,7 @@ def person_to_official(person: Person) -> Official:
 
         office=Office(
             name=" - ".join(person.roles),
-            division_id=person.divisions[0] if person.divisions else None,
+            division_ocdid=person.divisions[0] if person.divisions else None,
             start_date=person.start_date or None,
             end_date=person.end_date or None,
         ),
