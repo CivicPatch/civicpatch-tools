@@ -17,7 +17,7 @@ services:
 
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
-    image: code.wizards.cafe/witch/civicpatch-github-actions:latest
+    image: ghcr.io/civicpatch/civicpatch-github-actions:latest
     #build:
     #  context: ..
     #  dockerfile: civicpatch/Dockerfile.github-actions

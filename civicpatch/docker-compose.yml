@@ -21,7 +21,7 @@ services:
     #  context: ..
     #  dockerfile: civicpatch/Dockerfile
     #  target: production
-    image: code.wizards.cafe/witch/civicpatch:latest
+    image: ghcr.io/civicpatch/civicpatch:latest
     user: "${UID:-1000}:${GID:-1000}"
     ports:
       - "8000:8000"
