@@ -6,14 +6,13 @@ class Office(BaseModel):
     name: str
     division_ocdid: Optional[str] = None
  
-    start_date: Optional[str] = None
-    end_date: Optional[str] = None
-
 class Official(BaseModel):
     name: str
     phones: List[str] = []
     emails: List[str] = []
     urls: List[str] = []
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
 
     office: Office = None
 
@@ -49,12 +48,12 @@ def person_to_official(person: Person) -> Official:
         phones=person.phones,
         emails=person.emails,
         urls=person.urls,
+        start_date=person.start_date or None,
+        end_date=person.end_date or None,
 
         office=Office(
             name=" - ".join(person.roles),
             division_ocdid=person.divisions[0] if person.divisions else None,
-            start_date=person.start_date or None,
-            end_date=person.end_date or None,
         ),
 
         image=person.image or None,
