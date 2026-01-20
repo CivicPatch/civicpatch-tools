@@ -93,7 +93,7 @@ Extraction Guidelines:
 - Term Dates (`start_date`, `end_date`):
   - Extract start_date and end_date in YYYY, YYYY-MM, or YYYY-MM-DD format.
   - Acceptable date phrases include:
-    - “Elected [date]”, “Appointed [date]”, “Term: [date1] to [date2]”, “Since [date]”.
+    - “Sworn in [date]”, “Appointed [date]”, “Term: [date1] to [date2]”, “Since [date]”.
     - For vague phrases like "Spring 2025", extract the year only.
   - If more than one term is mentioned, extract the most recent term dates.
   - Examples:
