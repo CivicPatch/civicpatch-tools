@@ -128,9 +128,9 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
         - If no explicit dates are found, set both `start_date` and `end_date` to `null`.
 
     Additional Rules:
-    - Only extract officials if their information appears in a structured listing (such as a table, list, or directory) or in a dedicated biography/about/contact section.
+    - Only extract officials if their information appears in a **structured listing** (such as a table, list, or directory) or in a **dedicated biography/about/contact section**.
     - **Do NOT extract officials based on mentions in news articles, event summaries, meeting notes, or scattered references throughout the content.**
-    - If the only mentions of officials are within news stories, event recaps, meeting summaries, or scattered throughout the text (not in a structured list or dedicated section), return an empty array.
+    - If the only mentions of officials are within news stories, event recaps, meeting summaries, or scattered throughout the text (not in a structured list or dedicated section), **return an empty array**.
     - Do NOT infer or guess officials' names or roles from context, prior knowledge, or recent mentions. Only extract if the information is presented in a structured way or in a dedicated section.
     - Ensure all extracted details refer to the **current term** of the official.
     - Use the provided current date ({current_date}) to filter out officials, roles, 
@@ -139,5 +139,5 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
 
     Example of what NOT to extract:
-    - If the content only mentions that an official attended an event, was quoted in a news article, or is referenced in a meeting summary, and there is no structured list or dedicated biography/about/contact section, **do NOT extract these people. Return an empty array.**
+    - If the content only mentions that an official attended an event, was quoted in a news article, or is referenced in a meeting summary, and there is no structured list or dedicated biography/about/contact section, **return an empty array**.
     """
