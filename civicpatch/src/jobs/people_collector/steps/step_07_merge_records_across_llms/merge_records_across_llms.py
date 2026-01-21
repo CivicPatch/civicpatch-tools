@@ -122,12 +122,10 @@ def check_for_missing_person(person_name: str, grouped_people_by_llm: Dict[str, 
     
     return None
 
-
 def group_records_across_llms(people_by_llm: Dict[str, List[Person]]) -> List[Dict[str, List[Person]]]:
     """
-    Group records across LLMs based on weak ties.
+    Group records across LLMs based on exact name match and weak ties.
     Returns a list of groups, where each group is a dict mapping LLM -> List[Person] for that identity.
-
     Ex:
     [
         {
@@ -146,34 +144,51 @@ def group_records_across_llms(people_by_llm: Dict[str, List[Person]]) -> List[Di
         for person in people
     ]
     
+    if not all_people_with_source:
+        return []
+    
     visited = set()
     groups = []
-
+    
     for i, (person, llm) in enumerate(all_people_with_source):
         if i in visited:
             continue
-
+        
         # Start a new group with the current person
         group = {llm: [person]}
         visited.add(i)
-
-        # Compare with all other people
-        for j, (other_person, other_llm) in enumerate(all_people_with_source):
-            if j in visited:
+        
+        # Use a queue to handle transitive grouping
+        # (if A matches B and B matches C, then A, B, C should all be in one group)
+        to_check = [(person, llm)]
+        checked = set()
+        
+        while to_check:
+            current_person, current_llm = to_check.pop(0)
+            if id(current_person) in checked:
                 continue
+            checked.add(id(current_person))
             
-            # Check if this person matches anyone already in the group
-            if any(merge_utils.is_weakly_tied(existing_person, other_person) 
-                   for existing_people in group.values() 
-                   for existing_person in existing_people):
+            # Compare with all other people
+            for j, (other_person, other_llm) in enumerate(all_people_with_source):
+                if j in visited:
+                    continue
                 
-                if other_llm not in group:
-                    group[other_llm] = []
-                group[other_llm].append(other_person)
-                visited.add(j)
-
+                # Check for exact name match OR weak tie
+                is_match = (
+                    current_person.name and other_person.name and 
+                    current_person.name == other_person.name
+                ) or merge_utils.is_weakly_tied(current_person, other_person)
+                
+                if is_match:
+                    if other_llm not in group:
+                        group[other_llm] = []
+                    group[other_llm].append(other_person)
+                    visited.add(j)
+                    to_check.append((other_person, other_llm))
+        
         groups.append(group)
-
+    
     return groups
 
 def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Person:
