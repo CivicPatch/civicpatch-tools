@@ -6,7 +6,6 @@ import shared.utils.config_utils as config_utils
 def municipality_officials_prompt(government_type: str, people_hint: List[ResearchedPerson]):
     """
     Generate a single prompt string for extracting city officials, following the detailed Ruby and Gemini logic.
-    If people_hint has exactly one entry, treat that as person_name for targeting.
     """
 
     roles = config_utils.get_roles_by_government_type(government_type)
@@ -15,93 +14,62 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
 
     maybe_target_people = [p.name for p in (people_hint or []) if p.name]
 
-    if len(maybe_target_people) == 1:
-        person_name = maybe_target_people[0]
-        target_text = f"the person named '{person_name}'"
-    elif maybe_target_people:
-        person_name = ""
+    if maybe_target_people:
         target_text = (
-            f"any of the main governing body of a municipality. "
             f"Here is a list of known target people (may be missing or include extra): {', '.join(maybe_target_people)}"
         )
     else:
-        person_name = ""
-        target_text = "any of the main governing body of a municipality."
-
-    content_type = (
-        f"First, determine if the content contains relevant information about {target_text}.\n"
-        "Do not include people whose terms have ended.\n"
-        "If not, return an empty JSON array `[]`."
-    )
+        target_text = ""
 
     prompt = f"""
-You are an expert data extractor focused on accuracy.
+    Your task is to extract information about the **current** officials of the target municipality.
 
-{content_type}
+    {target_text}
 
-Target Person (if applicable): {person_name}
-Target roles: {', '.join(roles)}
-Target divisions: {', '.join(division_names)}
-Current Date: {current_date}
+    Only extract people who are currently serving as officials as of {current_date}. 
+    Do not include anyone who is described as former, past, resigned, deceased, 
+    or otherwise not currently in office.
 
-Return a JSON object.
+    First, determine if the content contains a **structured listing** (such as a table, list, or directory) of officials, or a **dedicated biography/about/contact section** for an official. If not, return an empty JSON array `[]`.
 
-Output Field Definitions & Structure:
-- name: (String) Full name only (no titles).
-- image: (String or null) URL to profile image (https://...)
-- roles: (Array of strings) Active municipal roles.
-         Identify their official job title or specific position.
-         This can be a wide variety of municipal roles (e.g., "Mayor", "City Manager", "Selectman",
-         "Alderman", "Council Member").
-- divisions: (Array of strings) Specific district/ward and name/number,
-          only if specified (e.g., "Ward 1", "District 2").
-- phone: (String or null) Formatted phone number
-- email: (String or null) Email address (email@example.com)
-- url: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
-- start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
-- end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    Target roles: {', '.join(roles)}
+    Target divisions: {', '.join(division_names)}
+    Current Date: {current_date}
 
-Extraction Guidelines:
-- Roles extraction:
-  - Extract roles that match the **target roles** provided (e.g., {', '.join(roles)}).
-  - If a role includes additional descriptors or variations, normalize it to the closest matching target role when possible.
-    - Example: "Vice President" under a governing body → Normalize to the closest matching target role, such as "Council Vice President" or "Commissioner Vice President."
-    - If a role cannot be normalized to a target role but is clearly valid (e.g., "Vice President"), extract it as-is.
-  - Use the governing body or surrounding context to determine the correct role for ambiguous titles.
-    - Example: If "Vice President" is listed under "Council Members," infer it as "Council Vice President."
-    - Example: If "Vice President" appears without clear context, extract it as "Vice President."
-  - Include only active roles (today is {current_date}).
+    Return a JSON object.
 
-- Divisions:
-  - Extract divisions if explicitly mentioned and relevant to the person's role.
-  - Do not infer divisions if they are not explicitly stated.
+    Output Field Definitions & Structure:
+    - name: (String) Full name only (no titles).
+    - image: (String or null) URL to profile image (https://...)
+    - roles: (Array of strings) Active municipal roles.
+    - divisions: (Array of strings) Specific district/ward and name/number, only if specified (e.g., "Ward 1", "District 2").
+    - phone: (String or null) Formatted phone number
+    - email: (String or null) Email address (email@example.com)
+    - url: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
+    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
 
-- General Guidelines:
-  - Merge details for the same person into a single record.
-  - Assign confidence (0-1 scale) and provide a brief reason for each field's data.
-  - Extract full names only (e.g., "John Smith," not "Mayor John Smith"). Titles belong in the roles field.
-  - Ensure extracted data is accurate and relevant to the governing body or target roles.
-- Image: Extract URL of portrait/headshot near name. Ignore logos, banners, icons. Check alt text but prioritize proximity/style.
-- Contact Details (Phone/Email/Url):
-  - Associate details logically if near the person's name/section.
-  - Pick the most relevant contact detail if multiple are present.
-  - Phone numbers:
-    - Extract number after labels like "Office:", "Cell:", "Mobile:", "Direct:", "Home:". Exclude "Fax:". Format numbers simply.
-  - Markdown Links: Extract email/phone from the VISIBLE TEXT of links like `[TEXT](...)`, ignore the target URL.
-  - `url` data MUST be a valid http/https URL. Prefer profile pages. EXCLUDE mailto:, tel:.
-  - `email` data should ONLY contain email addresses.
-- Term Dates (`start_date`, `end_date`):
-  - Extract start_date and end_date in YYYY, YYYY-MM, or YYYY-MM-DD format.
-  - Acceptable date phrases include:
-    - “Sworn in [date]”, “Appointed [date]”, “Term: [date1] to [date2]”, “Since [date]”.
-    - For vague phrases like "Spring 2025", extract the year only.
-  - If more than one term is mentioned, extract the most recent term dates.
-  - Examples:
-    - "Elected Nov 2024 for term ending Dec 2028" -> start_date: "2024-11", end_date: "2028-12"
-    - "Served January 2018 until December 2021 - Re-elected and serving January 2022 and until December 2025" -> start_date: "2022-01", end_date: "2025-12"
-    - "Elected in 2017 and re-elected in 2021 for the 2022-2025 term." -> start_date: "2022", end_date: "2025"
+    **Instructions:**
+    - Only extract officials if their information appears in a **structured listing** (e.g., table, list, or directory) or in a **dedicated biography/about/contact section**.
+    - A **structured listing** must explicitly include names and roles. Additional details (e.g., contact information, division, or term dates) are optional but preferred.
+    - **Do NOT extract officials based on mentions in news articles, event summaries, meeting notes, or scattered references throughout the content.**
+    - **Do NOT extract officials if the only evidence is a link, heading, or navigation item (e.g., "Mayor And Council") without an actual structured listing or dedicated section in the provided content.**
+    - **Do NOT extract officials based on contextual clues such as dates, roles, or ongoing activities unless they are explicitly part of a structured listing or dedicated section.**
+    - If the only mentions of officials are within news stories, event recaps, meeting summaries, or scattered throughout the text (not in a structured list or dedicated section), return an empty array.
+    - Do NOT infer or guess officials' names or roles from context, prior knowledge, or recent mentions. Only extract if the information is presented in a structured way or in a dedicated section.
+    - Do NOT include people whose terms have ended, resigned, vacated their roles, or are deceased.
+    - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
 
-**FINAL MANDATORY CHECK**: Review your entire response for accuracy before submitting,
-  paying close attention to the role inference, date extraction, and term identification rules.
-"""
+    **Examples of what NOT to extract:**
+    - "Mayor John Smith attended the ribbon-cutting ceremony for the new library."
+    - "Councilwoman Jane Doe was quoted in a news article about the town's budget."
+    - "Deputy Mayor Joe Bloggs was present at the community event on March 3, 2024."
+    - "Mayor and Council" is mentioned as a link or heading, but no structured listing or dedicated section is present.
+
+    **Examples of what to extract:**
+    - A table listing officials with their names and roles (e.g., "John Smith - Mayor, Jane Doe - Councilwoman").
+    - A section titled "Mayor and Council" that includes a list of officials with their roles, contact details, and/or biographies.
+
+    **FINAL MANDATORY CHECK:** Review your entire response for accuracy before submitting, paying close attention to the role inference, date extraction, and term identification rules.
+    """
     return prompt

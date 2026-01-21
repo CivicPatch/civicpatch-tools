@@ -140,7 +140,7 @@ def merge_records(llm_people_list: List[LLMPerson], jurisdiction_ocdid: str) -> 
             if j in visited:
                 continue
             if (
-                merge_utils.same_name(record, other_record) or 
+                merge_utils.same_name(record.name, other_record.name) or 
                 any(merge_utils.is_weakly_tied(group_record, other_record) for group_record in group)
             ):
                 group.append(other_record)

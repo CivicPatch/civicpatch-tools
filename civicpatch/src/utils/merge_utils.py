@@ -12,31 +12,29 @@ def normalize_name(name: str) -> str:
     """
     Normalize a name using nameparser to ensure consistent formatting.
     """
+    def remove_diacritics(text: str) -> str:
+        # TODO: May want to do whitelist instead of blacklist
+        return ''.join(
+            char for char in unicodedata.normalize('NFD', text)
+            if unicodedata.category(char) != 'Mn'
+        )
+
     formatted_name = name.replace('‘', "'")
     formatted_name = remove_diacritics(formatted_name)
     # trim whitespace
     formatted_name = formatted_name.strip()
     return formatted_name
 
-def remove_diacritics(text: str) -> str:
-    """
-    Normalize a string by removing diacritics (accents).
-    """
-    # TODO: May want to do whitelist instead of blacklist
-    return ''.join(
-        char for char in unicodedata.normalize('NFD', text)
-        if unicodedata.category(char) != 'Mn'
-    )
-
-def same_name(record1: LLMPerson, record2: LLMPerson) -> bool:
+def same_name(name1: str, name2: str) -> bool:
     """
     Check if two records have the same normalized name.
     """
 
     return (
-        first_name(record1.name) == first_name(record2.name)) & (
-            last_name(record1.name) == last_name(record2.name)
-        )
+        first_name(name1) == first_name(name2)
+    ) & (
+        last_name(name1) == last_name(name2)
+    )
 
 def first_name(name: str) -> str:
     """

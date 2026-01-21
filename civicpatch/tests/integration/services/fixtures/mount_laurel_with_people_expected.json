@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Stephen Steglik",
+    "roles": ["Mayor"],
+    "divisions": [],
+    "phone": null,
+    "email": "ssteglik@mountlaurel.com",
+    "url": null,
+    "start_date": "2026",
+    "end_date": "2026",
+    "image": "https://www.mountlaurel.com/revize_photo_gallery/Government/Mayor%20&%20City%20Council/steve%20headshot.jpg?t=202107091025590"
+  },
+  {
+    "name": "Silvia Catalan-Culnan",
+    "roles": ["Deputy Mayor"],
+    "divisions": [],
+    "phone": null,
+    "email": "scatalan-culnan@mountlaurel.com",
+    "url": null,
+    "start_date": null,
+    "end_date": null,
+    "image": "https://www.mountlaurel.com/silvia%20headshot%202.jpg?t=202501021420370"
+  },
+  {
+    "name": "Fozia Janjua",
+    "roles": ["Council Member"],
+    "divisions": [],
+    "phone": null,
+    "email": "fjanjua@mountlaurel.com",
+    "url": null,
+    "start_date": null,
+    "end_date": null,
+    "image": "https://www.mountlaurel.com/New%20Fozia%20headshot.jpg?t=202502210917220"
+  },
+  {
+    "name": "Nikitas Moustakas, Esq.",
+    "roles": ["Council Member"],
+    "divisions": [],
+    "phone": null,
+    "email": "nmoustakas@mountlaurel.com",
+    "url": null,
+    "start_date": null,
+    "end_date": null,
+    "image": "https://www.mountlaurel.com/revize_photo_gallery/Government/Mayor%20&%20City%20Council/nik.jpg?t=202106251245360"
+  },
+  {
+    "name": "Curtis Green",
+    "roles": ["Council Member"],
+    "divisions": [],
+    "phone": null,
+    "email": "cgreen@mountlaurel.com",
+    "url": null,
+    "start_date": null,
+    "end_date": null,
+    "image": "https://www.mountlaurel.com/Curtis%20Green%20headshot.jpg?t=202510060847300"
+  }
+]
