@@ -27,7 +27,7 @@ def generate_data_comment(data: List[Official]) -> str:
         phones = person.phones if person.phones else "N/A"
         urls = ", ".join(format_url(url) for url in person.urls) if person.urls else "N/A"
         term_dates = f"{person.start_date or 'N/A'} - {person.end_date or 'N/A'}"
-        image = f"![image of {person.name}]({person.image})" if person.image else "N/A"
+        image = f"![image of {person.name}]({person.cdn_image})" if person.cdn_image else "N/A"
 
         table_rows += f"| **{name}** | {office_name} | {divisions} | {emails} | {phones} | {urls} | {term_dates} | {image} |\n"
 

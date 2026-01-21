@@ -63,3 +63,24 @@ async def test_run_prompt_mount_laure_without_people():
     )
     formatted_response = PeopleArrayLLMResponseSchema.model_validate(response)
     assert len(formatted_response.people) == 0
+
+@pytest.mark.asyncio
+async def test_run_prompt_austin_without_emails():
+    with open(FIXTURES_FOLDER / "austin_without_emails.md", "r") as f:
+        content = f.read()
+
+    prompt = municipality_officials_prompt(
+        "mayor_council",
+        []
+    )
+    response = await run_prompt(
+        TEST_REQUEST_ID,
+        "ocd-jurisdiction/country:us/state:tx/place:austin/government",
+        prompt,
+        response_schema=PeopleArrayLLMResponseSchema,
+        content=content,
+        with_search=False
+    )
+    formatted_response = PeopleArrayLLMResponseSchema.model_validate(response)
+    for person in formatted_response.people:
+        assert not person.email  # Ensure no emails are extracted

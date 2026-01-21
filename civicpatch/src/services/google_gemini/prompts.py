@@ -103,6 +103,7 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
 
     Guidelines:
+    - **Only extract information that is explicitly present in the provided content. Do NOT infer or fabricate any details, including email addresses, phone numbers, or URLs.**
     - Roles extraction:
         - Extract roles that match the **target roles** provided (e.g., {', '.join(roles)}).
     - Division extraction:
@@ -130,14 +131,17 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     Additional Rules:
     - Only extract officials if their information appears in a **structured listing** (such as a table, list, or directory) or in a **dedicated biography/about/contact section**.
     - **Do NOT extract officials based on mentions in news articles, event summaries, meeting notes, or scattered references throughout the content.**
-    - If the only mentions of officials are within news stories, event recaps, meeting summaries, or scattered throughout the text (not in a structured list or dedicated section), **return an empty array**.
-    - Do NOT infer or guess officials' names or roles from context, prior knowledge, or recent mentions. Only extract if the information is presented in a structured way or in a dedicated section.
+    - If the content contains any unstructured mentions of officials (e.g., in news articles, event summaries, or meeting notes), **ignore these mentions entirely** and return an empty array if no structured listing or dedicated section is found.
+    - Do NOT infer or guess officials' names, roles, or contact details from context, prior knowledge, or recent mentions. Only extract if the information is presented in a structured way or in a dedicated section.
+    - If the content contains a mix of structured listings and unstructured mentions, only extract information from the structured listings or dedicated sections.
     - Ensure all extracted details refer to the **current term** of the official.
     - Use the provided current date ({current_date}) to filter out officials, roles, 
         or terms that are no longer active.
     - Exclude individuals who have resigned, vacated their roles, or are deceased.
     - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
 
-    Example of what NOT to extract:
-    - If the content only mentions that an official attended an event, was quoted in a news article, or is referenced in a meeting summary, and there is no structured list or dedicated biography/about/contact section, **return an empty array**.
+    Examples of what NOT to extract:
+    - If the content only mentions that an official attended an event, was quoted in a news article, 
+      or is referenced in a meeting summary, and there is no structured list or 
+      dedicated biography/about/contact section, **return an empty array**.
     """
