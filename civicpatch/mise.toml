@@ -28,7 +28,7 @@ run = "docker compose -f docker-compose.development.yml exec civicpatch-frontend
 # run = "docker compose -f docker-compose.development.yml run --rm civicpatch poetry run pytest -s -vv tests/integration/services/together_ai/test_llm.py"
 # docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m integration tests/integration
 run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch xvfb-run -a pytest -m integration tests/integration/steps
+docker compose -f docker-compose.development.yml run --rm civicpatch xvfb-run -a pytest -vvm integration tests/integration/services/google_gemini
 """
 
 [tasks.devunittest]
