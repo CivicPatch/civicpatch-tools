@@ -7,7 +7,6 @@ def merge_field(field: str, values: List[str]) -> Any:
     - If all values are empty, return empty string
     - If no value has at least 2 occurrences, return empty string
     - Otherwise, return the most common non-empty value
-    
     """
     non_empty_values = [v for v in values if v]
     if not non_empty_values:
@@ -28,12 +27,14 @@ def merge_field_to_list(records: List[List[str]]) -> List[str]:
     """
     Merge a multi-value field (e.g., emails, phones, urls) from a list of lists of strings.
     Collect unique values and include only those that appear in at least two records.
+    Case-insensitive: "A@B.com" and "a@b.com" are treated as the same.
     """
-    # Flatten the list of lists and count occurrences of each value
+    # Flatten the list of lists and count occurrences of each value (case-insensitive)
     all_values = [value for sublist in records for value in sublist]
-    value_counter = Counter(all_values)
+    lower_map = {v.lower(): v for v in all_values}  # preserve original casing of first occurrence
+    value_counter = Counter(v.lower() for v in all_values)
 
-    # Keep only values that appear in at least two records
-    merged_values = [value for value, count in value_counter.items() if count >= 2]
+    # Keep only values that appear in at least two records (case-insensitive)
+    merged_values = [lower_map[value] for value, count in value_counter.items() if count >= 2]
 
     return merged_values
