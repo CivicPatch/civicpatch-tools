@@ -13,6 +13,7 @@ def test_generate_table_with_full_data():
         urls=["https://example.com"],
         start_date="2020-01-01",
         end_date="2024-01-01",
+        image="https://example.com/jane.jpg",
         cdn_image="https://cdn.example.com/jane.jpg",
         jurisdiction_ocdid="ocd-division/country:us",
         source_urls=["https://source.com"],
@@ -21,7 +22,7 @@ def test_generate_table_with_full_data():
     table = generate_data_comment([official])
     assert "Jane Doe" in table
     assert "[Link](https://example.com)" in table
-    assert "![](https://cdn.example.com/jane.jpg)" in table
+    assert "![image of Jane Doe](https://example.com/jane.jpg)" in table
 
 def test_generate_table_with_missing_data():
     official = Official(
