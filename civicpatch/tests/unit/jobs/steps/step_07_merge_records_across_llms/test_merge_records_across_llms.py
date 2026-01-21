@@ -5,6 +5,7 @@ from typing import Dict, List, Any
 from domain.models import Person
 from jobs.people_collector.steps.step_07_merge_records_across_llms.merge_records_across_llms import (
     merge_records_across_llms,
+    group_records_across_llms
 )
 from jobs.people_collector.schemas import (
     WorkflowStatus,
@@ -90,3 +91,42 @@ def test_merge_records_across_llms():
     
     john = next(p for p in result.people if p.name == "John Smith")
     assert "Mayor" in john.roles
+
+
+def test_exact_name_match():
+    people_by_llm = {
+        "llm1": [create_person("Alice", ["A"])],
+        "llm2": [create_person("Alice", ["B"])]
+    }
+    groups = group_records_across_llms(people_by_llm)
+    assert len(groups) == 1
+    assert set(groups[0].keys()) == {"llm1", "llm2"}
+    assert all(p.name == "Alice" for ps in groups[0].values() for p in ps)
+
+def test_weak_tie_grouping():
+    people_by_llm = {
+        "llm1": [create_person("Gem Smitch", ["A"])],
+        "llm2": [create_person("Gem Smitch", ["A"])],
+        "llm3": [create_person("Idaho Evans", ["B"])]
+    }
+    groups = group_records_across_llms(people_by_llm)
+    # Should group llm1 and llm2 together, llm3 separate
+    assert len(groups) == 2
+
+def test_mixed_name_and_weak_tie():
+    people_by_llm = {
+        "llm1": [create_person("Bob Idaho", ["A"]), create_person("Alex H. Smitch", ["C"])],
+        "llm2": [create_person("Bob Idaho", ["B"]), create_person("Alex B. Smitch", ["C"])]
+    }
+    # Alex H. Smitch and Alex B. Smitch should be grouped by weak tie, Bob by exact match
+    groups = group_records_across_llms(people_by_llm)
+    print("groups found:", groups)
+    names = [set(p.name for ps in g.values() for p in ps) for g in groups]
+    assert len(groups) == 2
+    assert {"Bob Idaho"} in names
+    assert {"Alex H. Smitch", "Alex B. Smitch"} in names
+
+def test_no_people():
+    people_by_llm = {"llm1": [], "llm2": []}
+    groups = group_records_across_llms(people_by_llm)
+    assert groups == []

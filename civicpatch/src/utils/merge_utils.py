@@ -192,8 +192,8 @@ def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool
         return False
 
     # Check for matching roles
-    if not (set(record1.roles) & set(record2.roles)):
-        return False
+    if (set(record1.roles) & set(record2.roles)):
+        return True 
 
     # Check for overlapping email addresses
     # This is kind of ugly

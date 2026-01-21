@@ -317,7 +317,7 @@ def test_is_not_weakly_tied_different_emails():
         pass
     person1 = Dummy()
     person1.name = "Alice Johnson"
-    person1.roles = ["Council"]
+    person1.roles = ["Mayor"]
     person1.emails = ["alice@example.com"]
 
     person2 = Dummy()
