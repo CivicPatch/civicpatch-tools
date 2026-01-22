@@ -1,6 +1,6 @@
 from typing import List, Dict, Tuple
 from domain.models import Person
-from jobs.people_collector.schemas import LLMPerson, PeopleByName, OtherNamesByCanonicalName
+from jobs.people_collector.schemas import LLMPerson, PeopleByName, OtherNamesByCanonicalName, PeopleCollectorContext
 from nameparser import HumanName
 from Levenshtein import distance as levenshtein_distance
 from copy import deepcopy
@@ -53,7 +53,7 @@ def last_name(name: str) -> str:
     return human_name.last
 
 def has_name_overlap(name1: str, name2: str) -> bool:
-    return (last_name(name1) == last_name(name2)) or (first_name(name1) == first_name(name2))
+    return last_name(name1) == last_name(name2) or first_name(name1) == first_name(name2)
 
 
 def are_names_similar(name1: str, name2: str, threshold: int = NAME_SIMILARITY_THRESHOLD) -> bool:
@@ -183,23 +183,46 @@ def to_field_set_from_record(record, fields: List[str], ):
             result.update(value)
     return result
 
-def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool:
+def matched_identity(identity_names: Dict[str, List[str]], name: str) -> str | None:
     """
-    Determine if two records are weakly tied based on shared attributes.
+    Check if a name matches any known separate identities.
+    Returns the identity (canonical) name if matched, else empty string.
     """
+    for canonical, identity_name_list in identity_names.items():
+        names = [canonical] + identity_name_list
+        for identity_name in names:
+            if same_name(name, identity_name):
+                return canonical
+    return None
 
+def is_weakly_tied(identity_names: Dict[str, List[str]], record1: LLMPerson | Person, record2: LLMPerson | Person) -> bool:
+    """
+    Determine if two records are weakly tied based on shared attributes or if they are explicitly marked as separate identities.
+    """
+    # If both names are in the list of separate identities 
+    # (using same_name for comparison), treat them as separate
+    record1_identity = matched_identity(identity_names, record1.name)
+    record2_identity = matched_identity(identity_names, record2.name)
+    print("record 1 identity:", record1_identity)
+    print("record 2 identity:", record2_identity)
+
+    if record1_identity and record2_identity:
+        if record1_identity == record2_identity:
+            return True
+        else:
+            return False
+    
+    # Check for name overlap
     if not has_name_overlap(record1.name, record2.name):
         return False
 
     # Check for matching roles
-    if (set(record1.roles) & set(record2.roles)):
-        return True 
+    if set(record1.roles) & set(record2.roles):
+        return True
 
     # Check for overlapping email addresses
-    # This is kind of ugly
-    # TBD: rework this function
     email_overlap = to_field_set_from_record(record1, ["emails", "email"]) & to_field_set_from_record(record2, ["emails", "email"])
-    if email_overlap: 
+    if email_overlap:
         return True
 
     # Check for matching websites if available
@@ -208,4 +231,3 @@ def is_weakly_tied(record1: LLMPerson|Person, record2: LLMPerson|Person) -> bool
         return True
 
     return False
-

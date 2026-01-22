@@ -9,6 +9,7 @@ from jobs.people_collector.steps.step_07_merge_records_across_llms.merge_records
 )
 from jobs.people_collector.schemas import (
     WorkflowStatus,
+    ProcessPageContentStep,
     MergeRecordsAcrossLLMsStep, 
     MergeRecordsWithinLLMStep, 
     ResearchMunicipalityStep
@@ -70,7 +71,11 @@ def test_merge_records_across_llms():
             government_type="city",
             people=[],
             elected_officials=[],
-        )
+        ),
+        WorkflowStatus.PROCESS_PAGE_CONTENT: ProcessPageContentStep(
+            raw_records_by_llm={},
+            records_by_llm={}
+        ),
     })
     
     # Test the function
@@ -98,7 +103,7 @@ def test_exact_name_match():
         "llm1": [create_person("Alice", ["A"])],
         "llm2": [create_person("Alice", ["B"])]
     }
-    groups = group_records_across_llms(people_by_llm)
+    groups = group_records_across_llms({}, people_by_llm)
     assert len(groups) == 1
     assert set(groups[0].keys()) == {"llm1", "llm2"}
     assert all(p.name == "Alice" for ps in groups[0].values() for p in ps)
@@ -109,7 +114,7 @@ def test_weak_tie_grouping():
         "llm2": [create_person("Gem Smitch", ["A"])],
         "llm3": [create_person("Idaho Evans", ["B"])]
     }
-    groups = group_records_across_llms(people_by_llm)
+    groups = group_records_across_llms({}, people_by_llm)
     # Should group llm1 and llm2 together, llm3 separate
     assert len(groups) == 2
 
@@ -119,7 +124,7 @@ def test_mixed_name_and_weak_tie():
         "llm2": [create_person("Bob Idaho", ["B"]), create_person("Alex B. Smitch", ["C"])]
     }
     # Alex H. Smitch and Alex B. Smitch should be grouped by weak tie, Bob by exact match
-    groups = group_records_across_llms(people_by_llm)
+    groups = group_records_across_llms({}, people_by_llm)
     print("groups found:", groups)
     names = [set(p.name for ps in g.values() for p in ps) for g in groups]
     assert len(groups) == 2
@@ -128,5 +133,5 @@ def test_mixed_name_and_weak_tie():
 
 def test_no_people():
     people_by_llm = {"llm1": [], "llm2": []}
-    groups = group_records_across_llms(people_by_llm)
+    groups = group_records_across_llms({}, people_by_llm)
     assert groups == []

@@ -53,10 +53,10 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:amarillo/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:laredo/government",
     "config": {
-        "url": "https://www.amarillo.gov/",
-        "name": "Amarillo city"
+        "url": "https://www.cityoflaredo.com",
+        "name": "Laredo city"
     }
   }'
 """

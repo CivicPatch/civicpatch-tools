@@ -28,7 +28,8 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
         groups_by_last_name = group_by_last_name(records)
 
         for llm_records_list in groups_by_last_name.values():
-            consolidated_people = merge_records(llm_records_list, jurisdiction_ocdid)
+            identity_names = context.data.process_page_content_step.identities
+            consolidated_people = merge_records(identity_names, llm_records_list, jurisdiction_ocdid)
             merged_people.extend(consolidated_people)
 
         people_by_llm[llm] = merged_people
@@ -119,7 +120,7 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     person.source_urls = source_urls
     return person
 
-def merge_records(llm_people_list: List[LLMPerson], jurisdiction_ocdid: str) -> List[Person]:
+def merge_records(identity_names: Dict[str, List[str]], llm_people_list: List[LLMPerson], jurisdiction_ocdid: str) -> List[Person]:
     """
     Consolidate records within a single group of LLMPerson objects.
     Merge records that are weakly tied into unified Person objects.
@@ -141,7 +142,7 @@ def merge_records(llm_people_list: List[LLMPerson], jurisdiction_ocdid: str) -> 
                 continue
             if (
                 merge_utils.same_name(record.name, other_record.name) or 
-                any(merge_utils.is_weakly_tied(group_record, other_record) for group_record in group)
+                any(merge_utils.is_weakly_tied(identity_names, group_record, other_record) for group_record in group)
             ):
                 group.append(other_record)
                 visited.add(j)
