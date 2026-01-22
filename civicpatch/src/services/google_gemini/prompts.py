@@ -91,16 +91,19 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     Target Divisions: {', '.join(division_names)}
     Current Date: {current_date}
 
-    Return a JSON object with people, each having:
-    - name: (String) Full name only (no titles)
-    - image: (String or null) URL to profile image (https://...)
-    - roles: (Array of strings) Active municipal roles
-    - divisions: (Array of strings) Specific district/ward names
-    - phone: (String or null) Formatted phone number
-    - email: (String or null) Email address
-    - url: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
-    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
-    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    Return a JSON object in the following format, each having:
+    - people: (Array of objects) Each object should have:
+      - name: (String) Full name only (no titles)
+      - image: (String or null) URL to profile image (https://...)
+      - roles: (Array of strings) Active municipal roles
+      - divisions: (Array of strings) Specific district/ward names
+      - phone: (String or null) Formatted phone number
+      - email: (String or null) Email address
+      - url: (String or null) In order of importance: the official's profile, biography URL, contact form URL, related position listing, or null if none exist.
+      - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+      - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - related_urls: (Array of strings) URLs that potentially contain more information about the officials, ward/district profiles, etc.
+    - thoughts: (String) Your reasoning process
 
     Guidelines:
     - **Only extract information that is explicitly present in the provided content. Do NOT infer or fabricate any details, including email addresses, phone numbers, or URLs.**

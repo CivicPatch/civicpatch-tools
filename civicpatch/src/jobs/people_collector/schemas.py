@@ -25,6 +25,7 @@ class LinkStatus(Enum):
     SCRAPED = "scraped"
     PREPROCESSED = "preprocessed"
     PREPROCESSED_NO_CONTENT = "preprocessed_no_content"
+    PROCESSED_IRRELEVANT = "processed_irrelevant"
     DONE = "done"
     ERROR = "error"
 
@@ -50,6 +51,11 @@ class RawLLMPerson(BaseModel):
 class PeopleArrayLLMResponseSchema(BaseModel):
     people: List[RawLLMPerson]
     thought: str
+
+class RelevantPageResponseSchema(BaseModel):
+    is_relevant: bool
+    related_urls: List[str] = []
+    thoughts: str
 
 class LLMPerson(RawLLMPerson):
     source_url: str

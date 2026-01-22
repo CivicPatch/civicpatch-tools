@@ -13,6 +13,10 @@ llm_model_prices = {
         'openai/gpt-4.1-mini': {
             'input_cost_per_1m': Decimal('0.40'),
             'output_cost_per_1m': Decimal('1.60')
+        },
+        'openai/gpt-5-mini': {
+            'input_cost_per_1m': Decimal('0.25'),
+            'output_cost_per_1m': Decimal('2.00')
         }
     },
     'google_gemini': {

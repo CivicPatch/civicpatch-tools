@@ -3,6 +3,43 @@ from typing import List
 from jobs.people_collector.schemas import ResearchedPerson
 import shared.utils.config_utils as config_utils
 
+def relevant_page_prompt(people_hint: List[ResearchedPerson]):
+    """
+    Generate a prompt to determine if a page is relevant for extracting municipality officials.
+    """
+
+    maybe_target_people = [p.name for p in (people_hint or []) if p.name]
+
+    if maybe_target_people:
+        target_text = (
+            f"Here is a list of known target people (may be missing or include extra): {', '.join(maybe_target_people)}"
+        )
+    else:
+        target_text = ""
+
+    prompt = f"""
+    Your task is to determine if the provided content contains information about the current officials of the target municipality. This includes structured listings (e.g., tables, lists, or directories) or dedicated sections (e.g., biography, contact, or about pages) for officials.
+
+    {target_text}
+
+    Only consider people who are currently serving as officials. 
+    Do not include anyone who is described as former, past, resigned, deceased, 
+    or otherwise not currently in office.
+
+    Return a JSON object with "thoughts" explaining your reasoning in the following format:
+    {{
+        "thoughts": "Your reasoning goes here",
+        "related_urls": [],  # List any URLs that are likely to contain more information about the officials or lead to a listing
+        "is_relevant": true
+    }}
+
+    **Guidelines for Identifying Relevant URLs:**
+    - Include URLs that are likely to contain structured listings or dedicated sections about officials.
+    - Exclude URLs that are general or unrelated, such as homepages, news articles, event summaries, or meeting minutes.
+    - Focus on pages that are likely to provide detailed information about officials, such as directories, biographies, or contact pages.
+    """
+    return prompt
+
 def municipality_officials_prompt(government_type: str, people_hint: List[ResearchedPerson]):
     """
     Generate a single prompt string for extracting city officials, following the detailed Ruby and Gemini logic.
@@ -36,19 +73,19 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     Target divisions: {', '.join(division_names)}
     Current Date: {current_date}
 
-    Return a JSON object.
-
-    Output Field Definitions & Structure:
-    - name: (String) Full name only (no titles).
-    - image: (String or null) URL to profile image (https://...)
-    - roles: (Array of strings) Active municipal roles.
-    - divisions: (Array of strings) Specific district/ward and name/number, only if specified (e.g., "Ward 1", "District 2").
-    - phone: (String or null) Formatted phone number
-    - email: (String or null) Email address (email@example.com)
-    - url: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
-    - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
-    - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
-
+    Return a JSON object in the following format:
+    - people: (Array of objects) Each object should have:
+      - name: (String) Full name only (no titles)
+      - image: (String or null) URL to profile image (https://...)
+      - roles: (Array of strings) Active municipal roles
+      - divisions: (Array of strings) Specific district/ward names
+      - phone: (String or null) Formatted phone number
+      - email: (String or null) Email address
+      - url: (String or null) In order of importance: the official's profile, biography URL, contact form URL, related position listing, or null if none exist.
+      - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+      - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
+    - thoughts: (String) Your reasoning process
+ 
     **Instructions:**
     - Only extract officials if their information appears in a **structured listing** (e.g., table, list, or directory) or in a **dedicated biography/about/contact section**.
     - A **structured listing** must explicitly include names and roles. Additional details (e.g., contact information, division, or term dates) are optional but preferred.

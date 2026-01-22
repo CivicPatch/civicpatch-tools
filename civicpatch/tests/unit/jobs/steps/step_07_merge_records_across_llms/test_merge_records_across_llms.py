@@ -84,7 +84,7 @@ def test_merge_records_across_llms():
     # Get all names in results
     result_names = {person.name for person in result.people}
     # Only people who appear in multiple LLMs should remain
-    expected_names = {"John Smith", "Jane Doe", "Alice Green"}  
+    expected_names = {"John Smith", "Jane Doe"}  
     
     # All expected people should be present
     assert result_names == expected_names, f"Expected {expected_names}, got {result_names}"

@@ -38,9 +38,6 @@ def get_link_status_by_url(links: List[Link], url: str) -> LinkStatus | None:
             return LinkStatus(link.status)
     return None
 
-def get_links_with_status(links: List[Link], status: LinkStatus) -> List[Link]:
-    return [link for link in links if link.status == status.value]
-
 def should_stop_for_cost_limit(current_cost: Decimal, job_config: JobConfig) -> bool:
     return current_cost >= job_config.pipeline_run_cost_limit
 
@@ -50,5 +47,8 @@ def should_stop_for_data_requirement(progress: ProgressState) -> bool:
             progress.has_target_divisions)
 
 def should_stop_for_max_pages(processed_count: int, job_config: JobConfig, progress: ProgressState) -> bool:
+    print("Processed count:", processed_count)
+    print("Current progress:", progress)
     max_pages_with_required_data = job_config.max_pages + progress.required_data
+    print("Max pages with required data:", max_pages_with_required_data)
     return processed_count >= max_pages_with_required_data
