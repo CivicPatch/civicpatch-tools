@@ -34,8 +34,9 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
     government_type = context.data.research_municipality_step.government_type 
 
     # Group records across LLMs based on weak ties and names
-    groups_by_llm = group_records_across_llms(people_by_llm)
-    
+    identity_names = context.data.process_page_content_step.identities
+    groups_by_llm = group_records_across_llms(identity_names, people_by_llm)
+
     # Filter out groups that only have one LLM source
     groups_by_llm = [group for group in groups_by_llm if len(group) > 1]
     
@@ -124,7 +125,7 @@ def check_for_missing_person(person_name: str, grouped_people_by_llm: Dict[str, 
     
     return None
 
-def group_records_across_llms(people_by_llm: Dict[str, List[Person]]) -> List[Dict[str, List[Person]]]:
+def group_records_across_llms(identity_names: Dict[str, List[str]], people_by_llm: Dict[str, List[Person]]) -> List[Dict[str, List[Person]]]:
     """
     Group records across LLMs based on exact name match and weak ties.
     Returns a list of groups, where each group is a dict mapping LLM -> List[Person] for that identity.
@@ -180,7 +181,7 @@ def group_records_across_llms(people_by_llm: Dict[str, List[Person]]) -> List[Di
                 is_match = (
                     current_person.name and other_person.name and 
                     current_person.name == other_person.name
-                ) or merge_utils.is_weakly_tied(current_person, other_person)
+                ) or merge_utils.is_weakly_tied(identity_names, current_person, other_person)
                 
                 if is_match:
                     if other_llm not in group:
