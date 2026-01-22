@@ -6,6 +6,9 @@ on:
       - main
     paths:
       - "civicpatch/**"
+
+permissions:
+  contents: read
   
 jobs:
   run-tests:
