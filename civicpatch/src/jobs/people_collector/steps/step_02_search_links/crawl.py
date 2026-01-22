@@ -5,7 +5,7 @@ from jobs.people_collector.steps.step_03_scrape_page.scrape_utils import scrape
 from jobs.people_collector.steps.step_04_preprocess_page_content.entity_extraction import sort_urls_by_keyword_similarity
 from typing import Tuple
 
-SEARCH_PAGE_LIMIT = 20
+SEARCH_PAGE_LIMIT = 10
 
 async def crawl(logger, keywords, site_search):
     """
@@ -27,10 +27,12 @@ async def crawl(logger, keywords, site_search):
     results = []
 
     while queue:
+        logger.info(f"Crawl queue length: {len(queue)}")
         if len(visited) >= SEARCH_PAGE_LIMIT:
             break
 
         current_url = queue.pop(0)
+        logger.info(f"Crawling URL: {current_url}")
         if current_url in visited:
             continue
 
@@ -59,9 +61,11 @@ async def crawl(logger, keywords, site_search):
                     queue.append(full_url)
 
         except Exception as e:
-            print(f"Error processing {current_url}: {e}")
+            logger.error(f"Error processing {current_url}: {e}")
             queue.pop(0)  # Remove the problematic URL and continue
 
+    # Deduplicate results
+    results = list(set(results))
     sorted_urls = sort_urls_by_keyword_similarity(keywords, results)
     return sorted_urls  # Remove duplicates
 

@@ -67,7 +67,8 @@ async def search_links(context: PeopleCollectorContext) -> tuple[List[Link], Sea
             keys = list(keyword_term_groups.keys())
             values = [keyword for keywords in keyword_term_groups.values() for keyword in keywords]
             flattened_keywords = keys + values
-            urls_found = await crawl(logger, flattened_keywords, municipality_website)
+            crawl_urls = await crawl(logger, flattened_keywords, municipality_website)
+            urls_found = [crawl_urls]
         else:
             for keyword_term, keywords in keyword_term_groups.items():
                 logger.info(f"Searching for keyword term: {keyword_term}, keywords: {keywords}",)
@@ -84,7 +85,7 @@ async def search_links(context: PeopleCollectorContext) -> tuple[List[Link], Sea
         return urls_found
 
     try:
-        urls_found = await with_retry(logger, MAX_RETRIES, search_all_keywords)
+        urls_found = await search_all_keywords()
         status_value = "completed"
         error_message = None
     except Exception as e:

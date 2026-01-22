@@ -36,7 +36,6 @@ async def research_municipality(context: PeopleCollectorContext) -> tuple[Progre
     # if not government_type:
     #     logger.info(f"Could not determine government type for jurisdiction {jurisdiction_ocdid}. Roles found: {roles_found}")
     government_types = config_utils.get_government_types().keys()
-    print("government types are", government_types)
     if government_type not in government_types:
         logger.warning(f"invalid government_type: {government_type}, matching government types from roles as fallback")
         government_type = match_roles_to_government_type(roles_found, config_utils.get_government_types())

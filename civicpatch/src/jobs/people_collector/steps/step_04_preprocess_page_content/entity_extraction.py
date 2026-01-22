@@ -2,6 +2,7 @@ import spacy
 import re
 from spacy.matcher import PhraseMatcher
 import shared.utils.config_utils as config_utils
+import json
 
 # Global variables
 _nlp = None
@@ -18,13 +19,21 @@ def get_nlp():
 def sort_urls_by_keyword_similarity(keywords, urls):
     nlp = get_nlp()
     pattern_docs = [nlp(k) for k in keywords]
+    pattern_vectors = [doc.vector for doc in pattern_docs]  # Precompute vectors for keywords
     sorted_urls = []
+
     for url, text in urls:
         doc = nlp(f"{url} {text}")
-        score = max(doc.similarity(pattern_doc) for pattern_doc in pattern_docs)
-        sorted_urls.append((url, score))
+        doc_vector = doc.vector  # Precompute vector for the current document
+        # Compute similarity scores using dot product
+        score = max(doc_vector.dot(pattern_vector) for pattern_vector in pattern_vectors)
+        sorted_urls.append((url, float(score)))  # Convert score to Python float
 
-    return sorted(sorted_urls, key=lambda x: x[1], reverse=True)
+    sorted_by_score = sorted(sorted_urls, key=lambda x: x[1], reverse=True)
+    #with open("sorted_urls_debug.txt", "w") as f:
+    #    # Convert scores to float for JSON serialization
+    #    json.dump({"keywords": keywords, "sorted_urls": [(url, float(score)) for url, score in sorted_by_score]}, f, indent=2)
+    return [url for url, _score in sorted_by_score]
 
 def extract_keywords(doc, government_type):
     """Extract keywords using a PhraseMatcher."""
