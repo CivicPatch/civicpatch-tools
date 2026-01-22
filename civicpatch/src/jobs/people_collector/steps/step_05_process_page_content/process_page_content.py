@@ -13,7 +13,8 @@ from jobs.people_collector.schemas import (
   OtherNamesByCanonicalName,
   ResearchMunicipalityStep,
   ResearchedPerson,
-  ProgressState
+  ProgressState,
+  RelevantPageResponseSchema
 )
 from shared.utils import config_utils, data_path_utils
 from utils import (
@@ -88,6 +89,33 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     merged_identities = merge_config_into_names(context.data.identities, current_step.identities)
     
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
+
+    is_relevant_page_prompt = openai_prompt.relevant_page_prompt(setup_data.people_hint)
+    is_relevant_response = await openai_llm.run_prompt(
+        context.request_id, 
+        context.data.jurisdiction_ocdid, 
+        is_relevant_page_prompt,
+        response_schema=RelevantPageResponseSchema, 
+        content=content)
+    
+    response = RelevantPageResponseSchema.model_validate(is_relevant_response)
+    updated_links = copy.deepcopy(context.data.links)
+    if response.related_urls:
+        logger.info(f"Page relevance check found related urls: {response.related_urls}")
+        updated_links = move_links_to_top(context.data.config.url, response.related_urls, updated_links)
+
+     # If page is not relevant, mark as processed_irrelevant and return
+    if not response.is_relevant:
+        updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT)
+
+        return ProcessPageContentStep(
+            raw_records_by_llm=current_step.raw_records_by_llm,
+            records_by_llm=current_step.records_by_llm,
+            links=updated_links,
+            progress=current_step.progress,
+            identities=current_step.identities,
+        )
+
     llm_responses = await process_with_llms(
         page_to_process.url, 
         context.request_id, 
@@ -114,8 +142,8 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
         setup_data.target_role,
         setup_data.target_divisions
     )
-    updated_links = update_links(context.data.links, page_to_process, logger, setup_data.roles, updated_records)
-    
+    updated_links = update_links(context.data.config.url, updated_links, page_to_process, logger, setup_data.roles, updated_records)
+
     return ProcessPageContentStep(
         raw_records_by_llm=updated_raw_records,
         records_by_llm=updated_records,
@@ -205,17 +233,13 @@ def update_step_data(
     
     return updated_identities, updated_raw_records, updated_normalized_records
 
-def update_links(context_links: List[Link], processed_page: Link, logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[Link]:
+def update_links(domain, context_links: List[Link], processed_page: Link, logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[Link]:
     """Update processed page status and add new website links."""
     # Mark processed page as done
-    updated_links = []
-    for link in context_links:
-        if link.url == processed_page.url:
-            link.status = LinkStatus.DONE.value
-        updated_links.append(link)
-    
+    updated_links = mark_link_as_terminating_status(processed_page.url, context_links, LinkStatus.DONE)
+
     # Add any new website links found
-    return update_website_links(logger, roles, updated_links, records_by_llm)
+    return update_website_links(logger, domain, roles, updated_links, records_by_llm)
 
 def normalize_record(logger, record: LLMPerson, government_type: str) -> LLMPerson:
     """
@@ -287,6 +311,7 @@ async def process_with_llms(
     Run the LLM prompt to process the page content.
     """
     responses: Dict[str, List[LLMPerson]] = {}
+
     for llm in LLMS:
         prompt = llm["prompt"].municipality_officials_prompt(government_type, people_hint)
         response = await llm["service"].run_prompt(
@@ -387,32 +412,15 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     )
     return has_contact and has_role
 
-def update_website_links(logger, roles, existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
+# TODO: refactor, too many params & dupe logic
+def update_website_links(logger, domain, roles, existing_links: List[Link], records_by_llm: RecordsByLLM) -> List[Link]:
     """
     Update the links with websites found in the processed data.
     """
-    updated_links = copy.deepcopy(existing_links)
     found_websites = extract_websites_from_processed_data(logger, roles, records_by_llm)
-
-    for website in found_websites:
-        existing_link = next((link for link in updated_links if link.url == website), None)
-        if existing_link:
-            # Only update if status is PENDING - don't re-add to list
-            if existing_link.status == LinkStatus.PENDING.value:
-                updated_links.remove(existing_link)
-                existing_link.is_profile_page = True
-                updated_links.insert(0, existing_link)
-        else:
-            # Only add if it's a completely new link
-            new_link: Link = Link(
-                url=website,
-                status=LinkStatus.PENDING.value,
-                folder_name=url_utils.format_url_to_folder(website),
-                is_profile_page=True
-            )
-            updated_links.insert(0, new_link)
-
-    return updated_links
+    # Combine found websites with related URLs from relevance check
+    urls = list(set(found_websites))
+    return move_links_to_top(domain, urls, existing_links)
 
 def extract_websites_from_processed_data(logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[str]:
     """
@@ -440,3 +448,47 @@ def extract_websites_from_processed_data(logger, roles: List[str], records_by_ll
                     if domain and not any(ignore in domain for ignore in IGNORE_WEBSITES):
                         found_websites.append(url)
     return found_websites
+
+def move_links_to_top(domain: str, urls: List[str], existing_links: List[Link]) -> List[Link]:
+    """
+    Bump specified links to the top of the existing links list, under links with status PENDING 
+   
+    If they do not exist, add them to the top as new links.
+    """
+    updated_links = copy.deepcopy(existing_links)
+    for link_url in urls:
+        within_domain = url_utils.same_domain(domain, link_url)
+        if not within_domain:
+            continue
+        formatted_link_url = url_utils.format_url(link_url)
+        existing_link = next((link for link in updated_links if link.url == formatted_link_url), None)
+        if existing_link:
+            # Remove and re-insert at top (after any PENDING links)
+            updated_links.remove(existing_link)
+            # Find the index after the last PENDING link
+            insert_index = next((i for i, link in enumerate(updated_links) if link.status != LinkStatus.PENDING.value), len(updated_links))
+            updated_links.insert(insert_index, existing_link)
+        else:
+            # Add new link at top (after any PENDING links)
+            new_link: Link = Link(
+                url=formatted_link_url,
+                status=LinkStatus.PENDING.value,
+                folder_name="",
+                is_profile_page=True
+            )
+            insert_index = next((i for i, link in enumerate(updated_links) if link.status != LinkStatus.PENDING.value), len(updated_links))
+            updated_links.insert(insert_index, new_link)
+
+    return updated_links
+
+def mark_link_as_terminating_status(link_url: str, existing_links: List[Link], status: LinkStatus) -> List[Link]:
+    """
+    Mark the specified link as status and move it to the bottom of the list.
+    """
+    updated_links = copy.deepcopy(existing_links)
+    existing_link = next((link for link in updated_links if link.url == link_url), None)
+    if existing_link:
+        existing_link.status = status.value
+        # Move to bottom
+        updated_links.append(updated_links.pop(updated_links.index(existing_link)))
+    return updated_links

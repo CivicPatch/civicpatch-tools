@@ -184,7 +184,7 @@ async def preprocess_page_content_transition(_: JobConfig, logger: WorkflowLogge
     return next_context, next_state
 
 async def process_page_content_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
-    preprocessed_links = get_links_with_status(context.data.links, LinkStatus.PREPROCESSED)
+    preprocessed_links = get_links_with_status(context.data.links, [LinkStatus.PREPROCESSED])
     if len(preprocessed_links) == 0:
         # TODO: call legger here
         return context, WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS
@@ -199,7 +199,7 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
         })
     })
 
-    links_processed = get_links_with_status(context.data.links, LinkStatus.DONE)
+    links_processed = get_links_with_status(context.data.links, [LinkStatus.PROCESSED_IRRELEVANT, LinkStatus.DONE])
     current_cost = cost_utils.total_cost_by_request(
         context.request_id, context.data.jurisdiction_ocdid
     )["total_cost"]

@@ -36,6 +36,9 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
     # Group records across LLMs based on weak ties and names
     groups_by_llm = group_records_across_llms(people_by_llm)
     
+    # Filter out groups that only have one LLM source
+    groups_by_llm = [group for group in groups_by_llm if len(group) > 1]
+    
     # Merge each group and collect disagreements
     merged_people = []
     all_disagreements = {}  # Dict[person_name, List[FieldComparison]]
@@ -103,7 +106,6 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
         missing_people=missing_people,
         validation_errors=validation_errors,
     )
-
 
 def check_for_missing_person(person_name: str, grouped_people_by_llm: Dict[str, List[Person]], all_llm_names: List[str]) -> MissingPerson | None:
     """
