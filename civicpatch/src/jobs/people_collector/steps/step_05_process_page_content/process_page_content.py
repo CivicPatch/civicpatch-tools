@@ -395,21 +395,32 @@ def calculate_progress(
 
 def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> bool:
     """
-    Return True if there is at least one record with contact info
-    AND at least one record with a matching role (can be different records).
+    Return True if there is at least one record with a matching role
+    AND at least two different types of contact info (phone, email, or URL).
     """
     people = [LLMPerson.model_validate(r) if not isinstance(r, LLMPerson) else r for r in records]
 
-    has_contact = (
-        sum(bool(p.phone) for p in people) +
-        sum(bool(p.email) for p in people) +
-        sum(bool(p.url) for p in people)
-    ) >= 3
+    # Collect unique types of contact info across all records
+    contact_info_types = set()
+    for person in people:
+        if person.phone:
+            contact_info_types.add("phone")
+        if person.email:
+            contact_info_types.add("email")
+        if person.url:
+            contact_info_types.add("url")
+        if person.image:
+            contact_info_types.add("image")
+
+    # Check if there are at least 2 different types of contact info
+    has_contact = len(contact_info_types) >= 2
+
     # Case-insensitive role match
     has_role = any(
         any(r and r.strip().lower() in roles for r in p.roles)
         for p in people
     )
+
     return has_contact and has_role
 
 # TODO: refactor, too many params & dupe logic
