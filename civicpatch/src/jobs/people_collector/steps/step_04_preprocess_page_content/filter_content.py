@@ -54,6 +54,51 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
     # Skip processing if this node is inside a kept table
     if node.find_parent("table") and hasattr(node.find_parent("table"), '_keep_table'):
         return  # Don't process nodes inside tables that are marked to keep
+
+    # Handle tables - evaluate the entire table content
+    if node.name == "table":
+        table_text = " ".join(cell.get_text(strip=True) for cell in node.find_all(["td", "th"]))
+        if table_text.strip():
+            is_relevant = has_relevant_content(identities, table_text, government_type)
+            if is_relevant:
+                # Mark this table to keep ALL its content (including images)
+                node._keep_table = True
+                
+                # Step 1: Unnest images from links
+                for link in node.find_all("a"):
+                    link_text = link.get_text(strip=True)
+                    images = link.find_all("img")
+                    if images and not link_text:
+                        # This link contains only images - unnest them
+                        for img in images:
+                            link.insert_before(img.extract())
+                        # Remove the now-empty link
+                        link.decompose()
+                
+                # Step 2: Remove any empty links
+                for link in node.find_all("a"):
+                    if not link.get_text(strip=True) and not link.find_all("img"):
+                        link.decompose()
+                
+                # Step 3: Hoist images to be direct children of td/th cells
+                for cell in node.find_all(["td", "th"]):
+                    images = cell.find_all("img")
+                    for img in images:
+                        # If image is not already a direct child of the cell, move it
+                        if img.parent != cell:
+                            # Extract the image and prepend it to the cell
+                            cell.insert(0, img.extract())
+                
+                return  # Keep the table with unnested images
+        
+        # Table is not relevant - extract images before removing
+        images = node.find_all("img")
+        if images and node.parent and hasattr(node.parent, 'name'):
+            for img in images:
+                node.insert_before(img.extract())
+        
+        node.decompose()
+        return
     
     # Recursively process children first
     for child in list(node.children):  # Use list() to avoid modifying the iterator during traversal
@@ -67,27 +112,6 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
         percent = int(100 * state["processed"] / state["total"])
         logger.info(f"-> PREPROCESS_PAGE_CONTENT Page Progress: {percent}% ({state['processed']}/{state['total']})")
         state["last_progress_time"] = now
-    
-    # Handle tables - evaluate the entire table content
-    if node.name == "table":
-        table_text = " ".join(cell.get_text(strip=True) for cell in node.find_all(["td", "th"]))
-        if table_text.strip():
-            # people, dates, emails, phones, keywords = entity_extraction.extract_data(table_text, government_type)
-            is_relevant = has_relevant_content(identities, table_text, government_type)
-            # if any([people, keywords]):  # Keep original logic - only check people and keywords for tables
-            if is_relevant:
-                # Mark this table to keep ALL its content (including images)
-                node._keep_table = True
-                return
-        
-        # Table is not relevant - extract images before removing
-        images = node.find_all("img")
-        if images and node.parent and hasattr(node.parent, 'name'):
-            for img in images:
-                node.insert_before(img.extract())
-        
-        node.decompose()  # Remove irrelevant tables
-        return
     
     # If we're inside a kept table, don't remove anything
     parent_table = node.find_parent("table")
@@ -158,3 +182,4 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
                 node.insert_before(img.extract())
         
         node.decompose()
+        return
