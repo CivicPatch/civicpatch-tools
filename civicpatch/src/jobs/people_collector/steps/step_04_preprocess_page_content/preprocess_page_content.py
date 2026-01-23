@@ -40,7 +40,14 @@ def preprocess_page_content(
     output_md = md(output_html, keep_inline_images_in=['td', 'th'])
 
     government_type = context.data.research_municipality_step.government_type
-    identities = context.data.config.identities or context.data.process_page_content_step.identities or context.data.research_municipality_step.identities
+    research_elected_officials = getattr(
+        context.data.research_municipality_step, "elected_officials", {}
+    )
+    research_identities = {official.name: [official.name] for official in research_elected_officials}
+    runtime_identities = getattr(
+        context.data.process_page_content_step, "identities", {}
+    )
+    identities = context.data.config.identities or runtime_identities or research_identities
     logger.debug(f"-> Preprocessing with identities: {identities}")
     preprocessed_html  = filter_content(logger, identities, output_html, government_type=government_type)
     preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th'])

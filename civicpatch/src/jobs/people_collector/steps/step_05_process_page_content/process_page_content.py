@@ -86,7 +86,11 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     
     # Get current step identities and merge with config
     current_step = context.data.process_page_content_step or DEFAULT_PROCESS_PAGE_CONTENT_STEP
-    merged_identities = merge_config_into_names(context.data.identities or context.data.research_municipality_step.identities, current_step.identities)
+    research_elected_officials = getattr(
+        context.data.research_municipality_step, "elected_officials", {}
+    )
+    research_identities = {official.name: [official.name] for official in research_elected_officials}
+    identities = context.data.identities or current_step.identities or research_identities
 
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
 
@@ -130,7 +134,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
         context.data.jurisdiction_ocdid,
         research_municipality_step.government_type, 
         llm_responses, 
-        merged_identities,
+        identities,
         current_step.records_by_llm,
         current_step.raw_records_by_llm
     )
@@ -152,33 +156,6 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
         progress=updated_progress,
         identities=updated_identities
     )
-
-def merge_config_into_names(config_identities: Optional[OtherNamesByCanonicalName], runtime_identities: Optional[OtherNamesByCanonicalName]) -> OtherNamesByCanonicalName:
-    """
-    Merge config-based identity mappings with runtime identities.
-    Config takes priority - if there's a conflict, config wins.
-    """
-    # Start with config (priority)
-    merged_identities = copy.deepcopy(config_identities) if config_identities else {}
-    
-    # Add runtime discoveries that don't conflict with config
-    for canonical, variants in (runtime_identities or {}).items():
-        # Check if this canonical name conflicts with any config mapping
-        canonical_in_config = any(
-            canonical.lower().strip() == config_canonical.lower().strip() or
-            canonical.lower().strip() in [v.lower().strip() for v in config_variants]
-            for config_canonical, config_variants in (config_identities or {}).items()
-        )
-        
-        if not canonical_in_config:
-            # No conflict - add the runtime mapping
-            merged_identities[canonical] = variants
-        else:
-            # There's a conflict - config wins, but log it
-            logger = log_utils.get_workflow_logger("system")
-            logger.info(f"Config identity mapping overriding runtime discovery for: {canonical}")
-    
-    return merged_identities
 
 def get_setup_data(municipality_research: ResearchMunicipalityStep) -> ProcessingSetup: 
     divisions = config_utils.get_divisions()
