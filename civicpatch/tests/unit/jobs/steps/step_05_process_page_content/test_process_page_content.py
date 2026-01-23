@@ -45,11 +45,11 @@ def test_has_role_and_contact_info_with_multiple_contact_info_same_type():
     ]
     assert has_role_and_contact_info(roles, records) == False
 
-def test_has_role_and_contact_info_with_exactly_two_contact_info_types():
+def test_has_role_and_contact_info_with_exactly_three_contact_info_types():
     """Test when there are exactly two different types of contact info."""
     roles = ["mayor", "council"]
     records = [
-        LLMPerson(name="John Doe", roles=["mayor"], phone="123-456-7890", email=None, url=None, divisions=[], source_url="test"),
+        LLMPerson(name="John Doe", roles=["mayor"], phone="123-456-7890", email=None, url="https://example.com", divisions=[], source_url="test"),
         LLMPerson(name="Jane Doe", roles=["mayor"], phone=None, email="jane@example.com", url=None, divisions=[], source_url="test"),
     ]
     assert has_role_and_contact_info(roles, records) == True

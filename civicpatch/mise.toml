@@ -53,10 +53,10 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:richardson/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:allen/government",
     "config": {
-        "url": "https://www.cor.net/",
-        "name": "Richardson city"
+        "url": "https://www.cityofallen.org",
+        "name": "Allen city"
     }
   }'
 """

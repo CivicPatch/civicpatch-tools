@@ -4,6 +4,13 @@ import shared.utils.config_utils as config_utils
 from domain.models import Person
 from jobs.people_collector.schemas import ResearchedPerson
 
+WORD_TO_NUMBER = {
+    'first': '1', 'second': '2', 'third': '3', 'fourth': '4', 'fifth': '5',
+    'sixth': '6', 'seventh': '7', 'eighth': '8', 'ninth': '9', 'tenth': '10',
+    'eleventh': '11', 'twelfth': '12', 'thirteenth': '13', 'fourteenth': '14',
+    'fifteenth': '15', 'sixteenth': '16', 'seventeenth': '17', 'eighteenth': '18',
+    'nineteenth': '19', 'twentieth': '20'
+}
 
 def filter_people_by_roles(role_configs, people: List[ResearchedPerson]):
     """
@@ -81,6 +88,10 @@ def normalize_remaining_text(text: str) -> str:
 
     # Convert to lower for matching
     text_lower = text.lower().strip()
+
+    # Check for word numbers
+    if text_lower in WORD_TO_NUMBER:
+        return WORD_TO_NUMBER[text_lower]
 
     # Check for roman numerals
     if text_lower in roman_map:

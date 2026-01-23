@@ -390,8 +390,8 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
         if person.image:
             contact_info_types.add("image")
 
-    # Check if there are at least 2 different types of contact info
-    has_contact = len(contact_info_types) >= 2
+    # Check if there are at least 3 different types of contact info
+    has_contact = len(contact_info_types) >= 3
 
     # Case-insensitive role match
     has_role = any(
