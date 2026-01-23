@@ -239,10 +239,17 @@ async def download_images(browser, logger, page: Page, image_dir: str):
             logger.warning(f"Failed to process image: {src} - {e}")
             await remove_image_from_dom(page, img, logger)
 
-    # Save the image map
+    # Load/create image map if it and update the image map
     map_file_path = os.path.join(image_dir, "image_map.json")
+    if os.path.exists(map_file_path):
+        with open(map_file_path, "r") as f:
+            existing_map = json.load(f)
+    else:
+        existing_map = {}
+
+    image_map.update(existing_map)
     with open(map_file_path, "w") as f:
-        json.dump(image_map, f, indent=4)
+        json.dump(image_map, f, indent=2)
 
 async def remove_image_from_dom(page: Page, img, logger):
     await page.evaluate("""(img) => {
