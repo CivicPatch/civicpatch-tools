@@ -58,11 +58,9 @@ def has_name_overlap(name1: str, name2: str) -> bool:
 
 def are_names_similar(name1: str, name2: str, threshold: int = NAME_SIMILARITY_THRESHOLD) -> bool:
     """
-    Compare two first names using Levenshtein distance and determine if they are similar.
+    Compare two names (usually first name only) using Levenshtein distance and determine if they are similar.
     """
-    normalized_first_name1 = first_name(name1)
-    normalized_first_name2 = first_name(name2)
-    return levenshtein_distance(normalized_first_name1, normalized_first_name2) <= threshold
+    return levenshtein_distance(name1, name2) <= threshold
 
 def resolve_from_known_mappings(name: str, known_mappings: OtherNamesByCanonicalName) -> str:
     """
@@ -100,9 +98,15 @@ def find_indexed_name(normalized_name: str, people_by_name: PeopleByName, known_
     
     # Priority 2: Existing similarity-based matching
     for existing_name in people_by_name.keys():
-        if has_name_overlap(normalized_name, existing_name):
-            if are_names_similar(existing_name, normalized_name):
+        if first_name(normalized_name) == first_name(existing_name) and \
+            (last_name(normalized_name) in last_name(existing_name) or \
+            last_name(existing_name) in last_name(normalized_name)):
                 return existing_name
+        if last_name(normalized_name) == last_name(existing_name):
+            # Check if first name meets the threshold
+            if are_names_similar(first_name(normalized_name), first_name(existing_name)):
+                return existing_name
+
     return normalized_name
 
 def update_name_map(
@@ -203,8 +207,6 @@ def is_weakly_tied(identity_names: Dict[str, List[str]], record1: LLMPerson | Pe
     # (using same_name for comparison), treat them as separate
     record1_identity = matched_identity(identity_names, record1.name)
     record2_identity = matched_identity(identity_names, record2.name)
-    print("record 1 identity:", record1_identity)
-    print("record 2 identity:", record2_identity)
 
     if record1_identity and record2_identity:
         if record1_identity == record2_identity:

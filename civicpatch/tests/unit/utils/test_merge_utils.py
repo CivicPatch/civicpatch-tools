@@ -376,3 +376,73 @@ def test_is_weakly_tied_no_overlap():
     record1 = LLMPerson(name="John Doe", roles=["Mayor"], email=None, url="http://example.com", divisions=[], source_url="test")
     record2 = LLMPerson(name="Jane Smith", roles=["Council"], email=None, url="http://example.org", divisions=[], source_url="test")
     assert is_weakly_tied(identity_names, record1, record2) == False
+
+import pytest
+from utils.merge_utils import find_indexed_name, PeopleByName, OtherNamesByCanonicalName
+
+def test_find_indexed_name_with_known_mapping():
+    """Test when the name is found in known mappings."""
+    known_mappings = {
+        "John Smith": ["Jon Smith", "Jonathan Smith"],
+        "Jane Doe": ["Janet Doe"]
+    }
+    people_by_name = {}
+
+    assert find_indexed_name("Jon Smith", people_by_name, known_mappings) == "John Smith"
+    assert find_indexed_name("Janet Doe", people_by_name, known_mappings) == "Jane Doe"
+    assert find_indexed_name("Unknown Name", people_by_name, known_mappings) == "Unknown Name"
+
+def test_find_indexed_name_with_similarity_matching():
+    """Test when the name is matched based on similarity."""
+    known_mappings = {}
+    people_by_name = {
+        "John Smith": [],
+        "Jane Doe": [],
+        "Alice Johnson": []
+    }
+
+    assert find_indexed_name("Jon Smith", people_by_name, known_mappings) == "John Smith"
+    assert find_indexed_name("Janey Doe", people_by_name, known_mappings) == "Jane Doe"
+    assert find_indexed_name("Alicia Johnson", people_by_name, known_mappings) == "Alice Johnson"
+
+def test_find_indexed_name_with_last_name_containment():
+    """Test when the last name contains or is contained by another."""
+    known_mappings = {}
+    people_by_name = {
+        "John Smith": [],
+        "Jane Doe": [],
+        "Alice Johnson": []
+    }
+
+    assert find_indexed_name("John Smithson", people_by_name, known_mappings) == "John Smith"
+    assert find_indexed_name("Jane y. Doe", people_by_name, known_mappings) == "Jane Doe"
+
+def test_find_indexed_name_no_match():
+    """Test when no match is found."""
+    known_mappings = {}
+    people_by_name = {
+        "John Smith": [],
+        "Jane Doe": [],
+        "Alice Johnson": []
+    }
+
+    assert find_indexed_name("Unknown Name", people_by_name, known_mappings) == "Unknown Name"
+
+def test_find_indexed_name_with_empty_people_by_name():
+    """Test when people_by_name is empty."""
+    known_mappings = {}
+    people_by_name = {}
+
+    assert find_indexed_name("John Smith", people_by_name, known_mappings) == "John Smith"
+
+def test_find_indexed_name_with_empty_known_mappings():
+    """Test when known_mappings is empty."""
+    known_mappings = {}
+    people_by_name = {
+        "John Smith": [],
+        "Jane Doe": [],
+        "Alice Johnson": []
+    }
+
+    assert find_indexed_name("John Smith", people_by_name, known_mappings) == "John Smith"
+    assert find_indexed_name("Unknown Name", people_by_name, known_mappings) == "Unknown Name"
