@@ -53,10 +53,10 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:laredo/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:midland/government",
     "config": {
-        "url": "https://www.cityoflaredo.com",
-        "name": "Laredo city"
+        "url": "https://www.midlandtexas.gov",
+        "name": "Midland city"
     }
   }'
 """
