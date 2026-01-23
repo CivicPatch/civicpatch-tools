@@ -40,7 +40,9 @@ def preprocess_page_content(
     output_md = md(output_html, keep_inline_images_in=['td', 'th'])
 
     government_type = context.data.research_municipality_step.government_type
-    preprocessed_html  = filter_content(logger, output_html, government_type=government_type)
+    identities = context.data.config.identities or context.data.process_page_content_step.identities or context.data.research_municipality_step.identities
+    logger.debug(f"-> Preprocessing with identities: {identities}")
+    preprocessed_html  = filter_content(logger, identities, output_html, government_type=government_type)
     preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th'])
 
     preprocessed_html_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "preprocessed.html")

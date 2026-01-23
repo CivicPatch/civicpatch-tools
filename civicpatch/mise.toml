@@ -53,10 +53,10 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:corpus_christi/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:arlington/government",
     "config": {
-        "url": "https://www.corpuschristitx.gov/",
-        "name": "Corpus Christi city"
+        "url": "https://www.arlingtontx.gov",
+        "name": "Arlington city"
     }
   }'
 """

@@ -11,10 +11,9 @@ def read_fixture(filename, subfolder="with_table"):
     with open(os.path.join(fixture_dir, filename), "r", encoding="utf-8") as f:
         return f.read().strip()
 
-def assert_markdown_equal(actual_html, expected_md, government_type, subfolder="with_table"):
-    print("asserting...")
-    actual_html = filter_content({}, actual_html, government_type)
-    actual_md = md(actual_html, keep_inline_images_in=['td']).strip()
+def assert_markdown_equal(identities, actual_html, expected_md, government_type, subfolder="with_table"):
+    actual_html = filter_content({}, identities, actual_html, government_type)
+    actual_md = md(actual_html, keep_inline_images_in=['td', 'th']).strip()
     expected_md = expected_md.strip()
     actual_lines = actual_md.splitlines()
     # actual_lines = actual_html.strip().splitlines()
@@ -36,26 +35,26 @@ def assert_markdown_equal(actual_html, expected_md, government_type, subfolder="
  #    original = read_fixture("original.html")
  #    expected = read_fixture("preprocessed.md")
  #    assert original, "Original fixture is missing or empty"
- #    assert_markdown_equal(original, expected, government_type="mayor_council")
+ #    assert_markdown_equal({}, original, expected, government_type="mayor_council")
 
 #def test_filter_content_with_seattle():
 #    original = read_fixture("original.html", subfolder="seattle_council")
 #    expected = read_fixture("preprocessed.md", subfolder="seattle_council")
 #    assert original, "Keyword test fixture is missing or empty"
-#    assert_markdown_equal(original, expected, "mayor_council", subfolder="seattle_council")
+#    assert_markdown_equal({}, original, expected, "mayor_council", subfolder="seattle_council")
 
 
 #def test_filter_content_with_big_page():
 #    original = read_fixture("original.html", subfolder="big_page")
 #    expected = read_fixture("preprocessed.md", subfolder="big_page")
 #    assert original, "Big page test fixture is missing or empty"
-#    assert_markdown_equal(original, expected, "mayor_council", subfolder="big_page")
+#    assert_markdown_equal({}, original, expected, "mayor_council", subfolder="big_page")
 
 # def test_filter_content_with_table():
 #     original = read_fixture("original.html", subfolder="with_table")
 #     expected = read_fixture("preprocessed.md", subfolder="with_table")
 #     assert original, "Table test fixture is missing or empty"
-#     assert_markdown_equal(original, expected, "mayor_council", subfolder="with_table")
+#     assert_markdown_equal({}, original, expected, "mayor_council", subfolder="with_table")
 
 
 def test_filter_content_keeps_all_images():
@@ -70,7 +69,7 @@ def test_filter_content_keeps_all_images():
     expected = """
     ![irrelevant image](image1.jpg)
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 def test_filter_content_keeps_images_in_kept_table():
     original = """
@@ -88,7 +87,7 @@ def test_filter_content_keeps_images_in_kept_table():
     expected = """
     ![relevant image](image2.jpg) 
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 def test_filter_content_keeps_images_outside_kept_table():
     original = """
@@ -106,7 +105,7 @@ def test_filter_content_keeps_images_outside_kept_table():
     expected = """
     ![image](image3.jpg) 
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 def test_filter_content_keeps_images_in_removed_table():
     """Images should be preserved when their containing table is removed"""
@@ -125,7 +124,7 @@ def test_filter_content_keeps_images_in_removed_table():
     expected = """
     ![chart](table-img.jpg)
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 
 def test_filter_content_keeps_multiple_images_in_removed_container():
@@ -145,7 +144,7 @@ def test_filter_content_keeps_multiple_images_in_removed_container():
     ![first](image1.jpg)
 ![second](image2.jpg)
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 
 def test_filter_content_keeps_images_in_irrelevant_link():
@@ -164,7 +163,7 @@ def test_filter_content_keeps_images_in_irrelevant_link():
     ![logo](linked-img.jpg)
 Irrelevant link text
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 
 def test_filter_content_keeps_images_in_nested_irrelevant_containers():
@@ -188,7 +187,7 @@ def test_filter_content_keeps_images_in_nested_irrelevant_containers():
     expected = """
     ![nested image](nested.jpg)
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 
 def test_filter_content_keeps_images_with_relevant_content():
@@ -208,7 +207,7 @@ def test_filter_content_keeps_images_with_relevant_content():
 
 Mayor John Smith announced the new policy.
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 
 def test_filter_content_keeps_images_mixed_with_irrelevant_and_relevant():
@@ -234,7 +233,7 @@ Mayor Jane Doe spoke today.
 
 ![photo two](photo2.jpg)
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 
 def test_filter_content_keeps_images_in_removed_span():
@@ -252,7 +251,7 @@ def test_filter_content_keeps_images_in_removed_span():
     expected = """
     ![icon](icon.jpg)
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 
 def test_filter_content_keeps_images_in_removed_section():
@@ -270,7 +269,7 @@ def test_filter_content_keeps_images_in_removed_section():
     expected = """
     ![banner](banner.jpg)
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 
 def test_filter_content_keeps_image_only_no_other_content():
@@ -287,7 +286,7 @@ def test_filter_content_keeps_image_only_no_other_content():
     expected = """
     ![alone](solo.jpg)
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 
 def test_filter_content_keeps_images_across_multiple_removed_tables():
@@ -308,7 +307,7 @@ def test_filter_content_keeps_images_across_multiple_removed_tables():
     ![first table](table1.jpg)
 ![second table](table2.jpg)
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
 
 
 def test_filter_content_keeps_images_in_kept_table_with_relevant_content():
@@ -330,4 +329,88 @@ def test_filter_content_keeps_images_in_kept_table_with_relevant_content():
 | --- | --- |
 | ![council](council-table.jpg) | Mayor Smith |
     """
-    assert_markdown_equal(original, expected, "mayor_council")
+    assert_markdown_equal({}, original, expected, "mayor_council")
+
+def test_filter_content_keeps_relevant_content_with_case_insensitive_match():
+    """Content containing case-insensitive matches of identities should be preserved"""
+    identities = {
+        "Alice Johnson": ["A. Johnson", "Alice J."],
+        "Bob Smith": ["B. Smith", "Robert S."]
+    }
+    original = """
+    <html>
+        <body>
+            <p>alice johnson attended the meeting.</p>
+            <p>Some irrelevant content.</p>
+        </body>
+    </html>
+    """
+    expected = """
+alice johnson attended the meeting.
+    """
+    assert_markdown_equal(identities, original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_relevant_content_with_mixed_identities_and_aliases():
+    """Content containing both identities and aliases should be preserved"""
+    identities = {
+        "Alice Johnson": ["A. Johnson", "Alice J."],
+        "Bob Smith": ["B. Smith", "Robert S."]
+    }
+    original = """
+    <html>
+        <body>
+            <p>Alice J. and Robert S. attended the meeting.</p>
+            <p>Some irrelevant content.</p>
+        </body>
+    </html>
+    """
+    expected = """
+Alice J. and Robert S. attended the meeting.
+    """
+    assert_markdown_equal(identities, original, expected, "mayor_council")
+
+def test_filter_content_keeps_relevant_content_with_ethnic_names():
+    """Content containing ethnic names should be preserved"""
+    identities = {
+        "José Martínez": ["J. Martínez", "Jose M."],
+        "李小龙": ["Bruce Lee", "L. Xiao Long"]
+    }
+    original = """
+    <html>
+        <body>
+            <p>José Martínez gave a speech today.</p>
+            <p>李小龙 was mentioned in the meeting.</p>
+            <p>Some irrelevant content.</p>
+        </body>
+    </html>
+    """
+    expected = """
+José Martínez gave a speech today.
+
+李小龙 was mentioned in the meeting.
+    """
+    assert_markdown_equal(identities, original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_relevant_content_with_ethnic_name_aliases():
+    """Content containing aliases of ethnic names should be preserved"""
+    identities = {
+        "José Martínez": ["J. Martínez", "Jose M."],
+        "李小龙": ["Bruce Lee", "L. Xiao Long"]
+    }
+    original = """
+    <html>
+        <body>
+            <p>J. Martínez was present at the event.</p>
+            <p>Bruce Lee's legacy was discussed.</p>
+            <p>Some irrelevant content.</p>
+        </body>
+    </html>
+    """
+    expected = """
+J. Martínez was present at the event.
+
+Bruce Lee's legacy was discussed.
+    """
+    assert_markdown_equal(identities, original, expected, "mayor_council")
