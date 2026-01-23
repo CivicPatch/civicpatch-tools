@@ -226,7 +226,7 @@ def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Per
 
         emails=field_mergers.merge_field_to_list([person.emails for person in group if person.emails]),
         phones=field_mergers.merge_field_to_list([person.phones for person in group if person.phones]),
-        urls=field_mergers.merge_field_to_list([person.urls for person in group if person.urls]),
+        urls=merge_urls([person.urls for person in group if person.urls]),
 
         start_date=field_mergers.merge_field("start_date", [person.start_date for person in group if person.start_date]),
         end_date=field_mergers.merge_field("end_date", [person.end_date for person in group if person.end_date]),
@@ -241,3 +241,21 @@ def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Per
 
     return person
 
+def merge_urls(url_groups: List[List[str]]) -> List[str]:
+    """
+    Priority 1: Merge list of URLs, preferring those that appear in multiple sources.
+    Priority 2: If no duplicates, return at least one URL.
+    """
+    url_counter = Counter(url for urls in url_groups for url in urls)
+    if not url_counter:
+        return []
+    
+    # Get URLs that appear in more than one source
+    merged_urls = [url for url, count in url_counter.items() if count > 1]
+    
+    # If no URLs appear in multiple sources, return at least one URL
+    if not merged_urls:
+        most_common_url, _ = url_counter.most_common(1)[0]
+        merged_urls.append(most_common_url)
+    
+    return merged_urls

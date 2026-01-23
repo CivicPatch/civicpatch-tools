@@ -1,7 +1,6 @@
 import os
 import hashlib
 import json
-from unittest import result
 from playwright.async_api import async_playwright, Page
 from typing import TypedDict
 import aiofiles
@@ -64,11 +63,29 @@ async def scrape(logger, website_url, options=None):
 
         if options and options.get('image_directory'):
             # Download images if the option is set
+            await convert_background_divs_to_imgs(page)
             await download_images(browser, logger, page, options.get('image_directory'))
 
         content = await page.content()
         await browser.close()
         return content
+
+async def convert_background_divs_to_imgs(page):
+    """Convert divs with background images to img tags in the page"""
+    await page.evaluate("""
+        () => {
+            const divs = document.querySelectorAll('div[style*="url("]');
+            divs.forEach(div => {
+                const style = div.getAttribute('style');
+                const match = style.match(/url\\(['"]?([^'"()]+)['"]?\\)/);
+                if (match) {
+                    const img = document.createElement('img');
+                    img.src = match[1];
+                    div.replaceWith(img);
+                }
+            });
+        }
+    """)
 
 async def flatten_shadow_root(page: Page):
     """

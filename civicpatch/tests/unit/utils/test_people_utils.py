@@ -56,6 +56,9 @@ def test_normalize_roles(roles, expected):
     # Hash symbol removal
     (["District # 3"], ["District 3"]),  # Remove hash symbol with space
     (["District #3"], ["District 3"]),  # Remove hash symbol without space
+
+    (["Ward First"], ["Ward 1"]),  # Word to numeral conversion
+    (["First Ward"], ["Ward 1"]),  # Word to numeral conversion alternative
     
     # Edge cases
     ([], []),  # Empty input
