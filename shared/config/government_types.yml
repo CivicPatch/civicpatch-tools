@@ -91,6 +91,7 @@ government_types:
       - role: deputy mayor
       - role: deputy mayor pro tempore
         aliases:
+          - deputy mayor pro tem
           - deputy mayor pro-tem
           - deputy mayor pro tempore
       - role: vice mayor
