@@ -200,7 +200,7 @@ async def download_images(browser, logger, page: Page, image_dir: str):
                 continue
             src = urljoin(page.url, src)
             image_hash = hash_string(src)
-            file_path = os.path.join(image_dir, f"{image_hash}.png")
+            file_path = f"{image_hash}.png"
 
             # Try downloading images directly
             try:
