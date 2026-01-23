@@ -27,7 +27,7 @@ async def crawl(logger, keywords, site_search):
     results = []
 
     while queue:
-        logger.info(f"Crawl queue length: {len(queue)}")
+        logger.info(f"Crawl queue length: {len(queue)}, crawling page {len(visited)+1} of {SEARCH_PAGE_LIMIT}")
         if len(visited) >= SEARCH_PAGE_LIMIT:
             break
 
