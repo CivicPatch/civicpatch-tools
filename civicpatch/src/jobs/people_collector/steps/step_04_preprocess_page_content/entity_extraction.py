@@ -3,6 +3,7 @@ import re
 from spacy.matcher import PhraseMatcher
 import shared.utils.config_utils as config_utils
 import json
+from typing import Dict, List
 
 # Global variables
 _nlp = None

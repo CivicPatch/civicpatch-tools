@@ -49,6 +49,7 @@ class RawLLMPerson(BaseModel):
     image: Optional[str] = None
 
 class PeopleArrayLLMResponseSchema(BaseModel):
+    government_type: str
     people: List[RawLLMPerson]
     thought: str
 

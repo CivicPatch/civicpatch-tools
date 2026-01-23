@@ -86,8 +86,8 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     
     # Get current step identities and merge with config
     current_step = context.data.process_page_content_step or DEFAULT_PROCESS_PAGE_CONTENT_STEP
-    merged_identities = merge_config_into_names(context.data.identities, current_step.identities)
-    
+    merged_identities = merge_config_into_names(context.data.identities or context.data.research_municipality_step.identities, current_step.identities)
+
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
 
     is_relevant_page_prompt = openai_prompt.relevant_page_prompt(setup_data.people_hint)
