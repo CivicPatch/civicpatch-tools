@@ -1,5 +1,5 @@
 import time
-from bs4 import Tag, BeautifulSoup, NavigableString
+from bs4 import Tag, BeautifulSoup
 from jobs.people_collector.steps.step_04_preprocess_page_content import entity_extraction
 
 BLACKLISTED_CLASSES = [ # Warning -- these need to be carefully curated
@@ -39,6 +39,10 @@ def filter_content(logger, input_html: str, government_type, progress_log_interv
     return filtered_content
 
 def filter_node_content(logger, node: Tag, state, government_type):
+    # Handle images - Always keep images (check this FIRST, before anything else)
+    if node.name == "img":
+        return  # Do not remove or modify images
+    
     # Skip processing if this node is inside a kept table
     if node.find_parent("table") and hasattr(node.find_parent("table"), '_keep_table'):
         return  # Don't process nodes inside tables that are marked to keep
@@ -62,9 +66,16 @@ def filter_node_content(logger, node: Tag, state, government_type):
         if table_text.strip():
             people, dates, emails, phones, keywords = entity_extraction.extract_data(table_text, government_type)
             if any([people, keywords]):  # Keep original logic - only check people and keywords for tables
-                # Mark this table to keep ALL its content
+                # Mark this table to keep ALL its content (including images)
                 node._keep_table = True
-                return  # Keep the entire table structure intact
+                return  # Keep the entire table structure intact with images inside
+        
+        # Table is not relevant - extract images before removing
+        images = node.find_all("img")
+        if images and node.parent and hasattr(node.parent, 'name'):
+            for img in images:
+                node.insert_before(img.extract())
+        
         node.decompose()  # Remove irrelevant tables
         return
     
@@ -72,10 +83,6 @@ def filter_node_content(logger, node: Tag, state, government_type):
     parent_table = node.find_parent("table")
     if parent_table and hasattr(parent_table, '_keep_table'):
         return  # Keep all content inside marked tables
-    
-    # Handle images
-    if node.name == "img":
-        return
     
     # Handle links - be more selective about which links to keep
     if node.name == "a":
@@ -88,8 +95,14 @@ def filter_node_content(logger, node: Tag, state, government_type):
         
         # For other http links, check content relevance
         if href.startswith("http") and link_text:
-            if has_relevant_content(link_text, government_type):  # Use the fixed function
+            if has_relevant_content(link_text, government_type):
                 return
+        
+        # Before removing/replacing the link, extract and preserve any images
+        images = node.find_all("img")
+        if images and node.parent and hasattr(node.parent, 'name'):
+            for img in images:
+                node.insert_before(img.extract())
         
         # If link is not relevant, replace with just the text content
         if link_text:
@@ -102,22 +115,36 @@ def filter_node_content(logger, node: Tag, state, government_type):
     if node and node.name:
         node_text = node.get_text(strip=True)
         if node_text:
-            if has_relevant_content(node_text, government_type):  # Use the fixed function
+            if has_relevant_content(node_text, government_type):
                 return  # Keep nodes with relevant content
     
     # Handle specific structural elements more carefully
     if node.name in ["div", "span", "p", "section", "article", "main", "header", "footer"]:
-        # Check if this element or its children contain relevant content
+        # Check if this element or its children contain relevant content FIRST
         descendant_text = node.get_text(strip=True)
         if descendant_text:
-            if has_relevant_content(descendant_text, government_type):  # Use the fixed function
-                return  # Keep structural elements that contain relevant content
+            if has_relevant_content(descendant_text, government_type):
+                return  # Keep structural elements that contain relevant content (including images)
         
-        # If no relevant content, unwrap instead of removing completely
-        if node.parent:
-            node.unwrap()
+        # Only extract images if we're going to remove this element
+        images = node.find_all("img")
+        if images and node.parent and hasattr(node.parent, 'name'):
+            for img in images:
+                node.insert_before(img.extract())
+        
+        # If no relevant content and no parent, just return
+        if not node.parent:
+            return
+        
+        # If no relevant content, decompose to remove it and its text content
+        node.decompose()
         return
     
-    # For other elements without relevant content, remove them
+    # For other elements without relevant content, extract images before removing
     if node.parent and node.name not in ["html", "body", "head", "title", "meta"]:
+        images = node.find_all("img")
+        if images and hasattr(node.parent, 'name'):
+            for img in images:
+                node.insert_before(img.extract())
+        
         node.decompose()

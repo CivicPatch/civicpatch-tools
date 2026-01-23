@@ -433,7 +433,6 @@ def update_website_links(logger, domain, roles, existing_links: List[Link], reco
 
     # Combine found websites with related URLs from relevance check
     urls = list(set(found_websites))
-    logger.info(f"Urls found for profiles: {urls}", )
     return move_links_to_top(domain, urls, existing_links)
 
 def extract_websites_from_processed_data(logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[str]:

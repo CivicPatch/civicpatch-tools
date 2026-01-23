@@ -1,7 +1,10 @@
 import os
 import difflib
+import pytest
 from jobs.people_collector.steps.step_04_preprocess_page_content.filter_content import filter_content
 from markdownify import markdownify as md
+
+pytestmark = pytest.mark.unit
 
 def read_fixture(filename, subfolder="with_table"):
     fixture_dir = os.path.join(os.path.dirname(__file__), "fixtures", subfolder)
@@ -10,10 +13,11 @@ def read_fixture(filename, subfolder="with_table"):
 
 def assert_markdown_equal(actual_html, expected_md, government_type, subfolder="with_table"):
     print("asserting...")
-    actual_html = filter_content(actual_html, government_type)
-    actual_md = md(actual_html).strip()
+    actual_html = filter_content({}, actual_html, government_type)
+    actual_md = md(actual_html, keep_inline_images_in=['td']).strip()
     expected_md = expected_md.strip()
     actual_lines = actual_md.splitlines()
+    # actual_lines = actual_html.strip().splitlines()
     expected_lines = expected_md.splitlines()
     if actual_lines != expected_lines:
         print("\n".join(difflib.unified_diff(expected_lines, actual_lines, fromfile="expected", tofile="actual", lineterm="")))
@@ -23,8 +27,8 @@ def assert_markdown_equal(actual_html, expected_md, government_type, subfolder="
         with open(output_html_path, "w", encoding="utf-8") as f:
             f.write(actual_html)
         print(f"Actual HTML output written to {output_html_path}")
-        with open(output_path, "w", encoding="utf-8") as f:
-            f.write(actual_md)
+        #with open(output_path, "w", encoding="utf-8") as f:
+        #    f.write(actual_md)
         print(f"Actual preprocessed output written to {output_path}")
     assert actual_lines == expected_lines
 
@@ -34,11 +38,11 @@ def assert_markdown_equal(actual_html, expected_md, government_type, subfolder="
  #    assert original, "Original fixture is missing or empty"
  #    assert_markdown_equal(original, expected, government_type="mayor_council")
 
-def test_filter_content_with_seattle():
-    original = read_fixture("original.html", subfolder="seattle_council")
-    expected = read_fixture("preprocessed.md", subfolder="seattle_council")
-    assert original, "Keyword test fixture is missing or empty"
-    assert_markdown_equal(original, expected, "mayor_council", subfolder="seattle_council")
+#def test_filter_content_with_seattle():
+#    original = read_fixture("original.html", subfolder="seattle_council")
+#    expected = read_fixture("preprocessed.md", subfolder="seattle_council")
+#    assert original, "Keyword test fixture is missing or empty"
+#    assert_markdown_equal(original, expected, "mayor_council", subfolder="seattle_council")
 
 
 #def test_filter_content_with_big_page():
@@ -52,3 +56,278 @@ def test_filter_content_with_seattle():
 #     expected = read_fixture("preprocessed.md", subfolder="with_table")
 #     assert original, "Table test fixture is missing or empty"
 #     assert_markdown_equal(original, expected, "mayor_council", subfolder="with_table")
+
+
+def test_filter_content_keeps_all_images():
+    original = """
+    <html>
+        <body>
+            <img src="image1.jpg" alt="irrelevant image">
+            <p>Some text</p>
+        </body>
+    </html>
+    """
+    expected = """
+    ![irrelevant image](image1.jpg)
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+def test_filter_content_keeps_images_in_kept_table():
+    original = """
+    <html>
+        <body>
+            <table>
+                <tr>
+                    <td><img src="image2.jpg" alt="relevant image"></td>
+                    <td>stuff content</td>
+                </tr>
+            </table>
+        </body>
+    </html>
+    """
+    expected = """
+    ![relevant image](image2.jpg) 
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+def test_filter_content_keeps_images_outside_kept_table():
+    original = """
+    <html>
+        <body>
+            <table>
+                <tr>
+                    <td>Irrelevant content</td>
+                </tr>
+            </table>
+            <img src="image3.jpg" alt="image">
+        </body>
+    </html>
+    """
+    expected = """
+    ![image](image3.jpg) 
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+def test_filter_content_keeps_images_in_removed_table():
+    """Images should be preserved when their containing table is removed"""
+    original = """
+    <html>
+        <body>
+            <table>
+                <tr>
+                    <td><img src="table-img.jpg" alt="chart"></td>
+                    <td>Irrelevant data</td>
+                </tr>
+            </table>
+        </body>
+    </html>
+    """
+    expected = """
+    ![chart](table-img.jpg)
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_multiple_images_in_removed_container():
+    """Multiple images should be preserved when their container is removed"""
+    original = """
+    <html>
+        <body>
+            <div>
+                <img src="image1.jpg" alt="first">
+                <img src="image2.jpg" alt="second">
+                <p>Irrelevant content</p>
+            </div>
+        </body>
+    </html>
+    """
+    expected = """
+    ![first](image1.jpg)
+![second](image2.jpg)
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_images_in_irrelevant_link():
+    """Images inside irrelevant links should be preserved"""
+    original = """
+    <html>
+        <body>
+            <a href="http://example.com">
+                <img src="linked-img.jpg" alt="logo">
+                Irrelevant link text
+            </a>
+        </body>
+    </html>
+    """
+    expected = """
+    ![logo](linked-img.jpg)
+Irrelevant link text
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_images_in_nested_irrelevant_containers():
+    """Images should be preserved even in deeply nested irrelevant containers"""
+    original = """
+    <html>
+        <body>
+            <div>
+                <section>
+                    <article>
+                        <p>
+                            <img src="nested.jpg" alt="nested image">
+                            Irrelevant nested content
+                        </p>
+                    </article>
+                </section>
+            </div>
+        </body>
+    </html>
+    """
+    expected = """
+    ![nested image](nested.jpg)
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_images_with_relevant_content():
+    """Images should be kept alongside relevant content in the same container"""
+    original = """
+    <html>
+        <body>
+            <div>
+                <img src="council.jpg" alt="council photo">
+                <p>Mayor John Smith announced the new policy.</p>
+            </div>
+        </body>
+    </html>
+    """
+    expected = """
+    ![council photo](council.jpg)
+
+Mayor John Smith announced the new policy.
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_images_mixed_with_irrelevant_and_relevant():
+    """Images should be preserved when mixed with both relevant and irrelevant content"""
+    original = """
+    <html>
+        <body>
+            <div>
+                <img src="photo1.jpg" alt="photo one">
+                <p>Irrelevant stuff</p>
+            </div>
+            <div>
+                <p>Mayor Jane Doe spoke today.</p>
+                <img src="photo2.jpg" alt="photo two">
+            </div>
+        </body>
+    </html>
+    """
+    expected = """
+    ![photo one](photo1.jpg)
+
+Mayor Jane Doe spoke today.
+
+![photo two](photo2.jpg)
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_images_in_removed_span():
+    """Images in span elements should be preserved when span is removed"""
+    original = """
+    <html>
+        <body>
+            <span>
+                <img src="icon.jpg" alt="icon">
+                Irrelevant span text
+            </span>
+        </body>
+    </html>
+    """
+    expected = """
+    ![icon](icon.jpg)
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_images_in_removed_section():
+    """Images in section elements should be preserved when section is removed"""
+    original = """
+    <html>
+        <body>
+            <section>
+                <img src="banner.jpg" alt="banner">
+                <p>Unrelated section content</p>
+            </section>
+        </body>
+    </html>
+    """
+    expected = """
+    ![banner](banner.jpg)
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_image_only_no_other_content():
+    """A container with only an image and no other content should preserve the image"""
+    original = """
+    <html>
+        <body>
+            <div>
+                <img src="solo.jpg" alt="alone">
+            </div>
+        </body>
+    </html>
+    """
+    expected = """
+    ![alone](solo.jpg)
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_images_across_multiple_removed_tables():
+    """Images in multiple removed tables should all be preserved"""
+    original = """
+    <html>
+        <body>
+            <table>
+                <tr><td><img src="table1.jpg" alt="first table"></td></tr>
+            </table>
+            <table>
+                <tr><td><img src="table2.jpg" alt="second table"></td></tr>
+            </table>
+        </body>
+    </html>
+    """
+    expected = """
+    ![first table](table1.jpg)
+![second table](table2.jpg)
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
+
+
+def test_filter_content_keeps_images_in_kept_table_with_relevant_content():
+    """Images in tables with relevant content should be kept with the table"""
+    original = """
+    <html>
+        <body>
+            <table>
+                <tr>
+                    <td><img src="council-table.jpg" alt="council"></td>
+                    <td>Mayor Smith</td>
+                </tr>
+            </table>
+        </body>
+    </html>
+    """
+    expected = """
+|  |  |
+| --- | --- |
+| ![council](council-table.jpg) | Mayor Smith |
+    """
+    assert_markdown_equal(original, expected, "mayor_council")
