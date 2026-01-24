@@ -53,10 +53,10 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:nj/county:middlesex/place:woodbridge/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:garland/government",
     "config": {
-        "url": "https://www.twp.woodbridge.nj.us",
-        "name": "Woodbridge township"
+        "url": "http://garlandtx.gov",
+        "name": "Garland city"
     }
   }'
 """
