@@ -14,6 +14,7 @@ def make_llm_person(name, roles=None, divisions=None, phone=None, email=None, we
     """Helper function to create LLMPerson objects for testing"""
     return LLMPerson(
         name=name,
+        other_names=[],
         roles=roles or [],
         divisions=divisions or [],
         phone={"data": phone} if phone else None,

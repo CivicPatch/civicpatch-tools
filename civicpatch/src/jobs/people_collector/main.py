@@ -20,7 +20,6 @@ def initialize_workflow(request_id, jurisdiction_ocdid: str, config: WorkflowCon
         data=PeopleCollectorData(
           jurisdiction_ocdid=jurisdiction_ocdid,
           config=config,
-          identities=config.identities or {}
         ),
     )
     logger = log_utils.get_workflow_logger(jurisdiction_ocdid)

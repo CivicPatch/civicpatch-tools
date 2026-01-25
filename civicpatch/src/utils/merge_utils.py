@@ -3,7 +3,7 @@ from domain.models import Person
 from jobs.people_collector.schemas import LLMPerson, PeopleByName, OtherNamesByCanonicalName, PeopleCollectorContext
 from nameparser import HumanName
 from Levenshtein import distance as levenshtein_distance
-from copy import deepcopy
+import copy
 import unicodedata
 
 NAME_SIMILARITY_THRESHOLD = 2
@@ -109,19 +109,6 @@ def find_indexed_name(normalized_name: str, people_by_name: PeopleByName, known_
 
     return normalized_name
 
-def update_name_map(
-    name_map: Dict[str, List[str]], indexed_name: str, original_name: str
-) -> Dict[str, List[str]]:
-    """
-    Return an updated name_map with aliases for the canonical name.
-    """
-    updated_name_map = deepcopy(name_map)  # Create a deep copy to avoid side effects
-    if indexed_name not in updated_name_map:
-        updated_name_map[indexed_name] = []
-    updated_name_map[indexed_name].append(original_name)
-    return updated_name_map
-
-
 def append_to_people_by_name(
     people_by_name: PeopleByName, indexed_name: str, people_list: List[LLMPerson]
 ) -> PeopleByName:
@@ -134,48 +121,30 @@ def append_to_people_by_name(
     updated_people_by_name[indexed_name].extend(people_list)
     return updated_people_by_name
 
-
-def group_people_by_name(
-    known_mappings: OtherNamesByCanonicalName,  # Renamed: this is your merged names
-    people_by_name: PeopleByName,
-    people_to_link: List[LLMPerson]
-) -> Tuple[OtherNamesByCanonicalName, PeopleByName]:
+def group_people_by_name(known_mappings: Dict[str, List[str]], people_by_name: Dict[str, List[LLMPerson]], people_to_link: List[LLMPerson]) -> Dict[str, List[LLMPerson]]:
     """
-    Group people by their canonical names and update mappings.
-    known_mappings contains both config and previously discovered name mappings.
+    Group people by name, preserving known mappings and adding new people to the appropriate groups.
     """
-    updated_mappings: OtherNamesByCanonicalName = {}
-    linked_people = {}
+    updated_people = copy.deepcopy(people_by_name)
 
     # Process people_to_link
     for person in people_to_link:
         normalized_name = normalize_name(person.name)
-        indexed_name = find_indexed_name(normalized_name, people_by_name, known_mappings)
+        matched = False
+        for canonical_name, aliases in known_mappings.items():
+            if normalized_name == normalize_name(canonical_name) or normalized_name in [normalize_name(alias) for alias in aliases]:
+                if canonical_name not in updated_people:
+                    updated_people[canonical_name] = [] 
+                updated_people[canonical_name].append(person)
+                matched = True
+                break
+        if not matched:
+            # If no match is found, add the person under their own name
+            if person.name not in updated_people:
+                updated_people[person.name] = []
+            updated_people[person.name].append(person)
 
-        updated_mappings = update_name_map(updated_mappings, indexed_name, normalized_name)
-
-        if indexed_name not in linked_people:
-            linked_people[indexed_name] = []
-        linked_people[indexed_name].append(person)
-
-    # Append linked_people to people_by_name
-    for indexed_name, people_list in linked_people.items():
-        people_by_name = append_to_people_by_name(people_by_name, indexed_name, people_list)
-
-    # Process known mappings to ensure they're preserved
-    for canonical, aliases in known_mappings.items():
-        normalized_canonical = normalize_name(canonical)
-        indexed_name = find_indexed_name(normalized_canonical, people_by_name, known_mappings)
-
-        updated_mappings = update_name_map(updated_mappings, indexed_name, canonical)
-        if indexed_name in updated_mappings:
-            updated_mappings[indexed_name].extend(aliases)
-
-    # Deduplicate and sort
-    for indexed_name in updated_mappings:
-        updated_mappings[indexed_name] = sorted(set(updated_mappings[indexed_name]))
-
-    return updated_mappings, people_by_name
+    return updated_people
 
 def to_field_set_from_record(record, fields: List[str], ):
     result = set()

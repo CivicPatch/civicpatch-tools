@@ -7,10 +7,10 @@ from jobs.people_collector.schemas import (
     LinkStatus, 
     WorkflowStatus, 
     PreprocessPageContentStep, 
-    ResearchMunicipalityStep
 )
 from shared.utils import data_path_utils
 from jobs.people_collector.steps.step_04_preprocess_page_content.filter_content import filter_content
+from jobs.people_collector.steps.step_04_preprocess_page_content.clean_html import clean_html
 from utils import log_utils
 from typing import List
 
@@ -44,16 +44,18 @@ def preprocess_page_content(
         context.data.research_municipality_step, "elected_officials", {}
     )
     research_identities = {official.name: [official.name] for official in research_elected_officials}
-    runtime_identities = getattr(
-        context.data.process_page_content_step, "identities", {}
-    )
-    identities = context.data.config.identities or runtime_identities or research_identities
+    #runtime_identities = getattr(
+    #    context.data.process_page_content_step, "identities", {}
+    #)
+    identities = context.data.config.identities or research_identities
     logger.debug(f"-> Preprocessing with identities: {identities}")
-    preprocessed_html  = filter_content(logger, identities, output_html, government_type=government_type)
-    preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th'])
+    cleaned_html = clean_html(logger, output_html)
+    preprocessed_html  = filter_content(logger, identities, cleaned_html, government_type=government_type)
+    preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
 
     preprocessed_html_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "preprocessed.html")
     original_output_md_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "original.md")
+    cleaned_html_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "cleaned.html")
     output_md_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "preprocessed.md")
 
     with open(preprocessed_html_file_path, "w", encoding="utf-8") as f:
@@ -64,6 +66,9 @@ def preprocess_page_content(
 
     with open(output_md_file_path, "w", encoding="utf-8") as f:
         f.write(preprocessed_md)
+
+    #with open(cleaned_html_file_path, "w", encoding="utf-8") as f:
+    #    f.write(cleaned_html)
 
     # Update link status to PREPROCESSED or PREPROCESSED_NO_CONTENT
     if preprocessed_md.strip():

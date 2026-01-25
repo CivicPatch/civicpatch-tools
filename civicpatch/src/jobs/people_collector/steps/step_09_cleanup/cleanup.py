@@ -23,8 +23,7 @@ def cleanup(context: PeopleCollectorContext):
     cache_dir = os.path.join(data_source_dir, "cache")
     images_dir = os.path.join(data_source_dir, "images")
 
-    people_data = context.data.format_output_step
-    people = [Official.parse_obj(person) for person in people_data]
+    people = context.data.format_output_step.officials
 
     if os.path.exists(cache_dir):
         # Only keep cache folders that are referenced by people
@@ -33,9 +32,7 @@ def cleanup(context: PeopleCollectorContext):
         # Only keep images that are referenced by people
         cleanup_images(logger, request_id, jurisdiction_ocdid, images_dir, people)
 
-    updated_names = cleanup_names_config(context.data.identities)
-
-    return {"identities": updated_names}
+    return
 
 
 def cleanup_cache(cache_dir: str, people_list: List[Official]):
@@ -99,11 +96,3 @@ def cleanup_images(
 
     return {}
 
-
-def cleanup_names_config(names_config: Dict[str, List[str]]) -> dict:
-    # Remove any names that are empty or only whitespace
-    cleaned_names_config = {}
-    for key, names_list in names_config.items():
-        if len(names_list) > 1:
-            cleaned_names_config[key] = names_list
-    return cleaned_names_config

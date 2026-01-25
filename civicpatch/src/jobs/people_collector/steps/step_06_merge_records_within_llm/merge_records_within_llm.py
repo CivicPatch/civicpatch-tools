@@ -5,6 +5,8 @@ from jobs.people_collector.schemas import (
 )
 from utils import merge_utils
 import jobs.people_collector.steps.step_06_merge_records_within_llm.field_mergers as field_mergers
+from collections import Counter
+from datetime import datetime, timezone
 
 def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWithinLLMStep:
     """
@@ -28,7 +30,8 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
         groups_by_last_name = group_by_last_name(records)
 
         for llm_records_list in groups_by_last_name.values():
-            identity_names = context.data.process_page_content_step.identities
+            research_identities = {official.name: [official.name] for official in context.data.research_municipality_step.elected_officials}
+            identity_names = context.data.config.identities or research_identities
             consolidated_people = merge_records(identity_names, llm_records_list, jurisdiction_ocdid)
             merged_people.extend(consolidated_people)
 
@@ -98,8 +101,14 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     start_date = field_mergers.merge_field([r.start_date for r in records])
     end_date = field_mergers.merge_field([r.end_date for r in records])
 
+    # Collect all unique names from the group, excluding the canonical name
+    other_names = list(set(
+        person.name for person in llm_people_list if person.name and person.name != canonical_name
+    ))
+
     person = Person(
         name=canonical_name,
+        other_names=other_names,  # Add other names here
         roles=merged_roles,
         divisions=merged_divisions,
 
@@ -140,14 +149,57 @@ def merge_records(identity_names: Dict[str, List[str]], llm_people_list: List[LL
         for j, other_record in enumerate(llm_people_list):
             if j in visited:
                 continue
-            if (
-                merge_utils.same_name(record.name, other_record.name) or 
-                any(merge_utils.is_weakly_tied(identity_names, group_record, other_record) for group_record in group)
-            ):
+
+            # Check for exact name match or weak tie
+            is_exact_match = merge_utils.same_name(record.name, other_record.name)
+            is_alias_match = (
+                record.name in identity_names and 
+                other_record.name in identity_names[record.name]
+            )
+            is_weak_tie = any(
+                merge_utils.is_weakly_tied(identity_names, group_record, other_record) 
+                for group_record in group
+            )
+
+            if is_exact_match or is_alias_match or is_weak_tie:
                 group.append(other_record)
                 visited.add(j)
 
+        # Determine canonical name
+        canonical_name = determine_canonical_name(identity_names, group)
+
         # Merge all records in the group into a single Person object
-        consolidated_groups.append(merge_llm_people_to_person(group[0].name, group, jurisdiction_ocdid))
+        merged_person = merge_llm_people_to_person(canonical_name, group, jurisdiction_ocdid)
+
+        # Update other_names for weak ties
+        all_names = set(person.name for person in group if person.name)  # Add all person names
+        all_names.discard(canonical_name)  # Remove the canonical name from other_names
+        merged_person.other_names = list(all_names)
+
+        consolidated_groups.append(merged_person)
 
     return consolidated_groups
+
+def determine_canonical_name(identity_names: Dict[str, List[str]], group: List[LLMPerson]) -> str:
+    """
+    Determine the canonical name for a group of LLMPerson objects.
+
+    Priority:
+    1. If a name exists in the identity_names mapping, use the canonical name from the mapping.
+    2. If no name exists in the identity_names mapping, use the most frequently used name in the group.
+    """
+    # Count the occurrences of each name in the group
+    name_counter = Counter(person.name for person in group if person.name)
+
+    # Check if any name in the group matches a canonical name in identity_names
+    for person in group:
+        if person.name in identity_names:
+            return person.name  # Return the canonical name from the mapping
+
+    # Handle case where no names are found in the group
+    if not name_counter:
+        raise ValueError("Cannot determine canonical name for an empty group or group with no valid names.")
+
+    # Default to the most common name if no canonical name is found
+    most_common_name, _ = name_counter.most_common(1)[0]
+    return most_common_name

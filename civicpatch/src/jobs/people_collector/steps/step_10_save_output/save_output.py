@@ -22,21 +22,13 @@ async def save_output(context: PeopleCollectorContext):
       context.data.jurisdiction_ocdid
   )
 
-  people = context.data.format_output_step
-  save_data_to_file(people, data_file_path)
+  format_output = context.data.format_output_step
+  save_data_to_file(format_output.officials, data_file_path)
 
-  updated_config = WorkflowConfig(
-    url=context.data.config.url,
-    name=context.data.config.name,
-    
-    # TODO: might not want to save this?
-    source_urls=context.data.config.source_urls,
-    
-    identities=context.data.identities, # Can be updated up via job
-    government_type=context.data.research_municipality_step.government_type # Can be updated via research step if config not available
-  )
+  updated_config = format_output.config
+
   save_config_to_file(updated_config, config_file_path)
-  await update_people_job_result(logger, context.request_id, people)
+  await update_people_job_result(logger, context.request_id, format_output.officials)
 
 def save_data_to_file(people: List[Official], file_path: str):
     # Create parent directories if not exists

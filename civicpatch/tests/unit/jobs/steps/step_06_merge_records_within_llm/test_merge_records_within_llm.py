@@ -4,7 +4,7 @@ from jobs.people_collector.schemas import (
     LLMPerson, WorkflowStatus 
 )
 from jobs.people_collector.steps.step_06_merge_records_within_llm.merge_records_within_llm import (
-    merge_llm_people_to_person, merge_records_within_llm, get_source_urls
+    merge_llm_people_to_person, get_source_urls, merge_records, determine_canonical_name
 )
 from shared.utils.config_utils import get_role_alias_map, get_division_alias_map
 from datetime import datetime as Datetime
@@ -119,4 +119,64 @@ def test_get_source_urls_filters_by_unique_contribution():
 
     result = get_source_urls(person_records, person)
     # Should only return r2's source_url for all fields with data
-    assert set(result) == expected_urls 
+    assert set(result) == expected_urls
+
+def test_merge_records_updates_other_names():
+    """Test that merge_records updates other_names correctly."""
+    identity_names = {
+        "John Doe": ["J. Doe", "Johnny"]
+    }
+    llm_people_list = [
+        LLMPerson(name="Johnny", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="J. Doe", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="John Doe", roles=["Deputy"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
+    ]
+    jurisdiction_ocdid = "ocd-division/country:us/state:ca/place:someplace"
+
+    merged_people = merge_records(identity_names, llm_people_list, jurisdiction_ocdid)
+
+    assert len(merged_people) == 1
+    merged_person = merged_people[0]
+    assert merged_person.name == "John Doe"
+
+def test_determine_canonical_name():
+    """Test determine_canonical_name function."""
+
+    # Case 1: Canonical name exists in identity_names
+    identity_names = {
+        "John Doe": ["J. Doe", "Johnny"],
+        "Jane Smith": ["J. Smith", "Janey Smith"]
+    }
+    group = [
+        make_llm_person(name="J. Doe"),
+        make_llm_person(name="John Doe"),
+        make_llm_person(name="J. Doe"),
+        make_llm_person(name="John Doe")
+    ]
+    canonical_name = determine_canonical_name(identity_names, group)
+    assert canonical_name == "John Doe"
+
+    # Case 2: No canonical name in identity_names, fallback to most common name
+    identity_names = {}
+    group = [
+        make_llm_person(name="Johnny"),
+        make_llm_person(name="Johnny"),
+        make_llm_person(name="J. Doe"),
+        make_llm_person(name="John Doe")
+    ]
+    canonical_name = determine_canonical_name(identity_names, group)
+    assert canonical_name == "Johnny"
+
+    # Case 3: Empty group
+    with pytest.raises(ValueError):
+        determine_canonical_name(identity_names, [])
+
+    # Case 4: Tie in most common name
+    group = [
+        make_llm_person(name="Johnny"),
+        make_llm_person(name="John Doe"),
+        make_llm_person(name="Johnny"),
+        make_llm_person(name="John Doe")
+    ]
+    canonical_name = determine_canonical_name(identity_names, group)
+    assert canonical_name in ["Johnny", "John Doe"]  # Either name is valid

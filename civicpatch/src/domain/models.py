@@ -8,6 +8,7 @@ class Office(BaseModel):
  
 class Official(BaseModel):
     name: str
+    other_names: List[str] = []
     phones: List[str] = []
     emails: List[str] = []
     urls: List[str] = []
@@ -26,6 +27,7 @@ class Official(BaseModel):
 class Person(BaseModel):
     name: str
     # address: NOTE: not implemented, we are NOT collecting addresses
+    other_names: List[str] = []
     roles: List[str] = []
     divisions: List[str] = []
     phones: List[str] = []
@@ -44,6 +46,7 @@ class Person(BaseModel):
 def person_to_official(person: Person) -> Official:
     return Official(
         name=person.name,
+        other_names=person.other_names,
 
         phones=person.phones,
         emails=person.emails,
