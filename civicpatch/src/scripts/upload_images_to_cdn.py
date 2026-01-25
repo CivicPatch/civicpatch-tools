@@ -1,4 +1,5 @@
 import os
+import sys
 import posixpath
 from typing import BinaryIO
 
@@ -56,6 +57,8 @@ def upload_images_to_cdn(jurisdiction_ocdid: str):
                         print(f"Failed to upload {filename}: {str(e)}")
             else:
                 print(f"Image file {image_file_path} does not exist.")
+                sys.exit(1)
+                
         else:
             print(f"No image mapping found for {person.name} or image is missing.")
 

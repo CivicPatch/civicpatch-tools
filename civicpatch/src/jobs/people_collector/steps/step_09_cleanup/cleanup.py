@@ -61,6 +61,7 @@ def cleanup_images(
     images_to_keep = set()
     image_map_file_path = os.path.join(images_dir, "image_map.json")
     image_map_data = {}
+    missing_images = set()
 
     with open(image_map_file_path, "r") as f:
         image_map_data = json.load(f)
@@ -70,8 +71,10 @@ def cleanup_images(
             continue
 
         if person.image in image_map_data:
+            if not os.path.exists(image_map_data[person.image]):
+                missing_images.add(image_map_data[person.image])
             images_to_keep.add(image_map_data[person.image])
-
+    
     images_found = set()
     for image_file in os.listdir(images_dir):
         # Skip image_map.json
@@ -90,7 +93,6 @@ def cleanup_images(
                     file_size_bytes=os.path.getsize(image_file_path),
                 )
 
-    missing_images = images_to_keep - images_found
     if len(missing_images) > 0:
         logger.error(f"Missing images that were expected to be found: {missing_images}")
 
