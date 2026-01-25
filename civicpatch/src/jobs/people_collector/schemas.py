@@ -49,7 +49,6 @@ class RawLLMPerson(BaseModel):
     image: Optional[str] = None
 
 class PeopleArrayLLMResponseSchema(BaseModel):
-    government_type: str
     people: List[RawLLMPerson]
     thought: str
 
@@ -114,6 +113,11 @@ class ResearchedPerson(BaseModel):
     name: str
     roles: List[str]
     divisions: List[str]
+
+class ResearchMunicipalityLLMSchema(BaseModel):
+    government_type: str
+    people: List[ResearchedPerson]
+    notes: Optional[str] = None
 
 class ResearchMunicipalityStep(BaseModel):
     government_type: str

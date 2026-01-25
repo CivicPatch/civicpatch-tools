@@ -4,25 +4,33 @@ government_types:
     head_of_government: mayor
     roles:
       - role: mayor
+        is_unique: true
       - role: mayor pro tempore
+        is_unique: true
         aliases: 
         - mayor pro-tem
         - mayor pro tem
       - role: assistant mayor
+        is_unique: true
       - role: deputy mayor
+        is_unique: true
       - role: vice mayor
+        is_unique: true
         aliases:
         - vice-mayor
       - role: commission president
+        is_unique: true
         aliases:
           - commissioner president
       - role: commissioner vice president
+        is_unique: true
         aliases:
           - commissioner vice-president
           - commissioner-vice president
           - commission vice-president
           - commission vice president
       - role: commissioner
+        is_unique: false
         aliases:
           - city commissioner
     keywords: # Keys are for google search, values are for web crawling
@@ -59,7 +67,9 @@ government_types:
       - council-manager
     roles:
       - role: mayor
+        is_unique: true
       - role: mayor pro tempore
+        is_unique: true
         aliases: 
         - mayor pro-tem
         - mayor pro tem
@@ -88,25 +98,33 @@ government_types:
       #  - vice-chairwoman
       #- role: chair pro tem
       - role: assistant mayor
+        is_unique: true
       - role: deputy mayor
+        is_unique: true
       - role: deputy mayor pro tempore
+        is_unique: true
         aliases:
           - deputy mayor pro tem
           - deputy mayor pro-tem
           - deputy mayor pro tempore
       - role: vice mayor
+        is_unique: true
       - role: council president
+        is_unique: true
         aliases:
         - president
         - city council president
         - council member president
         - president of the council
       - role: council president pro tem
+        is_unique: true
         aliases:
         - council president pro-tem
         - council president pro tempore
       - role: deputy council president
+        is_unique: true
       - role: council vice president
+        is_unique: true
         aliases:
           - vice president
           - vice-president
@@ -114,7 +132,9 @@ government_types:
           - council member vice president
           - council member vice-president
       - role: council manager
+        is_unique: true
       - role: council member
+        is_unique: false
         aliases:
           - council-member
           - city councilor
@@ -137,8 +157,6 @@ government_types:
           - town board member
           - representative
           - member
-    exclude_positions:
-      - youth councilor
     keywords: # Keys are for google search, values are for web crawling
       mayor:
         - mayor and city council
@@ -174,8 +192,11 @@ government_types:
     head_of_government: mayor
     roles:
       - role: mayor
+        is_unique: true
       - role: deputy mayor
+        is_unique: true
       - role: committee member
+        is_unique: true
         aliases:
           - township committee member
           - committeeman
@@ -195,11 +216,14 @@ government_types:
   select_board:
     roles:
       - role: mayor # Optional, not always present
+        is_unique: true
       - role: mayor pro tempore
+        is_unique: true
         aliases: 
         - mayor pro-tem
         - mayor pro tem
       - role: select board chair
+        is_unique: false
         aliases:
         - chair
         - selectboard chairman
@@ -210,6 +234,7 @@ government_types:
         - chairwoman
         - selectboard chair
       - role: select board vice chair
+        is_unique: true
         aliases:
         - select board vice chairman
         - select board vice chairwoman
@@ -228,8 +253,10 @@ government_types:
         - vice-chair
         - vice-chairman
         - vice-chairwoman
-      - role: deputy mayor  
+      - role: deputy mayor
+        is_unique: true
       - role: select board member
+        is_unique: false
         aliases:
         - selectmen
         - selectman
@@ -264,9 +291,13 @@ government_types:
   aldermen:
     roles:
       - role: mayor # Optional, not always present
+        is_unique: true
       - role: president board of aldermen
+        is_unique: true
       - role: vice president board of aldermen
+        is_unique: true
       - role: mayor pro tempore
+        is_unique: true
         aliases: 
         - mayor pro-tem
         - mayor pro tem
@@ -280,6 +311,7 @@ government_types:
       #    - vice chairwoman
       #    - vice chairman
       - role: alderperson
+        is_unique: false
         aliases:
         - vice president board of aldermen
         - alder

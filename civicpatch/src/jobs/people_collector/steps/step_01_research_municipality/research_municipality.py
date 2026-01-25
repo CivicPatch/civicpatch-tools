@@ -2,6 +2,7 @@ from typing import List, Dict
 from jobs.people_collector.schemas import (
     PeopleCollectorContext,
     WorkflowStatus,
+    ResearchMunicipalityLLMSchema,
     ResearchMunicipalityStep,
     ResearchedPerson,
     ProgressState,
@@ -23,7 +24,13 @@ async def research_municipality(context: PeopleCollectorContext) -> tuple[Progre
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     municipality_name = context.data.config.name
     prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_ocdid, municipality_name)
-    response = await google_gemini_llm.run_prompt(request_id, jurisdiction_ocdid, prompt, with_search=True)
+    response = await google_gemini_llm.run_prompt(
+        request_id, 
+        jurisdiction_ocdid, 
+        prompt, 
+        response_schema=ResearchMunicipalityLLMSchema,
+        with_search=True
+    )
     if not response:
         raise ValueError("No response from LLM")
     people = response.get("people", [])
