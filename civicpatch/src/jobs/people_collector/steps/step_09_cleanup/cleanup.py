@@ -1,14 +1,14 @@
 import os
 import shutil
 import json
-from typing import List, cast, Dict
+from typing import List
 
 from shared.utils.data_path_utils import get_data_source_path_for_jurisdiction_ocdid
 from jobs.people_collector.schemas import (
-    PeopleCollectorContext, WorkflowStatus, MergeRecordsAcrossLLMsStep,
+    PeopleCollectorContext, WorkflowStatus, 
 
 )
-from utils import url_utils, log_utils, cost_utils
+from utils import url_utils, log_utils
 from domain.models import Official
 
 # Todo: Should return updated configs
@@ -58,7 +58,8 @@ def cleanup_images(
     logger, request_id, jurisdiction_ocdid, images_dir: str, people_list: List[Official]
 ):
     # Clear out any images that are not under image
-    images_to_keep = set()
+    image_files_to_keep = set()
+    # This is image source urls mapped to local file names
     image_map_file_path = os.path.join(images_dir, "image_map.json")
     image_map_data = {}
     missing_images = set()
@@ -73,25 +74,19 @@ def cleanup_images(
         if person.image in image_map_data:
             if not os.path.exists(image_map_data[person.image]):
                 missing_images.add(image_map_data[person.image])
-            images_to_keep.add(image_map_data[person.image])
-    
-    images_found = set()
+            image_files_to_keep.add(image_map_data[person.image])
+
     for image_file in os.listdir(images_dir):
+        logger.debug(f"Checking image file: {image_file}")
         # Skip image_map.json
         if image_file == "image_map.json":
             continue
 
         image_file_path = os.path.join(images_dir, image_file)
         if os.path.isfile(image_file_path):
-            if image_file_path not in images_to_keep:
-                os.remove(image_file_path)
-            else:
-                images_found.add(image_file_path)
-                cost_utils.add_storage_cost(
-                    request_id=request_id,
-                    jurisdiction_ocdid=jurisdiction_ocdid,
-                    file_size_bytes=os.path.getsize(image_file_path),
-                )
+            if image_file not in image_files_to_keep:
+                logger.debug(f"Removing unreferenced image file: {image_file_path}")
+                os.remove(image_file_path) 
 
     if len(missing_images) > 0:
         logger.error(f"Missing images that were expected to be found: {missing_images}")
