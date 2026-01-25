@@ -44,13 +44,12 @@ def mock_images_dir():
 @patch("os.path.isfile")
 @patch("os.path.getsize")
 @patch("builtins.open", new_callable=mock_open, read_data='''{
-    "https://example.com/image1.jpg": "/mock/images/mapped_image1.jpg",
-    "https://example.com/image2.jpg": "/mock/images/mapped_image2.jpg"
+    "https://example.com/image1.jpg": "mapped_image1.jpg",
+    "https://example.com/image2.jpg": "mapped_image2.jpg"
 }''')
 @patch("os.remove")
-@patch("utils.cost_utils.add_storage_cost")
 def test_cleanup_images_respects_image_map(
-    mock_add_storage_cost, mock_remove, mock_open_file, mock_getsize, mock_isfile, mock_listdir,
+    mock_remove, mock_open_file, mock_getsize, mock_isfile, mock_listdir,
     mock_logger, mock_request_id, mock_jurisdiction_ocdid, mock_images_dir
 ):
     # Mock inputs
@@ -75,11 +74,6 @@ def test_cleanup_images_respects_image_map(
     # Assertions
     mock_listdir.assert_called_once_with(mock_images_dir)
     mock_open_file.assert_called_once_with(os.path.join(mock_images_dir, "image_map.json"), "r")
-    mock_add_storage_cost.assert_any_call(
-        request_id=mock_request_id,
-        jurisdiction_ocdid=mock_jurisdiction_ocdid,
-        file_size_bytes=1024
-    )
 
     # Ensure unreferenced files are removed
     mock_remove.assert_called_once_with(os.path.join(mock_images_dir, "unmapped_image.jpg"))
