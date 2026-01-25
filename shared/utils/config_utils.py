@@ -126,6 +126,14 @@ def get_role_configs_by_government_type(government_type: str) -> List[Dict[str, 
 
     return normalized_roles
 
+def get_unique_roles(government_type: str) -> List[str]:
+    """
+    Returns a list of roles marked as unique for a specific government type from the configuration file.
+    """
+    role_configs = get_role_configs_by_government_type(government_type)
+    unique_roles = [entry['role'] for entry in role_configs if entry.get('is_unique', False)]
+    return unique_roles
+
 def get_crawl():
     global _crawl_config
     if _crawl_config is None:

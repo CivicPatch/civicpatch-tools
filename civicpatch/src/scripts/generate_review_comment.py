@@ -1,15 +1,15 @@
 import json
 import sys
 from typing import List
-from domain.models import Person
 from jobs.people_collector.schemas import (
     PeopleCollectorContext,
-    MergeRecordsAcrossLLMsStep, 
 )
-from shared.utils import data_path_utils
+from domain.models import Official
+from shared.utils import data_path_utils, config_utils
 
-def generate_review_comment(pipeline_context: PeopleCollectorContext, people: List[Person]) -> str:
+def generate_review_comment(pipeline_context: PeopleCollectorContext, people: List[Official]) -> str:
     merge_step = pipeline_context.data.merge_records_across_llms_step
+    government_type = pipeline_context.data.format_output_step.config.government_type
 
     agreement_score = merge_step.agreement_score
     disagreements_by_person = merge_step.disagreements  # Now a Dict[str, List[FieldComparison]]
@@ -19,7 +19,8 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
     # Collect all unique data sources from people.yml
     all_sources = {source for person in people for source in person.source_urls}
 
-    has_validation_errors = len(validation_errors) > 0
+    issues = generate_validation_errors(government_type, people)
+    has_validation_errors = len(validation_errors) > 0 or len(issues) > 0
 
     # Build the markdown
     markdown = []
@@ -34,6 +35,9 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
             for person in missing_people:
                 markdown.append(f"  - {person}")
             markdown.append("")
+        
+        for issue in issues:
+            markdown.append(f"- {issue}")
 
         # Add any other validation issues here
         markdown.append("---\n")
@@ -99,6 +103,21 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
 
     return "\n".join(markdown)
 
+def generate_validation_errors(government_type: str, people: List[Official]) -> List[str]:
+    errors = []
+    # Error out if more than one person has an is_unique: true role
+    unique_roles = config_utils.get_unique_roles(government_type)
+    person_roles = {
+            person.name: person.office.name.lower().split(' - ')
+            for person in people
+    }
+    for role in unique_roles:
+        person_with_role = [person for person in people if role in person_roles.get(person.name, [])]
+        if len(person_with_role) > 1:
+            person_names = ", ".join([person.name for person in person_with_role])
+            errors.append(f"Role '{role}' is marked as unique, but found multiple persons with this role: {person_names}")
+    return errors
+
 def load_pipeline_context_from_json(filepath: str) -> PeopleCollectorContext:
     with open(filepath, "r") as file:
         data = json.load(file)
@@ -113,7 +132,7 @@ def main():
         # It should be defined in the dockerfile
         pipeline_context_file_path = data_path_utils.get_workflow_context_file_path(jurisdiction_ocdid)
         serialized_people = data_path_utils.get_data(jurisdiction_ocdid)
-        people = [Person(**person) for person in serialized_people]
+        people = [Official(**person) for person in serialized_people]
 
         pipeline_context = load_pipeline_context_from_json(pipeline_context_file_path)
         comment = generate_review_comment(pipeline_context, people)
