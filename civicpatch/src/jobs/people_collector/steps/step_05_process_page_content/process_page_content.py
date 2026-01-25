@@ -90,7 +90,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
         context.data.research_municipality_step, "elected_officials", {}
     )
     research_identities = {official.name: [official.name] for official in research_elected_officials}
-    identities = context.data.identities or current_step.identities or research_identities
+    identities = context.data.config.identities or research_identities
 
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
 
@@ -117,7 +117,6 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
             records_by_llm=current_step.records_by_llm,
             links=updated_links,
             progress=current_step.progress,
-            identities=current_step.identities,
         )
 
     llm_responses = await process_with_llms(
@@ -130,7 +129,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     )
     
     # Process the data functionally without mutations
-    updated_identities, updated_raw_records, updated_records = update_step_data(
+    updated_raw_records, updated_records = update_step_data(
         context.data.jurisdiction_ocdid,
         research_municipality_step.government_type, 
         llm_responses, 
@@ -150,11 +149,10 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     logger.info(f"links updated: {updated_links}")
 
     return ProcessPageContentStep(
-        raw_records_by_llm=updated_raw_records,
-        records_by_llm=updated_records,
         links=updated_links,
         progress=updated_progress,
-        identities=updated_identities
+        raw_records_by_llm=updated_raw_records,
+        records_by_llm=updated_records,
     )
 
 def get_setup_data(municipality_research: ResearchMunicipalityStep) -> ProcessingSetup: 
@@ -186,14 +184,14 @@ def update_step_data(
     jurisdiction_ocdid: str,
     government_type: str, 
     llm_responses: Dict[str, List[LLMPerson]], 
-    merged_identities: OtherNamesByCanonicalName,
+    merged_identities: Dict[str, List[str]],
     existing_records_by_llm: RecordsByLLM,
     existing_raw_records_by_llm: RecordsByLLM
-) -> tuple[OtherNamesByCanonicalName, RecordsByLLM, RecordsByLLM]:
+) -> Tuple[RecordsByLLM, RecordsByLLM]:
     """Update and normalize all processed records functionally without mutations."""
     
     # Update records without mutation
-    updated_identities, updated_raw_records = update_records_by_llm(
+    updated_raw_records = update_records_by_llm(
         merged_identities,
         existing_records_by_llm, 
         llm_responses
@@ -209,7 +207,7 @@ def update_step_data(
             normalized_people = [normalize_record(logger, person, government_type) for person in people]
             updated_normalized_records[llm][name] = normalized_people
     
-    return updated_identities, updated_raw_records, updated_normalized_records
+    return updated_raw_records, updated_normalized_records
 
 def update_links(domain, context_links: List[Link], processed_page: Link, logger, roles: List[str], records_by_llm: RecordsByLLM) -> List[Link]:
     """Update processed page status and add new website links."""
@@ -258,24 +256,23 @@ def get_target_divisions(divisions_with_geo: List[str], people_hint: List[Resear
     return list(divisions)
 
 def update_records_by_llm(
-    identities: OtherNamesByCanonicalName,
+    identities: Dict[str, List[str]],  # map of canonical name to list of other names
     records_by_llm: RecordsByLLM,  # map of llm name to Dict[str, List[LLMPerson]]
     current_responses: Dict[str, List[LLMPerson]]  # map of llm name to List[LLMPerson]
-) -> Tuple[OtherNamesByCanonicalName, RecordsByLLM]:
+) -> RecordsByLLM:
     """
     Update the data with the new responses.
     """
-    updated_identities = copy.deepcopy(identities) if identities else {}  # Handle empty identities
     updated_records_by_llm = copy.deepcopy(records_by_llm)
     
     for llm_name, llm_people_list in current_responses.items():
         people_by_name = updated_records_by_llm.get(llm_name, {})  # Handle missing LLM data
-        updated_identities, updated_people_by_name = merge_utils.group_people_by_name(
-            updated_identities, people_by_name, llm_people_list
+        updated_people_by_name = merge_utils.group_people_by_name(
+            identities, people_by_name, llm_people_list
         )
         updated_records_by_llm[llm_name] = updated_people_by_name
 
-    return updated_identities, updated_records_by_llm
+    return updated_records_by_llm
 
 async def process_with_llms(
     source_url: str,

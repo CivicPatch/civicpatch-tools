@@ -145,7 +145,6 @@ class ProcessPageContentStep(BaseModel):
     progress: ProgressState = ProgressState(
         required_data=0, current_data=0, has_target_role=True, has_target_divisions=True
     )
-    identities: OtherNamesByCanonicalName = {}
 
 class MergeRecordsWithinLLMStep(BaseModel):
     people_by_llm: Dict[str, List[Person]]  # LLM Names to list of Person records
@@ -159,6 +158,9 @@ class MergeRecordsAcrossLLMsStep(BaseModel):
     ] = []  # Now properly typed with MissingPerson class
     validation_errors: List[str] = []
 
+class FormatOutputStep(BaseModel):
+    officials: List[Official]
+    config: WorkflowConfig
 
 class MaybeSendToGitHubStep(BaseModel):
     status: str
@@ -171,7 +173,6 @@ class PeopleCollectorData(BaseModel):
     # Can be overridden with data source configs
     config: WorkflowConfig 
 
-    identities: Dict[str, List[str]] = {} 
     links: List[Link] = []
     progress: ProgressState = ProgressState(
         required_data=0, current_data=0, has_target_role=True, has_target_divisions=True
@@ -183,7 +184,7 @@ class PeopleCollectorData(BaseModel):
     process_page_content_step: Optional[ProcessPageContentStep] = None
     merge_records_within_llm_step: Optional[MergeRecordsWithinLLMStep] = None
     merge_records_across_llms_step: Optional[MergeRecordsAcrossLLMsStep] = None
-    format_output_step: Optional[List[Official]] = None 
+    format_output_step: Optional[FormatOutputStep] = None
     maybe_send_to_github_step: Optional[MaybeSendToGitHubStep] = None
 
     pipeline_duration: Optional[int] = None

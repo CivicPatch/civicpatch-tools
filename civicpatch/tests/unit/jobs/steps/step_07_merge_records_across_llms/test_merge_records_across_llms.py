@@ -5,7 +5,8 @@ from typing import Dict, List, Any
 from domain.models import Person
 from jobs.people_collector.steps.step_07_merge_records_across_llms.merge_records_across_llms import (
     merge_records_across_llms,
-    group_records_across_llms
+    group_records_across_llms,
+    merge_group_across_llms
 )
 from jobs.people_collector.schemas import (
     WorkflowStatus,
@@ -26,6 +27,7 @@ def create_person(name: str, roles: List[str], emails: List[str] = [], source_ur
     
     return Person(
         name=name,
+        other_names=[],
         roles=roles,
         divisions=["City"] if roles else [],
 
@@ -135,3 +137,16 @@ def test_no_people():
     people_by_llm = {"llm1": [], "llm2": []}
     groups = group_records_across_llms({}, people_by_llm)
     assert groups == []
+
+def test_merge_group_across_llms_combines_other_names():
+    """Test that merge_group_across_llms combines other_names correctly."""
+    group = [
+        Person(name="John Doe", other_names=["J. Doe", "Johnny"], roles=["Mayor"], divisions=[], emails=[], phones=[], urls=[], start_date=None, end_date=None, image=None, cdn_image=None, jurisdiction_ocdid="ocd-division/country:us/state:ca/place:someplace", source_urls=["test"], updated_at=""),
+        Person(name="Johnny", other_names=["Johnathan Doe"], roles=["Council"], divisions=[], emails=[], phones=[], urls=[], start_date=None, end_date=None, image=None, cdn_image=None, jurisdiction_ocdid="ocd-division/country:us/state:ca/place:someplace", source_urls=["test"], updated_at="")
+    ]
+    jurisdiction_ocdid = "ocd-division/country:us/state:ca/place:someplace"
+
+    merged_person = merge_group_across_llms(group, jurisdiction_ocdid)
+
+    assert merged_person.name == "John Doe"
+    assert set(merged_person.other_names) == {"J. Doe", "Johnny", "Johnathan Doe"}

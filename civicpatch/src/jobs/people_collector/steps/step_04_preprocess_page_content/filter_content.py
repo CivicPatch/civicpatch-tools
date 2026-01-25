@@ -63,33 +63,7 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
             if is_relevant:
                 # Mark this table to keep ALL its content (including images)
                 node._keep_table = True
-                
-                # Step 1: Unnest images from links
-                for link in node.find_all("a"):
-                    link_text = link.get_text(strip=True)
-                    images = link.find_all("img")
-                    if images and not link_text:
-                        # This link contains only images - unnest them
-                        for img in images:
-                            link.insert_before(img.extract())
-                        # Remove the now-empty link
-                        link.decompose()
-                
-                # Step 2: Remove any empty links
-                for link in node.find_all("a"):
-                    if not link.get_text(strip=True) and not link.find_all("img"):
-                        link.decompose()
-                
-                # Step 3: Hoist images to be direct children of td/th cells
-                for cell in node.find_all(["td", "th"]):
-                    images = cell.find_all("img")
-                    for img in images:
-                        # If image is not already a direct child of the cell, move it
-                        if img.parent != cell:
-                            # Extract the image and prepend it to the cell
-                            cell.insert(0, img.extract())
-                
-                return  # Keep the table with unnested images
+                return
         
         # Table is not relevant - extract images before removing
         images = node.find_all("img")

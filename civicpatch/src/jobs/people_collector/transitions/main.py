@@ -262,7 +262,7 @@ async def format_output_transition(_: JobConfig, logger: WorkflowLogger, context
     result = format_output(context)
     next_context = context.copy(update={
         "data": context.data.copy(update={
-            "format_output_step": result
+            "format_output_step": result,
         })
     })
 
@@ -278,14 +278,7 @@ async def format_output_transition(_: JobConfig, logger: WorkflowLogger, context
     return next_context, next_state
 
 async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
-    result = cleanup(context)
-    next_context = context.copy(update={
-        "data": context.data.copy(update={
-            "config": context.data.config.copy(update={
-                "identities": result["identities"]
-            })
-        })
-    })
+    _result = cleanup(context)
 
     progress = calculate_progress_percentage(context.data.progress, 9)
     await update_people_job_status(
@@ -295,7 +288,7 @@ async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: Peop
         progress=progress
     )
     next_state = WorkflowStatus.SAVE_OUTPUT
-    return next_context, next_state
+    return context, next_state
 
 async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
     _result = await save_output(context)

@@ -34,7 +34,8 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
     government_type = context.data.research_municipality_step.government_type 
 
     # Group records across LLMs based on weak ties and names
-    identity_names = context.data.process_page_content_step.identities
+    research_identities = {official.name: [official.name] for official in context.data.research_municipality_step.elected_officials}
+    identity_names = context.data.config.identities or research_identities
     groups_by_llm = group_records_across_llms(identity_names, people_by_llm)
 
     # Filter out groups that only have one LLM source
@@ -178,17 +179,29 @@ def group_records_across_llms(identity_names: Dict[str, List[str]], people_by_ll
                     continue
                 
                 # Check for exact name match OR weak tie
-                is_match = (
+                is_exact_match = (
                     current_person.name and other_person.name and 
                     current_person.name == other_person.name
-                ) or merge_utils.is_weakly_tied(identity_names, current_person, other_person)
+                )
+                is_alias_match = (
+                    current_person.name in identity_names and 
+                    other_person.name in identity_names[current_person.name]
+                )
+                is_weak_tie = merge_utils.is_weakly_tied(identity_names, current_person, other_person)
                 
-                if is_match:
+                if is_exact_match or is_alias_match or is_weak_tie:
                     if other_llm not in group:
                         group[other_llm] = []
                     group[other_llm].append(other_person)
                     visited.add(j)
                     to_check.append((other_person, other_llm))
+                    
+                    # Update other_names for weak ties
+                    if is_weak_tie:
+                        if not current_person.other_names:
+                            current_person.other_names = []
+                        if other_person.name not in current_person.other_names:
+                            current_person.other_names.append(other_person.name)
         
         groups.append(group)
     
@@ -210,17 +223,26 @@ def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Per
     source_urls = set(
         ds
         for person in group
-        if person.source_urls  # Check if sources exists
+        if person.source_urls  # Check if sources exist
         for ds in person.source_urls  # Flatten the list of data sources
     )
 
-    # Use the most common name in the group as the canonical name
+    # Determine canonical name
     name_counter = Counter(person.name for person in group)
     canonical_name = name_counter.most_common(1)[0][0]
 
+    # Combine person.name and other_names into a single list, ensuring no duplicates
+    all_names = set(person.name for person in group if person.name)  # Add all person names
+    for person in group:
+        if person.other_names:
+            all_names.update(person.other_names)  # Add other_names
+    all_names.discard(canonical_name)  # Remove the canonical name from other_names
+    other_names = list(all_names)
+
     person = Person(
         name=canonical_name,
-        
+        other_names=other_names,
+
         roles=roles,
         divisions=divisions,
 
