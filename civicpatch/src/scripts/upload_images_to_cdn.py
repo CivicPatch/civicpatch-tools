@@ -10,6 +10,7 @@ from botocore.client import Config
 from domain.models import Official
 from shared.utils import data_path_utils
 from shared.utils import id_utils
+from utils import cost_utils
 
 STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
 STORAGE_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY_ID")
@@ -53,15 +54,18 @@ def upload_images_to_cdn(jurisdiction_ocdid: str):
                         )
                         print(f"Uploaded {filename} to {uploaded_url}")
                         person.cdn_image = uploaded_url
+
+                        cost_utils.add_storage_cost(
+                            request_id="cdn_script",
+                            jurisdiction_ocdid=jurisdiction_ocdid,
+                            file_size_bytes=os.path.getsize(image_file_path),
+                        )
                     except Exception as e:
                         print(f"Failed to upload {filename}: {str(e)}")
             else:
                 print(f"Image file {image_file_path} does not exist.")
                 sys.exit(1)
                 
-        else:
-            print(f"No image mapping found for {person.name} or image is missing.")
-
     # Update people with CDN URLs
     data_path_utils.update_data_for_jurisdiction(
         jurisdiction_ocdid, 
