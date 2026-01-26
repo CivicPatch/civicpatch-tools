@@ -201,6 +201,7 @@ async def download_images(browser, logger, page: Page, image_dir: str):
             src = urljoin(page.url, src)
             image_hash = hash_string(src)
             file_name = f"{image_hash}.png"
+            file_path = os.path.join(image_dir, file_name)
 
             # Try downloading images directly
             try:
@@ -235,7 +236,7 @@ async def download_images(browser, logger, page: Page, image_dir: str):
                 """
                 data_url = await page.evaluate(canvas_script, src)
                 header, encoded = data_url.split(",", 1)
-                with open(file_name, "wb") as f:
+                with open(file_path, "wb") as f:
                     f.write(base64.b64decode(encoded))
                 logger.debug(f"Image saved from canvas: {file_name}")
                 image_map[src] = file_name 
