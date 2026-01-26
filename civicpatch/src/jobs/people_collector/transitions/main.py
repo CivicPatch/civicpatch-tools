@@ -39,7 +39,6 @@ from utils import cost_utils
 from utils.log_utils import WorkflowLogger
 from services.civicpatch_api import register_people_job, update_people_job_status
 
-
 async def start_job(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
     await prepare_pipeline(context)
     await register_people_job(

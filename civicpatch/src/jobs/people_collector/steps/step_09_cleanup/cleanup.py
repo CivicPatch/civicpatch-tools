@@ -76,6 +76,8 @@ def cleanup_images(
                 missing_images.add(image_map_data[person.image])
             image_files_to_keep.add(image_map_data[person.image])
 
+    logger.debug(f"Image files to keep: {image_files_to_keep}")
+    logger.debug(f"All image map data: {image_map_data}")
     for image_file in os.listdir(images_dir):
         logger.debug(f"Checking image file: {image_file}")
         # Skip image_map.json

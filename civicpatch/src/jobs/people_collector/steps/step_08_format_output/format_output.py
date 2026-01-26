@@ -10,7 +10,6 @@ import utils.log_utils as log_utils
 from shared.utils.config_utils import get_divisions 
 
 from domain.models import (
-  Person,
   Official,
   person_to_official
 )
