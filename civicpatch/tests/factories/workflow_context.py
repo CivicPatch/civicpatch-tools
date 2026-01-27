@@ -11,6 +11,7 @@ from jobs.people_collector.schemas import (
     ProcessPageContentStep,
     MergeRecordsWithinLLMStep,
     MergeRecordsAcrossLLMsStep,
+    FormatOutputStep,
     MaybeSendToGitHubStep,
 )
 
@@ -24,8 +25,9 @@ def workflow_context_factory(
         ProcessPageContentStep,
         MergeRecordsWithinLLMStep,
         MergeRecordsAcrossLLMsStep,
+        FormatOutputStep,
         MaybeSendToGitHubStep]
-        ] = {}    
+        ] = {}
 
     default_steps.update(steps)
 
@@ -36,6 +38,7 @@ def workflow_context_factory(
             config=WorkflowConfig(
                 name="Seattle",
                 url="https://seattle.gov",
+                government_type="mayor_council"
             ),
             links=[],
             jurisdiction_ocdid="ocd-jurisdiction/country:us/state:wa/place:seattle/government",
@@ -45,5 +48,6 @@ def workflow_context_factory(
             process_page_content_step=default_steps.get(WorkflowStatus.PROCESS_PAGE_CONTENT),
             merge_records_within_llm_step=default_steps.get(WorkflowStatus.MERGE_RECORDS_WITHIN_LLM),
             merge_records_across_llms_step=default_steps.get(WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS),
+            format_output_step=default_steps.get(WorkflowStatus.FORMAT_OUTPUT),
         )
     )

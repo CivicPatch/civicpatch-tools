@@ -3,10 +3,12 @@ from datetime import datetime, timezone
 from typing import List
 
 from scripts.generate_review_comment import generate_review_comment
-from domain.models import Person
+from domain.models import Person, person_to_official
 from jobs.people_collector.schemas import (
     WorkflowStatus,
     MergeRecordsAcrossLLMsStep, 
+    FormatOutputStep,
+    WorkflowConfig,
     FieldComparison
 )
 from tests.factories.workflow_context import workflow_context_factory
@@ -37,6 +39,7 @@ def test_generate_review_comment_with_missing_llm_values():
     
     # Create a person that exists in both LLMs for the merged result
     john = create_person("John Smith", ["Mayor"], "john@city.gov")
+    john_official = person_to_official(john)
     
     # Create disagreements where one LLM is missing from llm_values
     # This simulates the case where a person exists in some LLMs but not others
@@ -60,11 +63,19 @@ def test_generate_review_comment_with_missing_llm_values():
             disagreements=disagreements,
             missing_people=[],
             validation_errors=[]
+        ),
+        WorkflowStatus.FORMAT_OUTPUT: FormatOutputStep(
+            officials=[john_official],
+            config=WorkflowConfig(
+                url="https://city.gov",
+                name="City",
+                government_type="mayor_council"
+            )
         )
     })
     
     # Generate the comment
-    comment = generate_review_comment(context, [john])
+    comment = generate_review_comment(context, [john_official])
     
     # The comment should contain the disagreements section
     assert "### Disagreements" in comment
@@ -98,6 +109,7 @@ def test_generate_review_comment_with_all_llms_present():
     """Test that disagreements are displayed correctly when all LLMs have values"""
     
     jane = create_person("Jane Doe", ["Council Member"], "jane@city.gov")
+    jane_official = person_to_official(jane)
     
     disagreements = {
         "Jane Doe": [
@@ -120,10 +132,18 @@ def test_generate_review_comment_with_all_llms_present():
             disagreements=disagreements,
             missing_people=[],
             validation_errors=[]
+        ),
+        WorkflowStatus.FORMAT_OUTPUT: FormatOutputStep(
+            officials=[jane_official],
+            config=WorkflowConfig(
+                url="https://city.gov",
+                name="City",
+                government_type="mayor_council"
+            )
         )
     })
     
-    comment = generate_review_comment(context, [jane])
+    comment = generate_review_comment(context, [jane_official])
     
     assert "### Disagreements" in comment
     assert "jane@city.gov" in comment
