@@ -294,7 +294,7 @@ def test_is_weakly_tied_url_overlap():
     identity_names = {}
     record1 = LLMPerson(name="Abigail Doe", roles=[], email=None, url="http://example.com", divisions=[], source_url="test")
     record2 = LLMPerson(name="Abby Doe", roles=[], email=None, url="http://example.com", divisions=[], source_url="test")
-    assert is_weakly_tied({}, record1, record2) == True
+    assert is_weakly_tied({}, record1, record2) == False
 
 def test_is_weakly_tied_no_overlap():
     """Test is_weakly_tied when there is no overlap."""

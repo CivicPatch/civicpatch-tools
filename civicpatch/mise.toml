@@ -53,10 +53,10 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:fulshear/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:galena_park/government",
     "config": {
-        "url": "https://www.fulsheartexas.gov/",
-        "name": "Fulshear city"
+        "url": "http://www.cityofgalenapark-tx.gov",
+        "name": "Galena Park city"
     }
   }'
 """

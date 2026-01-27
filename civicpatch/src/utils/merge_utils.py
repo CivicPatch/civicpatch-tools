@@ -53,8 +53,25 @@ def last_name(name: str) -> str:
     return human_name.last
 
 def has_name_overlap(name1: str, name2: str) -> bool:
-    return last_name(name1) == last_name(name2) or first_name(name1) == first_name(name2)
+    """
+    Check if two names have an overlap in their first and last names.
+    - First names must match exactly or have overlap (e.g., partial match).
+    - Last names must either match exactly or one must be a substring of the other.
+    """
+    # Normalize names
+    first1, last1 = first_name(name1), last_name(name1)
+    first2, last2 = first_name(name2), last_name(name2)
 
+    # Check if last names match or one is a substring of the other
+    if last1.lower() == last2.lower() or last1.lower() in last2.lower() or last2.lower() in last1.lower():
+        # First names must match exactly or have overlap
+        if first1.lower() == first2.lower() or \
+            first1.lower() in first2.lower() or \
+                first2.lower() in first1.lower() or \
+                    are_names_similar(first1, first2):
+            return True
+
+    return False
 
 def are_names_similar(name1: str, name2: str, threshold: int = NAME_SIMILARITY_THRESHOLD) -> bool:
     """
