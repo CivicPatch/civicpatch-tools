@@ -10,7 +10,7 @@ from interfaces.schemas import (
     PeopleCollectorJobRequest,
     validate_people_request
 )
-from jobs.people_collector.main import start as start_people_collector
+from jobs.people_collector.main import start_threaded as start_people_collector
 from jobs.people_collector.main import stop as stop_people_collector
 from jobs.people_collector.schemas import PeopleCollectorContext, WorkflowStatus
 from shared.utils import id_utils

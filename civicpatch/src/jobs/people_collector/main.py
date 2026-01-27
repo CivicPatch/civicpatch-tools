@@ -40,6 +40,13 @@ async def start(request_id: str, jurisdiction_ocdid: str, config: WorkflowConfig
         persist_context
     )
 
+async def start_threaded(request_id, jurisdiction_ocdid, config):
+    """For API: Run the start coroutine in a separate thread."""
+    def run_start():
+        asyncio.run(start(request_id, jurisdiction_ocdid, config))
+
+    await asyncio.to_thread(run_start)
+
 #def resume_people_collector(context: PeopleCollectorContext, stop_flag=None, persist_fn=None):
 #    """Resume existing workflow"""
 #    return run_workflow(context, step_runner, stop_flag=stop_flag, persist_fn=persist_fn)

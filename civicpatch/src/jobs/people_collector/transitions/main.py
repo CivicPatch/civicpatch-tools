@@ -67,11 +67,15 @@ async def research_municipality_transition(job_config: JobConfig, logger: Workfl
 
     if next_context.data.config.source_urls and len(next_context.data.config.source_urls) > 0:
         logger.info("Source URLs provided, skipping link search.")
-        context.links = [
-                Link(url=sl, status=LinkStatus.PENDING.value)
-                for sl in next_context.data.config.source_urls
-            ]
-        
+        next_context = next_context.copy(update={
+            "data": next_context.data.copy(update={
+                "links": [
+                    Link(url=sl, status=LinkStatus.PENDING.value)
+                    for sl in next_context.data.config.source_urls
+                ]
+            })
+        })
+
         next_state = WorkflowStatus.SCRAPE_PAGE
     else:
         logger.info("Source URLs not found, using search engine for links.")
