@@ -1,0 +1,5 @@
+[pytest]
+markers = [
+    "contracts: contract tests",
+    "evals: eval tests",
+]

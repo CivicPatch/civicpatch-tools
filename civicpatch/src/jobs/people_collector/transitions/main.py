@@ -53,7 +53,7 @@ async def start_job(job_config: JobConfig, logger: WorkflowLogger, context: Peop
     return context, WorkflowStatus.RESEARCH_MUNICIPALITY
 
 async def research_municipality_transition(job_config: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
-    progress, result = await research_municipality(context)
+    result = await research_municipality(context)
     next_state = WorkflowStatus.SEARCH_LINKS
 
     new_data = context.data.copy(update={
@@ -339,7 +339,9 @@ def calculate_progress_percentage(context_data: PeopleCollectorData, current_ste
     if context_data.process_page_content_step is None:
         data_progress = 0
     else:
-        data_progress = context_data.process_page_content_step.current_data / context_data.process_page_content_step.required_data if context_data.process_page_content_step.required_data > 0 else 0
+        data_progress = (context_data.process_page_content_step.progress.current_data \
+            / context_data.process_page_content_step.progress.required_data) \
+            if context_data.process_page_content_step.progress.required_data > 0 else 0
     steps_progress = (current_step + 1) / total_steps
     combined_progress = data_progress * 0.7 + steps_progress * 0.3
     progress_percent = int(combined_progress * 100)

@@ -92,31 +92,8 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
     if parent_table and hasattr(parent_table, '_keep_table'):
         return  # Keep all content inside marked tables
     
-    # Handle links - be more selective about which links to keep
+    # Handle links - always keep
     if node.name == "a":
-        href = node.get("href", "")
-        link_text = node.get_text(strip=True)
-        
-        # Always keep mailto links
-        if href.startswith("mailto:"):
-            return
-        
-        # For other http links, check content relevance
-        if href.startswith("http") and link_text:
-            if has_relevant_content(identities, link_text, government_type):
-                return
-        
-        # Before removing/replacing the link, extract and preserve any images
-        images = node.find_all("img")
-        if images and node.parent and hasattr(node.parent, 'name'):
-            for img in images:
-                node.insert_before(img.extract())
-        
-        # If link is not relevant, replace with just the text content
-        if link_text:
-            node.replace_with(link_text)
-        else:
-            node.decompose()
         return
     
     # For text nodes and other elements, check content but don't be too aggressive

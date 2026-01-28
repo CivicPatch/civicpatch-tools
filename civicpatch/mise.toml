@@ -31,15 +31,26 @@ run = """
 docker compose -f docker-compose.development.yml run --rm civicpatch xvfb-run -a pytest -vvm integration tests/integration/services/google_gemini
 """
 
-[tasks.devunittest]
+[tasks.unit]
 run = """
 docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm unit tests/unit
 """
 
+[tasks.contracts]
+run = """
+docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm contracts tests/prompts
+"""
+
+[tasks.evals]
+run = """
+docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm evals tests/prompts
+"""
+
 [tasks.scratchtest]
 run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vm unit tests/unit/scripts/test_generate_data_comment.py
+docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vm contracts tests/unit/scripts/test_generate_data_comment.py
 """
+#docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vm unit tests/unit/scripts/test_generate_data_comment.py
 
 
 [tasks.dev]
@@ -55,7 +66,7 @@ curl -X POST http://localhost:8000/api/pipelines \
   -d '{
     "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:la_joya/government",
     "config": {
-        "url": "http://www.cityoflajoya.com",
+        "url": "https://www.lajoyatx.gov",
         "name": "La Joya city"
     }
   }'

@@ -10,7 +10,13 @@ MODEL = "openai/gpt-5-mini"
 MAX_RETRIES = 5
 OPENAI_URL = "https://api.openai.com/v1/responses"
 
-def run_prompt(request_id, jurisdiction_ocdid: str, prompt, response_schema, content=""):
+def run_prompt(
+        request_id, 
+        jurisdiction_ocdid: str, 
+        prompt, 
+        response_schema, 
+        content="",
+        with_search=False):
     """
     Run a prompt against OpenAI's API
     """

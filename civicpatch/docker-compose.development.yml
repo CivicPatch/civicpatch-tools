@@ -44,7 +44,7 @@ services:
       dockerfile: civicpatch/Dockerfile
       target: development
       # target: image-base
-    restart: unless-stopped
+    #restart: unless-stopped
     ports:
       - "8000:8000"
     user: "${UID:-1000}:${GID:-1000}"
