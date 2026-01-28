@@ -18,6 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Ensure writable data directories for Docker
+        run: |
+          mkdir -p data_source data
+          chmod -R 777 data_source data
+
       - name: Run unit tests
         working-directory: ./civicpatch
         run: |
