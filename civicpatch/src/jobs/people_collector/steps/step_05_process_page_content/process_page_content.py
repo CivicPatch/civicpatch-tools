@@ -159,7 +159,7 @@ def create_process_page_content_step(
             #"together_ai": {}
         },
         links=[],
-        progress=ProgressState(required_data,
+        progress=ProgressState(required_data=required_data,
                                current_data=0,
                                has_target_role=False,
                                has_target_divisions=False)

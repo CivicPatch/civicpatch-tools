@@ -158,6 +158,16 @@ government_types:
           - representative
           - member
     keywords: # Keys are for google search, values are for web crawling
+      elected officials:
+        - elected officials
+        - government officials
+        - officials
+        - city administration
+        - index
+        - government
+        - bios
+        - meet
+        - about
       mayor:
         - mayor and city council
         - about mayor
@@ -179,14 +189,6 @@ government_types:
         - city hall
         - council
         - municipal directory
-      elected officials:
-        - elected officials
-        - city administration
-        - index
-        - government
-        - bios
-        - meet
-        - about
   # town_meeting: # Not handling this
   township_committee:
     head_of_government: mayor

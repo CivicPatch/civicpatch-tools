@@ -40,7 +40,10 @@ def relevant_page_prompt(people_hint: List[ResearchedPerson]):
     """
     return prompt
 
-def municipality_officials_prompt(government_type: str, people_hint: List[ResearchedPerson]):
+def municipality_officials_prompt(
+        government_type: str, 
+        people_hint: List[ResearchedPerson]
+    ):
     """
     Generate a single prompt string for extracting city officials, following the detailed Ruby and Gemini logic.
     """
