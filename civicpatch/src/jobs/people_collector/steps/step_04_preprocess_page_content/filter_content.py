@@ -111,11 +111,15 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
             if has_relevant_content(identities, descendant_text, government_type):
                 return  # Keep structural elements that contain relevant content (including images)
         
-        # Only extract images if we're going to remove this element
+        # Only extract images and <a> links if we're going to remove this element
         images = node.find_all("img")
+        links = node.find_all("a")
         if images and node.parent and hasattr(node.parent, 'name'):
             for img in images:
                 node.insert_before(img.extract())
+        if links and node.parent and hasattr(node.parent, 'name'):
+            for link in links:
+                node.insert_before(link.extract())
         
         # If no relevant content and no parent, just return
         if not node.parent:
