@@ -125,7 +125,6 @@ class ResearchMunicipalityStep(BaseModel):
     elected_officials: List[ResearchedPerson]
     notes: Optional[str] = None
 
-
 class SearchLinksStep(BaseModel):
     search_link_pointer: int = 0  # Index of the next search engine to use
     search_engines: Dict[str, SearchEngineState] = {
@@ -147,7 +146,7 @@ class ProcessPageContentStep(BaseModel):
     records_by_llm: RecordsByLLM
     links: List[Link] = []
     progress: ProgressState = ProgressState(
-        required_data=0, current_data=0, has_target_role=True, has_target_divisions=True
+        required_data=0, current_data=0, has_target_role=False, has_target_divisions=False
     )
 
 class MergeRecordsWithinLLMStep(BaseModel):
@@ -178,9 +177,6 @@ class PeopleCollectorData(BaseModel):
     config: WorkflowConfig 
 
     links: List[Link] = []
-    progress: ProgressState = ProgressState(
-        required_data=0, current_data=0, has_target_role=True, has_target_divisions=True
-    )
 
     research_municipality_step: Optional[ResearchMunicipalityStep] = None
     search_links_step: SearchLinksStep = SearchLinksStep()

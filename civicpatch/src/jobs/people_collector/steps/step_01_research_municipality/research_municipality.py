@@ -59,10 +59,7 @@ async def research_municipality(context: PeopleCollectorContext) -> tuple[Progre
         notes=response.get("notes"),
     )
 
-    return ProgressState(
-            required_data=max(MINIMUM_ELECTED_OFFICIALS_NUM, len(target_people)),
-            current_data=0,  # Default current data count
-        ), result
+    return result
 
 def match_roles_to_government_type(roles: List[str], government_types_config: Dict) -> str | None:
     """
