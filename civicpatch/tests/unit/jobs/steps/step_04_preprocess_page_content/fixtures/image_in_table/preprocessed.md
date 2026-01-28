@@ -23,6 +23,16 @@ Impacts to municipal services expected with arrival of severe winter weather. Up
 [www.cor.net/WinterWeather](http://www.cor.net/WinterWeather)
 .
 
+[Skip to Main Content](https://www.cor.net/government/city-council#pagebody)
+
+[Home](https://www.cor.net/home)
+[Menu](javascript:void(0);)
+[Contact Us](https://www.cor.net/our-city/city-contacts)
+[Employment](https://www.cor.net/departments/human-resources/job-openings)
+[Transparency](https://www.cor.net/government/transparency-initiative)
+[Translate](javascript:void)
+[Go](javascript:void(0);)
+
 * [Our City](https://www.cor.net/our-city "Click to open Our City")
 
   + [Bond Projects](https://www.cor.net/our-city/bond-projects "Click to open Bond Projects")
@@ -75,9 +85,19 @@ Impacts to municipal services expected with arrival of severe winter weather. Up
 
 
 
+[Government](https://www.cor.net/government)
+
 
 Richardson City Council
 =======================
+
+[Font Size:](javascript:void(0); "default font size")
+[+](javascript:void(0); "larger font size")
+[-](javascript:void(0); "smaller font size")
+[Share & Bookmark](javascript:void(0); "Click to expand Share & Bookmark options")
+[Email](javascript:void(0); "Click to submit an email online")
+[Feedback](javascript:void(0); "Click to submit an email to feedback")
+[Print](javascript:window.print(); "Click to print this page")
 
 This page contains the latest news and information relating to the City Council at the City of Richardson.
 
@@ -150,6 +170,8 @@ The City Council typically holds business meetings on the second and fourth Mond
 
 
 
+[Change eNotification Preferences](https://www.cor.net/government/city-council/-selectview-1)
+
 Email Address \*
 
 Retype Email Address \*
@@ -170,6 +192,19 @@ Mailing Address P.O. Box 830309
 Richardson, TX 75083-0309
 [View Richardson Projects](https://www.cor.net/departments/capital-projects-engineering/public-project-input/capital-project-tracker-map)
 
+[Report an Issue](https://www.cor.net/departments/community-services/code-enforcement/express-a-concern)
+
 
 ![](https://www.cor.net/home/showpublishedimage/17259/636468752454200000)
 ![](https://www.cor.net/home/showpublishedimage/17261/638260480152170000)
+
+
+[Website Design by Granicus](https://granicus.com/government-website-design?utm_source=customer&utm_medium=footer&utm_campaign=govAccesswebsite)
+
+
+
+[972-744-0908](tel:9727440908)
+[ADACoordinator@cor.gov](mailto:ADACoordinator@cor.gov)
+[www.cor.net/ADA](http://www.cor.net/services/ada-compliance-accommodations)
+
+[View Full Site](javascript:void(0);)

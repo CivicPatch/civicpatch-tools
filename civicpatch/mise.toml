@@ -35,6 +35,7 @@ docker compose -f docker-compose.development.yml run --rm civicpatch xvfb-run -a
 run = """
 docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm unit tests/unit
 """
+# /jobs/steps/step_04_preprocess_page_content
 
 [tasks.contracts]
 run = """

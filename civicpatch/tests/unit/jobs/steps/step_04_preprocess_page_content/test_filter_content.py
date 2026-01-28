@@ -6,26 +6,32 @@ from jobs.people_collector.steps.step_04_preprocess_page_content.clean_html impo
 from markdownify import markdownify as md
 
 pytestmark = pytest.mark.unit
-fixture_dir = os.path.join(os.path.dirname(__file__), "fixtures")
+FIXTURE_DIR = os.path.join(os.path.dirname(__file__), "fixtures")
+
+class PlaceholderLogger:
+    def info(self, message):
+        print(f"INFO: {message}")
+
+logger = PlaceholderLogger()
+
+def to_markdown(html: str) -> str:
+    return md(html, keep_inline_images_in=['td', 'th', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']).strip()
 
 def read_fixture(filename, subfolder="with_table"):
-    fixture_dir = os.path.join(os.path.dirname(__file__), "fixtures", subfolder)
+    fixture_dir = os.path.join(FIXTURE_DIR, subfolder)
     with open(os.path.join(fixture_dir, filename), "r", encoding="utf-8") as f:
         return f.read().strip()
 
 def assert_markdown_equal(identities, actual_html, expected_md, government_type, subfolder=""):
-    logger = {
-        "info": lambda message: print(f"LOG: {message}")
-    }
     actual_html = filter_content(logger, identities, actual_html, government_type)
-    actual_md = md(actual_html, keep_inline_images_in=['td', 'th', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']).strip()
+    actual_md = to_markdown(actual_html)
     expected_md = expected_md.strip()
     actual_lines = actual_md.splitlines()
     # actual_lines = actual_html.strip().splitlines()
     expected_lines = expected_md.splitlines()
 
     if subfolder:
-        output_dir = os.path.join(fixture_dir, subfolder)
+        output_dir = os.path.join(FIXTURE_DIR, subfolder)
         if actual_lines != expected_lines:
             print("\n".join(difflib.unified_diff(expected_lines, actual_lines, fromfile="expected", tofile="actual", lineterm="")))
             output_path = os.path.join(output_dir, "preprocessed.md")
@@ -422,7 +428,7 @@ Bruce Lee's legacy was discussed.
     assert_markdown_equal(identities, original, expected, "mayor_council")
 
 def test_markdownify_image_output():
-    output_dir = os.path.join(fixture_dir, "image_in_table")
+    output_dir = os.path.join(FIXTURE_DIR, "image_in_table")
     with open(os.path.join(output_dir, "original.html"), "r", encoding="utf-8") as f:
         original_html = f.read()
 
@@ -436,3 +442,18 @@ def test_markdownify_image_output():
 #    assert_markdown_equal({}, cleaned_html, 
 #                          read_fixture("preprocessed.md", subfolder="garland_nested_images"), 
 #                                       "mayor_council", subfolder="garland_nested_images")
+
+def test_with_read_more_fixture():
+    with open(os.path.join(FIXTURE_DIR, "la_joya_read_more", "expected_clean_html.html"), "r", encoding="utf-8") as f:
+        input_html = f.read()
+    filtered_content = filter_content(logger, {}, input_html, government_type="mayor_council")
+    #with open(os.path.join(FIXTURE_DIR, "la_joya_read_more", "expected_filter_content.html"), "w", encoding="utf-8") as f:
+    #    f.write(filtered_content)
+    expected_html = read_fixture("expected_filter_content.html", subfolder="la_joya_read_more")
+    assert filtered_content.strip() == expected_html.strip()
+    actual_md = to_markdown(filtered_content)
+    #with open(os.path.join(FIXTURE_DIR, "la_joya_read_more", "expected_filter_content.md"), "w", encoding="utf-8") as f:
+    #    f.write(actual_md)
+    with open(os.path.join(FIXTURE_DIR, "la_joya_read_more", "expected_filter_content.md"), "r", encoding="utf-8") as f:
+        expected_md = f.read()
+    assert actual_md.strip() == expected_md.strip()

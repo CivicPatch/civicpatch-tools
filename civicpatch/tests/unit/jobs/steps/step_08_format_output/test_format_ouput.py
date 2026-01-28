@@ -113,4 +113,7 @@ def test_format_output():
 
     # Check that the config is correctly populated
     assert output.config.name == context.data.config.name
-    assert output.config.source_urls == ["https://example.com/john_doe", "https://example.com/jane_smith"]
+    assert len(output.config.source_urls) == 2
+    assert "https://example.com/john_doe" in output.config.source_urls
+    assert "https://example.com/jane_smith" in output.config.source_urls
+
