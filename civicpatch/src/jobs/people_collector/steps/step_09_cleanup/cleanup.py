@@ -25,9 +25,9 @@ def cleanup(context: PeopleCollectorContext):
 
     people = context.data.format_output_step.officials
 
-    if os.path.exists(cache_dir):
-        # Only keep cache folders that are referenced by people
-        cleanup_cache(cache_dir, people)
+    #if os.path.exists(cache_dir):
+    #    # Only keep cache folders that are referenced by people
+    #    cleanup_cache(cache_dir, people)
     if os.path.exists(images_dir):
         # Only keep images that are referenced by people
         cleanup_images(logger, request_id, jurisdiction_ocdid, images_dir, people)
