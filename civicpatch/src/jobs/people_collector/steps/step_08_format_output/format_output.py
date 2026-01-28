@@ -1,4 +1,4 @@
-from typing import List
+
 from domain.models import person_to_official
 from jobs.people_collector.schemas import (
   PeopleCollectorContext,
@@ -8,6 +8,7 @@ from jobs.people_collector.schemas import (
 )
 import utils.log_utils as log_utils
 from shared.utils.config_utils import get_divisions 
+from typing import List
 
 from domain.models import (
   Official,
@@ -19,15 +20,16 @@ def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
     logger.info(f"Step 8: {WorkflowStatus.FORMAT_OUTPUT} Formatting output data.")
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
 
-    people = context.data.merge_records_across_llms_step.people
+    data = context.data.merge_records_across_llms_step.people
 
-    data = [person_to_official(person) for person in people]
+    people = [person_to_official(person) for person in data]
 
     # TODO: Make this more generic later
     division_configs = get_divisions()
-    for i in range(len(data)):
-        division_string = data[i].office.division_ocdid
-        data[i].office.division_ocdid = normalize_division(jurisdiction_ocdid, division_string, division_configs)
+    for index, person in enumerate(people):
+        division_string = person.office.division_ocdid
+        person.office.division_ocdid = normalize_division(jurisdiction_ocdid, division_string, division_configs)
+        person = maybe_add_fallback_url(person)
 
     identities = generate_identities_config(people)
     source_urls = find_source_urls(people)
@@ -42,7 +44,7 @@ def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
     )
 
     return FormatOutputStep(
-        officials=data,
+        officials=people,
         config=config
     )
 
@@ -63,6 +65,11 @@ def normalize_division(jurisdiction_ocdid: str, division_string: str, division_c
         return f"{division_ocdid_base}/{division_name}:{division_parts_suffix}"
     else:
         return division_ocdid_base
+    
+def maybe_add_fallback_url(person: Official) -> Official:
+    if not person.urls and person.source_urls:
+        person.urls = [person.source_urls[0]]
+    return person
 
 def generate_identities_config(people: List[Official]) -> dict:
     identities = {}
