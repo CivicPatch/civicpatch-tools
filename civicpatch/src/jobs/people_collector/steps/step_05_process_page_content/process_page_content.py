@@ -64,18 +64,7 @@ IGNORE_WEBSITES = [
     "youtube.com"
 ]
 
-DEFAULT_PROCESS_PAGE_CONTENT_STEP = ProcessPageContentStep(
-    records_by_llm={
-        "google_gemini": {},
-        "openai": {},
-        #"together_ai": {}
-    },
-    raw_records_by_llm={
-        "google_gemini": {},
-        "openai": {},
-        #"together_ai": {}
-    }
-)
+MINIMUM_NUM_PEOPLE = 5
 
 async def process_page_content(context: PeopleCollectorContext, page_to_process: Link) -> ProcessPageContentStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
@@ -83,12 +72,12 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
 
     research_municipality_step = context.data.research_municipality_step
     setup_data = get_setup_data(research_municipality_step)
-    
-    # Get current step identities and merge with config
-    current_step = context.data.process_page_content_step or DEFAULT_PROCESS_PAGE_CONTENT_STEP
-    research_elected_officials = getattr(
-        context.data.research_municipality_step, "elected_officials", {}
+    research_elected_officials = research_municipality_step.elected_officials
+
+    default_current_step = create_process_page_content_step(
+        required_data=max(MINIMUM_NUM_PEOPLE, len(research_elected_officials))
     )
+    current_step = context.data.process_page_content_step or default_current_step 
     research_identities = {official.name: [official.name] for official in research_elected_officials}
     identities = context.data.config.identities or research_identities
 
@@ -139,7 +128,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     )
     
     updated_progress = calculate_progress(
-        context.data.progress,
+        current_step.progress,
         updated_records,
         setup_data.roles,
         setup_data.target_role,
@@ -153,6 +142,27 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
         progress=updated_progress,
         raw_records_by_llm=updated_raw_records,
         records_by_llm=updated_records,
+    )
+
+def create_process_page_content_step(
+        required_data: int
+        ) -> ProcessPageContentStep:
+    return ProcessPageContentStep(
+        records_by_llm={
+            "google_gemini": {},
+            "openai": {},
+            #"together_ai": {}
+        },
+        raw_records_by_llm={
+            "google_gemini": {},
+            "openai": {},
+            #"together_ai": {}
+        },
+        links=[],
+        progress=ProgressState(required_data,
+                               current_data=0,
+                               has_target_role=False,
+                               has_target_divisions=False)
     )
 
 def get_setup_data(municipality_research: ResearchMunicipalityStep) -> ProcessingSetup: 

@@ -14,7 +14,10 @@ def read_fixture(filename, subfolder="with_table"):
         return f.read().strip()
 
 def assert_markdown_equal(identities, actual_html, expected_md, government_type, subfolder=""):
-    actual_html = filter_content({}, identities, actual_html, government_type)
+    logger = {
+        "info": lambda message: print(f"LOG: {message}")
+    }
+    actual_html = filter_content(logger, identities, actual_html, government_type)
     actual_md = md(actual_html, keep_inline_images_in=['td', 'th', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']).strip()
     expected_md = expected_md.strip()
     actual_lines = actual_md.splitlines()
@@ -59,7 +62,6 @@ def assert_markdown_equal(identities, actual_html, expected_md, government_type,
 #     expected = read_fixture("preprocessed.md", subfolder="with_table")
 #     assert original, "Table test fixture is missing or empty"
 #     assert_markdown_equal({}, original, expected, "mayor_council", subfolder="with_table")
-
 
 def test_filter_content_keeps_all_images():
     original = """

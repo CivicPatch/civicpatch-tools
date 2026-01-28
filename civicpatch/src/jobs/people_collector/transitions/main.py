@@ -3,7 +3,7 @@ from jobs.people_collector.schemas import (
   PeopleCollectorContext,
   Link,
   LinkStatus,
-  ProgressState
+  PeopleCollectorData
 )
 
 from jobs.people_collector.steps.step_00_prepare_pipeline.prepare_pipeline import prepare_pipeline
@@ -57,7 +57,6 @@ async def research_municipality_transition(job_config: JobConfig, logger: Workfl
     next_state = WorkflowStatus.SEARCH_LINKS
 
     new_data = context.data.copy(update={
-        "progress": progress,
         "research_municipality_step": result
     })
 
@@ -81,7 +80,7 @@ async def research_municipality_transition(job_config: JobConfig, logger: Workfl
         logger.info("Source URLs not found, using search engine for links.")
         next_state = WorkflowStatus.SEARCH_LINKS
 
-    progress = calculate_progress_percentage(context.data.progress, 1)
+    progress = calculate_progress_percentage(context.data, 1)
     await update_people_job_status(
         logger,
         context.request_id,
@@ -113,7 +112,7 @@ async def search_links_transition(_: JobConfig, logger: WorkflowLogger, context:
         else:
             next_state = WorkflowStatus.SCRAPE_PAGE
 
-    progress = calculate_progress_percentage(context.data.progress, 2)
+    progress = calculate_progress_percentage(context.data, 2)
     await update_people_job_status(
         logger,
         context.request_id,
@@ -144,7 +143,7 @@ async def scrape_page_transition(_: JobConfig, logger: WorkflowLogger, context: 
     else:
         next_state = WorkflowStatus.SCRAPE_PAGE
 
-    progress = calculate_progress_percentage(context.data.progress, 3)
+    progress = calculate_progress_percentage(context.data, 3)
     await update_people_job_status(
         logger,
         context.request_id,
@@ -177,7 +176,7 @@ async def preprocess_page_content_transition(_: JobConfig, logger: WorkflowLogge
     else:  # link_status == LinkStatus.PREPROCESSED_NO_CONTENT:
         next_state = WorkflowStatus.SCRAPE_PAGE
     
-    progress = calculate_progress_percentage(context.data.progress, 4)
+    progress = calculate_progress_percentage(context.data, 4)
     await update_people_job_status(
         logger,
         context.request_id,
@@ -197,7 +196,6 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
     next_context = context.copy(update={
         "data": context.data.copy(update={
             "links": result.links,
-            "progress": result.progress,
             "process_page_content_step": result
         })
     })
@@ -210,9 +208,9 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
         processed_count=len(links_processed),
         current_cost=current_cost,
         job_config=job_config,
-        progress=context.data.progress
+        progress=result.progress
     )
-    progress = calculate_progress_percentage(context.data.progress, 5)
+    progress = calculate_progress_percentage(context.data, 5)
     await update_people_job_status(
         logger,
         context.request_id,
@@ -229,7 +227,7 @@ async def merge_records_within_llm_transition(_: JobConfig, logger: WorkflowLogg
         })
     })
 
-    progress = calculate_progress_percentage(context.data.progress, 6)
+    progress = calculate_progress_percentage(context.data, 6)
     await update_people_job_status(
         logger,
         context.request_id,
@@ -250,7 +248,7 @@ async def merge_records_across_llms_transition(_: JobConfig, logger: WorkflowLog
         })
     })
 
-    progress = calculate_progress_percentage(context.data.progress, 7)
+    progress = calculate_progress_percentage(context.data, 7)
     await update_people_job_status(
         logger,
         context.request_id,
@@ -269,7 +267,7 @@ async def format_output_transition(_: JobConfig, logger: WorkflowLogger, context
         })
     })
 
-    progress = calculate_progress_percentage(context.data.progress, 8)
+    progress = calculate_progress_percentage(context.data, 8)
     await update_people_job_status(
         logger,
         context.request_id,
@@ -283,7 +281,7 @@ async def format_output_transition(_: JobConfig, logger: WorkflowLogger, context
 async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
     _result = cleanup(context)
 
-    progress = calculate_progress_percentage(context.data.progress, 9)
+    progress = calculate_progress_percentage(context.data, 9)
     await update_people_job_status(
         logger,
         context.request_id,
@@ -296,7 +294,7 @@ async def cleanup_transition(_: JobConfig, logger: WorkflowLogger, context: Peop
 async def save_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
     _result = await save_output(context)
 
-    progress = calculate_progress_percentage(context.data.progress, 10)
+    progress = calculate_progress_percentage(context.data, 10)
     await update_people_job_status(
         logger,
             context.request_id,
@@ -314,7 +312,7 @@ async def maybe_send_to_github_transition(_: JobConfig, logger: WorkflowLogger, 
 
     _ = await maybe_send_to_github(context)
 
-    progress = calculate_progress_percentage(context.data.progress, 11)
+    progress = calculate_progress_percentage(context.data, 11)
     await update_people_job_status(
         logger,
         context.request_id,
@@ -336,9 +334,12 @@ async def finalize_transition(_: JobConfig, logger: WorkflowLogger, context: Peo
 
 # TODO: issue with this is that steps can go backwards, so progress
 # might decrease at certain points. Should fix.
-def calculate_progress_percentage(progress: ProgressState, current_step: int):
+def calculate_progress_percentage(context_data: PeopleCollectorData, current_step: int):
     total_steps = 12
-    data_progress = progress.current_data / progress.required_data if progress.required_data > 0 else 0
+    if context_data.process_page_content_step is None:
+        data_progress = 0
+    else:
+        data_progress = context_data.process_page_content_step.current_data / context_data.process_page_content_step.required_data if context_data.process_page_content_step.required_data > 0 else 0
     steps_progress = (current_step + 1) / total_steps
     combined_progress = data_progress * 0.7 + steps_progress * 0.3
     progress_percent = int(combined_progress * 100)
