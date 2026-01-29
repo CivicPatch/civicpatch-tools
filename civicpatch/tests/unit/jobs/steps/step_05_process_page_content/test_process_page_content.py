@@ -2,9 +2,9 @@ import pytest
 import os
 from unittest.mock import patch
 from jobs.people_collector.schemas import (
-    LLMPerson, LinkStatus, WorkflowStatus, ProcessPageContentStep
+    LLMPerson, LinkStatus, WorkflowStatus, ProcessPageContentStep, Link
 )
-from jobs.people_collector.steps.step_05_process_page_content.process_page_content import has_role_and_contact_info
+from jobs.people_collector.steps.step_05_process_page_content.process_page_content import has_role_and_contact_info, move_links_to_top
 from utils.url_utils import format_url_to_folder
 
 pytestmark = pytest.mark.unit
@@ -77,3 +77,49 @@ def test_has_role_and_contact_info_with_three_contact_info_types():
         LLMPerson(name="Jane Doe", other_names=[], roles=["mayor"], phone=None, email=None, url="http://example.com", divisions=[], source_url="test"),
     ]
     assert has_role_and_contact_info(roles, records) == True
+
+def test_move_existing_link_to_top():
+    domain = "https://foo.com"
+    links = [
+        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name="", is_profile_page=False),
+        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name="", is_profile_page=False),
+        Link(url="https://foo.com/c", status=LinkStatus.PENDING.value, folder_name="", is_profile_page=False),
+    ]
+    result = move_links_to_top(domain, ["https://foo.com/b"], links)
+    urls = [l.url for l in result]
+    assert urls == ["https://foo.com/a", "https://foo.com/c", "https://foo.com/b"]
+
+def test_add_new_link():
+    domain = "https://foo.com"
+    links = [
+        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name="", is_profile_page=False),
+        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name="", is_profile_page=False),
+    ]
+    # Add new link 'c'
+    result = move_links_to_top(domain, ["https://foo.com/c"], links)
+    urls = [l.url for l in result]
+    # Should be: a (PENDING), c (PENDING), b (DONE)
+    assert urls == ["https://foo.com/a", "https://foo.com/c", "https://foo.com/b"]
+    assert result[1].status == LinkStatus.PENDING.value
+
+def test_ignore_out_of_domain():
+    domain = "https://foo.com"
+    links = [
+        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name="", is_profile_page=False),
+    ]
+    # Try to add out-of-domain link
+    result = move_links_to_top(domain, ["https://bar.com/x"], links)
+    urls = [l.url for l in result]
+    assert urls == ["https://foo.com/a"]
+
+def test_multiple_links():
+    domain = "https://foo.com"
+    links = [
+        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name="", is_profile_page=False),
+        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name="", is_profile_page=False),
+    ]
+    # Add new and move existing
+    result = move_links_to_top(domain, ["https://foo.com/b", "https://foo.com/c"], links)
+    urls = [l.url for l in result]
+    # Should be: a (PENDING), c (PENDING), b (DONE)
+    assert urls == ["https://foo.com/a", "https://foo.com/c", "https://foo.com/b"]

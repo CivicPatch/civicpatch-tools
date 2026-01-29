@@ -26,8 +26,8 @@ async def research_municipality(context: PeopleCollectorContext) -> tuple[Progre
     municipality_name = context.data.config.name
     prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_ocdid, municipality_name)
     response = await request_utils.with_retry(
-        5,
         logger,
+        max_retries=5,
         func=lambda: google_gemini_llm.run_prompt(
             request_id,
             jurisdiction_ocdid,

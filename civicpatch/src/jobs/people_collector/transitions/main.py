@@ -192,15 +192,15 @@ async def process_page_content_transition(job_config: JobConfig, logger: Workflo
         return context, WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS
 
     page_to_process = preprocessed_links[0] 
-    result = await process_page_content(context, page_to_process)
+    links, result = await process_page_content(context, page_to_process)
     next_context = context.copy(update={
         "data": context.data.copy(update={
-            "links": result.links,
+            "links": links,
             "process_page_content_step": result
         })
     })
 
-    links_processed = get_links_with_status(context.data.links, [LinkStatus.PROCESSED_IRRELEVANT, LinkStatus.DONE])
+    links_processed = get_links_with_status(next_context.data.links, [LinkStatus.PROCESSED_IRRELEVANT, LinkStatus.DONE])
     current_cost = cost_utils.total_cost_by_request(
         context.request_id, context.data.jurisdiction_ocdid
     )["total_cost"]

@@ -24,18 +24,16 @@ async def with_retry(logger, max_retries, func, *args, **kwargs):
 
     while retry_attempts <= max_retries:
         try:
-            if inspect.iscoroutinefunction(func):
-                return await func(*args, **kwargs)
+            result = func(*args, **kwargs)
+            if inspect.isawaitable(result):
+                return await result
             else:
-                return func(*args, **kwargs)
+                return result
         except Exception as e:
             if retry_attempts < max_retries:
                 sleep_time = BASE_SLEEP ** retry_attempts + random.uniform(0, 1)
                 logger.warning(f"{e} - Retrying in {sleep_time:.2f} seconds... (Attempt #{retry_attempts + 1})")
-                if inspect.iscoroutinefunction(func):
-                    await asyncio.sleep(sleep_time)
-                else:
-                    time.sleep(sleep_time)
+                await asyncio.sleep(sleep_time)
                 retry_attempts += 1
             else:
                 raise e

@@ -144,7 +144,6 @@ class PreprocessPageContentStep(BaseModel):
 class ProcessPageContentStep(BaseModel):
     raw_records_by_llm: RecordsByLLM
     records_by_llm: RecordsByLLM
-    links: List[Link] = []
     progress: ProgressState = ProgressState(
         required_data=0, current_data=0, has_target_role=False, has_target_divisions=False
     )
