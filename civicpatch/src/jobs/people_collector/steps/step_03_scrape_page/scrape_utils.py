@@ -89,33 +89,20 @@ async def convert_background_divs_to_imgs(page):
 
 async def flatten_shadow_root(page: Page):
     """
-    Flattens the shadow root of the current page using Playwright.
-
-    Args:
-        page (Page): The Playwright page object.
-
-    Returns:
-        list: A list of all elements inside shadow roots on the page.
+    Moves all shadow DOM content into the main DOM for scraping.
     """
-    # JavaScript to traverse shadow DOM and return all elements
     js_script = """
-    const flattenShadowRoot = (node) => {
-        const elements = [];
-        const traverse = (root) => {
-            if (root.shadowRoot) {
-                elements.push(...root.shadowRoot.querySelectorAll('*'));
-                root.shadowRoot.querySelectorAll('*').forEach(traverse);
+    (() => {
+        function flatten(node) {
+            if (node.shadowRoot) {
+                node.append(...Array.from(node.shadowRoot.childNodes).map(n => n.cloneNode(true)));
+                node.shadowRoot.querySelectorAll('*').forEach(flatten);
             }
-        };
-        document.querySelectorAll('*').forEach(traverse);
-        return elements.map(el => el.outerHTML);
-    };
-    flattenShadowRoot(document);
+        }
+        document.querySelectorAll('*').forEach(flatten);
+    })();
     """
-    # Execute the JavaScript on the page
-    shadow_elements = await page.evaluate(js_script)
-    
-    return shadow_elements
+    await page.evaluate(js_script)
 
 async def html_relative_to_absolute_urls(page: Page):
     """

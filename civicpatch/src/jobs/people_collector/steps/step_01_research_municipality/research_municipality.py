@@ -11,6 +11,7 @@ import services.google_gemini.llm as google_gemini_llm
 import services.google_gemini.prompts as google_gemini_prompt
 from shared.utils import config_utils
 from utils import people_utils, log_utils
+import utils.request_utils as request_utils
 
 MINIMUM_ELECTED_OFFICIALS_NUM = 5
 
@@ -24,12 +25,16 @@ async def research_municipality(context: PeopleCollectorContext) -> tuple[Progre
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     municipality_name = context.data.config.name
     prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_ocdid, municipality_name)
-    response = await google_gemini_llm.run_prompt(
-        request_id, 
-        jurisdiction_ocdid, 
-        prompt, 
-        response_schema=ResearchMunicipalityLLMSchema,
-        with_search=True
+    response = await request_utils.with_retry(
+        5,
+        logger,
+        func=lambda: google_gemini_llm.run_prompt(
+            request_id,
+            jurisdiction_ocdid,
+            prompt,
+            response_schema=ResearchMunicipalityLLMSchema,
+            with_search=True
+        )
     )
     if not response:
         raise ValueError("No response from LLM")
