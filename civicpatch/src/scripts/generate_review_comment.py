@@ -116,6 +116,9 @@ def generate_validation_errors(government_type: str, people: List[Official]) -> 
         if len(person_with_role) > 1:
             person_names = ", ".join([person.name for person in person_with_role])
             errors.append(f"Role '{role}' is marked as unique, but found multiple persons with this role: {person_names}")
+    if len(people) == 0:
+        errors.append("No officials were found.")
+    
     return errors
 
 def load_pipeline_context_from_json(filepath: str) -> PeopleCollectorContext:

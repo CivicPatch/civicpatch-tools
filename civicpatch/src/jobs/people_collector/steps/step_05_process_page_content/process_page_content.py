@@ -66,7 +66,7 @@ IGNORE_WEBSITES = [
 
 MINIMUM_NUM_PEOPLE = 5
 
-async def process_page_content(context: PeopleCollectorContext, page_to_process: Link) -> ProcessPageContentStep:
+async def process_page_content(context: PeopleCollectorContext, page_to_process: Link) -> Tuple[List[Link], ProcessPageContentStep]:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 5: {WorkflowStatus.PROCESS_PAGE_CONTENT.value}: {page_to_process.url}")
 
@@ -101,7 +101,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     if not response.is_relevant:
         updated_links = mark_link_as_terminating_status(page_to_process.url, updated_links, LinkStatus.PROCESSED_IRRELEVANT)
 
-        return ProcessPageContentStep(
+        return updated_links, ProcessPageContentStep(
             raw_records_by_llm=current_step.raw_records_by_llm,
             records_by_llm=current_step.records_by_llm,
             links=updated_links,
@@ -137,8 +137,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     updated_links = update_links(context.data.config.url, updated_links, page_to_process, logger, setup_data.roles, updated_records)
     logger.info(f"links updated: {updated_links}")
 
-    return ProcessPageContentStep(
-        links=updated_links,
+    return updated_links, ProcessPageContentStep(
         progress=updated_progress,
         raw_records_by_llm=updated_raw_records,
         records_by_llm=updated_records,
