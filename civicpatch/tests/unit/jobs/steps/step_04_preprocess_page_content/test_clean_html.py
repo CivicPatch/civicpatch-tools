@@ -93,4 +93,14 @@ def test_with_read_more_fixture():
         expected_output = f.read()
     assert ''.join(cleaned_html.split()) == ''.join(expected_output.split())
 
-        
+def test_with_flattened_shadow_dom():
+    with open(os.path.join(FIXTURE_DIR, "flattened_shadow_dom", "input.html"), "r", encoding="utf-8") as f:
+        input_html = f.read()
+    cleaned_html = clean_html(None, input_html)
+    #with open(FIXTURE_DIR / "flattened_shadow_dom" / "expected_clean_html.html", "w", encoding="utf-8") as f:
+    #    f.write(cleaned_html)
+    with open(os.path.join(FIXTURE_DIR, "flattened_shadow_dom", "expected_clean_html.html"), "r", encoding="utf-8") as f:
+        expected_output = f.read()
+    assert ''.join(cleaned_html.split()) == ''.join(expected_output.split())
+
+       

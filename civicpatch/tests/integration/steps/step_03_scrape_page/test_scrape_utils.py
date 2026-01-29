@@ -1,8 +1,8 @@
 import os
 import pytest
 import shutil
-from unittest.mock import AsyncMock, MagicMock, patch
-from steps.step_03_scrape_page.scrape_utils import download_images, scrape
+from unittest.mock import MagicMock
+from jobs.people_collector.steps.step_03_scrape_page.scrape_utils import scrape
 
 pytestmark = pytest.mark.integration
 
@@ -54,3 +54,36 @@ def assert_logger_called_with_partial(logger, partial_message):
     assert any(partial_message in str(call) for call in logger.info.call_args_list), (
         f"Logger did not log a message containing: {partial_message}"
     )
+
+@pytest.mark.asyncio
+async def test_scrape_with_shadow_root():
+    # Mock logger
+    logger = MagicMock()
+
+    # URL to scrape (Dublin, TX council page)
+    website_url = "https://www.ci.dublin.tx.us/council"
+
+    # Options for scraping
+    options = {
+        "image_directory": FIXTURES_DIR,
+        "scraped_urls": []
+    }
+
+    # Run the scrape function and get HTML output
+    try:
+        html_output = await scrape(logger, website_url, options)
+    except Exception as e:
+        pytest.fail(f"Scrape function raised an exception: {e}")
+
+    # Save actual output for debugging (optional)
+    dublin_fixture_dir = os.path.join(FIXTURES_DIR, "dublin")
+    os.makedirs(dublin_fixture_dir, exist_ok=True)
+    with open(os.path.join(dublin_fixture_dir, "actual.html"), "w", encoding="utf-8") as f:
+        f.write(html_output)
+
+    # Load expected HTML
+    with open(os.path.join(dublin_fixture_dir, "expected.html"), "r", encoding="utf-8") as f:
+        expected_html = f.read()
+
+    # Compare outputs
+    assert html_output.strip() == expected_html.strip()

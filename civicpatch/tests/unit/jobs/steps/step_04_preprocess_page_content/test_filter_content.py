@@ -457,3 +457,18 @@ def test_with_read_more_fixture():
     with open(os.path.join(FIXTURE_DIR, "la_joya_read_more", "expected_filter_content.md"), "r", encoding="utf-8") as f:
         expected_md = f.read()
     assert actual_md.strip() == expected_md.strip()
+
+def test_with_flattened_shadow_dom():
+    with open(os.path.join(FIXTURE_DIR, "flattened_shadow_dom", "expected_clean_html.html"), "r", encoding="utf-8") as f:
+        input_html = f.read()
+    filtered_content = filter_content(logger, {}, input_html, government_type="mayor_council")
+    #with open(os.path.join(FIXTURE_DIR, "flattened_shadow_dom", "expected_filter_content.html"), "w", encoding="utf-8") as f:
+    #    f.write(filtered_content)
+    expected_html = read_fixture("expected_filter_content.html", subfolder="flattened_shadow_dom")
+    assert filtered_content.strip() == expected_html.strip()
+    actual_md = to_markdown(filtered_content)
+    #with open(os.path.join(FIXTURE_DIR, "flattened_shadow_dom", "expected_filter_content.md"), "w", encoding="utf-8") as f:
+    #    f.write(actual_md)
+    with open(os.path.join(FIXTURE_DIR, "flattened_shadow_dom", "expected_filter_content.md"), "r", encoding="utf-8") as f:
+        expected_md = f.read()
+    assert actual_md.strip() == expected_md.strip()
