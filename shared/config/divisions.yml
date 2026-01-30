@@ -27,3 +27,7 @@ divisions:
   seat:
     aliases:
       - council seat
+  place:
+    aliases: []
+  precinct:
+    aliases: []

@@ -4,6 +4,7 @@ import json
 from playwright.async_api import async_playwright, Page
 from typing import TypedDict
 import aiofiles
+import asyncio
 
 IMAGE_URL_BLACKLIST = ["https://google.com"]
 IMAGE_EXT_BLACKLIST = [".svg", ".gif"]
@@ -39,9 +40,9 @@ async def scrape(logger, website_url, options=None):
         context = await browser.new_context() 
         page = await context.new_page()
 
-        for wait_until in ["load", "domcontentloaded"]:
+        for wait_until in ["networkidle", "load", "domcontentloaded"]:
             try:
-                await page.goto(website_url, wait_until=wait_until)
+                await page.goto(website_url, wait_until=wait_until, timeout=15000) # 15 seconds
                 break
             except Exception as e:
                 logger.warning(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
@@ -54,7 +55,7 @@ async def scrape(logger, website_url, options=None):
 
         # Check if the page is HTML using document.contentType
         content_type = await page.evaluate("document.contentType")
-        if content_type.lower() != "text/html":
+        if (content_type.lower() != "text/html"):
             await browser.close()
             raise ValueError(f"Content type is not text/html: {content_type}")
     
@@ -163,13 +164,10 @@ def is_valid_image(src: str | None) -> bool:
         return False
     return True
 
-async def download_images(browser, logger, page: Page, image_dir: str):
+async def download_images(browser, logger, page: Page, image_dir: str, timeout_s: int = 5):
     """
-    Downloads images from the current page using a fallback strategy:
-    1. Direct download by URL.
-    2. Intercept and save images in the same browser session (one by one).
-    3. Create a canvas and load the image into it.
-    4. Screenshot the image element as a last resort.
+    Downloads images from the current page using a fallback strategy.
+    If processing any image takes longer than `timeout` seconds, skip to the next image.
     """
     import aiohttp
     import base64
@@ -179,70 +177,76 @@ async def download_images(browser, logger, page: Page, image_dir: str):
     image_map = {}
 
     for img in await page.query_selector_all("img"):
-        src = None
-        try:
-            src = await img.get_attribute("src")
-            if not is_valid_image(src):
-                logger.debug(f"Skipping blacklisted or invalid image: {src}")
-                continue
-            src = urljoin(page.url, src)
-            image_hash = hash_string(src)
-            file_name = f"{image_hash}.png"
-            file_path = os.path.join(image_dir, file_name)
-
-            # Try downloading images directly
+        async def process_image(img):
+            src = None
             try:
-                logger.debug(f"Attempting to intercept and save image for: {src}")
-                intercepted_image_path = await load_and_save_image(page, image_dir, src, logger, file_name)
-                if intercepted_image_path:
+                src = await img.get_attribute("src")
+                if not is_valid_image(src):
+                    logger.debug(f"Skipping blacklisted or invalid image: {src}")
+                    return
+                src = urljoin(page.url, src)
+                image_hash = hash_string(src)
+                file_name = f"{image_hash}.png"
+                file_path = os.path.join(image_dir, file_name)
+
+                # Try downloading images directly
+                try:
+                    logger.debug(f"Attempting to intercept and save image for: {src}")
+                    intercepted_image_path = await load_and_save_image(page, image_dir, src, logger, file_name)
+                    if intercepted_image_path:
+                        image_map[src] = file_name 
+                        return
+                except Exception as e:
+                    logger.warning(f"Failed to intercept and save image for {src}: {e}")
+
+                # Fallback 2: Create a canvas and load the image into it
+                try:
+                    logger.debug(f"Attempting to create a canvas and load image: {src}")
+                    canvas_script = """
+                    (src) => {
+                        return new Promise((resolve, reject) => {
+                            const img = new Image();
+                            img.crossOrigin = "anonymous";
+                            img.onload = () => {
+                                const canvas = document.createElement("canvas");
+                                canvas.width = img.width;
+                                canvas.height = img.height;
+                                const ctx = canvas.getContext("2d");
+                                ctx.drawImage(img, 0, 0);
+                                resolve(canvas.toDataURL("image/png"));
+                            };
+                            img.onerror = reject;
+                            img.src = src;
+                        });
+                    }
+                    """
+                    data_url = await page.evaluate(canvas_script, src)
+                    header, encoded = data_url.split(",", 1)
+                    with open(file_path, "wb") as f:
+                        f.write(base64.b64decode(encoded))
+                    logger.debug(f"Image saved from canvas: {file_name}")
                     image_map[src] = file_name 
-                    continue
-            except Exception as e:
-                logger.warning(f"Failed to intercept and save image for {src}: {e}")
+                    return
+                except Exception as e:
+                    logger.warning(f"Failed to create canvas for image: {src} - {e}")
 
-            # Fallback 2: Create a canvas and load the image into it
-            try:
-                logger.debug(f"Attempting to create a canvas and load image: {src}")
-                canvas_script = """
-                (src) => {
-                    return new Promise((resolve, reject) => {
-                        const img = new Image();
-                        img.crossOrigin = "anonymous";
-                        img.onload = () => {
-                            const canvas = document.createElement("canvas");
-                            canvas.width = img.width;
-                            canvas.height = img.height;
-                            const ctx = canvas.getContext("2d");
-                            ctx.drawImage(img, 0, 0);
-                            resolve(canvas.toDataURL("image/png"));
-                        };
-                        img.onerror = reject;
-                        img.src = src;
-                    });
-                }
-                """
-                data_url = await page.evaluate(canvas_script, src)
-                header, encoded = data_url.split(",", 1)
-                with open(file_path, "wb") as f:
-                    f.write(base64.b64decode(encoded))
-                logger.debug(f"Image saved from canvas: {file_name}")
-                image_map[src] = file_name 
-                continue
-            except Exception as e:
-                logger.warning(f"Failed to create canvas for image: {src} - {e}")
+                # Fallback 3: Screenshot the image element
+                try:
+                    logger.debug(f"Attempting to screenshot image element: {src}")
+                    await img.screenshot(path=file_name)
+                    logger.debug(f"Image captured via element screenshot: {file_name}")
+                    image_map[src] = file_name
+                except Exception as e:
+                    logger.warning(f"Failed to screenshot image element: {src} - {e}")
 
-            # Fallback 3: Screenshot the image element
-            try:
-                logger.debug(f"Attempting to screenshot image element: {src}")
-                await img.screenshot(path=file_name)
-                logger.debug(f"Image captured via element screenshot: {file_name}")
-                image_map[src] = file_name
             except Exception as e:
-                logger.warning(f"Failed to screenshot image element: {src} - {e}")
+                logger.warning(f"Failed to process image: {src} - {e}")
+                await remove_image_from_dom(page, img, logger)
 
-        except Exception as e:
-            logger.warning(f"Failed to process image: {src} - {e}")
-            await remove_image_from_dom(page, img, logger)
+        try:
+            await asyncio.wait_for(process_image(img), timeout=timeout_s)
+        except asyncio.TimeoutError:
+            logger.warning(f"Timeout processing image, skipping to next.")
 
     # Load/create image map if it and update the image map
     map_file_path = os.path.join(image_dir, "image_map.json")
