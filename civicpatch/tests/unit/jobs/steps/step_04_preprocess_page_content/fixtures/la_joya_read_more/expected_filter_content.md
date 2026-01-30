@@ -47,6 +47,8 @@ Enrique Cantu
 
 Mayor Pro-Tem
 
+Place 2
+
 [Read More](https://www.lajoyatx.gov/citycouncil/enrique-cantu)
 
 ![Irma Veloz](https://static.wixstatic.com/media/3c0551_590e921f74c4419c86b3cd320c5523a9~mv2.png/v1/fill/w_275,h_281,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Angie%20Garza.png)
@@ -57,9 +59,19 @@ Irma Veloz
 
 Councilwoman
 
+Place 1
+
 [Read More](https://www.lajoyatx.gov/citycouncil/irma-veloz)
 
 ![Angie Garza](https://static.wixstatic.com/media/3c0551_937b4108346044868cfa249ae29082a9~mv2.jpg/v1/fill/w_275,h_281,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Angie%20Garza.jpg)
+
+
+Angie Garza
+-----------
+
+Councilwoman
+
+Place 3
 
 [Read More](https://www.lajoyatx.gov/citycouncil/angie-garza)
 
@@ -70,6 +82,8 @@ Laura M. Macias
 ---------------
 
 Councilwoman
+
+Place 4
 
 [Read More](https://www.lajoyatx.gov/citycouncil/laura-m.-macias)
 
