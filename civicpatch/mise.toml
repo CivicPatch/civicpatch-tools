@@ -49,7 +49,7 @@ docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm
 
 [tasks.scratchtest]
 run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vm integration tests/integration/steps/step_03_scrape_page
+docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm unit tests/unit/jobs/steps/step_04_preprocess_page_content
 """
 #docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vm unit tests/unit/scripts/test_generate_data_comment.py
 

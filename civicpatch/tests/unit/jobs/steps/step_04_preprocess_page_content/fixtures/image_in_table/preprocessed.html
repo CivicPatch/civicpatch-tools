@@ -72,25 +72,82 @@
    <div class="sitewrapper site_template mainSpan_wrapper">
     <div class="mainSpan" id="mainSpan_wrapper_Screen">
      <!--stopindex-->
+     <div id="skipnav" tabindex="-1">
+      <a href="https://www.cor.net/government/city-council#pagebody" tabindex="-1">
+       Skip to Main Content
+      </a>
+     </div>
      <!--startindex-->
-     <a href="https://www.cor.net/home" id="home_link">
-      Home
-     </a>
-     <a class="menu_trigger mobile_only" href="javascript:void(0);">
-      Menu
-     </a>
-     <a href="https://www.cor.net/our-city/city-contacts" target="_self">
-      Contact Us
-     </a>
-     <a href="https://www.cor.net/departments/human-resources/job-openings" target="_self">
-      Employment
-     </a>
-     <a href="https://www.cor.net/government/transparency-initiative" target="_self">
-      Transparency
-     </a>
-     <a href="javascript:void" onclick="javascript:GoogleTranslateLink();">
-      Translate
-     </a>
+     <header class="" id="siteheader">
+      <!--stopindex-->
+      <a href="https://www.cor.net/home" id="home_link">
+       Home
+      </a>
+      <a class="menu_trigger mobile_only" href="javascript:void(0);">
+       Menu
+      </a>
+      <!--startindex-->
+      <div class="site_template_column header_column" id="headercolumn">
+       <!--stopindex-->
+       <div id="top_nav">
+        <a href="https://www.cor.net/our-city/city-contacts" target="_self">
+         Contact Us
+        </a>
+        <a href="https://www.cor.net/departments/human-resources/job-openings" target="_self">
+         Employment
+        </a>
+        <a href="https://www.cor.net/government/transparency-initiative" target="_self">
+         Transparency
+        </a>
+        <a href="javascript:void" onclick="javascript:GoogleTranslateLink();">
+         Translate
+        </a>
+       </div>
+       <script type="text/javascript">
+        function GoogleTranslateLink()
+    {
+        if (window.location.href.indexOf("translate.google.com") == -1)
+        {
+            var url = "//translate.google.com/translate?js=y&prev=_t&hl=en&ie=UTF-8&layout=1&eotf=1&sl=en&tl=es&u=";
+            url += escape(window.location.href);
+            window.location.href = url;
+        }
+        else
+        {
+            //do nothing
+        }
+    }
+       </script>
+       <!--startindex-->
+       <!--stopindex-->
+       <div class="clearfix" id="searchbox">
+        <a href="javascript:void(0);">
+         Go
+        </a>
+       </div>
+       <script type="text/javascript">
+        $(function () {
+    $("#searchbox input").keydown(function(e){
+	if(e.keyCode == 13){
+			$("#searchbox a").click();
+	}
+});
+$("#searchbox a").click(function () {
+    var keyWord = $("#searchbox input#search_text").val();
+	if(keyWord.length<=0){return false;}
+        keyWord  = encodeURIComponent(keyWord.replace("<"," ").replace(">"," ") );
+        var link = '/our-city/search-results';
+	if (link.indexOf("?") >= 0 )
+	    link = link + "&q=" + keyWord;
+	    else
+	    link = link + "?q=" + keyWord;
+        window.location.href = link;
+    });
+});
+       </script>
+       <!--startindex-->
+      </div>
+     </header>
      <div class="standardthreecolumnlayout clearfix" id="sitebody">
       <div class="column top_col clearfix" id="ColumnUserControl1">
        <!--!!WidgetStart, vi-orderdata="1"  vi-hideonmobile="false" vi-widgetinstancedata="603"WidgetStart!!-->
@@ -98,6 +155,11 @@
        <div class="main_menu_widget">
         <nav class="advancedmegamenu mainnav" id="menuContainer_603_0_490">
          <ul class="dropdownmenu clearfix">
+          <li class="megamenu_first" id="dropdownrootitem1">
+           <a aria-label="City of Richardson Home" class="dropdownrootitem1" data-navid="1" href="https://www.cor.net/home" style="overflow: visible;" target="_self" title="City of Richardson Home">
+            Home
+           </a>
+          </li>
           <li class="megamenu_first" id="dropdownrootitem2">
            <a aria-label="Click to open Our City" class="dropdownrootitem2" data-navid="2" href="https://www.cor.net/our-city" style="overflow: visible;" target="_self" title="Click to open Our City">
             Our City
@@ -106,6 +168,38 @@
             <div class="inner_container">
              <ul class="megamenu_column">
               <li class="megamenu_level1">
+               <a aria-label="City Council Celebrates Diversity with Student Contests" class="megamenu_level1" data-navid="5436" href="https://www.cor.net/our-city/art-and-essay-contest" target="_self" title="City Council Celebrates Diversity with Student Contests">
+                Art and Essay Contest
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Visitors" class="megamenu_level1" data-navid="4" href="https://www.cor.net/our-city/visitors" target="_self" title="Visitors">
+                About Us / Visitor Info
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Arts and Culture" class="megamenu_level1" data-navid="4951" href="https://www.cor.net/our-city/richardson-arts-online" target="_self" title="Click to open Arts and Culture">
+                Arts and Culture
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Arts Groups" class="megamenu_level2" data-navid="4952" href="https://www.cor.net/our-city/arts-and-culture/arts-groups" target="_self" title="Click to open Arts Groups">
+                  Arts Groups
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Arts Funding Grants" class="megamenu_level2" data-navid="2075" href="https://www.cor.net/government/boards-commissions-meetings/cultural-arts-commission/documents/richardson-arts-online/arts-funding-grants" target="_self" title="Click to open Arts Funding Grants">
+                  Arts Funding Grants
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Public Art" class="megamenu_level2" data-navid="4973" href="https://www.cor.net/our-city/arts-and-culture/public-art" target="_self" title="Click to open Public Art">
+                  Public Art
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
                <a aria-label="Click to open Bond Projects" class="megamenu_level1" data-navid="5588" href="https://www.cor.net/our-city/bond-projects" target="_self" title="Click to open Bond Projects">
                 Bond Projects
                </a>
@@ -113,6 +207,21 @@
                 <li class="megamenu_level2">
                  <a aria-label="Click to open New City Hall" class="megamenu_level2" data-navid="6172" href="https://www.cor.net/our-city/bond-projects/new-city-hall" target="_self" title="Click to open New City Hall">
                   New City Hall
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open 2021 Bond" class="megamenu_level2" data-navid="5590" href="https://www.cor.net/our-city/bond-projects/2021-bond" target="_self" title="Click to open 2021 Bond">
+                  2021 Bond
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open 2015 Bond" class="megamenu_level2" data-navid="5589" href="https://www.cor.net/our-city/bond-projects/2015-bond" target="_self" title="Click to open 2015 Bond">
+                  2015 Bond
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Other Projects" class="megamenu_level2" data-navid="5591" href="https://www.cor.net/our-city/bond-projects/other-projects" target="_self" title="Click to open Other Projects">
+                  Other Projects
                  </a>
                 </li>
                </ul>
@@ -130,6 +239,36 @@
                </a>
                <ul class="megamenu_level1">
                 <li class="megamenu_level2">
+                 <a aria-label="Click to open Eisemann Center" class="megamenu_level2" data-navid="1650" href="https://www.cor.net/our-city/city-facilities/eisemann-center" rel="noopener" target="_blank" title="Click to open Eisemann Center">
+                  Eisemann Center
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Library" class="megamenu_level2" data-navid="2243" href="https://www.cor.net/our-city/city-facilities/library" target="_self" title="Click to open Library">
+                  Library
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Municipal Court" class="megamenu_level2" data-navid="1495" href="https://www.cor.net/our-city/city-facilities/municipal-court" target="_self" title="Click to open Municipal Court">
+                  Municipal Court
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Parks and Recreation Facilities" class="megamenu_level2" data-navid="1496" href="https://www.cor.net/our-city/city-facilities/parks-and-recreation-facilities" target="_self" title="Click to open Parks and Recreation Facilities">
+                  Parks and Recreation Facilities
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Sherrill Park Golf Course" class="megamenu_level2" data-navid="1657" href="https://www.cor.net/our-city/city-facilities/sherrill-park-golf-course" rel="noopener" target="_blank" title="Click to open Sherrill Park Golf Course">
+                  Sherrill Park Golf Course
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Senior Center" class="megamenu_level2" data-navid="3734" href="https://www.cor.net/our-city/city-facilities/senior-center" target="_self" title="Click to open Senior Center">
+                  Senior Center
+                 </a>
+                </li>
+                <li class="megamenu_level2">
                  <a aria-label="Click to open Richardson Woman’s Club" class="megamenu_level2" data-navid="4949" href="https://www.cor.net/our-city/city-facilities/richardson-woman-s-club" target="_self" title="Click to open Richardson Woman’s Club">
                   Richardson Woman’s Club
                  </a>
@@ -141,8 +280,60 @@
                 City Maps
                </a>
               </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Community Engagement" class="megamenu_level1" data-navid="5768" href="https://www.cor.net/our-city/community-engagement" target="_self" title="Click to open Community Engagement">
+                Community Engagement
+               </a>
+              </li>
              </ul>
              <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Emergency Services" class="megamenu_level1" data-navid="1481" href="https://www.cor.net/our-city/emergency-services" target="_self" title="Click to open Emergency Services">
+                Emergency Services
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Animal Services" class="megamenu_level2" data-navid="1484" href="https://www.cor.net/our-city/emergency-services/animal-services" target="_self" title="Click to open Animal Services">
+                  Animal Services
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Emergency Management" class="megamenu_level2" data-navid="1485" href="https://www.cor.net/our-city/emergency-services/emergency-management" target="_self" title="Click to open Emergency Management">
+                  Emergency Management
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Fire Department" class="megamenu_level2" data-navid="1482" href="https://www.cor.net/our-city/emergency-services/fire-department" target="_self" title="Click to open Fire Department">
+                  Fire Department
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Police Department" class="megamenu_level2" data-navid="1483" href="https://www.cor.net/our-city/emergency-services/police-department" target="_self" title="Click to open Police Department">
+                  Police Department
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Events Calendar" class="megamenu_level1" data-navid="64" href="https://www.cor.net/our-city/events-calendar" target="_self" title="Click to open Events Calendar">
+                Events Calendar
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Healthcare Facilities" class="megamenu_level1" data-navid="949" href="https://www.cor.net/our-city/healthcare-facilities" target="_self" title="Click to open Healthcare Facilities">
+                Healthcare Facilities
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open HOA and Neighborhood Assoc." class="megamenu_level1" data-navid="889" href="https://www.cor.net/our-city/hoa-and-neighborhood-assoc" target="_self" title="Click to open HOA and Neighborhood Assoc.">
+                HOA and Neighborhood Assoc.
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Home Improvement Incentive Program (HIIP)" class="megamenu_level1" data-navid="890" href="https://www.cor.net/our-city/home-improvement-incentive-program-hiip" target="_self" title="Click to open Home Improvement Incentive Program (HIIP)">
+                Home Improvement Incentive Program (HIIP)
+               </a>
+              </li>
               <li class="megamenu_level1">
                <a aria-label="Click to open Municipal Campus" class="megamenu_level1" data-navid="5755" href="https://www.cor.net/our-city/municipal-campus" target="_self" title="Click to open Municipal Campus">
                 Municipal Campus
@@ -158,7 +349,70 @@
                   New City Hall
                  </a>
                 </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Library Renovations" class="megamenu_level2" data-navid="5760" href="https://www.cor.net/our-city/municipal-campus/library-renovations" target="_self" title="Click to open Library Renovations">
+                  Library Renovations
+                 </a>
+                </li>
                </ul>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open New Resident Guide" class="megamenu_level1" data-navid="4959" href="https://www.cor.net/our-city/new-resident-guide-4959" target="_self" title="Click to open New Resident Guide">
+                New Resident Guide
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Economic Development" class="megamenu_level2" data-navid="6105" href="https://www.cor.net/our-city/new-resident-guide/economic-development" target="_self" title="Click to open Economic Development">
+                  Economic Development
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open News / Videos" class="megamenu_level1" data-navid="1486" href="https://www.cor.net/our-city/news-videos" rel="noopener" target="_blank" title="Click to open News / Videos">
+                News / Videos
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open News" class="megamenu_level2" data-navid="73" href="https://www.cor.net/our-city/news-videos/news" target="_self" title="Click to open News">
+                  News
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Schools and Universities" class="megamenu_level1" data-navid="937" href="https://www.cor.net/our-city/schools-and-universities" target="_self" title="Click to open Schools and Universities">
+                Schools and Universities
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Transportation" class="megamenu_level1" data-navid="954" href="https://www.cor.net/our-city/transportation" target="_self" title="Click to open Transportation">
+                Transportation
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open DART" class="megamenu_level2" data-navid="956" href="https://www.cor.net/our-city/transportation/dart" target="_self" title="Click to open DART">
+                  DART
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Hike and bike trails" class="megamenu_level2" data-navid="955" href="https://www.cor.net/our-city/transportation/hike-and-bike-trails" target="_self" title="Click to open Hike and bike trails">
+                  Hike and bike trails
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open NTTA" class="megamenu_level2" data-navid="957" href="https://www.cor.net/our-city/transportation/ntta" target="_self" title="Click to open NTTA">
+                  NTTA
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Utilities" class="megamenu_level1" data-navid="5164" href="https://www.cor.net/our-city/utilities" target="_self" title="Click to open Utilities">
+                Utilities
+               </a>
               </li>
              </ul>
             </div>
@@ -172,10 +426,121 @@
             <div class="inner_container">
              <ul class="megamenu_column">
               <li class="megamenu_level1">
+               <a aria-label="Click to open Animal Services" class="megamenu_level1" data-navid="128" href="https://www.cor.net/departments/animal-services" target="_self" title="Click to open Animal Services">
+                Animal Services
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Adoptable Animals" class="megamenu_level2" data-navid="716" href="https://www.cor.net/departments/animal-services/adoptable-animals" target="_self" title="Click to open Adoptable Animals">
+                  Adoptable Animals
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Lost or Found Animals" class="megamenu_level2" data-navid="774" href="https://www.cor.net/departments/animal-services/lost-or-found-animals" target="_self" title="Click to open Lost or Found Animals">
+                  Lost or Found Animals
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Surrendering a Pet" class="megamenu_level2" data-navid="1289" href="https://www.cor.net/departments/animal-services/surrendering-a-pet" target="_self" title="Click to open Surrendering a Pet">
+                  Surrendering a Pet
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Wildlife" class="megamenu_level2" data-navid="775" href="https://www.cor.net/departments/animal-services/wildlife" target="_self" title="Click to open Wildlife">
+                  Wildlife
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Budget" class="megamenu_level1" data-navid="1051" href="https://www.cor.net/departments/budget" target="_self" title="Click to open Budget">
+                Budget
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Building Inspection" class="megamenu_level1" data-navid="43" href="https://www.cor.net/departments/building-inspection" target="_self" title="Click to open Building Inspection">
+                Building Inspection
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Commercial Construction" class="megamenu_level2" data-navid="367" href="https://www.cor.net/departments/building-inspection/commercial" target="_self" title="Commercial Construction">
+                  Commercial
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Residential Construction" class="megamenu_level2" data-navid="368" href="https://www.cor.net/departments/building-inspection/residential" target="_self" title="Residential Construction">
+                  Residential
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Signs" class="megamenu_level2" data-navid="369" href="https://www.cor.net/departments/building-inspection/signs" target="_self" title="Click to open Signs">
+                  Signs
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="CAPITAL PROJECTS/ENGINEERING DEPARTMENT" class="megamenu_level1" data-navid="144" href="https://www.cor.net/departments/capital-projects-engineering" target="_self" title="CAPITAL PROJECTS/ENGINEERING DEPARTMENT">
+                Capital Projects &amp; Engineering
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Capital Project Tracker Map" class="megamenu_level2" data-navid="5763" href="https://www.cor.net/departments/capital-projects-engineering/public-project-input/capital-project-tracker-map" target="_self" title="Click to open Capital Project Tracker Map">
+                  Capital Project Tracker Map
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="      Capital Projects &amp; Engineering    " class="megamenu_level2" data-navid="535" href="https://www.cor.net/departments/capital-projects-engineering/construction-projects" target="_self" title="      Capital Projects &amp; Engineering    ">
+                  Construction Projects
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Floodplain Information" class="megamenu_level2" data-navid="285" href="https://www.cor.net/departments/capital-projects-engineering/floodplain-information" target="_self" title="Click to open Floodplain Information">
+                  Floodplain Information
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Right-of-Way Permits" class="megamenu_level2" data-navid="449" href="https://www.cor.net/departments/capital-projects-engineering/right-of-way-permits" target="_self" title="Click to open Right-of-Way Permits">
+                  Right-of-Way Permits
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Standard Construction Details" class="megamenu_level2" data-navid="280" href="https://www.cor.net/departments/capital-projects-engineering/standard-construction-details" target="_self" title="Click to open Standard Construction Details">
+                  Standard Construction Details
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
                <a aria-label="Click to open Communications" class="megamenu_level1" data-navid="146" href="https://www.cor.net/departments/communications" target="_self" title="Click to open Communications">
                 Communications
                </a>
                <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Applications and Permits" class="megamenu_level2" data-navid="6008" href="https://www.cor.net/departments/communications/applications-and-permits" target="_self" title="Click to open Applications and Permits">
+                  Applications and Permits
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Severe Weather" class="megamenu_level2" data-navid="1969" href="https://www.cor.net/departments/communications/severe-weather" target="_self" title="Click to open Severe Weather">
+                  Severe Weather
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Press Releases" class="megamenu_level2" data-navid="149" href="https://www.cor.net/departments/communications/press-releases" target="_self" title="Click to open Press Releases">
+                  Press Releases
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Richardson Today Online" class="megamenu_level2" data-navid="981" href="https://www.cor.net/departments/communications/richardson-today" rel="noopener" target="_blank" title="Richardson Today Online">
+                  Richardson Today
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Richardson Today Archive" class="megamenu_level2" data-navid="148" href="https://www.cor.net/departments/communications/richardson-today/richardson-today-archive" target="_self" title="Click to open Richardson Today Archive">
+                  Richardson Today Archive
+                 </a>
+                </li>
                 <li class="megamenu_level2">
                  <a aria-label="Click to open Temporary City Hall Services" class="megamenu_level2" data-navid="5656" href="https://www.cor.net/departments/communications/temporary-city-hall-services" target="_self" title="Click to open Temporary City Hall Services">
                   Temporary City Hall Services
@@ -191,6 +556,285 @@
              </ul>
              <ul class="megamenu_column">
               <li class="megamenu_level1">
+               <a aria-label="Click to open Community Services" class="megamenu_level1" data-navid="17" href="https://www.cor.net/departments/community-services" target="_self" title="Click to open Community Services">
+                Community Services
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Code Enforcement" class="megamenu_level2" data-navid="44" href="https://www.cor.net/departments/community-services/code-enforcement" target="_self" title="Click to open Code Enforcement">
+                  Code Enforcement
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Community Programs" class="megamenu_level2" data-navid="45" href="https://www.cor.net/departments/community-services/community-programs" target="_self" title="Click to open Community Programs">
+                  Community Programs
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Development Services" class="megamenu_level1" data-navid="1680" href="https://www.cor.net/departments/development-services" target="_self" title="Click to open Development Services">
+                Development Services
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Applications and Forms" class="megamenu_level2" data-navid="1080" href="https://www.cor.net/departments/development-services/applications-and-forms" target="_self" title="Click to open Applications and Forms">
+                  Applications and Forms
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Comprehensive Planning" class="megamenu_level2" data-navid="6014" href="https://www.cor.net/departments/development-services/comprehensive-planning-6014" target="_self" title="Click to open Comprehensive Planning">
+                  Comprehensive Planning
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Regulations and Guidelines" class="megamenu_level2" data-navid="325" href="https://www.cor.net/departments/development-services/regulations-and-guidelines" target="_self" title="Click to open Regulations and Guidelines">
+                  Regulations and Guidelines
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Economic Development" class="megamenu_level1" data-navid="5734" href="https://www.cor.net/departments/economic-development" target="_self" title="Click to open Economic Development">
+                Economic Development
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Office of Emergency Management" class="megamenu_level1" data-navid="294" href="https://www.cor.net/departments/emergency-management" target="_self" title="Office of Emergency Management">
+                Emergency Management
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Disaster Preparedness Passport" class="megamenu_level2" data-navid="5990" href="https://www.cor.net/departments/emergency-management/disaster-preparedness-passport" target="_self" title="Click to open Disaster Preparedness Passport">
+                  Disaster Preparedness Passport
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Facilities and Fleet" class="megamenu_level1" data-navid="5926" href="https://www.cor.net/departments/facilities-and-fleet" target="_self" title="Click to open Facilities and Fleet">
+                Facilities and Fleet
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Finance" class="megamenu_level1" data-navid="528" href="https://www.cor.net/departments/finance" target="_self" title="Click to open Finance">
+                Finance
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Fire Department" class="megamenu_level1" data-navid="166" href="https://www.cor.net/departments/fire-department" target="_self" title="Click to open Fire Department">
+                Fire Department
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open HIPPA Notice of Public Privacy" class="megamenu_level2" data-navid="1608" href="https://www.cor.net/departments/fire-department/about-us/operations/emergency-medical-services/hippa-notice-of-public-privacy" target="_self" title="Click to open HIPPA Notice of Public Privacy">
+                  HIPPA Notice of Public Privacy
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Join The Fire Department" class="megamenu_level2" data-navid="170" href="https://www.cor.net/departments/fire-department/join" target="_self" title="Join The Fire Department">
+                  Join Us
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Outreach &amp; Education" class="megamenu_level2" data-navid="664" href="https://www.cor.net/departments/fire-department/outreach-education" target="_self" title="Click to open Outreach &amp; Education">
+                  Outreach &amp; Education
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Permits &amp; Record Requests" class="megamenu_level2" data-navid="5746" href="https://www.cor.net/departments/fire-department/services" target="_self" title="Click to open Permits &amp; Record Requests">
+                  Permits &amp; Record Requests
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Geographic Information Services" class="megamenu_level1" data-navid="1188" href="https://www.cor.net/departments/geographic-information-services" target="_self" title="Click to open Geographic Information Services">
+                Geographic Information Services
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Health Department" class="megamenu_level1" data-navid="181" href="https://www.cor.net/departments/health-department" target="_self" title="Click to open Health Department">
+                Health Department
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Programs &amp; Events" class="megamenu_level2" data-navid="183" href="https://www.cor.net/departments/health-department/health-news-events" target="_self" title="Click to open Programs &amp; Events">
+                  Programs &amp; Events
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Permits" class="megamenu_level2" data-navid="188" href="https://www.cor.net/departments/health-department/health-permits" target="_self" title="Click to open Permits">
+                  Permits
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Human Resources" class="megamenu_level1" data-navid="196" href="https://www.cor.net/departments/human-resources" target="_self" title="Click to open Human Resources">
+                Human Resources
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Make a Difference" class="megamenu_level2" data-navid="5587" href="https://www.cor.net/departments/human-resources/make-a-difference" target="_self" title="Click to open Make a Difference">
+                  Make a Difference
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Job Openings" class="megamenu_level2" data-navid="197" href="https://www.cor.net/departments/human-resources/job-openings" target="_self" title="Click to open Job Openings">
+                  Job Openings
+                 </a>
+                </li>
+               </ul>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Municipal Court Overview" class="megamenu_level1" data-navid="200" href="https://www.cor.net/departments/municipal-court" target="_self" title="Click to open Municipal Court Overview">
+                Municipal Court Overview
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Attorney" class="megamenu_level2" data-navid="6059" href="https://www.cor.net/departments/municipal-court/attorney" target="_self" title="Click to open Attorney">
+                  Attorney
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Court Docket" class="megamenu_level2" data-navid="6023" href="https://www.cor.net/departments/municipal-court/court-docket" target="_self" title="Click to open Court Docket">
+                  Court Docket
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Compliance &amp; Dismissals" class="megamenu_level2" data-navid="6055" href="https://www.cor.net/departments/municipal-court/dismissals" target="_self" title="Compliance &amp; Dismissals">
+                  Dismissals
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Driving Safety &amp; Deferred Disposition" class="megamenu_level2" data-navid="6028" href="https://www.cor.net/departments/municipal-court/driving-safety-deferred-disposition" target="_self" title="Click to open Driving Safety &amp; Deferred Disposition">
+                  Driving Safety &amp; Deferred Disposition
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Parks &amp; Recreation" class="megamenu_level1" data-navid="15" href="https://www.cor.net/departments/parks-recreation" target="_self" title="Click to open Parks &amp; Recreation">
+                Parks &amp; Recreation
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Aquatics" class="megamenu_level2" data-navid="32" href="https://www.cor.net/departments/parks-recreation/aquatics" target="_self" title="Click to open Aquatics">
+                  Aquatics
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Athletics" class="megamenu_level2" data-navid="33" href="https://www.cor.net/departments/parks-recreation/athletics" target="_self" title="Click to open Athletics">
+                  Athletics
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Community Events" class="megamenu_level2" data-navid="34" href="https://www.cor.net/departments/parks-recreation/community-events" target="_self" title="Click to open Community Events">
+                  Community Events
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Gymnastics Center" class="megamenu_level2" data-navid="38" href="https://www.cor.net/departments/parks-recreation/gymnastics-center" target="_self" title="Click to open Gymnastics Center">
+                  Gymnastics Center
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Miss Belle's House" class="megamenu_level2" data-navid="5973" href="https://www.cor.net/departments/parks-recreation/miss-belle-s-house" target="_self" title="Click to open Miss Belle's House">
+                  Miss Belle's House
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Parks &amp; Trails" class="megamenu_level2" data-navid="39" href="https://www.cor.net/departments/parks-recreation/parks-trails" target="_self" title="Click to open Parks &amp; Trails">
+                  Parks &amp; Trails
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Recreation Centers" class="megamenu_level2" data-navid="40" href="https://www.cor.net/departments/parks-recreation/recreation-centers" target="_self" title="Click to open Recreation Centers">
+                  Recreation Centers
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Richardson Senior Center" class="megamenu_level2" data-navid="41" href="https://www.cor.net/departments/parks-recreation/senior-center" target="_self" title="Richardson Senior Center">
+                  Senior Center
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Huffhines Tennis Center" class="megamenu_level2" data-navid="42" href="https://www.cor.net/departments/parks-recreation/tennis-center" target="_self" title="Huffhines Tennis Center">
+                  Tennis Center
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Police" class="megamenu_level1" data-navid="2550" href="https://www.cor.net/departments/police" target="_self" title="Click to open Police">
+                Police
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Property Tax" class="megamenu_level1" data-navid="213" href="https://www.cor.net/departments/property-tax" target="_self" title="Click to open Property Tax">
+                Property Tax
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Richardson Public Library" class="megamenu_level1" data-navid="18" href="https://www.cor.net/departments/public-library" target="_self" title="Richardson Public Library">
+                Public Library
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Children" class="megamenu_level2" data-navid="26" href="https://www.cor.net/departments/public-library/youth" target="_self" title="Click to open Children">
+                  Children
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Catalog Search" class="megamenu_level2" data-navid="21" href="https://www.cor.net/departments/public-library/catalog-search" rel="noopener" target="_blank" title="Click to open Catalog Search">
+                  Catalog Search
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Event Calendar" class="megamenu_level2" data-navid="23" href="https://www.cor.net/departments/public-library/event-calendar" target="_self" title="Click to open Event Calendar">
+                  Event Calendar
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Richardson Reads One Book" class="megamenu_level2" data-navid="2722" href="https://www.cor.net/departments/public-library/richardson-reads-one-book" target="_self" title="Click to open Richardson Reads One Book">
+                  Richardson Reads One Book
+                 </a>
+                </li>
+               </ul>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Public Services" class="megamenu_level1" data-navid="215" href="https://www.cor.net/departments/public-services" target="_self" title="Click to open Public Services">
+                Public Services
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open 24/7 Response Center" class="megamenu_level2" data-navid="4930" href="https://www.cor.net/departments/public-services/24-7-response-center" target="_self" title="Click to open 24/7 Response Center">
+                  24/7 Response Center
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Streets" class="megamenu_level2" data-navid="224" href="https://www.cor.net/departments/public-services/streets" target="_self" title="Click to open Streets">
+                  Streets
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Trash/Recycling" class="megamenu_level2" data-navid="216" href="https://www.cor.net/departments/public-services/trash-recycling" target="_self" title="Click to open Trash/Recycling">
+                  Trash/Recycling
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Water" class="megamenu_level2" data-navid="225" href="https://www.cor.net/departments/public-services/water" target="_self" title="Click to open Water">
+                  Water
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
                <a aria-label="Click to open Purchasing" class="megamenu_level1" data-navid="231" href="https://www.cor.net/departments/purchasing" target="_self" title="Click to open Purchasing">
                 Purchasing
                </a>
@@ -198,6 +842,50 @@
                 <li class="megamenu_level2">
                  <a aria-label="Doing Business with the City of Richardson" class="megamenu_level2" data-navid="696" href="https://www.cor.net/departments/purchasing/doing-business-with-the-city" target="_self" title="Doing Business with the City of Richardson">
                   Doing Business with the City
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Transportation &amp; Mobility" class="megamenu_level1" data-navid="232" href="https://www.cor.net/departments/transportation-mobility" target="_self" title="Click to open Transportation &amp; Mobility">
+                Transportation &amp; Mobility
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Active Transportation" class="megamenu_level2" data-navid="5600" href="https://www.cor.net/departments/transportation-mobility/active-transportation" target="_self" title="Click to open Active Transportation">
+                  Active Transportation
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Construction Project Status" class="megamenu_level2" data-navid="1571" href="https://www.cor.net/departments/traffic-transportation/construction-project-status" target="_self" title="Click to open Construction Project Status">
+                  Construction Project Status
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Resident Information" class="megamenu_level2" data-navid="942" href="https://www.cor.net/departments/traffic-transportation/resident-information" target="_self" title="Click to open Resident Information">
+                  Resident Information
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="US 75 Tech Lane Project" class="megamenu_level2" data-navid="6086" href="https://www.cor.net/departments/transportation-mobility/us-75-tech-lane" target="_self" title="US 75 Tech Lane Project">
+                  US 75 Tech Lanes
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Water Customer Service" class="megamenu_level1" data-navid="233" href="https://www.cor.net/departments/water-customer-service" target="_self" title="Click to open Water Customer Service">
+                Water Customer Service
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Pay Your Bill" class="megamenu_level2" data-navid="1630" href="https://www.cor.net/departments/water-customer-service/pay-your-bill" target="_self" title="Click to open Pay Your Bill">
+                  Pay Your Bill
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Start New Service" class="megamenu_level2" data-navid="1631" href="https://www.cor.net/departments/water-customer-service/start-new-service" target="_self" title="Click to open Start New Service">
+                  Start New Service
                  </a>
                 </li>
                </ul>
@@ -248,18 +936,94 @@
              </ul>
              <ul class="megamenu_column">
               <li class="megamenu_level1">
+               <a aria-label="Click to open Awards and Achievements" class="megamenu_level1" data-navid="2265" href="https://www.cor.net/government/awards-and-achievements" target="_self" title="Click to open Awards and Achievements">
+                Awards and Achievements
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Boards, Commissions, &amp; Meetings" class="megamenu_level1" data-navid="108" href="https://www.cor.net/government/boards-commissions-meetings" target="_self" title="Click to open Boards, Commissions, &amp; Meetings">
+                Boards, Commissions, &amp; Meetings
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Public Meetings" class="megamenu_level2" data-navid="1316" href="https://www.cor.net/government/boards-commissions-meetings/all-meetings" target="_self" title="Public Meetings">
+                  All Public Meetings
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Budget Information" class="megamenu_level1" data-navid="111" href="https://www.cor.net/government/budget-information" target="_self" title="Click to open Budget Information">
+                Budget Information
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Charter / Code of Ordinances" class="megamenu_level1" data-navid="1547" href="https://www.cor.net/government/charter-code-of-ordinances" rel="noopener" target="_self" title="Click to open Charter / Code of Ordinances">
+                Charter / Code of Ordinances
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Code of Ordinances" class="megamenu_level2" data-navid="2219" href="https://www.cor.net/government/charter-code-of-ordinances/code-of-ordinances" rel="noopener" target="_blank" title="Code of Ordinances">
+                  Code of Ordinances, Minutes, &amp; Resolutions
+                 </a>
+                </li>
+               </ul>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
                <a aria-label="Richardson City Council" class="megamenu_level1" data-navid="112" href="https://www.cor.net/government/city-council" target="_self" title="Richardson City Council">
                 City Council
                </a>
                <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Ceremonial Requests" class="megamenu_level2" data-navid="2007" href="https://www.cor.net/government/city-council/ceremonial-requests" target="_self" title="Click to open Ceremonial Requests">
+                  Ceremonial Requests
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Code of Ethics" class="megamenu_level2" data-navid="115" href="https://www.cor.net/government/city-council/code-of-ethics" rel="noopener" target="_blank" title="Click to open Code of Ethics">
+                  Code of Ethics
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="2025 - 2027 Statement of Goals" class="megamenu_level2" data-navid="1907" href="https://www.cor.net/government/city-council/council-goals" target="_self" title="2025 - 2027 Statement of Goals">
+                  Council Goals
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Meeting Calendar" class="megamenu_level2" data-navid="1262" href="https://www.cor.net/government/city-council/city-council" target="_self" title="Meeting Calendar">
+                  Council Meeting Calendar
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Council Meeting Documents" class="megamenu_level2" data-navid="1583" href="https://www.cor.net/government/city-council/council-meeting-documents" target="_self" title="Click to open Council Meeting Documents">
+                  Council Meeting Documents
+                 </a>
+                </li>
                 <li class="megamenu_level2">
                  <a aria-label="Click to open State of the City Address" class="megamenu_level2" data-navid="1578" href="https://www.cor.net/government/city-council/state-of-the-city-address" target="_self" title="Click to open State of the City Address">
                   State of the City Address
                  </a>
                 </li>
                 <li class="megamenu_level2">
+                 <a aria-label="Click to open Watch Live Council Video" class="megamenu_level2" data-navid="1505" href="https://www.cor.net/government/city-council/watch-live-council-video" target="_self" title="Click to open Watch Live Council Video">
+                  Watch Live Council Video
+                 </a>
+                </li>
+                <li class="megamenu_level2">
                  <a aria-label="Click to open Who are our City Council Members?" class="megamenu_level2" data-navid="114" href="https://www.cor.net/government/city-council/who-are-our-city-council-members" target="_self" title="Click to open Who are our City Council Members?">
                   Who are our City Council Members?
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Meeting Minutes" class="megamenu_level2" data-navid="1534" href="https://www.cor.net/government/city-council/meeting-minutes" rel="noopener" target="_self" title="Click to open Meeting Minutes">
+                  Meeting Minutes
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="2025 City of Richardson Legislative Agenda" class="megamenu_level2" data-navid="5007" href="https://www.cor.net/government/city-council/texas-legislative-session" target="_self" title="2025 City of Richardson Legislative Agenda">
+                  Texas Legislative Session
                  </a>
                 </li>
                </ul>
@@ -275,6 +1039,97 @@
                <a aria-label="Click to open City Secretary" class="megamenu_level1" data-navid="124" href="https://www.cor.net/government/city-secretary" target="_self" title="Click to open City Secretary">
                 City Secretary
                </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Ceremonial Requests" class="megamenu_level2" data-navid="2011" href="https://www.cor.net/government/city-secretary/ceremonial-requests" target="_self" title="Click to open Ceremonial Requests">
+                  Ceremonial Requests
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Alcoholic Beverage Permit" class="megamenu_level2" data-navid="1434" href="https://www.cor.net/government/city-secretary/alcoholic-beverage-permit" target="_self" title="Click to open Alcoholic Beverage Permit">
+                  Alcoholic Beverage Permit
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Claims" class="megamenu_level2" data-navid="1406" href="https://www.cor.net/government/city-secretary/claims" target="_self" title="Click to open Claims">
+                  Claims
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Elections" class="megamenu_level2" data-navid="1423" href="https://www.cor.net/government/city-secretary/elections" target="_self" title="Click to open Elections">
+                  Elections
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Public Information \ Open Records" class="megamenu_level2" data-navid="1404" href="https://www.cor.net/government/city-secretary/public-information-open-records" target="_self" title="Click to open Public Information \ Open Records">
+                  Public Information \ Open Records
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Serving on a Board or Commission" class="megamenu_level2" data-navid="1409" href="https://www.cor.net/government/city-secretary/serving-on-a-board-or-commission" target="_self" title="Click to open Serving on a Board or Commission">
+                  Serving on a Board or Commission
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Richardson CARES" class="megamenu_level1" data-navid="3877" href="https://www.cor.net/government/citizen-s-academy" target="_self" title="Richardson CARES">
+                Citizen's Academy
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Master Plans" class="megamenu_level1" data-navid="6020" href="https://www.cor.net/government/master-plans" target="_self" title="Click to open Master Plans">
+                Master Plans
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Regional, State and Federal Offices" class="megamenu_level1" data-navid="127" href="https://www.cor.net/government/regional-state-and-federal-offices" target="_self" title="Click to open Regional, State and Federal Offices">
+                Regional, State and Federal Offices
+               </a>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Transparency Initiative" class="megamenu_level1" data-navid="2317" href="https://www.cor.net/government/transparency-initiative" target="_self" title="Click to open Transparency Initiative">
+                Transparency Initiative
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Campaign Finance Reports" class="megamenu_level2" data-navid="6007" href="https://www.cor.net/government/transparency-initiative/campaign-finance-reports" target="_self" title="Click to open Campaign Finance Reports">
+                  Campaign Finance Reports
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Contracts and Procurement" class="megamenu_level2" data-navid="5690" href="https://www.cor.net/government/transparency-initiative/contracts-and-procurement" target="_self" title="Click to open Contracts and Procurement">
+                  Contracts and Procurement
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Debt Obligations" class="megamenu_level2" data-navid="2326" href="https://www.cor.net/government/transparency-initiative/debt-obligations" target="_self" title="Debt Obligations">
+                  Debt Obligations
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Economic Development" class="megamenu_level2" data-navid="2349" href="https://www.cor.net/government/transparency-initiative/economic-development" target="_self" title="Click to open Economic Development">
+                  Economic Development
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Open Government and Compliance" class="megamenu_level2" data-navid="6110" href="https://www.cor.net/government/transparency-initiative/open-government-and-compliance" rel="noopener" target="_self" title="Click to open Open Government and Compliance">
+                  Open Government and Compliance
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Public Pension" class="megamenu_level2" data-navid="2324" href="https://www.cor.net/government/transparency-initiative/public-pension" target="_self" title="Click to open Public Pension">
+                  Public Pension
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Traditional Finances" class="megamenu_level2" data-navid="2325" href="https://www.cor.net/government/transparency-initiative/traditional-finances" target="_self" title="Click to open Traditional Finances">
+                  Traditional Finances
+                 </a>
+                </li>
+               </ul>
               </li>
              </ul>
             </div>
@@ -288,8 +1143,54 @@
             <div class="inner_container">
              <ul class="megamenu_column">
               <li class="megamenu_level1">
+               <a aria-label="Click to open Business Crime Watch" class="megamenu_level1" data-navid="1296" href="https://www.cor.net/businesses/business-crime-watch" target="_self" title="Click to open Business Crime Watch">
+                Business Crime Watch
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Chamber of Commerce" class="megamenu_level1" data-navid="821" href="https://www.cor.net/businesses/chamber-of-commerce" rel="noopener" target="_blank" title="Click to open Chamber of Commerce">
+                Chamber of Commerce
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Convention and Visitors Bureau" class="megamenu_level1" data-navid="819" href="https://www.cor.net/businesses/convention-and-visitors-bureau" rel="noopener" target="_blank" title="Click to open Convention and Visitors Bureau">
+                Convention and Visitors Bureau
+               </a>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Corporate Challenge" class="megamenu_level1" data-navid="828" href="https://www.cor.net/businesses/corporate-challenge" rel="noopener" target="_blank" title="Click to open Corporate Challenge">
+                Corporate Challenge
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Hotels" class="megamenu_level1" data-navid="822" href="https://www.cor.net/businesses/hotels" rel="noopener" target="_blank" title="Click to open Hotels">
+                Hotels
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open New Business Guide" class="megamenu_level1" data-navid="2339" href="https://www.cor.net/businesses/new-business-guide" target="_self" title="Click to open New Business Guide">
+                New Business Guide
+               </a>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
                <a aria-label="Click to open Open Bids for City Projects" class="megamenu_level1" data-navid="820" href="https://www.cor.net/businesses/open-bids-for-city-projects" target="_self" title="Click to open Open Bids for City Projects">
                 Open Bids for City Projects
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Restaurants" class="megamenu_level1" data-navid="823" href="https://www.cor.net/businesses/restaurants" rel="noopener" target="_blank" title="Click to open Restaurants">
+                Restaurants
+               </a>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Richardson Economic Development Dept" class="megamenu_level1" data-navid="1789" href="https://www.cor.net/businesses/richardson-economic-development-partnership" rel="noopener" target="_blank" title="Click to open Richardson Economic Development Dept">
+                Richardson Economic Development Dept
                </a>
               </li>
              </ul>
@@ -304,9 +1205,192 @@
             <div class="inner_container">
              <ul class="megamenu_column">
               <li class="megamenu_level1">
+               <a aria-label="Click to open ADA Compliance &amp; Accommodations" class="megamenu_level1" data-navid="6118" href="https://www.cor.net/services/ada-compliance-accommodations" target="_self" title="Click to open ADA Compliance &amp; Accommodations">
+                ADA Compliance &amp; Accommodations
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open ADA Request Form" class="megamenu_level2" data-navid="6119" href="https://www.cor.net/services/ada/ada-request-form" target="_self" title="Click to open ADA Request Form">
+                  ADA Request Form
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open 24/7 Response Center" class="megamenu_level1" data-navid="3909" href="https://www.cor.net/services/24-7-response-center" target="_self" title="Click to open 24/7 Response Center">
+                24/7 Response Center
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Animal Shelter" class="megamenu_level1" data-navid="803" href="https://www.cor.net/services/animal-shelter" target="_self" title="Click to open Animal Shelter">
+                Animal Shelter
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Cultural Partnership Initiative" class="megamenu_level1" data-navid="4939" href="https://www.cor.net/services/cultural-partnership-initiative" target="_self" title="Click to open Cultural Partnership Initiative">
+                Cultural Partnership Initiative
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Micro Macro Mojo" class="megamenu_level2" data-navid="4937" href="https://www.cor.net/services/cultural-partnership-initiative/micro-macro-mojo" target="_self" title="Click to open Micro Macro Mojo">
+                  Micro Macro Mojo
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Public ArtWalk" class="megamenu_level2" data-navid="2473" href="https://www.cor.net/services/cultural-partnership-initiative/public-artwalk" rel="noopener" target="_self" title="Click to open Public ArtWalk">
+                  Public ArtWalk
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label='Click to open "Rocket" Art' class="megamenu_level2" data-navid="4938" href="https://www.cor.net/services/cultural-partnership-initiative/rocket-art" target="_self" title='Click to open "Rocket" Art'>
+                  "Rocket" Art
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
                <a aria-label="Click to open Department Contact List" class="megamenu_level1" data-navid="1687" href="https://www.cor.net/services/department-contact-list" target="_self" title="Click to open Department Contact List">
                 Department Contact List
                </a>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Eisemann Center" class="megamenu_level1" data-navid="1651" href="https://www.cor.net/services/eisemann-center" target="_self" title="Click to open Eisemann Center">
+                Eisemann Center
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Environmental Partnership Initiative" class="megamenu_level1" data-navid="2329" href="https://www.cor.net/services/environmental-partnership-initiatives" target="_self" title="Environmental Partnership Initiative">
+                Environmental Partnership Initiatives
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Richardson Plants" class="megamenu_level2" data-navid="2331" href="https://www.cor.net/services/environmental-partnership-initiatives/richardson-plants" target="_self" title="Click to open Richardson Plants">
+                  Richardson Plants
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Richardson Conserves" class="megamenu_level2" data-navid="2332" href="https://www.cor.net/services/environmental-partnership-initiatives/richardson-conserves" target="_self" title="Click to open Richardson Conserves">
+                  Richardson Conserves
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Richardson Informs" class="megamenu_level2" data-navid="2333" href="https://www.cor.net/services/environmental-partnership-initiatives/richardson-informs" target="_self" title="Click to open Richardson Informs">
+                  Richardson Informs
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Fire" class="megamenu_level1" data-navid="804" href="https://www.cor.net/services/fire" target="_self" title="Click to open Fire">
+                Fire
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Police" class="megamenu_level1" data-navid="816" href="https://www.cor.net/services/police" target="_self" title="Click to open Police">
+                Police
+               </a>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Recreation Facilities" class="megamenu_level1" data-navid="802" href="https://www.cor.net/services/recreation-facilities" target="_self" title="Click to open Recreation Facilities">
+                Recreation Facilities
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Gymnastics Center" class="megamenu_level2" data-navid="1749" href="https://www.cor.net/services/recreation-facilities/gymnastics-center" target="_self" title="Click to open Gymnastics Center">
+                  Gymnastics Center
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Hike and Bike Trails" class="megamenu_level2" data-navid="811" href="https://www.cor.net/services/recreation-facilities/hike-and-bike-trails" target="_self" title="Click to open Hike and Bike Trails">
+                  Hike and Bike Trails
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Public Parks" class="megamenu_level2" data-navid="812" href="https://www.cor.net/services/recreation-facilities/public-parks" target="_self" title="Click to open Public Parks">
+                  Public Parks
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Recreation Centers" class="megamenu_level2" data-navid="813" href="https://www.cor.net/services/recreation-facilities/recreation-centers" target="_self" title="Click to open Recreation Centers">
+                  Recreation Centers
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Sherrill Park Golf Course" class="megamenu_level2" data-navid="996" href="https://www.cor.net/services/recreation-facilities/sherrill-park-golf-course" rel="noopener" target="_blank" title="Click to open Sherrill Park Golf Course">
+                  Sherrill Park Golf Course
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Swimming Pools" class="megamenu_level2" data-navid="814" href="https://www.cor.net/services/recreation-facilities/swimming-pools" target="_self" title="Click to open Swimming Pools">
+                  Swimming Pools
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Tennis Courts" class="megamenu_level2" data-navid="815" href="https://www.cor.net/services/recreation-facilities/tennis-courts" target="_self" title="Click to open Tennis Courts">
+                  Tennis Courts
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Recycling" class="megamenu_level1" data-navid="806" href="https://www.cor.net/services/recycling" target="_self" title="Click to open Recycling">
+                Recycling
+               </a>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Transportation" class="megamenu_level1" data-navid="801" href="https://www.cor.net/services/transportation" target="_self" title="Click to open Transportation">
+                Transportation
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open DART" class="megamenu_level2" data-navid="808" href="https://www.cor.net/services/transportation/dart" target="_self" title="Click to open DART">
+                  DART
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Hike and Bike Trails" class="megamenu_level2" data-navid="809" href="https://www.cor.net/services/transportation/hike-and-bike-trails" target="_self" title="Click to open Hike and Bike Trails">
+                  Hike and Bike Trails
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open NTTA" class="megamenu_level2" data-navid="810" href="https://www.cor.net/services/transportation/ntta" target="_self" title="Click to open NTTA">
+                  NTTA
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Trash Pickup" class="megamenu_level1" data-navid="807" href="https://www.cor.net/services/trash-pickup" target="_self" title="Click to open Trash Pickup">
+                Trash Pickup
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Water Customer Service" class="megamenu_level1" data-navid="805" href="https://www.cor.net/services/water-customer-service" target="_self" title="Click to open Water Customer Service">
+                Water Customer Service
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Senior Services" class="megamenu_level1" data-navid="5556" href="https://www.cor.net/services/senior-services" target="_self" title="Click to open Senior Services">
+                Senior Services
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Veteran Services" class="megamenu_level1" data-navid="5558" href="https://www.cor.net/services/veteran-services" target="_self" title="Click to open Veteran Services">
+                Veteran Services
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Veterans Partnership Initiative" class="megamenu_level2" data-navid="5225" href="https://www.cor.net/our-city/veteran-s-partnership-initiative" target="_self" title="Click to open Veterans Partnership Initiative">
+                  Veterans Partnership Initiative
+                 </a>
+                </li>
+               </ul>
               </li>
              </ul>
             </div>
@@ -320,13 +1404,149 @@
             <div class="inner_container">
              <ul class="megamenu_column">
               <li class="megamenu_level1">
+               <a aria-label="Click to open Adopt an Animal" class="megamenu_level1" data-navid="840" href="https://www.cor.net/i-want-to/adopt-an-animal" target="_self" title="Click to open Adopt an Animal">
+                Adopt an Animal
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Apply for a..." class="megamenu_level1" data-navid="841" href="https://www.cor.net/i-want-to/apply-for-a" target="_self" title="Click to open Apply for a...">
+                Apply for a...
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Alarm Permit" class="megamenu_level2" data-navid="842" href="https://www.cor.net/i-want-to/apply-for-a/alarm-permit" rel="noopener" target="_blank" title="Click to open Alarm Permit">
+                  Alarm Permit
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Driver's License" class="megamenu_level2" data-navid="5223" href="https://www.cor.net/i-want-to/apply-for-a/driver-s-license" rel="noopener" target="_blank" title="Click to open Driver's License">
+                  Driver's License
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Event Permit" class="megamenu_level2" data-navid="2282" href="https://www.cor.net/i-want-to/apply-for-a/event-permit" target="_self" title="Click to open Event Permit">
+                  Event Permit
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Garage Sale Permit" class="megamenu_level2" data-navid="1442" href="https://www.cor.net/i-want-to/apply-for-a/garage-sale-permit" target="_self" title="Click to open Garage Sale Permit">
+                  Garage Sale Permit
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Health Permit Applications" class="megamenu_level2" data-navid="1311" href="https://www.cor.net/i-want-to/apply-for-a/health-permit" target="_self" title="Health Permit Applications">
+                  Health Permit
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Apply for a Job with the City" class="megamenu_level2" data-navid="1313" href="https://www.cor.net/i-want-to/apply-for-a/job-with-the-city" rel="noopener" target="_blank" title="Apply for a Job with the City">
+                  Job with the City
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Pet Microchipping" class="megamenu_level2" data-navid="844" href="https://www.cor.net/i-want-to/apply-for-a/pet-microchipping" target="_self" title="Click to open Pet Microchipping">
+                  Pet Microchipping
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Solicitation Permit Application" class="megamenu_level2" data-navid="1297" href="https://www.cor.net/i-want-to/apply-for-a/solicitation-permit" target="_self" title="Solicitation Permit Application">
+                  Solicitation Permit
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Forms and Applications" class="megamenu_level1" data-navid="5349" href="https://www.cor.net/i-want-to/commonly-used-forms-and-applications" target="_self" title="Forms and Applications">
+                Commonly Used Forms and Applications
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Contact" class="megamenu_level1" data-navid="6127" href="https://www.cor.net/i-want-to/city-contacts" target="_self" title="Click to open Contact">
+                Contact
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Philanthropic Opportunities" class="megamenu_level1" data-navid="2672" href="https://www.cor.net/i-want-to/philanthropic-opportunities" target="_self" title="Philanthropic Opportunities">
+                Donate / Give
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Sponsorship Opportunities" class="megamenu_level1" data-navid="6097" href="https://www.cor.net/i-want-to/sponsor" target="_self" title="Sponsorship Opportunities">
+                Sponsor
+               </a>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Online Services" class="megamenu_level1" data-navid="1197" href="https://www.cor.net/i-want-to/online-services" target="_self" title="Click to open Online Services">
+                Online Services
+               </a>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Pay Online" class="megamenu_level1" data-navid="850" href="https://www.cor.net/i-want-to/pay-online" target="_self" title="Click to open Pay Online">
+                Pay Online
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Alarm Permit" class="megamenu_level2" data-navid="1299" href="https://www.cor.net/i-want-to/pay-online/alarm-permit" rel="noopener" target="_blank" title="Click to open Alarm Permit">
+                  Alarm Permit
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Fine/Citation" class="megamenu_level2" data-navid="851" href="https://www.cor.net/i-want-to/pay-online/fine-citation" target="_self" title="Click to open Fine/Citation">
+                  Fine/Citation
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Pet Registration" class="megamenu_level2" data-navid="1295" href="https://www.cor.net/i-want-to/pay-online/pet-registration" target="_self" title="Click to open Pet Registration">
+                  Pet Registration
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Property Tax" class="megamenu_level2" data-navid="852" href="https://www.cor.net/i-want-to/pay-online/property-tax" target="_self" title="Click to open Property Tax">
+                  Property Tax
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Utility Bill" class="megamenu_level2" data-navid="853" href="https://www.cor.net/i-want-to/pay-online/utility-bill" target="_self" title="Click to open Utility Bill">
+                  Utility Bill
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
                <a aria-label="Click to open Read" class="megamenu_level1" data-navid="1618" href="https://www.cor.net/i-want-to/read" target="_self" title="Click to open Read">
                 Read
                </a>
                <ul class="megamenu_level1">
                 <li class="megamenu_level2">
+                 <a aria-label="Click to open Library" class="megamenu_level2" data-navid="2330" href="https://www.cor.net/i-want-to/read/library" target="_self" title="Click to open Library">
+                  Library
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Parks and Recreation Guide" class="megamenu_level2" data-navid="1620" href="https://www.cor.net/i-want-to/read/parks-and-recreation-guide" target="_self" title="Click to open Parks and Recreation Guide">
+                  Parks and Recreation Guide
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Press Releases" class="megamenu_level2" data-navid="1621" href="https://www.cor.net/i-want-to/read/press-releases" target="_self" title="Click to open Press Releases">
+                  Press Releases
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Richardson Today Online" class="megamenu_level2" data-navid="1622" href="https://www.cor.net/i-want-to/read/richardson-today-online" target="_self" title="Click to open Richardson Today Online">
+                  Richardson Today Online
+                 </a>
+                </li>
+                <li class="megamenu_level2">
                  <a aria-label="Click to open Week in Review" class="megamenu_level2" data-navid="1623" href="https://www.cor.net/i-want-to/read/week-in-review" target="_self" title="Click to open Week in Review">
                   Week in Review
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Things to Do" class="megamenu_level2" data-navid="5603" href="https://www.cor.net/i-want-to/read/things-to-do" target="_self" title="Click to open Things to Do">
+                  Things to Do
                  </a>
                 </li>
                </ul>
@@ -337,8 +1557,173 @@
                </a>
                <ul class="megamenu_level1">
                 <li class="megamenu_level2">
+                 <a aria-label="Click to open Crime Tip" class="megamenu_level2" data-navid="5301" href="https://www.cor.net/i-want-to/report/crime-tip" target="_self" title="Click to open Crime Tip">
+                  Crime Tip
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Express A Concern" class="megamenu_level2" data-navid="1504" href="https://www.cor.net/i-want-to/express-a-concern" target="_self" title="Express A Concern">
+                  Concern
+                 </a>
+                </li>
+                <li class="megamenu_level2">
                  <a aria-label="Click to open MyRichardson App" class="megamenu_level2" data-navid="1688" href="https://www.cor.net/i-want-to/report-an-issue-online/myrichardson-app" target="_self" title="Click to open MyRichardson App">
                   MyRichardson App
+                 </a>
+                </li>
+               </ul>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Sign-up" class="megamenu_level1" data-navid="869" href="https://www.cor.net/i-want-to/sign-up" target="_self" title="Click to open Sign-up">
+                Sign-up
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Week In Review" class="megamenu_level2" data-navid="870" href="https://www.cor.net/i-want-to/sign-up/city-news-and-notifications-week-in-review" target="_self" title="Week In Review">
+                  City News and Notifications (Week In Review)
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Crime Stats Weekly E-Mail" class="megamenu_level2" data-navid="1328" href="https://www.cor.net/i-want-to/sign-up/crime-stats-weekly-e-mail" rel="noopener" target="_blank" title="Crime Stats Weekly E-Mail">
+                  Community Crime Map
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Emergency Notification System" class="megamenu_level2" data-navid="1928" href="https://www.cor.net/i-want-to/sign-up/emergency-notification-system" target="_self" title="Click to open Emergency Notification System">
+                  Emergency Notification System
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open House Watch Form" class="megamenu_level2" data-navid="1538" href="https://www.cor.net/i-want-to/sign-up/house-watch-form" target="_self" title="Click to open House Watch Form">
+                  House Watch Form
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Parks &amp; Recreation Classes" class="megamenu_level2" data-navid="871" href="https://www.cor.net/i-want-to/sign-up/parks-recreation-classes" target="_self" title="Click to open Parks &amp; Recreation Classes">
+                  Parks &amp; Recreation Classes
+                 </a>
+                </li>
+               </ul>
+              </li>
+              <li class="megamenu_level1">
+               <a aria-label="Click to open View" class="megamenu_level1" data-navid="859" href="https://www.cor.net/i-want-to/view" target="_self" title="Click to open View">
+                View
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Agendas, Notices &amp; Actions" class="megamenu_level2" data-navid="861" href="https://www.cor.net/i-want-to/view/agendas-notices-actions" target="_self" title="Click to open Agendas, Notices &amp; Actions">
+                  Agendas, Notices &amp; Actions
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open ArtWalk Map" class="megamenu_level2" data-navid="2426" href="https://www.cor.net/i-want-to/view/artwalk-map" target="_self" title="Click to open ArtWalk Map">
+                  ArtWalk Map
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open City Holidays" class="megamenu_level2" data-navid="5006" href="https://www.cor.net/i-want-to/view/city-holidays" target="_self" title="Click to open City Holidays">
+                  City Holidays
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open CITV Video On Demand" class="megamenu_level2" data-navid="1532" href="https://www.cor.net/i-want-to/view/citv-video-on-demand" target="_parent" title="Click to open CITV Video On Demand">
+                  CITV Video On Demand
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Crime Stats" class="megamenu_level2" data-navid="1287" href="https://www.cor.net/i-want-to/view/crime-stats" target="_self" title="Click to open Crime Stats">
+                  Crime Stats
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Garbage Schedule" class="megamenu_level2" data-navid="862" href="https://www.cor.net/i-want-to/view/garbage-schedule" target="_self" title="Click to open Garbage Schedule">
+                  Garbage Schedule
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Municipal Code" class="megamenu_level2" data-navid="864" href="https://www.cor.net/i-want-to/view/municipal-code" target="_self" title="Click to open Municipal Code">
+                  Municipal Code
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open News Releases" class="megamenu_level2" data-navid="863" href="https://www.cor.net/i-want-to/view/news-releases" target="_self" title="Click to open News Releases">
+                  News Releases
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Projects (Construction, Road, Etc.)" class="megamenu_level2" data-navid="2296" href="https://www.cor.net/i-want-to/view/projects-construction-road-etc" rel="noopener" target="_blank" title="Click to open Projects (Construction, Road, Etc.)">
+                  Projects (Construction, Road, Etc.)
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Richardson Cultural Arts" class="megamenu_level2" data-navid="1986" href="https://www.cor.net/i-want-to/view/richardson-cultural-arts" target="_self" title="Click to open Richardson Cultural Arts">
+                  Richardson Cultural Arts
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Social Media Accounts" class="megamenu_level2" data-navid="3832" href="https://www.cor.net/i-want-to/view/social-media-accounts" target="_self" title="Click to open Social Media Accounts">
+                  Social Media Accounts
+                 </a>
+                </li>
+               </ul>
+              </li>
+             </ul>
+             <ul class="megamenu_column">
+              <li class="megamenu_level1">
+               <a aria-label="Click to open Volunteer" class="megamenu_level1" data-navid="865" href="https://www.cor.net/i-want-to/volunteer" target="_self" title="Click to open Volunteer">
+                Volunteer
+               </a>
+               <ul class="megamenu_level1">
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Animal Shelter" class="megamenu_level2" data-navid="1294" href="https://www.cor.net/i-want-to/volunteer/animal-shelter" target="_self" title="Click to open Animal Shelter">
+                  Animal Shelter
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Boards and Commissions" class="megamenu_level2" data-navid="1555" href="https://www.cor.net/i-want-to/volunteer/boards-and-commissions" target="_self" title="Click to open Boards and Commissions">
+                  Boards and Commissions
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Community Services" class="megamenu_level2" data-navid="1556" href="https://www.cor.net/i-want-to/volunteer/community-services" target="_self" title="Click to open Community Services">
+                  Community Services
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Cottonwood Art Festival" class="megamenu_level2" data-navid="2466" href="https://www.cor.net/i-want-to/volunteer/cottonwood-art-festival" rel="noopener" target="_blank" title="Click to open Cottonwood Art Festival">
+                  Cottonwood Art Festival
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Eisemann Center" class="megamenu_level2" data-navid="867" href="https://www.cor.net/i-want-to/volunteer/eisemann-center" rel="noopener" target="_blank" title="Click to open Eisemann Center">
+                  Eisemann Center
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Environmental Partnership Initiative" class="megamenu_level2" data-navid="3852" href="https://www.cor.net/i-want-to/volunteer/environmental-partnership-initiative" target="_self" title="Click to open Environmental Partnership Initiative">
+                  Environmental Partnership Initiative
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Library" class="megamenu_level2" data-navid="866" href="https://www.cor.net/i-want-to/volunteer/library" target="_self" title="Click to open Library">
+                  Library
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Police Department" class="megamenu_level2" data-navid="1286" href="https://www.cor.net/i-want-to/volunteer/police-department" rel="noopener" target="_blank" title="Click to open Police Department">
+                  Police Department
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Santa's Village" class="megamenu_level2" data-navid="2467" href="https://www.cor.net/i-want-to/volunteer/santa-s-village" target="_self" title="Click to open Santa's Village">
+                  Santa's Village
+                 </a>
+                </li>
+                <li class="megamenu_level2">
+                 <a aria-label="Click to open Wildflower Festival" class="megamenu_level2" data-navid="868" href="https://www.cor.net/i-want-to/volunteer/wildflower-festival" rel="noopener" target="_blank" title="Click to open Wildflower Festival">
+                  Wildflower Festival
                  </a>
                 </li>
                </ul>
@@ -526,14 +1911,54 @@
            -
           </a>
           <ul>
+           <li>
+            <a aria-label="Ceremonial Requests" href="https://www.cor.net/government/city-council/ceremonial-requests" target="_self">
+             Ceremonial Requests
+            </a>
+           </li>
+           <li>
+            <a aria-label="Code of Ethics" href="https://www.cor.net/government/city-council/code-of-ethics" target="_blank">
+             Code of Ethics
+            </a>
+           </li>
+           <li>
+            <a aria-label="Council Goals" href="https://www.cor.net/government/city-council/council-goals" target="_self">
+             Council Goals
+            </a>
+           </li>
+           <li>
+            <a aria-label="Council Meeting Calendar" href="https://www.cor.net/government/city-council/city-council" target="_self">
+             Council Meeting Calendar
+            </a>
+           </li>
+           <li>
+            <a aria-label="Council Meeting Documents" href="https://www.cor.net/government/city-council/council-meeting-documents" target="_self">
+             Council Meeting Documents
+            </a>
+           </li>
            <li class="sidenav_haschildren">
             <a aria-label="State of the City Address" href="https://www.cor.net/government/city-council/state-of-the-city-address" target="_self">
              State of the City Address
             </a>
            </li>
+           <li>
+            <a aria-label="Watch Live Council Video" href="https://www.cor.net/government/city-council/watch-live-council-video" target="_self">
+             Watch Live Council Video
+            </a>
+           </li>
            <li class="sidenav_haschildren">
             <a aria-label="Who are our City Council Members?" href="https://www.cor.net/government/city-council/who-are-our-city-council-members" target="_self">
              Who are our City Council Members?
+            </a>
+           </li>
+           <li>
+            <a aria-label="Meeting Minutes" href="https://www.cor.net/government/city-council/meeting-minutes" target="_self">
+             Meeting Minutes
+            </a>
+           </li>
+           <li class="sidenav_haschildren">
+            <a aria-label="Texas Legislative Session" href="https://www.cor.net/government/city-council/texas-legislative-session" target="_self">
+             Texas Legislative Session
             </a>
            </li>
           </ul>
@@ -599,14 +2024,20 @@
       <div class="column right_col">
        <div class="column banner_col clearfix" id="ColumnUserControl3">
         <!--!!WidgetStart, vi-orderdata="3"  vi-hideonmobile="false" vi-widgetinstancedata="609"WidgetStart!!-->
-        <img alt="2025" class="img_item" src="https://www.cor.net/home/showpublishedimage/46326/638913035681730000"/>
+        <div class="image_widget" id="widget_609_5425_490" tabindex="0">
+         <a href="javascript:void(0);" target="_self" title="Rotate Image has no Title">
+          <img alt="2025" class="img_item" src="https://www.cor.net/home/showpublishedimage/46326/638913035681730000"/>
+         </a>
+        </div>
         <!--!!WidgetEnd-->
         <!--!!WidgetStart, vi-orderdata="4"  vi-hideonmobile="false" vi-widgetinstancedata="605"WidgetStart!!-->
         <header class="title_widget clearfix" id="widget_605_0_490">
          <!--stopindex-->
-         <a href="https://www.cor.net/government">
-          Government
-         </a>
+         <p class="breadcrumb">
+          <a href="https://www.cor.net/government">
+           Government
+          </a>
+         </p>
          <!--startindex-->
          <h1 class="titlewidget-title">
           <span>
@@ -614,6 +2045,59 @@
           </span>
          </h1>
          <!--stopindex-->
+         <div class="title_right">
+          <div class="title_row">
+           <div class="font_size">
+            <a class="text_size" href="javascript:void(0);" title="default font size">
+             Font Size:
+            </a>
+            <a class="font_larger" href="javascript:void(0);" title="larger font size">
+             +
+            </a>
+            <a class="font_smaller" href="javascript:void(0);" title="smaller font size">
+             -
+            </a>
+           </div>
+           <div id="share">
+            <a aria-expanded="false" aria-haspopup="true" aria-labelledby="share-desciption" class="sharelink" href="javascript:void(0);" title="Click to expand Share &amp; Bookmark options">
+             Share &amp; Bookmark
+            </a>
+            <ul class="no_external_url_indication">
+             <li>
+              <a class="shareemail send_share_email" href="javascript:void(0);" title="Click to submit an email online">
+               Email
+              </a>
+             </li>
+             <li>
+              <a class="sharefacebook" href="javascript:shareLink('facebook')" title="Click to share with Facebook">
+               Facebook
+              </a>
+             </li>
+             <li>
+              <a class="sharelinkedin" href="javascript:shareLink('linkedin')" title="Click to share with LinkedIn">
+               LinkedIn
+              </a>
+             </li>
+             <li>
+              <a class="sharetwitter" href="javascript:shareLink('twitter')" title="Click to share with Twitter">
+               Twitter
+              </a>
+             </li>
+             <li>
+              <a class="sharereddit" href="javascript:shareLink('reddit')" title="Click to share with Reddit">
+               Reddit
+              </a>
+             </li>
+            </ul>
+           </div>
+           <a class="thickbox feedback_link" href="javascript:void(0);" title="Click to submit an email to feedback">
+            Feedback
+           </a>
+           <a class="printer_friendly" href="javascript:window.print();" title="Click to print this page">
+            Print
+           </a>
+          </div>
+         </div>
          <!--startindex-->
         </header>
         <script type="text/javascript">
@@ -1078,6 +2562,11 @@
         <div class="content_area normal_content_area clearfix" id="widget_3365_10631_490">
          <div class="cardGrid1" style="text-align: left;">
           <a href="https://feedback.cor.gov/s/Public-Meeting-Comment-Form/tt-QWnVy" tabindex="-1" target="_blank">
+           <div class="card1">
+            Submit Public
+            <br/>
+            Comment Form
+           </div>
           </a>
           <a href="https://www.cor.net/home/showpublisheddocument/44858/638984726788930000" rel="noopener" tabindex="-1" target="_blank">
            <div class="card2">
@@ -1094,15 +2583,19 @@
         <div class="content_area normal_content_area clearfix" id="widget_608_5423_490">
          <a href="https://www.cor.net/government/city-council/who-are-our-city-council-members">
           Council Members
+          <br/>
          </a>
          <a href="https://www.cor.net/government/city-council/council-meeting-documents">
           Meetings and Agendas
+          <br/>
          </a>
          <a href="https://www.cor.net/departments/communications/citizens-information-television">
           Watch Meeting Live
+          <br/>
          </a>
          <a href="http://richardsontx.swagit.com/city-council" target="_blank">
           On-Demand Video
+          <br/>
          </a>
          <a href="https://www.cor.net/government/city-council/state-of-the-city-address">
           State of the City Address
@@ -1182,6 +2675,14 @@
         <!--!!WidgetStart, vi-orderdata="9"  vi-hideonmobile="false" vi-widgetinstancedata="611"WidgetStart!!-->
         <div aria-label="eNotification" class="eNotification_widget content_area clearfix front_end_form_container" role="region">
          <div class="signup_view">
+          <div class="tag_div">
+           |
+           <span>
+            <a href="https://www.cor.net/government/city-council/-selectview-1">
+             Change eNotification Preferences
+            </a>
+           </span>
+          </div>
           <div class="front_end_form_container">
            <form action="/Home/Components/ENotification/ENotification/Subscribe" class="front_end_form ng-pristine ng-valid" id="signup_form" loadingcontainer="body" method="post" need-ajax-submit="true" need-write-proxy="true" needloading="true" novalidate="novalidate" posteles="input[type='text'],input[type='checkbox'],input[type='hidden']" write-proxy=".enotification_recaptcha_field">
             <div>
@@ -1214,6 +2715,15 @@
                 </ol>
                </fieldset>
               </div>
+             </div>
+             <div class="subscribe_all">
+              <ol class="FX466SSB6BLU00 enotification_cats_list formlist">
+               <li aria-checked="false" class="emaill_all" role="checkbox" tabindex="0">
+                <a aria-hidden="true" class="email_all_btn" href="javascript:void(0);" tabindex="-1">
+                 Subscribe to All Emails
+                </a>
+               </li>
+              </ol>
              </div>
             </div>
            </form>
@@ -1280,36 +2790,59 @@
           View Richardson Projects
          </a>
          <a href="https://www.cor.net/departments/capital-projects-engineering/public-project-input/capital-project-tracker-map" target="_blank">
+          <br/>
          </a>
-         <a href="https://www.cor.net/departments/community-services/code-enforcement/express-a-concern" target="_blank">
-          Report an Issue
-         </a>
+         <p>
+          <a href="https://www.cor.net/departments/community-services/code-enforcement/express-a-concern" target="_blank">
+           Report an Issue
+          </a>
+         </p>
         </div>
        </div>
        <!--startindex-->
        <!--stopindex-->
-       <img alt="" src="https://www.cor.net/home/showpublishedimage/17259/636468752454200000"/>
-       <img alt="" src="https://www.cor.net/home/showpublishedimage/17261/638260480152170000"/>
-       <a href="https://granicus.com/government-website-design?utm_source=customer&amp;utm_medium=footer&amp;utm_campaign=govAccesswebsite">
-        Website Design by Granicus
-       </a>
+       <div class="social_icons">
+        <a href="https://www.cor.net/our-city/system-pages-do-not-delete/follow-us" target="_self" title="Facebook">
+         <img alt="" src="https://www.cor.net/home/showpublishedimage/17259/636468752454200000"/>
+        </a>
+        <a href="mailto:askrichardson@cor.net" target="_self" title="Email">
+         <img alt="" src="https://www.cor.net/home/showpublishedimage/17261/638260480152170000"/>
+        </a>
+       </div>
+       <p class="footer_copyright">
+        <a href="https://granicus.com/government-website-design?utm_source=customer&amp;utm_medium=footer&amp;utm_campaign=govAccesswebsite">
+         Website Design by Granicus
+        </a>
+        - Connecting People and Government
+       </p>
        <!--startindex-->
        <!--stopindex-->
        <div class="footer_contact">
-        <a href="tel:9727440908">
-         972-744-0908
-        </a>
-        <a href="mailto:ADACoordinator@cor.gov">
-         ADACoordinator@cor.gov
-        </a>
-        <a href="http://www.cor.net/services/ada-compliance-accommodations" target="_blank">
-         www.cor.net/ADA
-        </a>
+        <p>
+         Accommodations for Persons with Disabilities call Lindsay Turman,
+         <a href="tel:9727440908">
+          972-744-0908
+         </a>
+         or
+         <a href="mailto:ADACoordinator@cor.gov">
+          ADACoordinator@cor.gov
+         </a>
+         Visit
+         <a href="http://www.cor.net/services/ada-compliance-accommodations" target="_blank">
+          www.cor.net/ADA
+         </a>
+         for more information.
+        </p>
        </div>
        <!--startindex-->
       </div>
       <!--startindex-->
      </footer>
+     <div id="view-options">
+      <a class="mobile_only fullsite" href="javascript:void(0);" id="view-full" onclick="viewfullsite()">
+       View Full Site
+      </a>
+     </div>
     </div>
    </div>
    <script>

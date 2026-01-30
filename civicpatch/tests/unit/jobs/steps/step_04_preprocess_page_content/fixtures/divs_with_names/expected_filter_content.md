@@ -2,14 +2,26 @@ City Council & Mayor | Pflugerville, TX - Official Website
 
 
 [Skip to Main Content](https://www.pflugervilletx.gov/178/City-Council-Mayor?contentid=b8ea2c0e-29c1-496f-ae7e-5ef4d3047441#cc5f8c90dc-b4cb-431b-90ee-10648f8df655)
-![Pflugerville TX Homepage](//content.civicplus.com/api/assets/93ff0e2f-eeaa-42c9-b9bf-834ee145bded?cache=1800)
 
+[![Pflugerville TX Homepage](//content.civicplus.com/api/assets/93ff0e2f-eeaa-42c9-b9bf-834ee145bded?cache=1800)](https://www.pflugervilletx.gov/)
+Type 3 or more characters to see suggestions
+Use up/down arrow keys to navigate suggestions, Enter to select, Esc to close.
+
+* [Residents](https://www.pflugervilletx.gov/156/Residents)
+* [Businesses](https://www.pflugervilletx.gov/35/Businesses)
+* [Visitors](https://www.pflugervilletx.gov/31/Visitors)
+* [Online Services](https://www.pflugervilletx.gov/101/Online-Services)
+* [Government](https://www.pflugervilletx.gov/27/Government)
+
+Opens in a new window
 
 ![](https://content.civicplus.com/api/assets/f7c8cd7a-0c4a-4144-85ee-d017907b6ee8?cache=1800&width=1650&mode=min)
 
 
 
-1. City Council & Mayor
+1. [Home](https://www.pflugervilletx.gov/)
+2. [Government](https://www.pflugervilletx.gov/27/Government)
+3. City Council & Mayor
 
 City Council & Mayor
 ====================
@@ -17,6 +29,7 @@ City Council & Mayor
 [January 27, 2026 Council Packet](https://content.civicplus.com/api/assets/a0fca277-97df-40ed-a9b5-ad05da31a486)
 
 [View Most Recent Agendas and Minutes](https://www.pflugervilletx.gov/asset/5aa5b5f4-7b9f-41ee-967b-c5e8ef41a93d)
+
 [![Doug_Weiss.jpg](https://content.civicplus.com/api/assets/bc997abe-a486-4549-b138-d2b82203488d?cache=1800)](https://www.pflugervilletx.gov/178/City-Council-Mayor?contentid=b8ea2c0e-29c1-496f-ae7e-5ef4d3047441&contentId=b8ea2c0e-29c1-496f-ae7e-5ef4d3047441)
 
 [Doug
@@ -129,14 +142,14 @@ Address
 [Link to Map](https://www.google.com/maps/search/?api=1&query=30.4512585,-97.6073893)
 Mailing Address
 
-P.O. Box 589
-Pflugerville, TX 78691-0589
-
-
 
 * [Email Us (Online Form)](//pflugervilletx-city-manager.form.transform.civicplus.com/45145)
+* [Campaign Finance Reports](https://www.pflugervilletx.gov/179/Campaign-Finance-Reports)
 * [City Council Agendas & Minutes](//pflugerville.legistar.com/Calendar.aspx)
+* [Fire & EMS Assessments](https://www.pflugervilletx.gov/186/Fire-EMS-Assessments)
+* [Our Legislative Agenda](https://www.pflugervilletx.gov/191/Our-Legislative-Agenda)
 * [State of the City](https://www.pflugervilletx.gov/193/State-of-the-City)
+* [Quick Links](https://www.pflugervilletx.gov/205/Quick-Links)
 [Pay Online](https://www.pflugervilletx.gov/178/City-Council-Mayor?contentid=b8ea2c0e-29c1-496f-ae7e-5ef4d3047441#)
 
 
@@ -174,9 +187,35 @@ Phone:
 [512-990-6100](tel:512-990-6100)
 
 1. [About Pflugerville City Government](https://www.pflugervilletx.gov/677/About-Pflugerville-City-Government)
+2. [Tax Rate](https://www.pflugervilletx.gov/281/Tax-Rates)
+3. [Schools](https://www.pflugervilletx.gov/687/Schools---PfISD)
+4. [Frequently Asked Questions](https://www.pflugervilletx.gov/675/Frequently-Asked-Questions)
+5. [Pflugerville Public Access Television](https://www.pflugervilletx.gov/188/PfTV)
+6. [Jobs](https://www.governmentjobs.com/careers/pflugerville?sort=PositionTitle%7CAscending&page=1)
 
+1. [Home](https://www.pflugervilletx.gov/)
+2. [Accessibility](https://www.pflugervilletx.gov/850/Accessibility)
+3. [Copyright Notices](https://www.pflugervilletx.gov/851/Copyright-Notices)
+4. [Site Map](https://www.pflugervilletx.gov/sitemap)
+5. [Privacy Policy](https://www.pflugervilletx.gov/124/Privacy-Policy)
+6. [Explore Pflugerville](https://explorepf.com/)
 Government Websites by
 [CivicPlus®](//connect.civicplus.com/referral)
+
+
+Batak Karo
+
+Batak Simalungun
+
+Batak Toba
+
+Hakha Chin
+
+Scots Gaelic
+
+Tok Pisin
+
+Yucatec Maya
 Powered by
 [![Google Translate](https://www.gstatic.com/images/branding/googlelogo/1x/googlelogo_color_42x16dp.png)
 Translate](https://translate.google.com)
@@ -192,3 +231,13 @@ Word Download
 Excel Download
 PowerPoint Download
 Document Download
+
+
+
+
+
+
+
+
+
+close carousel

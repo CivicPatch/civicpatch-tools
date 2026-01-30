@@ -6,14 +6,44 @@ City of Dublin - City Council
 [![logo](https://www.ci.dublin.tx.us/api/blob/viewBlob?i=Hd%252Bk3YPs3UmleGFpQtGuX0ZrODDGToiKQ7FHVtEC0U2CIIyNeCy%252BqvGCJhq3Z3Cv&s=large)](https://www.ci.dublin.tx.us/index)
 
 * + [City Council](https://www.ci.dublin.tx.us/council)
+  + [Agendas & Minutes](https://www.ci.dublin.tx.us/agendasandminutes)
+  + [Forms & Permits](https://www.ci.dublin.tx.us/formsandpermits)
+  + [Ordinances](https://library.municode.com/tx/dublin/codes/code_of_ordinances)
+  + [Financial Transparency](https://www.ci.dublin.tx.us/transparency)
+  + [Bids & RFPs](https://www.ci.dublin.tx.us/bids)
+  + [Election Information](https://www.ci.dublin.tx.us/elections)
 * City Offices
   + Main Menu
     /
     City Offices
   + City Offices
-* + [City Services](https://www.ci.dublin.tx.us/services)
+  + [Human Resources](https://www.ci.dublin.tx.us/hr)
+  + [Police](https://www.ci.dublin.tx.us/police)
+  + [Fire Department](https://www.ci.dublin.tx.us/fire)
+  + [EMS](https://www.ci.dublin.tx.us/ems)
+  + [Code Enforcement](https://www.ci.dublin.tx.us/codeenforcement)
+  + [Airport](https://www.ci.dublin.tx.us/airport)
+  + [Public Works](https://www.ci.dublin.tx.us/publicworks)
+  + [Municipal Court](https://www.ci.dublin.tx.us/court)
+* + [Public Hearings & Notices](https://www.ci.dublin.tx.us/notices)
+  + [Pay Utilities](https://www.municipalonlinepayments.com/dublintx/utilities)
+  + [City Services](https://www.ci.dublin.tx.us/services)
   + [City Pool](https://www.ci.dublin.tx.us/pool)
-* + [Contact Us](https://www.ci.dublin.tx.us/contactus)
+  + [Library](https://www.ci.dublin.tx.us/library)
+  + [Moving to Dublin](https://www.ci.dublin.tx.us/moving)
+  + [Submit Feedback](https://www.ci.dublin.tx.us/submitfeedback)
+* [Visitors](https://www.dublintxchamber.com/)
+* [Business](https://www.dublintxedc.com/)
+* [Calendar](https://www.ci.dublin.tx.us/calendar)
+* + [History](https://www.ci.dublin.tx.us/history)
+  + [Map](https://www.ci.dublin.tx.us/map)
+  + [Contact Us](https://www.ci.dublin.tx.us/contactus)
+
+
+No data is available at this time
+[AI Assistant](javascript:;)
+[Keyword Search](javascript:;)
+
 
 ![](https://www.ci.dublin.tx.us/api/blob/viewBlob?i=SDQClSGEvvue%2FTO9%252BasQWgFt0aX1mJTuk3%2FDd8YSbyVSUIpQ5QVQlP%2FH1XyuN78w&s=xlarge)
 City Council
