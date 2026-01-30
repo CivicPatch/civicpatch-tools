@@ -489,3 +489,20 @@ def test_with_divs_with_names():
     assert actual_md.strip() == expected_md.strip()
 
 
+def test_with_divs_with_names_2():
+    with open(os.path.join(FIXTURE_DIR, "divs_with_names_2", "expected_clean_html.html"), "r", encoding="utf-8") as f:
+        input_html = f.read()
+    filtered_content = filter_content(logger, {"Meloday Ryan": [], "Kimberly Holiday": []}, input_html, government_type="mayor_council")
+    #with open(os.path.join(FIXTURE_DIR, "divs_with_names_2", "expected_filter_content.html"), "w", encoding="utf-8") as f:
+    #    f.write(filtered_content)
+    expected_html = read_fixture("expected_filter_content.html", subfolder="divs_with_names_2")
+    assert filtered_content.strip() == expected_html.strip()
+    actual_md = to_markdown(filtered_content)
+    #with open(os.path.join(FIXTURE_DIR, "divs_with_names_2", "expected_filter_content.md"), "w", encoding="utf-8") as f:
+    #    f.write(actual_md)
+    with open(os.path.join(FIXTURE_DIR, "divs_with_names_2", "expected_filter_content.md"), "r", encoding="utf-8") as f:
+        expected_md = f.read()
+    assert actual_md.strip() == expected_md.strip()
+
+
+

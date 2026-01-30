@@ -19,6 +19,12 @@ def has_relevant_content(identities: Dict[str, List[str]], text: str, government
     """Check if text contains any relevant content including emails and phones.
     Match identity names by individual name tokens (word-by-word, case-insensitive).
     """
+    # Normalize input: accept a bs4.Tag or any value and coerce to a plain string
+    if isinstance(text, Tag):
+        text = text.get_text(" ", strip=True)
+    else:
+        text = str(text or "")
+
     if not text.strip():
         return False
 
@@ -45,7 +51,6 @@ def has_relevant_content(identities: Dict[str, List[str]], text: str, government
                 continue
             if re.search(r'\b' + re.escape(token) + r'\b', text_lc):
                 return True
-
     return any([people, dates, emails, phones, keywords])
 
 def filter_content(logger, identities: Dict[str, List[str]], input_html: str, government_type, progress_log_interval: int = 10) -> str:
@@ -64,14 +69,22 @@ def filter_content(logger, identities: Dict[str, List[str]], input_html: str, go
     filtered_content = soup.prettify()
     return filtered_content
 
-def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, state, government_type):
+def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, state, government_type) -> bool:
+    """
+    Process node tree. Returns True if this node (or any descendant) should be kept,
+    False if the node was removed.
+    """
     # Handle images - Always keep images (check this FIRST, before anything else)
     if node.name == "img":
-        return  # Do not remove or modify images
-    
+        return True  # Do not remove or modify images
+
+    # Handle links - always keep
+    if node.name == "a":
+        return True
+
     # Skip processing if this node is inside a kept table
     if node.find_parent("table") and hasattr(node.find_parent("table"), '_keep_table'):
-        return  # Don't process nodes inside tables that are marked to keep
+        return True  # Don't process nodes inside tables that are marked to keep
 
     # Handle tables - evaluate the entire table content
     if node.name == "table":
@@ -81,21 +94,23 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
             if is_relevant:
                 # Mark this table to keep ALL its content (including images)
                 node._keep_table = True
-                return
-        
+                return True
+
         # Table is not relevant - extract images before removing
         images = node.find_all("img")
         if images and node.parent and hasattr(node.parent, 'name'):
             for img in images:
                 node.insert_before(img.extract())
-        
+
         node.decompose()
-        return
-    
-    # Recursively process children first
+        return False
+
+    # Recursively process children first; if any child is kept, mark that
+    any_child_kept = False
     for child in list(node.children):  # Use list() to avoid modifying the iterator during traversal
         if isinstance(child, Tag):  # Ensure the child is a Tag (not a string or comment)
-            filter_node_content(logger, identities, child, state, government_type)
+            child_kept = filter_node_content(logger, identities, child, state, government_type)
+            any_child_kept = any_child_kept or bool(child_kept)
 
     # Process the parent node after all its children
     state["processed"] += 1
@@ -104,31 +119,28 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
         percent = int(100 * state["processed"] / state["total"])
         logger.info(f"-> PREPROCESS_PAGE_CONTENT Page Progress: {percent}% ({state['processed']}/{state['total']})")
         state["last_progress_time"] = now
-    
+
     # If we're inside a kept table, don't remove anything
     parent_table = node.find_parent("table")
     if parent_table and hasattr(parent_table, '_keep_table'):
-        return  # Keep all content inside marked tables
-    
-    # Handle links - always keep
-    if node.name == "a":
-        return
-    
+        return True  # Keep all content inside marked tables
+
+    # If any descendant was kept, keep this node (do not decompose)
+    if any_child_kept:
+        return True
+
     # For text nodes and other elements, check content but don't be too aggressive
     if node and node.name:
-        node_text = node.get_text(strip=True)
-        if node_text:
-            if has_relevant_content(identities, node_text, government_type):
-                return  # Keep nodes with relevant content
-    
+        # pass the Tag so has_relevant_content can inspect attributes/descendants if implemented
+        if has_relevant_content(identities, node, government_type):
+            return True  # Keep nodes with relevant content
+
     # Handle specific structural elements more carefully
-    if node.name in ["p", "section", "article", "main", "header", "footer"]:
-        # Check if this element or its children contain relevant content FIRST
-        descendant_text = node.get_text(strip=True)
-        if descendant_text:
-            if has_relevant_content(identities, descendant_text, government_type):
-                return  # Keep structural elements that contain relevant content (including images)
-        
+    if node.name in ["p", "section", "article", "main", "header", "footer", "h1", "h2", "h3", "h4", "h5", "h6"]:
+        # pass Tag to has_relevant_content so it can check attributes/descendants
+        if has_relevant_content(identities, node, government_type):
+            return True  # Keep structural elements that contain relevant content (including images)
+
         # Only extract images and <a> links if we're going to remove this element
         images = node.find_all("img")
         links = node.find_all("a")
@@ -138,21 +150,23 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
         if links and node.parent and hasattr(node.parent, 'name'):
             for link in links:
                 node.insert_before(link.extract())
-        
-        # If no relevant content and no parent, just return
+
+        # If no relevant content and no parent, just return (nothing to remove)
         if not node.parent:
-            return
-        
+            return True
+
         # If no relevant content, decompose to remove it and its text content
         node.decompose()
-        return
-    
+        return False
+
     # For other elements without relevant content, extract images before removing
     if node.parent and node.name not in ["html", "body", "head", "title", "meta"]:
         images = node.find_all("img")
         if images and hasattr(node.parent, 'name'):
             for img in images:
                 node.insert_before(img.extract())
-        
+
         node.decompose()
-        return
+        return False
+
+    return True

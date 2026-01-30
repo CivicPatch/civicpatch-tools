@@ -110,4 +110,13 @@ def test_with_divs_with_names():
         expected_output = f.read()
     assert ''.join(cleaned_html.split()) == ''.join(expected_output.split())
 
-       
+def test_with_divs_with_names_2():
+    with open(os.path.join(FIXTURE_DIR, "divs_with_names_2", "input.html"), "r", encoding="utf-8") as f:
+        input_html = f.read()
+    cleaned_html = clean_html(None, input_html)
+    with open(FIXTURE_DIR / "divs_with_names_2" / "expected_clean_html.html", "w", encoding="utf-8") as f:
+        f.write(cleaned_html)
+    #with open(os.path.join(FIXTURE_DIR, "divs_with_names_2", "expected_clean_html.html"), "r", encoding="utf-8") as f:
+    #    expected_output = f.read()
+    #assert ''.join(cleaned_html.split()) == ''.join(expected_output.split())
+
