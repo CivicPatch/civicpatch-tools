@@ -10,6 +10,10 @@ def clean_html(logger, input_html: str) -> str:
     # Remove all span tags but keep their content
     for span in soup.find_all("span"):
         span.unwrap()
+    
+    # Remove all div tags but keep their content
+    for div in soup.find_all("div"):
+        div.unwrap()
 
     # Pull images out of headers
     for header_tag in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):

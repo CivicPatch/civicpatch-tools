@@ -6,7 +6,7 @@ from utils.request_utils import with_retry
 from utils.log_utils import get_workflow_logger
 from utils import cost_utils
 
-MODEL = "openai/gpt-5-mini"
+MODEL = "openai/gpt-4.1-mini"
 MAX_RETRIES = 5
 OPENAI_URL = "https://api.openai.com/v1/responses"
 
