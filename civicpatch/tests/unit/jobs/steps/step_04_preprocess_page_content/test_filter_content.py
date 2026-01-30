@@ -439,9 +439,9 @@ def test_markdownify_image_output():
 #def test_with_cleaned_html():
 #    original = read_fixture("input.html", subfolder="garland_nested_images")
 #    cleaned_html = clean_html({}, original)
-#    assert_markdown_equal({}, cleaned_html, 
-#                          read_fixture("preprocessed.md", subfolder="garland_nested_images"), 
-#                                       "mayor_council", subfolder="garland_nested_images")
+#    assert_markdown_equal({}, cleaned_html,
+#                          read_fixture("preprocessed.md", subfolder="garland_nested_images"),
+#                          "mayor_council", subfolder="garland_nested_images")
 
 def test_with_read_more_fixture():
     with open(os.path.join(FIXTURE_DIR, "la_joya_read_more", "expected_clean_html.html"), "r", encoding="utf-8") as f:
@@ -472,3 +472,20 @@ def test_with_flattened_shadow_dom():
     with open(os.path.join(FIXTURE_DIR, "flattened_shadow_dom", "expected_filter_content.md"), "r", encoding="utf-8") as f:
         expected_md = f.read()
     assert actual_md.strip() == expected_md.strip()
+
+def test_with_divs_with_names():
+    with open(os.path.join(FIXTURE_DIR, "divs_with_names", "expected_clean_html.html"), "r", encoding="utf-8") as f:
+        input_html = f.read()
+    filtered_content = filter_content(logger, {"Meloday Ryan": [], "Kimberly Holiday": []}, input_html, government_type="mayor_council")
+    #with open(os.path.join(FIXTURE_DIR, "divs_with_names", "expected_filter_content.html"), "w", encoding="utf-8") as f:
+    #    f.write(filtered_content)
+    expected_html = read_fixture("expected_filter_content.html", subfolder="divs_with_names")
+    assert filtered_content.strip() == expected_html.strip()
+    actual_md = to_markdown(filtered_content)
+    #with open(os.path.join(FIXTURE_DIR, "divs_with_names", "expected_filter_content.md"), "w", encoding="utf-8") as f:
+    #    f.write(actual_md)
+    with open(os.path.join(FIXTURE_DIR, "divs_with_names", "expected_filter_content.md"), "r", encoding="utf-8") as f:
+        expected_md = f.read()
+    assert actual_md.strip() == expected_md.strip()
+
+

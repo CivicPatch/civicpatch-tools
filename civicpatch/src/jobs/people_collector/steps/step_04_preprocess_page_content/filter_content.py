@@ -1,3 +1,4 @@
+import re
 import time
 from bs4 import Tag, BeautifulSoup
 from jobs.people_collector.steps.step_04_preprocess_page_content import entity_extraction
@@ -15,18 +16,35 @@ def count_nodes(node: Tag):
     return count
 
 def has_relevant_content(identities: Dict[str, List[str]], text: str, government_type) -> bool:
-    """Check if text contains any relevant content including emails and phones."""
+    """Check if text contains any relevant content including emails and phones.
+    Match identity names by individual name tokens (word-by-word, case-insensitive).
+    """
     if not text.strip():
         return False
-    
-    people, dates, emails, phones, keywords = entity_extraction.extract_data(text, government_type)
-    # Flatten both keys & values of identities for checking
 
+    people, dates, emails, phones, keywords = entity_extraction.extract_data(text, government_type)
+
+    # Flatten both keys & values of identities for checking
     flattened_names = [canonical_name for canonical_name in identities.keys()]
     flattened_aliases = [item for sublist in identities.values() for item in sublist]
+
+    text_lc = text.lower()
+
+    # Tokenize each identity name and match tokens as whole words in the text.
     for name in flattened_names + flattened_aliases:
-        if name in text:
-            return True
+        if not name:
+            continue
+        name_lc = name.strip().lower()
+        if not name_lc:
+            continue
+
+        tokens = re.split(r'\W+', name_lc)  # split on non-word chars
+        for token in tokens:
+            token = token.strip()
+            if len(token) < 3:  # require at least 3 chars to reduce false positives
+                continue
+            if re.search(r'\b' + re.escape(token) + r'\b', text_lc):
+                return True
 
     return any([people, dates, emails, phones, keywords])
 
@@ -104,7 +122,7 @@ def filter_node_content(logger, identities: Dict[str, List[str]], node: Tag, sta
                 return  # Keep nodes with relevant content
     
     # Handle specific structural elements more carefully
-    if node.name in ["div", "span", "p", "section", "article", "main", "header", "footer"]:
+    if node.name in ["p", "section", "article", "main", "header", "footer"]:
         # Check if this element or its children contain relevant content FIRST
         descendant_text = node.get_text(strip=True)
         if descendant_text:
