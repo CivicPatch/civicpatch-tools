@@ -49,7 +49,8 @@ def municipality_officials_prompt(
     """
 
     roles = config_utils.get_roles_by_government_type(government_type)
-    division_names = config_utils.get_division_names()
+    designation_names = config_utils.get_designation_names()
+    designations_str = ", ".join(designation_names)
     current_date = datetime.now().strftime("%Y-%m-%d")
 
     maybe_target_people = [p.name for p in (people_hint or []) if p.name]
@@ -73,7 +74,7 @@ def municipality_officials_prompt(
     First, determine if the content contains a **structured listing** (such as a table, list, or directory) of officials, or a **dedicated biography/about/contact section** for an official. If not, return an empty JSON array `[]`.
 
     Target roles: {', '.join(roles)}
-    Target divisions: {', '.join(division_names)}
+    Target designations: {designations_str}
     Current Date: {current_date}
 
     Return a JSON object in the following format:
@@ -81,7 +82,8 @@ def municipality_officials_prompt(
       - name: (String) Full name only (no titles)
       - image: (String or null) URL to profile image (https://...)
       - roles: (Array of strings) Active municipal roles
-      - divisions: (Array of strings) Specific district/ward names
+      - designations: (Array) 
+            Example: "Ward 1", "District 2, Seat 8"
       - phone: (String or null) Formatted phone number
       - email: (String or null) Email address
       - url: (String or null) In order of importance: the official's profile, biography URL, contact form URL, related position listing, or null if none exist.
@@ -91,7 +93,7 @@ def municipality_officials_prompt(
  
     **Instructions:**
     - Only extract officials if their information appears in a **structured listing** (e.g., table, list, or directory) or in a **dedicated biography/about/contact section**.
-    - A **structured listing** must explicitly include names and roles. Additional details (e.g., contact information, division, or term dates) are optional but preferred.
+    - A **structured listing** must explicitly include names and roles. Additional details (e.g., contact information, designations, or term dates) are optional but preferred.
     - **Do NOT extract officials based on mentions in news articles, event summaries, meeting notes, or scattered references throughout the content.**
     - **Do NOT extract officials if the only evidence is a link, heading, or navigation item (e.g., "Mayor And Council") without an actual structured listing or dedicated section in the provided content.**
     - **Do NOT extract officials based on contextual clues such as dates, roles, or ongoing activities unless they are explicitly part of a structured listing or dedicated section.**

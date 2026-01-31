@@ -30,8 +30,8 @@ def calculate_disagreement_score(
     if not valid_values:
         return 0.0
 
-    # Handle list fields (roles, divisions)
-    if field_name in ["roles", "divisions"]:
+    # Handle list fields (roles, designations)
+    if field_name in ["roles", "designations"]:
         if merged_value in ["", "(empty)"]:
             empty_count = sum(1 for v in llm_values.values() if v in ["", "(empty)"])
             if empty_count > 1:

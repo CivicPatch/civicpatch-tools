@@ -44,7 +44,7 @@ def should_stop_for_cost_limit(current_cost: Decimal, job_config: JobConfig) -> 
 def should_stop_for_data_requirement(progress: ProgressState) -> bool:
     return (progress.current_data >= progress.required_data and 
             progress.has_target_role and 
-            progress.has_target_divisions)
+            progress.has_target_designations)
 
 def should_stop_for_max_pages(processed_count: int, job_config: JobConfig, progress: ProgressState) -> bool:
     print("Processed count:", processed_count)

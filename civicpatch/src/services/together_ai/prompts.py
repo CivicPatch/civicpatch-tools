@@ -8,8 +8,8 @@ def municipality_officials_prompt(government_type, people_hint: List[ResearchedP
     Generate a prompt to identify municipality officials from the given content.
     """
     roles = config_utils.get_roles_by_government_type(government_type)
-    # division_names = config_utils.get_divisions()
-    # divisions_str = ", ".join(division_names)
+    designation_names = config_utils.get_designation_names()
+    designations_str = ", ".join(designation_names)
 
 
     hint_str = ""
@@ -24,13 +24,13 @@ from the markdown text. {hint_str}
 
 Government type: '{government_type}'
 Target roles: {', '.join(roles)}
-Target divisions: ward, district 
+Target designations: {designations_str}
 
 Return JSON array of people with:
 - name: (String) Full name only
 - roles: (Array) Official titles
-- divisions: (Array) Strictly districts/wards. 
-    Example: "Ward 1", "District 2"
+- designations: (Array) 
+    Example: "Ward 1", "District 2, Seat 8"
 - image: (String|null) Photo URL (.jpg/.png)
 - website: (String or null) Use the official's profile or biography URL if available; otherwise, use a contact form URL. If neither exists, set to null.
 - phone_number: (String|null) Contact number
@@ -40,6 +40,6 @@ Return JSON array of people with:
 
 URLs: Include profile/bio pages. Exclude news/events/press.
 Terms: "2024-2027" → start: "2024", end: "2027"
-Divisions: Extract exactly from text -- do not infer or make up divisions.
+Designations: Extract exactly from text -- do not infer or make up designations.
 """
     return prompt

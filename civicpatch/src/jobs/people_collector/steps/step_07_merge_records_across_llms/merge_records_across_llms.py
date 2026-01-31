@@ -14,7 +14,7 @@ import jobs.people_collector.steps.step_07_merge_records_across_llms.record_comp
 MINIMUM_AGREEMENT_SCORE = 80
 FIELD_WEIGHTS = {
     "roles": 1.0,           
-    "divisions": 0.8,       
+    "designations": 0.8,       
     "emails": 0.5,         
     "urls": 0.2,        
     "phones": 0.2,    
@@ -92,7 +92,7 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
         len(merged_people)
     )
 
-    # Sort people by role priority, division, and name
+    # Sort people by role priority, designations, and name
     sorted_people = people_utils.sort_people(merged_people, government_type)
 
     validation_errors = []
@@ -211,12 +211,12 @@ def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Per
     """
     Merge a group of weakly tied Person objects into a single Person object.
     """
-    # Collect roles and divisions that appear in more than one source
+    # Collect roles and designations that appear in more than one source
     role_counter = Counter(role for person in group for role in person.roles)
-    division_counter = Counter(div for person in group for div in person.divisions)
+    designation_counter = Counter(div for person in group for div in person.designations)
 
     roles = [role for role, count in role_counter.items()] 
-    divisions = [div for div, count in division_counter.items() if count > 1]  # Include divisions present in more than one source
+    designations = [div for div, count in designation_counter.items() if count > 1]  # Include designations present in more than one source
 
     # For single-value fields, take the most common non-empty value across all sources
     image_counter = Counter(person.image for person in group if person.image)
@@ -244,7 +244,7 @@ def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Per
         other_names=other_names,
 
         roles=roles,
-        divisions=divisions,
+        designations=designations,
 
         emails=field_mergers.merge_field_to_list([person.emails for person in group if person.emails]),
         phones=field_mergers.merge_field_to_list([person.phones for person in group if person.phones]),

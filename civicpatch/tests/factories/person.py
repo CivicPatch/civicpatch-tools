@@ -7,7 +7,7 @@ def person_factory(
         emails=[],
         urls=[],
         roles=["Council Member"],
-        divisions=[],
+        designations=[],
         source_urls=["https://example.gov"],
         jurisdiction_ocdid="ocd-jurisdiction/country:us/state:wa/place:seattle/government"
 ) -> Person:
@@ -15,7 +15,7 @@ def person_factory(
         name=name,
         other_names=other_names,
         roles=roles,
-        divisions=divisions,
+        designations=designations,
         phones=phones,
         emails=emails,
         urls=urls,

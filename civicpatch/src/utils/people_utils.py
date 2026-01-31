@@ -40,7 +40,7 @@ def filter_people_by_roles(role_configs, people: List[ResearchedPerson]):
 
 def normalize_remaining_text(text: str) -> str:
     """
-    Normalize text after division name:
+    Normalize text after designation name:
     - Convert roman numerals to numbers
     - Convert ordinals to numbers
     - Preserve directional or other text
@@ -140,52 +140,52 @@ def normalize_roles(logger, government_type: str, roles: List[str]) -> List[str]
     return [r.title() for r in seen]
 
 
-def normalize_divisions(divisions: List[str]) -> List[str]:
+def normalize_designations(designations: List[str]) -> List[str]:
     """
-    Normalize divisions using configured aliases.
+    Normalize designations using configured aliases.
     """
-    if not divisions:
+    if not designations:
         return []
 
-    division_aliases = config_utils.get_division_alias_map()
+    designation_aliases = config_utils.get_designation_alias_map()
     normalized = []
 
-    for division in divisions:
+    for designation in designations:
         # Skip None or empty values
-        if division is None or division == "":
+        if designation is None or designation == "":
             continue
-            
-        division = str(division).strip()
-        if not division:
+
+        designation = str(designation).strip()
+        if not designation:
             continue
 
         # Clean parenthetical content and hash symbols
-        clean_division = (
-            division.split("(")[0].strip() if "(" in division else division.strip()
+        clean_designation = (
+            designation.split("(")[0].strip() if "(" in designation else designation.strip()
         )
         # Remove hash symbols and normalize spacing
-        clean_division = clean_division.replace("#", "").replace("  ", " ").strip()
-        
-        words = clean_division.split()
+        clean_designation = clean_designation.replace("#", "").replace("  ", " ").strip()
+
+        words = clean_designation.split()
 
         if not words:
             continue
 
         parts = []
 
-        # Find all division types and their positions
-        division_matches = []
+        # Find all designation types and their positions
+        designation_matches = []
         i = 0
         while i < len(words):
             # Check two-word combinations first
             if i + 1 < len(words):
                 two_word = f"{words[i].lower()} {words[i + 1].lower()}"
-                if two_word in division_aliases:
-                    division_matches.append(
+                if two_word in designation_aliases:
+                    designation_matches.append(
                         {
                             "start": i,
                             "end": i + 2,
-                            "type": division_aliases[two_word],
+                            "type": designation_aliases[two_word],
                             "original": f"{words[i]} {words[i + 1]}",
                         }
                     )
@@ -193,12 +193,12 @@ def normalize_divisions(divisions: List[str]) -> List[str]:
                     continue
 
             # Check single words
-            if words[i].lower() in division_aliases:
-                division_matches.append(
+            if words[i].lower() in designation_aliases:
+                designation_matches.append(
                     {
                         "start": i,
                         "end": i + 1,
-                        "type": division_aliases[words[i].lower()],
+                        "type": designation_aliases[words[i].lower()],
                         "original": words[i],
                     }
                 )
@@ -207,25 +207,25 @@ def normalize_divisions(divisions: List[str]) -> List[str]:
 
             i += 1
 
-        if not division_matches:
-            # No division types found - handle special cases and fallback
+        if not designation_matches:
+            # No designation types found - handle special cases and fallback
 
-            # Check for ordinal + division pattern (e.g. "1st Ward" -> "Ward 1")
+            # Check for ordinal + designation pattern (e.g. "1st Ward" -> "Ward 1")
             if len(words) >= 2:
                 first_normalized = normalize_remaining_text(words[0])
                 if (
                     first_normalized.isdigit()
                     and first_normalized != words[0]
-                    and words[1].lower() in division_aliases
+                    and words[1].lower() in designation_aliases
                 ):
-                    division_type = division_aliases[words[1].lower()]
-                    parts.append(f"{division_type.title()} {first_normalized}")
+                    designation_type = designation_aliases[words[1].lower()]
+                    parts.append(f"{designation_type.title()} {first_normalized}")
 
-            # Check for directional + division pattern (e.g. "North Ward" -> "Ward North")
+            # Check for directional + designation pattern (e.g. "North Ward" -> "Ward North")
             elif len(words) >= 2:
                 last_word_lower = words[-1].lower()
-                if last_word_lower in division_aliases:
-                    division_type = division_aliases[last_word_lower]
+                if last_word_lower in designation_aliases:
+                    designation_type = designation_aliases[last_word_lower]
                     prefix_words = words[:-1]
                     prefix_text = " ".join(prefix_words)
                     # Clean up punctuation
@@ -234,9 +234,9 @@ def normalize_divisions(divisions: List[str]) -> List[str]:
 
                     # If prefix didn't change (like "North"), it's directional
                     if normalized_prefix.lower() == prefix_text.lower():
-                        parts.append(f"{division_type.title()} {prefix_text.title()}")
+                        parts.append(f"{designation_type.title()} {prefix_text.title()}")
                     else:
-                        parts.append(f"{division_type.title()} {normalized_prefix}")
+                        parts.append(f"{designation_type.title()} {normalized_prefix}")
 
             # Fallback: normalize any ordinals/romans in place
             if not parts:
@@ -254,15 +254,15 @@ def normalize_divisions(divisions: List[str]) -> List[str]:
                 parts.append(" ".join(result_words))
 
         else:
-            # Special case: if there's only one division and it's at the end with prefix content,
+            # Special case: if there's only one designation and it's at the end with prefix content,
             # treat prefix as directional (e.g., "North Ward" -> "Ward North")
             if (
-                len(division_matches) == 1
-                and division_matches[0]["start"] > 0
-                and division_matches[0]["end"] == len(words)
+                len(designation_matches) == 1
+                and designation_matches[0]["start"] > 0
+                and designation_matches[0]["end"] == len(words)
             ):
-                match = division_matches[0]
-                division_type = match["type"]
+                match = designation_matches[0]
+                designation_match = match["type"]
                 prefix_words = words[: match["start"]]
 
                 if prefix_words:
@@ -273,26 +273,26 @@ def normalize_divisions(divisions: List[str]) -> List[str]:
 
                     # If prefix didn't change, it's likely directional
                     if normalized_prefix.lower() == prefix_text.lower():
-                        parts.append(f"{division_type.title()} {prefix_text.title()}")
+                        parts.append(f"{designation_match.title()} {prefix_text.title()}")
                     else:
-                        parts.append(f"{division_type.title()} {normalized_prefix}")
+                        parts.append(f"{designation_match.title()} {normalized_prefix}")
                 else:
-                    parts.append(division_type.title())
+                    parts.append(designation_match.title())
 
             else:
-                # Process divisions found in the text
-                for j, match in enumerate(division_matches):
-                    division_type = match["type"]
+                # Process designations found in the text
+                for j, match in enumerate(designation_matches):
+                    designation_type = match["type"]
                     end_idx = match["end"]
 
-                    # For content, only look AFTER this division, not before
-                    # (prefix content belongs to the previous division)
+                    # For content, only look AFTER this designation, not before
+                    # (prefix content belongs to the previous designation)
                     content_start = end_idx
                     content_end = len(words)
 
-                    # If there's a next division, content ends there
-                    if j + 1 < len(division_matches):
-                        content_end = division_matches[j + 1]["start"]
+                    # If there's a next designation, content ends there
+                    if j + 1 < len(designation_matches):
+                        content_end = designation_matches[j + 1]["start"]
 
                     content_words = words[content_start:content_end]
 
@@ -305,14 +305,14 @@ def normalize_divisions(divisions: List[str]) -> List[str]:
                         # If content didn't change, preserve original case (directional words)
                         if normalized_content.lower() == content_text.lower():
                             parts.append(
-                                f"{division_type.title()} {content_text.title()}"
+                                f"{designation_type.title()} {content_text.title()}"
                             )
                         else:
                             parts.append(
-                                f"{division_type.title()} {normalized_content}"
+                                f"{designation_type.title()} {normalized_content}"
                             )
                     else:
-                        parts.append(division_type.title())
+                        parts.append(designation_type.title())
 
         normalized.extend(parts)
 
@@ -342,7 +342,7 @@ def get_role_priority(government_type: str) -> Dict[str, int]:
 
 def sort_people(people: List[Person], government_type: str) -> List[Person]:
     """
-    Sort people by role priority (from config), then division, then name.
+    Sort people by role priority (from config), then designation, then name.
     """
     role_priority = get_role_priority(government_type)
 
@@ -350,7 +350,7 @@ def sort_people(people: List[Person], government_type: str) -> List[Person]:
         # Find the highest priority among person's roles
         priorities = [role_priority.get(role.lower(), 9999) for role in person.roles]
         min_priority = min(priorities) if priorities else 9999
-        first_division = person.divisions[0] if person.divisions else ""
-        return (min_priority, first_division, person.name)
+        first_designation = person.designations[0] if person.designations else ""
+        return (min_priority, first_designation, person.name)
 
     return sorted(people, key=sort_key)
