@@ -10,17 +10,17 @@ def merge_roles(records: List[LLMPerson]) -> List[str]:
                 unique_roles.add(role)
     return list(unique_roles)
 
-def merge_divisions(records: List[LLMPerson]) -> List[str]:
+def merge_designations(records: List[LLMPerson]) -> List[str]:
     """
-    Collect a set of unique divisions from all records.
+    Collect a set of unique designations from all records.
     """
 
-    unique_divisions = set()
+    unique_designations = set()
     for record in records:
-        for division in record.divisions:
-            if division:
-                unique_divisions.add(division)
-    return list(unique_divisions)
+        for designation in record.designations:
+            if designation:
+                unique_designations.add(designation)
+    return list(unique_designations)
 
 def merge_field(values: List[str]) -> str:
     """

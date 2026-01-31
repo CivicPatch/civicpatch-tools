@@ -35,7 +35,7 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
        2.1. For each official, extract the following details:
             - name: Full name only (no titles)
             - roles: List of active municipal roles (e.g., Mayor, Council Member)
-            - divisions: List of (ward, district), only if applicable
+            - designations: List of (ward, district), only if applicable
 
     3. Create a JSON object with the following structure:
        ```json
@@ -45,7 +45,7 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
            {{
              "name": "Full name of the official or null if uncertain",
              "roles": ["Mayor", "Council Member", "Commissioner", etc.],
-             "divisions": ["Ward 1", "District 2", etc.] or [],
+             "designations": ["Ward 1", "District 2", etc.] or [],
            }}
          ],
          "notes": "Brief notes about the search and results"
@@ -64,7 +64,8 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     Generate a prompt for extracting municipality officials.
     """
     roles = config_utils.get_roles_by_government_type(government_type)
-    division_names = config_utils.get_division_names()
+    designation_names = config_utils.get_designation_names()
+    designations_str = ", ".join(designation_names)
     current_date = datetime.now().strftime("%Y-%m-%d")
 
     maybe_target_people = [person.name for person in people_hint if person.name]
@@ -88,7 +89,7 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     or otherwise not currently in office.
 
     Target Roles: {', '.join(roles)}
-    Target Divisions: {', '.join(division_names)}
+    Target Designations: {designations_str}
     Current Date: {current_date}
 
     Return a JSON object in the following format, each having:
@@ -96,7 +97,7 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
       - name: (String) Full name only (no titles)
       - image: (String or null) URL to profile image (https://...)
       - roles: (Array of strings) Active municipal roles
-      - divisions: (Array of strings) Specific district/ward names
+      - designations: (Array of strings) Specific district/ward/etc names
       - phone: (String or null) Formatted phone number
       - email: (String or null) Email address
       - url: (String or null) In order of importance: the official's profile, biography URL, contact form URL, related position listing, or null if none exist.
@@ -109,8 +110,8 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
     - **Only extract information that is explicitly present in the provided content. Do NOT infer or fabricate any details, including email addresses, phone numbers, or URLs.**
     - Roles extraction:
         - Extract roles that match the **target roles** provided (e.g., {', '.join(roles)}).
-    - Division extraction:
-        - Extract divisions if explicitly mentioned in the text and relevant to the person's role.
+    - Designation extraction:
+        - Extract designations if explicitly mentioned in the text and relevant to the person's role.
         - Examples: "Ward 1", "District 2"
     - Name extraction:
         - Extract full names ONLY, not titles.

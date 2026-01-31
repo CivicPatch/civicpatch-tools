@@ -7,8 +7,8 @@ from jobs.people_collector.schemas import (
   FormatOutputStep,
 )
 import utils.log_utils as log_utils
-from shared.utils.config_utils import get_divisions 
-from typing import List
+from shared.utils.config_utils import get_designations
+from typing import List, Tuple
 
 from domain.models import (
   Official,
@@ -25,10 +25,7 @@ def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
     people = [person_to_official(person) for person in data]
 
     # TODO: Make this more generic later
-    division_configs = get_divisions()
-    for index, person in enumerate(people):
-        division_string = person.office.division_ocdid
-        person.office.division_ocdid = normalize_division(jurisdiction_ocdid, division_string, division_configs)
+    for person in people:
         person = maybe_add_fallback_url(person)
 
     identities = generate_identities_config(people)
@@ -48,24 +45,6 @@ def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
         config=config
     )
 
-def normalize_division(jurisdiction_ocdid: str, division_string: str, division_configs) -> str:
-    division_ocdid_base = jurisdiction_ocdid.replace("ocd-jurisdiction", "ocd-division")
-    # Remove the jurisdiction type suffix (e.g "/government")
-    division_ocdid_base = division_ocdid_base.rsplit('/', 1)[0]
-    
-
-    if not division_string:
-        return division_ocdid_base
-
-    division_parts = division_string.lower().split(' ')
-    division_key = division_parts[0]
-    if division_key in division_configs and division_configs[division_key].get("has_geographic_area", False):
-        division_parts_suffix = '_'.join(division_parts[1:]).strip()
-        division_name = division_configs[division_key].get("name", division_key)
-        return f"{division_ocdid_base}/{division_name}:{division_parts_suffix}"
-    else:
-        return division_ocdid_base
-    
 def maybe_add_fallback_url(person: Official) -> Official:
     if not person.urls and person.source_urls:
         person.urls = [person.source_urls[0]]

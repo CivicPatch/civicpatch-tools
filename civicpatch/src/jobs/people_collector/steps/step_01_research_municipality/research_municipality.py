@@ -24,37 +24,45 @@ async def research_municipality(context: PeopleCollectorContext) -> tuple[Progre
     request_id = context.request_id
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     municipality_name = context.data.config.name
-    prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_ocdid, municipality_name)
-    response = await request_utils.with_retry(
-        logger,
-        max_retries=5,
-        func=lambda: google_gemini_llm.run_prompt(
-            request_id,
-            jurisdiction_ocdid,
-            prompt,
-            response_schema=ResearchMunicipalityLLMSchema,
-            with_search=True
-        )
-    )
-    if not response:
-        raise ValueError("No response from LLM")
-    people = response.get("people", [])
-    roles_found = [p.get("roles", None) for p in people if p.get("roles")]
-    roles_found = [role for person_roles in roles_found for role in person_roles]
+    
+    MAX_ATTEMPTS = 3 # Tool call + JSON output doesn't work at the same time for Google Gemini, let's retry a couple times
+    for attempt in range(MAX_ATTEMPTS):
+        try:
+            prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_ocdid, municipality_name)
+            response = await google_gemini_llm.run_prompt(
+                    request_id,
+                    jurisdiction_ocdid,
+                    prompt,
+                    response_schema=ResearchMunicipalityLLMSchema,
+                    with_search=True
+                )
+            if not response:
+                raise ValueError("No response from LLM")
+            people = response.get("people", [])
+            roles_found = [p.get("roles", None) for p in people if p.get("roles")]
+            roles_found = [role for person_roles in roles_found for role in person_roles]
 
-    # Government type can be overridden via config
-    government_type = context.data.config.government_type or response.get("government_type")
+            # Government type can be overridden via config
+            government_type = context.data.config.government_type or response.get("government_type")
 
-    # if not government_type:
-    #     logger.info(f"Could not determine government type for jurisdiction {jurisdiction_ocdid}. Roles found: {roles_found}")
-    government_types = config_utils.get_government_types().keys()
-    if government_type not in government_types:
-        logger.warning(f"invalid government_type: {government_type}, matching government types from roles as fallback")
-        government_type = match_roles_to_government_type(roles_found, config_utils.get_government_types())
-        logger.info(f"setting fallback government_type: {government_type}")
+            # if not government_type:
+            #     logger.info(f"Could not determine government type for jurisdiction {jurisdiction_ocdid}. Roles found: {roles_found}")
+            government_types = config_utils.get_government_types().keys()
+            if government_type not in government_types:
+                logger.warning(f"invalid government_type: {government_type}, matching government types from roles as fallback")
+                government_type = match_roles_to_government_type(roles_found, config_utils.get_government_types())
+                logger.info(f"setting fallback government_type: {government_type}")
 
-    role_configs = config_utils.get_role_configs_by_government_type(government_type)
-    researched_people: List[ResearchedPerson] = [ResearchedPerson.model_validate(p) if isinstance(p, dict) else p for p in people]
+            role_configs = config_utils.get_role_configs_by_government_type(government_type)
+            researched_people: List[ResearchedPerson] = [ResearchedPerson.model_validate(p) if isinstance(p, dict) else p for p in people]
+        except Exception as e:
+            logger.error(f"Attempt {attempt + 1} failed with error: {e}")
+            if attempt == MAX_ATTEMPTS - 1:
+                raise e
+            continue
+    if not researched_people:
+        raise RuntimeError(f"No people found for jurisdiction {jurisdiction_ocdid} after {MAX_ATTEMPTS} attempts.")
+
     target_people = people_utils.filter_people_by_roles(role_configs, researched_people)
 
     result = ResearchMunicipalityStep(

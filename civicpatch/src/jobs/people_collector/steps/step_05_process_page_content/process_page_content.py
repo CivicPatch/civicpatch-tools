@@ -37,7 +37,7 @@ class ProcessingSetup:
     people_hint: List[ResearchedPerson]
     roles: List[str]
     target_role: str
-    target_divisions: List[str]
+    target_designations: List[str]
 
 LLMS = [
     {
@@ -132,7 +132,7 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
         updated_records,
         setup_data.roles,
         setup_data.target_role,
-        setup_data.target_divisions
+        setup_data.target_designations
     )
     updated_links = update_links(context.data.config.url, updated_links, page_to_process, logger, setup_data.roles, updated_records)
     logger.info(f"links updated: {updated_links}")
@@ -161,22 +161,22 @@ def create_process_page_content_step(
         progress=ProgressState(required_data=required_data,
                                current_data=0,
                                has_target_role=False,
-                               has_target_divisions=False)
+                               has_target_designations=False)
     )
 
 def get_setup_data(municipality_research: ResearchMunicipalityStep) -> ProcessingSetup: 
-    divisions = config_utils.get_divisions()
-    divisions_with_geo = [d for d, v in divisions.items() if v.get("has_geographic_area", False)]
+    designations = config_utils.get_designations()
+    designations_with_geo = [d for d, v in designations.items() if v.get("has_geographic_area", False)]
     
     roles = config_utils.get_roles_by_government_type(municipality_research.government_type)
     target_role = config_utils.get_head_of_government_role(municipality_research.government_type)
-    target_divisions = get_target_divisions(divisions_with_geo, municipality_research.elected_officials)
-    
+    target_designations = get_target_designations(designations_with_geo, municipality_research.elected_officials)
+
     return ProcessingSetup(
         people_hint=municipality_research.elected_officials,
         roles=roles,
         target_role=target_role,
-        target_divisions=target_divisions
+        target_designations=target_designations
     )
 
 
@@ -228,10 +228,10 @@ def update_links(domain, context_links: List[Link], processed_page: Link, logger
 
 def normalize_record(logger, record: LLMPerson, government_type: str) -> LLMPerson:
     """
-    Normalize roles and divisions in an LLMPerson record.
+    Normalize roles and designations in an LLMPerson record.
     """
     normalized_roles = people_utils.normalize_roles(logger, government_type, record.roles)
-    normalized_divisions = people_utils.normalize_divisions(record.divisions)
+    normalized_designations = people_utils.normalize_designations(record.designations)
 
     try:
         phone = phonenumbers.parse(record.phone, "US") if record.phone else None
@@ -243,7 +243,7 @@ def normalize_record(logger, record: LLMPerson, government_type: str) -> LLMPers
     return LLMPerson(
         name=record.name,
         roles=normalized_roles,
-        divisions=normalized_divisions,
+        designations=normalized_designations,
         phone=normalized_phone,
         email=record.email,
         url=record.url,
@@ -253,16 +253,16 @@ def normalize_record(logger, record: LLMPerson, government_type: str) -> LLMPers
         source_url=record.source_url
     )
 
-def get_target_divisions(divisions_with_geo: List[str], people_hint: List[ResearchedPerson]) -> List[str]:
+def get_target_designations(designations_with_geo: List[str], people_hint: List[ResearchedPerson]) -> List[str]:
     """
-    Extract target divisions from people hint.
+    Extract target designations from people hint.
     """
-    divisions = set()
+    designations = set()
     for person in people_hint:
-        for division in person.divisions:
-            if division and division.strip() and any(dg in division.lower() for dg in divisions_with_geo):
-                divisions.add(division.strip().lower())
-    return list(divisions)
+        for designation in person.designations:
+            if designation and designation.strip() and any(dg in designation.lower() for dg in designations_with_geo):
+                designations.add(designation.strip().lower())
+    return list(designations)
 
 def update_records_by_llm(
     identities: Dict[str, List[str]],  # map of canonical name to list of other names
@@ -327,15 +327,15 @@ def calculate_progress(
     updated_records_by_llm: RecordsByLLM,
     roles: List[str],
     target_role: str,
-    target_divisions: List[str]
+    target_designations: List[str]
 ) -> ProgressState:
     """
     Update the progress based on the processed data.
     """
     llm_people_found_lengths = []
     target_role_found_with_an_llm = set()
-    divisions_found_with_an_llm = set()
-    num_target_divisions = len(target_divisions)
+    designations_found_with_an_llm = set()
+    num_target_designations = len(target_designations)
 
     for llm, people_by_name in updated_records_by_llm.items():
         # Only count a person if any of their records has both a role and contact info
@@ -353,21 +353,20 @@ def calculate_progress(
         else:
             target_role_found_with_an_llm.add(llm)
 
-        # Count valid people with non-empty divisions
-        if len(target_divisions) > 0:
-            people_with_divisions = [
+        # Count valid people with non-empty designations
+        if len(target_designations) > 0:
+            people_with_designations = [
                 person_list for person_list in valid_people
-                if any(person.divisions and any(d.strip() for d in person.divisions) for person in person_list)
+                if any(person.designations and any(d.strip() for d in person.designations) for person in person_list)
             ]
-            if len(people_with_divisions) >= num_target_divisions:
-                divisions_found_with_an_llm.add(llm)
+            if len(people_with_designations) >= num_target_designations:
+                designations_found_with_an_llm.add(llm)
         else:
-            divisions_found_with_an_llm.add(llm)
+            designations_found_with_an_llm.add(llm)
 
-    
     # Following are only true if at least 2 LLMs found enough data
     progress.has_target_role = len(target_role_found_with_an_llm) >= 2
-    progress.has_target_divisions = len(divisions_found_with_an_llm) >= 2
+    progress.has_target_designations = len(designations_found_with_an_llm) >= 2
 
     sorted_lengths = sorted(llm_people_found_lengths, reverse=True)
     if len(sorted_lengths) > 1:

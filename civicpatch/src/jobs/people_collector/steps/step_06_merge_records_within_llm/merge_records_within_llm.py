@@ -59,10 +59,10 @@ def get_source_urls(person_records: list, person: Person) -> list:
     """
     field_map = [
         ('roles', 'roles'),
-        # ('divisions', 'divisions'), # Uncomment if you want divisions
+        # ('divisions', 'divisions'),
         ('phones', 'phone'),
         ('emails', 'email'),
-        # ('urls', 'url'), # Uncomment if you want urls
+        # ('urls', 'url'), 
     ]
     merged_values = {plural: set(getattr(person, plural)) for plural, _ in field_map}
     source_urls = set()
@@ -94,7 +94,7 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
     # Use helper functions to merge fields
     image = field_mergers.merge_field([r.image for r in records])
     merged_roles = field_mergers.merge_roles(records)
-    merged_divisions = field_mergers.merge_divisions(records)
+    merged_designations = field_mergers.merge_designations(records)
     phones = field_mergers.merge_field_to_list([r.phone for r in records])
     emails = field_mergers.merge_field_to_list([r.email for r in records])
     urls = field_mergers.merge_field_to_list([r.url for r in records])
@@ -110,7 +110,7 @@ def merge_llm_people_to_person(canonical_name: str, llm_people_list: List[LLMPer
         name=canonical_name,
         other_names=other_names,  # Add other names here
         roles=merged_roles,
-        divisions=merged_divisions,
+        designations=merged_designations,
 
         phones=phones,
         emails=emails,

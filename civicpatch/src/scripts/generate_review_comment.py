@@ -121,6 +121,28 @@ def generate_validation_errors(government_type: str, people: List[Official]) -> 
     
     return errors
 
+def extract_designations_from_office_name(office_name: str, designations_config: dict) -> List[str]:
+    designations = []
+    office_name_parts = office_name.lower().split(' - ')
+
+    for part in office_name_parts:
+        designation_candidate_parts = part.split(' ');
+        designation_label = designation_candidate_parts[0]
+        designation_value = ' '.join(designation_candidate_parts[1:]).strip()
+
+        for designation_key, config in designations_config.items():
+            if designation_label == designation_key or designation_label in config.get("aliases", []):
+                if config.get("is_unique", False):
+                    designations.append(designation_key)
+                else:
+                    if designation_value:
+                        designations.append(f"{designation_key} {designation_value}")
+                    else:
+                        designations.append(designation_key)
+                break  # Stop searching once a match is found
+
+    return designations
+
 def load_pipeline_context_from_json(filepath: str) -> PeopleCollectorContext:
     with open(filepath, "r") as file:
         data = json.load(file)

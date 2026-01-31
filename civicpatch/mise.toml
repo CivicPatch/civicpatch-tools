@@ -65,10 +65,10 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:alvin/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:palouse/government",
     "config": {
-        "url": "https://www.alvin.gov/",
-        "name": "Alvin city"
+        "url": "https://palousewa.gov",
+        "name": "Palouse city"
     }
   }'
 """

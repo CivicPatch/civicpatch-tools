@@ -18,7 +18,7 @@ class ProgressState(BaseModel):
     required_data: int
     current_data: int
     has_target_role: bool = False
-    has_target_divisions: bool = False
+    has_target_designations: bool = False
 
 class LinkStatus(Enum):
     PENDING = "pending"
@@ -38,7 +38,7 @@ class Link(BaseModel):
 class RawLLMPerson(BaseModel):
     name: str
     roles: List[str]
-    divisions: List[str]
+    designations: List[str]
 
     phone: Optional[str] = None
     email: Optional[str] = None
@@ -112,7 +112,7 @@ class MissingPerson(BaseModel):
 class ResearchedPerson(BaseModel):
     name: str
     roles: List[str]
-    divisions: List[str]
+    designations: List[str]
 
 class ResearchMunicipalityLLMSchema(BaseModel):
     government_type: str
@@ -145,7 +145,7 @@ class ProcessPageContentStep(BaseModel):
     raw_records_by_llm: RecordsByLLM
     records_by_llm: RecordsByLLM
     progress: ProgressState = ProgressState(
-        required_data=0, current_data=0, has_target_role=False, has_target_divisions=False
+        required_data=0, current_data=0, has_target_role=False, has_target_designations=False
     )
 
 class MergeRecordsWithinLLMStep(BaseModel):
