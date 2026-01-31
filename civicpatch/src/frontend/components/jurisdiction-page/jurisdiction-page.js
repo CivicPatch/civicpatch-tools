@@ -1,6 +1,7 @@
 import { component, useEffect, useState, useCallback } from "haunted";
 import { html } from "lit-html";
 import { useModal } from "../hooks/useModal.js";
+import "../scrape-history/scrape-history-list.js";
 
 const DEFAULT_CENTER = "30.24171,-91.991044";
 
@@ -205,16 +206,9 @@ function JurisdictionPage({ jurisdiction_ocdid }) {
 
                 <h3>Scrape History</h3>
                 <hr />
-                <civ-scrape-history
-                  .scrapes=${[]}
-                ></civ-scrape-history>
-
-                <p>
-                  Last Scraped:
-                  ${data.data.updated_at
-                    ? new Date(data.data.updated_at).toLocaleString()
-                    : "N/A"}
-                </p>
+                <civ-scrape-history-list
+                  .scrapeJobs=${[]}
+                ></civ-scrape-history-list>
 
                 <civ-scrape-modal
                   .onStartScrape=${handleScrapeStartClick}

@@ -56,7 +56,8 @@ Roles and divisions are standardized via the rules listed under [./config](./con
    You will need to collaborate with the crudder maintainer to use the `API_CIVICPATCH_ORG_TOKEN`.
    See: [API_CIVICPATCH_ORG_TOKEN](#API_CIVICPATCH_ORG_TOKEN)
 4. Under the `civicpatch/` directory, run `mise dev`. This will take a while if it's the first time.
-5. You're done. yOpen up a browser at `http://localhost:8000`
+5. You're done. Open up a browser at `http://localhost:8000`
+6. To develop with the frontend (components), run "npm run start" under src/frontend
 
 ### Commands
 
