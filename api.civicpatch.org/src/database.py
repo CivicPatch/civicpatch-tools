@@ -404,6 +404,22 @@ async def get_geojson_by_latlong(lat: float, long: float, zoom: int = None):
         buffer_m = max(50.0, meters_per_pixel * 512.0)
 
     try:
+        # Approximate degree deltas for a bounding box to let the DB use a spatial index.
+        # These approximations are fine for the bbox pre-filter (we still run ST_DWithin for exact check).
+        meters_per_deg_lat = 110574.0  # approximate meters per degree latitude
+        meters_per_deg_lon = 111320.0 * math.cos(math.radians(lat))  # varies with latitude
+
+        dlat = buffer_m / meters_per_deg_lat
+        dlon = buffer_m / meters_per_deg_lon
+
+        min_lon = long - dlon
+        max_lon = long + dlon
+        min_lat = lat - dlat
+        max_lat = lat + dlat
+
+        # Limit to avoid huge result sets; adjust as needed.
+        RESULT_LIMIT = 100
+
         async with pool.connection() as conn, conn.cursor() as cur:
             await cur.execute(
                 """
@@ -417,14 +433,23 @@ async def get_geojson_by_latlong(lat: float, long: float, zoom: int = None):
                     ) AS distance_m
                 FROM geo g
                 JOIN jurisdictions j ON j.data->>'geoid' = g.geoid
-                WHERE ST_DWithin(
+                -- fast bbox pre-filter using && and ST_MakeEnvelope so the spatial index on geom can be used
+                WHERE g.geom && ST_MakeEnvelope(%s, %s, %s, %s, 4326)
+                  AND ST_DWithin(
                     g.geom::geography,
                     ST_SetSRID(ST_Point(%s, %s), 4326)::geography,
                     %s
-                )
-                ORDER BY distance_m;
+                  )
+                ORDER BY distance_m
+                LIMIT %s;
                 """,
-                (long, lat, long, lat, buffer_m),
+                (
+                    long, lat,
+                    min_lon, min_lat, max_lon, max_lat,
+                    long, lat,
+                    buffer_m,
+                    RESULT_LIMIT,
+                ),
             )
             rows = await cur.fetchall()
 
