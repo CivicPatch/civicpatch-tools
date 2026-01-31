@@ -22,6 +22,19 @@ import markerIconPng from "leaflet/dist/images/marker-icon.png";
 
 const DEFAULT_LOCATION = { lat: 47.60813, lng: -122.335167 }; // Seattle, WA
 
+// Use accessible colors for map
+const MAP_COLORS = {
+  color1: "#1b9e77",
+  color2: "#d95f02",
+  color3: "#7570b3",
+  color4: "#e7298a",
+  color5: "#66a61e",
+  color6: "#e6ab02",
+  color7: "#a6761d",
+  color8: "#666666",
+
+}
+
 // https://leafletjs.com/reference.html#latlng
 function CivMap({ latlng, canmove = true, geojson = null }) {
   const canMove = canmove === "true" || canmove === true;
@@ -35,6 +48,100 @@ function CivMap({ latlng, canmove = true, geojson = null }) {
   const [geo, setGeo] = useState({ data: null, featureGroup: null });
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [prevSelectedJurisdictionOcdid, setPrevSelectedJurisdictionOcdid] = useState(null);
+
+  // --- START: helpers to color geojson features ---
+  const _colorPalette = Object.values(MAP_COLORS);
+
+  const _hashStringToIndex = (str = "") => {
+    let h = 0;
+    for (let i = 0; i < str.length; i++) {
+      h = (h << 5) - h + str.charCodeAt(i);
+      h |= 0;
+    }
+    return Math.abs(h) % _colorPalette.length;
+  };
+
+  const colorForFeature = (feature) => {
+    // Prefer a stable property for color grouping (jurisdiction_ocdid or id)
+    const key =
+      feature?.properties?.jurisdiction_ocdid ||
+      feature?.properties?.id ||
+      feature?.id ||
+      feature?.properties?.name ||
+      "";
+    return _colorPalette[_hashStringToIndex(String(key))];
+  };
+
+  const styleForFeature = (feature) => {
+    const c = colorForFeature(feature);
+    return {
+      color: c, // stroke
+      weight: 2,
+      fillColor: c,
+      fillOpacity: 0.25,
+    };
+  };
+  // --- END helpers ---
+
+  // Create a geoJSON layer with per-feature styles and popups
+  const createGeoDataLayer = (map) => {
+    const _geoData = new geoJSON(null, {
+      style: styleForFeature,
+      onEachFeature: (feature, layer) => {
+        const title =
+          feature?.properties?.name ||
+          feature?.properties?.jurisdiction_ocdid ||
+          feature?.properties?.id ||
+          "Feature";
+        layer.bindPopup(String(title));
+      },
+    });
+
+    const _geoLayer = new FeatureGroup([_geoData]).addTo(map);
+    return { data: _geoData, featureGroup: _geoLayer };
+  };
+
+  // Replace layers in the existing geo.data cleanly
+  const updateGeoData = (geoData, newGeojson) => {
+    if (!geoData || !newGeojson) return;
+    try {
+      geoData.clearLayers();
+      geoData.addData(newGeojson);
+    } catch (err) {
+      console.error("updateGeoData error:", err);
+    }
+  };
+
+  // Create and attach optional controls (geocoder + locate)
+  const createAndAttachControls = (map) => {
+    let _gc = null;
+    let _lc = null;
+    if (canMove) {
+      _gc = new Geocoder({
+        geocoder: new geocoders.Nominatim({
+          geocodingQueryParams: { countrycodes: "US" },
+        }),
+        defaultMarkGeocode: false,
+        position: "topleft",
+      })
+        .on("markgeocode", handleAddressResult)
+        .addTo(map);
+
+      _lc = new LocateControl({
+        keepCurrentZoomLevel: true,
+        drawMarker: false,
+        drawCircle: false,
+        position: "bottomright",
+        setView: false,
+        clickBehavior: {
+          inView: "stop",
+          outOfView: "stop",
+          inViewNotFollowing: "stop",
+        },
+      }).addTo(map);
+    }
+    return { gc: _gc, lc: _lc };
+  };
 
   useEffect(() => {
     if (!mapInstance) return;
@@ -98,12 +205,10 @@ function CivMap({ latlng, canmove = true, geojson = null }) {
     return () => clearTimeout(timer);
   }, [latlng, geo, homeLatlng, currentLatlng, zoom, mapInstance]);
 
+  // wire geojson updates through a small helper
   useEffect(() => {
     if (!geo.data || !geojson) return;
-
-    geo.data.clearLayers();
-    geo.data.addData(geojson);
-    
+    updateGeoData(geo.data, geojson);
     // handleGeojsonChange({ geoData: geo.data });
   }, [geo, geojson]);
 
@@ -163,35 +268,12 @@ function CivMap({ latlng, canmove = true, geojson = null }) {
     }
 
     if (canMove) {
-      _gc = new Geocoder({
-        geocoder: new geocoders.Nominatim({
-          geocodingQueryParams: {
-            countrycodes: "US",
-          },
-        }),
-        defaultMarkGeocode: false,
-        position: "topleft",
-      })
-        .on("markgeocode", handleAddressResult)
-        .addTo(newMapInstance);
-
-      _lc = new LocateControl({
-        keepCurrentZoomLevel: true,
-        drawMarker: false,
-        drawCircle: false,
-        position: "bottomright",
-        setView: false,
-        clickBehavior: {
-          inView: "stop",
-          outOfView: "stop",
-          inViewNotFollowing: "stop",
-        },
-      }).addTo(newMapInstance);
+      const ctrls = createAndAttachControls(newMapInstance);
+      _gc = ctrls.gc;
+      _lc = ctrls.lc;
     }
 
-    let _geoData = new geoJSON();
-
-    let _geoLayer = new FeatureGroup([_geoData]).addTo(newMapInstance);
+    const { data: _geoData, featureGroup: _geoLayer } = createGeoDataLayer(newMapInstance);
 
     let _zoom = new Control.Zoom({
       position: "bottomright",

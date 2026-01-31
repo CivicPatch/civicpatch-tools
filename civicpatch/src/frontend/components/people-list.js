@@ -3,7 +3,35 @@ import { html } from "lit-html";
 
 function PeopleList({ local = [] }) {
     const people = local;
+
+    const hasSubdivision = (person) => {
+        const divisionOcdid = person.office.division_ocdid || "";
+        if (divisionOcdid.includes("district") || divisionOcdid.includes("ward")) {
+            return true;
+        }
+        return false;
+    }
+
+    const getSubdivisionLabel = (person) => {
+        const divisionOcdid = person.office.division_ocdid || "";
+        const parts = divisionOcdid.split("/");
+        for (const part of parts) {
+            if (part.startsWith("council_district:")) {
+                return `District ${part.split(":")[1]}`;
+            } else if (part.startsWith("ward:")) {
+                return `Ward ${part.split(":")[1]}`;
+            }
+        }
+    }
     
+
+    const subDivision = (person) => {
+        if (hasSubdivision(person)) {
+            return `${getSubdivisionLabel(person)}`;
+        }
+        return null;
+    }
+
     const formatSources = (sources) => {
         if (!sources || sources.length === 0) {
             return html`<small>No Sources</small>`;
@@ -36,7 +64,6 @@ function PeopleList({ local = [] }) {
                 <tr>
                     <th style="width: 1%;">Photo</th>
                     <th style="width: 15%;">Official</th>
-                    <th style="width: 15%;">Divisions</th>
                     <th style="width: 15%">Contact</th>
                 </tr>
             </thead>
@@ -58,17 +85,14 @@ function PeopleList({ local = [] }) {
                         
                         <td data-label="Official">
                             <strong>${person.name}</strong>
-                            <small style="display: block;">${person.roles && person.roles.join(' | ')}</small>
+                            <small style="display: block;">${person.office && person.office.name}</small>
+                            <small style="display: block;">${subDivision(person)}</small>
                         </td>
 
-                        <td data-label="Divisions">
-                            ${person.divisions && person.divisions.join(' | ')}
-                        </td>
-                        
                         <td data-label="Contact">
-                            ${person.email ? html`<a href="mailto:${person.email}" style="display: block;">${person.email}</a>` : ''}
-                            ${person.phone_number ? html`<a href="tel:${person.phone_number}" style="display: block;">${person.phone_number}</a>` : ''}
-                            ${person.website ? html`<a href="${person.website}" target="_blank" class="secondary">Link</a>` : ''}
+                            ${person.emails ? html`<a href="mailto:${person.emails.join(',')}" style="display: block;">${person.emails.join(',')}</a>` : ''}
+                            ${person.phones ? html`<a href="tel:${person.phones.join(',')}" style="display: block;">${person.phones.join(',')}</a>` : ''}
+                            ${person.urls ? html`<a href="${person.urls.join(',')}" target="_blank" class="secondary">Link</a>` : ''}
                         </td>
                     </tr>
                 `)}

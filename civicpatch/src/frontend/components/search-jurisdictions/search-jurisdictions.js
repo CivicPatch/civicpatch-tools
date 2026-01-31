@@ -63,6 +63,7 @@ function SearchJurisdictions() {
       </div>
       <civ-people-list .local=${people}></civ-people-list>
     </div>
+
   `;
 }
 
