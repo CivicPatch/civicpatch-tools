@@ -1,6 +1,7 @@
 import json
 import sys
 from typing import List
+from collections import defaultdict
 from jobs.people_collector.schemas import (
     PeopleCollectorContext,
 )
@@ -105,43 +106,58 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
 
 def generate_validation_errors(government_type: str, people: List[Official]) -> List[str]:
     errors = []
-    # Error out if more than one person has an is_unique: true role
-    unique_roles = config_utils.get_unique_roles(government_type)
-    person_roles = {
-            person.name: person.office.name.lower().split(' - ')
-            for person in people
-    }
-    for role in unique_roles:
-        person_with_role = [person for person in people if role in person_roles.get(person.name, [])]
-        if len(person_with_role) > 1:
-            person_names = ", ".join([person.name for person in person_with_role])
-            errors.append(f"Role '{role}' is marked as unique, but found multiple persons with this role: {person_names}")
-    if len(people) == 0:
-        errors.append("No officials were found.")
-    
+    if not people:
+        return ["No officials were found."]
+
+    unique_roles = {r.lower() for r in config_utils.get_unique_roles(government_type)}
+    designations_config = config_utils.get_designations()
+
+    # Map unique role token -> list of person names
+    role_to_persons = defaultdict(list)
+    for person in people:
+        office_tokens = [t.strip() for t in (person.office.name or "").lower().split(" - ") if t.strip()]
+        for token in office_tokens:
+            if token in unique_roles:
+                role_to_persons[token].append(person.name)
+
+    for role, persons in role_to_persons.items():
+        if len(persons) > 1:
+            errors.append(f"Role '{role}' is marked as unique, but found multiple persons with this role: {', '.join(persons)}")
+
+    # Collect unique designations per person and invert to designation -> persons
+    designation_to_persons = defaultdict(list)
+    for person in people:
+        designations = extract_unique_designations_from_office_name(person.office.name or "", designations_config)
+        for d in designations:
+            designation_to_persons[d].append(person.name)
+
+    for designation, persons in designation_to_persons.items():
+        if len(persons) > 1:
+            errors.append(f"Designation '{designation}' is marked as unique, but found multiple persons with this designation: {', '.join(persons)}")
+
     return errors
 
-def extract_designations_from_office_name(office_name: str, designations_config: dict) -> List[str]:
-    designations = []
-    office_name_parts = office_name.lower().split(' - ')
+def extract_unique_designations_from_office_name(office_name: str, designations_config: dict) -> List[str]:
+    if not office_name:
+        return []
 
+    office_name_parts = [p.strip() for p in office_name.lower().split(" - ") if p.strip()]
+
+    # Build a flat set of all aliases + canonical keys (lowercased) for unique designations
+    alias_set = set()
+    for key, cfg in designations_config.items():
+        if cfg.get("is_unique"):
+            aliases = [a.lower() for a in cfg.get("aliases", [])]
+            alias_set.update(aliases)
+            alias_set.add(key.lower())
+
+    matches = []
     for part in office_name_parts:
-        designation_candidate_parts = part.split(' ');
-        designation_label = designation_candidate_parts[0]
-        designation_value = ' '.join(designation_candidate_parts[1:]).strip()
+        tokens = set(part.split())
+        if tokens & alias_set:
+            matches.append(part)
 
-        for designation_key, config in designations_config.items():
-            if designation_label == designation_key or designation_label in config.get("aliases", []):
-                if config.get("is_unique", False):
-                    designations.append(designation_key)
-                else:
-                    if designation_value:
-                        designations.append(f"{designation_key} {designation_value}")
-                    else:
-                        designations.append(designation_key)
-                break  # Stop searching once a match is found
-
-    return designations
+    return matches
 
 def load_pipeline_context_from_json(filepath: str) -> PeopleCollectorContext:
     with open(filepath, "r") as file:

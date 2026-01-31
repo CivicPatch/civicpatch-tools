@@ -5,7 +5,7 @@ from decimal import Decimal, InvalidOperation
 from shared.schemas import JobConfig
 
 _data_config = None
-_divisions_config = None
+_designations_config = None
 _government_types_config = None
 _crawl_config = None
 _job_config = None
@@ -30,31 +30,31 @@ def get_data_config():
         _data_config = config_data.get('data', {})
     return _data_config
 
-def get_divisions():
-    global _divisions_config
-    if _divisions_config is None:
+def get_designations():
+    global _designations_config
+    if _designations_config is None:
         config_path = get_config_path()
-        divisions_file_path = os.path.join(config_path, 'divisions.yml')
-        with open(divisions_file_path, 'r') as config_file:
+        designations_file_path = os.path.join(config_path, 'designations.yml')
+        with open(designations_file_path, 'r') as config_file:
             config_data = yaml.safe_load(config_file)
-        _divisions_config = config_data.get('divisions', {})
-    return _divisions_config
+        _designations_config = config_data.get('designations', {})
+    return _designations_config
 
-def get_division_names() -> List[str]:
+def get_designation_names() -> List[str]:
     """
-    Returns a list of canonical division names from the configuration file.
+    Returns a list of canonical designation names from the configuration file.
     """
-    divisions_config = get_divisions()
-    return list(divisions_config.keys())
+    designations_config = get_designations()
+    return list(designations_config.keys())
 
-def get_division_alias_map() -> Dict[str, str]:
+def get_designation_alias_map() -> Dict[str, str]:
     """
-    Build a mapping from all aliases to their canonical division type.
+    Build a mapping from all aliases to their canonical designation type.
     """
-    divisions_config = get_divisions()
+    designations_config = get_designations()
 
     alias_map = {}
-    for canonical, entry in divisions_config.items():
+    for canonical, entry in designations_config.items():
         alias_map[canonical.lower()] = canonical
         for alias in entry.get("aliases", []):
             alias_map[alias.lower()] = canonical
@@ -201,7 +201,7 @@ def get_role_alias_map(government_type: str) -> Dict[str, str]:
 
 def get_context_keywords(government_type: str) -> List[str]:
     """
-    Combines all search keywords (including roles and divisions and their aliases)
+    Combines all search keywords (including roles and designations and their aliases)
     into a single list.
     """
     government_types = get_government_types()
@@ -219,9 +219,9 @@ def get_context_keywords(government_type: str) -> List[str]:
         for alias in role.get('aliases', []):
             keywords.add(alias)
 
-    # Add all divisions and their aliases
-    divisions_config = get_divisions()
-    for canonical, entry in divisions_config.items():
+    # Add all designations and their aliases
+    designations_config = get_designations()
+    for canonical, entry in designations_config.items():
         keywords.add(canonical)
         for alias in entry.get('aliases', []):
             keywords.add(alias)

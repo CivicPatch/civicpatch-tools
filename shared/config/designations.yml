@@ -1,17 +1,20 @@
 ---
-divisions:
+designations:
   ward:
+    is_unique: false
     has_geographic_area: true
     aliases:
       - council ward
       - ward council
   district:
+    is_unique: false
     has_geographic_area: true
     name: council_district # ocd-diviosion uses council_district
     aliases:
       - council district
       - district council
   at-large:
+    is_unique: false
     aliases: 
       - citywide
       - city-wide
@@ -19,15 +22,24 @@ divisions:
       - city wide
       - city
   position:
+    is_unique: false
     aliases:
       - council position
       - position council
       - posn
       - pos.
   seat:
+    is_unique: true
     aliases:
       - council seat
   place:
+    is_unique: true
     aliases: []
   precinct:
+    is_unique: false
+    has_geographic_area: true
+    aliases: []
+  post:
+    is_unique: true
+    has_geographic_area: false
     aliases: []
