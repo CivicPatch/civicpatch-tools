@@ -6,17 +6,17 @@ from jobs.people_collector.schemas import (
 from jobs.people_collector.steps.step_06_merge_records_within_llm.merge_records_within_llm import (
     merge_llm_people_to_person, get_source_urls, merge_records, determine_canonical_name
 )
-from shared.utils.config_utils import get_role_alias_map, get_division_alias_map
+from shared.utils.config_utils import get_role_alias_map, get_designation_alias_map
 from datetime import datetime as Datetime
 
 pytestmark = pytest.mark.unit
 
-def make_llm_person(name, roles=None, divisions=None, phone=None, email=None, url=None, source_url=None):
+def make_llm_person(name, roles=None, designations=None, phone=None, email=None, url=None, source_url=None):
     """Helper function to create LLMPerson objects for testing"""
     return LLMPerson(
         name=name,
         roles=roles or [],
-        divisions=divisions or [],
+        designations=designations or [],
         phone=phone,
         email=email,
         url=url,
@@ -27,11 +27,11 @@ def make_llm_person(name, roles=None, divisions=None, phone=None, email=None, ur
     )
 
 def test_merge_llm_people_to_person():
-    """Test merging multiple LLMPerson records into a single Person with normalized roles and divisions and correct source_urls"""
+    """Test merging multiple LLMPerson records into a single Person with normalized roles and designations and correct source_urls"""
     p1 = make_llm_person(
         name="Eve",
         roles=["Council Member", "Treasurer"],
-        divisions=["Ward 5", "Ward 6"],
+        designations=["Ward 5", "Ward 6"],
         phone="555-1234",
         email="eve@city.org",
         source_url="http://source1.com"
@@ -39,7 +39,7 @@ def test_merge_llm_people_to_person():
     p2 = make_llm_person(
         name="Eve",
         roles=["Council Member", "Mayor"],
-        divisions=["Ward 5", "Ward 7"],
+        designations=["Ward 5", "Ward 7"],
         phone="555-1234",
         email="eve@city.org",
         source_url="http://source2.com"
@@ -50,7 +50,7 @@ def test_merge_llm_people_to_person():
     # Check merged fields
     assert result.name == "Eve"
     assert set(result.roles) == {"Council Member", "Treasurer", "Mayor"}
-    assert set(result.divisions) == {"Ward 5", "Ward 6", "Ward 7"}
+    assert set(result.designations) == {"Ward 5", "Ward 6", "Ward 7"}
     assert set(result.phones) == {"555-1234"}
     assert set(result.emails) == {"eve@city.org"}
     # Check that both source_urls are present
@@ -63,7 +63,7 @@ def test_get_source_urls_filters_by_unique_contribution():
     r1 = LLMPerson(
         name="Robert Kubert",
         roles=["Mayor"],
-        divisions=["Ward 1"],
+        designations=["Ward 1"],
         phone=None,
         email=None,
         url="https://www.bayonnenj.org/officials/bio/mayor-robert-kubert",
@@ -72,11 +72,11 @@ def test_get_source_urls_filters_by_unique_contribution():
         image=None,
         source_url="https://www.bayonnenj.org/r1"
     )
-    # Record 2: contributes "Mayor", "Council Member" roles, "Ward 2", "Ward 3" divisions, phone, email
+    # Record 2: contributes "Mayor", "Council Member" roles, "Ward 2", "Ward 3" designations, phone, email
     r2 = LLMPerson(
         name="Robert Kubert",
         roles=["Mayor", "Council Member"],
-        divisions=["Ward 2", "Ward 3"],
+        designations=["Ward 2", "Ward 3"],
         phone="555-0002",
         email="mayor2@bayonne.org",
         url="https://www.bayonnenj.org/officials/bio/mayor-robert-kubert",
@@ -89,7 +89,7 @@ def test_get_source_urls_filters_by_unique_contribution():
     r3 = LLMPerson(
         name="Robert Kubert",
         roles=["Mayor"],
-        divisions=["Ward 1"],
+        designations=["Ward 1"],
         phone=None,
         email=None,
         url="https://www.bayonnenj.org/officials/bio/mayor-robert-kubert",
@@ -105,7 +105,7 @@ def test_get_source_urls_filters_by_unique_contribution():
     person = Person(
         name="Robert Kubert",
         roles=["Mayor", "Council Member"],
-        divisions=["Ward 1", "Ward 2", "Ward 3"],
+        designations=["Ward 1", "Ward 2", "Ward 3"],
         phones=["555-0002"],
         emails=["mayor2@bayonne.org"],
         urls=["https://www.bayonnenj.org/officials/bio/mayor-robert-kubert"],
@@ -114,7 +114,7 @@ def test_get_source_urls_filters_by_unique_contribution():
         updated_at=""
     )
 
-    # Only r2 contributed the most unique values for roles, divisions, phone, email
+    # Only r2 contributed the most unique values for roles, designations, phone, email
     expected_urls = {"https://www.bayonnenj.org/r1", "https://www.bayonnenj.org/r2"}
 
     result = get_source_urls(person_records, person)
@@ -127,9 +127,9 @@ def test_merge_records_updates_other_names():
         "John Doe": ["J. Doe", "Johnny"]
     }
     llm_people_list = [
-        LLMPerson(name="Johnny", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
-        LLMPerson(name="J. Doe", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
-        LLMPerson(name="John Doe", roles=["Deputy"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
+        LLMPerson(name="Johnny", roles=["Mayor"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="J. Doe", roles=["Council"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="John Doe", roles=["Deputy"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     jurisdiction_ocdid = "ocd-division/country:us/state:ca/place:someplace"
 

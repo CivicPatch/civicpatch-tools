@@ -112,7 +112,7 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
         - Extract roles that match the **target roles** provided (e.g., {', '.join(roles)}).
     - Designation extraction:
         - Extract designations if explicitly mentioned in the text and relevant to the person's role.
-        - Examples: "Ward 1", "District 2"
+        - Examples: ["Ward 1", "District 2"]
     - Name extraction:
         - Extract full names ONLY, not titles.
     - Phone number extraction:

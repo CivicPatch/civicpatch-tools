@@ -64,8 +64,8 @@ def test_normalize_roles(roles, expected):
     ([], []),  # Empty input
     ([None, ""], []),  # Invalid divisions
 ])
-def test_normalize_divisions(divisions, expected):
-    result = people_utils.normalize_divisions(divisions)
+def test_normalize_designations(divisions, expected):
+    result = people_utils.normalize_designations(divisions)
     if isinstance(expected, list) and len(expected) > 1:
         assert sorted(result) == sorted(expected)
     else:
