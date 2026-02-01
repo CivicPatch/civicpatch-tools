@@ -1,0 +1,67 @@
+people:
+- name: Todd Day
+  roles:
+  - Mayor
+  designations: []
+  phone: 956-350-4093
+  email: Todd.Day@RanchoViejoTx.gov
+  url: null
+  start_date: 2025-05
+  end_date: 2027-05
+  image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/07/Todd-Day-e1720626761286.jpg
+- name: Javier Vera
+  roles:
+  - Mayor Pro Tem
+  designations: []
+  phone: null
+  email: Javier.Vera@RanchoViejoTx.gov
+  url: null
+  start_date: 2025-05
+  end_date: 2027-05
+  image: https://www.ranchoviejotexas.com/wp-content/uploads/2021/11/Group-1.jpg
+- name: Christi Burnias
+  roles:
+  - Alderwoman
+  designations: []
+  phone: null
+  email: Christi.Burnias@RanchoViejoTx.gov
+  url: null
+  start_date: 2024-05
+  end_date: 2026-05
+  image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/05/C-Burnias3-e1716392656796.jpg
+- name: Abelardo Gonzalez
+  roles:
+  - Alderman
+  designations: []
+  phone: null
+  email: Abelardo.Gonzalez@RanchoViejoTx.gov
+  url: null
+  start_date: 2025-05
+  end_date: 2027-05
+  image: null
+- name: Peter Harris
+  roles:
+  - Alderman
+  designations: []
+  phone: null
+  email: Peter.Harris@RanchoViejoTx.gov
+  url: null
+  start_date: 2025-05
+  end_date: 2026-05
+  image: null
+- name: Mark A. Johnson
+  roles:
+  - Alderman
+  designations: []
+  phone: null
+  email: Mark.Johnson@RanchoViejoTx.gov
+  url: null
+  start_date: 2024-05
+  end_date: 2026-05
+  image: https://www.ranchoviejotexas.com/wp-content/uploads/2023/05/FullSizeR001-3-1.jpg
+thought: The information about the Board of Aldermen is presented in a structured
+  format, listing each official with their name, role, email, and term dates. Image
+  URLs are available for some officials. All terms are current as of 2026-02-01. I
+  extracted each official's details as per the instructions. The 'Abelardo Gonzalez'
+  entry was handled by extracting his name from the email address as it was explicitly
+  present with his role and term.

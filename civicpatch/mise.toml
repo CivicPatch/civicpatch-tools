@@ -65,13 +65,14 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:palouse/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:wa/place:palouse/government",
     "config": {
         "url": "https://palousewa.gov",
         "name": "Palouse city"
     }
   }'
 """
+#poetry run python src/scripts/generate_review_comment.py ocd-jurisdiction/country:us/state:tx/place:palouse/government
 #curl -X POST http://localhost:8000/api/pipelines \
 #  -H "Content-Type: application/json" \
 #  -d '{

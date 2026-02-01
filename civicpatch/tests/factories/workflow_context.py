@@ -38,7 +38,6 @@ def workflow_context_factory(
             config=WorkflowConfig(
                 name="Seattle",
                 url="https://seattle.gov",
-                government_type="mayor_council"
             ),
             links=[],
             jurisdiction_ocdid="ocd-jurisdiction/country:us/state:wa/place:seattle/government",

@@ -3,11 +3,11 @@ from typing import List
 from schemas import ResearchedPerson
 import shared.utils.config_utils as config_utils
 
-def municipality_officials_prompt(government_type, people_hint: List[ResearchedPerson]):
+def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
     """
     Generate a prompt to identify municipality officials from the given content.
     """
-    roles = config_utils.get_roles_by_government_type(government_type)
+    roles = config_utils.get_role_names()
     designation_names = config_utils.get_designation_names()
     designations_str = ", ".join(designation_names)
 
@@ -22,7 +22,6 @@ def municipality_officials_prompt(government_type, people_hint: List[ResearchedP
 Extract municipality officials (ex: mayors and council members, or equivalent positions for the government type), if found, 
 from the markdown text. {hint_str}
 
-Government type: '{government_type}'
 Target roles: {', '.join(roles)}
 Target designations: {designations_str}
 

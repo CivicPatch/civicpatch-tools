@@ -116,14 +116,14 @@ def normalize_remaining_text(text: str) -> str:
     return text
 
 
-def normalize_roles(logger, government_type: str, roles: List[str]) -> List[str]:
+def normalize_roles(logger, roles: List[str]) -> List[str]:
     """
     Normalize roles using configured aliases.
     """
     if not roles:
         return []
 
-    role_aliases = config_utils.get_role_alias_map(government_type)
+    role_aliases = config_utils.get_role_alias_map()
     seen = set()
 
     for role in roles:
@@ -134,7 +134,7 @@ def normalize_roles(logger, government_type: str, roles: List[str]) -> List[str]
             seen.add(direct_match)
         else:
             logger.warning(
-                f"Role '{role}' not found in aliases for government type '{government_type}'. Keeping original."
+                f"Role '{role}' not found in aliases. Keeping original."
             )
 
     return [r.title() for r in seen]
@@ -327,12 +327,12 @@ def normalize_designations(designations: List[str]) -> List[str]:
     return result
 
 
-def get_role_priority(government_type: str) -> Dict[str, int]:
+def get_role_priority() -> Dict[str, int]:
     """
     Returns a mapping from role name (lowercase) to its priority/order in the config.
     Aliases are ignored; only main role names are used.
     """
-    role_configs = config_utils.get_role_configs_by_government_type(government_type)
+    role_configs = config_utils.get_role_configs()
     priority = {}
     for idx, role_entry in enumerate(role_configs):
         role_name = role_entry["role"].lower()
@@ -340,11 +340,11 @@ def get_role_priority(government_type: str) -> Dict[str, int]:
     return priority
 
 
-def sort_people(people: List[Person], government_type: str) -> List[Person]:
+def sort_people(people: List[Person]) -> List[Person]:
     """
     Sort people by role priority (from config), then designation, then name.
     """
-    role_priority = get_role_priority(government_type)
+    role_priority = get_role_priority()
 
     def sort_key(person: Person):
         # Find the highest priority among person's roles

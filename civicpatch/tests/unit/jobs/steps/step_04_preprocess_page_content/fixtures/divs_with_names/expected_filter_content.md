@@ -13,6 +13,8 @@ Use up/down arrow keys to navigate suggestions, Enter to select, Esc to close.
 * [Online Services](https://www.pflugervilletx.gov/101/Online-Services)
 * [Government](https://www.pflugervilletx.gov/27/Government)
 
+  Expand Government Submenu
+
 Opens in a new window
 
 ![](https://content.civicplus.com/api/assets/f7c8cd7a-0c4a-4144-85ee-d017907b6ee8?cache=1800&width=1650&mode=min)

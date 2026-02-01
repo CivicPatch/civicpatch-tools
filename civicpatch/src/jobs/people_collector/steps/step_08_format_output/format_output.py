@@ -37,7 +37,8 @@ def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
         source_urls = source_urls,
         identities = identities,
 
-        government_type = context.data.research_municipality_step.government_type
+        # TODO: implement
+        # should_crawl = context.data.config.should_crawl
     )
 
     return FormatOutputStep(

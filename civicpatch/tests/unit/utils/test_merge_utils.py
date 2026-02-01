@@ -5,6 +5,8 @@ from utils.merge_utils import (
   group_people_by_name,
   to_field_set_from_record,
   is_weakly_tied,
+  are_names_similar,
+  has_name_overlap,
 )
 from jobs.people_collector.schemas import LLMPerson
 from domain.models import Person
@@ -214,11 +216,13 @@ def test_is_weakly_tied_llm_person():
     person1.name = "John Doe"
     person1.roles = ["Mayor"]
     person1.email = ["john@example.com"]
+    person1.designations = []
 
     person2 = Dummy()
     person2.name = "Johnathan Doe"
     person2.roles = ["Mayor"]
     person2.email = ["john@example.com"]
+    person2.designations = []
 
     assert is_weakly_tied({}, person1, person2) == True
 
@@ -230,11 +234,13 @@ def test_is_weakly_tied_person():
     person1.name = "Jane Smith"
     person1.roles = ["Council"]
     person1.emails = ["jane@example.com"]
+    person1.designations = ["Seat 2"]
 
     person2 = Dummy()
     person2.name = "Janet Smith"
     person2.roles = ["Council"]
     person2.emails = ["jane@example.com"]
+    person2.designations = ["Seat 2"]
     assert is_weakly_tied({}, person1, person2) == True
 
 def test_is_not_weakly_tied_different_roles_and_emails():
@@ -275,11 +281,11 @@ def test_is_weakly_tied_name_overlap():
     record2 = LLMPerson(name="Jon Doe", roles=[], email=None, url=None, designations=[], source_url="test")
     assert is_weakly_tied(identity_names, record1, record2) == False
 
-def test_is_weakly_tied_matching_roles():
-    """Test is_weakly_tied when roles match."""
+def test_is_weakly_tied_matching_designations():
+    """Test is_weakly_tied when designations match."""
     identity_names = {}
-    record1 = LLMPerson(name="John Doe", roles=["Mayor"], email=None, url=None, designations=[], source_url="test")
-    record2 = LLMPerson(name="Jon Doe", roles=["Mayor"], email=None, url=None, designations=[], source_url="test")
+    record1 = LLMPerson(name="John Doe", roles=["Mayor"], email=None, url=None, designations=["Mayor"], source_url="test")
+    record2 = LLMPerson(name="Jon Doe", roles=["Mayor"], email=None, url=None, designations=["Mayor"], source_url="test")
     assert is_weakly_tied(identity_names, record1, record2) == True
 
 def test_is_weakly_tied_email_overlap():
@@ -372,3 +378,56 @@ def test_find_indexed_name_with_empty_known_mappings():
 
     assert find_indexed_name("John Smith", people_by_name, known_mappings) == "John Smith"
     assert find_indexed_name("Unknown Name", people_by_name, known_mappings) == "Unknown Name"
+
+import pytest
+from utils.merge_utils import are_names_similar
+
+@pytest.mark.parametrize(
+    "name1, name2, expected",
+    [
+        ("John", "John", True),
+        ("Jon", "John",  True),
+        ("Jonny", "John",  True),
+        ("john", "John", True),
+        ("Danny", "Daniel", True),
+        ("Dan", "Daniel", True),
+        ("Dan", "Don", True),
+        ("Sam", "Samuel", True),
+        ("Chris", "Krist", True),
+        ("", "", True),
+        ("", "A", True),
+        ("A", "", True),
+        ("A", "B", True),
+    ]
+)
+def test_are_names_similar_matrix(name1, name2, expected):
+    assert are_names_similar(name1, name2) is expected
+
+import pytest
+from utils.merge_utils import has_name_overlap
+
+@pytest.mark.parametrize(
+    "name1, name2, expected",
+    [
+        ("John Smith", "John Smith", True),           # exact match
+        ("Jon Smith", "John Smith", True),            # similar first, exact last
+        ("John Smith", "Smith John", False),           # reversed order, same names
+        ("Johnny Smith", "John Smith", True),         # similar first, exact last
+        ("John Smithson", "John Smith", True),        # last name containment
+        ("John Smith", "John Smithson", True),        # last name containment
+        ("Jane Smith", "John Smith", True),           # different first, same last - unfortunately
+        ("John Doe", "Jane Doe", True),               # different first, same last - unfortunately
+        ("John Smith", "John Doe", False),            # same first, different last
+        ("Jon Smythe", "John Smith", False),          # similar first, different last
+        ("J. Smith", "John Smith", True),             # initial, same last
+        ("J. Smithson", "John Smith", True),          # initial, last name containment
+        ("", "", False),                              # empty names
+        ("John", "John", False),                      # missing last name
+        ("Smith", "Smith", False),                    # missing first name
+        ("John Smith", "Smith", False),               # missing first in one
+        ("John", "John Smith", False),                # missing last in one
+    ]
+)
+def test_has_name_overlap_matrix(name1, name2, expected):
+    assert has_name_overlap(name1, name2) is expected
+

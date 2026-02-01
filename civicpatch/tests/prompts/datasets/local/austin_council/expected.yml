@@ -6,7 +6,7 @@ people:
     start_date: null
     end_date: null
     roles: [Mayor]
-    divisions: []
+    designations: []
     image: null
   - name: Natasha Harper-Madison
     phone: (512) 978-2101
@@ -15,7 +15,7 @@ people:
     start_date: null
     end_date: null
     roles: [Council Member]
-    divisions: [District 1]
+    designations: [District 1]
     image: null
   - name: Marc Duchen
     phone: (512) 978-2110
@@ -24,7 +24,7 @@ people:
     start_date: null
     end_date: null
     roles: [Council Member]
-    divisions: [District 10]
+    designations: [District 10]
     image: null
   - name: Vanessa Fuentes
     phone: (512) 978-2102
@@ -33,7 +33,7 @@ people:
     start_date: null
     end_date: null
     roles: [Council Member]
-    divisions: [District 2]
+    designations: [District 2]
     image: null
   - name: José Velásquez
     phone: (512) 978-2103
@@ -42,7 +42,7 @@ people:
     start_date: null
     end_date: null
     roles: [Council Member]
-    divisions: [District 3]
+    designations: [District 3]
     image: null
   - name: José “Chito” Vela
     phone: (512) 978-2104
@@ -51,7 +51,7 @@ people:
     start_date: null
     end_date: null
     roles: [Council Member]
-    divisions: [District 4]
+    designations: [District 4]
     image: null
   - name: Ryan Alter
     phone: (512) 978-2105
@@ -60,7 +60,7 @@ people:
     start_date: null
     end_date: null
     roles: [Council Member]
-    divisions: [District 5]
+    designations: [District 5]
     image: null
   - name: Krista Laine
     phone: (512) 978-2106
@@ -69,7 +69,7 @@ people:
     start_date: null
     end_date: null
     roles: [Council Member]
-    divisions: [District 6]
+    designations: [District 6]
     image: null
   - name: Mike Siegel
     phone: (512) 978-2107
@@ -78,7 +78,7 @@ people:
     start_date: null
     end_date: null
     roles: [Council Member]
-    divisions: [District 7]
+    designations: [District 7]
     image: null
   - name: Paige Ellis
     phone: (512) 978-2108
@@ -87,7 +87,7 @@ people:
     start_date: null
     end_date: null
     roles: [Council Member]
-    divisions: [District 8]
+    designations: [District 8]
     image: null
   - name: Zohaib “Zo” Qadri
     phone: (512) 978-2109
@@ -96,5 +96,5 @@ people:
     start_date: null
     end_date: null
     roles: [Council Member]
-    divisions: [District 9]
+    designations: [District 9]
     image: null

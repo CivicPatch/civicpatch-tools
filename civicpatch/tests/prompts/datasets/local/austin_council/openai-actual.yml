@@ -2,9 +2,9 @@ people:
 - name: Kirk Watson
   roles:
   - Mayor
-  divisions: []
+  designations: []
   phone: 512-978-2100
-  email: null
+  email: mayorwatson@austintexas.gov
   url: https://www.austintexas.gov/email/mayorwatson
   start_date: null
   end_date: null
@@ -12,7 +12,7 @@ people:
 - name: Natasha Harper-Madison
   roles:
   - Council Member
-  divisions:
+  designations:
   - District 1
   phone: 512-978-2101
   email: null
@@ -23,7 +23,7 @@ people:
 - name: Vanessa Fuentes
   roles:
   - Council Member
-  divisions:
+  designations:
   - District 2
   phone: 512-978-2102
   email: null
@@ -34,7 +34,7 @@ people:
 - name: "Jos\xE9 Vel\xE1squez"
   roles:
   - Council Member
-  divisions:
+  designations:
   - District 3
   phone: 512-978-2103
   email: null
@@ -45,7 +45,7 @@ people:
 - name: "Jos\xE9 \u201CChito\u201D Vela"
   roles:
   - Council Member
-  divisions:
+  designations:
   - District 4
   phone: 512-978-2104
   email: null
@@ -56,7 +56,7 @@ people:
 - name: Ryan Alter
   roles:
   - Council Member
-  divisions:
+  designations:
   - District 5
   phone: 512-978-2105
   email: null
@@ -67,7 +67,7 @@ people:
 - name: Krista Laine
   roles:
   - Council Member
-  divisions:
+  designations:
   - District 6
   phone: 512-978-2106
   email: null
@@ -78,7 +78,7 @@ people:
 - name: Mike Siegel
   roles:
   - Council Member
-  divisions:
+  designations:
   - District 7
   phone: 512-978-2107
   email: null
@@ -89,7 +89,7 @@ people:
 - name: Paige Ellis
   roles:
   - Council Member
-  divisions:
+  designations:
   - District 8
   phone: 512-978-2108
   email: null
@@ -100,7 +100,7 @@ people:
 - name: "Zohaib \u201CZo\u201D Qadri"
   roles:
   - Council Member
-  divisions:
+  designations:
   - District 9
   phone: 512-978-2109
   email: null
@@ -111,7 +111,7 @@ people:
 - name: Marc Duchen
   roles:
   - Council Member
-  divisions:
+  designations:
   - District 10
   phone: 512-978-2110
   email: null
@@ -119,11 +119,8 @@ people:
   start_date: null
   end_date: null
   image: null
-thought: The page contains a structured table listing the Mayor and City Council members
-  with their roles (Mayor or District X Council Member) and phone numbers. Per instructions,
-  I extracted only officials from that structured listing and did not include anyone
-  mentioned elsewhere on the page. The table provides names, role labels, district
-  divisions (for council members), contact URLs for each entry, and phone numbers;
-  it does not include emails, images, or term dates, so those fields are left null.
-  Extraction is limited to the explicit structured listing and current as of the page's
-  context (the site references an organizational chart dated January 2026).
+thought: The content contains a structured listing of current officials under the
+  City Hall section, listing the Mayor and District Council Members with their roles,
+  district designations, phone numbers, and URLs to their profile or district pages.
+  There are no indications they are former or no longer serving, so I extracted all
+  as current officials.

@@ -1,15 +1,18 @@
 import pytest
 from datetime import datetime, timezone
 from typing import List
+from domain.models import Official
 
-from scripts.generate_review_comment import generate_review_comment
+from scripts.generate_review_comment import (generate_review_comment, get_identity_mismatches)
 from domain.models import Person, person_to_official
 from jobs.people_collector.schemas import (
     WorkflowStatus,
     MergeRecordsAcrossLLMsStep, 
     FormatOutputStep,
     WorkflowConfig,
-    FieldComparison
+    FieldComparison,
+    ResearchMunicipalityStep,
+    ResearchedPerson,
 )
 from tests.factories.workflow_context import workflow_context_factory
 
@@ -57,6 +60,10 @@ def test_generate_review_comment_with_missing_llm_values():
     
     # Create pipeline context with disagreements
     context = workflow_context_factory({
+        WorkflowStatus.RESEARCH_MUNICIPALITY: ResearchMunicipalityStep(
+            people=[],
+            elected_officials=[]
+        ),
         WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS: MergeRecordsAcrossLLMsStep(
             people=[john],
             agreement_score=85.0,
@@ -69,7 +76,6 @@ def test_generate_review_comment_with_missing_llm_values():
             config=WorkflowConfig(
                 url="https://city.gov",
                 name="City",
-                government_type="mayor_council"
             )
         )
     })
@@ -126,6 +132,10 @@ def test_generate_review_comment_with_all_llms_present():
     }
     
     context = workflow_context_factory({
+        WorkflowStatus.RESEARCH_MUNICIPALITY: ResearchMunicipalityStep(
+            people=[],
+            elected_officials=[]
+        ),
         WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS: MergeRecordsAcrossLLMsStep(
             people=[jane],
             agreement_score=90.0,
@@ -138,7 +148,6 @@ def test_generate_review_comment_with_all_llms_present():
             config=WorkflowConfig(
                 url="https://city.gov",
                 name="City",
-                government_type="mayor_council"
             )
         )
     })
@@ -155,3 +164,142 @@ def test_generate_review_comment_with_all_llms_present():
         if line.strip().startswith("| email"):
             assert "jane@city.gov" in line
             assert "jane.doe@city.gov" in line or "**jane.doe@city.gov**" in line
+
+def make_official(name):
+    return Official(
+        name=name,
+        roles=["mayor"],
+        divisions=[],
+        emails=[],
+        phones=[],
+        urls=[],
+        start_date="",
+        end_date="",
+        image="",
+        cdn_image="",
+        source_urls=[],
+        jurisdiction_ocdid="",
+        updated_at="",
+    )
+
+def test_direct_name_match():
+    config = WorkflowConfig(
+        url="https://city.gov",
+        identities={"michelle drass": ["michelle d rass"]}
+    )
+    research = ResearchMunicipalityStep(
+        people=[],
+        elected_officials=[ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[])]
+    )
+    people = [make_official("michelle drass")]
+    errors = get_identity_mismatches(research, config, people)
+    assert errors == []
+
+def test_alias_match():
+    config = WorkflowConfig(
+        url="https://city.gov",
+        identities={"michelle drass": ["michelle d rass"]}
+    )
+    research = ResearchMunicipalityStep(
+        people=[],
+        elected_officials=[ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[])]
+    )
+    people = [make_official("michelle d rass")]
+    errors = get_identity_mismatches(research, config, people)
+    assert errors == []
+
+def test_missing_official():
+    config = WorkflowConfig(
+        url="https://city.gov",
+        identities={"michelle drass": ["michelle d rass"]}
+    )
+    research = ResearchMunicipalityStep(
+        people=[],
+        elected_officials=[ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[])]
+    )
+    people = [make_official("john smith")]
+    errors = get_identity_mismatches(research, config, people)
+    assert errors == [
+        "Extra official: john smith",
+        "Missing official: michelle drass"
+    ]
+
+def test_multiple_officials_some_missing():
+    config = WorkflowConfig(
+        url="https://city.gov",
+        identities={"michelle drass": ["michelle d rass"]}
+    )
+    research = ResearchMunicipalityStep(
+        people=[],
+        elected_officials=[
+            ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[]),
+            ResearchedPerson(name="jane smith", roles=["council"], designations=[])
+        ]
+    )
+    people = [make_official("michelle d rass"), make_official("john smith")]
+    errors = get_identity_mismatches(research, config, people)
+    assert errors == [
+        "Extra official: john smith",
+        "Missing official: jane smith"
+    ]
+
+def test_extra_official_in_people():
+    config = WorkflowConfig(
+        url="https://city.gov",
+        identities={"michelle drass": ["michelle d rass"]}
+    )
+    research = ResearchMunicipalityStep(
+        people=[],
+        elected_officials=[ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[])]
+    )
+    people = [make_official("michelle drass"), make_official("john smith")]
+    errors = get_identity_mismatches(research, config, people)
+    assert errors == ["Extra official: john smith"]
+
+def test_extra_official_in_research():
+    config = WorkflowConfig(
+        url="https://city.gov",
+        identities={"michelle drass": ["michelle d rass"]}
+    )
+    research = ResearchMunicipalityStep(
+        people=[],
+        elected_officials=[
+            ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[]),
+            ResearchedPerson(name="jane smith", roles=["council"], designations=[])
+        ]
+    )
+    people = [make_official("michelle d rass")]
+    errors = get_identity_mismatches(research, config, people)
+    assert errors == ["Missing official: jane smith"]
+
+def test_both_extra_and_missing_officials():
+    config = WorkflowConfig(
+        url="https://city.gov",
+        identities={"michelle drass": ["michelle d rass"]}
+    )
+    research = ResearchMunicipalityStep(
+        people=[],
+        elected_officials=[
+            ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[]),
+            ResearchedPerson(name="jane smith", roles=["council"], designations=[])
+        ]
+    )
+    people = [make_official("michelle d rass"), make_official("john smith")]
+    errors = get_identity_mismatches(research, config, people)
+    assert errors == [
+        "Extra official: john smith",
+        "Missing official: jane smith"
+    ]
+
+def test_no_officials():
+    config = WorkflowConfig(
+        url="https://city.gov",
+        identities={}
+    )
+    research = ResearchMunicipalityStep(
+        people=[],
+        elected_officials=[]
+    )
+    people = []
+    errors = get_identity_mismatches(research, config, people)
+    assert errors == []

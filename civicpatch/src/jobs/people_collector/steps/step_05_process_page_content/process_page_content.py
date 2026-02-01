@@ -112,7 +112,6 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
         page_to_process.url, 
         context.request_id, 
         context.data.jurisdiction_ocdid,
-        research_municipality_step.government_type,
         content,
         setup_data.people_hint
     )
@@ -120,7 +119,6 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     # Process the data functionally without mutations
     updated_raw_records, updated_records = update_step_data(
         context.data.jurisdiction_ocdid,
-        research_municipality_step.government_type, 
         llm_responses, 
         identities,
         current_step.records_by_llm,
@@ -168,8 +166,8 @@ def get_setup_data(municipality_research: ResearchMunicipalityStep) -> Processin
     designations = config_utils.get_designations()
     designations_with_geo = [d for d, v in designations.items() if v.get("has_geographic_area", False)]
     
-    roles = config_utils.get_roles_by_government_type(municipality_research.government_type)
-    target_role = config_utils.get_head_of_government_role(municipality_research.government_type)
+    roles = config_utils.get_role_names()
+    target_role = "Mayor" # TBD hardcoded
     target_designations = get_target_designations(designations_with_geo, municipality_research.elected_officials)
 
     return ProcessingSetup(
@@ -191,7 +189,6 @@ def read_preprocessed_content(jurisdiction_ocdid: str, page_to_process: Link) ->
 
 def update_step_data(
     jurisdiction_ocdid: str,
-    government_type: str, 
     llm_responses: Dict[str, List[LLMPerson]], 
     merged_identities: Dict[str, List[str]],
     existing_records_by_llm: RecordsByLLM,
@@ -213,7 +210,7 @@ def update_step_data(
     for llm, people_by_name in updated_raw_records.items():
         updated_normalized_records[llm] = {}
         for name, people in people_by_name.items():
-            normalized_people = [normalize_record(logger, person, government_type) for person in people]
+            normalized_people = [normalize_record(logger, person) for person in people]
             updated_normalized_records[llm][name] = normalized_people
     
     return updated_raw_records, updated_normalized_records
@@ -226,11 +223,11 @@ def update_links(domain, context_links: List[Link], processed_page: Link, logger
     # Add any new website links found
     return update_website_links(logger, domain, roles, updated_links, records_by_llm)
 
-def normalize_record(logger, record: LLMPerson, government_type: str) -> LLMPerson:
+def normalize_record(logger, record: LLMPerson) -> LLMPerson:
     """
     Normalize roles and designations in an LLMPerson record.
     """
-    normalized_roles = people_utils.normalize_roles(logger, government_type, record.roles)
+    normalized_roles = people_utils.normalize_roles(logger, record.roles)
     normalized_designations = people_utils.normalize_designations(record.designations)
 
     try:
@@ -287,7 +284,6 @@ async def process_with_llms(
     source_url: str,
     request_id,
     jurisdiction_ocdid: str,
-    government_type: str,
     content: str,
     people_hint: List[ResearchedPerson]
 ) -> Dict[str, List[LLMPerson]]:
@@ -297,7 +293,7 @@ async def process_with_llms(
     responses: Dict[str, List[LLMPerson]] = {}
 
     for llm in LLMS:
-        prompt = llm["prompt"].municipality_officials_prompt(government_type, people_hint)
+        prompt = llm["prompt"].municipality_officials_prompt(people_hint)
         response = await llm["service"].run_prompt(
             request_id,
             jurisdiction_ocdid,

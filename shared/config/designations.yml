@@ -13,6 +13,10 @@ designations:
     aliases:
       - council district
       - district council
+  precinct:
+    is_unique: false
+    has_geographic_area: true
+    aliases: []
   at-large:
     is_unique: false
     aliases: 
@@ -34,10 +38,6 @@ designations:
       - council seat
   place:
     is_unique: true
-    aliases: []
-  precinct:
-    is_unique: false
-    has_geographic_area: true
     aliases: []
   post:
     is_unique: true

@@ -71,9 +71,9 @@ class WorkflowConfig(BaseModel):
     name: Optional[str] = None # Human-readable name
     source_urls: Optional[List[str]] = None
     identities: Optional[Dict[str, List[str]]] = None # Canonical name to other names found while scraping
-    
-    # TODO: override in configs
-    government_type: Optional[str] = None  # Ex: "Mayor-Council", "Council-Manager", etc.
+
+    # TODO: implement 
+    should_crawl: bool = True # Whether to run the crawl step or follow links
 
 class WorkflowStatus(Enum):
     INIT = "INIT"
@@ -115,12 +115,10 @@ class ResearchedPerson(BaseModel):
     designations: List[str]
 
 class ResearchMunicipalityLLMSchema(BaseModel):
-    government_type: str
     people: List[ResearchedPerson]
     notes: Optional[str] = None
 
 class ResearchMunicipalityStep(BaseModel):
-    government_type: str
     people: List[ResearchedPerson]
     elected_officials: List[ResearchedPerson]
     notes: Optional[str] = None

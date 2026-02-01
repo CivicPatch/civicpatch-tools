@@ -36,29 +36,20 @@ def sort_urls_by_keyword_similarity(keywords, urls):
     #    json.dump({"keywords": keywords, "sorted_urls": [(url, float(score)) for url, score in sorted_by_score]}, f, indent=2)
     return [url for url, _score in sorted_by_score]
 
-def extract_keywords(doc, government_type):
+def extract_keywords(doc):
     """Extract keywords using a PhraseMatcher."""
-    if not government_type:
-        return []
-    matcher = get_keyword_matcher(government_type)
+    matcher = setup_keyword_entities()
     matches = matcher(doc)
     return [doc[start:end].text for match_id, start, end in matches]
 
-def setup_keyword_entities(government_type):
+def setup_keyword_entities():
     """Setup function to initialize the keyword matcher."""
     nlp = get_nlp()
     matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
-    if government_type:
-        context_keywords = config_utils.get_context_keywords(government_type)
-        patterns = [nlp.make_doc(kw.lower()) for kw in context_keywords]
-        matcher.add("KEYWORD", patterns)
+    context_keywords = config_utils.get_keywords()
+    patterns = [nlp.make_doc(kw.lower()) for kw in context_keywords]
+    matcher.add("KEYWORD", patterns)
     return matcher
-
-def get_keyword_matcher(government_type):
-    """Returns a cached PhraseMatcher for the given government_type."""
-    if government_type not in keyword_matchers:
-        keyword_matchers[government_type] = setup_keyword_entities(government_type)
-    return keyword_matchers[government_type]
 
 def is_valid_phone_number(phone_text):
     """Validate phone number format and reject invalid patterns."""
@@ -125,7 +116,7 @@ def extract_phones_with_regex(text):
     
     return found_phones
 
-def extract_data(text, government_type):
+def extract_data(text):
     """Extract relevant data from the given text."""
     nlp = get_nlp()
     doc = nlp(text)
@@ -148,6 +139,6 @@ def extract_data(text, government_type):
     found_emails = [token.text for token in doc if token.like_email]
     
     # Extract keywords
-    keywords = extract_keywords(doc, government_type)
+    keywords = extract_keywords(doc)
     
     return found_people, found_dates, found_emails, found_phones, keywords

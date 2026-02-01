@@ -6,7 +6,7 @@ from shared.schemas import JobConfig
 
 _data_config = None
 _designations_config = None
-_government_types_config = None
+_roles_config = None
 _crawl_config = None
 _job_config = None
 
@@ -30,6 +30,16 @@ def get_data_config():
         _data_config = config_data.get('data', {})
     return _data_config
 
+def get_role_configs():
+    global _roles_config
+    if _roles_config is None:
+        config_path = get_config_path()
+        roles_config_path = os.path.join(config_path, 'roles.yml')
+        with open(roles_config_path, 'r') as config_file:
+            config_data = yaml.safe_load(config_file)
+        _roles_config = config_data.get('roles', [])
+    return _roles_config
+
 def get_designations():
     global _designations_config
     if _designations_config is None:
@@ -39,6 +49,10 @@ def get_designations():
             config_data = yaml.safe_load(config_file)
         _designations_config = config_data.get('designations', {})
     return _designations_config
+
+def get_role_names() -> List[str]:
+    roles_config = get_role_configs()
+    return [role_config['role'] for role_config in roles_config]
 
 def get_designation_names() -> List[str]:
     """
@@ -60,77 +74,11 @@ def get_designation_alias_map() -> Dict[str, str]:
             alias_map[alias.lower()] = canonical
     return alias_map
 
-def get_government_types():
-    global _government_types_config
-    if _government_types_config is None:
-        config_path = get_config_path()
-        government_types_file_path = os.path.join(config_path, 'government_types.yml')
-        with open(government_types_file_path, 'r') as config_file:
-            config_data = yaml.safe_load(config_file)
-        _government_types_config = config_data.get('government_types', {})
-    return _government_types_config
-
-def get_roles_by_government_type(government_type: str) -> List[str]:
-    """
-    Returns a list of roles associated with a specific government type from the configuration file.
-    
-    Args:
-        government_type: The type of government (e.g., "mayor_council", "commission").
-    
-    Returns:
-        List of roles associated with the specified government type.
-    """
-    government_types = get_government_types()
-    role_configs = government_types.get(government_type, {}).get('roles', [])
-    return [role['role'] for role in role_configs]
-
-def get_all_roles_by_government_type(government_type: str) -> List[str]:
-    """
-    Returns a list of all roles and their aliases associated with a specific government type from the configuration file.
-    """
-    government_types = get_government_types()
-    role_configs = government_types.get(government_type, {}).get('roles', [])
-    roles = []
-    for role in role_configs:
-        roles.append(role['role'])
-        roles.extend(role.get('aliases', []))
-    return roles
-
-def get_head_of_government_role(government_type: str) -> str:
-    """
-    Returns the head of government role for a specific government type from the configuration file.
-    
-    Args:
-        government_type: The type of government (e.g., "mayor_council", "commission").
-    
-    Returns:
-        The head of government role associated with the specified government type.
-    """
-    government_types = get_government_types()
-    return government_types.get(government_type, {}).get('head_of_government', '')
-
-def get_role_configs_by_government_type(government_type: str) -> List[Dict[str, List[str]]]:
-    """
-    Returns a list of role configurations associated with a specific government type from the configuration file.
-    """
-    government_types = get_government_types()
-    roles = government_types.get(government_type, {}).get('roles', [])
-
-    # Ensure each role is a dictionary with a string `role` and a list `aliases`
-    normalized_roles = []
-    for role_entry in roles:
-        if isinstance(role_entry, dict):
-            normalized_roles.append(role_entry)
-        elif isinstance(role_entry, str):
-            normalized_roles.append({"role": role_entry, "aliases": []})
-
-    return normalized_roles
-
-def get_unique_roles(government_type: str) -> List[str]:
+def get_unique_roles() -> List[str]:
     """
     Returns a list of roles marked as unique for a specific government type from the configuration file.
     """
-    role_configs = get_role_configs_by_government_type(government_type)
+    role_configs = get_role_configs()
     unique_roles = [entry['role'] for entry in role_configs if entry.get('is_unique', False)]
     return unique_roles
 
@@ -143,25 +91,28 @@ def get_crawl():
             _crawl_config = yaml.safe_load(config_file)
     return _crawl_config
 
-def search_keywords(government_type: str) -> Dict[str, List[str]]:
-    """
-    Returns the search keywords from the configuration file.
-    """
+def search_keywords(type = "local") -> Dict[str, List[str]]:
     config_path = get_config_path()
-    government_types_file_path = os.path.join(config_path, 'government_types.yml')
-    with open(government_types_file_path, 'r') as config_file:
+    search_config_path = os.path.join(config_path, 'search.yml')
+    with open(search_config_path, 'r') as config_file:
         config = yaml.safe_load(config_file)
-        government_types_config = config.get('government_types', {})
+    
+    return config.get('keywords', {})
 
-    government_type_config = government_types_config.get(government_type, {})
-    return government_type_config.get('keywords', [])
+def crawl_keywords(type = "local") -> Dict[str, List[str]]:
+    config_path = get_config_path()
+    crawl_config_path = os.path.join(config_path, 'crawl.yml')
+    with open(crawl_config_path, 'r') as config_file:
+        config = yaml.safe_load(config_file)
+    
+    return config.get('keywords', {})
 
-def get_job_config(logger) -> JobConfig:
+def get_job_config(logger = None) -> JobConfig:
     # You can override certain properties
     global _job_config
     if _job_config is None:
         config_path = get_config_path()
-        process_file_path = os.path.join(config_path, 'workflow.yml')
+        process_file_path = os.path.join(config_path, 'job.yml')
         with open(process_file_path, 'r') as config_file:
             _job_config = yaml.safe_load(config_file)
 
@@ -169,7 +120,8 @@ def get_job_config(logger) -> JobConfig:
         try:
             pipeline_run_cost_limit_string = os.getenv("PIPELINE_RUN_COST_LIMIT")
             if pipeline_run_cost_limit_string:
-                logger.info(f"Overriding pipeline_run_cost_limit with environment variable: {pipeline_run_cost_limit_string}")
+                if logger is not None:
+                    logger.info(f"Overriding pipeline_run_cost_limit with environment variable: {pipeline_run_cost_limit_string}")
                 pipeline_run_cost_limit = Decimal(pipeline_run_cost_limit_string)
                 _job_config['pipeline_run_cost_limit'] = pipeline_run_cost_limit
         except (ValueError, InvalidOperation):
@@ -179,12 +131,12 @@ def get_job_config(logger) -> JobConfig:
         pipeline_run_cost_limit=_job_config.get('pipeline_run_cost_limit')
     )
 
-def get_role_alias_map(government_type: str) -> Dict[str, str]:
-    role_configs = get_role_configs_by_government_type(government_type)
+def get_role_alias_map() -> Dict[str, str]:
+    role_configs = get_role_configs()
     alias_map = {}
 
     for entry in role_configs:
-        role_entry = entry.get("role", "")
+        role_entry = entry['role']
         canonical_role = role_entry if isinstance(role_entry, str) else " ".join(role_entry).strip()
         if not canonical_role:
             continue
@@ -199,37 +151,32 @@ def get_role_alias_map(government_type: str) -> Dict[str, str]:
 
     return alias_map
 
-def get_context_keywords(government_type: str) -> List[str]:
+def get_keywords() -> List[str]:
     """
     Combines all search keywords (including roles and designations and their aliases)
-    into a single list.
+    into a single deduplicated list.
     """
-    government_types = get_government_types()
-    keywords = set()
-    # Add all keys and values under search_keywords
-    search_keywords = government_types.get(government_type, {}).get('search_keywords', {})
-    for key, values in search_keywords.items():
-        keywords.add(key)
-        keywords.update(values)
+    keywords = []
 
-    # Add all roles and their aliases
-    role_configs = government_types.get(government_type, {}).get('roles', [])
-    for role in role_configs:
-        keywords.add(role['role'])
-        for alias in role.get('aliases', []):
-            keywords.add(alias)
+    # Get all role keywords (canonical + aliases)
+    role_alias_map = get_role_alias_map()
+    role_keywords = set(role_alias_map.keys()) | set(role_alias_map.values())
 
-    # Add all designations and their aliases
-    designations_config = get_designations()
-    for canonical, entry in designations_config.items():
-        keywords.add(canonical)
-        for alias in entry.get('aliases', []):
-            keywords.add(alias)
+    # Get all designation keywords (canonical + aliases)
+    designation_alias_map = get_designation_alias_map()
+    designation_keywords = set(designation_alias_map.keys()) | set(designation_alias_map.values())
 
-    ## Extra keywords for content filtering
-    extra_keywords = ["title", "email", "phone", "contact", "address",
-                      "start date", "elected at", "end date", "term expires",
-                      "current term"]
-    keywords.update(extra_keywords)
+    # Crawl keywords (flatten if dict)
+    crawl = crawl_keywords()
 
-    return list(keywords)
+    # Extra keywords for content filtering
+    extra_keywords = [
+        "title", "email", "phone", "contact", "address",
+        "start date", "elected at", "end date", "term expires",
+        "current term"
+    ]
+
+    # Combine and dedupe all
+    keywords = list(role_keywords | designation_keywords | set(crawl) | set(extra_keywords))
+
+    return keywords
