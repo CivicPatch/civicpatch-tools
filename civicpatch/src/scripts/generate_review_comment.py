@@ -9,8 +9,13 @@ from jobs.people_collector.schemas import (
 )
 from domain.models import Official
 from shared.utils import data_path_utils, config_utils
+from pydantic import BaseModel
 
-def generate_review_comment(pipeline_context: PeopleCollectorContext, people: List[Official]) -> str:
+class ReviewDecision(BaseModel):
+    comment: str
+    approved: bool
+
+def generate_review_comment(pipeline_context: PeopleCollectorContext, people: List[Official]) -> ReviewDecision:
     merge_step = pipeline_context.data.merge_records_across_llms_step
 
     agreement_score = merge_step.agreement_score
@@ -100,7 +105,10 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
                 markdown.append(f"| {field} | {score:.2f} | {gemini_value} | {openai_value} | {final_value} |")
             markdown.append("\n---\n")
 
-    return "\n".join(markdown)
+    return ReviewDecision(
+        comment="\n".join(markdown),
+        approved=not has_validation_errors and not identity_errors
+    )
 
 def generate_validation_errors(people_context: PeopleCollectorContext, people: List[Official]) -> List[str]:
     errors = []
@@ -227,14 +235,14 @@ def main():
         sys.exit(1)
     else:
         jurisdiction_ocdid = sys.argv[1]
-        # It should be defined in the dockerfile
         pipeline_context_file_path = data_path_utils.get_workflow_context_file_path(jurisdiction_ocdid)
         serialized_people = data_path_utils.get_data(jurisdiction_ocdid)
         people = [Official(**person) for person in serialized_people]
 
         pipeline_context = load_pipeline_context_from_json(pipeline_context_file_path)
-        comment = generate_review_comment(pipeline_context, people)
-        print(comment)
+        review_decision = generate_review_comment(pipeline_context, people)
+        print(json.dumps(review_decision.model_dump()))
+        
 
 if __name__ == "__main__":
     main()
