@@ -45,13 +45,11 @@ def test_generate_review_comment_with_missing_llm_values():
     john_official = person_to_official(john)
     
     # Create disagreements where one LLM is missing from llm_values
-    # This simulates the case where a person exists in some LLMs but not others
     disagreements = {
         "John Smith": [
             FieldComparison(
                 field="email",
                 merged_value="john@city.gov",
-                # Only google_gemini has a value, openai is missing from this dict
                 llm_values={"google_gemini": "john@city.gov"},
                 disagreement_score=0.5
             )
@@ -81,31 +79,23 @@ def test_generate_review_comment_with_missing_llm_values():
     })
     
     # Generate the comment
-    comment = generate_review_comment(context, [john_official])
+    review_decision = generate_review_comment(context, [john_official])
+    comment = review_decision.comment
     
     # The comment should contain the disagreements section
     assert "### Disagreements" in comment
     
     # The comment should show "(missing)" for the openai column, not an empty string
-    # The table should look like:
-    # | Field | Disagreement Score | gemini | openai | final_value |
-    # | email | 0.50 | john@city.gov | (missing) | john@city.gov |
     assert "(missing)" in comment, "Expected '(missing)' to appear in the comment for LLMs without values"
     
     # Verify that the openai column shows "(missing)" and not an empty string
     lines = comment.split("\n")
     for line in lines:
         if line.strip().startswith("| email"):
-            # This is the data row for the email field
-            # Parse the columns
             parts = [p.strip() for p in line.split("|")]
-            # Expected format: ['', 'field', 'score', 'gemini', 'openai', 'final', '']
             assert len(parts) >= 6, f"Expected at least 6 columns in line: {line}"
-            
-            # Column indices: 0='', 1=field, 2=score, 3=gemini, 4=openai, 5=final, 6=''
             OPENAI_COLUMN_INDEX = 4
             openai_column = parts[OPENAI_COLUMN_INDEX]
-            
             assert openai_column != "", f"Expected openai column to not be empty, got: {parts}"
             assert "(missing)" in openai_column, \
                 f"Expected openai column to contain '(missing)', got: {openai_column}"
@@ -124,7 +114,7 @@ def test_generate_review_comment_with_all_llms_present():
                 merged_value="jane@city.gov",
                 llm_values={
                     "google_gemini": "jane@city.gov",
-                    "openai": "jane.doe@city.gov"  # Different value
+                    "openai": "jane.doe@city.gov"
                 },
                 disagreement_score=0.3
             )
@@ -152,7 +142,8 @@ def test_generate_review_comment_with_all_llms_present():
         )
     })
     
-    comment = generate_review_comment(context, [jane_official])
+    review_decision = generate_review_comment(context, [jane_official])
+    comment = review_decision.comment
     
     assert "### Disagreements" in comment
     assert "jane@city.gov" in comment
