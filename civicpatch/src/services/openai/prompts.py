@@ -43,10 +43,6 @@ def relevant_page_prompt(people_hint: List[ResearchedPerson]):
 def municipality_officials_prompt(
         people_hint: List[ResearchedPerson]
     ):
-    """
-    Generate a single prompt string for extracting city officials, following the detailed Ruby and Gemini logic.
-    """
-
     designation_names = config_utils.get_designation_names()
     designations_str = ", ".join(designation_names)
     current_date = datetime.now().strftime("%Y-%m-%d")
@@ -61,7 +57,7 @@ def municipality_officials_prompt(
         target_text = ""
 
     prompt = f"""
-    Your task is to extract information about the **current** officials of the target municipality.
+    Your task is to extract information about the **current** elected officials of the target municipality.
 
     {target_text}
 

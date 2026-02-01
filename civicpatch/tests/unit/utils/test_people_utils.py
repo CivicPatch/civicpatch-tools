@@ -1,6 +1,7 @@
 import pytest
 import logging
 from utils import people_utils
+from utils.people_utils import sort_roles, sort_designations, sort_people, Person
 
 pytestmark = pytest.mark.unit
 
@@ -71,3 +72,45 @@ def test_normalize_designations(divisions, expected):
         assert sorted(result) == sorted(expected)
     else:
         assert result == expected
+
+def test_sort_roles_priority_and_numeric(monkeypatch):
+    # Patch config priorities
+    monkeypatch.setattr("utils.people_utils.get_role_priority", lambda: {"mayor": 0, "council": 1, "seat": 2})
+    monkeypatch.setattr("utils.people_utils.get_designation_priority", lambda: {"seat": 0, "ward": 1})
+
+    roles = ["Council", "Mayor", "Seat 10", "Seat 2", "Seat 1", "Ward 3"]
+    # Should sort: Mayor (priority 0), Council (1), Seat 1 (2, num 1), Seat 2 (2, num 2), Seat 10 (2, num 10), Ward 3 (fallback)
+    assert sort_roles(roles) == ["Mayor", "Council", "Seat 1", "Seat 2", "Seat 10", "Ward 3"]
+
+def test_sort_designations_priority_and_numeric(monkeypatch):
+    monkeypatch.setattr("utils.people_utils.get_designation_priority", lambda: {"seat": 0, "ward": 1, "at-large": 2})
+
+    designations = ["Ward 2", "Seat 10", "Seat 1", "At-Large", "Ward 1"]
+    # Should sort: Seat 1, Seat 10, Ward 1, Ward 2, At-Large
+    assert sort_designations(designations) == ["Seat 1", "Seat 10", "Ward 1", "Ward 2", "At-Large"]
+
+def test_sort_people_priority_and_numeric(monkeypatch):
+    monkeypatch.setattr("utils.people_utils.get_role_priority", lambda: {"mayor": 0, "council": 1, "seat": 2})
+    monkeypatch.setattr("utils.people_utils.get_designation_priority", lambda: {"seat": 0, "ward": 1, "at-large": 2})
+
+    people = [
+        Person(name="Alice", roles=["Council"], designations=["Ward 2"], updated_at="2024-01-01", jurisdiction_ocdid="ocd-jurisdiction/country:us/state:xy/place:abc", source_urls=[]),
+        Person(name="Bob", roles=["Mayor"], designations=["At-Large"], updated_at="2024-01-01", jurisdiction_ocdid="ocd-jurisdiction/country:us/state:xy/place:abc", source_urls=[]),
+        Person(name="Carol", roles=["Seat"], designations=["Seat 10"], updated_at="2024-01-01", jurisdiction_ocdid="ocd-jurisdiction/country:us/state:xy/place:abc", source_urls=[]),
+        Person(name="Dave", roles=["Seat"], designations=["Seat 1"], updated_at="2024-01-01", jurisdiction_ocdid="ocd-jurisdiction/country:us/state:xy/place:abc", source_urls=[]),
+        Person(name="Eve", roles=["Council"], designations=["Ward 1"], updated_at="2024-01-01", jurisdiction_ocdid="ocd-jurisdiction/country:us/state:xy/place:abc", source_urls=[]),
+    ]
+    # Should sort: Bob (Mayor), Eve (Council, Ward 1), Alice (Council, Ward 2), Dave (Seat, Seat 1), Carol (Seat, Seat 10)
+    sorted_people = sort_people(people)
+    assert [p.name for p in sorted_people] == ["Bob", "Eve", "Alice", "Dave", "Carol"]
+
+def test_sort_roles_no_priority(monkeypatch):
+    monkeypatch.setattr("utils.people_utils.get_role_priority", lambda: {})
+    monkeypatch.setattr("utils.people_utils.get_designation_priority", lambda: {})
+    roles = ["Seat 2", "Seat 1", "Seat 10"]
+    assert sort_roles(roles) == ["Seat 1", "Seat 2", "Seat 10"]
+
+def test_sort_designations_no_priority(monkeypatch):
+    monkeypatch.setattr("utils.people_utils.get_designation_priority", lambda: {})
+    designations = ["Ward 2", "Ward 1", "Ward 10"]
+    assert sort_designations(designations) == ["Ward 1", "Ward 2", "Ward 10"]
