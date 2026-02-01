@@ -96,7 +96,7 @@ def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
       - roles: (Array of strings) Active municipal roles
       - designations: (Array of strings) Specific district/ward/etc names
       - phone: (String or null) Formatted phone number
-      - email: (String or null) Email address
+      - email: (String or null) Email address in the format of email@domain.tld
       - url: (String or null) In order of importance: the official's profile, biography URL, contact form URL, related position listing, or null if none exist.
       - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
       - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
@@ -115,7 +115,7 @@ def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
     - URL extraction:
         - Extract URLs starting with "http://" or "https://".
     - Email extraction:
-        - Extract email addresses found directly in the text or formatted as Markdown link text.
+        - Extract email addresses found directly in the text
     - Start and End Date Extraction:
         - Extract dates only if explicitly written in the text.
         - **Start Date**:

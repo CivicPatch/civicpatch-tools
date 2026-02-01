@@ -79,7 +79,7 @@ def municipality_officials_prompt(
       - designations: (Array) 
             Example: ["Ward 1", "District 2, Seat 8"]
       - phone: (String or null) Formatted phone number
-      - email: (String or null) Email address
+      - email: (String or null) Email address in the format of email@domain.tld
       - url: (String or null) In order of importance: the official's profile, biography URL, contact form URL, related position listing, or null if none exist.
       - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
       - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
