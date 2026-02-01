@@ -5,7 +5,7 @@ people:
   designations: []
   phone: 956-350-4093
   email: Todd.Day@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  url: null
   start_date: 2025-05
   end_date: 2027-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/07/Todd-Day-e1720626761286.jpg
@@ -15,7 +15,7 @@ people:
   designations: []
   phone: null
   email: Javier.Vera@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  url: null
   start_date: 2025-05
   end_date: 2027-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2021/11/Group-1.jpg
@@ -25,7 +25,7 @@ people:
   designations: []
   phone: null
   email: Christi.Burnias@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  url: null
   start_date: 2024-05
   end_date: 2026-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/05/C-Burnias3-e1716392656796.jpg
@@ -35,7 +35,7 @@ people:
   designations: []
   phone: null
   email: Abelardo.Gonzalez@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  url: null
   start_date: 2025-05
   end_date: 2027-05
   image: null
@@ -45,7 +45,7 @@ people:
   designations: []
   phone: null
   email: Peter.Harris@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  url: null
   start_date: 2025-05
   end_date: 2026-05
   image: null
@@ -55,13 +55,13 @@ people:
   designations: []
   phone: null
   email: Mark.Johnson@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  url: null
   start_date: 2024-05
   end_date: 2026-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2023/05/FullSizeR001-3-1.jpg
-thought: The content contains a structured listing section titled 'Board of Aldermen'
-  with details about current officials, their roles, images, contact emails, phone
-  numbers for some, and term dates. All officials have terms that include or extend
-  to 2026-02-01, indicating they are current officials as of that date. Therefore,
-  all named persons in the listing with roles and term dates that cover 2026-02-01
-  are extracted with their data.
+thought: The content includes a structured listing of current elected officials under
+  the 'Board of Aldermen' section with names, roles, images, emails, phone where available,
+  and term start and end dates. All officials listed have current terms that overlap
+  with the date 2026-02-01, so all are included. Specific designations like ward or
+  district are not provided, so left empty. URLs to individual profiles are not provided
+  directly, so those fields are null.
