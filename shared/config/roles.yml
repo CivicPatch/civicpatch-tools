@@ -91,13 +91,6 @@ roles:
       - township committee member
       - committeeman
       - committeewoman
-  - role: mayor # Optional, not always present
-    is_unique: true
-  - role: mayor pro tempore
-    is_unique: true
-    aliases: 
-    - mayor pro-tem
-    - mayor pro tem
   - role: select board chair
     is_unique: false
     aliases:

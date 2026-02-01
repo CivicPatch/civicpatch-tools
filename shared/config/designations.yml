@@ -17,14 +17,6 @@ designations:
     is_unique: false
     has_geographic_area: true
     aliases: []
-  at-large:
-    is_unique: false
-    aliases: 
-      - citywide
-      - city-wide
-      - at large
-      - city wide
-      - city
   position:
     is_unique: false
     aliases:
@@ -43,3 +35,11 @@ designations:
     is_unique: true
     has_geographic_area: false
     aliases: []
+  at-large:
+    is_unique: false
+    aliases: 
+      - citywide
+      - city-wide
+      - at large
+      - city wide
+      - city

@@ -3,6 +3,7 @@ from typing import List, Dict, Any
 import shared.utils.config_utils as config_utils
 from domain.models import Person
 from jobs.people_collector.schemas import ResearchedPerson
+import re
 
 WORD_TO_NUMBER = {
     'first': '1', 'second': '2', 'third': '3', 'fourth': '4', 'fifth': '5',
@@ -137,7 +138,9 @@ def normalize_roles(logger, roles: List[str]) -> List[str]:
                 f"Role '{role}' not found in aliases. Keeping original."
             )
 
-    return [r.title() for r in seen]
+    sorted_roles = sort_roles(seen)
+
+    return [r.title() for r in sorted_roles]
 
 
 def normalize_designations(designations: List[str]) -> List[str]:
@@ -323,8 +326,9 @@ def normalize_designations(designations: List[str]) -> List[str]:
         if item not in seen:
             seen.add(item)
             result.append(item)
-
-    return result
+    
+    sorted_designations = sort_designations(result)
+    return sorted_designations
 
 
 def get_role_priority() -> Dict[str, int]:
@@ -339,18 +343,113 @@ def get_role_priority() -> Dict[str, int]:
         priority[role_name] = idx
     return priority
 
+def get_designation_priority() -> Dict[str, int]:
+    """
+    Returns a mapping from designation name (lowercase) to its priority/order in the config.
+    Aliases are ignored; only main designation names are used.
+    """
+    designation_configs = config_utils.get_designations()
+    priority = {}
+    for idx, designation_name in enumerate(designation_configs.keys()):
+        priority[designation_name.lower()] = idx
+    return priority
+
+def generic_sort_key(
+    value: str,
+    primary_priority: dict,
+    secondary_priority: dict = None
+):
+    """
+    Generates a tuple for sorting:
+    1. By primary_priority (role or designation priority) using the full value for roles,
+       or first word for designations if no role match.
+    2. By extracted number (if present, for designations only)
+    3. By secondary_priority (if provided)
+    """
+    value_lower = value.lower().strip()
+    # Try full value as role
+    primary = primary_priority.get(value_lower)
+    if primary is not None:
+        # Matched as a role, do NOT extract designation value
+        if secondary_priority:
+            secondary = (1, secondary_priority.get(value_lower, 9999))
+        else:
+            secondary = (1, 9999)
+        return (primary, secondary)
+    else:
+        # Not a role, treat as designation: use first word
+        first_word = value_lower.split()[0] if value_lower.split() else value_lower
+        primary = primary_priority.get(first_word, 9999)
+        number = extract_designation_value(value)
+        if number is not None:
+            secondary = (0, number)
+        elif secondary_priority:
+            secondary = (1, secondary_priority.get(first_word, 9999))
+        else:
+            secondary = (1, 9999)
+        return (primary, secondary)
+
+def sort_roles(roles: List[str]) -> List[str]:
+    role_priority = get_role_priority()
+    designation_priority = get_designation_priority()
+    return sorted(
+        roles,
+        key=lambda r: generic_sort_key(r, role_priority, designation_priority)
+    )
+
+def sort_designations(designations: List[str]) -> List[str]:
+    designation_priority = get_designation_priority()
+    return sorted(
+        designations,
+        key=lambda d: generic_sort_key(d, designation_priority)
+    )
 
 def sort_people(people: List[Person]) -> List[Person]:
-    """
-    Sort people by role priority (from config), then designation, then name.
-    """
     role_priority = get_role_priority()
+    designation_priority = get_designation_priority()
 
-    def sort_key(person: Person):
-        # Find the highest priority among person's roles
-        priorities = [role_priority.get(role.lower(), 9999) for role in person.roles]
-        min_priority = min(priorities) if priorities else 9999
-        first_designation = person.designations[0] if person.designations else ""
-        return (min_priority, first_designation, person.name)
+    def person_sort_key(person: Person):
+        # Role: use minimum priority among all roles (full string)
+        role_priorities = [
+            role_priority.get(role.lower().strip(), 9999)
+            for role in person.roles
+        ] if person.roles else [9999]
+        min_role_priority = min(role_priorities)
 
-    return sorted(people, key=sort_key)
+        # Designation: use minimum priority among all designations (first word)
+        designation_priorities = [
+            designation_priority.get(designation.lower().split()[0], 9999)
+            for designation in person.designations if designation
+        ] if person.designations else [9999]
+        min_designation_priority = min(designation_priorities)
+
+        # Numeric value for tie-breaking
+        designation_numbers = [
+            extract_designation_value(designation)
+            for designation in person.designations if designation
+        ] if person.designations else [None]
+        # Use the minimum number if available, else 9999
+        min_designation_number = min([n for n in designation_numbers if n is not None], default=9999)
+
+        return (min_role_priority, min_designation_priority, min_designation_number)
+
+    return sorted(people, key=person_sort_key)
+
+def extract_designation_value(designation: str):
+    """
+    Extract the first integer found in a designation string.
+    Returns the integer if found, otherwise None.
+
+    Examples:
+        "Seat 10" -> 10
+        "Ward 2" -> 2
+        "District 5A" -> 5
+        "Place 3" -> 3
+        "At-Large" -> None
+    """
+    if not designation:
+        return None
+    match = re.search(r"\b(\d+)\b", designation)
+    if match:
+        return int(match.group(1))
+    return None
