@@ -17,10 +17,10 @@ def test_normalize_name():
 
 def test_append_to_people_by_name():
     people_by_name = {
-        "John Doe": [LLMPerson(name="John Doe", roles=[], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
+        "John Doe": [LLMPerson(name="John Doe", roles=[], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
     }
     new_people = [
-        LLMPerson(name="Johnny Doe", roles=[], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
+        LLMPerson(name="Johnny Doe", roles=[], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
   
     updated_people_by_name = append_to_people_by_name(people_by_name, "John Doe", new_people)
@@ -38,8 +38,8 @@ def test_group_people_by_name_basic():
     known_mappings = {}
     people_by_name = {}
     people_to_link = [
-        LLMPerson(name="John Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
-        LLMPerson(name="Jane Smith", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
+        LLMPerson(name="John Doe", roles=["Mayor"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="Jane Smith", roles=["Council"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -53,8 +53,8 @@ def test_group_people_by_name_with_known_mappings():
     }
     people_by_name = {}
     people_to_link = [
-        LLMPerson(name="J. Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
-        LLMPerson(name="Johnny", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
+        LLMPerson(name="J. Doe", roles=["Mayor"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="Johnny", roles=["Council"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -66,10 +66,10 @@ def test_group_people_by_name_with_existing_people():
     """Test grouping with existing people_by_name"""
     known_mappings = {}
     people_by_name = {
-        "John Doe": [LLMPerson(name="John Doe", roles=["Existing"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
+        "John Doe": [LLMPerson(name="John Doe", roles=["Existing"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
     }
     people_to_link = [
-        LLMPerson(name="John Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
+        LLMPerson(name="John Doe", roles=["Mayor"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -81,10 +81,10 @@ def test_group_people_by_name_similarity_matching():
     """Test grouping with name similarity matching"""
     known_mappings = {}
     people_by_name = {
-        "John Doe": [LLMPerson(name="John Doe", roles=["Existing"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
+        "John Doe": [LLMPerson(name="John Doe", roles=["Existing"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
     }
     people_to_link = [
-        LLMPerson(name="Jon Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
+        LLMPerson(name="Jon Doe", roles=["Mayor"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -102,9 +102,9 @@ def test_group_people_by_name_deduplication():
     }
     people_by_name = {}
     people_to_link = [
-        LLMPerson(name="John Doe", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
-        LLMPerson(name="Johnny", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
-        LLMPerson(name="John Doe", roles=["Deputy"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
+        LLMPerson(name="John Doe", roles=["Mayor"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="Johnny", roles=["Council"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="John Doe", roles=["Deputy"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -128,13 +128,13 @@ def test_group_people_by_name_complex_scenario():
         "John Smith": ["J. Smith"]
     }
     people_by_name = {
-        "Jane Doe": [LLMPerson(name="Jane Doe", roles=["Existing"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
+        "Jane Doe": [LLMPerson(name="Jane Doe", roles=["Existing"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")]
     }
     people_to_link = [
-        LLMPerson(name="John Smith", roles=["Mayor"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
-        LLMPerson(name="J. Smith", roles=["Council"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
-        LLMPerson(name="Jane Doe", roles=["Deputy"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
-        LLMPerson(name="Bob Johnson", roles=["Clerk"], divisions=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
+        LLMPerson(name="John Smith", roles=["Mayor"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="J. Smith", roles=["Council"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="Jane Doe", roles=["Deputy"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test"),
+        LLMPerson(name="Bob Johnson", roles=["Clerk"], designations=[], phone_number=None, email=None, website=None, start_date=None, end_date=None, source_url="test")
     ]
     
     updated_people = group_people_by_name(known_mappings, people_by_name, people_to_link)
@@ -254,8 +254,8 @@ def test_is_not_weakly_tied_different_roles_and_emails():
 def test_is_weakly_tied_same_identity():
     """Test is_weakly_tied when both records have the same identity."""
     identity_names = {"John Doe": ["John Doe", "Johnny", "J. Doe"]}
-    record1 = LLMPerson(name="Johnny", roles=[], email=None, url=None, divisions=[], source_url="test")
-    record2 = LLMPerson(name="J. Doe", roles=[], email=None, url=None, divisions=[], source_url="test")
+    record1 = LLMPerson(name="Johnny", roles=[], email=None, url=None, designations=[], source_url="test")
+    record2 = LLMPerson(name="J. Doe", roles=[], email=None, url=None, designations=[], source_url="test")
     assert is_weakly_tied(identity_names, record1, record2) == True
 
 def test_is_weakly_tied_different_identity():
@@ -264,43 +264,43 @@ def test_is_weakly_tied_different_identity():
         "John Doe": ["Johnny"],
         "Jane Smith": ["J. Smith"]
     }
-    record1 = LLMPerson(name="Johnny", roles=[], email=None, url=None, divisions=[], source_url="test")
-    record2 = LLMPerson(name="J. Smith", roles=[], email=None, url=None, divisions=[], source_url="test")
+    record1 = LLMPerson(name="Johnny", roles=[], email=None, url=None, designations=[], source_url="test")
+    record2 = LLMPerson(name="J. Smith", roles=[], email=None, url=None, designations=[], source_url="test")
     assert is_weakly_tied(identity_names, record1, record2) == False
 
 def test_is_weakly_tied_name_overlap():
     """Test is_weakly_tied when names overlap."""
     identity_names = {}
-    record1 = LLMPerson(name="John Doe", roles=[], email=None, url=None, divisions=[], source_url="test")
-    record2 = LLMPerson(name="Jon Doe", roles=[], email=None, url=None, divisions=[], source_url="test")
+    record1 = LLMPerson(name="John Doe", roles=[], email=None, url=None, designations=[], source_url="test")
+    record2 = LLMPerson(name="Jon Doe", roles=[], email=None, url=None, designations=[], source_url="test")
     assert is_weakly_tied(identity_names, record1, record2) == False
 
 def test_is_weakly_tied_matching_roles():
     """Test is_weakly_tied when roles match."""
     identity_names = {}
-    record1 = LLMPerson(name="John Doe", roles=["Mayor"], email=None, url=None, divisions=[], source_url="test")
-    record2 = LLMPerson(name="Jon Doe", roles=["Mayor"], email=None, url=None, divisions=[], source_url="test")
+    record1 = LLMPerson(name="John Doe", roles=["Mayor"], email=None, url=None, designations=[], source_url="test")
+    record2 = LLMPerson(name="Jon Doe", roles=["Mayor"], email=None, url=None, designations=[], source_url="test")
     assert is_weakly_tied(identity_names, record1, record2) == True
 
 def test_is_weakly_tied_email_overlap():
     """Test is_weakly_tied when emails overlap."""
     identity_names = {}
-    record1 = LLMPerson(name="John Doe", roles=[], email="john@example.com", url=None, divisions=[], source_url="test")
-    record2 = LLMPerson(name="Jon Doe", roles=[], email="john@example.com", url=None, divisions=[], source_url="test")
+    record1 = LLMPerson(name="John Doe", roles=[], email="john@example.com", url=None, designations=[], source_url="test")
+    record2 = LLMPerson(name="Jon Doe", roles=[], email="john@example.com", url=None, designations=[], source_url="test")
     assert is_weakly_tied(identity_names, record1, record2) == True
 
 def test_is_weakly_tied_url_overlap():
     """Test is_weakly_tied when URLs overlap."""
     identity_names = {}
-    record1 = LLMPerson(name="Abigail Doe", roles=[], email=None, url="http://example.com", divisions=[], source_url="test")
-    record2 = LLMPerson(name="Abby Doe", roles=[], email=None, url="http://example.com", divisions=[], source_url="test")
+    record1 = LLMPerson(name="Abigail Doe", roles=[], email=None, url="http://example.com", designations=[], source_url="test")
+    record2 = LLMPerson(name="Abby Doe", roles=[], email=None, url="http://example.com", designations=[], source_url="test")
     assert is_weakly_tied({}, record1, record2) == False
 
 def test_is_weakly_tied_no_overlap():
     """Test is_weakly_tied when there is no overlap."""
     identity_names = {}
-    record1 = LLMPerson(name="John Doe", roles=["Mayor"], email=None, url="http://example.com", divisions=[], source_url="test")
-    record2 = LLMPerson(name="Jane Smith", roles=["Council"], email=None, url="http://example.org", divisions=[], source_url="test")
+    record1 = LLMPerson(name="John Doe", roles=["Mayor"], email=None, url="http://example.com", designations=[], source_url="test")
+    record2 = LLMPerson(name="Jane Smith", roles=["Council"], email=None, url="http://example.org", designations=[], source_url="test")
     assert is_weakly_tied(identity_names, record1, record2) == False
 
 import pytest

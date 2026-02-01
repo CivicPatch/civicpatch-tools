@@ -83,7 +83,7 @@ def municipality_officials_prompt(
       - image: (String or null) URL to profile image (https://...)
       - roles: (Array of strings) Active municipal roles
       - designations: (Array) 
-            Example: "Ward 1", "District 2, Seat 8"
+            Example: ["Ward 1", "District 2, Seat 8"]
       - phone: (String or null) Formatted phone number
       - email: (String or null) Email address
       - url: (String or null) In order of importance: the official's profile, biography URL, contact form URL, related position listing, or null if none exist.
