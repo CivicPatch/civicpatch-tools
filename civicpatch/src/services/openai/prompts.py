@@ -41,14 +41,12 @@ def relevant_page_prompt(people_hint: List[ResearchedPerson]):
     return prompt
 
 def municipality_officials_prompt(
-        government_type: str, 
         people_hint: List[ResearchedPerson]
     ):
     """
     Generate a single prompt string for extracting city officials, following the detailed Ruby and Gemini logic.
     """
 
-    roles = config_utils.get_roles_by_government_type(government_type)
     designation_names = config_utils.get_designation_names()
     designations_str = ", ".join(designation_names)
     current_date = datetime.now().strftime("%Y-%m-%d")
@@ -73,7 +71,7 @@ def municipality_officials_prompt(
 
     First, determine if the content contains a **structured listing** (such as a table, list, or directory) of officials, or a **dedicated biography/about/contact section** for an official. If not, return an empty JSON array `[]`.
 
-    Target roles: {', '.join(roles)}
+    Roles (examples): Mayor, Council Member, Aldermen, Select Board Member, Commissioner
     Target designations: {designations_str}
     Current Date: {current_date}
 
@@ -99,6 +97,7 @@ def municipality_officials_prompt(
     - **Do NOT extract officials based on contextual clues such as dates, roles, or ongoing activities unless they are explicitly part of a structured listing or dedicated section.**
     - If the only mentions of officials are within news stories, event recaps, meeting summaries, or scattered throughout the text (not in a structured list or dedicated section), return an empty array.
     - Do NOT infer or guess officials' names or roles from context, prior knowledge, or recent mentions. Only extract if the information is presented in a structured way or in a dedicated section.
+    - Do NOT infer information for officials. Only extract what is explicitly stated (ex: emails).
     - Do NOT include people whose terms have ended, resigned, vacated their roles, or are deceased.
     - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
 

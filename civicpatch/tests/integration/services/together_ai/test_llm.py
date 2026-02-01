@@ -80,7 +80,6 @@ def test_run_prompt_integration():
 
 
     prompt = municipality_officials_prompt(
-        government_type="mayor_council",
         people_hint=people_hint # Adjust if you want to provide hints
     )
 

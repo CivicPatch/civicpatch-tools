@@ -49,7 +49,6 @@ def test_format_output():
         validation_errors=[]
     )
     research_municipality_step_data = ResearchMunicipalityStep(
-        government_type='mayor_council',
         people=[],
         elected_officials=[],
         notes=None

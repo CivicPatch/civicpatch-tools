@@ -17,14 +17,18 @@ top of page
   Stage 2 (Moderate)](https://www.lajoyatx.gov/_files/ugd/3c0551_048de282712a4d0a8886a0e94368a3c3.docx?dn=PUD-WCC2309.docx)
 
 * [Home](https://www.lajoyatx.gov)
-* + [Community Description](https://www.lajoyatx.gov/community-description)
+* About
+
+  + [Community Description](https://www.lajoyatx.gov/community-description)
   + [Economic Development](https://www.lajoyatx.gov/economic-development)
   + [Ethics](https://www.lajoyatx.gov/ethics)
   + [History](https://www.lajoyatx.gov/history)
   + [Tourism](https://www.lajoyatx.gov/tourism)
 * [Council](https://www.lajoyatx.gov/citycouncil)
 * [Boards](https://www.lajoyatx.gov/boards)
-* + [City Attorney's Office](https://www.lajoyatx.gov/city-attorney-s-office)
+* Departments
+
+  + [City Attorney's Office](https://www.lajoyatx.gov/city-attorney-s-office)
   + [City Engineer's Office](https://www.lajoyatx.gov/city-engineer-s-office)
   + [City Manager's Office](https://www.lajoyatx.gov/copy-of-city-manager-s-office)
   + [City Secretary's Office](https://www.lajoyatx.gov/city-secretary-s-office)
@@ -65,6 +69,8 @@ and are all member of the La Joya
 The Council invites the public to its Regular and Special Meetings to discuss items on the
 [Council's Agenda](https://www.lajoyatx.gov/agendas-and-minutes)
 .
+
+More information on municipal government is found at:
 
 * [Texas Municipal League (TML) Institute](https://www.tml.org/278/Certification-for-Elected-Officials-TMLI)
 * [Texas Association of Mayors, Councilmember & Commissioners](https://www.tml.org/266/TAMCC)

@@ -1738,6 +1738,153 @@ $("#searchbox a").click(function () {
         </nav>
        </div>
        <script>
+        /**********************************************************
+    Dropdown Menu delay disappearance on mouse out
+    *********************************************************/
+    /*javascript to delay the disappearance of the menu when the user mouses out.  Uses jquery library.*/
+    $(function () {
+        
+
+        var timer = null;
+        var delay = 800; //change this number for shorter or longer delay
+        
+        
+        //using megamenu
+        var dropdowncontainer = '>.megamenu_container';
+        var activePage = $(".mainnav .dropdownmenu > li.active");
+        $('.mainnav > .dropdownmenu>li > a').css('overflow', 'visible');
+        $(".mainnav > .dropdownmenu > li").hoverIntent(
+
+            //what happens on hover over
+            function () {
+                 //end timer and stop hiding if they are mousing back in.
+                 if (timer != null) {
+                     clearTimeout(timer);
+                     timer = null;
+                 }
+                 // Find the hovered menu's sub-menu
+                 var $menu = $(this);
+                 var $submenu = $(this).find(dropdowncontainer);
+
+                 // hide any other submenus that are open
+                 $('.mainnav > .dropdownmenu>li' + dropdowncontainer).not($submenu).css('display', 'none');
+                 $('.mainnav > .dropdownmenu li.active').not($menu).not(activePage).removeClass('active');
+                 $('.mainnav > .dropdownmenu li._visionMenuHovered').not($menu).removeClass('_visionMenuHovered');
+                 // show current menu
+                 $submenu.css('display', 'block');
+                 $menu.addClass('active');
+                 $menu.addClass('_visionMenuHovered');
+             },
+
+            //what happens on mouse out
+            function () {
+                var $submenu = $(this).find(dropdowncontainer);
+                var $menu = $(this);
+                // delay disappearance
+                var mouseDelay = $(this).data("mouseDelay") || delay;
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    $submenu.css('display', 'none'); $menu.not(activePage).removeClass('active');
+                    $menu.removeClass('_visionMenuHovered');
+                    clearTimeout(timer); timer = null;
+                }, mouseDelay);
+            }
+        );
+
+
+        $('body').bind('keyup', function (event) {
+            if (event.keyCode == 9) {
+                // Find the hovered menu's sub-menu
+                var $menu = $(event.target).closest('li');
+                 $menu.addClass("_visionMenuHovered");
+                $menu.on('focusout', function () {
+                $(this).removeClass("_visionMenuHovered");
+ });
+                let isJPanelMenuVisible = $("#jPanelMenu-menu").length > 0 ? true : false;
+                if ($menu.hasClass('megamenu_first')) {
+                    if (isJPanelMenuVisible) {
+                        HideMainMenuChild($menu.prev().find('li'));
+                    }
+                    var $submenu = $menu.find(dropdowncontainer);
+
+                    // hide any other submenus that are open
+                    $('.mainnav > .dropdownmenu>li' + dropdowncontainer).not($submenu).css('display', 'none');
+                    $('.mainnav > .dropdownmenu li.active').not($menu).not(activePage).removeClass('active');
+                    // show current menu
+                    $submenu.css('display', 'block');
+                    $menu.addClass('active');
+                }
+                else {
+                    if (isJPanelMenuVisible) {
+                        //sub-menu has children
+                        if ($menu.children('ul').length > 0) {
+                            var subMenuContainer = '>li > ul';
+                            var $submenuChild = $menu.find('>ul');
+                            $submenuChild.css('display', 'block');
+                            $menu.addClass('megamenulevelchildmenu');
+                        }
+
+                        var isSideNav = $menu.hasClass('sidenav_haschildren');
+                        if (isSideNav) {
+                            $menu.removeClass('megamenulevelchildmenu');
+                            $menu.addClass('sidenav_expanded');
+                            var $item = $menu.children('.vi-sidenav-toggle');
+                            $item.html("-");
+                            $item.attr('aria-expanded', true);
+                            $item.on('keydown', function (e) {
+                                if (e.code.toLowerCase() == "enter" || e.code.toLowerCase() == "numpadenter") {
+                                    var isSideNavExpanded = $menu.hasClass('sidenav_expanded');
+                                    if (isSideNavExpanded) {
+                                        $item.html("-");
+                                        $item.attr('aria-expanded', false);
+                                        $menu.children('ul').css('display', 'none');
+                                    }
+                                    else {
+                                        var isItemExpand = $item.html() == "-";
+                                        if (!isItemExpand) {
+                                            $item.html("+");
+                                        }
+                                        $item.attr('aria-expanded', !isItemExpand);
+                                        $menu.children('ul').css('display', isItemExpand ? 'none' : 'block');
+                                        $menu.removeClass('sidenav_expanded');
+                                    }
+                                }
+                            });
+                        }
+                        if ($menu.prev().hasClass('megamenulevelchildmenu')) {
+                            HideMainMenuChild($menu.prev());
+                        }
+                        else if ($menu.parent().prev().children('li').hasClass('megamenulevelchildmenu')) {
+                            HideMainMenuChild($menu.parent().prev().children('li'));
+                        }
+                    }
+
+                }
+            }
+        });
+
+        function HideMainMenuChild(e) {
+            $(e).each(function (index,child) {
+                
+                if ($(child).children('ul').each(function (subIndex,subChild) {
+                    HideMainMenuChild($(subChild).children('li'));
+                }));  
+            });
+            $(e).children('ul').css('display', 'none');
+            $(e).removeClass('megamenulevelchildmenu');
+        }
+
+        
+        $(document).click(function(e){
+            if($(e.target).closest('li.active').hasClass('megamenu_first') === false &&
+            $(e.target).closest(".megamenu_first>a").length <= 0){
+                $('.megamenu_first>div.megamenu_container').css('display', 'none');                
+            }               
+        });
+
+    });
+       </script>
+       <script>
         //$(function () 
     {
         var menuContainerID = "menuContainer_603_0_490";
@@ -2473,6 +2620,11 @@ $("#searchbox a").click(function () {
            </tr>
           </tbody>
          </table>
+         <p>
+          <strong style="background-color: transparent; font-family: inherit; color: rgb(1, 78, 137); font-size: 20px;">
+           Government
+          </strong>
+         </p>
          <p>
           Voters approved a home rule charter in 1956 establishing a Council/Manager form of government. The Council/Manager form of government is the system of local government that combines the strong political leadership of elected officials in the form of a council, with the managerial experience of an appointed local government manager. A representative system of government is established where all power is concentrated in the elected council and where the council hires a professionally trained manager to oversee the delivery of public services.
          </p>

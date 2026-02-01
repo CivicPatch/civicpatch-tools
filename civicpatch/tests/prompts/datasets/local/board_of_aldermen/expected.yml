@@ -1,0 +1,67 @@
+people:
+- name: Todd Day
+  roles:
+  - Mayor
+  designations: []
+  phone: 956-350-4093
+  email: Todd.Day@RanchoViejoTx.gov
+  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  start_date: 2025-05
+  end_date: 2027-05
+  image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/07/Todd-Day-e1720626761286.jpg
+- name: Javier Vera
+  roles:
+  - Mayor Pro Tem
+  designations: []
+  phone: null
+  email: Javier.Vera@RanchoViejoTx.gov
+  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  start_date: 2025-05
+  end_date: 2027-05
+  image: https://www.ranchoviejotexas.com/wp-content/uploads/2021/11/Group-1.jpg
+- name: Christi Burnias
+  roles:
+  - Alderwoman
+  designations: []
+  phone: null
+  email: Christi.Burnias@RanchoViejoTx.gov
+  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  start_date: 2024-05
+  end_date: 2026-05
+  image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/05/C-Burnias3-e1716392656796.jpg
+- name: Abelardo Gonzalez
+  roles:
+  - Alderman
+  designations: []
+  phone: null
+  email: Abelardo.Gonzalez@RanchoViejoTx.gov
+  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  start_date: 2025-05
+  end_date: 2027-05
+  image: null
+- name: Peter Harris
+  roles:
+  - Alderman
+  designations: []
+  phone: null
+  email: Peter.Harris@RanchoViejoTx.gov
+  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  start_date: 2025-05
+  end_date: 2026-05
+  image: null
+- name: Mark A. Johnson
+  roles:
+  - Alderman
+  designations: []
+  phone: null
+  email: Mark.Johnson@RanchoViejoTx.gov
+  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  start_date: 2024-05
+  end_date: 2026-05
+  image: https://www.ranchoviejotexas.com/wp-content/uploads/2023/05/FullSizeR001-3-1.jpg
+thought: All listed officials have terms that are active as of 2026-02-01. I have
+  extracted their names, roles, email addresses, and term dates. Phone numbers were
+  only explicitly provided for Todd Day. Image URLs were extracted where present.
+  No specific designations like ward or district were found. The general URL for the
+  Board of Aldermen page is used as the personal URL for each official since no individual
+  profile pages are provided.

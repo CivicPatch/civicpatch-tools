@@ -70,7 +70,6 @@ def test_merge_records_across_llms():
             people_by_llm=people_by_llm,
         ),
         WorkflowStatus.RESEARCH_MUNICIPALITY: ResearchMunicipalityStep(
-            government_type="city",
             people=[],
             elected_officials=[],
         ),

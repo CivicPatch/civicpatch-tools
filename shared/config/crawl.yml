@@ -7,5 +7,42 @@ ignore_url_paths:
   - archive
   - meeting
   - documentcenter
+keywords:
+  - elected officials
+  - government officials
+  - government
+  - city administration
+  - index
+  - government
+  - bios
+  - meet
+  - about
+  - mayor
+  - meet the council
+  - city council members
+  - council bios
+  - council members
+  - councilmembers
+  - city council
+  - board of trustees
+  - city
+  - town
+  - village
+  - town hall
+  - city hall
+  - council
+  - mayor and city council
+  - about mayor
+  - meet the mayor
+  - about the mayor
+  - mayor
+  - council president
+  - council manager
+  - commissioners
+  - aldermen
+  - board of aldermen
+  - select board
+  - board of selectmen
+  - departments
 max_crawl_depth: 2
 max_crawl_pages: 15

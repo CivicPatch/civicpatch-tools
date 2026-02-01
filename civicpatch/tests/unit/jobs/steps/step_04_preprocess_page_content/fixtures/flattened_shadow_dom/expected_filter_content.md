@@ -5,7 +5,12 @@ City of Dublin - City Council
 
 [![logo](https://www.ci.dublin.tx.us/api/blob/viewBlob?i=Hd%252Bk3YPs3UmleGFpQtGuX0ZrODDGToiKQ7FHVtEC0U2CIIyNeCy%252BqvGCJhq3Z3Cv&s=large)](https://www.ci.dublin.tx.us/index)
 
-* + [City Council](https://www.ci.dublin.tx.us/council)
+* Government
+  + Main Menu
+    /
+    Government
+  + Government
+  + [City Council](https://www.ci.dublin.tx.us/council)
   + [Agendas & Minutes](https://www.ci.dublin.tx.us/agendasandminutes)
   + [Forms & Permits](https://www.ci.dublin.tx.us/formsandpermits)
   + [Ordinances](https://library.municode.com/tx/dublin/codes/code_of_ordinances)
@@ -35,7 +40,12 @@ City of Dublin - City Council
 * [Visitors](https://www.dublintxchamber.com/)
 * [Business](https://www.dublintxedc.com/)
 * [Calendar](https://www.ci.dublin.tx.us/calendar)
-* + [History](https://www.ci.dublin.tx.us/history)
+* About
+  + Main Menu
+    /
+    About
+  + About
+  + [History](https://www.ci.dublin.tx.us/history)
   + [Map](https://www.ci.dublin.tx.us/map)
   + [Contact Us](https://www.ci.dublin.tx.us/contactus)
 

@@ -18,7 +18,8 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
 
     jurisdiction_ocdid_parts = id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
     state = jurisdiction_ocdid_parts.state
-    government_type_keys = "- " + "\n- ".join(list(config_utils.get_government_types().keys()))
+    designations = config_utils.get_designation_names()
+    designations_str = ', '.join(designations)
 
     return f"""
     Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
@@ -27,20 +28,16 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
 
     Instructions:
 
-    1. Determine the government type of the city. Available government types:
-{government_type_keys}
-
-    2. Identify the elected officials in the local government, 
+    1. Identify the elected officials in the local government, 
        including the Mayor (if applicable).
-       2.1. For each official, extract the following details:
+       1.1. For each official, extract the following details:
             - name: Full name only (no titles)
             - roles: List of active municipal roles (e.g., Mayor, Council Member)
-            - designations: List of (ward, district), only if applicable
+            - designations: List of ({designations_str}), if applicable
 
     3. Create a JSON object with the following structure:
        ```json
        {{
-         "government_type": examples - "mayor_council" or "mayor_commission", etc.,
          "people": [
            {{
              "name": "Full name of the official or null if uncertain",
@@ -59,11 +56,11 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
     """
 
 
-def municipality_officials_prompt(government_type: str, people_hint: List[ResearchedPerson]):
+def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
     """
     Generate a prompt for extracting municipality officials.
     """
-    roles = config_utils.get_roles_by_government_type(government_type)
+
     designation_names = config_utils.get_designation_names()
     designations_str = ", ".join(designation_names)
     current_date = datetime.now().strftime("%Y-%m-%d")
@@ -80,15 +77,15 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
         target_text = ""
 
     return f"""
-    Your task is to extract information about the **current** officials of the target municipality.
+    Your task is to extract information about the **current** elected officials of the target municipality.
 
     {target_text}
 
-    Only extract people who are currently serving as officials as of {current_date}. 
+    Only extract people who are currently serving aselected officials as of {current_date}. 
     Do not include anyone who is described as former, past, resigned, deceased, 
     or otherwise not currently in office.
 
-    Target Roles: {', '.join(roles)}
+    Roles (examples): Mayor, Council Member, Aldermen, Commissioner
     Target Designations: {designations_str}
     Current Date: {current_date}
 
@@ -108,8 +105,6 @@ def municipality_officials_prompt(government_type: str, people_hint: List[Resear
 
     Guidelines:
     - **Only extract information that is explicitly present in the provided content. Do NOT infer or fabricate any details, including email addresses, phone numbers, or URLs.**
-    - Roles extraction:
-        - Extract roles that match the **target roles** provided (e.g., {', '.join(roles)}).
     - Designation extraction:
         - Extract designations if explicitly mentioned in the text and relevant to the person's role.
         - Examples: ["Ward 1", "District 2"]

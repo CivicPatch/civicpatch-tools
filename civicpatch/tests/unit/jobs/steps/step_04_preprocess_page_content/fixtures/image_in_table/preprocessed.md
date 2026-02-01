@@ -381,6 +381,8 @@ This page contains the latest news and information relating to the City Council 
 | ![Joe Corcoran - Thumbnail](https://www.cor.net/home/showpublishedimage/36858/638197380725930000) | **Council Member - Place 4   Joe Corcoran**   [Biography](https://www.cor.net/government/city-council/who-are-our-city-council-members/joe-corcoran)   [Email](mailto:Joe.Corcoran@cor.gov) |
 | ![Arefin Shamsul - Thumbnail](https://www.cor.net/home/showpublishedimage/36862/638197381244070000) | **Arefin Shamsul   Council Member - Place 6**   [Biography](https://www.cor.net/government/city-council/who-are-our-city-council-members/arefin-shamsul)   [Email](mailto:Arefin.Shamsul@cor.gov) |
 
+**Government**
+
 Voters approved a home rule charter in 1956 establishing a Council/Manager form of government. The Council/Manager form of government is the system of local government that combines the strong political leadership of elected officials in the form of a council, with the managerial experience of an appointed local government manager. A representative system of government is established where all power is concentrated in the elected council and where the council hires a professionally trained manager to oversee the delivery of public services.
 
 The Richardson City Council consists of the Mayor, two at-large seats and four place, or district, seats. Though members representing Place 1 thru 4 must reside in those areas, all members of the City Council are elected at-large by voters. All City Council seats carry two-year terms, and are up for election during May of every odd year. Term limits for membership on the City Council are limited to 6 terms, or 12 consecutive years.

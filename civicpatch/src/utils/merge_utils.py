@@ -6,7 +6,7 @@ from Levenshtein import distance as levenshtein_distance
 import copy
 import unicodedata
 
-NAME_SIMILARITY_THRESHOLD = 2
+NAME_SIMILARITY_THRESHOLD = 4
 
 def normalize_name(name: str) -> str:
     """
@@ -52,23 +52,49 @@ def last_name(name: str) -> str:
     human_name = HumanName(formatted_name)
     return human_name.last
 
+def is_initial(first_name: str, candidate: str) -> bool:
+    """
+    Check if candidate is an initial of the name.
+    "J." -> "John"
+    "J" -> "John"
+    """
+    if len(candidate) == 1:
+        return first_name.lower().startswith(candidate.lower())
+    if len(candidate) == 2 and candidate[1] == '.':
+        return first_name.lower().startswith(candidate[0].lower())
+    return False
+
 def has_name_overlap(name1: str, name2: str) -> bool:
     """
     Check if two names have an overlap in their first and last names.
-    - First names must match exactly or have overlap (e.g., partial match).
+    - First names must be similar or have overlap (e.g., partial match).
     - Last names must either match exactly or one must be a substring of the other.
     """
     # Normalize names
     first1, last1 = first_name(name1), last_name(name1)
     first2, last2 = first_name(name2), last_name(name2)
+    
+    if not first1 or not first2:
+        return False
+    if not last1 or not last2:
+        return False
 
     # Check if last names match or one is a substring of the other
     if last1.lower() == last2.lower() or last1.lower() in last2.lower() or last2.lower() in last1.lower():
-        # First names must match exactly or have overlap
-        if first1.lower() == first2.lower() or \
-            first1.lower() in first2.lower() or \
-                first2.lower() in first1.lower() or \
-                    are_names_similar(first1, first2):
+        # Case 1: First name matches exactly
+        if first1.lower() == first2.lower():
+            return True
+
+        # Case 2: One of the first names is an initial of the other
+        if is_initial(first1, first2) or is_initial(first2, first1):
+            return True
+    
+        # Case 3: First name is a subset of the other or similar
+        if first1.lower() in first2.lower() or first2.lower() in first1.lower():
+            return True
+        
+        # Case 4: First names are similar based on Levenshtein distance
+        if are_names_similar(first1, first2):
             return True
 
     return False
@@ -204,6 +230,10 @@ def is_weakly_tied(identity_names: Dict[str, List[str]], record1: LLMPerson | Pe
     if not has_name_overlap(record1.name, record2.name):
         return False
 
+    # Check for matching designations
+    if set(record1.designations) & set(record2.designations):
+        return True
+    
     # Check for matching roles
     if set(record1.roles) & set(record2.roles):
         return True

@@ -31,7 +31,6 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
 
     # Get people_by_llm from the previous step
     people_by_llm: Dict[str, List[Person]] = context.data.merge_records_within_llm_step.people_by_llm
-    government_type = context.data.research_municipality_step.government_type 
 
     # Group records across LLMs based on weak ties and names
     research_identities = {official.name: [official.name] for official in context.data.research_municipality_step.elected_officials}
@@ -93,7 +92,7 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
     )
 
     # Sort people by role priority, designations, and name
-    sorted_people = people_utils.sort_people(merged_people, government_type)
+    sorted_people = people_utils.sort_people(merged_people)
 
     validation_errors = []
     if overall_agreement_score < MINIMUM_AGREEMENT_SCORE:

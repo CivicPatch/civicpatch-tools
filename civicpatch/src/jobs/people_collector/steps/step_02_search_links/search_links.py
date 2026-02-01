@@ -8,7 +8,7 @@ from jobs.people_collector.schemas import (
     SearchEngineState,
     SearchLinksStep,
 )
-from shared.utils.config_utils import search_keywords
+from shared.utils.config_utils import search_keywords, crawl_keywords
 from utils import log_utils
 from utils.array_utils import interleave_arrays
 from utils.request_utils import with_retry
@@ -50,11 +50,8 @@ async def search_links(context: PeopleCollectorContext) -> tuple[List[Link], Sea
     municipality_name = context.data.config.name
     municipality_website = context.data.config.url
 
-    research_municipality_step = context.data.research_municipality_step
-    government_type = research_municipality_step.government_type
-
-    keyword_term_groups = search_keywords(government_type)
-    logger.info(f"Using government type: {government_type} for keyword selection with keywords: {keyword_term_groups}")
+    search_keys = search_keywords("local")
+    crawl_keys = crawl_keywords("local")
 
     urls_found = []
 
@@ -64,14 +61,11 @@ async def search_links(context: PeopleCollectorContext) -> tuple[List[Link], Sea
         urls_found = []
 
         if search_engine == "crawl":
-            keys = list(keyword_term_groups.keys())
-            values = [keyword for keywords in keyword_term_groups.values() for keyword in keywords]
-            flattened_keywords = keys + values
-            crawl_urls = await crawl(logger, flattened_keywords, municipality_website)
+            crawl_urls = await crawl(logger, crawl_keys, municipality_website)
             urls_found = [crawl_urls]
         else:
-            for keyword_term, keywords in keyword_term_groups.items():
-                logger.info(f"Searching for keyword term: {keyword_term}, keywords: {keywords}",)
+            for keyword_term in search_keys:
+                logger.info(f"Searching for keyword term: {keyword_term}",)
                 urls_for_term = await municipality_search(
                     logger,
                     request_id,

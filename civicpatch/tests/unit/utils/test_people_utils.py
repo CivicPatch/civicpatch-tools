@@ -4,9 +4,8 @@ from utils import people_utils
 
 pytestmark = pytest.mark.unit
 
-# Create dummy logger and government_type for testing
+# Create dummy logger for testing
 logger = logging.getLogger(__name__)
-government_type = "mayor_council"
 
 
 @pytest.mark.parametrize("roles, expected", [
@@ -17,7 +16,7 @@ government_type = "mayor_council"
     (["  mayor  ", "MAYOR"], ["Mayor"]),  # Mixed case and whitespace
 ])
 def test_normalize_roles(roles, expected):
-    assert people_utils.normalize_roles(logger, government_type, roles) == expected
+    assert people_utils.normalize_roles(logger, roles) == expected
 
 
 @pytest.mark.parametrize("divisions, expected", [
@@ -59,6 +58,8 @@ def test_normalize_roles(roles, expected):
 
     (["Ward First"], ["Ward 1"]),  # Word to numeral conversion
     (["First Ward"], ["Ward 1"]),  # Word to numeral conversion alternative
+    (["Seat 1 District 2"], ["District 2", "Seat 1"]),
+    (["Place 3, District 2"], ["Place 3", "District 2"]),
     
     # Edge cases
     ([], []),  # Empty input
