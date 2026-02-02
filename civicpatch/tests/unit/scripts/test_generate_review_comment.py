@@ -4,7 +4,7 @@ from typing import List
 from domain.models import Official
 
 from scripts.generate_review_comment import (generate_review_comment, get_identity_mismatches)
-from domain.models import Person, person_to_official
+from domain.models import Person
 from jobs.people_collector.schemas import (
     WorkflowStatus,
     MergeRecordsAcrossLLMsStep, 
@@ -14,9 +14,13 @@ from jobs.people_collector.schemas import (
     ResearchMunicipalityStep,
     ResearchedPerson,
 )
+from utils.people_utils import person_to_official
+import shared.utils.config_utils as config_utils
 from tests.factories.workflow_context import workflow_context_factory
 
 pytestmark = pytest.mark.unit
+
+designation_configs = config_utils.get_designations()
 
 def create_person(name: str, roles: List[str], email: str = "") -> Person:
     """Helper to create a Person with minimal required fields"""
@@ -42,7 +46,7 @@ def test_generate_review_comment_with_missing_llm_values():
     
     # Create a person that exists in both LLMs for the merged result
     john = create_person("John Smith", ["Mayor"], "john@city.gov")
-    john_official = person_to_official(john)
+    john_official = person_to_official(designation_configs, john)
     
     # Create disagreements where one LLM is missing from llm_values
     disagreements = {
@@ -105,7 +109,7 @@ def test_generate_review_comment_with_all_llms_present():
     """Test that disagreements are displayed correctly when all LLMs have values"""
     
     jane = create_person("Jane Doe", ["Council Member"], "jane@city.gov")
-    jane_official = person_to_official(jane)
+    jane_official = person_to_official(designation_configs, jane)
     
     disagreements = {
         "Jane Doe": [

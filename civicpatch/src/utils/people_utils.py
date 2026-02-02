@@ -1,7 +1,7 @@
 # from schemas import People
-from typing import List, Dict, Any
+from typing import List, Dict, Tuple
 import shared.utils.config_utils as config_utils
-from domain.models import Person
+from domain.models import Person, Official, Office
 from jobs.people_collector.schemas import ResearchedPerson
 import re
 
@@ -453,3 +453,65 @@ def extract_designation_value(designation: str):
     if match:
         return int(match.group(1))
     return None
+
+def jurisdiction_ocdid_to_division_ocdid(jurisdiction_ocdid: str) -> str:
+    without_classification = jurisdiction_ocdid.rsplit('/', 1)[0]
+    return without_classification.replace("ocd-jurisdiction", "ocd-division")
+
+def extract_role_names_and_division_from_designations(designation_configs, jurisdiction_ocdid: str, office_designations: List[str]) -> Tuple[List[str], str]:
+    role_names = []
+    division = None
+    division_base = jurisdiction_ocdid_to_division_ocdid(jurisdiction_ocdid)
+
+    for designation_string in office_designations:
+        parts = designation_string.lower().split(' ')
+        designation_key = parts[0]
+        designation_value = ' '.join(parts[1:]).strip()
+        if designation_key in designation_configs:
+            config = designation_configs[designation_key]
+            if config.get("has_geographic_area", False) and designation_value:
+                division = format_division(division_base, designation_key, designation_value)
+            else:
+                role_names.append(designation_string)
+        else:
+            role_names.append(designation_string)
+
+    if division is None:
+        division = division_base
+
+    return role_names, division
+
+def format_division(division_base: str, designation_key: str, designation_value: str) -> str:
+    return f"{division_base}/{designation_key}:{designation_value}"
+
+def person_to_official(designation_configs, person: Person) -> Official:
+    role_designations, division_ocdid = extract_role_names_and_division_from_designations(
+        designation_configs=designation_configs,
+        jurisdiction_ocdid=person.jurisdiction_ocdid,
+        office_designations=person.designations
+    )
+
+    office_names = person.roles + role_designations
+    office_name = " - ".join(office_names) if office_names else "Unknown Office"
+    return Official(
+        name=person.name,
+        other_names=person.other_names,
+
+        phones=person.phones,
+        emails=person.emails,
+        urls=person.urls,
+        start_date=person.start_date or None,
+        end_date=person.end_date or None,
+
+        office=Office(
+            name=office_name,
+            division_ocdid=division_ocdid
+        ),
+
+        image=person.image or None,
+
+        jurisdiction_ocdid=person.jurisdiction_ocdid,
+        cdn_image=person.cdn_image or None,
+        source_urls=person.source_urls,
+        updated_at=person.updated_at,
+    )

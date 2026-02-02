@@ -1,5 +1,5 @@
 
-from domain.models import person_to_official
+from domain.models import Person
 from jobs.people_collector.schemas import (
   PeopleCollectorContext,
   WorkflowStatus,
@@ -7,22 +7,22 @@ from jobs.people_collector.schemas import (
   FormatOutputStep,
 )
 import utils.log_utils as log_utils
+import utils.people_utils as people_utils
 from shared.utils.config_utils import get_designations
 from typing import List, Tuple
 
 from domain.models import (
-  Official,
-  person_to_official
+  Official
 )
 
 def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
     logger = log_utils.get_workflow_logger(context.data.jurisdiction_ocdid)
     logger.info(f"Step 8: {WorkflowStatus.FORMAT_OUTPUT} Formatting output data.")
-    jurisdiction_ocdid = context.data.jurisdiction_ocdid
+    designation_configs = get_designations()
 
     data = context.data.merge_records_across_llms_step.people
 
-    people = [person_to_official(person) for person in data]
+    people = [people_utils.person_to_official(designation_configs, person) for person in data]
 
     # TODO: Make this more generic later
     for person in people:

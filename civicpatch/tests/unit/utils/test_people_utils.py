@@ -1,7 +1,8 @@
 import pytest
 import logging
 from utils import people_utils
-from utils.people_utils import sort_roles, sort_designations, sort_people, Person
+from domain.models import Person
+from utils.people_utils import sort_roles, sort_designations, sort_people, extract_role_names_and_division_from_designations
 
 pytestmark = pytest.mark.unit
 
@@ -114,3 +115,86 @@ def test_sort_designations_no_priority(monkeypatch):
     monkeypatch.setattr("utils.people_utils.get_designation_priority", lambda: {})
     designations = ["Ward 2", "Ward 1", "Ward 10"]
     assert sort_designations(designations) == ["Ward 1", "Ward 2", "Ward 10"]
+
+@pytest.mark.parametrize(
+    "designation_configs,jurisdiction_ocdid,office_designations,expected_role_names,expected_division",
+    [
+        (
+            {"district": {"has_geographic_area": True}},
+            "ocd-jurisdiction/country:us/state:xy/place:alpha/government",
+            [],
+            [],
+            "ocd-division/country:us/state:xy/place:alpha"
+        ),
+        (
+            {"district": {"has_geographic_area": True}},
+            "ocd-jurisdiction/country:us/state:xy/place:bravo/government",
+            ["district 1"],
+            [],
+            "ocd-division/country:us/state:xy/place:bravo/district:1"
+        ),
+        (
+            {"district": {"has_geographic_area": True}},
+            "ocd-jurisdiction/country:us/state:xy/place:charlie/government",
+            ["district"],
+            ["district"],
+            "ocd-division/country:us/state:xy/place:charlie"
+        ),
+        (
+            {"at-large": {"has_geographic_area": False}},
+            "ocd-jurisdiction/country:us/state:xy/place:delta/government",
+            ["at-large"],
+            ["at-large"],
+            "ocd-division/country:us/state:xy/place:delta"
+        ),
+        (
+            {
+                "district": {"has_geographic_area": True},
+                "at-large": {"has_geographic_area": False}
+            },
+            "ocd-jurisdiction/country:us/state:xy/place:echo/government",
+            ["at-large", "district 2"],
+            ["at-large"],
+            "ocd-division/country:us/state:xy/place:echo/district:2"
+        ),
+        (
+            {
+                "at-large": {"has_geographic_area": False},
+                "seat": {"has_geographic_area": False}
+            },
+            "ocd-jurisdiction/country:us/state:xy/place:foxtrot/government",
+            ["at-large", "seat 1"],
+            ["at-large", "seat 1"],
+            "ocd-division/country:us/state:xy/place:foxtrot"
+        ),
+        (
+            {"district": {"has_geographic_area": True}},
+            "ocd-jurisdiction/country:us/state:xy/place:golf/government",
+            ["unknown 5"],
+            ["unknown 5"],
+            "ocd-division/country:us/state:xy/place:golf"
+        ),
+        (
+            {"district": {"has_geographic_area": True}},
+            "ocd-jurisdiction/country:us/state:xy/place:hotel/government",
+            ["District 3"],
+            [],
+            "ocd-division/country:us/state:xy/place:hotel/district:3"
+        ),
+        (
+            {},
+            "ocd-jurisdiction/country:us/state:xy/place:india/government",
+            ["1"],
+            ["1"],
+            "ocd-division/country:us/state:xy/place:india"
+        )
+    ]
+)
+def test_extract_role_names_and_division_from_designations(
+    designation_configs, jurisdiction_ocdid, office_designations, expected_role_names, expected_division
+):
+    role_names, division = extract_role_names_and_division_from_designations(
+        designation_configs, jurisdiction_ocdid, office_designations
+    )
+    assert role_names == expected_role_names
+    assert division == expected_division

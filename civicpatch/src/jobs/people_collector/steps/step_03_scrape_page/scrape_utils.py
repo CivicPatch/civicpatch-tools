@@ -5,6 +5,10 @@ from playwright.async_api import async_playwright, Page
 from typing import TypedDict
 import aiofiles
 import asyncio
+import aiohttp
+import base64
+from urllib.parse import urljoin
+from jobs.people_collector.steps.step_03_scrape_page.scrape.wix import wait_for_wix_content
 
 IMAGE_URL_BLACKLIST = ["https://google.com"]
 IMAGE_EXT_BLACKLIST = [".svg", ".gif"]
@@ -23,53 +27,195 @@ def hash_string(s: str) -> str:
 async def scrape(logger, website_url, options=None):
     """
     Fetches the content of a given website URL using Playwright.
-
+    Automatically detects and waits for Wix sites.
+    
     Args:
         website_url (str): The URL of the website to scrape.
-
+        options (dict): Optional settings including:
+            - scraped_urls (set): URLs already scraped
+            - image_directory (str): Path to save images
+            - timeout (int): Navigation timeout in ms (default: 30000)
+            - headless (bool): Run in headless mode (default: True)
+    
     Returns:
         str: The HTML content of the website.
     """
-    async with async_playwright() as playwright:
-        browser = await playwright.chromium.launch(
-            headless=False
-        )
-        # CHROMIUM ARGS
-        # 2025-09-29T00:58:37.330Z pw:browser <launching> /opt/google/chrome/chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --no-sandbox --no-sandbox --disable-crashpad-for-testing --user-data-dir=/tmp/playwright_chromiumdev_profile-9RRDRG --remote-debugging-pipe --no-startup-window 
-
-        context = await browser.new_context() 
-        page = await context.new_page()
-
-        for wait_until in ["networkidle", "load", "domcontentloaded"]:
-            try:
-                await page.goto(website_url, wait_until=wait_until, timeout=15000) # 15 seconds
-                break
-            except Exception as e:
-                logger.warning(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
-
-        # Check if, after redirect, we have already scraped this URL
-        if options and options.get('scraped_urls') and page.url in options.get('scraped_urls'):
-            logger.info(f"Already scraped url: {website_url}, redirected to: {page.url}")
-            await browser.close()
-            raise ValueError("Already scraped this URL after redirect")
-
-        # Check if the page is HTML using document.contentType
-        content_type = await page.evaluate("document.contentType")
-        if (content_type.lower() != "text/html"):
-            await browser.close()
-            raise ValueError(f"Content type is not text/html: {content_type}")
+    options = options or {}
+    timeout = options.get('timeout', 30000)
+    headless = options.get('headless', True)
     
-        await flatten_shadow_root(page)
-        await html_relative_to_absolute_urls(page)
+    browser = None
+    try:
+        async with async_playwright() as playwright:
+            browser = await playwright.chromium.launch(
+                headless=headless,
+                args=[
+                    '--disable-blink-features=AutomationControlled',
+                    '--disable-dev-shm-usage',
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                ]
+            )
+            
+            context = await browser.new_context(
+                viewport={'width': 1920, 'height': 1080},
+                user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            )
+            
+            page = await context.new_page()
+            page.set_default_timeout(timeout)
+            
+            # Navigate with fallback strategy
+            response = None
+            for wait_until in ["networkidle", "load", "domcontentloaded"]:
+                try:
+                    response = await page.goto(website_url, wait_until=wait_until, timeout=15000)
+                    break
+                except Exception as e:
+                    logger.warning(f"Warning: navigation to {website_url} with wait_until={wait_until} failed: {e}")
+            
+            if response is None:
+                raise Exception("Failed to load page with all wait strategies")
+            
+            # Check if, after redirect, we have already scraped this URL
+            if options.get('scraped_urls') and page.url in options.get('scraped_urls'):
+                logger.info(f"Already scraped url: {website_url}, redirected to: {page.url}")
+                await browser.close()
+                raise ValueError("Already scraped this URL after redirect")
+            
+            # Check if the page is HTML using document.contentType
+            try:
+                content_type = await page.evaluate("document.contentType")
+                if content_type.lower() != "text/html":
+                    await browser.close()
+                    raise ValueError(f"Content type is not text/html: {content_type}")
+            except:
+                pass  # Continue if we can't check content type
+            
+            # === AUTO-DETECT AND WAIT FOR WIX CONTENT ===
+            await auto_detect_and_wait(page, logger, response)
+            
+            # Existing processing
+            await flatten_shadow_root(page)
+            await html_relative_to_absolute_urls(page)
+            
+            if options.get('image_directory'):
+                await convert_background_divs_to_imgs(page)
+                await download_images(browser, logger, page, options.get('image_directory'))
+            
+            content = await page.content()
+            await browser.close()
+            return content
+            
+    except Exception as e:
+        if browser:
+            await browser.close()
+        raise
 
-        if options and options.get('image_directory'):
-            # Download images if the option is set
-            await convert_background_divs_to_imgs(page)
-            await download_images(browser, logger, page, options.get('image_directory'))
 
-        content = await page.content()
-        await browser.close()
-        return content
+async def auto_detect_and_wait(page, logger, response):
+    """
+    Auto-detect site type and apply appropriate waiting strategies.
+    Currently detects: Wix, React/SPA, static sites
+    """
+    try:
+        # Quick pre-check: URL-based detection
+        url = page.url.lower()
+        is_wix_url = 'wix.com' in url or 'wixsite.com' in url
+        
+        # Check response headers for Wix
+        is_wix_header = False
+        if response:
+            headers = response.headers
+            is_wix_header = (
+                'x-wix-request-id' in headers or
+                'x-wix-renderer-server' in headers or
+                (headers.get('server', '').lower().find('wix') >= 0)
+            )
+        
+        # Check DOM for Wix indicators
+        site_info = await page.evaluate("""() => {
+            return {
+                isWix: !!(
+                    document.getElementById('wix-warmup-data') ||
+                    document.querySelector('meta[name="generator"][content*="Wix"]')
+                ),
+                isSPA: !!(
+                    window.React ||
+                    window.Vue ||
+                    window.angular ||
+                    window.__NEXT_DATA__ ||
+                    window.__NUXT__
+                ),
+                hasWarmupData: !!document.getElementById('wix-warmup-data')
+            };
+        }""")
+        
+        is_wix = is_wix_url or is_wix_header or site_info['isWix']
+        
+        if is_wix:
+            logger.info("🎯 Detected Wix site - applying enhanced waiting strategy")
+            await wait_for_wix_content(page, logger, site_info['hasWarmupData'])
+        elif site_info['isSPA']:
+            logger.info("⚛️  Detected SPA/React site - applying SPA waiting strategy")
+            await wait_for_spa_content(page, logger)
+        else:
+            logger.debug("📄 Standard site - using basic waiting strategy")
+            await wait_for_basic_content(page, logger)
+        
+    except Exception as e:
+        logger.warning(f"Error in auto-detection: {e}")
+        # Don't fail the whole scrape
+
+async def wait_for_spa_content(page, logger):
+    """
+    Wait for SPA/React content to hydrate and render.
+    """
+    try:
+        logger.debug("Waiting for SPA hydration...")
+        
+        # Wait for framework to be ready
+        await page.wait_for_function(
+            """() => {
+                return document.readyState === 'complete' &&
+                       (!window.React || document.querySelector('[data-reactroot], #__next, #root'));
+            }""",
+            timeout=10000
+        )
+        
+        # Additional wait for content
+        await page.wait_for_timeout(2000)
+        
+        # Wait for network idle
+        try:
+            await page.wait_for_load_state('networkidle', timeout=8000)
+        except:
+            pass
+        
+        logger.debug("✓ SPA content loaded")
+        
+    except Exception as e:
+        logger.warning(f"Error in SPA waiting: {e}")
+
+
+async def wait_for_basic_content(page, logger):
+    """
+    Basic waiting for standard websites.
+    """
+    try:
+        # Wait for DOM to be ready
+        await page.wait_for_function(
+            "document.readyState === 'complete'",
+            timeout=5000
+        )
+        
+        # Small wait for any final scripts
+        await page.wait_for_timeout(1000)
+        
+        logger.debug("✓ Basic content loaded")
+        
+    except Exception as e:
+        logger.warning(f"Error in basic waiting: {e}")
 
 async def convert_background_divs_to_imgs(page):
     """Convert divs with background images to img tags in the page"""
@@ -169,9 +315,7 @@ async def download_images(browser, logger, page: Page, image_dir: str, timeout_s
     Downloads images from the current page using a fallback strategy.
     If processing any image takes longer than `timeout` seconds, skip to the next image.
     """
-    import aiohttp
-    import base64
-    from urllib.parse import urljoin
+    await convert_background_divs_to_imgs(page)
 
     os.makedirs(image_dir, exist_ok=True)
     image_map = {}
@@ -280,7 +424,6 @@ async def load_and_save_image(page: Page, image_dir: str, img_url: str, logger, 
     Returns:
         str: The file path of the saved image, or None if the image could not be saved.
     """
-    import aiohttp
     from urllib.parse import urljoin
 
     os.makedirs(image_dir, exist_ok=True)
