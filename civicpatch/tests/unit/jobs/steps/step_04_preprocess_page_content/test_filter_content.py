@@ -520,5 +520,18 @@ def test_with_board_of_aldermen():
     assert actual_md.strip() == expected_md.strip()
 
 
-
-
+def test_with_wix_site():
+    folder = os.path.join(FIXTURE_DIR, "wix_site")
+    with open(os.path.join(folder, "expected_clean_html.html"), "r", encoding="utf-8") as f:
+        input_html = f.read()
+    filtered_content = filter_content(logger, {}, input_html)
+    with open(os.path.join(folder, "expected_filter_content.html"), "w", encoding="utf-8") as f:
+        f.write(filtered_content)
+    expected_html = read_fixture("expected_filter_content.html", subfolder=folder)
+    assert filtered_content.strip() == expected_html.strip()
+    actual_md = to_markdown(filtered_content)
+    with open(os.path.join(folder, "expected_filter_content.md"), "w", encoding="utf-8") as f:
+        f.write(actual_md)
+    with open(os.path.join(folder, "expected_filter_content.md"), "r", encoding="utf-8") as f:
+        expected_md = f.read()
+    assert actual_md.strip() == expected_md.strip()

@@ -65,10 +65,10 @@ run = """
 curl -X POST http://localhost:8000/api/pipelines \
   -H "Content-Type: application/json" \
   -d '{
-    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:austin/government",
+    "jurisdiction_ocdid": "ocd-jurisdiction/country:us/state:tx/place:childress/government",
     "config": {
-        "url": "https://www.austintexas.gov",
-        "name": "Austin city"
+        "url": "https://www.cityofchildress.com",
+        "name": "Childress city"
     }
   }'
 """

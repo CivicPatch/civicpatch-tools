@@ -129,3 +129,13 @@ def test_with_board_of_aldermen():
     with open(os.path.join(FIXTURE_DIR, "board_of_aldermen", "expected_clean_html.html"), "r", encoding="utf-8") as f:
         expected_output = f.read()
     assert ''.join(cleaned_html.split()) == ''.join(expected_output.split())
+
+def test_with_wix_site():
+    with open(os.path.join(FIXTURE_DIR, "wix_site", "input.html"), "r", encoding="utf-8") as f:
+        input_html = f.read()
+    cleaned_html = clean_html(None, input_html)
+    with open(FIXTURE_DIR / "wix_site" / "expected_clean_html.html", "w", encoding="utf-8") as f:
+        f.write(cleaned_html)
+    with open(os.path.join(FIXTURE_DIR, "wix_site", "expected_clean_html.html"), "r", encoding="utf-8") as f:
+        expected_output = f.read()
+    assert ''.join(cleaned_html.split()) == ''.join(expected_output.split())
