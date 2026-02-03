@@ -1,9 +1,14 @@
 import os
-from typing import List
+from typing import List, Optional
+import json
+import yaml
+import base64
+import httpx
 
 import requests
 
 from schemas import PullRequest
+timeout = httpx.Timeout(60.0)  
 
 GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
 
@@ -91,17 +96,24 @@ def trigger_github_data_intake_workflow(
     return True
 
 
-def get_github_file_contents(github_file_path: str) -> str | None:
+async def get_github_file_contents(
+        github_file_path: str,
+        ref: Optional[str] = None,
+    ) -> str | None:
     headers = {
         "Authorization": f"Bearer {GITHUB_WORKFLOW_TOKEN}",
         "Accept": "application/vnd.github.raw",
         "X-GitHub-Api-Version": "2022-11-28",
     }
+    print("Fetching GitHub file:", github_file_path, "ref:", ref)
 
     url = (
         f"https://api.github.com/repos/CivicPatch/open-data/contents/{github_file_path}"
     )
-    response = requests.get(url, headers=headers)
+    if ref:
+        url += f"?ref={ref}"
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.get(url, headers=headers)
 
     if response.status_code == 200:
         file_content = response.text
@@ -118,7 +130,7 @@ def get_open_pull_requests(github_workflow_token: str) -> List[PullRequest]:
         "X-GitHub-Api-Version": "2022-11-28",
     }
 
-    params = "state=open&per_page=100"
+    params = "state=open&per_page=100&sort=created&direction=desc"
     url = f"https://api.github.com/repos/CivicPatch/open-data/pulls?{params}"
     response = requests.get(url, headers=headers)
 
@@ -131,3 +143,46 @@ def get_open_pull_requests(github_workflow_token: str) -> List[PullRequest]:
     else:
         print("Error fetching pull requests:", response.status_code, response.text)
         return []
+    
+def get_open_pull_request_by_branch_suffix(suffix: str) -> List[PullRequest]:
+    pull_requests = get_open_pull_requests(GITHUB_WORKFLOW_TOKEN)
+    matching_prs = [pr for pr in pull_requests if pr.branch_name.endswith(suffix)]
+    return matching_prs
+
+async def update_pull_request_file(
+    branch_name: str,
+    file_path: str,
+    new_data: str,
+    commit_message: str = "Automated update via API"
+) -> bool:
+    headers = {
+        "Authorization": f"Bearer {GITHUB_WORKFLOW_TOKEN}",
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+
+    # Get file SHA
+    contents_url = f"https://api.github.com/repos/{repo}/contents/{file_path}?ref={branch_name}"
+    contents_response = await httpx.get(contents_url, headers=headers)
+    if contents_response.status_code != 200:
+        print("Error fetching file contents:", contents_response.status_code, contents_response.text)
+        return False
+    sha = contents_response.json()["sha"]
+
+    # Prepare new content (base64 encoded)
+    encoded_content = base64.b64encode(new_data.encode("utf-8")).decode("utf-8")
+    data = {
+        "message": commit_message,
+        "content": encoded_content,
+        "sha": sha,
+        "branch": branch_name
+    }
+
+    # Update file
+    update_response = await httpx.put(contents_url, headers=headers, json=data)
+    if update_response.status_code in [200, 201]:
+        print("File updated successfully.")
+        return True
+    else:
+        print("Error updating file:", update_response.status_code, update_response.text)
+        return False

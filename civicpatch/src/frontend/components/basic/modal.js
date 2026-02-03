@@ -44,6 +44,16 @@ function Modal({
   };
 
   return html`
+    <style>
+    dialog[open] {
+      z-index: 9999 !important;
+      position: fixed !important;
+      left: 0; top: 0; right: 0; bottom: 0;
+      margin: auto;
+      /* Optional: add a semi-transparent background */
+      background: rgba(255,255,255,0.98);
+    }
+    </style>
     <dialog
       ?open=${open}
       tabindex="-1"

@@ -612,7 +612,7 @@ async def get_job(request_id: str):
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT status, progress, arguments_json, result_json, created_at, updated_at FROM jobs
+            SELECT status, progress, arguments_json, result_json, created_at, updated_at, pull_request_url FROM jobs
             WHERE request_id = %s;
             """,
             (request_id,),
@@ -625,9 +625,9 @@ async def get_job(request_id: str):
                 "progress": row[1],
                 "arguments_json": row[2],
                 "result_json": row[3],
-                "pull_request_url": None,  # TODO: implement
                 "created_at": to_iso(row[4]),
                 "updated_at": to_iso(row[5]),
+                "pull_request_url": row[6],
             }
         return None
     
@@ -696,6 +696,7 @@ async def update_job_result(request_id: str, result_json: Any):
 
 async def update_job_pull_request_url(request_id: str, pull_request_url: str = None):
     async with pool.connection() as conn:
+        # Update jobs table
         result = await conn.execute(
             """
             UPDATE jobs
@@ -706,7 +707,20 @@ async def update_job_pull_request_url(request_id: str, pull_request_url: str = N
             (
                 pull_request_url, 
                 request_id
-             ),
+            ),
+        )
+        # Update status table
+        await conn.execute(
+            """
+            UPDATE status
+            SET status = %s,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE request_id = %s;
+            """,
+            (
+                "OPEN_PULL_REQUEST",
+                request_id
+            ),
         )
         if result.rowcount == 0:
             return False

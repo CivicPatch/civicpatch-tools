@@ -92,7 +92,7 @@ def get_router() -> APIRouter:
         state: str,
         num_jurisdictions: int = 10,
     ):
-        jurisdictions_file_content = github_service.get_github_file_contents(
+        jurisdictions_file_content = await github_service.get_github_file_contents(
             f"data_source/{state}/jurisdictions_metadata.yml"
         )
         if jurisdictions_file_content is None:
@@ -100,7 +100,7 @@ def get_router() -> APIRouter:
                 status_code=404, detail="Could not find jurisdictions file"
             )
 
-        open_pull_requests = github_service.get_open_pull_requests(
+        open_pull_requests = await github_service.get_open_pull_requests(
             GITHUB_WORKFLOW_TOKEN
         )
         jurisdictions_data = yaml.safe_load(jurisdictions_file_content)
