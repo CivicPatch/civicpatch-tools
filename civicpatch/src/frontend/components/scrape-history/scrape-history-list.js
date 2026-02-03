@@ -1,6 +1,6 @@
 import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
-import "../modal.js";
+import "../basic/modal.js";
 
 const DUMMY_DATA = [
   { id: 1, name: "Scrape Job 1", status: "Completed", start_date: "2024-01-01", duration_in_s: 120, 
