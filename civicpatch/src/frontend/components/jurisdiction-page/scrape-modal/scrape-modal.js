@@ -22,7 +22,6 @@ function ScrapeModal({
   };
 
   const resetUrl = () => {
-    console.log("resetting url...,", url);
     setCurrentUrl(url);
   };
 

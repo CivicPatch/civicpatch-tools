@@ -6,9 +6,6 @@ from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-
-# import traceback
-# from auth.token_handler import verify_github_action_data_query
 from interfaces.api.routes.backend import get_router as get_backend_router
 from interfaces.api.routes.frontend import get_router as get_frontend_router
 
@@ -25,7 +22,7 @@ templates = Jinja2Templates(directory="src/frontend/templates")
 templates.env.globals["is_production"] = is_production
 
 if not is_production:
-    hot_reload = arel.HotReload(paths=[arel.Path("src/frontend")])
+    hot_reload = arel.HotReload(paths=[arel.Path("src/frontend/build")])
     app.add_websocket_route("/hot-reload", route=hot_reload, name="hot-reload")
     app.add_event_handler("startup", hot_reload.startup)
     app.add_event_handler("shutdown", hot_reload.shutdown)
@@ -75,15 +72,3 @@ async def proxy_to_api_civicpatch_org_endpoint(path: str, request: Request):
         media_type=response_headers.get("content-type"),
         headers=response_headers,
     )
-
-
-# @app.exception_handler(Exception)
-# async def exception_handler(request: Request, exc: Exception):
-#    stack_trace = traceback.format_exc()
-#    return JSONResponse(
-#        status_code=500,
-#        content={
-#            "detail": str(exc),
-#            "stack_trace": stack_trace
-#        },
-#    )

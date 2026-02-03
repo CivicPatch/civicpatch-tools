@@ -1,116 +1,49 @@
 import { component, useEffect, useState, useCallback } from "haunted";
 import { html } from "lit-html";
 import { useModal } from "../hooks/useModal.js";
+import { useSSE } from "../hooks/useSse.js"; // <-- Import the hook
 import "../scrape-history/scrape-history-list.js";
 
 const DEFAULT_CENTER = "30.24171,-91.991044";
+const API_URL = __API_URL__;
 
-function JurisdictionPage({ jurisdiction_ocdid }) {
+function JurisdictionPage({ 
+  jurisdiction_ocdid, 
+  history
+}) {
   const [data, setData] = useState(null);
   const [people, setPeople] = useState([]);
 
-  const [pipelineStatus, setPipelineStatus] = useState(null);
-  const [pipelineStatusIsLoading, setPipelineStatusIsLoading] = useState(false);
-  const [eventSource, setEventSource] = useState(null);
-  const [isConnected, setIsConnected] = useState(false);
-
-  const [error, setError] = useState(null);
-
   const scrapeModal = useModal(false);
+
+  const sseUrl = jurisdiction_ocdid
+    ? [`${API_URL}/api/v1/sse/jobs/status`,
+      `?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`,
+      `&job_type=people`].join("")
+    : null;
+
+  const {
+    data: jobStatus,
+    isConnected,
+    error: sseError,
+    // connect: connectStream,
+    // disconnect: disconnectStream,
+  } = useSSE(sseUrl, { autoConnect: !!sseUrl });
 
   useEffect(() => {
     if (!jurisdiction_ocdid) return;
-
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    const [pipelineStatusData, jurisdictionData, peopleData] =
+    const [jurisdictionData, peopleData] =
       await Promise.all([
-        fetchPipelineStatus(jurisdiction_ocdid),
         fetchJurisdictionData(jurisdiction_ocdid),
         fetchPeopleData(jurisdiction_ocdid),
       ]);
     setData(jurisdictionData);
     setPeople(peopleData);
-    setPipelineStatus(pipelineStatusData);
   };
-
-  const connectStream = useCallback(() => {
-    console.log("Attempting to connect to SSE stream...");
-    if (eventSource) {
-      console.log("Stream is already active or being closed.");
-      return;
-    }
-
-    const sseUrl = `/api/sse/pipelines/status?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`;
-
-    try {
-      const newEventSource = new EventSource(sseUrl);
-      setEventSource(newEventSource); // Store the instance in state
-      setError(null);
-
-      newEventSource.onopen = () => {
-        console.log("✅ SSE connection established.");
-        setIsConnected(true);
-        setPipelineStatus((prev) => ({
-          ...prev,
-          status: "CONNECTED",
-          message: "Waiting for updates...",
-        }));
-      };
-
-      newEventSource.onmessage = (event) => {
-        try {
-          const update = JSON.parse(event.data);
-
-          // Update the state with the new status
-          setPipelineStatus(update.data);
-
-          if (update.data.status === "DONE") {
-            // Close if the pipeline is finished
-            newEventSource.close();
-            setEventSource(null);
-            setIsConnected(false);
-            console.log("Stream closed: Pipeline finished.");
-          }
-        } catch (e) {
-          console.error("Error parsing JSON from SSE stream:", e);
-          setError("Error processing update.");
-        }
-      };
-
-      newEventSource.onerror = (e) => {
-        console.error("❌ SSE Error occurred.", e);
-        setIsConnected(false);
-        setError("Connection lost or failed.");
-        // Note: EventSource will attempt to reconnect automatically
-      };
-    } catch (e) {
-      console.error("Failed to initialize EventSource:", e);
-      setError("Failed to initialize connection.");
-    }
-  }, [eventSource, setEventSource]); // Dependency on eventSource to avoid multiple connections
-
-  // --- 2. Disconnect Handler Function ---
-  //const disconnectStream = useCallback(() => {
-  //    if (eventSource) {
-  //        eventSource.close();
-  //        setEventSource(null);
-  //        setIsConnected(false);
-  //        setPipelineStatus({ status: 'DISCONNECTED', message: 'Monitoring manually stopped.' });
-  //        console.log('Stream manually closed.');
-  //    }
-  //}, [eventSource]);
-
-  useEffect(() => {
-    return () => {
-      if (eventSource) {
-        eventSource.close();
-        console.log("Stream closed on component unmount.");
-      }
-    };
-  }, [eventSource]);
 
   const fetchJurisdictionData = async (ocdid) => {
     const jurisdictionOcdidFormatted = encodeURIComponent(ocdid)
@@ -133,22 +66,11 @@ function JurisdictionPage({ jurisdiction_ocdid }) {
     return result.data;
   };
 
-  const fetchPipelineStatus = async (ocdid) => {
-    const response = await fetch(`/api/pipelines/status?jurisdiction_ocdid=${encodeURIComponent(ocdid)}`);
-    if (!response.ok) {
-      return null;
-    }
-
-    const result = await response.json();
-    return result.data;
-  };
-
   const handleScrapeModalClick = (event) => {
     scrapeModal.openModal();
   };
 
   const handleScrapeStartClick = async (details) => {
-    setPipelineStatusIsLoading(true);
     const body = {
       jurisdiction_ocdid: data.data.id,
       config: {
@@ -163,10 +85,9 @@ function JurisdictionPage({ jurisdiction_ocdid }) {
       method: "POST",
       body: JSON.stringify(body),
     });
-    connectStream();
   };
 
-  const canStartScrape = !pipelineStatus && !pipelineStatusIsLoading;
+  const canStartScrape = true;
   const scrapeStatus = data?.data?.updated_at ? `Scraped` : `Unscraped`;
 
   return html`
@@ -207,7 +128,10 @@ function JurisdictionPage({ jurisdiction_ocdid }) {
                 <h3>Scrape History</h3>
                 <hr />
                 <civ-scrape-history-list
-                  .scrapeJobs=${[]}
+                  .history=${history}
+                  .jobStatus=${jobStatus}
+                  .isConnected=${isConnected}
+                  .sseError=${sseError}
                 ></civ-scrape-history-list>
 
                 <civ-scrape-modal
@@ -228,15 +152,6 @@ function JurisdictionPage({ jurisdiction_ocdid }) {
         </div>
       </div>
 
-      ${isConnected
-        ? html`
-            <div class="status-banner success">
-              <strong>Pipeline Status:</strong> ${pipelineStatus?.status} <br />
-              <small>${pipelineStatus.message || ""}</small>
-            </div>
-          `
-        : null}
-
       <h2>Elected Representatives</h2>
       <civ-people-list .local=${people}></civ-people-list>
     </div>
@@ -247,6 +162,9 @@ customElements.define(
   "civ-jurisdiction-page",
   component(JurisdictionPage, {
     useShadowDOM: false,
-    observedAttributes: ["jurisdiction_ocdid"],
+    observedAttributes: [
+      "jurisdiction_ocdid", 
+      "history"
+    ],
   }),
 );

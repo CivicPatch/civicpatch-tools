@@ -28,17 +28,18 @@ async def register_people_job(logger, request_id: str, arguments: dict):
         logger.error(f"Failed to register job with api.civicpatch.org: {response.status_code} {response.text}")
     return response
 
-async def update_people_job_status(logger, request_id: str, status: str, progress: int):
+async def update_job_status(request_id: str, jurisdiction_ocdid: str, status: str, progress: int):
     data = {
         "status": status,
-        "progress": progress
+        "progress": progress,
+        "jurisdiction_ocdid": jurisdiction_ocdid
     }
 
     response = requests.patch(f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/people/{request_id}/status", 
                               headers=AUTH_HEADER, 
                               json=data)
-    if response.status_code != 200:
-        logger.error(f"Failed to update job status with api.civicpatch.org: {response.status_code} {response.text}")
+    #if response.status_code != 200:
+        #logger.error(f"Failed to update job status with api.civicpatch.org: {response.status_code} {response.text}")
     return response
 
 async def update_people_job_result(logger, request_id: str, people: List[Official]):
@@ -53,3 +54,16 @@ async def update_people_job_result(logger, request_id: str, people: List[Officia
     if response.status_code != 200:
         logger.error(f"Failed to update job result with api.civicpatch.org: {response.status_code} {response.text}")
     return response
+
+async def get_people_job_history(jurisdiction_ocdid: str):
+    params = {
+        "jurisdiction_ocdid": jurisdiction_ocdid
+    }
+    response = requests.get(
+        f"{API_CIVICPATCH_ORG_URL}/api/v1/jurisdictions/history",
+        params=params,
+        headers=AUTH_HEADER
+    )
+    print("response??", response)
+    history_data = response.json()
+    return history_data

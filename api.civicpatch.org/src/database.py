@@ -8,7 +8,7 @@ from typing import List, cast, Optional, Any
 
 from psycopg_pool import AsyncConnectionPool
 
-from schemas import Person
+from schemas import Person, PeopleJobHistory
 
 CRUDDER_DB_URL = os.getenv("CRUDDER_DB_URL")
 DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
@@ -389,26 +389,34 @@ async def get_people_by_geo(lat: float, long: float):
         return []
     
 async def get_geojson_by_latlong(lat: float, long: float, zoom: int = None):
-    """Return multiple GeoJSON geometries from geo for polygons near the given point.
-    Includes jurisdiction_ocdid from jurisdictions. If zoom is provided a radius is computed
-    (meters) to limit the neighborhood. Results are ordered by distance for performance.
-    Note: does not enforce a hard result limit — caller should supply reasonable zoom.
     """
-    # compute a buffer in meters based on zoom and latitude; fallback to ~1km when zoom not provided
+    Return multiple GeoJSON geometries from geo for polygons near the given point.
+    At low zoom (zoomed out), geometries are simplified and exaggerated (buffered).
+    """
     if zoom is None:
         buffer_m = 1000.0
+        simplify_tolerance = 0.01
+        result_limit = 100
+        exaggerate_buffer = 0
     else:
-        # meters per pixel at given latitude for WebMercator approximation
         meters_per_pixel = 156543.03392 * math.cos(math.radians(lat)) / (2 ** zoom)
-        # use a neighborhood of ~512 pixels (tunable) but enforce a sensible min
         buffer_m = max(50.0, meters_per_pixel * 512.0)
+        if zoom < 7:
+            simplify_tolerance = 0.05
+            result_limit = 20
+            exaggerate_buffer = 5000  # exaggerate by 5km at low zoom
+        elif zoom < 10:
+            simplify_tolerance = 0.01
+            result_limit = 50
+            exaggerate_buffer = 1000  # exaggerate by 1km at mid zoom
+        else:
+            simplify_tolerance = 0.001
+            result_limit = 100
+            exaggerate_buffer = 0  # no exaggeration at high zoom
 
     try:
-        # Approximate degree deltas for a bounding box to let the DB use a spatial index.
-        # These approximations are fine for the bbox pre-filter (we still run ST_DWithin for exact check).
-        meters_per_deg_lat = 110574.0  # approximate meters per degree latitude
-        meters_per_deg_lon = 111320.0 * math.cos(math.radians(lat))  # varies with latitude
-
+        meters_per_deg_lat = 110574.0
+        meters_per_deg_lon = 111320.0 * math.cos(math.radians(lat))
         dlat = buffer_m / meters_per_deg_lat
         dlon = buffer_m / meters_per_deg_lon
 
@@ -417,23 +425,27 @@ async def get_geojson_by_latlong(lat: float, long: float, zoom: int = None):
         min_lat = lat - dlat
         max_lat = lat + dlat
 
-        # Limit to avoid huge result sets; adjust as needed.
-        RESULT_LIMIT = 100
-
         async with pool.connection() as conn, conn.cursor() as cur:
+            # Use ST_Buffer if exaggerate_buffer > 0, else just simplify
+            geom_expr = (
+                "ST_Simplify(ST_Buffer(g.geom::geography, %s)::geometry, %s)"
+                if exaggerate_buffer > 0
+                else "ST_Simplify(g.geom, %s)"
+            )
             await cur.execute(
-                """
+                f"""
                 SELECT
                     j.jurisdiction_ocdid,
                     g.geoid,
-                    ST_AsGeoJSON(g.geom)::json AS geojson,
+                    ST_AsGeoJSON(
+                        {geom_expr}
+                    )::json AS geojson,
                     ST_Distance(
                         g.geom::geography,
                         ST_SetSRID(ST_Point(%s, %s), 4326)::geography
                     ) AS distance_m
                 FROM geo g
                 JOIN jurisdictions j ON j.data->>'geoid' = g.geoid
-                -- fast bbox pre-filter using && and ST_MakeEnvelope so the spatial index on geom can be used
                 WHERE g.geom && ST_MakeEnvelope(%s, %s, %s, %s, 4326)
                   AND ST_DWithin(
                     g.geom::geography,
@@ -444,11 +456,20 @@ async def get_geojson_by_latlong(lat: float, long: float, zoom: int = None):
                 LIMIT %s;
                 """,
                 (
+                    exaggerate_buffer, simplify_tolerance
+                    if exaggerate_buffer > 0 else simplify_tolerance,
                     long, lat,
                     min_lon, min_lat, max_lon, max_lat,
                     long, lat,
                     buffer_m,
-                    RESULT_LIMIT,
+                    result_limit,
+                ) if exaggerate_buffer > 0 else (
+                    simplify_tolerance,
+                    long, lat,
+                    min_lon, min_lat, max_lon, max_lat,
+                    long, lat,
+                    buffer_m,
+                    result_limit,
                 ),
             )
             rows = await cur.fetchall()
@@ -751,3 +772,36 @@ async def set_daily_limit_for_user(provider: str, provider_user_id: str, daily_l
             """,
             (provider, provider_user_id, daily_limit),
         )
+
+### Jurisdiction History ###
+async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]:
+    """
+    Get jobs where arguments_json->>'jurisdiction_ocdid' matches the given jurisdiction_ocdid.
+    and job_type = 'people'
+    Ordered by created_at DESC.
+    """
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT request_id, created_at, updated_at, status, progress, pull_request_url
+            FROM jobs
+            WHERE arguments_json->>'jurisdiction_ocdid' = %s
+                AND job_type = %s
+            ORDER BY created_at DESC;
+            """,
+            (jurisdiction_ocdid, "people"),
+        )
+        rows = await cur.fetchall()
+        history = []
+        for row in rows:
+            history.append(
+                {
+                    "request_id": row[0],
+                    "created_at": to_iso(row[1]),
+                    "updated_at": to_iso(row[2]),
+                    "status": row[3],
+                    "progress": row[4],
+                    "pull_request_url": row[5]
+                }
+            )
+    return history

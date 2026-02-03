@@ -54,6 +54,12 @@ def get_config_file_path(jurisdiction_ocdid: str):
 
     return config_file_path
 
+def get_metadata_file_path(jurisdiction_ocdid: str):
+    data_source_path = get_data_source_path()
+    folder_path = id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    metadata_file_path = os.path.join(data_source_path, folder_path, "metadata.yml")
+
+    return metadata_file_path
 
 def get_data_file_path(jurisdiction_ocdid):
     data_path = get_data_path()

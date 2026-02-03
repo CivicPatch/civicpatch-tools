@@ -12,6 +12,7 @@ from fastapi.security import APIKeyHeader
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from schemas import Identity, RouteCategory
+import asyncio
 
 import routers.api.admin as api_admin_router
 import routers.api.api_keys as api_keys_router
@@ -29,6 +30,8 @@ from database import (
     user_is_approved,
 )
 from utils.auth import require_route_access, get_optional_user, require_route_access_optional
+from services.memory_pub_sub_service import memory_pubsub
+from fastapi.responses import StreamingResponse
 
 # Only purpose is to manage users, their API keys, and move data from 3rd party servers
 # to GitHub Actions.
@@ -119,6 +122,7 @@ if is_production:
     allowed_origins = [
         "https://civicpatch.org",
         "https://api.civicpatch.org"
+        "https://app.civicpatch.org"
         "https://components.civicpatch.org",
     ]
 else:
@@ -127,6 +131,7 @@ else:
 app.add_middleware(
     CORSMiddleware,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_origins=allowed_origins,
 )
 
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
@@ -215,3 +220,37 @@ app.include_router(
     prefix="/auth",
     tags=["auth"],
 )
+
+@app.get("/api/v1/sse/jobs/status", include_in_schema=False)
+async def sse_job_status(job_type: str, jurisdiction_ocdid: str, request: Request):
+    key = f"{job_type}:{jurisdiction_ocdid}"
+    queue = memory_pubsub.subscribe(key)
+    print("grabbing sse for key:", key)
+
+    async def event_generator():
+        try:
+            while True:
+                try:
+                # Wait for data with a timeout, send heartbeat if nothing comes
+                    data = await asyncio.wait_for(queue.get(), timeout=15.0)
+                    yield f"data: {data}\n\n"
+                except asyncio.TimeoutError:
+                    # On timeout, unsubscribe and exit if client disconnected
+                    if await request.is_disconnected():
+                        print("Client disconnected, stopping SSE")
+                        break
+
+        except asyncio.CancelledError:
+            pass
+        finally:
+            memory_pubsub.unsubscribe(key, queue)
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )

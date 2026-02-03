@@ -11,6 +11,8 @@ from fastapi.responses import RedirectResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 from shared.utils import data_path_utils
 from shared.utils import id_utils
+import services.civicpatch_api as civicpatch_api
+import json
 
 def get_router(templates: Jinja2Templates) -> APIRouter:
     router = APIRouter()
@@ -41,12 +43,14 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     ):
 
         print("Rendering jurisdiction page for:", jurisdiction_ocdid)
+        history = await civicpatch_api.get_people_job_history(jurisdiction_ocdid)
 
         return templates.TemplateResponse(
             "pages/jurisdiction.html",
             {
                 "request": request,
                 "jurisdiction_ocdid": jurisdiction_ocdid,
+                "history": json.dumps(history),
             }
         )
 
