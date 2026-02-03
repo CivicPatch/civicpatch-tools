@@ -199,15 +199,22 @@ def get_router() -> APIRouter:
             "data": jurisdictions,
             "links": {"prev": prev_link, "next": next_link, "self": self_link},  # TODO!
         }
+    
+    @router.get("/history")
+    async def get_jurisdiction_history_endpoint(
+        jurisdiction_ocdid: str = Query(..., description="The OCD ID of the jurisdiction")
+    ):
+        database_history = await database.get_jurisdiction_history(jurisdiction_ocdid)
 
-    # TODO: is anyone using this?
-    #@router.get("/{jurisdiction_ocdid}/geom")
-    #async def get_jurisdiction_geom_endpoint(
-    #    jurisdiction_ocdid: str,
-    #):
-    #    geom = await database.get_jurisdiction_geom(jurisdiction_ocdid)
-    #    if geom is None:
-    #        raise HTTPException(status_code=404, detail="Geometry not found")
-    #    return {"data": geom}
+        # Query github for matching pull requests and add to top of history
+        # TBD: does this need a cache?
+        #pull_request_history = github_service.get_pull_request_history(jurisdiction_ocdid)
+        #history = database_history + pull_request_history
+        history = database_history
+
+        if history is None:
+            raise HTTPException(status_code=404, detail="Jurisdiction not found")
+
+        return {"data": history}
 
     return router

@@ -28,7 +28,6 @@ def get_router(templates: Jinja2Templates):
 
             api_keys = await database.get_api_keys_for_user("github", provider_user_id)
             api_usage = await database.get_api_usage_for_user("github", provider_user_id)
-            print("API USAGE:", api_usage)
 
             return templates.TemplateResponse(
                 request=request,

@@ -184,7 +184,5 @@ class PeopleCollectorData(BaseModel):
     format_output_step: Optional[FormatOutputStep] = None
     maybe_send_to_github_step: Optional[MaybeSendToGitHubStep] = None
 
-    pipeline_duration: Optional[int] = None
-
 class PeopleCollectorContext(WorkflowContext[PeopleCollectorData, WorkflowStatus]):
-  request_id: str
+    pass

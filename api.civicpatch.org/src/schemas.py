@@ -1,4 +1,5 @@
-from pydantic import BaseModel, model_validator
+from pydantic import BaseModel
+from typing import Optional
 from enum import Enum
 
 import shared.utils.id_utils
@@ -55,3 +56,11 @@ class Identity(BaseModel):
     provider_user_id: str
     email: str | None
     roles: list[str] | None
+
+class PeopleJobHistory(BaseModel):
+    request_id: str
+    created_at: float
+    updated_at: float
+    status: str
+    progress: int
+    pull_request_url: Optional[str]

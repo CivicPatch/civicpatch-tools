@@ -36,6 +36,9 @@ def get_router() -> APIRouter:
             request.config
         )
 
+        if errors:
+            raise HTTPException(status_code=400, detail={"errors": errors, "warnings": warnings})
+
         return {
             "data": {
                 "request_id": request_id,

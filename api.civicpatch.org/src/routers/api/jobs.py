@@ -15,6 +15,8 @@ from database import (
 )
 from utils.auth import get_user
 import shared.utils.id_utils
+import json
+from services.memory_pub_sub_service import memory_pubsub
 
 class GetJobResponse(BaseModel):
     request_id: str
@@ -23,8 +25,8 @@ class GetJobResponse(BaseModel):
     arguments: dict
     result: Optional[Any] = None
     pull_request_url: Optional[str] = None # TODO: implement
-    created_at: str
-    updated_at: str
+    created_at: float
+    updated_at: float
 
 class GetJobStatusResponse(BaseModel):
     request_id: str
@@ -32,6 +34,7 @@ class GetJobStatusResponse(BaseModel):
     progress: int
 
 class UpdateJobStatusRequest(BaseModel):
+    jurisdiction_ocdid: str
     status: str
     progress: Optional[int]
 
@@ -133,6 +136,16 @@ def get_router(api_key_header):
             )
 
         await update_job_status(request_id, status=request.status, progress=request.progress)
+
+        # Publish to SSE subscribers
+        key = f"people:{request.jurisdiction_ocdid}"
+        print("publishing with key", key)
+        await memory_pubsub.publish(key, json.dumps({
+            "request_id": request_id,
+            "status": request.status,
+            "progress": request.progress
+        }))
+
         return UpdateJobStatusResponse(
             request_id=request_id,
             status=request.status,

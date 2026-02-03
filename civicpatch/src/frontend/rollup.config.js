@@ -3,6 +3,7 @@ import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import image from "@rollup/plugin-image";
 import css from "rollup-plugin-import-css";
+import replace from "@rollup/plugin-replace";
 //import alias from "@rollup/plugin-alias";
 
 const devMode = process.env.BUILD_ENV === "development";
@@ -48,6 +49,15 @@ const config = {
         drop_debugger: !devMode,
       },
       output: { quote_style: 1 },
+    }),
+    replace({
+      preventAssignment: true,
+      values: {
+        __API_URL__: devMode
+          ? `"http://localhost:8001"`
+          : `"https://api.civicpatch.org"`,
+        __DEV_MODE__: JSON.stringify(devMode),
+      },
     }),
   ],
   // plugins: [minifyHTML(), copy(copyConfig), resolve()],
