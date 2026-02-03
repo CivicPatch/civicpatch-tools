@@ -1,6 +1,5 @@
 import { component, useEffect, useState, useCallback } from "haunted";
 import { html } from "lit-html";
-import { useModal } from "../hooks/useModal.js";
 import { useSSE } from "../hooks/useSse.js"; // <-- Import the hook
 import "../scrape-history/scrape-history-list.js";
 
@@ -13,8 +12,20 @@ function JurisdictionPage({
 }) {
   const [data, setData] = useState(null);
   const [people, setPeople] = useState([]);
+  const [scrapeModalOpen, setScrapeModalOpen] = useState(false); 
+  console.log("data", data);
+  const identities = people?.reduce((acc, person) => {
+    if (acc[person.name]) {
+      acc[person.name] = [...new Set([...acc[person.name], ...(person.other_names || [])])];
+    } else {
+      acc[person.name] = [...new Set(person.other_names || [])];
+    }
 
-  const scrapeModal = useModal(false);
+    return acc;
+
+  }, {});
+
+  console.log({people, identities})
 
   const sseUrl = jurisdiction_ocdid
     ? [`${API_URL}/api/v1/sse/jobs/status`,
@@ -66,11 +77,11 @@ function JurisdictionPage({
     return result.data;
   };
 
-  const handleScrapeModalClick = (event) => {
-    scrapeModal.openModal();
-  };
+  const handleScrapeModalClick = () => setScrapeModalOpen(true);
+  const handleScrapeModalClose = () => setScrapeModalOpen(false);
 
   const handleScrapeStartClick = async (details) => {
+    setScrapeModalOpen(false); // Optionally close modal on submit
     const body = {
       jurisdiction_ocdid: data.data.id,
       config: {
@@ -137,8 +148,13 @@ function JurisdictionPage({
                 <civ-scrape-modal
                   .onStartScrape=${handleScrapeStartClick}
                   .url=${data.data.url}
-                  .modalProps=${scrapeModal.modalProps}
-                ></civ-scrape-modal>
+                  .modalProps=${{
+                    open: scrapeModalOpen,
+                    onClose: handleScrapeModalClose,
+                    closeOnBackdropClick: false
+                  }}
+                  .identities=${identities}
+                ></civ-scrape-modal> 
 
                 <button
                   @click=${handleScrapeModalClick}
