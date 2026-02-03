@@ -14,9 +14,6 @@ def get_data_path():
     """
     data_path = os.path.join(ROOT_DIR, "data")
 
-    if not os.path.exists(data_path):
-        raise FileNotFoundError(f"'data' directory not found at {data_path}")
-
     return data_path
 
 

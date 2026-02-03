@@ -1,6 +1,6 @@
-import { component, useState, useEffect } from "haunted";
+import { component, useState } from "haunted";
 import { html } from "lit-html";
-import "../basic/modal.js";
+import "./scrape-history-modal.js";
 
 const DUMMY_DATA = [
   { id: 1, name: "Scrape Job 1", status: "Completed", start_date: "2024-01-01", duration_in_s: 120, 
@@ -61,21 +61,6 @@ function ScrapeHistoryList({ history, jobStatus }) {
     return `${minutes}m ${seconds}s`;
   }
 
-  const modalContent = selectedJob
-    ? html`<div>
-        <p><strong>Date / Time:</strong> ${fmtDate(selectedJob.created_at)}</p>
-        <p><strong>Status:</strong> ${selectedJob.status}</p>
-        <p><strong>Progress:</strong> ${selectedJob.progress ?? "?"}%</p>
-        <p><strong>Time to scrape:</strong> ${getDurationString(selectedJob.created_at, selectedJob.updated_at)}</p>
-        <p><strong>URLs scraped:</strong></p>
-        <ul>
-          ${selectedJob.source_urls && selectedJob.source_urls.length > 0
-            ? selectedJob.source_urls.map((url) => html`<li><a href="${url}" target="_blank" rel="noopener">${url}</a></li>`)
-            : html`<li><em>No source URLs</em></li>`}
-        </ul>
-      </div>`
-    : null;
-
   if (!parsedHistory || parsedHistory.length === 0) {
     return html`<p>No scrape history available.</p>`;
   }
@@ -85,9 +70,9 @@ function ScrapeHistoryList({ history, jobStatus }) {
       ul.list { 
         padding: 0; 
         margin: 0; 
-        max-height: 300px; /* Set your desired max height */
-        overflow-y: auto;  /* Enable vertical scrolling */
-        padding-right: 1rem; /* Add space between scrollbar and content */
+        max-height: 300px;
+        overflow-y: auto;
+        padding-right: 1rem;
       }
       ul li { list-style: none; margin: 0; }
       .item { padding: 0.5rem 0; }
@@ -107,7 +92,6 @@ function ScrapeHistoryList({ history, jobStatus }) {
           const statusClass = job.status ? job.status.toLowerCase().replace(/\s+/g, "-") : "";
           return html`
             <li class="item">
-              
               <div class="row">
                 <button class="btn" @click=${() => openFor(job)}>
                   ${fmtDate(job.created_at)}
@@ -123,11 +107,11 @@ function ScrapeHistoryList({ history, jobStatus }) {
 
     <hr />
 
-    <civ-modal
-      .title=${"Scrape Details"}
-      .content=${modalContent}
-      .modalProps=${{ open: modalOpen, onClose: closeModal, closeOnBackdropClick: true }}
-    ></civ-modal>
+    <civ-scrape-history-modal
+      .open=${modalOpen}
+      .job=${selectedJob}
+      .onClose=${closeModal}
+    ></civ-scrape-history-modal>
   `;
 }
 

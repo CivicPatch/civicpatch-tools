@@ -2,7 +2,8 @@ import { component, useEffect, useState, useCallback } from "haunted";
 import { html } from "lit-html";
 import { useSSE } from "../hooks/useSse.js"; // <-- Import the hook
 import "../scrape-history/scrape-history-list.js";
-
+import "../basic/person-card.js"; // Make sure this is imported
+import "../editable-people-list.js";
 const DEFAULT_CENTER = "30.24171,-91.991044";
 const API_URL = __API_URL__;
 
@@ -12,7 +13,9 @@ function JurisdictionPage({
 }) {
   const [data, setData] = useState(null);
   const [people, setPeople] = useState([]);
+  const [pullRequests, setPullRequests] = useState([]); // <-- Add state
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false); 
+  const [peopleMode, setPeopleMode] = useState("read"); // Add mode state
   console.log("data", data);
   const identities = people?.reduce((acc, person) => {
     if (acc[person.name]) {
@@ -169,7 +172,36 @@ function JurisdictionPage({
       </div>
 
       <h2>Elected Representatives</h2>
-      <civ-people-list .local=${people}></civ-people-list>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button 
+          class="secondary"
+          @click=${() => setPeopleMode(peopleMode === "read" ? "edit" : "read")}
+          aria-pressed=${peopleMode === "edit"}
+        >
+          ${peopleMode === "read" ? "Edit" : "Read"}
+        </button>
+        <span style="font-size: 1rem; color: var(--muted-color);">
+          Mode: ${peopleMode.charAt(0).toUpperCase() + peopleMode.slice(1)}
+        </span>
+      </div>
+      ${
+        peopleMode === "read"
+          ? html`<civ-people-list .local=${people}></civ-people-list>`
+          : html`
+              <div
+                class="grid"
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                  gap: 1.5rem;
+                  align-items: stretch;
+                  width: 100%;
+                "
+              >
+                <civ-editable-people-list jurisdiction_ocdid=${jurisdiction_ocdid}></civ-editable-people-list>
+              </div>
+            `
+      }
     </div>
   `;
 }
