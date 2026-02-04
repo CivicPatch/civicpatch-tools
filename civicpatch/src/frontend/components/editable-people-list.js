@@ -1,6 +1,8 @@
-import { html, component, useEffect, useState } from 'haunted';
+import { html, component, useEffect, useState, useRef } from 'haunted';
+import { ref, createRef } from 'lit-html/directives/ref.js';
 import './basic/person-card.js';
 import yaml from 'js-yaml';
+import { useRovingFocusList } from '../hooks/use-roving-focus-list.js';
 
 // Helper to generate a random key
 function genKey() {
@@ -27,6 +29,13 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   const [dirty, setDirty] = useState(false);
   const [originalPeople, setOriginalPeople] = useState([]);
   const [notice, setNotice] = useState(null);
+
+  const {
+    refs: cardRefs,
+    focusedIdx,
+    setFocusedIdx,
+    handleKeyDown,
+  } = useRovingFocusList(localPeople.length);
 
   useEffect(() => {
     if (!jurisdiction_ocdid) return;
@@ -57,6 +66,18 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     );
   }
 
+  function handleCardKeyDown(e, idx, tempKey) {
+
+    handleKeyDown(e, idx);
+    
+    if (e.target !== e.currentTarget) return; // Only handle if event is on the card itself
+
+    if ((e.key === ' ' || e.key === 'Enter') && tempKey) {
+      e.preventDefault();
+      toggleSelect(tempKey);
+    }
+  }
+
   function assignPeople(peopleToAssign) {
     const peopleWithKeys = peopleToAssign.map(person => ({
       ...person,
@@ -85,7 +106,11 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   } 
 
   function submitChanges(branchName, data) {
-
+    const url = [
+      `/api/api_proxy/jobs/people/pull_request/`,
+      encodeURIComponent(branchName),
+      `/submit`,
+    ]
   }
 
   function handleAddPerson() {
@@ -110,7 +135,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   function handleReset(tempKey) {
-    console.log('Resetting person with key:', tempKey);
     if (!tempKey) {
       if (selectedOpenPullRequest) {
         getSelectedOpenPullRequestData(selectedOpenPullRequest);
@@ -235,6 +259,14 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   if (error) return html`<p>Error loading people.</p>`;
 
   return html`
+  <style>
+    .grid > [role="listitem"] person-card:focus article {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(0,0,0,0.12);
+        border-radius: 6px;
+        z-index: 1;
+    }
+  </style>
   <div style="margin-bottom: 2rem;">
     <h3>Data Source</h3>
     <div role="radiogroup">
@@ -287,7 +319,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     </button>
     <button
       @click=${() => handleReset()}
-      style="margin-left:auto; margin-right: 0.5rem;"
+      style="margin-left:auto; margin-right: 1rem;"
       ?disabled=${dirty === false}
     >
       Reset Form
@@ -318,15 +350,21 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     "
   >
     ${localPeople.map(
-      person => html`
-        <person-card
-          .person=${person}
-          .selected=${selected.includes(person._tempKey)}
-          .onSelect=${() => toggleSelect(person._tempKey)}
-          .onDelete=${() => handleDelete(person._tempKey)}
-          .onChange=${(field, value) => updatePerson(person._tempKey, { [field]: value })}
-          .onReset=${() => handleReset(person._tempKey)}
-        ></person-card>
+      (person, idx) => html`
+        <div role="listitem">
+          <person-card
+            tabIndex=${focusedIdx === idx ? "0" : "-1"}
+            ${ref(cardRefs[idx])}
+            @focus=${() => setFocusedIdx(idx)}
+            @keydown=${e => handleCardKeyDown(e, idx, person._tempKey) }
+            .person=${person}
+            .selected=${selected.includes(person._tempKey)}
+            .onSelect=${() => toggleSelect(person._tempKey)}
+            .onDelete=${() => handleDelete(person._tempKey)}
+            .onChange=${(field, value) => updatePerson(person._tempKey, { [field]: value })}
+            .onReset=${() => handleReset(person._tempKey)}
+          ></person-card>
+        </div>
       `
     )}
   </div>

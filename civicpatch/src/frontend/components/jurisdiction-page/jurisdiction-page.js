@@ -13,10 +13,8 @@ function JurisdictionPage({
 }) {
   const [data, setData] = useState(null);
   const [people, setPeople] = useState([]);
-  const [pullRequests, setPullRequests] = useState([]); // <-- Add state
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false); 
   const [peopleMode, setPeopleMode] = useState("read"); // Add mode state
-  console.log("data", data);
   const identities = people?.reduce((acc, person) => {
     if (acc[person.name]) {
       acc[person.name] = [...new Set([...acc[person.name], ...(person.other_names || [])])];
@@ -28,7 +26,6 @@ function JurisdictionPage({
 
   }, {});
 
-  console.log({people, identities})
 
   const sseUrl = jurisdiction_ocdid
     ? [`${API_URL}/api/v1/sse/jobs/status`,

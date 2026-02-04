@@ -5,6 +5,7 @@ import os
 import secrets
 import math
 from typing import List, cast, Optional, Any
+import shared.utils.id_utils
 
 from psycopg_pool import AsyncConnectionPool
 
@@ -808,6 +809,7 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]
         rows = await cur.fetchall()
         history = []
         for row in rows:
+            branch_name = shared.utils.id_utils.make_git_branch(jurisdiction_ocdid, row[0])
             history.append(
                 {
                     "request_id": row[0],
@@ -815,7 +817,9 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]
                     "updated_at": to_iso(row[2]),
                     "status": row[3],
                     "progress": row[4],
-                    "pull_request_url": row[5]
+                    "pull_request_url": row[5],
+                    "jurisdiction_ocdid": jurisdiction_ocdid,
+                    "branch_name": branch_name
                 }
             )
     return history

@@ -79,7 +79,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
       justify-content: center;
     }
     </style>
-    <article class="person-card" tabindex="0" style="border-width:2px; border-style:solid; border-color:${selected ? 'var(--primary)' : 'var(--muted-border)'}; border-radius:8px; padding:1rem;">
+    <article class="person-card" style="border-width:2px; border-style:solid; border-color:${selected ? 'var(--pico-form-element-active-border-color)' : 'var(--pico-form-element-border-color)'}; border-radius:8px; padding:1rem;">
       <header style="display: flex; align-items: center; gap: 1rem;">
         <input
           type="checkbox"

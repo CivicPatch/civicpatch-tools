@@ -116,7 +116,7 @@ def jurisdiction_ocdid_to_git_branch_suffix(jurisdiction_ocdid: str) -> str:
     branch += f"{jurisdiction_ocdid_parts.place_label}_{jurisdiction_ocdid_parts.place}__{jurisdiction_ocdid_parts.jurisdiction_type}"
     return branch.lower()
 
-def jurisdiction_ocdid_to_git_branch(jurisdiction_ocdid: str, request_id: str) -> str:
+def make_git_branch(jurisdiction_ocdid: str, request_id: str) -> str:
     """
     Converts a jurisdiction ID to a reversible, human-friendly git branch name.
     Example:

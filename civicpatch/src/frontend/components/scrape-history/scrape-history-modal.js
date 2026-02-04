@@ -1,4 +1,4 @@
-import { component } from "haunted";
+import { component, useEffect } from "haunted";
 import { html } from "lit-html";
 import "../basic/modal.js";
 
