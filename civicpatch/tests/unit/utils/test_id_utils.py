@@ -2,7 +2,7 @@ import pytest
 from shared.utils.id_utils import (  # Replace `your_module` with the actual module name
     parse_jurisdiction_ocdid,
     jurisdiction_ocdid_to_folder,
-    jurisdiction_ocdid_to_git_branch,
+    make_git_branch,
     slug_to_jurisdiction_ocdid,
     git_branch_to_jurisdiction_ocdid,
 )
@@ -84,12 +84,12 @@ def test_jurisdiction_ocdid_to_folder():
     assert jurisdiction_ocdid_to_folder(jurisdiction_ocdid) == expected
 
 
-# Tests for jurisdiction_ocdid_to_git_branch
-def test_jurisdiction_ocdid_to_git_branch():
+# Tests for make_git_branch
+def test_make_git_branch():
     jurisdiction_ocdid = "ocd-jurisdiction/country:us/state:wa/place:seattle/government"
     request_id = "2025-09-25-1a2b"
     expected = "2025-09-25-1a2b__state_wa__place_seattle__government"
-    assert jurisdiction_ocdid_to_git_branch(jurisdiction_ocdid, request_id) == expected
+    assert make_git_branch(jurisdiction_ocdid, request_id) == expected
 
 
 # Tests for slug_to_jurisdiction_ocdid

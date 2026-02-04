@@ -64,6 +64,5 @@ async def get_people_job_history(jurisdiction_ocdid: str):
         params=params,
         headers=AUTH_HEADER
     )
-    print("response??", response)
     history_data = response.json()
     return history_data

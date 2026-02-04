@@ -91,7 +91,7 @@ def zip_files(request_id, jurisdiction_ocdid):
     data_municipality_file = get_data_file_path(jurisdiction_ocdid)
     data_source_municipality_path = get_data_source_path_for_jurisdiction_ocdid(jurisdiction_ocdid)
 
-    git_branch_name = id_utils.jurisdiction_ocdid_to_git_branch(
+    git_branch_name = id_utils.make_git_branch(
         jurisdiction_ocdid, request_id
     )
     zip_file_name = f"{git_branch_name}.zip"

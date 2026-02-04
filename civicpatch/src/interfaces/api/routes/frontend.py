@@ -42,7 +42,6 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         jurisdiction_ocdid: str
     ):
 
-        print("Rendering jurisdiction page for:", jurisdiction_ocdid)
         history = await civicpatch_api.get_people_job_history(jurisdiction_ocdid)
 
         return templates.TemplateResponse(

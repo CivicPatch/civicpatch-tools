@@ -167,7 +167,7 @@ async def update_pull_request_file(
 
     # Get file SHA
     contents_url = f"https://api.github.com/repos/{repo}/contents/{file_path}?ref={branch_name}"
-    contents_response = await httpx.get(contents_url, headers=headers)
+    contents_response = await httpx.get(contents_url, headers=headers, timeout=timeout)
     if contents_response.status_code != 200:
         print("Error fetching file contents:", contents_response.status_code, contents_response.text)
         return False

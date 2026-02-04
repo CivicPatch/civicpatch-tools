@@ -1,4 +1,4 @@
-import { component, useState } from "haunted";
+import { component, useState, useEffect } from "haunted";
 import { html } from "lit-html";
 import { ref } from "lit-html/directives/ref.js";
 import "../../basic/modal.js";
