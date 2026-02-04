@@ -198,7 +198,10 @@ function JurisdictionPage({
                   width: 100%;
                 "
               >
-                <civ-editable-people-list jurisdiction_ocdid=${jurisdiction_ocdid}></civ-editable-people-list>
+                <civ-editable-people-list 
+                jurisdiction_ocdid=${jurisdiction_ocdid}
+                peopele=${people}
+                ></civ-editable-people-list>
               </div>
             `
       }

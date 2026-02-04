@@ -263,48 +263,41 @@ def get_router(api_key_header):
     async def get_open_people_pull_requests_endpoint(
         jurisdiction_ocdid: Optional[str] = None
     ):
-        branch_name_suffix = shared.utils.id_utils.jurisdiction_ocdid_to_git_branch(jurisdiction_ocdid)
+        branch_name_suffix = shared.utils.id_utils.jurisdiction_ocdid_to_git_branch_suffix(jurisdiction_ocdid)
         print("branch_name_suffix:", branch_name_suffix)
-        open_pull_requests = await github_service.get_open_pull_request_by_branch_suffix("people", branch_name_suffix)
+        open_pull_requests = await github_service.get_open_pull_request_by_branch_suffix(branch_name_suffix)
         return {"data": open_pull_requests}
 
     @router.get(
-        "/people/{request_id}/pull_request/data",
+        "/people/pull_request/{branch_name}/data",
         include_in_schema=False
     )
-    async def get_job_pull_request_data_endpoint(request_id: str):
-        # Get the pull request url from the job
-        job = await database.get_job(request_id)
-        if not job:
-            return JSONResponse(
-                content=ErrorResponse(error="Job not found").model_dump(),
-                status_code=404
-            )
-        jurisdiction_ocdid = job['arguments_json'].get('jurisdiction_ocdid')
-        print("jurisdiction_ocdid:", jurisdiction_ocdid)
+    async def get_job_pull_request_data_endpoint(
+        branch_name: str,
+        jurisdiction_ocdid: str
+    ):
         file_path = data_path_utils.get_data_file_path(jurisdiction_ocdid)
         # Chop off leading "/app/" from file_path
         if file_path.startswith("/app/"):
             file_path = file_path[len("/app/"):]
-        branch_name = shared.utils.id_utils.jurisdiction_ocdid_to_git_branch(
-            jurisdiction_ocdid,
-            request_id
-        )
-        print("branch_name:", branch_name)
         github_response = await github_service.get_github_file_contents(
             github_file_path=file_path,
             ref=branch_name
         )
+
+        if github_response is None:
+            return {"branch_name": branch_name, "data": None}
+
         response = yaml.safe_load(github_response) if github_response else None
 
-        return {"request_id": request_id, "data": response}
+        return {"branch_name": branch_name, "data": response}
 
     @router.post(
-        "/people/{request_id}/pull_request/data",
+        "/people/pull_request/{branch_name}/data",
         include_in_schema=False
     )
     async def post_job_pull_request_data_endpoint(
-        request_id: str, 
+        branch_name: str,
         request: PostJobPullRequestDataRequest,
         user: Identity = Depends(get_user)
     ):
@@ -315,7 +308,7 @@ def get_router(api_key_header):
             new_data=request.data,
             commit_message=f"Data update by {user_name}"
         )
-        return {"request_id": request_id, "status": "success"}
+        return {"branch_name": branch_name, "status": "success"}
 
     @router.delete(
         "/people/{request_id}",
