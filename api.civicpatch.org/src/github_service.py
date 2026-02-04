@@ -123,7 +123,7 @@ async def get_github_file_contents(
         return None
 
 
-def get_open_pull_requests(github_workflow_token: str) -> List[PullRequest]:
+async def get_open_pull_requests(github_workflow_token: str) -> List[PullRequest]:
     headers = {
         "Authorization": f"Bearer {github_workflow_token}",
         "Accept": "application/vnd.github+json",
@@ -132,20 +132,24 @@ def get_open_pull_requests(github_workflow_token: str) -> List[PullRequest]:
 
     params = "state=open&per_page=100&sort=created&direction=desc"
     url = f"https://api.github.com/repos/CivicPatch/open-data/pulls?{params}"
-    response = requests.get(url, headers=headers)
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url, headers=headers, timeout=timeout)
 
     if response.status_code == 200:
         pull_requests = response.json()
         valid_pull_requests = [
-            PullRequest(branch_name=pr["head"]["ref"]) for pr in pull_requests
+            PullRequest(
+                branch_name=pr["head"]["ref"],
+                url=pr["html_url"],
+            ) for pr in pull_requests
         ]
         return [pr for pr in valid_pull_requests if pr.jurisdiction_ocdid]
     else:
         print("Error fetching pull requests:", response.status_code, response.text)
         return []
     
-def get_open_pull_request_by_branch_suffix(suffix: str) -> List[PullRequest]:
-    pull_requests = get_open_pull_requests(GITHUB_WORKFLOW_TOKEN)
+async def get_open_pull_request_by_branch_suffix(suffix: str) -> List[PullRequest]:
+    pull_requests = await get_open_pull_requests(GITHUB_WORKFLOW_TOKEN)
     matching_prs = [pr for pr in pull_requests if pr.branch_name.endswith(suffix)]
     return matching_prs
 

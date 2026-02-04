@@ -37,6 +37,7 @@ class Person(BaseModel):
 class PullRequest(BaseModel):
     branch_name: str
     jurisdiction_ocdid: str = ""
+    url: str
 
     def model_post_init(self, __context):
         try:

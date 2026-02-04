@@ -102,6 +102,20 @@ def jurisdiction_ocdid_to_folder(jurisdiction_ocdid: str) -> str:
 
     return folder
 
+def jurisdiction_ocdid_to_git_branch_suffix(jurisdiction_ocdid: str) -> str:
+    """
+    Converts a jurisdiction ID to a reversible, human-friendly git branch suffix.
+    Example:
+      "ocd-jurisdiction/country:us/state:wa/place:seattle"
+      -> "state_wa__place_seattle__government"
+    """
+    jurisdiction_ocdid_parts = parse_jurisdiction_ocdid(jurisdiction_ocdid)
+    branch = f"state_{jurisdiction_ocdid_parts.state}__"
+    if jurisdiction_ocdid_parts.county:
+        branch += f"county_{jurisdiction_ocdid_parts.county}__"
+    branch += f"{jurisdiction_ocdid_parts.place_label}_{jurisdiction_ocdid_parts.place}__{jurisdiction_ocdid_parts.jurisdiction_type}"
+    return branch.lower()
+
 def jurisdiction_ocdid_to_git_branch(jurisdiction_ocdid: str, request_id: str) -> str:
     """
     Converts a jurisdiction ID to a reversible, human-friendly git branch name.
@@ -109,12 +123,7 @@ def jurisdiction_ocdid_to_git_branch(jurisdiction_ocdid: str, request_id: str) -
       "ocd-jurisdiction/country:us/state:wa/place:seattle"
       -> "2025-09-25-1a2b-state-wa-place-seattle"
     """
-    jurisdiction_ocdid_parts = parse_jurisdiction_ocdid(jurisdiction_ocdid)
-    branch = f"state_{jurisdiction_ocdid_parts.state}__"
-    if jurisdiction_ocdid_parts.county:
-        branch += f"county_{jurisdiction_ocdid_parts.county}__"
-    branch += f"{jurisdiction_ocdid_parts.place_label}_{jurisdiction_ocdid_parts.place}__{jurisdiction_ocdid_parts.jurisdiction_type}"
-    slug = branch.lower()
+    slug = jurisdiction_ocdid_to_git_branch_suffix(jurisdiction_ocdid)
     return f"{request_id}__{slug}".lower()
 
 
