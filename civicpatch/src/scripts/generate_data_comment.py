@@ -11,7 +11,7 @@ def generate_data_comment(data: List[Official]) -> str:
     Generate a Markdown table from a list of Person objects.
     """
     table_header = (
-        "| **Name**  | **Office Name**  | **Division**  | **Emails**     | **Phones**     | **Urls**      | **Term Dates** | **Image**     | ** Source URLs **|\n"
+        "| **Name**  | **Office Name**  | **Division**  | **Emails**     | **Phones**     | **Urls**      | **Term Dates** | **Image**     | **Source URLs**|\n"
         "|-----------|------------------|---------------|----------------|----------------|---------------|----------------|---------------|------------------|\n"
     )
     table_rows = ""

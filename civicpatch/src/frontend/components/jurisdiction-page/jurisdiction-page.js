@@ -2,8 +2,7 @@ import { component, useEffect, useState, useCallback } from "haunted";
 import { html } from "lit-html";
 import { useSSE } from "../hooks/useSse.js"; // <-- Import the hook
 import "../scrape-history/scrape-history-list.js";
-import "../basic/person-card.js"; // Make sure this is imported
-import "../editable-people-list.js";
+import "../edit-people/editable-people-list.js";
 const DEFAULT_CENTER = "30.24171,-91.991044";
 const API_URL = __API_URL__;
 
@@ -197,7 +196,7 @@ function JurisdictionPage({
               >
                 <civ-editable-people-list 
                 jurisdiction_ocdid=${jurisdiction_ocdid}
-                peopele=${people}
+                .people=${people}
                 ></civ-editable-people-list>
               </div>
             `
