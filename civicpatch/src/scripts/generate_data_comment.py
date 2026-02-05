@@ -11,8 +11,8 @@ def generate_data_comment(data: List[Official]) -> str:
     Generate a Markdown table from a list of Person objects.
     """
     table_header = (
-        "| **Name**  | **Office Name**  | **Division**  | **Emails**     | **Phones**     | **Urls**      | **Term Dates** | **Image**     |\n"
-        "|-----------|------------------|---------------|----------------|----------------|---------------|----------------|---------------|\n"
+        "| **Name**  | **Office Name**  | **Division**  | **Emails**     | **Phones**     | **Urls**      | **Term Dates** | **Image**     | ** Source URLs **|\n"
+        "|-----------|------------------|---------------|----------------|----------------|---------------|----------------|---------------|------------------|\n"
     )
     table_rows = ""
 
@@ -28,10 +28,19 @@ def generate_data_comment(data: List[Official]) -> str:
         urls = ", ".join(format_url(url) for url in person.urls) if person.urls else "N/A"
         term_dates = f"{person.start_date or 'N/A'} - {person.end_date or 'N/A'}"
         image = f"![image of {person.name}]({person.image})" if person.image else "N/A"
+        source_urls = to_markdown_list(person.source_urls)
 
-        table_rows += f"| **{name}** | {office_name} | {divisions} | {emails} | {phones} | {urls} | {term_dates} | {image} |\n"
+        table_rows += f"| **{name}** | {office_name} | {divisions} | {emails} | {phones} | {urls} | {term_dates} | {image} | {source_urls} |\n"
 
     return table_header + table_rows
+
+def to_markdown_list(items: List[str]) -> str:
+    """
+    Convert a list of strings to a Markdown-formatted list.
+    """
+    if not items:
+        return "N/A"
+    return "\n".join(f"- {item}" for item in items)
 
 
 def main():

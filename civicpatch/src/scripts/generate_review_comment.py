@@ -10,6 +10,7 @@ from jobs.people_collector.schemas import (
 from domain.models import Official
 from shared.utils import data_path_utils, config_utils
 from pydantic import BaseModel
+import utils.merge_utils as merge_utils
 
 class ReviewDecision(BaseModel):
     comment: str
@@ -166,16 +167,27 @@ def extract_unique_designations_from_office_name(office_name: str, designations_
     return matches
 
 def canonicalize_names(officials, identities):
-    """Return a set of canonical names for a list of officials, using identities mapping."""
-    name_to_canonical = {}
-    for canonical, aliases in (identities or {}).items():
-        name_to_canonical[canonical.lower()] = canonical.lower()
-        for alias in aliases:
-            name_to_canonical[alias.lower()] = canonical.lower()
+    """Return a set of canonical names for a list of officials, using identities mapping and same_name comparison."""
+
     canonicals = set()
     for o in officials:
-        name = o.name.lower()
-        canonicals.add(name_to_canonical.get(name, name))
+        name = o.name
+        found = False
+        if identities:
+            for canonical, aliases in identities.items():
+                if merge_utils.same_name(name, canonical):
+                    canonicals.add(canonical)
+                    found = True
+                    break
+                for alias in aliases:
+                    if merge_utils.same_name(name, alias):
+                        canonicals.add(canonical)
+                        found = True
+                        break
+                if found:
+                    break
+        if not found:
+            canonicals.add(name)
     return canonicals
 
 def get_identity_mismatches(
