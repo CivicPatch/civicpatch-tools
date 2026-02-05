@@ -1,8 +1,9 @@
 import { html, component, useEffect, useState, useRef } from 'haunted';
-import { ref, createRef } from 'lit-html/directives/ref.js';
-import './basic/person-card.js';
+import { ref } from 'lit-html/directives/ref.js';
+import './person-card.js';
 import yaml from 'js-yaml';
-import { useRovingFocusList } from '../hooks/use-roving-focus-list.js';
+import { useRovingFocusList } from '../../hooks/use-roving-focus-list.js';
+import './diff-preview.js';
 
 // Helper to generate a random key
 function genKey() {
@@ -105,14 +106,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       })
   } 
 
-  function submitChanges(branchName, data) {
-    const url = [
-      `/api/api_proxy/jobs/people/pull_request/`,
-      encodeURIComponent(branchName),
-      `/submit`,
-    ]
-  }
-
   function handleAddPerson() {
     const name = prompt('Enter name for new person:');
     if (!name) return;
@@ -137,6 +130,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   function handleReset(tempKey) {
     if (!tempKey) {
       if (selectedOpenPullRequest) {
+        console.log("selectedOpenPullRequest", selectedOpenPullRequest);
         getSelectedOpenPullRequestData(selectedOpenPullRequest);
       } else {
         assignPeople(people);
@@ -214,6 +208,22 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     setSelected([]);
   }
 
+  function submitChanges(branchName, data) {
+    const url = [
+      `/api/api_proxy/jobs/people/pull_request/`,
+      encodeURIComponent(branchName),
+      `/submit`,
+    ]
+      .join("");
+    return fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ data }),
+    }).then((r) => r.json());
+  }
+
   function handleSubmit() {
     setSelected([]);
     setDirty(false);
@@ -223,6 +233,13 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         ? `Changes submitted to ${openPullRequests.find(pr => pr.branch_name === selectedOpenPullRequest)?.url || selectedOpenPullRequest}`
         : "Changes submitted."
     );
+    submitChanges(
+      selectedOpenPullRequest, // TODO: if not available needs to open a new PR instead
+      localPeople.map(({ _tempKey, _dirty, _changes, ...person }) => person)
+    ).catch(() => {
+      setNotice("Failed to submit changes.");
+    });
+
   }
 
   function selectActions() {
@@ -370,12 +387,23 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   </div>
 
   <div style="margin-top:2rem;">
-    <label for="final-yml" style="font-weight:600;">Final YAML Output</label>
-    <textarea
-      id="final-yml"
-      readonly
-      style="width:100%;height:300px;font-family:monospace;font-size:14px;resize:vertical;"
-    >${yaml.dump(localPeople.map(({ ...person }) => person))}</textarea>
+    <label for="diff-table" style="font-weight:600;">YAML Diff</label>
+    <diff-preview
+      .original=${yaml.dump(originalPeople.map(({ _tempKey, ...person }) => person))}
+      .updated=${yaml.dump(localPeople.map(({ _dirty, _changes, _tempKey, ...person }) => person))}
+    ></diff-preview>
+    <div style="margin-top:2rem;">
+      <label for="final-yml" style="font-weight:600;">Final YAML Output</label>
+      <pre id="final-yml" style="
+        background: var(--pico-code-background, #f6f8fa);
+        border-radius: 6px;
+        padding: 1em;
+        font-family: var(--pico-font-monospace, monospace);
+        white-space: pre-wrap;
+        max-height: 300px;
+        overflow: auto;
+      ">${yaml.dump(localPeople.map(({ _dirty, _changes, _tempKey, ...person }) => person))}</pre>
+    </div>
   </div>
   `;
 }
@@ -383,8 +411,9 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 customElements.define(
   'civ-editable-people-list', 
   component(
-    EditablePeopleList, { 
-      useShadowDOM: false, observedAttributes: ['jurisdiction_ocdid'] 
+    EditablePeopleList,
+    {
+      useShadowDOM: false, observedAttributes: ['jurisdiction_ocdid']
     }
   )
 );

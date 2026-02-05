@@ -110,7 +110,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
       <section style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
         <input
           type="text"
-          value=${person.name || ''}
+          .value=${person.name || ''}
           @input=${e => handleFieldChange('name', e.target.value)}
           placeholder="Full Name"
           style="flex: 1;"
@@ -122,7 +122,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
         <div style="margin-bottom: 0.5rem;">
           <input
             type="text"
-            value=${person.office?.name || ''}
+            .value=${person.office?.name || ''}
             @input=${e => {
               const newOffice = { ...(person.office || {}), name: e.target.value };
               if (onChange) onChange('office', newOffice);
@@ -131,17 +131,28 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
             style="width: 100%;"
           />
         </div>
+        <div style="margin-bottom: 0.5rem;">
+          <textarea
+            @input=${e => {
+              const newOffice = { ...(person.office || {}), division_ocdid: e.target.value };
+              if (onChange) onChange('office', newOffice);
+            }}
+            placeholder="Division"
+            style="width: 100%; min-height: 2.5em; resize: vertical;"
+            rows="2"
+          >${person.office?.division_ocdid || ''}</textarea>
+        </div>
         <label>Term</label>
         <div style="display: flex; gap: 0.5rem;">
           <input
             type="date"
-            value=${person.start_date || ''}
+            .value=${person.start_date || ''}
             @input=${e => handleFieldChange('start_date', e.target.value)}
             placeholder="Start"
           />
           <input
             type="date"
-            value=${person.end_date || ''}
+            .value=${person.end_date || ''}
             @input=${e => handleFieldChange('end_date', e.target.value)}
             placeholder="End"
           />
@@ -155,7 +166,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <input
                 type="tel"
-                value=${phone}
+                .value=${phone}
                 @input=${e => handleArrayChange('phones', idx, e.target.value)}
                 placeholder="(555) 123-4567"
               />
@@ -178,7 +189,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <input
                 type="email"
-                value=${email}
+                .value=${email}
                 @input=${e => handleArrayChange('emails', idx, e.target.value)}
                 placeholder="email@example.com"
               />
@@ -201,7 +212,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <input
                 type="url"
-                value=${url}
+                .value=${url}
                 @input=${e => handleArrayChange('urls', idx, e.target.value)}
                 placeholder="https://example.com"
               />
@@ -224,7 +235,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <input
                 type="url"
-                value=${url}
+                .value=${url}
                 @input=${e => handleArrayChange('source_urls', idx, e.target.value)}
                 placeholder="https://source.com"
               />
