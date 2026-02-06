@@ -1,0 +1,68 @@
+people:
+- name: Tommy Sloan
+  roles:
+  - Mayor
+  designations: []
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Beau Brudney
+  roles:
+  - Council Member
+  designations:
+  - Place 3
+  - Ward East
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Monte Sides
+  roles:
+  - Council Member
+  designations:
+  - Place 4
+  - Ward South
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Sharlene T. Hetzel
+  roles:
+  - Council Member
+  - Mayor Pro-Tem
+  designations:
+  - Place 2
+  - Ward West
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Tracy Rankin
+  roles:
+  - Council Member
+  designations:
+  - Place 1
+  - Ward North
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+thought: 'The content includes a structured listing of the City Council members with
+  a photo and explicit roles: a Mayor and four Council Members specified by their
+  wards (Places 1-4). Contact phone is given for all council members. No emails or
+  official URLs specific to individual members are provided, but the City Council
+  main page URL is given. There is no indication that these officials are former or
+  no longer in office, so they are assumed to be current as of 2026. The roster and
+  roles are clearly identified in the City Council section, fulfilling the requirement
+  for structured listing extraction.'

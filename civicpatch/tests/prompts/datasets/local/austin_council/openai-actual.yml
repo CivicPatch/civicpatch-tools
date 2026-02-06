@@ -119,19 +119,7 @@ people:
   start_date: null
   end_date: null
   image: null
-- name: T.C. Broadnax
-  roles:
-  - City Manager
-  designations: []
-  phone: 512-974-2200
-  email: null
-  url: https://www.austintexas.gov/department/city-manager
-  start_date: null
-  end_date: null
-  image: null
-thought: The content contains a structured listing of officials under the section
-  that includes the Mayor and District Council Members, along with the City Manager.
-  Each entry has names, roles, district designations for council members, and phone
-  numbers. Email addresses or official URLs are present for most. There are no indications
-  these officials are former or not currently serving, so they are assumed to be current
-  as of 2026-02-01.
+thought: The content contains a structured listing of current officials for the City
+  of Austin including the Mayor and District Council Members with their phone numbers
+  and URLs. There are no indications that these officials are former or not currently
+  serving, so they are extracted as current officials for 2026-02-06.

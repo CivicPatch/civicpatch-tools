@@ -10,6 +10,7 @@ import phonenumbers
 from typing import cast, List
 import pathlib
 import yaml
+import os
 from tests.utils import find_person_by_name
 
 pytestmark = pytest.mark.evals
@@ -92,16 +93,13 @@ def aggregate(scores):
 @pytest.mark.asyncio
 async def run_eval(model_client, cases):
     scores = []
-
+    per_case_scores = []
     for case in cases:
         run_prompt = model_client["run_prompt"]
         make_prompt = model_client["make_prompt"] 
 
         case_input = case["input"]
-        prompt = make_prompt(
-            []  # people_hint
-        )
-        # Await the run_prompt coroutine
+        prompt = make_prompt([])
         response = await run_prompt(
             "run-eval",
             "ocd-jurisdiction/country:us/state:tx/place:austin/government",
@@ -117,12 +115,15 @@ async def run_eval(model_client, cases):
             yaml_output = yaml.safe_dump(serialized_output, sort_keys=False)
             f.write(yaml_output)
 
-        # Calculate scores for all people in the case
         case_scores = score_cases(actual.people, expected)
+        # Aggregate scores for this case
+        case_aggregate = {}
+        for key in case_scores[0].keys():
+            case_aggregate[key] = sum(score[key] for score in case_scores) / len(case_scores)
+        per_case_scores.append((case["id"], case_aggregate))
         scores.append(case_scores)
 
-    # Aggregate scores at both levels
-    return aggregate(scores)
+    return aggregate(scores), per_case_scores
 
 @pytest_asyncio.fixture
 def load_eval_cases(base_dir="tests/prompts/datasets/local"):
@@ -174,13 +175,51 @@ async def model_client(request):
 @pytest.mark.parametrize("model_client", ["openai", "gemini"], indirect=True)
 @pytest.mark.asyncio
 async def test_eval_with_mocked_cases(model_client, load_eval_cases):
-    report = await run_eval(model_client, load_eval_cases)
+    report, per_case_scores = await run_eval(model_client, load_eval_cases)
     print("Final aggregated report:", report)
 
-    # Same rubric, per-model thresholds (tune these)
-    assert report["name"] >= 0.95
-    assert report["roles"] >= 0.90
-    assert report["designations"] >= 0.85
-    assert report["email"] >= 0.90
-    assert report["phone"] >= 0.90
-    assert report["url"] >= 0.40
+    thresholds = {
+        "name": 0.95,
+        "roles": 0.90,
+        "designations": 0.85,
+        "email": 0.90,
+        "phone": 0.90,
+        "url": 0.40,
+    }
+
+    failed_cases = []
+    for idx, (case_id, case_aggregate) in enumerate(per_case_scores):
+        failed = []
+        for key, threshold in thresholds.items():
+            actual_score = case_aggregate.get(key, 1.0)
+            if actual_score < threshold:
+                failed.append(f"{key}: actual={actual_score:.3f}, expected>={threshold}")
+        if failed:
+            failed_cases.append({
+                "model_client": model_client["name"],
+                "case_number": idx,
+                "case_id": case_id,
+                "failures": failed
+            })
+            print(f"[{model_client['name']}] Case #{idx} ('{case_id}') failed: {', '.join(failed)}")
+
+    # Write full report to file
+    evals_dir = "tests/prompts/tests/evals"
+    os.makedirs(evals_dir, exist_ok=True)
+    report_path = os.path.join(evals_dir, f"{model_client['name']}-eval-report.yml")
+    with open(report_path, "w", encoding="utf-8") as f:
+        yaml.safe_dump({
+            "aggregated_report": report,
+            "per_case_scores": [
+                {"case_id": case_id, "scores": case_aggregate}
+                for case_id, case_aggregate in per_case_scores
+            ],
+            "failed_cases": failed_cases
+        }, f, sort_keys=False)
+
+    assert report["name"] >= thresholds["name"]
+    assert report["roles"] >= thresholds["roles"]
+    assert report["designations"] >= thresholds["designations"]
+    assert report["email"] >= thresholds["email"]
+    assert report["phone"] >= thresholds["phone"]
+    assert report["url"] >= thresholds["url"]

@@ -94,7 +94,14 @@ def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
       - name: (String) Full name only (no titles)
       - image: (String or null) URL to profile image (https://...)
       - roles: (Array of strings) Active municipal roles
-      - designations: (Array of strings) Specific district/ward/etc names
+      - designations: (Array) 
+            Designation labels should ALWAYS be in the format of <designation_type> <designation value/name>, 
+            If no designation type is provided, leave empty.
+            If the text contains a role, drop it (the role should be set under "roles", not "designations").
+            Examples:
+            - "Ward 1" -> "Ward 1"
+            - "East District" -> "District East"
+            - "Alderman 5" -> "5"
       - phone: (String or null) Formatted phone number
       - email: (String or null) Email address in the format of email@domain.tld
       - url: (String or null) In order of importance: the official's profile, biography URL, contact form URL, related position listing, or null if none exist.

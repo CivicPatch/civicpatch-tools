@@ -1,0 +1,33 @@
+aggregated_report:
+  name: 1.0
+  roles: 1.0
+  designations: 1.0
+  email: 1.0
+  phone: 1.0
+  url: 0.9696969696969697
+per_case_scores:
+- case_id: austin_council
+  scores:
+    name: 1.0
+    roles: 1.0
+    designations: 1.0
+    email: 1.0
+    phone: 1.0
+    url: 0.9090909090909091
+- case_id: board_of_aldermen
+  scores:
+    name: 1.0
+    roles: 1.0
+    designations: 1.0
+    email: 1.0
+    phone: 1.0
+    url: 1.0
+- case_id: coleman_council
+  scores:
+    name: 1.0
+    roles: 1.0
+    designations: 1.0
+    email: 1.0
+    phone: 1.0
+    url: 1.0
+failed_cases: []
