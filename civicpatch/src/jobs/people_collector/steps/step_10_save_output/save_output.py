@@ -32,26 +32,10 @@ async def save_output(context: PeopleCollectorContext):
 
   updated_config = format_output.config
 
-  save_config_to_file(updated_config, config_file_path)
   await update_people_job_result(logger, context.request_id, format_output.officials)
-
-  save_metadata_to_file(context, metadata_file_path)
 
 def save_data_to_file(people: List[Official], file_path: str):
     # Create parent directories if not exists
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "w") as f:
         yaml.dump([official.model_dump() for official in people], f, sort_keys=False, allow_unicode=True)
-
-def save_config_to_file(config: WorkflowConfig, file_path: str):
-    with open(file_path, "w") as f:
-        yaml.dump(config.model_dump(), f, sort_keys=False, allow_unicode=True)
-
-def save_metadata_to_file(context: PeopleCollectorContext, file_path: str):
-  metadata = {
-     "created_at": context.created_at,
-     "updated_at": context.updated_at
-  }
-
-  with open(file_path, "w") as f:
-      yaml.dump(metadata, f, sort_keys=False, allow_unicode=True)

@@ -35,8 +35,8 @@ async def run_workflow(
     
     created_at = time.time()
     ctx = ctx.copy(update={
-        "created_time": created_at,
-        "updated_time": created_at
+        "created_at": created_at,
+        "updated_at": created_at
     })
 
     register_workflow(jurisdiction_ocdid, ctx.current_state)

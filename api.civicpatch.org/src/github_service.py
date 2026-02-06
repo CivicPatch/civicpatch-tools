@@ -55,13 +55,14 @@ def trigger_people_job_workflow(
     return True
 
 
-def trigger_github_data_intake_workflow(
+async def trigger_github_data_intake_workflow(
     github_workflow_token,
     user_email: str,
     server_url: str,
     request_id: str,
     jurisdiction_ocdid: str,
     zip_file_url: str,
+    workflow_context_url: str
 ):
     # Trigger GitHub Actions workflow to pull data from the given URL
     # For example, you might use the GitHub API to dispatch a workflow event
@@ -79,14 +80,15 @@ def trigger_github_data_intake_workflow(
             "request_id": request_id,
             "jurisdiction_ocdid": jurisdiction_ocdid,
             "zip_file_url": zip_file_url,
+            "workflow_context_url": workflow_context_url
         },
     }
 
-    response = requests.post(
-        "https://api.github.com/repos/CivicPatch/open-data/actions/workflows/data_intake.yml/dispatches",
-        headers=headers,
-        json=data,
-    )
+    response = await github_async_client.post(
+            "https://api.github.com/repos/CivicPatch/open-data/actions/workflows/data_intake.yml/dispatches",
+            headers=headers,
+            json=data,
+        )
 
     print("Response from GitHub API:", response.status_code, response.text)
 
@@ -193,3 +195,43 @@ async def update_pull_request_file(
     else:
         print("Error updating file:", update_response.status_code, update_response.text)
         return False
+
+
+async def bulk_sync_jurisdictions_and_people(
+    jurisdiction_ocdids: list[str],
+    metadata_github_path: str,
+    people_github_path_template: str,
+    db_syncer
+):
+    # Fetch the metadata file once
+    metadata_content = await get_github_file_contents(metadata_github_path)
+    metadata = yaml.safe_load(metadata_content)
+    jurisdiction_entries = metadata.get("jurisdictions", [])
+
+    # Build a lookup for OCDID -> jurisdiction entry
+    jurisdiction_lookup = {j["id"]: j for j in jurisdiction_entries}
+
+    for ocdid in jurisdiction_ocdids:
+        # Insert jurisdiction record
+        jurisdiction = jurisdiction_lookup.get(ocdid)
+        if jurisdiction:
+            await db_syncer.insert_jurisdiction(jurisdiction)
+        else:
+            print(f"Jurisdiction OCDID not found in metadata: {ocdid}")
+
+        # Fetch and insert people for this jurisdiction
+        people_github_path = people_github_path_template.format(ocdid=ocdid)
+        people_content = await get_github_file_contents(people_github_path)
+        if people_content:
+            people_data = yaml.safe_load(people_content)
+            await db_syncer.insert_people(ocdid, people_data)
+        else:
+            print(f"No people data found for OCDID: {ocdid}")
+
+# Example usage:
+# await bulk_sync_jurisdictions_and_people(
+#     jurisdiction_ocdids,
+#     metadata_github_path="data/tx/local/jurisdictions_metadata.yml",
+#     people_github_path_template="data/tx/local/{ocdid}/data.yml",
+#     db_syncer=my_db_syncer
+# )

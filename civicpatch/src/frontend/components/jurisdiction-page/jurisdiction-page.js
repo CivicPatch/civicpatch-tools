@@ -95,6 +95,7 @@ function JurisdictionPage({
       method: "POST",
       body: JSON.stringify(body),
     });
+    window.location.reload();
   };
 
   const canStartScrape = true;
