@@ -1,5 +1,5 @@
 import os
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 import json
 import yaml
 import base64
@@ -9,8 +9,10 @@ import requests
 
 from schemas import PullRequest
 timeout = httpx.Timeout(60.0)  
+github_async_client = httpx.AsyncClient(timeout=timeout)
 
 GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
+GITHUB_UPDATE_TOKEN = os.getenv("GITHUB_UPDATE_TOKEN")
 
 def trigger_people_job_workflow(
     request_id: str,
@@ -112,8 +114,7 @@ async def get_github_file_contents(
     )
     if ref:
         url += f"?ref={ref}"
-    async with httpx.AsyncClient(timeout=timeout) as client:
-        response = await client.get(url, headers=headers)
+    response = await github_async_client.get(url, headers=headers)
 
     if response.status_code == 200:
         file_content = response.text
@@ -132,8 +133,8 @@ async def get_open_pull_requests(github_workflow_token: str) -> List[PullRequest
 
     params = "state=open&per_page=100&sort=created&direction=desc"
     url = f"https://api.github.com/repos/CivicPatch/open-data/pulls?{params}"
-    async with httpx.AsyncClient() as client:
-        response = await client.get(url, headers=headers, timeout=timeout)
+
+    response = await github_async_client.get(url, headers=headers, timeout=timeout)
 
     if response.status_code == 200:
         pull_requests = response.json()
@@ -156,25 +157,27 @@ async def get_open_pull_request_by_branch_suffix(suffix: str) -> List[PullReques
 async def update_pull_request_file(
     branch_name: str,
     file_path: str,
-    new_data: str,
+    new_data: List[Dict[str, Any]],
     commit_message: str = "Automated update via API"
 ) -> bool:
     headers = {
-        "Authorization": f"Bearer {GITHUB_WORKFLOW_TOKEN}",
+        "Authorization": f"Bearer {GITHUB_UPDATE_TOKEN}",
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
     }
 
     # Get file SHA
-    contents_url = f"https://api.github.com/repos/{repo}/contents/{file_path}?ref={branch_name}"
-    contents_response = await httpx.get(contents_url, headers=headers, timeout=timeout)
+    contents_url = f"https://api.github.com/repos/CivicPatch/open-data/contents/{file_path}?ref={branch_name}"
+    print("Content url:", contents_url)
+    contents_response = await github_async_client.get(contents_url, headers=headers, timeout=timeout)
     if contents_response.status_code != 200:
         print("Error fetching file contents:", contents_response.status_code, contents_response.text)
         return False
     sha = contents_response.json()["sha"]
+    print("sha:", sha)
+    serialized_data = yaml.dump(new_data, sort_keys=False, allow_unicode=True)
+    encoded_content = base64.b64encode(serialized_data.encode("utf-8")).decode("utf-8")
 
-    # Prepare new content (base64 encoded)
-    encoded_content = base64.b64encode(new_data.encode("utf-8")).decode("utf-8")
     data = {
         "message": commit_message,
         "content": encoded_content,
@@ -183,7 +186,7 @@ async def update_pull_request_file(
     }
 
     # Update file
-    update_response = await httpx.put(contents_url, headers=headers, json=data)
+    update_response = await github_async_client.put(contents_url, headers=headers, json=data)
     if update_response.status_code in [200, 201]:
         print("File updated successfully.")
         return True
