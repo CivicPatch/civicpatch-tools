@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends 
 from fastapi.responses import JSONResponse
-from typing import Optional, Any
+from typing import Optional, Any, List, Dict
 from pydantic import BaseModel
 from schemas import Identity
 from github_service import trigger_people_job_workflow 
@@ -68,9 +68,8 @@ class ErrorResponse(BaseModel):
     error: str
 
 class PostJobPullRequestDataRequest(BaseModel):
-    branch_name: str
-    file_path: str
-    data: str
+    jurisdiction_ocdid: str
+    data: List[Dict[str, Any]]
 
 def get_router(api_key_header):
     router = APIRouter()
@@ -300,10 +299,15 @@ def get_router(api_key_header):
         request: PostJobPullRequestDataRequest,
         user: Identity = Depends(get_user)
     ):
+        print("user is", user)
         user_name = user.email
+        file_path = data_path_utils.get_data_file_path(request.jurisdiction_ocdid)
+        # Chop off leading "/app/" from file_path
+        if file_path.startswith("/app/"):
+            file_path = file_path[len("/app/"):]
         _github_response = await github_service.update_pull_request_file(
-            branch_name=request.branch_name,
-            file_path=request.file_path,
+            branch_name=branch_name,
+            file_path=file_path,
             new_data=request.data,
             commit_message=f"Data update by {user_name}"
         )

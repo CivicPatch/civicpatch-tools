@@ -130,7 +130,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   function handleReset(tempKey) {
     if (!tempKey) {
       if (selectedOpenPullRequest) {
-        console.log("selectedOpenPullRequest", selectedOpenPullRequest);
         getSelectedOpenPullRequestData(selectedOpenPullRequest);
       } else {
         assignPeople(people);
@@ -212,15 +211,16 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     const url = [
       `/api/api_proxy/jobs/people/pull_request/`,
       encodeURIComponent(branchName),
-      `/submit`,
+      `/data`,
     ]
       .join("");
+    
     return fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ data }),
+      body: JSON.stringify({ jurisdiction_ocdid, data }),
     }).then((r) => r.json());
   }
 
@@ -235,7 +235,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     );
     submitChanges(
       selectedOpenPullRequest, // TODO: if not available needs to open a new PR instead
-      localPeople.map(({ _tempKey, _dirty, _changes, ...person }) => person)
+      localPeople.map(({ _dirty, _changes, _tempKey, ...person }) => person)
     ).catch(() => {
       setNotice("Failed to submit changes.");
     });
@@ -274,6 +274,28 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   if (loading) return html`<p>Loading people...</p>`;
   if (error) return html`<p>Error loading people.</p>`;
+
+  const diffPreview = html`
+  <div style="margin-top:2rem;">
+    <label for="diff-table" style="font-weight:600;">YAML Diff</label>
+    <diff-preview
+      .original=${yaml.dump(originalPeople.map(({ _tempKey, ...person }) => person))}
+      .updated=${yaml.dump(localPeople.map(({ _dirty, _changes, _tempKey, ...person }) => person))}
+    ></diff-preview>
+    <div style="margin-top:2rem;">
+      <label for="final-yml" style="font-weight:600;">Final YAML Output</label>
+      <pre id="final-yml" style="
+        background: var(--pico-code-background, #f6f8fa);
+        border-radius: 6px;
+        padding: 1em;
+        font-family: var(--pico-font-monospace, monospace);
+        white-space: pre-wrap;
+        max-height: 300px;
+        overflow: auto;
+      ">${yaml.dump(localPeople.map(({ _dirty, _changes, _tempKey, ...person }) => person))}</pre>
+    </div>
+  </div>
+    `
 
   return html`
   <style>
@@ -385,31 +407,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       `
     )}
   </div>
-
-  <div style="margin-top:2rem;">
-    <label for="diff-table" style="font-weight:600;">YAML Diff</label>
-    <diff-preview
-      .original=${yaml.dump(originalPeople.map(({ _tempKey, ...person }) => person))}
-      .updated=${yaml.dump(localPeople.map(({ _dirty, _changes, _tempKey, ...person }) => person))}
-    ></diff-preview>
-    <div style="margin-top:2rem;">
-      <label for="final-yml" style="font-weight:600;">Final YAML Output</label>
-      <pre id="final-yml" style="
-        background: var(--pico-code-background, #f6f8fa);
-        border-radius: 6px;
-        padding: 1em;
-        font-family: var(--pico-font-monospace, monospace);
-        white-space: pre-wrap;
-        max-height: 300px;
-        overflow: auto;
-      ">${yaml.dump(localPeople.map(({ _dirty, _changes, _tempKey, ...person }) => person))}</pre>
-    </div>
-  </div>
+  ${!notice ? diffPreview : ""}
   `;
 }
 
 customElements.define(
-  'civ-editable-people-list', 
+  'civ-editable-people-list',
   component(
     EditablePeopleList,
     {
