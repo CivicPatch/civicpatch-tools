@@ -77,7 +77,15 @@ def municipality_officials_prompt(
       - image: (String or null) URL to profile image (https://...)
       - roles: (Array of strings) Active municipal roles
       - designations: (Array) 
-            Example: ["Ward 1", "District 2, Seat 8"]
+            Designation labels should ALWAYS be in the format of <designation_type> <designation value/name>, 
+            If no designation type is provided, leave empty.
+            If the text contains a role, drop it (the role should be set under "roles", not "designations").
+            Examples:
+            - "Ward 1" -> "Ward 1"
+            - "East District" -> "District East"
+            - "Alderman 5" -> "5"
+            - "Ward 2 (Place 3)" -> "Ward 2", "Place 3"
+            
       - phone: (String or null) Formatted phone number
       - email: (String or null) Email address in the format of email@domain.tld
       - url: (String or null) In order of importance: the official's profile, biography URL, contact form URL, related position listing, or null if none exist.
@@ -85,7 +93,7 @@ def municipality_officials_prompt(
       - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
     - thoughts: (String) Your reasoning process
  
-    **Instructions:**
+    **Instructions:*
     - Only extract officials if their information appears in a **structured listing** (e.g., table, list, or directory) or in a **dedicated biography/about/contact section**.
     - A **structured listing** must explicitly include names and roles. Additional details (e.g., contact information, designations, or term dates) are optional but preferred.
     - **Do NOT extract officials based on mentions in news articles, event summaries, meeting notes, or scattered references throughout the content.**

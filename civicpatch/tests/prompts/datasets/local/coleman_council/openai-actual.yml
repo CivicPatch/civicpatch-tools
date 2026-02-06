@@ -1,0 +1,67 @@
+people:
+- name: Tommy Sloan
+  roles:
+  - Mayor
+  designations: []
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Tracy Rankin
+  roles:
+  - Council Member
+  designations:
+  - Ward North
+  - Place 1
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Sharlene T. Hetzel
+  roles:
+  - Council Member
+  - Mayor Pro-Tem
+  designations:
+  - Ward West
+  - Place 2
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Beau Brudney
+  roles:
+  - Council Member
+  designations:
+  - Ward East
+  - Place 3
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Monte Sides
+  roles:
+  - Council Member
+  designations:
+  - Ward South
+  - Place 4
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+thought: The content includes a structured listing of the Coleman City Council officials
+  in a dedicated section titled 'City Council'. It lists a Mayor and four Council
+  Members with their associated ward places and wards (North, West, East, South),
+  a photo with their names and designations, and contact info. The roles and designations
+  are clearly stated. The phone number, image, and council webpage URL were added.
+  There are no term start or end dates given. No indication that any are former or
+  no longer in office, so all are assumed currently serving as of 2026-02-06.
