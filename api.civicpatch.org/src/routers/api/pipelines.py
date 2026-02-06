@@ -4,7 +4,7 @@ from fastapi import APIRouter, Form, HTTPException, Security, UploadFile
 
 import github_service
 import services.auth_service as AuthService
-from storage_service import upload_file_to_storage
+import storage_service
 
 STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
 STORAGE_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY_ID")
@@ -45,29 +45,33 @@ def get_router(api_key_header):
 
         # Now you have access to the parameters
         print(f"Processing intake for {request_id} - {jurisdiction_ocdid}")
+        file_suffix = file.filename
 
-        zip_file_url = await upload_file_to_storage(
+        storage_response = await storage_service.process_and_upload_artifacts(
+            file,
             STORAGE_ENDPOINT,
             STORAGE_ACCESS_KEY_ID,
             STORAGE_SECRET_ACCESS_KEY,
-            "crudder",
-            file,
+            file_suffix,
             with_presigned_url=True,
         )
 
-        github_service.trigger_github_data_intake_workflow(
+        print("what is storage response", storage_response)
+
+        await github_service.trigger_github_data_intake_workflow(
             GITHUB_WORKFLOW_TOKEN,
             server_detail["user_email"],
             server_detail["server_url"],
             request_id=request_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
-            zip_file_url=zip_file_url,
+            zip_file_url=storage_response["zip_to_commit"],
+            workflow_context_url=storage_response["workflow_context_url"],
         )
 
         return {
             "filename": file.filename,
             "status": "uploaded",
-            "zip_file_url": zip_file_url,
+            "zip_file_url": storage_response["zip_to_commit"],
             "metadata": {"request_id": request_id, "jurisdiction_ocdid": jurisdiction_ocdid},
         }
 

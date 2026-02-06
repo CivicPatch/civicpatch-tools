@@ -12,8 +12,12 @@ import shutil
 import subprocess
 from datetime import datetime
 from pathlib import Path
+import github_service as github_service
 
 import yaml
+import aiofiles
+import aiofiles.os
+import fnmatch
 
 # Configuration
 CONFIG = {
@@ -58,112 +62,79 @@ class GitDatabaseSync:
             if m:
                 self.people_subdirs.append(m.group(1))
 
-    def is_valid_git_repo(self):
-        return (self.repo_path / ".git").is_dir()
+    async def is_valid_git_repo(self):
+        return await aiofiles.os.path.exists(str(self.repo_path / ".git"))
 
-    def clone_or_pull(self):
-        if self.repo_path.exists():
-            if self.is_valid_git_repo():
+    async def clone_or_pull(self):
+        if await aiofiles.os.path.exists(str(self.repo_path)):
+            if await self.is_valid_git_repo():
                 print("Fetching latest changes from existing repository...")
-                subprocess.run(
-                    ["git", "-C", str(self.repo_path), "fetch", "origin"], check=True
-                )
-                subprocess.run(
-                    ["git", "-C", str(self.repo_path), "reset", "--hard", "origin/main"], check=True
-                )
+                await self._run_git(["fetch", "origin"])
+                await self._run_git(["reset", "--hard", "origin/main"])
                 return "fetched"
             else:
                 print("Repository directory is invalid. Removing and re-cloning...")
-                shutil.rmtree(self.repo_path)
+                await self._rmtree(self.repo_path)
         print(f"Cloning repository from {self.repo_url}...")
-        subprocess.run([
+        await self._run_cmd([
             "git", "clone", 
             "--single-branch", "--branch", "main",
             self.repo_url, 
             str(self.repo_path)
-        ], check=True)
+        ])
         return "cloned"
 
-    def get_current_commit(self):
-        result = subprocess.run(
-            ["git", "-C", str(self.repo_path), "rev-parse", "HEAD"],
-            capture_output=True,
-            text=True,
-            check=True,
+    async def _run_git(self, args):
+        proc = await asyncio.create_subprocess_exec(
+            "git", "-C", str(self.repo_path), *args,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
         )
-        return result.stdout.strip()
+        stdout, stderr = await proc.communicate()
+        if proc.returncode != 0:
+            raise RuntimeError(f"Git command failed: {' '.join(args)}\n{stderr.decode()}")
 
-    def get_file_content_at_commit(self, rel_path, commit):
+    async def _run_cmd(self, args):
+        proc = await asyncio.create_subprocess_exec(
+            *args,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        stdout, stderr = await proc.communicate()
+        if proc.returncode != 0:
+            raise RuntimeError(f"Command failed: {' '.join(args)}\n{stderr.decode()}")
+
+    async def _rmtree(self, path):
+        # Run blocking rmtree in a thread
+        loop = asyncio.get_running_loop()
+        await loop.run_in_executor(None, shutil.rmtree, path)
+
+    async def get_current_commit(self):
+        proc = await asyncio.create_subprocess_exec(
+            "git", "-C", str(self.repo_path), "rev-parse", "HEAD",
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+        stdout, stderr = await proc.communicate()
+        if proc.returncode != 0:
+            raise RuntimeError(f"Git rev-parse failed: {stderr.decode()}")
+        return stdout.decode().strip()
+
+    async def get_file_content_at_commit(self, rel_path, commit):
         try:
-            result = subprocess.run(
-                ["git", "-C", str(self.repo_path), "show", f"{commit}:{rel_path}"],
-                capture_output=True,
-                text=True,
-                check=True,
+            proc = await asyncio.create_subprocess_exec(
+                "git", "-C", str(self.repo_path), "show", f"{commit}:{rel_path}",
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
             )
-            return result.stdout
-        except subprocess.CalledProcessError as e:
+            stdout, stderr = await proc.communicate()
+            if proc.returncode != 0:
+                print(f"Could not read {rel_path} at commit {commit}: {stderr.decode()}")
+                return None
+            return stdout.decode()
+        except Exception as e:
             print(f"Could not read {rel_path} at commit {commit}: {e}")
             return None
-
-    def get_changed_files(self, old_commit, new_commit):
-        if not old_commit:
-            print(
-                f"First sync - processing files matching {self.data_files_patterns} and {self.jurisdiction_files_pattern}..."
-            )
-            files = []
-            for pattern in self.data_files_patterns:
-                files.extend(list(self.repo_path.rglob(pattern)))
-            files.extend(list(self.repo_path.rglob(self.jurisdiction_files_pattern)))
-            files.extend(list(self.repo_path.rglob(self.map_files_pattern)))
-            return files
-
-        result = subprocess.run(
-            [
-                "git",
-                "-C",
-                str(self.repo_path),
-                "diff",
-                "--name-only",
-                old_commit,
-                new_commit,
-            ],
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-
-        changed_paths = result.stdout.strip().split("\n")
-        changed_paths = [p for p in changed_paths if p]
-
-        files = []
-        for path in changed_paths:
-            full_path = self.repo_path / path
-
-            # Use self.people_subdirs instead of hardcoded names
-            is_people_file = (
-                path.startswith("data/")
-                and any(f"/{subdir}/" in path for subdir in self.people_subdirs)
-                and path.endswith(".yml")
-            )
-
-            is_jurisdiction_file = path.startswith(
-                Path(self.jurisdiction_files_pattern).parts[0] + os.sep
-            ) and path.endswith("jurisdictions_metadata.yml")
-
-            is_map_file = False
-            maps_segment = f"{os.sep}.maps{os.sep}"
-            if maps_segment in path and path.endswith(".geojson"):
-                remainder = path.split(maps_segment, 1)[1]
-                if os.sep not in remainder:
-                    is_map_file = True
-
-            if is_people_file or is_jurisdiction_file:
-                files.append(full_path)
-            elif is_map_file:
-                files.append(full_path)
-
-        return files
 
     async def get_last_synced_commit(self):
         """Get the last commit that was synced. Assumes sync_log table exists."""
@@ -180,14 +151,15 @@ class GitDatabaseSync:
             # Read content from git history or filesystem
             if use_git_show:
                 rel_path = str(file_path.relative_to(self.repo_path))
-                content = self.get_file_content_at_commit(rel_path, commit_hash)
+                content = await self.get_file_content_at_commit(rel_path, commit_hash)
                 if content is None:
                     return False
                 data = yaml.safe_load(content)
             else:
                 # Fallback for first sync when files exist on filesystem
-                with open(file_path, "r") as f:
-                    data = yaml.safe_load(f)
+                async with aiofiles.open(file_path, "r") as f:
+                    content = await f.read()
+                    data = yaml.safe_load(content)
                 rel_path = str(file_path.relative_to(self.repo_path))
 
             if not isinstance(data, list) or not data:
@@ -230,14 +202,15 @@ class GitDatabaseSync:
             # Read content from git history or filesystem
             if use_git_show:
                 rel_path = str(file_path.relative_to(self.repo_path))
-                content = self.get_file_content_at_commit(rel_path, commit_hash)
+                content = await self.get_file_content_at_commit(rel_path, commit_hash)
                 if content is None:
                     return False
                 data = yaml.safe_load(content)
             else:
                 # Fallback for first sync when files exist on filesystem
-                with open(file_path, "r") as f:
-                    data = yaml.safe_load(f)
+                async with aiofiles.open(file_path, "r") as f:
+                    content = await f.read()
+                    data = yaml.safe_load(content)
                 rel_path = str(file_path.relative_to(self.repo_path))
 
             jurisdictions_by_id = data.get("jurisdictions_by_id", {})
@@ -308,13 +281,14 @@ class GitDatabaseSync:
         # Read content from git history or filesystem
         if use_git_show:
             rel_path = str(file_path.relative_to(self.repo_path))
-            content = self.get_file_content_at_commit(rel_path, commit_hash)
+            content = await self.get_file_content_at_commit(rel_path, commit_hash)
             if content is None:
                 return False
             data = json.loads(content)
         else:
-            with open(file_path, "r") as f:
-                data = json.load(f)
+            async with aiofiles.open(file_path, "r") as f:
+                content = await f.read()
+                data = json.loads(content)
             rel_path = str(file_path.relative_to(self.repo_path))
 
         # Normalize to list of features
@@ -395,6 +369,42 @@ class GitDatabaseSync:
 
         return commit_hash
 
+    async def get_changed_files(self, old_commit, new_commit):
+        """
+        Returns a list of Path objects for files changed between old_commit and new_commit.
+        If old_commit is None, returns all files matching the patterns.
+        """
+        if old_commit:
+            # Use git diff to get changed files
+            proc = await asyncio.create_subprocess_exec(
+                "git", "-C", str(self.repo_path), "diff", "--name-only", old_commit, new_commit,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+            )
+            stdout, stderr = await proc.communicate()
+            if proc.returncode != 0:
+                raise RuntimeError(f"Git diff failed: {stderr.decode()}")
+            files = stdout.decode().splitlines()
+        else:
+            # First sync: return all files matching patterns
+            files = []
+            for pattern in self.data_files_patterns + [self.jurisdiction_files_pattern, self.map_files_pattern]:
+                files.extend([str(p) for p in self.repo_path.glob(pattern)])
+
+        # Filter files to only those matching your patterns
+        matched_files = []
+        patterns = self.data_files_patterns + [self.jurisdiction_files_pattern, self.map_files_pattern]
+        for file in files:
+            for pattern in patterns:
+                # Convert glob to fnmatch pattern
+                pat = pattern.replace("**/", "**").replace("*", "*")
+                if fnmatch.fnmatch(file, pat) or fnmatch.fnmatch(str(file), pat):
+                    matched_files.append(self.repo_path / file if not file.startswith(str(self.repo_path)) else Path(file))
+                    break
+
+        # Remove duplicates and ensure Path objects
+        unique_files = list({str(f): f for f in matched_files}.values())
+        return unique_files
 
     async def sync(self):
         """Main sync process"""
@@ -409,12 +419,12 @@ class GitDatabaseSync:
             old_commit = await self.get_last_synced_commit()
 
             # Clone or pull repo (synchronous git operations)
-            clone_status = self.clone_or_pull()
+            clone_status = await self.clone_or_pull()
 
             # No need for additional pull since clone_or_pull handles both cases
 
             # Get current commit
-            new_commit = self.get_current_commit()
+            new_commit = await self.get_current_commit()
 
             if old_commit == new_commit:
                 print(
@@ -425,7 +435,7 @@ class GitDatabaseSync:
             print(f"Syncing from {old_commit or 'initial'} to {new_commit}")
 
             # Get changed files (will filter for both people and jurisdiction files)
-            changed_files = self.get_changed_files(old_commit, new_commit)
+            changed_files = await self.get_changed_files(old_commit, new_commit)
             print(f"Found {len(changed_files)} changed files")
 
             # Update database
@@ -491,7 +501,68 @@ class GitDatabaseSync:
             duration = (datetime.now() - start_time).total_seconds()
             print(f"FATAL SYNC ERROR: {e}")
 
+import aiofiles
+import yaml
+
+async def sync_jurisdictions(jurisdiction_ocdids, syncer):
+    """
+    For each jurisdiction OCDID, find the relevant jurisdiction_metadata.yml and data.yml,
+    then bulk insert jurisdiction and people records.
+    """
+    states = list(set([
+        ocdid.split("/")[2].split(":")[1]
+        for ocdid in jurisdiction_ocdids
+    ]))
+    state_metadata_files = {}
+    for state in states:
+        # Find jurisdiction_metadata.yml for each state
+        metadata_files = list(REPO_PATH.glob(f"data/{state}/local/jurisdictions_metadata.yml"))
+        state_metadata_files[state] = metadata_files[0] if metadata_files else None
+
+    for jurisdiction_ocdid in jurisdiction_ocdids:
+        jurisdiction_state = jurisdiction_ocdid.split("/")[2].split(":")[1]
+        metadata_path = state_metadata_files.get(jurisdiction_state)
+        if metadata_path is None:
+            print(f"No jurisdiction_metadata.yml found for state {jurisdiction_state}")
+            continue
+
+        # Find people data file for this jurisdiction
+        people_data_path = None
+        # Example: data/{state}/local/data.yml or similar pattern
+        possible_people_files = list(REPO_PATH.glob(f"data/{jurisdiction_state}/local/*.yml"))
+        for pfile in possible_people_files:
+            async with aiofiles.open(pfile, "r") as f:
+                content = await f.read()
+                data = yaml.safe_load(content)
+                # Check if this file contains people for the jurisdiction_ocdid
+                if isinstance(data, list) and any(person.get("jurisdiction_ocdid") == jurisdiction_ocdid for person in data):
+                    people_data_path = pfile
+                    break
+
+        await process_jurisdiction(metadata_path, people_data_path, jurisdiction_ocdid, syncer)
+
+async def process_jurisdiction(metadata_path, people_data_path, jurisdiction_ocdid, syncer):
+    """
+    Insert jurisdiction and people records for a single jurisdiction_ocdid.
+    """
+    # Insert jurisdiction record(s)
+    if metadata_path:
+        async with aiofiles.open(metadata_path, "r") as f:
+            content = await f.read()
+            data = yaml.safe_load(content)
+        commit_hash = await syncer.get_current_commit()
+        await syncer.update_jurisdiction_in_db(metadata_path, commit_hash, use_git_show=False)
+
+    # Insert people record(s)
+    if people_data_path:
+        async with aiofiles.open(people_data_path, "r") as f:
+            content = await f.read()
+            data = yaml.safe_load(content)
+        commit_hash = await syncer.get_current_commit()
+        await syncer.update_file_in_db(people_data_path, commit_hash, use_git_show=False)
+
 async def main():
+
     syncer = GitDatabaseSync(None, config=CONFIG)
     await syncer.sync()
 
