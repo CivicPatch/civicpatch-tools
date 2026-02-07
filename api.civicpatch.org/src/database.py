@@ -823,3 +823,74 @@ async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]
                 }
             )
     return history
+
+import datetime
+
+async def update_jurisdiction(jurisdiction_ocdid, state, file_path, data: dict):
+    """
+    Update jurisdiction record(s) in the database for a single jurisdiction_ocdid.
+    """
+    async with pool.connection() as conn:
+        dummy_git_commit = "dummy_git_commit_hash"
+        updated_at = data.get("updated_at", None)
+        if not updated_at:
+            updated_at = datetime.datetime.utcnow().isoformat()
+        data_json = json.dumps(data)
+        print("adding jurisdiction record to db with updated_at", updated_at)
+        await conn.execute(
+            """
+            INSERT INTO jurisdictions (jurisdiction_ocdid, state, file_path, data, updated_at, git_commit)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            ON CONFLICT (jurisdiction_ocdid)
+            DO UPDATE SET
+                data = EXCLUDED.data,
+                updated_at = EXCLUDED.updated_at,
+                git_commit = EXCLUDED.git_commit;
+            """,
+            (jurisdiction_ocdid, state, file_path, data_json, updated_at, dummy_git_commit)
+        )
+
+async def update_people(jurisdiction_ocdid, file_path, data: dict):
+    """
+    Update people record(s) in the database for a single jurisdiction_ocdid.
+    """
+    async with pool.connection() as conn:
+        dummy_git_commit = "dummy_git_commit_hash"
+        # Handle empty data
+        if not data or (isinstance(data, list) and len(data) == 0):
+            updated_at = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds')
+            data_json = json.dumps([])
+        else:
+            updated_at = data[0]["updated_at"]
+            data_json = json.dumps(data)
+        await conn.execute(
+            """
+            INSERT INTO people (jurisdiction_ocdid, file_path, data, updated_at, git_commit)
+            VALUES (%s, %s, %s, %s, %s)
+            ON CONFLICT (jurisdiction_ocdid)
+            DO UPDATE SET
+                data = EXCLUDED.data,
+                updated_at = EXCLUDED.updated_at,
+                git_commit = EXCLUDED.git_commit
+            """,
+            (jurisdiction_ocdid, file_path, data_json, updated_at, dummy_git_commit)
+        )
+
+async def get_jurisdictions_by_state(state: str) -> List[dict]:
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT jurisdiction_ocdid, updated_at FROM jurisdictions
+            WHERE state = %s
+            ORDER BY jurisdiction_ocdid;
+            """,
+            (state.lower(),),
+        )
+        rows = await cur.fetchall()
+        jurisdictions = {}
+        for row in rows:
+            jurisdictions[row[0]] = {
+                "jurisdiction_ocdids": row[0],
+                "updated_at": to_iso(row[1]),
+            }
+    return jurisdictions

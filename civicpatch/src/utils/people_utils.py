@@ -482,7 +482,11 @@ def extract_role_names_and_division_from_designations(designation_configs, juris
     return role_names, division
 
 def format_division(division_base: str, designation_key: str, designation_value: str) -> str:
-    return f"{division_base}/{designation_key}:{designation_value}"
+    formatted_designation_key = designation_key
+    if designation_key == "district":
+        formatted_designation_key = "council_district"
+
+    return f"{division_base}/{formatted_designation_key}:{designation_value}"
 
 def person_to_official(designation_configs, person: Person) -> Official:
     role_designations, division_ocdid = extract_role_names_and_division_from_designations(

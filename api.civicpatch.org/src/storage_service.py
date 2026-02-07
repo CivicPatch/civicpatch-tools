@@ -33,8 +33,7 @@ async def process_and_upload_artifacts(
         "cache/*",
         "images/*",
         "costs.json",
-        "workflow_context.json",
-        "workflow.log"
+        "workflow.log",
     ]
     temp_dir = tempfile.mkdtemp()
     extracted_dir = os.path.join(temp_dir, "extracted")
@@ -53,7 +52,7 @@ async def process_and_upload_artifacts(
     with zipfile.ZipFile(zip_path, "r") as zip_ref:
         zip_ref.extractall(extracted_dir)
 
-    # Move relevant files to debug_dir, rest to filtered_dir
+    # Move relevant files to data_source debug_dir, rest to filtered_dir 
     for root, dirs, files in os.walk(extracted_dir):
         for file in files:
             rel_path = os.path.relpath(os.path.join(root, file), extracted_dir)
@@ -84,12 +83,6 @@ async def process_and_upload_artifacts(
         data = yaml.safe_load(f)
     with open(image_map_path, "r") as f:
         image_map = json.load(f)
-    await process_images_and_update_data(
-        storage_endpoint=storage_endpoint,
-        data_file_path=data_yml_path,
-        data=data,
-        image_map=image_map
-    )
 
     # Zip debug_dir (relevant files)
     debug_zip_path = os.path.join(temp_dir, "debug_artifacts.zip")
@@ -99,6 +92,41 @@ async def process_and_upload_artifacts(
                 file_path = os.path.join(root, file)
                 arcname = os.path.relpath(file_path, debug_dir)
                 zip_out.write(file_path, arcname)
+
+    # Upload each file in debug_dir
+    workflow_context_url = None
+    image_filename_to_cloudflare_url = {}
+    for root, _, files in os.walk(debug_dir):
+        for file in files:
+            file_path = os.path.join(root, file)
+            arcname = os.path.relpath(file_path, debug_dir)
+            with open(file_path, "rb") as f:
+                upload_file = UploadFile(filename=f"open-data/{arcname}", file=f)
+                base_filename = os.path.basename(arcname)
+                is_log = arcname.endswith("workflow.log")
+                is_image = base_filename.endswith(".png") 
+
+                should_presign_url = is_log  # Only presign workflow.log for now
+
+                url = await upload_file_to_storage(
+                    storage_endpoint,
+                    storage_access_key_id,
+                    storage_secret_access_key,
+                    "civicpatch-artifacts",
+                    upload_file,
+                    should_presign_url
+                )
+                if is_log:
+                    log_url = url
+                if is_image:
+                    image_filename_to_cloudflare_url[base_filename] = url
+
+    await process_images_and_update_data(
+        data_file_path=data_yml_path,
+        data=data,
+        image_map=image_map,
+        image_filename_to_cloudflare_url=image_filename_to_cloudflare_url 
+    )
 
     # Zip filtered_dir (rest of the files)
     filtered_zip_path = os.path.join(temp_dir, f"filtered_artifacts_{file_suffix}")
@@ -116,50 +144,31 @@ async def process_and_upload_artifacts(
             storage_endpoint,
             storage_access_key_id,
             storage_secret_access_key,
-            "crudder", # Commit zip
+            "civicpatch-artifacts", # Commit zip
             filtered_upload_file,
             with_presigned_url
         )
 
-    # Upload each file in debug_dir
-    workflow_context_url = None
-    for root, _, files in os.walk(debug_dir):
-        for file in files:
-            file_path = os.path.join(root, file)
-            arcname = os.path.relpath(file_path, debug_dir)
-            with open(file_path, "rb") as f:
-                upload_file = UploadFile(filename=f"open-data/{arcname}", file=f)
-                is_workflow_context = arcname.endswith("workflow_context.json")
-                should_presign_url = is_workflow_context  # Only presign workflow_context.json for now
-                
-                url = await upload_file_to_storage(
-                    storage_endpoint,
-                    storage_access_key_id,
-                    storage_secret_access_key,
-                    "civicpatch-artifacts",
-                    upload_file,
-                    should_presign_url
-                )
-                if is_workflow_context:
-                    workflow_context_url = url
-
     shutil.rmtree(temp_dir)
     return {
         "zip_to_commit": zip_to_commit,
-        "workflow_context_url": workflow_context_url
+        "log_url": log_url
     }
 
 async def process_images_and_update_data(
-    storage_endpoint: str,
     data_file_path: str, # Local path to YAML file
     data: list,
-    image_map: dict # Map of URL to local file base name,
+    image_map: dict, # Map of URL to local file base name
+    image_filename_to_cloudflare_url: dict # Map of local file base name to Cloudflare URL
 ): 
     # Update data with CDN URLs
+    print(f"Processing images for data file {data_file_path}")
     for person in data:
         if person.get("image") and person["image"] in image_map:
             local_filename = image_map[person["image"]]
-            person["cdn_image"] = os.path.join(storage_endpoint, data_file_path, "images", local_filename)
+            print(f"Mapping original image URL {person['image']} to local filename {local_filename}")
+            if local_filename in image_filename_to_cloudflare_url:
+                person["cdn_image"] = image_filename_to_cloudflare_url[local_filename]
 
     # Save updated data back to file
     with open(data_file_path, "w") as f:

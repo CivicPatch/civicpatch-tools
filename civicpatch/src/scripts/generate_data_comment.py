@@ -35,12 +35,9 @@ def generate_data_comment(data: List[Official]) -> str:
     return table_header + table_rows
 
 def to_markdown_list(items: List[str]) -> str:
-    """
-    Convert a list of strings to a Markdown-formatted list.
-    """
     if not items:
         return "N/A"
-    return "\n".join(f"- {item}" for item in items)
+    return "<br>".join(f"[Link]({item})" for item in items)
 
 
 def main():

@@ -56,8 +56,6 @@ def get_router(api_key_header):
             with_presigned_url=True,
         )
 
-        print("what is storage response", storage_response)
-
         await github_service.trigger_github_data_intake_workflow(
             GITHUB_WORKFLOW_TOKEN,
             server_detail["user_email"],
@@ -65,7 +63,7 @@ def get_router(api_key_header):
             request_id=request_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
             zip_file_url=storage_response["zip_to_commit"],
-            workflow_context_url=storage_response["workflow_context_url"],
+            log_url=storage_response["log_url"],
         )
 
         return {
