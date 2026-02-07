@@ -131,7 +131,7 @@ def test_sort_designations_no_priority(monkeypatch):
             "ocd-jurisdiction/country:us/state:xy/place:bravo/government",
             ["district 1"],
             [],
-            "ocd-division/country:us/state:xy/place:bravo/district:1"
+            "ocd-division/country:us/state:xy/place:bravo/council_district:1"
         ),
         (
             {"district": {"has_geographic_area": True}},
@@ -155,7 +155,7 @@ def test_sort_designations_no_priority(monkeypatch):
             "ocd-jurisdiction/country:us/state:xy/place:echo/government",
             ["at-large", "district 2"],
             ["at-large"],
-            "ocd-division/country:us/state:xy/place:echo/district:2"
+            "ocd-division/country:us/state:xy/place:echo/council_district:2"
         ),
         (
             {
@@ -179,7 +179,7 @@ def test_sort_designations_no_priority(monkeypatch):
             "ocd-jurisdiction/country:us/state:xy/place:hotel/government",
             ["District 3"],
             [],
-            "ocd-division/country:us/state:xy/place:hotel/district:3"
+            "ocd-division/country:us/state:xy/place:hotel/council_district:3"
         ),
         (
             {},

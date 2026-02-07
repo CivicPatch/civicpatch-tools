@@ -255,7 +255,7 @@ async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
     return people
 
 
-async def get_jurisdiction_states() -> List[str]:
+async def get_states() -> List[str]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
@@ -787,6 +787,18 @@ async def set_daily_limit_for_user(provider: str, provider_user_id: str, daily_l
             """,
             (provider, provider_user_id, daily_limit),
         )
+async def get_jurisdiction_states():
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT DISTINCT state from jurisdictions
+            ORDER by state;
+            """,
+        )
+        results = await cur.fetchall()
+        unique_states = [row[0] for row in results]
+
+    return unique_states
 
 ### Jurisdiction History ###
 async def get_jurisdiction_history(jurisdiction_ocdid) -> List[PeopleJobHistory]:
@@ -876,15 +888,39 @@ async def update_people(jurisdiction_ocdid, file_path, data: dict):
             (jurisdiction_ocdid, file_path, data_json, updated_at, dummy_git_commit)
         )
 
-async def get_jurisdictions_by_state(state: str) -> List[dict]:
+async def bulk_update_people(people_records: list):
+    query = """
+        INSERT INTO people (jurisdiction_ocdid, file_path, data, updated_at, git_commit)
+        VALUES (%s, %s, %s, %s, %s)
+        ON CONFLICT (jurisdiction_ocdid)
+        DO UPDATE SET
+            data = EXCLUDED.data,
+            updated_at = EXCLUDED.updated_at,
+            git_commit = EXCLUDED.git_commit
+    """
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.executemany(query, people_records)
+
+async def bulk_update_jurisdictions(jurisdiction_records: list):
+    query = """
+        INSERT INTO jurisdictions (jurisdiction_ocdid, state, file_path, data, updated_at, git_commit)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        ON CONFLICT (jurisdiction_ocdid)
+        DO UPDATE SET
+            data = EXCLUDED.data,
+            updated_at = EXCLUDED.updated_at,
+            git_commit = EXCLUDED.git_commit
+    """
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.executemany(query, jurisdiction_records)
+
+async def get_jurisdiction_updates() -> List[dict]:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
             SELECT jurisdiction_ocdid, updated_at FROM jurisdictions
-            WHERE state = %s
             ORDER BY jurisdiction_ocdid;
-            """,
-            (state.lower(),),
+            """
         )
         rows = await cur.fetchall()
         jurisdictions = {}
@@ -894,3 +930,27 @@ async def get_jurisdictions_by_state(state: str) -> List[dict]:
                 "updated_at": to_iso(row[1]),
             }
     return jurisdictions
+
+async def get_people_updates() -> List[dict]:
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT jurisdiction_ocdid, updated_at FROM people
+            ORDER BY jurisdiction_ocdid;
+            """
+        )
+        rows = await cur.fetchall()
+        people = {}
+        for row in rows:
+            people[row[0]] = {
+                "jurisdiction_ocdids": row[0],
+                "updated_at": to_iso(row[1]),
+            }
+    return people
+
+async def delete_jurisdictions_by_ocdids(ocdids: List[str]):
+    async with pool.connection() as conn:
+        await conn.execute(
+            "DELETE FROM jurisdictions WHERE jurisdiction_ocdid = ANY(%s)",
+            (ocdids,)
+        )

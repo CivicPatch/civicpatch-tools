@@ -12,6 +12,7 @@ from interfaces.api.routes.frontend import get_router as get_frontend_router
 API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "http://api_civicpatch_org:8001")
 API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
 
+
 app = FastAPI()
 app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
 

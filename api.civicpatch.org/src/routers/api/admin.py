@@ -5,7 +5,6 @@ from typing import List, Optional
 import services.github_sync_service
 
 class OdSyncRequestSchema(BaseModel):
-    states: List[str] = None
     jurisdiction_ocdids: Optional[List[str]] = None
 
 def get_router(api_key_header, pool) -> APIRouter:
@@ -16,7 +15,7 @@ def get_router(api_key_header, pool) -> APIRouter:
         request: OdSyncRequestSchema,
         background_tasks: BackgroundTasks,
     ):
-        background_tasks.add_task(services.github_sync_service.data, request.states, request.jurisdiction_ocdids)
+        background_tasks.add_task(services.github_sync_service.sync_data, request.jurisdiction_ocdids)
 
         return {"status": "running"}
     

@@ -33,6 +33,12 @@ from utils.auth import require_route_access, get_optional_user, require_route_ac
 from services.memory_pub_sub_service import memory_pubsub
 from fastapi.responses import StreamingResponse
 
+import logging
+
+# Set up logger at the top of your file
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
+
 # Only purpose is to manage users, their API keys, and move data from 3rd party servers
 # to GitHub Actions.
 # Update 2025/10/24
