@@ -77,7 +77,8 @@ async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, juri
         parsed_ocdid = shared.utils.id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
         state = parsed_ocdid.state
         updated_at = jurisdiction_data.get("updated_at") if jurisdiction_data else None
-        serialized_data = json.dumps(jurisdiction_data) if jurisdiction_data else None
+        nested_jurisdiction_data = jurisdiction_data.get("jurisdiction") if jurisdiction_data else None
+        serialized_data = json.dumps(nested_jurisdiction_data) if nested_jurisdiction_data else None
         jurisdictions.append((jurisdiction_ocdid, state, "can-delete", serialized_data, updated_at, "can-delete"))
 
     await database.bulk_update_jurisdictions(jurisdictions)
@@ -138,13 +139,6 @@ async def bulk_sync():
 
     logger.info(f"Updating people data for jurisdictions with OCDIDs: {jurisdictions_to_update_data}")
     await sync_people_by_ocdids(jurisdictions_to_update_data)
-
-async def sync_data(jurisdiction_ocdids: Optional[List[str]] = None):
-    if jurisdiction_ocdids:
-        await sync_jurisdictions_by_ocdids(jurisdiction_ocdids)
-        await sync_people_by_ocdids(jurisdiction_ocdids)
-    else:
-        await bulk_sync()
 
 def is_newer(date1, date2):
     if not date1:
