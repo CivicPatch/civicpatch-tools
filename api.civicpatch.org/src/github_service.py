@@ -62,7 +62,7 @@ async def trigger_github_data_intake_workflow(
     request_id: str,
     jurisdiction_ocdid: str,
     zip_file_url: str,
-    workflow_context_url: str
+    log_url: str
 ):
     # Trigger GitHub Actions workflow to pull data from the given URL
     # For example, you might use the GitHub API to dispatch a workflow event
@@ -80,7 +80,7 @@ async def trigger_github_data_intake_workflow(
             "request_id": request_id,
             "jurisdiction_ocdid": jurisdiction_ocdid,
             "zip_file_url": zip_file_url,
-            "workflow_context_url": workflow_context_url
+            "log_url": log_url 
         },
     }
 
@@ -122,7 +122,7 @@ async def get_github_file_contents(
         file_content = response.text
         return file_content
     else:
-        print("Error fetching file contents:", response.status_code, response.text)
+        print(f"Error fetching file contents: {github_file_path}", response.status_code, response.text)
         return None
 
 

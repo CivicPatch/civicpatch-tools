@@ -225,7 +225,6 @@ app.include_router(
 async def sse_job_status(job_type: str, jurisdiction_ocdid: str, request: Request):
     key = f"{job_type}:{jurisdiction_ocdid}"
     queue = memory_pubsub.subscribe(key)
-    print("grabbing sse for key:", key)
 
     async def event_generator():
         try:

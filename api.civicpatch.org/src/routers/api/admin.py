@@ -1,34 +1,23 @@
 from fastapi import APIRouter, BackgroundTasks, HTTPException, Security
 
-import services.auth_service as AuthService
-from services.github_sync_service import GitDatabaseSync
 from pydantic import BaseModel
 from typing import List, Optional
+import services.github_sync_service
 
 class OdSyncRequestSchema(BaseModel):
-    jurisdiction_ocdids: List[str] = None
+    states: List[str] = None
+    jurisdiction_ocdids: Optional[List[str]] = None
 
-# TODO: rbac perms needed
 def get_router(api_key_header, pool) -> APIRouter:
     router = APIRouter()
 
     @router.post("/od_sync", include_in_schema=False)
     async def sync_people_endpoint(
+        request: OdSyncRequestSchema,
         background_tasks: BackgroundTasks,
     ):
-        syncer = GitDatabaseSync(pool)
-        background_tasks.add_task(syncer.sync)
+        background_tasks.add_task(services.github_sync_service.data, request.states, request.jurisdiction_ocdids)
 
         return {"status": "running"}
     
-    @router.post("/od_sync_jurisdictions", include_in_schema=False)
-    async def sync_jurisdictions_endpoint(
-        background_tasks: BackgroundTasks,
-        request: OdSyncRequestSchema
-    ):
-        syncer = GitDatabaseSync(pool)
-        background_tasks.add_task(syncer.sync_jurisdictions, request.jurisdiction_ocdids)
-
-        return {"status": "running"}
-
     return router
