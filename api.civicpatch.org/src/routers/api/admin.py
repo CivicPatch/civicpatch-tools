@@ -18,7 +18,6 @@ def get_router(api_key_header, pool) -> APIRouter:
 
         return {"status": "running"}
     
-    
     @router.post("/od_sync_jurisdictions", include_in_schema=False)
     async def sync_jurisdictions_endpoint(
         request: OdSyncRequestSchema,
