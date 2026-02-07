@@ -70,14 +70,15 @@ run = """
     curl -X POST "http://localhost:8001/api/admin/od_sync" \
       -H "Content-Type: application/json" \
       -H "Authorization: $CRUDDER_SHARED_TOKEN" \
-      -d '{"states": ["tx"]}'
+      -d '{"jurisdiction_ocdids": ["ocd-jurisdiction/country:us/state:tx/place:combes/government"]}'
 """
 
 [tasks.od_sync_prod]
 run = """
-    curl -X POST "https://api.civicpatch.org/api/admin/od_sync" \
+    curl -X POST "https://api.civicpatch.org/api/admin/od_sync_people" \
       -H "Content-Type: application/json" \
       -H "Authorization: $PROD_CRUDDER_SHARED_TOKEN"
+#      -d '{"jurisdiction_ocdids": ["ocd-jurisdiction/country:us/state:tx/place:combes/government"]}'
 """
 
 [tasks.query_jurisdictions]
