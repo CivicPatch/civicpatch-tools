@@ -33,6 +33,9 @@
             type="module"
             src="{{ url_for('frontend', path='/dist/bundle.js') }}"
         ></script>
+
+        {{ url_for('frontend', path='/dist/bundle.js') }}
+
         {% else %}
         <!-- Hot reload script -->
         {{ hot_reload.script(url_for('hot-reload')) | safe }}

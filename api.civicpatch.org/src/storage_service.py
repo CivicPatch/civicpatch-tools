@@ -32,7 +32,6 @@ async def process_and_upload_artifacts(
     patterns = [
         "cache/*",
         "images/*",
-        "costs.json",
         "workflow.log",
     ]
     temp_dir = tempfile.mkdtemp()

@@ -75,10 +75,10 @@ run = """
 
 [tasks.od_sync_prod]
 run = """
-    curl -X POST "https://api.civicpatch.org/api/admin/od_sync_people" \
+    curl -X POST "https://api.civicpatch.org/api/admin/od_sync_jurisdictions" \
       -H "Content-Type: application/json" \
-      -H "Authorization: $PROD_CRUDDER_SHARED_TOKEN"
-#      -d '{"jurisdiction_ocdids": ["ocd-jurisdiction/country:us/state:tx/place:combes/government"]}'
+      -H "Authorization: $PROD_CRUDDER_SHARED_TOKEN" \
+      -d '{"jurisdiction_ocdids": ["ocd-jurisdiction/country:us/state:tx/place:combes/government"]}'
 """
 
 [tasks.query_jurisdictions]

@@ -76,4 +76,11 @@ graph TD
 ### Steps
 1. Run `mise install` to set up your environment.
 2. Run `pre-commit install` to set up gitleaks.
-3. Go into individual projects (civicpatch, mainly) for further setup steps
+3. Go into individual projects (civicpatch, mainly) to set up relevant .env files
+4. Set up local domains:
+  4.a. Update the `hosts` file:
+```sh
+127.0.0.1 app.civicpatch.local
+127.0.0.1 api.civicpatch.local
+```
+  4.b. Add & trust certificate under development/caddy/data/caddy/pki/authorities/local/root.crt

@@ -26,6 +26,7 @@ def get_router(is_production: bool) -> APIRouter:
     router = APIRouter()
  
     @router.get("/{provider}/login", include_in_schema=False)
+
     async def login(provider: str):
         match provider:
             case "github":
