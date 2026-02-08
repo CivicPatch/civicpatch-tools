@@ -106,7 +106,7 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-USER civicpatch_user
+USER root
 EXPOSE 8000
 
 ENTRYPOINT [ "/app/src/scripts/docker-entrypoint.sh" ]
@@ -145,7 +145,6 @@ WORKDIR /app
 
 COPY --from=production-build /app/dist/. /app/src/frontend/dist
 
-USER civicpatch_user
 EXPOSE 8000
 # # Keep the container running
 # CMD ["tail", "-f", "/dev/null"]

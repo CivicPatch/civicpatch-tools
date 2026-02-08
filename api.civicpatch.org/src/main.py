@@ -39,6 +39,25 @@ import logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
+from fastapi import Request as FastAPIRequest
+from starlette.datastructures import URL
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request as StarletteRequest
+
+
+class HTTPSSchemeMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: StarletteRequest, call_next):
+        if request.headers.get("x-forwarded-proto", "").lower() == "https":
+            request.scope["scheme"] = "https"
+        return await call_next(request)
+
+# Hack to get url_for to generate https URLs when behind a proxy that terminates SSL
+def url_for(request: FastAPIRequest, name: str) -> URL:
+    url = request.url_for(name)
+    if request.scope.get("scheme") == "https":
+        url = url.replace(scheme="https")
+    return url
+
 # Only purpose is to manage users, their API keys, and move data from 3rd party servers
 # to GitHub Actions.
 # Update 2025/10/24
@@ -127,13 +146,14 @@ templates = Jinja2Templates(directory="src/frontend/templates")
 if is_production:
     allowed_origins = [
         "https://civicpatch.org",
-        "https://api.civicpatch.org"
-        "https://app.civicpatch.org"
+        "https://api.civicpatch.org",
+        "https://app.civicpatch.org",
         "https://components.civicpatch.org",
     ]
 else:
     allowed_origins = ["*"]
 
+app.add_middleware(HTTPSSchemeMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],

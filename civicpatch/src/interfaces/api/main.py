@@ -6,15 +6,34 @@ from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from fastapi import Request as FastAPIRequest
+from starlette.datastructures import URL
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request as StarletteRequest
+
+
+class HTTPSSchemeMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: StarletteRequest, call_next):
+        if request.headers.get("x-forwarded-proto", "").lower() == "https":
+            request.scope["scheme"] = "https"
+        return await call_next(request)
+
+# Hack to get url_for to generate https URLs when behind a proxy that terminates SSL
+def url_for(request: FastAPIRequest, name: str) -> URL:
+    url = request.url_for(name)
+    if request.scope.get("scheme") == "https":
+        url = url.replace(scheme="https")
+    return url
+
 from interfaces.api.routes.backend import get_router as get_backend_router
 from interfaces.api.routes.frontend import get_router as get_frontend_router
 
 API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "http://api_civicpatch_org:8001")
 API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
 
-
 app = FastAPI()
 app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
+app.add_middleware(HTTPSSchemeMiddleware)
 
 civicpatch_env = os.getenv("CIVICPATCH_ENV", "development")
 is_production = civicpatch_env == "production"
@@ -31,7 +50,6 @@ if not is_production:
 
 app.include_router(get_backend_router(), prefix="/api", tags=["api"])
 app.include_router(get_frontend_router(templates), tags=["frontend"])
-
 
 @app.api_route(
     "/api/api_proxy/{path:path}",

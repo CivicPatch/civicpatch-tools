@@ -27,13 +27,14 @@ function Modal({
       modalProps.onClose && modalProps.onClose();
     }
   };
-
+  
   useEffect(() => {
     // focus the dialog so it receives key events when opened
     if (open && dialogEl && typeof dialogEl.focus === "function") {
       dialogEl.focus();
     }
   }, [open]);
+
 
   const backdropClick = (e) => {
     if (!modalProps.closeOnBackdropClick && modalProps.closeOnBackdropClick !== undefined) return;
