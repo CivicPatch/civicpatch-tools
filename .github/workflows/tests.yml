@@ -19,4 +19,4 @@ jobs:
       - name: Run unit tests
         working-directory: ./civicpatch
         run: |
-          docker compose -f docker-compose.development.yml run --rm civicpatch pytest -m unit tests/unit
+          docker compose -f docker-compose.development.yml run --rm civicpatch_test pytest -m unit tests/unit

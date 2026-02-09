@@ -65,8 +65,6 @@ services:
       context: ..
       dockerfile: civicpatch/Dockerfile
       target: development
-    env_file:
-      - .env
     environment:
       CIVICPATCH_ENV: test
 
