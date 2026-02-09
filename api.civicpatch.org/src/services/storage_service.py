@@ -129,7 +129,7 @@ async def upload_file_to_storage(
             print(f"Successfully uploaded and generated URL for {file_path}")
             return presigned_url
         else:  # Return the object URL
-            object_url = f"{bucket_name}/{key}"
+            object_url = f"{STORAGE_ENDPOINT}/{bucket_name}/{key}"
             print(f"Successfully uploaded {file_path} to {object_url}")
             return object_url
         
