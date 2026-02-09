@@ -2,13 +2,18 @@ import os
 from google.oauth2 import service_account
 import googleapiclient.discovery
 
+GOOGLE_SHEETS_SPREADSHEET_ID = os.getenv("GOOGLE_SHEETS_SPREADSHEET_ID", "")
+GOOGLE_SHEETS_PRIVATE_KEY = os.getenv("GOOGLE_SHEETS_PRIVATE_KEY", "")
+GOOGLE_SHEETS_CLIENT_EMAIL = os.getenv("GOOGLE_SHEETS_CLIENT_EMAIL", "")
+GOOGLE_SHEETS_TOKEN_URI = os.getenv("GOOGLE_SHEETS_TOKEN_URI", "")
+
 # https://developers.google.com/workspace/sheets/api/guides/values#append_values
 # https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets.values#resource-valuerange
 def update_spreadsheet(sheet_name, values):
-    if os.getenv("GOOGLE_SHEETS_SPREADSHEET_ID") is None or os.getenv("GOOGLE_SHEETS_SPREADSHEET_ID") == "":
+    if GOOGLE_SHEETS_SPREADSHEET_ID is None or GOOGLE_SHEETS_SPREADSHEET_ID == "":
         raise ValueError("GOOGLE_SHEETS_SPREADSHEET_ID environment variable is not set.")
-    
-    spreadsheet_id = os.getenv("GOOGLE_SHEETS_SPREADSHEET_ID")
+
+    spreadsheet_id = GOOGLE_SHEETS_SPREADSHEET_ID
     service = get_service()
 
     result = service.spreadsheets().values().append(

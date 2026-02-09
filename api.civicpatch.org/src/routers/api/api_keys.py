@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request, Depends
 
 import database
 from utils.auth import get_user 
-from schemas import Identity
+from schemas.common import Identity
 
 
 def get_router():

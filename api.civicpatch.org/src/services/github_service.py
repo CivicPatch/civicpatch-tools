@@ -1,31 +1,34 @@
 import os
 from typing import List, Optional, Dict, Any
-import json
 import yaml
 import base64
 import httpx
 
-import requests
-
-from schemas import PullRequest
+from schemas.common import PullRequest
 timeout = httpx.Timeout(60.0)  
 github_async_client = httpx.AsyncClient(timeout=timeout)
 
 GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
 GITHUB_UPDATE_TOKEN = os.getenv("GITHUB_UPDATE_TOKEN")
 
-def trigger_people_job_workflow(
+# Shared HTTP client
+github_async_client = httpx.AsyncClient(timeout=timeout)
+
+def get_default_headers() -> Dict[str, str]:
+    """
+    Get the default headers for GitHub API requests.
+    """
+    return {
+        "Authorization": f"Bearer {GITHUB_WORKFLOW_TOKEN}",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+
+async def trigger_people_job_workflow(
     request_id: str,
     jurisdiction_ocdid: str,
     name: str | None = None,
     url: str | None = None,
 ):
-    headers = {
-        "Authorization": f"Bearer {GITHUB_WORKFLOW_TOKEN}",
-        "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-    }
-
     data = {
         "ref": "main",
         "inputs": {
@@ -39,7 +42,13 @@ def trigger_people_job_workflow(
     if url:
         data["inputs"]["url"] = url
 
-    response = requests.post(
+    headers = {
+        **get_default_headers(),
+        "Accept": "application/vnd.github+json",
+    }
+
+
+    response = await github_async_client.post(
         "https://api.github.com/repos/CivicPatch/server/actions/workflows/data_scrape.yml/dispatches",
         headers=headers,
         json=data,
@@ -56,22 +65,14 @@ def trigger_people_job_workflow(
 
 
 async def trigger_github_data_intake_workflow(
-    github_workflow_token,
     user_email: str,
     server_url: str,
     request_id: str,
     jurisdiction_ocdid: str,
-    zip_file_url: str,
-    log_url: str
+    zip_file_url: str
 ):
     # Trigger GitHub Actions workflow to pull data from the given URL
     # For example, you might use the GitHub API to dispatch a workflow event
-    headers = {
-        "Authorization": f"Bearer {github_workflow_token}",
-        "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-    }
-
     data = {
         "ref": "main",
         "inputs": {
@@ -79,9 +80,13 @@ async def trigger_github_data_intake_workflow(
             "user_email": user_email,
             "request_id": request_id,
             "jurisdiction_ocdid": jurisdiction_ocdid,
-            "zip_file_url": zip_file_url,
-            "log_url": log_url 
+            "zip_file_url": zip_file_url
         },
+    }
+
+    headers = {
+        **get_default_headers(),
+         "Accept": "application/vnd.github+json",
     }
 
     response = await github_async_client.post(
@@ -104,19 +109,18 @@ async def get_github_file_contents(
         github_file_path: str,
         ref: Optional[str] = None,
     ) -> str | None:
-    headers = {
-        "Authorization": f"Bearer {GITHUB_WORKFLOW_TOKEN}",
-        "Accept": "application/vnd.github.raw",
-        "X-GitHub-Api-Version": "2022-11-28",
-    }
     print("Fetching GitHub file:", github_file_path, "ref:", ref)
 
     url = (
         f"https://api.github.com/repos/CivicPatch/open-data/contents/{github_file_path}"
     )
     if ref:
-        url += f"?ref={ref}"
-    response = await github_async_client.get(url, headers=headers)
+        url += f"?ref={ref}"    
+    headers = {
+        **get_default_headers(),
+        "Accept": "application/vnd.github.raw",
+    }
+    response = await github_async_client.get(url, headers=headers, timeout=timeout)
 
     if response.status_code == 200:
         file_content = response.text
@@ -126,15 +130,15 @@ async def get_github_file_contents(
         return None
 
 
-async def get_open_pull_requests(github_workflow_token: str) -> List[PullRequest]:
-    headers = {
-        "Authorization": f"Bearer {github_workflow_token}",
-        "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-    }
-
+async def get_open_pull_requests() -> List[PullRequest]:
     params = "state=open&per_page=100&sort=created&direction=desc"
     url = f"https://api.github.com/repos/CivicPatch/open-data/pulls?{params}"
+
+
+    headers = {
+        **get_default_headers(),
+        "Accept": "application/vnd.github+json",
+    }
 
     response = await github_async_client.get(url, headers=headers, timeout=timeout)
 
@@ -152,7 +156,7 @@ async def get_open_pull_requests(github_workflow_token: str) -> List[PullRequest
         return []
     
 async def get_open_pull_request_by_branch_suffix(suffix: str) -> List[PullRequest]:
-    pull_requests = await get_open_pull_requests(GITHUB_WORKFLOW_TOKEN)
+    pull_requests = await get_open_pull_requests()
     matching_prs = [pr for pr in pull_requests if pr.branch_name.endswith(suffix)]
     return matching_prs
 
@@ -162,12 +166,6 @@ async def update_pull_request_file(
     new_data: List[Dict[str, Any]],
     commit_message: str = "Automated update via API"
 ) -> bool:
-    headers = {
-        "Authorization": f"Bearer {GITHUB_UPDATE_TOKEN}",
-        "Accept": "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-    }
-
     # Get file SHA
     contents_url = f"https://api.github.com/repos/CivicPatch/open-data/contents/{file_path}?ref={branch_name}"
     print("Content url:", contents_url)
@@ -187,51 +185,16 @@ async def update_pull_request_file(
         "branch": branch_name
     }
 
+    headers = {
+        **get_default_headers(),
+         "Accept": "application/vnd.github+json",
+    }
+
     # Update file
-    update_response = await github_async_client.put(contents_url, headers=headers, json=data)
+    update_response = await github_async_client.put(contents_url, json=data)
     if update_response.status_code in [200, 201]:
         print("File updated successfully.")
         return True
     else:
         print("Error updating file:", update_response.status_code, update_response.text)
         return False
-
-
-async def bulk_sync_jurisdictions_and_people(
-    jurisdiction_ocdids: list[str],
-    metadata_github_path: str,
-    people_github_path_template: str,
-    db_syncer
-):
-    # Fetch the metadata file once
-    metadata_content = await get_github_file_contents(metadata_github_path)
-    metadata = yaml.safe_load(metadata_content)
-    jurisdiction_entries = metadata.get("jurisdictions", [])
-
-    # Build a lookup for OCDID -> jurisdiction entry
-    jurisdiction_lookup = {j["id"]: j for j in jurisdiction_entries}
-
-    for ocdid in jurisdiction_ocdids:
-        # Insert jurisdiction record
-        jurisdiction = jurisdiction_lookup.get(ocdid)
-        if jurisdiction:
-            await db_syncer.insert_jurisdiction(jurisdiction)
-        else:
-            print(f"Jurisdiction OCDID not found in metadata: {ocdid}")
-
-        # Fetch and insert people for this jurisdiction
-        people_github_path = people_github_path_template.format(ocdid=ocdid)
-        people_content = await get_github_file_contents(people_github_path)
-        if people_content:
-            people_data = yaml.safe_load(people_content)
-            await db_syncer.insert_people(ocdid, people_data)
-        else:
-            print(f"No people data found for OCDID: {ocdid}")
-
-# Example usage:
-# await bulk_sync_jurisdictions_and_people(
-#     jurisdiction_ocdids,
-#     metadata_github_path="data/tx/local/jurisdictions_metadata.yml",
-#     people_github_path_template="data/tx/local/{ocdid}/data.yml",
-#     db_syncer=my_db_syncer
-# )

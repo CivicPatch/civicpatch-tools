@@ -60,6 +60,16 @@ services:
     # temporary
     # network_mode: host
 
+  civicpatch_test:
+    build:
+      context: ..
+      dockerfile: civicpatch/Dockerfile
+      target: development
+    env_file:
+      - .env
+    environment:
+      CIVICPATCH_ENV: test
+
 networks:
   civicpatch_net:
     driver: bridge

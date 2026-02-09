@@ -5,9 +5,9 @@ import yaml
 from fastapi import APIRouter, HTTPException, Query
 
 import database
-import github_service
+import services.github_service as github_service
 # import services.auth_service as AuthService
-from schemas import Jurisdiction
+from schemas.common import Jurisdiction
 
 VALID_STATES = [
     "al",
@@ -100,9 +100,7 @@ def get_router() -> APIRouter:
                 status_code=404, detail="Could not find jurisdictions file"
             )
 
-        open_pull_requests = await github_service.get_open_pull_requests(
-            GITHUB_WORKFLOW_TOKEN
-        )
+        open_pull_requests = await github_service.get_open_pull_requests()
         jurisdictions_data = yaml.safe_load(jurisdictions_file_content)
         jurisdictions = [
             Jurisdiction(

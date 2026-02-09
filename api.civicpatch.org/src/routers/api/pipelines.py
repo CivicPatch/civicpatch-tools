@@ -1,28 +1,29 @@
 import os
+import logging
 
-from fastapi import APIRouter, Form, HTTPException, Security, UploadFile
+from fastapi import APIRouter, Form, HTTPException, Security, UploadFile, BackgroundTasks
 
-import github_service
 import services.auth_service as AuthService
-import storage_service
+import job_service.people_collector
+from schemas.requests import HandleSubmitJobArtifactsRequest
+from schemas.responses import SubmitJobArtifactsResponse
 
-STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
-STORAGE_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY_ID")
-STORAGE_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_ACCESS_KEY")
 GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
 
+logger = logging.getLogger(__name__)
 
 def get_router(api_key_header):
     router = APIRouter()
 
     @router.post(
-        "/github_intake",
+        "/submit_job_artifacts",
         summary="Upload zip file containing municipal data",
         description="Accepts a zip file containing municipal data and processes it",
         include_in_schema=False
     )
-    async def github_intake(
+    async def intake_endpoint(
         file: UploadFile,
+        background_tasks: BackgroundTasks,
         authorization: str = Security(api_key_header),
         request_id: str = Form(...),
         jurisdiction_ocdid: str = Form(...),
@@ -44,33 +45,19 @@ def get_router(api_key_header):
             )
 
         # Now you have access to the parameters
-        print(f"Processing intake for {request_id} - {jurisdiction_ocdid}")
-        file_suffix = file.filename
-
-        storage_response = await storage_service.process_and_upload_artifacts(
-            file,
-            STORAGE_ENDPOINT,
-            STORAGE_ACCESS_KEY_ID,
-            STORAGE_SECRET_ACCESS_KEY,
-            file_suffix,
-            with_presigned_url=True,
-        )
-
-        await github_service.trigger_github_data_intake_workflow(
-            GITHUB_WORKFLOW_TOKEN,
-            server_detail["user_email"],
-            server_detail["server_url"],
+        logger.info(f"Processing intake for {request_id} - {jurisdiction_ocdid}")
+        request = HandleSubmitJobArtifactsRequest(
+            file=file,
             request_id=request_id,
             jurisdiction_ocdid=jurisdiction_ocdid,
-            zip_file_url=storage_response["zip_to_commit"],
-            log_url=storage_response["log_url"],
+            server_detail=server_detail
         )
 
-        return {
-            "filename": file.filename,
-            "status": "uploaded",
-            "zip_file_url": storage_response["zip_to_commit"],
-            "metadata": {"request_id": request_id, "jurisdiction_ocdid": jurisdiction_ocdid},
-        }
+        response = await job_service.people_collector.handle_submit_job_artifacts(
+            request=request,
+            background_tasks=background_tasks
+        )
+
+        return response
 
     return router

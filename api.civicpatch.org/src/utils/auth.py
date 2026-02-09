@@ -8,7 +8,7 @@ import time
 from typing import cast, Annotated
 import database
 from http import cookies as _cookies
-from schemas import Identity, RouteCategory, UserRole, ApiKeyType
+from schemas.common import Identity, RouteCategory, UserRole, ApiKeyType
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 API_COOKIE = APIKeyCookie(name="token", auto_error=False)

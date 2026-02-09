@@ -25,7 +25,7 @@ async def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGi
     # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
     API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
     API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "https://api.civicpatch.org")
-    CRUDDER_UPLOAD_URL = f"{API_CIVICPATCH_ORG_URL}/api/internal/pipelines/github_intake"
+    CRUDDER_UPLOAD_URL = f"{API_CIVICPATCH_ORG_URL}/api/internal/pipelines/submit_job_artifacts"
     request_id = context.request_id
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     logger.info(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")

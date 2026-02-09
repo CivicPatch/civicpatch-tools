@@ -8,6 +8,10 @@ _.file = ".env"
 PYTHONPATH = "./src"
 POETRY_VIRTUALENVS_IN_PROJECT = "true"
 
+[tasks.unit]
+run = """
+docker compose -f docker-compose.yml run --rm api_civicpatch_org_test pytest -vvm unit tests/unit
+"""
 
 [tasks.dev]
 run = """
