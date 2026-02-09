@@ -67,7 +67,7 @@ async def get_jurisdiction_metadata_for_ocdids(jurisdiction_ocdids: List[str]) -
 
 async def sync_jurisdictions_by_ocdids(jurisdiction_ocdids: List[str]):
     jurisdiction_metadata_by_state = await get_jurisdiction_metadata_for_ocdids(jurisdiction_ocdids)
-    sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata_by_state, jurisdiction_ocdids)
+    await sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata_by_state, jurisdiction_ocdids)
 
 async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, jurisdiction_ocdids: List[str]):
     jurisdictions: List[tuple] = []
