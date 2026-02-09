@@ -27,6 +27,7 @@ async def handle_submit_job_artifacts(
     artifact_file_patterns = [
         "data/*/local/*.yml",
         "data_source/*/local/*/workflow_context.json",
+        "data_source/*/local/*/config.yml",
     ]
     debug_file_patterns = [
         "data_source/*/local/*/cache/*",
