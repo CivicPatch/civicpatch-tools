@@ -150,7 +150,6 @@ def get_router(api_key_header):
 
         # Publish to SSE subscribers
         key = f"people:{request.jurisdiction_ocdid}"
-        print("publishing with key", key)
         await memory_pubsub.publish(key, json.dumps({
             "request_id": request_id,
             "status": request.status,
@@ -302,7 +301,6 @@ def get_router(api_key_header):
         request: PostJobPullRequestDataRequest,
         user: Identity = Depends(get_user)
     ):
-        print("user is", user)
         user_name = user.email
         file_path = data_path_utils.get_data_file_path(request.jurisdiction_ocdid)
         # Chop off leading "/app/" from file_path
