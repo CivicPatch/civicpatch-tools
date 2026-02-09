@@ -55,7 +55,7 @@ async def handle_submit_job_artifacts(
     
     # For every file in debug_file_dir, upload to storage,
     # Including image files
-    filenames_to_urls = await _upload_debug_files(debug_file_dir, file_suffix)
+    filenames_to_urls = await _upload_debug_files(debug_file_dir, request.request_id)
     data_file_path = file_utils.find_file(artifact_file_dir, "data/*/local/*.yml")
     with open(data_file_path, "r") as f:
         data = yaml.safe_load(f)
@@ -115,13 +115,13 @@ async def _process_images(debug_file_dir: str, filenames_to_urls: dict, data: Li
                 person["cdn_image"] = filenames_to_urls[image_map[person["image"]]]
     return data
 
-async def _upload_debug_files(debug_file_dir: str, request_id: str) -> dict:
+async def _upload_debug_files(debug_file_dir: str, file_suffix_without_ext: str) -> dict:
     """
     Upload files in debug_file_dir to storage and return a mapping of original filenames to their URLs.
 
     Args:
         debug_file_dir (str): Path to the directory containing debug files.
-        request_id (str): Unique request ID to use as the root folder in storage.
+        file_suffix_without_ext (str): Suffix to use for naming files in storage.
 
     Returns:
         dict: A mapping of relative file paths to their URLs in storage.
@@ -133,7 +133,7 @@ async def _upload_debug_files(debug_file_dir: str, request_id: str) -> dict:
                 file_path = os.path.join(root, file)
                 relative_path = os.path.relpath(file_path, debug_file_dir)  # Preserve the hierarchy
                 base_filename = os.path.basename(file_path)
-                storage_key = f"{request_id}/{relative_path}"  # Use request_id as the root folder
+                storage_key = f"{file_suffix_without_ext}/{relative_path}"  # Use request_id as the root folder
                 url = await storage_service.upload_file_to_storage(
                     "civicpatch-artifacts",
                     file_path,
@@ -142,7 +142,7 @@ async def _upload_debug_files(debug_file_dir: str, request_id: str) -> dict:
                 )
                 filename_to_url[base_filename] = url
     except Exception as e:
-        logger.error(f"Failed to upload debug files for request {request_id}: {e}")
+        logger.error(f"Failed to upload debug files for request {file_suffix_without_ext}: {e}")
 
     logger.info("DEBUG: Uploaded debug files with the following URLs: %s", filename_to_url)
     return filename_to_url
