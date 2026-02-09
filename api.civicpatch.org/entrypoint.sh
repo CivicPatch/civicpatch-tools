@@ -45,5 +45,11 @@ if [ "$APP_ENVIRONMENT" = "development" ]; then
   fi
 fi
 
-# Drop privileges and run the command as civicpatch_user
-exec su civicpatch_user -c "$*"
+# Handle user switching based on environment
+if [ "$APP_ENVIRONMENT" = "development" ]; then
+  echo "[development] Running as civicpatch_user..."
+  exec su -s /bin/sh -c "$*" civicpatch_user
+else
+  echo "[production] Running as civicpatch_user..."
+  exec "$@"
+fi

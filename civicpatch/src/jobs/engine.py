@@ -7,6 +7,7 @@ from utils import log_utils
 import time
 from datetime import datetime, timezone
 import services.civicpatch_api as civicpatch_api
+import psutil  # Add this import
 
 from jobs.people_collector.schemas import WorkflowStatus
 from jobs.registry import (
@@ -29,6 +30,13 @@ async def run_workflow(
     stop_flag: optional function returning True to interrupt
     persist_fn: optional function to persist context between steps
     """
+    def log_system_usage():
+        process = psutil.Process()
+        memory_info = process.memory_info()
+        cpu_percent = psutil.cpu_percent(interval=None)
+        print(f"Memory Usage: {memory_info.rss / (1024 * 1024):.2f} MB")
+        print(f"CPU Usage: {cpu_percent}%")
+
     ctx = context
     job_config = get_job_config(logger)
     jurisdiction_ocdid = ctx.data.jurisdiction_ocdid
@@ -42,6 +50,8 @@ async def run_workflow(
     register_workflow(jurisdiction_ocdid, ctx.current_state)
 
     while ctx.current_state not in [WorkflowStatus.DONE]: # Note: all workflow state should include DONE
+        log_system_usage()  # Log system usage at the start of each iteration
+
         await civicpatch_api.update_job_status(
             ctx.request_id,
             ctx.data.jurisdiction_ocdid,
@@ -49,11 +59,11 @@ async def run_workflow(
             progress=ctx.progress
         )
         if workflow_stop_requested(jurisdiction_ocdid):
-          ctx = ctx.copy(update={
-              "current_state": ctx.current_state,
-              "updated_at": time.time()
-          })
-          break
+            ctx = ctx.copy(update={
+                "current_state": ctx.current_state,
+                "updated_at": time.time()
+            })
+            break
 
         transition_fn = transition_map[ctx.current_state]
         ctx, next_state = await transition_fn(job_config, logger, ctx)
@@ -66,6 +76,7 @@ async def run_workflow(
         if persist_fn:
             persist_fn(ctx)
 
+    log_system_usage()  # Log system usage before the final update
     await civicpatch_api.update_job_status(
         ctx.request_id,
         ctx.data.jurisdiction_ocdid,

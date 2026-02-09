@@ -50,6 +50,8 @@ WORKDIR /app
 
 RUN chown -R civicpatch_user:civicpatch_user /venv
 
+USER root
+
 EXPOSE 8001
 
 # CMD ["tail", "-f", "/dev/null"]
@@ -62,7 +64,7 @@ ENV APP_ENVIRONMENT=production
 
 WORKDIR /app
 
-USER root
+USER civicpatch_user
 
 EXPOSE 80
 
