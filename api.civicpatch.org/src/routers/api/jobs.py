@@ -2,9 +2,8 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import JSONResponse
 from typing import Optional, Any, List, Dict
 from pydantic import BaseModel
-from schemas import Identity
-from github_service import trigger_people_job_workflow 
-import github_service as github_service
+from schemas.common import Identity
+import services.github_service as github_service
 from services.api_service import can_make_api_request, can_call_request_id
 from database import (
     get_job,
@@ -21,6 +20,8 @@ import shared.utils.id_utils
 import json
 import yaml
 from services.memory_pub_sub_service import memory_pubsub
+
+import logging
 
 class GetJobResponse(BaseModel):
     request_id: str
@@ -70,6 +71,8 @@ class ErrorResponse(BaseModel):
 class PostJobPullRequestDataRequest(BaseModel):
     jurisdiction_ocdid: str
     data: List[Dict[str, Any]]
+
+logger = logging.getLogger(__name__)
 
 def get_router(api_key_header):
     router = APIRouter()
@@ -187,7 +190,7 @@ def get_router(api_key_header):
 
         try:
             request_id = shared.utils.id_utils.make_request_id() 
-            response = trigger_people_job_workflow(
+            _response = await github_service.trigger_people_job_workflow(
                 request_id=request_id,
                 jurisdiction_ocdid=request.jurisdiction_ocdid,
                 name=request.name,
@@ -216,7 +219,7 @@ def get_router(api_key_header):
         user: Identity = Depends(get_user)
     ):
         print(f"Registering job: {request.request_id} by user {user.provider_user_id} from provider {user.provider}")
-        response = await register_job(
+        _response = await register_job(
             requested_by_provider=user.provider,
             requested_by_provider_user_id=user.provider_user_id,
             request_id=request.request_id,

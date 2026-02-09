@@ -6,10 +6,11 @@ import secrets
 import math
 from typing import List, cast, Optional, Any
 import shared.utils.id_utils
+from schemas.requests import ServerDetail
 
 from psycopg_pool import AsyncConnectionPool
 
-from schemas import Person, PeopleJobHistory
+from schemas.common import Person, PeopleJobHistory
 
 CRUDDER_DB_URL = os.getenv("CRUDDER_DB_URL")
 DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
@@ -203,7 +204,7 @@ async def user_is_approved(user_provider, provider_user_id) -> bool:
         row = await cur.fetchone()
         return row[0] if row else False
     
-async def get_server_detail_by_active_api_key(api_key):
+async def get_server_detail_by_active_api_key(api_key) -> Optional[ServerDetail]:
     candidate_api_key_hash = hash_string(api_key, DATABASE_HASH_KEY)
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
@@ -217,10 +218,10 @@ async def get_server_detail_by_active_api_key(api_key):
         )
         row = await cur.fetchone()
     if row:
-        return {
-            "user_email": row[0],
-            "server_url": row[1],
-        }
+        return ServerDetail(
+            user_email=row[0],
+            server_url=row[1],
+        )
     return None
 
 

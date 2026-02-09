@@ -11,7 +11,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.security import APIKeyHeader
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from schemas import Identity, RouteCategory
+from schemas.common import Identity, RouteCategory
 import asyncio
 
 import routers.api.admin as api_admin_router

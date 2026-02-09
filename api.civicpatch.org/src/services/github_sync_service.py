@@ -8,12 +8,12 @@ import asyncio
 import json
 import os
 from pathlib import Path
-import github_service as github_service
+import services.github_service as github_service
 
 import yaml
 import yaml
 import database
-from typing import List, Optional
+from typing import List
 import shared
 import dateutil.parser
 from datetime import timezone
