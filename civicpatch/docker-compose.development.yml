@@ -73,6 +73,9 @@ services:
       context: ..
       dockerfile: civicpatch/Dockerfile
       target: production
+    volumes:
+      - ./data:/app/data
+      - ./data_source:/app/data_source
     env_file: .env
 
 networks:
