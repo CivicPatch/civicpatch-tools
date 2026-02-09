@@ -145,6 +145,8 @@ WORKDIR /app
 
 COPY --from=production-build /app/dist/. /app/src/frontend/dist
 
+USER civicpatch_user
+
 EXPOSE 8000
 # # Keep the container running
 # CMD ["tail", "-f", "/dev/null"]

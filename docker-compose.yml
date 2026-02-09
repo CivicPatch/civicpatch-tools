@@ -17,7 +17,6 @@ services:
       - civicpatch_net
     depends_on:
       - caddy
-    volumes:
       - ./development/caddy/data:/development/caddy/data:ro    
   civicpatch-frontend:
     extends:

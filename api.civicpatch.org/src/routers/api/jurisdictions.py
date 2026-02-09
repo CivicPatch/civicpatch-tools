@@ -102,6 +102,7 @@ def get_router() -> APIRouter:
 
         open_pull_requests = await github_service.get_open_pull_requests()
         jurisdictions_data = yaml.safe_load(jurisdictions_file_content)
+        print("what are", jurisdictions_data)
         jurisdictions = [
             Jurisdiction(
                 id=j["jurisdiction"]["id"],

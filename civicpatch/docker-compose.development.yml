@@ -67,6 +67,13 @@ services:
       target: development
     environment:
       CIVICPATCH_ENV: test
+    
+  civicpatch_prod:
+    build:
+      context: ..
+      dockerfile: civicpatch/Dockerfile
+      target: production
+    env_file: .env
 
 networks:
   civicpatch_net:
