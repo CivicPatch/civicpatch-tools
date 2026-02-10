@@ -67,6 +67,9 @@ services:
       target: development
     environment:
       CIVICPATCH_ENV: test
+    volumes:
+      - ./data:/app/data
+      - ./data_source:/app/data_source
     
   civicpatch_prod:
     build:
