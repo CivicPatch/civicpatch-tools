@@ -312,6 +312,11 @@ def get_router(api_key_header):
             new_data=request.data,
             commit_message=f"Data update by {user_name}"
         )
+        if not _github_response:
+            return JSONResponse(
+                content=ErrorResponse(error="Failed to update pull request data on GitHub").model_dump(),
+                status_code=500
+            )
         return {"branch_name": branch_name, "status": "success"}
 
     @router.delete(

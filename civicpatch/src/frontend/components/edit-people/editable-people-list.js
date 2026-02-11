@@ -221,24 +221,41 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ jurisdiction_ocdid, data }),
-    }).then((r) => r.json());
+    })
+      .then(r => {
+        console.log("Submit response:", r);
+        if (!r.ok) {
+          console.log("rethrowing...")
+          throw new Error(`Failed to submit changes: ${r.status} ${r.statusText}`);
+        } 
+        return r.json();
+      })
+      .catch(e => {
+        console.error("Error submitting changes:", e);
+        throw e;
+      })
   }
 
   function handleSubmit() {
     setSelected([]);
     setDirty(false);
     setPeople([]);
-    setNotice(
-      selectedOpenPullRequest
-        ? `Changes submitted to ${openPullRequests.find(pr => pr.branch_name === selectedOpenPullRequest)?.url || selectedOpenPullRequest}`
-        : "Changes submitted."
-    );
+    
     submitChanges(
       selectedOpenPullRequest, // TODO: if not available needs to open a new PR instead
       localPeople.map(({ _dirty, _changes, _tempKey, ...person }) => person)
-    ).catch(() => {
-      setNotice("Failed to submit changes.");
-    });
+    )
+      .then(() => {
+        setNotice(
+          selectedOpenPullRequest
+            ? `Changes submitted to ${openPullRequests.find(pr => pr.branch_name === selectedOpenPullRequest)?.url || selectedOpenPullRequest}`
+            : "Changes submitted."
+        );   // Optionally refresh data or update state based on response
+      })
+      .catch((e) => {
+        console.error("Error submitting changes:", e);
+        setError("Failed to submit changes.");
+      });
 
   }
 
@@ -273,7 +290,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   if (loading) return html`<p>Loading people...</p>`;
-  if (error) return html`<p>Error loading people.</p>`;
 
   const diffPreview = html`
   <div style="margin-top:2rem;">
@@ -375,6 +391,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   ${notice ? html`
     <div style="margin-bottom:1rem; padding:0.75em; background:#e0ffe0; border-radius:6px; color:#155724;">
       ${notice}
+    </div>
+  ` : ""}
+
+  ${error ? html`
+    <div style="margin-bottom:1rem; padding:0.75em; background:#ffe0e0; border-radius:6px; color:#721c24;">
+      ${error}
     </div>
   ` : ""}
 
