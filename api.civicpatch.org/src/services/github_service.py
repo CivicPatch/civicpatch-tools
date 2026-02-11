@@ -167,8 +167,11 @@ async def update_pull_request_file(
     commit_message: str = "Automated update via API"
 ) -> bool:
     # Get file SHA
+    headers = {
+        **get_default_headers(),
+    }
     contents_url = f"https://api.github.com/repos/CivicPatch/open-data/contents/{file_path}?ref={branch_name}"
-    print("Content url:", contents_url)
+    print("contents_url:", contents_url)
     contents_response = await github_async_client.get(contents_url, headers=headers, timeout=timeout)
     if contents_response.status_code != 200:
         print("Error fetching file contents:", contents_response.status_code, contents_response.text)
@@ -187,11 +190,12 @@ async def update_pull_request_file(
 
     headers = {
         **get_default_headers(),
-         "Accept": "application/vnd.github+json",
+        "Authorization": f"Bearer {GITHUB_UPDATE_TOKEN}",
+        "Accept": "application/vnd.github+json",
     }
 
     # Update file
-    update_response = await github_async_client.put(contents_url, json=data)
+    update_response = await github_async_client.put(contents_url, json=data, headers=headers, timeout=timeout)
     if update_response.status_code in [200, 201]:
         print("File updated successfully.")
         return True

@@ -1,6 +1,9 @@
 from fastapi import UploadFile
 from pydantic import BaseModel
-from typing import Tuple
+from typing import Optional, List
+
+class OdSyncRequestSchema(BaseModel):
+    jurisdiction_ocdids: Optional[List[str]] = None
 
 class ServerDetail(BaseModel):
     user_email: str

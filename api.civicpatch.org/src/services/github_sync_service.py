@@ -17,6 +17,7 @@ from typing import List
 import shared
 import dateutil.parser
 from datetime import timezone
+from schemas.requests import OdSyncRequestSchema
 import logging
 logger = logging.getLogger(__name__)
 
@@ -46,14 +47,33 @@ if not CRUDDER_DB_URL:
     raise ValueError("CRUDDER_DB_URL environment variable is not set.")
 
 async def get_jurisdiction_metadata(state: str):
-    file_path = os.path.join("data_source", state, "jurisdictions_metadata.yml")
-    jurisdictions_metadata_file = await github_service.get_github_file_contents(file_path)
-    if not jurisdictions_metadata_file:
-        return None
-    data = yaml.safe_load(jurisdictions_metadata_file)
-    jurisdictions_metadata = data.get("jurisdictions_by_id", {})
+    jurisdictions_file_path = os.path.join("data_source", state, "jurisdictions.yml")
+    jurisdictions_metadata_file_path = os.path.join("data_source", state, "jurisdictions_metadata.yml")
+    jurisdictions_metadata_response = await github_service.get_github_file_contents(jurisdictions_metadata_file_path)
+    jurisdiction_entries_response = await github_service.get_github_file_contents(jurisdictions_file_path)
 
-    return jurisdictions_metadata
+    if not jurisdictions_metadata_response or not jurisdiction_entries_response:
+        return None
+
+    jurisdictions_metadata = yaml.safe_load(jurisdictions_metadata_response)
+    jurisdiction_entries = yaml.safe_load(jurisdiction_entries_response)
+    metadata = jurisdictions_metadata.get("jurisdictions_by_id", {})
+
+    for jurisdiction_ocdid, jurisdiction_metadata in metadata.items():
+        # Need to find matching jurisdiction_entry under "jurisdictions" array field
+        jurisdictions = jurisdiction_entries.get("jurisdictions", [])
+        jurisdiction_entry = next((entry for entry in jurisdictions if entry.get("id") == jurisdiction_ocdid), None)
+        if jurisdiction_entry:
+            jurisdiction_metadata["jurisdiction"] = jurisdiction_entry
+
+    ## save output for debugging
+    #output_dir = "debug_output"
+    #os.makedirs(output_dir, exist_ok=True)
+    #output_file_path = os.path.join(output_dir, f"{state}_jurisdiction_metadata.json")
+    #with open(output_file_path, "w") as output_file:
+    #    json.dump(metadata, output_file, indent=2)
+
+    return metadata
 
 async def get_jurisdiction_metadata_for_ocdids(jurisdiction_ocdids: List[str]) -> dict:
     jurisdiction_metadata_by_state = {}
@@ -73,6 +93,7 @@ async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, juri
     jurisdictions: List[tuple] = []
     for jurisdiction_ocdid in jurisdiction_ocdids:
         jurisdiction_data = jurisdiction_metadata.get(jurisdiction_ocdid)
+        logging.info(f"Jurisdiction data for {jurisdiction_ocdid}: {jurisdiction_data}")
 
         parsed_ocdid = shared.utils.id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
         state = parsed_ocdid.state
@@ -139,6 +160,14 @@ async def bulk_sync():
 
     logger.info(f"Updating people data for jurisdictions with OCDIDs: {jurisdictions_to_update_data}")
     await sync_people_by_ocdids(jurisdictions_to_update_data)
+
+async def sync(request: OdSyncRequestSchema):
+    jurisdiction_ocdids = request.jurisdiction_ocdids
+    if jurisdiction_ocdids:
+        await sync_jurisdictions_by_ocdids(jurisdiction_ocdids)
+        await sync_people_by_ocdids(jurisdiction_ocdids)
+    else:
+        await bulk_sync()
 
 def is_newer(date1, date2):
     if not date1:
