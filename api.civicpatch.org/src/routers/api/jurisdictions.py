@@ -93,30 +93,53 @@ def get_router() -> APIRouter:
         num_jurisdictions: int = 10,
     ):
         jurisdictions_file_content = await github_service.get_github_file_contents(
+            f"data_source/{state}/jurisdictions.yml"
+        )
+        jurisdictions_metadata_file_content = await github_service.get_github_file_contents(
             f"data_source/{state}/jurisdictions_metadata.yml"
         )
+        if jurisdictions_metadata_file_content is None:
+            raise HTTPException(
+                status_code=404, detail="Could not find jurisdictions metadata file"
+            )
+
         if jurisdictions_file_content is None:
             raise HTTPException(
                 status_code=404, detail="Could not find jurisdictions file"
             )
-
-        open_pull_requests = await github_service.get_open_pull_requests()
+        # Combine metadata with jurisdiction entries from jurisdiction.yml, 
+        # filtering out jurisdictions with open pull requests or recently updated metadata
+        jurisdictions_metadata = yaml.safe_load(jurisdictions_metadata_file_content)
         jurisdictions_data = yaml.safe_load(jurisdictions_file_content)
-        print("what are", jurisdictions_data)
-        jurisdictions = [
-            Jurisdiction(
-                id=j["jurisdiction"]["id"],
-                name=j["jurisdiction"]["name"],
-                url=j["jurisdiction"]["url"],
-            )
-            for j in jurisdictions_data["jurisdictions_by_id"].values()
-            if j["jurisdiction"].get("url") and not j.get("updated_at")
-        ]
-        open_pull_request_ids = [pr.jurisdiction_ocdid for pr in open_pull_requests]
+        jurisdictions = []
+        open_pull_requests = await github_service.get_open_pull_requests()
+        jurisdictions_entries = jurisdictions_data.get("jurisdictions", [])
+        for jurisdiction_ocdid, jurisdiction_metadata in jurisdictions_metadata.get("jurisdictions_by_id", {}).items():
+            print("grabbing metadata for", jurisdiction_ocdid)
+            # Skip over if updated_at is populated (TODO: new condition needed)
+            if jurisdiction_metadata.get("updated_at"):
+                continue
+            # Skip over if there's an open pull request for this jurisdiction
+            if any(pr.jurisdiction_ocdid == jurisdiction_ocdid for pr in open_pull_requests):
+                continue
+            # Need to find matching jurisdiction_entry under "jurisdictions" array field
+            jurisdiction_entry = next((entry for entry in jurisdictions_entries if entry.get("id") == jurisdiction_ocdid), None)
 
-        filtered_jurisdictions = [
-            j for j in jurisdictions if j.id not in open_pull_request_ids
-        ][:num_jurisdictions]
+            # Skip over if no url 
+            if not jurisdiction_entry.get("url"):
+                continue
+
+            if jurisdiction_entry:
+                jurisdiction_metadata["jurisdiction"] = jurisdiction_entry
+                jurisdictions.append(
+                    Jurisdiction(
+                        id=jurisdiction_metadata["jurisdiction"]["id"],
+                        name=jurisdiction_metadata["jurisdiction"]["name"],
+                        url=jurisdiction_metadata["jurisdiction"]["url"],
+                    )
+                )
+
+        filtered_jurisdictions = jurisdictions[:num_jurisdictions]
         return {"jurisdictions": filtered_jurisdictions}
 
     @router.get("/states")
