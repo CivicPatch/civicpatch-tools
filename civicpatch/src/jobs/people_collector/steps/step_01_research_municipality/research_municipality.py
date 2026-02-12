@@ -25,7 +25,7 @@ async def research_municipality(context: PeopleCollectorContext) -> tuple[Progre
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
     municipality_name = context.data.config.name
     
-    MAX_ATTEMPTS = 3 # Tool call + JSON output doesn't work at the same time for Google Gemini, let's retry a couple times
+    MAX_ATTEMPTS = 5 # Tool call + JSON output doesn't work at the same time for Google Gemini, let's retry a couple times
     for attempt in range(MAX_ATTEMPTS):
         try:
             prompt = google_gemini_prompt.research_municipality_prompt(jurisdiction_ocdid, municipality_name)
@@ -45,6 +45,7 @@ async def research_municipality(context: PeopleCollectorContext) -> tuple[Progre
             role_configs = config_utils.get_role_configs()
             researched_people: List[ResearchedPerson] = [ResearchedPerson.model_validate(p) if isinstance(p, dict) else p for p in people]
         except Exception as e:
+            logger.error(f"Response: {response} ")
             logger.error(f"Attempt {attempt + 1} failed with error: {e}")
             if attempt == MAX_ATTEMPTS - 1:
                 raise e
