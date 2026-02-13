@@ -63,7 +63,7 @@ RUN poetry install
 
 FROM image-base AS post-install
 
-RUN poetry run playwright install --with-deps chromium
+RUN poetry run patchright install --with-deps chromium
 
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/src/setup.py /app/src/setup.py
 RUN poetry run post-install
