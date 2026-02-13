@@ -40,7 +40,7 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
        {{
          "people": [
            {{
-             "name": "Full name of the official or null if uncertain",
+             "name": "Full name of the official or "Vacant Vacant" if uncertain",
              "roles": ["Mayor", "Council Member", "Commissioner", etc.],
              "designations": ["Ward 1", "District 2", etc.] or [],
            }}
