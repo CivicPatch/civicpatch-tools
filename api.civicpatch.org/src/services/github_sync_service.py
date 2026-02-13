@@ -137,11 +137,9 @@ async def bulk_sync():
     for jurisdiction_ocdid in all_jurisdiction_metadata:
         remote_updated_at = all_jurisdiction_metadata[jurisdiction_ocdid].get("updated_at")
 
-        local_jurisdiction = local_jurisdictions.get(jurisdiction_ocdid)
         local_people_data = local_people.get(jurisdiction_ocdid)
 
-        if is_newer(remote_updated_at, local_jurisdiction.get("updated_at") if local_jurisdiction else None):
-            jurisdictions_to_update_metadata.append(jurisdiction_ocdid)
+        jurisdictions_to_update_metadata.append(jurisdiction_ocdid)
 
         if is_newer(remote_updated_at, local_people_data.get("updated_at") if local_people_data else None):
             jurisdictions_to_update_data.append(jurisdiction_ocdid)
