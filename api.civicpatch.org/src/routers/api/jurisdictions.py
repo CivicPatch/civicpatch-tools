@@ -115,7 +115,6 @@ def get_router() -> APIRouter:
         open_pull_requests = await github_service.get_open_pull_requests()
         jurisdictions_entries = jurisdictions_data.get("jurisdictions", [])
         for jurisdiction_ocdid, jurisdiction_metadata in jurisdictions_metadata.get("jurisdictions_by_id", {}).items():
-            print("grabbing metadata for", jurisdiction_ocdid)
             # Skip over if updated_at is populated (TODO: new condition needed)
             if jurisdiction_metadata.get("updated_at"):
                 continue

@@ -6,8 +6,11 @@ roles:
   - role: mayor pro tempore
     is_unique: true
     aliases: 
+    - mayor protem
+    - mayor protemp
     - mayor pro-tem
     - mayor pro tem
+    - mayor pro temp
   - role: assistant mayor
     is_unique: true
   - role: deputy mayor
@@ -135,6 +138,7 @@ roles:
     aliases:
     - alder
     - alderman
+    - aldermen
     - alderwoman
   - role: chair
     aliases:
