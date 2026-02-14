@@ -134,14 +134,14 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
           .checked=${person._selected}
           @change=${handleCheckboxChange}
           aria-label="Select ${person.name}" 
-          ${person._deleted ? 'disabled' : ''}
+          ?disabled=${person._deleted}
           />
         <div style="margin-left: auto; display: flex; gap: 0.5rem;">
           <button 
             class="contrast" 
             title="Delete person" 
             @click=${handleDeleteClick}
-            ${person._deleted ? 'disabled' : ''}
+            ?disabled=${person._deleted}
           >
             Delete
           </button>
@@ -154,8 +154,6 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
           </button>
         </div>
       </header>
-
-      ${ person._changes }
 
       <div class="person-card-avatar-row">
         <figure>
