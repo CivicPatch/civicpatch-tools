@@ -22,13 +22,13 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       _tempKey: person._tempKey || genKey(),
     }))
   );
+  const [originalPeople, setOriginalPeople] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selected, setSelected] = useState([]);
   const [openPullRequests, setOpenPullRequests] = useState([]);
   const [selectedOpenPullRequest, setSelectedOpenPullRequest] = useState(null);
   const [dirty, setDirty] = useState(false);
-  const [originalPeople, setOriginalPeople] = useState([]);
   const [notice, setNotice] = useState(null);
 
   const {
@@ -62,15 +62,18 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   
   
   function toggleSelect(key) {
-    setSelected(sel =>
-      sel.includes(key) ? sel.filter(x => x !== key) : [...sel, key]
+    setPeople(localPeople =>
+      localPeople.map(person =>
+        person._tempKey === key
+          ? { ...person, _selected: !person._selected }
+          : person
+      )
     );
   }
 
   function handleCardKeyDown(e, idx, tempKey) {
-
     handleKeyDown(e, idx);
-    
+
     if (e.target !== e.currentTarget) return; // Only handle if event is on the card itself
 
     if ((e.key === ' ' || e.key === 'Enter') && tempKey) {
@@ -106,42 +109,33 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       })
   } 
 
-  function handleAddPerson() {
-    const name = prompt('Enter name for new person:');
-    if (!name) return;
-    // Replace with your actual API call
-    fetch('/api/api_proxy/people', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, jurisdiction_ocdid }),
-    })
-      .then(r => r.json())
-      .then(newPerson => setPeople(p => [...p, { ...newPerson, _tempKey: genKey() }]))
-      .catch(e => alert('Failed to add person'));
-  }
-
   function markAsDeleted(keys) {
-    setPeople(localPeople =>
-      localPeople.map(person =>
-        keys.includes(person._tempKey)
-          ? { ...person, _deleted: true }
-          : person
-      )
-    );
-    setDirty(true); // Mark the form as dirty since changes were made
+    keys.forEach(key => {
+      updatePerson(key, { _deleted: true });
+    });
   }
 
-  // Updated handleBulkDelete
   function handleBulkDelete() {
     if (!confirm(`Mark ${selected.length} people as deleted?`)) return;
-    markAsDeleted(selected); // Use the helper function
-    setSelected([]); // Clear the selection after marking as deleted
+    markAsDeleted(selected);
   }
 
-  // Updated handleDelete
   function handleDelete(key) {
     if (!confirm('Mark this person as deleted?')) return;
-    markAsDeleted([key]); // Use the helper function
+    markAsDeleted([key]);
+
+    // Move person to bottom of the list
+    reorderPersonToBottom(key);
+  }
+
+  function reorderPersonToBottom(key) {
+    setPeople(localPeople => {
+      const index = localPeople.findIndex(p => p._tempKey === key);
+      if (index === -1) return localPeople;
+      const person = localPeople[index];
+      const without = localPeople.filter(p => p._tempKey !== key);
+      return [...without, person];
+    });
   }
 
   function handleReset(tempKey) {
@@ -151,7 +145,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       } else {
         assignPeople(people);
       }
-      setSelected([]);
       setDirty(false);
     } else {
       const originalPerson = originalPeople.find(p => p._tempKey === tempKey);
@@ -213,7 +206,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       filtered[basePersonIndex] = basePerson;
       return filtered;
     });
-    setSelected([]);
     setDirty(true);
   }
 
@@ -247,48 +239,48 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   function handleSubmit() {
-    setSelected([]);
     setDirty(false);
     setPeople([]);
     
     submitChanges(
       selectedOpenPullRequest, // TODO: if not available needs to open a new PR instead
-      localPeople.map(({ _dirty, _changes, _tempKey, ...person }) => person)
+      localPeople.map(({ _dirty, _changes, _tempKey, _selected, _deleted, ...person }) => person)
     )
       .then(() => {
         setNotice(
           selectedOpenPullRequest
             ? `Changes submitted to ${openPullRequests.find(pr => pr.branch_name === selectedOpenPullRequest)?.url || selectedOpenPullRequest}`
             : "Changes submitted."
-        );   // Optionally refresh data or update state based on response
+        );
       })
       .catch((e) => {
         console.error("Error submitting changes:", e);
         setError("Failed to submit changes.");
       });
-
   }
 
-  function updatePerson(key, updates) {
-    setPeople(localPeople =>
-      localPeople.map(person => {
-        if (person._tempKey === key) {
-          const originalPerson = originalPeople.find(p => p._tempKey === key);
-          const nextPerson = { ...person, ...updates };
-          const changedFields = TRACKED_FIELDS.filter(
-            field => JSON.stringify(nextPerson[field]) !== JSON.stringify(originalPerson?.[field])
-          );
-          return {
-            ...nextPerson,
-            _dirty: changedFields.length > 0,
-            _changes: changedFields,
-          };
-        }
-        return person;
-      })
-    );
-    setDirty(true);
-  }
+function updatePerson(key, updates) {
+  setPeople(localPeople =>
+    localPeople.map(person => {
+      if (person._tempKey === key) {
+        const originalPerson = originalPeople.find(p => p._tempKey === key);
+        const nextPerson = { ...person, ...updates };
+        const changedFields = TRACKED_FIELDS.filter(
+          field => JSON.stringify(nextPerson[field]) !== JSON.stringify(originalPerson?.[field])
+        );
+        return {
+          ...nextPerson,
+          _dirty: changedFields.length > 0 || updates._deleted === true,
+          _changes: changedFields,
+        };
+      }
+      return person;
+    })
+  );
+  setDirty(true);
+}
+
+  const selected = localPeople.filter(p => p._selected).map(p => p._tempKey);
 
   if (loading) return html`<p>Loading people...</p>`;
 
@@ -297,7 +289,9 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     <label for="diff-table" style="font-weight:600;">YAML Diff</label>
     <diff-preview
       .original=${yaml.dump(originalPeople.map(({ _tempKey, ...person }) => person))}
-      .updated=${yaml.dump(localPeople.map(({ _dirty, _changes, _tempKey, ...person }) => person))}
+      .updated=${yaml.dump(
+        localPeople.map(({ _dirty, _changes, _tempKey, _selected, _deleted, ...person }) => person)
+      )}
     ></diff-preview>
     <div style="margin-top:2rem;">
       <label for="final-yml" style="font-weight:600;">Final YAML Output</label>
@@ -309,10 +303,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         white-space: pre-wrap;
         max-height: 300px;
         overflow: auto;
-      ">${yaml.dump(localPeople.map(({ _dirty, _changes, _tempKey, ...person }) => person))}</pre>
+      ">${yaml.dump(
+        localPeople.map(({ _dirty, _changes, _tempKey, _selected, _deleted, ...person }) => person)
+      )}</pre>
     </div>
   </div>
-    `
+`;
 
   return html`
   <style>

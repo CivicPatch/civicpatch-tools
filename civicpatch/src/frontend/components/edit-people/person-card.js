@@ -1,6 +1,6 @@
 import { html, component } from 'haunted';
 
-function PersonCard({ person, selected = false, onSelect, onChange, onDelete, onReset }) {
+function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
   // Remove useState for isSelected and editPerson
 
   // Helper for array fields
@@ -40,6 +40,16 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
   const handleReset = () => {
     if (onReset) onReset();
   };
+
+    // Inside the person-card or where the name field is rendered
+  const isNameChanged = person._changes?.includes('name');
+  const isOfficeChanged = person._changes?.includes('office');
+  const isStartDateChanged = person._changes?.includes('start_date');
+  const isEndDateChanged = person._changes?.includes('end_date');
+  const isPhonesChanged = person._changes?.includes('phones');
+  const isEmailsChanged = person._changes?.includes('emails');
+  const isUrlsChanged = person._changes?.includes('urls');
+  const isSourceUrlsChanged = person._changes?.includes('source_urls');
 
   const imageUrl = person.image || person.cdn_image || null;
 
@@ -85,7 +95,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
       position: relative;
     }
     .person-card.selected::after {
-      content: ''; /* Add this line */
+      content: ''; 
       position: absolute;
       top: 0;
       left: 0;
@@ -95,7 +105,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
       pointer-events: none; /* Ensure it doesn't block interactions */
     }
     .person-card.deleted::after {
-      content: ''; /* Add this line */
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
@@ -105,15 +115,23 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
       pointer-events: none; /* Ensure it doesn't block interactions */
     }
 
+    .field-added {
+      background: rgba(var(--catppuccin-green), 0.3); /* Green color filter */
+    }
+
     </style>
     <article 
-      class="person-card ${selected ? 'selected' : ''} ${person._deleted ? 'deleted' : ''}" 
+      class="person-card 
+        ${person._selected ? 'selected' : ''}
+        ${person._deleted ? 'deleted' : ''} 
+      "  
       style="padding:1rem;"
+      .onSelect=${() => toggleSelect(person._tempKey)}
     >
       <header style="display: flex; align-items: center; gap: 1rem;">
         <input
           type="checkbox"
-          .checked=${selected}
+          .checked=${person._selected}
           @change=${handleCheckboxChange}
           aria-label="Select ${person.name}" 
           ${person._deleted ? 'disabled' : ''}
@@ -130,7 +148,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
           <button 
             title="Reset changes" 
             @click=${handleReset}
-            ?disabled=${!person._changes || person._changes.length === 0}
+            ?disabled=${(!person._changes || person._changes.length === 0) && !person._deleted}
           >
             Reset
           </button>
@@ -151,6 +169,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
       <section style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
         <input
           type="text"
+          class=${isNameChanged ? 'field-added' : ''}
           @keydown=${e => e.stopPropagation()}
           .value=${person.name || ''}
           @input=${e => handleFieldChange('name', e.target.value)}
@@ -164,6 +183,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
         <div style="margin-bottom: 0.5rem;">
           <input
             type="text"
+            class=${isOfficeChanged ? 'field-added' : ''}
             .value=${person.office?.name || ''}
             @keydown=${e => e.stopPropagation()}
             @input=${e => {
@@ -176,6 +196,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
         </div>
         <div style="margin-bottom: 0.5rem;">
           <textarea
+            class=${isOfficeChanged ? 'field-added' : ''}
             @input=${e => {
               const newOffice = { ...(person.office || {}), division_ocdid: e.target.value };
               if (onChange) onChange('office', newOffice);
@@ -190,6 +211,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
         <div style="display: flex; gap: 0.5rem;">
           <input
             type="date"
+            class=${(isStartDateChanged ? 'field-added' : '')}
             @keydown=${e => e.stopPropagation()}
             .value=${person.start_date || ''}
             @input=${e => handleFieldChange('start_date', e.target.value)}
@@ -197,6 +219,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
           />
           <input
             type="date"
+            class=${isEndDateChanged ? 'field-added' : ''}
             @keydown=${e => e.stopPropagation()}
             .value=${person.end_date || ''}
             @input=${e => handleFieldChange('end_date', e.target.value)}
@@ -211,6 +234,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
           ${(person.phones || []).map((phone, idx) => html`
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <input
+                class=${isPhonesChanged ? 'field-added' : ''}
                 type="tel"
                 @keydown=${e => e.stopPropagation()}
                 .value=${phone}
@@ -234,6 +258,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
           ${(person.emails || []).map((email, idx) => html`
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <input
+                class=${isEmailsChanged ? 'field-added' : ''}
                 type="email"
                 @keydown=${e => e.stopPropagation()}
                 .value=${email}
@@ -257,6 +282,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
           ${(person.urls || []).map((url, idx) => html`
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <input
+                class=${isUrlsChanged ? 'field-added' : ''}
                 type="url"
                 .value=${url}
                 @keydown=${e => e.stopPropagation()}
@@ -280,6 +306,7 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
           ${(person.source_urls || []).map((url, idx) => html`
             <div style="display: flex; gap: 0.5rem; align-items: center;">
               <input
+                class=${isSourceUrlsChanged ? 'field-added' : ''}
                 type="url"
                 @keydown=${e => e.stopPropagation()}
                 .value=${url}
