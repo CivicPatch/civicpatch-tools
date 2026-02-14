@@ -120,11 +120,28 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       .catch(e => alert('Failed to add person'));
   }
 
+  function markAsDeleted(keys) {
+    setPeople(localPeople =>
+      localPeople.map(person =>
+        keys.includes(person._tempKey)
+          ? { ...person, _deleted: true }
+          : person
+      )
+    );
+    setDirty(true); // Mark the form as dirty since changes were made
+  }
+
+  // Updated handleBulkDelete
+  function handleBulkDelete() {
+    if (!confirm(`Mark ${selected.length} people as deleted?`)) return;
+    markAsDeleted(selected); // Use the helper function
+    setSelected([]); // Clear the selection after marking as deleted
+  }
+
+  // Updated handleDelete
   function handleDelete(key) {
-    if (!confirm('Delete this person?')) return;
-    setPeople(p => p.filter(person => person._tempKey !== key));
-    setDirty(true)
-    // Optionally, call your API here if you can identify the person another way
+    if (!confirm('Mark this person as deleted?')) return;
+    markAsDeleted([key]); // Use the helper function
   }
 
   function handleReset(tempKey) {
@@ -200,13 +217,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     setDirty(true);
   }
 
-  // Example usage in handleBulkDelete:
-  function handleBulkDelete() {
-    if (!confirm(`Delete ${selected.length} people?`)) return;
-    setPeople(p => p.filter(person => !selected.includes(person._tempKey)));
-    setSelected([]);
-  }
-
   function submitChanges(branchName, data) {
     const url = [
       `/api/api_proxy/jobs/people/pull_request/`,
@@ -259,15 +269,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   }
 
-  function selectActions() {
-    return html`
-      <div>
-        <button @click=${handleMerge}>Merge (${selected.length})</button>
-        <button @click=${handleBulkDelete}>Delete (${selected.length})</button>
-      </div>
-    `;
-  }
-
   function updatePerson(key, updates) {
     setPeople(localPeople =>
       localPeople.map(person => {
@@ -317,8 +318,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   <style>
     .grid > [role="listitem"] person-card:focus article {
         outline: none;
-        box-shadow: 0 0 0 4px rgba(0,0,0,0.12);
-        border-radius: 6px;
+        box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
         z-index: 1;
     }
   </style>

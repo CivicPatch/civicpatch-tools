@@ -1,50 +1,154 @@
 :root,
 :host {
-    font-family: "Roboto Serif", serif; 
-
+    --pico-font-family: "Roboto Serif", serif; 
     --pico-form-element-spacing-vertical: 0.5rem; /* Smaller vertical padding */
     --pico-form-element-spacing-horizontal: 0.5rem; /* Smaller horizontal padding */
-    font-size: 16px;
+    font-size: 14px;
+    --pico-border-radius: 0.4rem;
+    --pico-border-width: 0.03rem;
+    --pico-outline-width: 0.2rem;
 }
 
-:host(:not([data-theme="dark"])), :root:not([data-theme="dark"]), [data-theme="light"] {
-    --pico-background-color: #faf4ed;
-    --pico-text-selection-color: #dfdad9;
-    --pico-form-element-focus-color: #56949f;
-    --pico-primary-focus: #56949f;
-    --pico-primary: #575279;
-    --pico-primary-background: #f2e9e1;
-    --pico-secondary-background: #dfdad9;
-    --pico-secondary-inverse: #575279;
-    --pico-primary-inverse: #575279;
-    --pico-form-element-background-color: #fffaf3;
-    --pico-primary-hover-background: #fffaf3;
-    --pico-secondary-hover-background: #f2e9e1;
-    --pico-form-element-active-background-color: #f2e9e1;
-    --pico-form-element-active-border-color: #907aa9;
-    --pico-primary-border: #cecacd;
-    --pico-muted-border-color: #cecacd;
-    --pico-border-width: 0.15rem;
-    --pico-contrast: #b4637a;
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+    --catppuccin-base: 239, 241, 245;
+    --catppuccin-mantle: 230, 233, 239;
+    --catppuccin-crust: 220, 224, 232;
+    --catppuccin-text: 76, 79, 105;
+    --catppuccin-subtext0: 108, 118, 139;
+    --catppuccin-subtext1: 92, 102, 124;
+    --catppuccin-surface0: 204, 208, 218; /* Corrected */
+    --catppuccin-surface1: 188, 192, 204; /* Corrected */
+    --catppuccin-surface2: 204, 208, 218; /* Corrected */
+    --catppuccin-blue: 30, 102, 245;
+    --catppuccin-red: 191, 97, 106;
+    --catppuccin-green: 163, 190, 140;
+    --catppuccin-yellow: 235, 203, 139;
+    --catppuccin-pink: 234, 118, 203; /* Corrected */
+    --catppuccin-mauve: 136, 57, 239;
+    --catppuccin-sky: 94, 205, 244;
+    --catppuccin-teal: 23, 146, 153; /* Corrected */
+    --catppuccin-sapphire: 32, 159, 181;
+    --catppuccin-lavender: 136, 192, 208;
 
-    --pico-outline-width: 0.2rem;
-    --pico-card-sectioning-background-color: #f2e9e1;
+    --pico-color: rgb(var(--catppuccin-text));
+    --pico-h2-color: rgb(var(--catppuccin-text));
+    --pico-h3-color: rgb(var(--catppuccin-text));
+    --pico-background-color: rgb(var(--catppuccin-base));
+    --pico-text-selection-color: rgb(var(--catppuccin-surface1));
+    --pico-form-element-focus-color: rgb(var(--catppuccin-mauve));
+    --pico-form-element-border-color: rgb(var(--catppuccin-base));
+    --pico-primary-focus: rgb(var(--catppuccin-mantle));
+    --pico-primary: rgb(var(--catppuccin-text));
+    --pico-primary-background: rgb(var(--catppuccin-text));
+    --pico-primary-inverse: rgb(var(--catppuccin-base));
+    --pico-primary-hover-background: rgb(var(--catppuccin-surface0));
+    --pico-secondary-background: rgb(var(--catppuccin-surface2));
+    --pico-secondary-inverse: rgb(var(--catppuccin-base));
+    --pico-secondary-hover-background: rgb(var(--catppuccin-sapphire));
+    --pico-form-element-active-background-color: rgb(var(--catppuccin-surface1));
+    --pico-form-element-background-color: rgb(var(--catppuccin-surface0));
+    --pico-form-element-active-border-color: rgb(var(--catppuccin-mantle));
+    --pico-form-element-color: var(--catppuccin-base);
+    --pico-primary-border: rgb(var(--catppuccin-subtext0));
+    --pico-muted-border-color: rgb(var(--catppuccin-subtext0));
+    --pico-contrast-background: rgb(var(--catppuccin-red));
+    --pico-contrast-inverse: rgb(var(--catppuccin-base));
+    --pico-contrast-hover-background: rgba(var(--catppuccin-red), 0.3);
+    --pico-primary-underline: rgb(var(--catppuccin-sapphire));
+    --pico-border-color: rgb(var(--catppuccin-mantle));
 
-    input:not([type=submit],
+    --pico-card-sectioning-background-color: rgb(var(--catppuccin-crust)); 
+    --pico-card-background-color: rgb(var(--catppuccin-mantle)); 
+
+    --pico-ins-color: rgb(var(--catppuccin-green));
+    --pico-del-color: rgb(var(--catppuccin-red));
+}
+
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --catppuccin-base: 30, 30, 46; /* Base */
+    --catppuccin-mantle: 24, 24, 37; /* Mantle */
+    --catppuccin-crust: 17, 17, 27; /* Crust */
+    --catppuccin-text: 205, 214, 244; /* Text */
+    --catppuccin-subtext0: 166, 173, 200; /* Subtext 0 */
+    --catppuccin-subtext1: 186, 194, 222; /* Subtext 1 */
+    --catppuccin-overlay1: 127, 132, 156;
+    --catppuccin-surface0: 49, 50, 68; /* Surface 0 */
+    --catppuccin-surface1: 69, 71, 90; /* Surface 1 */
+    --catppuccin-surface2: 88, 91, 112; /* Surface 2 */
+    --catppuccin-blue: 137, 180, 250; /* Blue */
+    --catppuccin-red: 243, 139, 168; /* Red */
+    --catppuccin-green: 166, 227, 161; /* Green */
+    --catppuccin-yellow: 249, 226, 175; /* Yellow */
+    --catppuccin-pink: 245, 194, 231; /* Pink */
+    --catppuccin-mauve: 203, 166, 247; /* Mauve */
+    --catppuccin-sky: 137, 220, 235; /* Sky */
+    --catppuccin-teal: 148, 226, 213; /* Teal */
+    --catppuccin-sapphire: 116, 199, 236; /* Sapphire */
+    --catppuccin-lavender: 180, 190, 254; /* Lavender */
+
+    --pico-color: rgb(var(--catppuccin-text));
+    --pico-h2-color: rgb(var(--catppuccin-text));
+    --pico-h3-color: rgb(var(--catppuccin-text));
+    --pico-background-color: rgb(var(--catppuccin-base));
+    --pico-text-selection-color: rgb(var(--catppuccin-surface1));
+    --pico-form-element-focus-color: rgb(var(--catppuccin-mauve));
+    --pico-form-element-border-color: rgb(var(--catppuccin-surface2));
+    --pico-primary-focus: rgb(var(--catppuccin-mantle));
+    --pico-primary: rgb(var(--catppuccin-text));
+    --pico-primary-background: rgb(var(--catppuccin-overlay1));
+    --pico-primary-inverse: rgb(var(--catppuccin-base));
+    --pico-primary-hover-background: rgb(var(--catppuccin-surface0));
+    --pico-secondary-background: rgb(var(--catppuccin-overlay1));
+    --pico-secondary-inverse: rgb(var(--catppuccin-base));
+    --pico-secondary-hover-background: rgb(var(--catppuccin-sapphire));
+    --pico-form-element-active-background-color: rgb(var(--catppuccin-surface1));
+    --pico-form-element-background-color: rgb(var(--catppuccin-surface0));
+    --pico-form-element-active-border-color: rgb(var(--catppuccin-mantle));
+    --pico-form-element-color: var(--catppuccin-base);
+    --pico-primary-border: rgb(var(--catppuccin-subtext0));
+    --pico-muted-border-color: rgb(var(--catppuccin-subtext0));
+    --pico-contrast-background: rgb(var(--catppuccin-red));
+    --pico-contrast-inverse: rgb(var(--catppuccin-base));
+    --pico-contrast-hover-background: rgba(var(--catppuccin-red), 0.3);
+    --pico-primary-underline: rgb(var(--catppuccin-sapphire));
+    --pico-border-color: rgb(var(--catppuccin-mantle));
+
+    --pico-card-sectioning-background-color: rgb(var(--catppuccin-crust)); 
+    --pico-card-background-color: rgb(var(--catppuccin-mantle)); 
+
+    --pico-ins-color: rgb(var(--catppuccin-green));
+    --pico-del-color: rgb(var(--catppuccin-red));
+  }
+}
+
+/**
+button.primary {
+  background-color: rgb(var(--catppuccin-mauve));
+  background-image: linear-gradient(120deg,var(--catppuccin-pink),var(--catppuccin-mauve));
+  color: rgb(var(--catppuccin-base));
+  font-weight: 500; 
+}
+button.primary:hover {
+  background-color: rgba(var(--catppuccin-mauve), 0.5);
+}
+*/
+
+input:not([type=submit],
     [type=button],
     [type=reset],
     [type=checkbox],
     [type=radio],
     [type=file]),
     :where(select, textarea) {
-      --pico-outline-width: 0.2rem;
-    }
+  --pico-outline-width: 0.2rem;
 }
 
-:host([data-theme="dark"]), :root[data-theme="dark"], [data-theme="dark"] {
-    --pico-background-color: #232136;
+[type="checkbox"]:checked {
+  --pico-background-color: rgb(var(--catppuccin-sapphire));
+  --pico-border-color: rgb(var(--catppuccin-sapphire));
 }
-
 
 main.container-fluid {
     display: flex;
