@@ -104,6 +104,7 @@ async def scrape(logger, website_url, options=None):
                 await download_images(browser, logger, page, options.get('image_directory'))
             
             content = await page.content()
+            print("Content is", content[:1000])  # Print the first 500 characters of the content for debugging
             await browser.close()
             return content
             

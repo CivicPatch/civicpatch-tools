@@ -343,7 +343,7 @@ export function registerCivMap() {
   if (!customElements.get("civ-map")) {
     customElements.define(
       "civ-map",
-      component(CivMap, {observedAttributes: ["canmove"] }),
+      component(CivMap, {useShadowDOM: false, observedAttributes: ["canmove"] }),
     );
   }
 }
