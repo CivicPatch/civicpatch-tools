@@ -44,7 +44,16 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     fetch(`/api/api_proxy/jobs/people/pull_request/open?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`)
       .then(r => r.json())
       .then(data => {
-        setOpenPullRequests(data.data || []);
+        const pullRequests = data.data || [];
+        setOpenPullRequests(pullRequests);
+
+        // Automatically select the first PR or default to "Existing Data"
+        if (pullRequests.length > 0) {
+          setSelectedOpenPullRequest(pullRequests[0].branch_name);
+        } else {
+          setSelectedOpenPullRequest(null);
+        }
+
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -315,6 +324,13 @@ function updatePerson(key, updates) {
 
   if (loading) return html`<p>Loading people...</p>`;
 
+  function truncateBranchName(branchName, maxLength = 24) {
+    if (branchName.length > maxLength) {
+      return branchName.substring(0, maxLength);
+    }
+    return branchName;
+  }
+
   const diffPreview = html`
   <div style="margin-top:2rem;">
     <label for="diff-table" style="font-weight:600;">YAML Diff</label>
@@ -348,40 +364,85 @@ function updatePerson(key, updates) {
         box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
         z-index: 1;
     }
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .tabs ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .tabs li {
+      margin: 0;
+    }
+    .tabs a {
+      display: block;
+      padding: 0.5rem 1rem;
+      border: 1px solid #ccc;
+      background: rgb(var(--catppuccin-crust));
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    .tabs a.active {
+      background: rgb(var(--catppuccin-sapphire));
+      color: white;
+    }
+    .tab-content {
+      padding: 1rem;
+      border: 1px solid #ccc;
+      background: rgb(var(--catppuccin-crust));
+    }
   </style>
   <div style="margin-bottom: 2rem;">
-    <h3>Data Source</h3>
-    <div role="radiogroup">
-      ${loading
-        ? html`<div style="margin: 1em 0;"><progress></progress> Loading pull requests...</div>`
+    <h3>Data Sources</h3>
+    <nav class="tabs">
+      <ul>
+        ${openPullRequests.map(
+          pr => html`
+            <li>
+              <a 
+                href="#" 
+                class=${selectedOpenPullRequest === pr.branch_name ? 'active' : ''} 
+                @click=${(e) => {
+                  e.preventDefault();
+                  setSelectedOpenPullRequest(pr.branch_name);
+                }}
+              >
+                [open] ${truncateBranchName(pr.branch_name)}
+              </a>
+            </li>
+          `
+        )}
+        <li>
+          <a 
+            href="#" 
+            class=${!selectedOpenPullRequest ? 'active' : ''} 
+            @click=${(e) => {
+              e.preventDefault();
+              setSelectedOpenPullRequest(null);
+            }}
+          >
+            Existing Data (TBD)
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <section class="selected-pr">
+      ${!selectedOpenPullRequest
+        ? html`
+            <p>Use the existing data for this jurisdiction.</p>
+        `
         : html`
-            <label style="display:block; margin-bottom:0.5em;">
-              <input
-                type="radio"
-                name="pr"
-                value=""
-                .checked=${!selectedOpenPullRequest}
-                @change=${() => setSelectedOpenPullRequest(null)}
-              />
-              Existing Data
-            </label>
-            ${openPullRequests.map(
-              pr => html`
-                <label style="display:block; margin-bottom:0.5em;">
-                  <input
-                    type="radio"
-                    name="pr"
-                    value=${pr.branch_name}
-                    .checked=${selectedOpenPullRequest === pr.branch_name}
-                    @change=${() => setSelectedOpenPullRequest(pr.branch_name)}
-                  />
-                  ${pr.branch_name}
-                  <a href=${pr.url} target="_blank" style="margin-left:0.5em;">View PR</a>
-                </label>
-              `
-            )}
-          `}
-    </div>
+          <a href=${openPullRequests.find(pr => pr.branch_name === selectedOpenPullRequest)?.url} target="_blank" class="contrast">
+            View Pull Request
+          </a>
+        `}
+    </section>
   </div>
 
   <div style="margin-bottom: 1rem; min-height: 2.5em; display: flex; align-items: center;">

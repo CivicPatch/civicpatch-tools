@@ -189,39 +189,11 @@ function JurisdictionPage({
       </div>
 
       <h2>Elected Representatives</h2>
-      <div style="display: flex; align-items: center; gap: 1rem;">
-        <button 
-          class="secondary"
-          @click=${() => setPeopleMode(peopleMode === "read" ? "edit" : "read")}
-          aria-pressed=${peopleMode === "edit"}
-        >
-          ${peopleMode === "read" ? "Edit" : "Read"}
-        </button>
-        <span style="font-size: 1rem; color: var(--muted-color);">
-          Mode: ${peopleMode.charAt(0).toUpperCase() + peopleMode.slice(1)}
-        </span>
-      </div>
-      ${
-        peopleMode === "read"
-          ? html`<civ-people-list .local=${people}></civ-people-list>`
-          : html`
-              <div
-                class="grid"
-                style="
-                  display: grid;
-                  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-                  gap: 1.5rem;
-                  align-items: stretch;
-                  width: 100%;
-                "
-              >
-                <civ-editable-people-list 
-                jurisdiction_ocdid=${jurisdiction_ocdid}
-                .people=${people}
-                ></civ-editable-people-list>
-              </div>
-            `
-      }
+      
+      <civ-editable-people-list 
+        jurisdiction_ocdid=${jurisdiction_ocdid}
+        .people=${people}
+      ></civ-editable-people-list>
     </div>
   `;
 }
