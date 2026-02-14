@@ -50,30 +50,51 @@ function DiffPreview({ original, updated }) {
                 white-space: pre-wrap;
                 max-height: 200px;
                 overflow: auto;
-                padding: 0.25em 0.5em;
+                padding: var(--pico-form-element-spacing-vertical) var(--pico-form-element-spacing-horizontal);
+                border-radius: var(--pico-border-radius);
             }
             .diff-cell.removed {
-                background: color-mix(in srgb, var(--pico-del-color, #c00) 10%, transparent 90%);
+                background-color: rgba(var(--catppuccin-red), 0.2); /* Softer red for removed lines */
+                color: rgb(var(--catppuccin-red)); /* Red text for removed lines */
             }
             .diff-cell.added {
-                background: color-mix(in srgb, var(--pico-ins-color, #080) 10%, transparent 90%);
+                background-color: rgba(var(--catppuccin-green), 0.2); /* Softer green for added lines */
+                color: rgb(var(--catppuccin-green)); /* Green text for added lines */
             }
             .line-number {
                 text-align: right;
-                color: #aaa;
+                color: rgb(var(--catppuccin-subtext0)); /* Muted text for line numbers */
                 font-family: var(--pico-font-monospace, monospace);
-                padding: 0.25em 0.5em;
+                padding: var(--pico-form-element-spacing-vertical) var(--pico-form-element-spacing-horizontal);
                 user-select: none;
-                background: #f6f8fa;
-                min-width: 2em;
+                background: rgb(var(--catppuccin-surface1)); /* Darker background for line numbers */
+                border-right: 1px solid rgb(var(--catppuccin-surface2)); /* Subtle border */
+                min-width: 3em;
             }
             table.diff-table {
                 width: 100%;
-                border-collapse: collapse;
+                border-collapse: separate;
+                border-spacing: 0;
+                background-color: rgb(var(--catppuccin-base)); /* Table background */
+                border: 1px solid rgb(var(--catppuccin-mantle)); /* Table border */
+                border-radius: var(--pico-border-radius);
+                overflow: hidden;
             }
-            table.diff-table th, table.diff-table td {
+            table.diff-table th {
+                background-color: rgb(var(--catppuccin-mantle)); /* Header background */
+                color: rgb(var(--catppuccin-text)); /* Header text color */
+                font-weight: bold;
+                padding: var(--pico-form-element-spacing-vertical) var(--pico-form-element-spacing-horizontal);
+                text-align: left;
+                border-bottom: 1px solid rgb(var(--catppuccin-surface2));
+            }
+            table.diff-table td {
                 vertical-align: top;
-                border-bottom: 1px solid #eee;
+                border-bottom: 1px solid rgb(var(--catppuccin-surface2)); /* Row separator */
+                padding: var(--pico-form-element-spacing-vertical) var(--pico-form-element-spacing-horizontal);
+            }
+            table.diff-table tr:nth-child(even) {
+                background-color: rgba(var(--catppuccin-surface1), 0.5); /* Alternate row background */
             }
         </style>
         <table class="table diff-table">

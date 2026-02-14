@@ -102,6 +102,26 @@ function JurisdictionPage({
   const scrapeStatus = data?.data?.updated_at ? `Scraped` : `Unscraped`;
 
   return html`
+    <style>
+      .jurisdiction-title {
+        position: relative;
+        z-index: 1;
+        color: rgb(var(--catppuccin-base));
+        padding: 0.5rem 1.5rem;
+      }
+
+      .jurisdiction-title::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(var(--catppuccin-sapphire), 1.0);
+        transform: skew(-20deg);
+        z-index: -1;
+      }
+    </style>
     <div style="display: flex; flex-direction: column; gap: 2rem;">
       <div class="grid">
         <div>
@@ -120,7 +140,7 @@ function JurisdictionPage({
                   <div
                     style="display: flex; justify-content: space-between; align-items: center;"
                   >
-                    <h2 style="margin-bottom: 0">${data.data.name}</h2>
+                    <h2 class="jurisdiction-title" style="margin-bottom: 0">${data.data.name}</h2>
                     <span style="font-size: 1.75rem"
                       >Status: ${scrapeStatus}</span
                     >
@@ -129,11 +149,11 @@ function JurisdictionPage({
                 <hr />
 
                 <p>
-                  <strong>Jurisdiction OCDID:</strong> ${data.data.id} <br />
-                  <strong>Website:</strong> ${data.data.url} <br />
-                  <strong>Geoid:</strong> ${data.data.geoid} <br />
-                  <strong>Population:</strong> ${data.data.population.toLocaleString()}
-                  <br />
+                  <strong><i class="fa-solid fa-landmark" style="margin-right: 6px;"></i>Jurisdiction OCDID:</strong> ${data.data.id} <br />
+                  <strong><i class="fa-solid fa-globe" style="margin-right: 6px;"></i>Website:</strong> 
+                  <a href="${data.data.url}" target="_blank">${data.data.url}</a> <br />
+                  <strong><i class="fa-solid fa-hashtag" style="margin-right: 6px;"></i>Geoid:</strong> ${data.data.geoid} <br />
+                  <strong><i class="fa-solid fa-users" style="margin-right: 6px;"></i>Population:</strong> ${data.data.population.toLocaleString()}
                 </p>
 
                 <h3>Scrape History</h3>

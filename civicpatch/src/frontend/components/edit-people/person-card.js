@@ -45,10 +45,13 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
 
   return html`
     <style>
-    .person-card input,
-    .person-card button,
-    .person-card select,
-    .person-card textarea {
+    .person-card header [type="checkbox"] {
+      --pico-form-element-border-color: rgb(var(--pico-color));
+    }
+    .person-card section input,
+    .person-card section button,
+    .person-card section select,
+    .person-card section textarea {
       --pico-form-element-spacing-vertical: 0.25rem;
       --pico-form-element-spacing-horizontal: 0.5rem;
       font-size: 0.75rem;
@@ -78,28 +81,63 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
       align-items: center;
       justify-content: center;
     }
+    .person-card {
+      position: relative;
+    }
+    .person-card.selected::after {
+      content: ''; /* Add this line */
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(var(--pico-primary-hover), 0.5);
+      pointer-events: none; /* Ensure it doesn't block interactions */
+    }
+    .person-card.deleted::after {
+      content: ''; /* Add this line */
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(var(--catppuccin-red), 0.2);
+      pointer-events: none; /* Ensure it doesn't block interactions */
+    }
+
     </style>
-    <article class="person-card" style="border-width:2px; border-style:solid; border-color:${
-        selected ? 'var(--pico-form-element-active-border-color)' 
-        : 'var(--pico-form-element-border-color)'
-    }; border-radius:8px; padding:1rem;">
+    <article 
+      class="person-card ${selected ? 'selected' : ''} ${person._deleted ? 'deleted' : ''}" 
+      style="padding:1rem;"
+    >
       <header style="display: flex; align-items: center; gap: 1rem;">
         <input
           type="checkbox"
           .checked=${selected}
           @change=${handleCheckboxChange}
-          aria-label="Select ${person.name}"
-        />
+          aria-label="Select ${person.name}" 
+          ${person._deleted ? 'disabled' : ''}
+          />
         <div style="margin-left: auto; display: flex; gap: 0.5rem;">
-          <button class="contrast outline" title="Delete person" @click=${handleDeleteClick}>Delete</button>
           <button 
-          class="outline" 
-          title="Reset changes" 
-          @click=${handleReset}
-          ?disabled=${!person._dirty}
-          >Reset</button>
+            class="contrast" 
+            title="Delete person" 
+            @click=${handleDeleteClick}
+            ${person._deleted ? 'disabled' : ''}
+          >
+            Delete
+          </button>
+          <button 
+            title="Reset changes" 
+            @click=${handleReset}
+            ?disabled=${!person._changes || person._changes.length === 0}
+          >
+            Reset
+          </button>
         </div>
       </header>
+
+      ${ person._changes }
 
       <div class="person-card-avatar-row">
         <figure>
@@ -180,14 +218,13 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
                 placeholder="(555) 123-4567"
               />
               <button
-                class="outline"
                 @click=${() => handleArrayRemove('phones', idx)}
                 title="Remove phone"
                 type="button"
               >✕</button>
             </div>
           `)}
-          <button class="outline" type="button" @click=${() => handleArrayAdd('phones')}>+ Add Phone</button>
+          <button type="button" @click=${() => handleArrayAdd('phones')}>+ Add Phone</button>
         </div>
       </section>
 
@@ -204,14 +241,13 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
                 placeholder="email@example.com"
               />
               <button
-                class="outline"
                 @click=${() => handleArrayRemove('emails', idx)}
                 title="Remove email"
                 type="button"
               >✕</button>
             </div>
           `)}
-          <button class="outline" type="button" @click=${() => handleArrayAdd('emails')}>+ Add Email</button>
+          <button type="button" @click=${() => handleArrayAdd('emails')}>+ Add Email</button>
         </div>
       </section>
 
@@ -228,14 +264,13 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
                 placeholder="https://example.com"
               />
               <button
-                class="outline"
                 @click=${() => handleArrayRemove('urls', idx)}
                 title="Remove link"
                 type="button"
               >✕</button>
             </div>
           `)}
-          <button class="outline" type="button" @click=${() => handleArrayAdd('urls')}>+ Add Link</button>
+          <button type="button" @click=${() => handleArrayAdd('urls')}>+ Add Link</button>
         </div>
       </section>
 
@@ -252,27 +287,23 @@ function PersonCard({ person, selected = false, onSelect, onChange, onDelete, on
                 placeholder="https://source.com"
               />
               <button
-                class="outline"
                 @click=${() => handleArrayRemove('source_urls', idx)}
                 title="Remove source URL"
                 type="button"
               >✕</button>
             </div>
           `)}
-          <button class="outline" type="button" @click=${() => handleArrayAdd('source_urls')}>+ Add Source</button>
+          <button type="button" @click=${() => handleArrayAdd('source_urls')}>+ Add Source</button>
         </div>
       </section>
-
-      ${person._dirty
-        ? html`
-            <section>
-              <strong>Unsaved changes:</strong>
-              <ul>
-                ${person._changes.map(change => html`<li>${change}</li>`)}
-              </ul>
-            </section>
-          `
-        : ""} 
+      ${person._changes && person._changes.length > 0 ? html`
+        <footer>
+          <strong>Unsaved changes:</strong>
+          <ul>
+            ${person._changes?.map(change => html`<li>${change}</li>`)}
+          </ul>
+        </footer>
+      ` : ''}
     </article>
   `;
 }
