@@ -116,16 +116,45 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   function handleBulkDelete() {
-    if (!confirm(`Mark ${selected.length} people as deleted?`)) return;
     markAsDeleted(selected);
   }
 
   function handleDelete(key) {
-    if (!confirm('Mark this person as deleted?')) return;
-    markAsDeleted([key]);
+    // If it's a new person that hasn't been submitted yet, just remove it from the list
+    const person = localPeople.find(p => p._tempKey === key);
+    if (person?._isNew) {
+      setPeople(localPeople => localPeople.filter(p => p._tempKey !== key));
+      return;
+    }
 
+    markAsDeleted([key]);
     // Move person to bottom of the list
     reorderPersonToBottom(key);
+  }
+
+  function handleAdd() {
+    const default_office_name = "Council Member";
+    const default_office_division_ocdid = originalPeople.length > 0 ? originalPeople[0].office?.division_ocdid : null;
+
+    const newPerson = {
+      _tempKey: genKey(),
+      _changes: [],
+      _selected: false,
+      _deleted: false,
+      _isNew: true,
+      name: '',
+      office: {
+        name: default_office_name,
+        division_ocdid: default_office_division_ocdid,
+      },
+      phones: [],
+      emails: [],
+      urls: [],
+      source_urls: [],
+      start_date: '',
+      end_date: '',
+    };
+    setPeople(localPeople => [newPerson, ...localPeople]);
   }
 
   function reorderPersonToBottom(key) {
@@ -282,6 +311,8 @@ function updatePerson(key, updates) {
 
   const selected = localPeople.filter(p => p._selected).map(p => p._tempKey);
 
+  const updatedPeople = localPeople.map(({ _dirty, _changes, _tempKey, _selected, _deleted, ...person }) => person);
+
   if (loading) return html`<p>Loading people...</p>`;
 
   const diffPreview = html`
@@ -290,7 +321,7 @@ function updatePerson(key, updates) {
     <diff-preview
       .original=${yaml.dump(originalPeople.map(({ _tempKey, ...person }) => person))}
       .updated=${yaml.dump(
-        localPeople.map(({ _dirty, _changes, _tempKey, _selected, _deleted, ...person }) => person)
+        updatedPeople
       )}
     ></diff-preview>
     <div style="margin-top:2rem;">
@@ -304,7 +335,7 @@ function updatePerson(key, updates) {
         max-height: 300px;
         overflow: auto;
       ">${yaml.dump(
-        localPeople.map(({ _dirty, _changes, _tempKey, _selected, _deleted, ...person }) => person)
+        updatedPeople
       )}</pre>
     </div>
   </div>
@@ -354,6 +385,9 @@ function updatePerson(key, updates) {
   </div>
 
   <div style="margin-bottom: 1rem; min-height: 2.5em; display: flex; align-items: center;">
+    <button @click=${handleAdd} style="margin-right: 1rem;">
+      Add
+    </button>
     <button 
       @click=${handleMerge} 
       style="margin-right: 1rem;" 
