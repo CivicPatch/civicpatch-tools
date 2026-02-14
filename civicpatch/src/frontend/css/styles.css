@@ -1,14 +1,50 @@
 :root,
 :host {
-    font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
-        Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-        "Segoe UI Symbol";
+    font-family: "Roboto Serif", serif; 
 
     --pico-form-element-spacing-vertical: 0.5rem; /* Smaller vertical padding */
     --pico-form-element-spacing-horizontal: 0.5rem; /* Smaller horizontal padding */
     font-size: 16px;
 }
+
+:host(:not([data-theme="dark"])), :root:not([data-theme="dark"]), [data-theme="light"] {
+    --pico-background-color: #faf4ed;
+    --pico-text-selection-color: #dfdad9;
+    --pico-form-element-focus-color: #56949f;
+    --pico-primary-focus: #56949f;
+    --pico-primary: #575279;
+    --pico-primary-background: #f2e9e1;
+    --pico-secondary-background: #dfdad9;
+    --pico-secondary-inverse: #575279;
+    --pico-primary-inverse: #575279;
+    --pico-form-element-background-color: #fffaf3;
+    --pico-primary-hover-background: #fffaf3;
+    --pico-secondary-hover-background: #f2e9e1;
+    --pico-form-element-active-background-color: #f2e9e1;
+    --pico-form-element-active-border-color: #907aa9;
+    --pico-primary-border: #cecacd;
+    --pico-muted-border-color: #cecacd;
+    --pico-border-width: 0.15rem;
+    --pico-contrast: #b4637a;
+
+    --pico-outline-width: 0.2rem;
+    --pico-card-sectioning-background-color: #f2e9e1;
+
+    input:not([type=submit],
+    [type=button],
+    [type=reset],
+    [type=checkbox],
+    [type=radio],
+    [type=file]),
+    :where(select, textarea) {
+      --pico-outline-width: 0.2rem;
+    }
+}
+
+:host([data-theme="dark"]), :root[data-theme="dark"], [data-theme="dark"] {
+    --pico-background-color: #232136;
+}
+
 
 main.container-fluid {
     display: flex;

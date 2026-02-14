@@ -54,7 +54,7 @@ function PeopleList({ local = [] }) {
     };
 
     if (!people || people.length === 0) {
-        return html`<p role="alert">No people data available for this jurisdiction.</p>`;
+        return html`<p role="alert">No data available for this jurisdiction.</p>`;
     }
 
     return html`
@@ -90,9 +90,9 @@ function PeopleList({ local = [] }) {
                         </td>
 
                         <td data-label="Contact">
-                            ${person.emails ? html`<a href="mailto:${person.emails.join(',')}" style="display: block;">${person.emails.join(',')}</a>` : ''}
-                            ${person.phones ? html`<a href="tel:${person.phones.join(',')}" style="display: block;">${person.phones.join(',')}</a>` : ''}
-                            ${person.urls ? html`<a href="${person.urls.join(',')}" target="_blank" class="secondary">Link</a>` : ''}
+                            ${len(person.emails) ? html`<a href="mailto:${person.emails.join(',')}" style="display: block;">${person.emails.join(',')}</a>` : ''}
+                            ${len(person.phones) ? html`<a href="tel:${person.phones.join(',')}" style="display: block;">${person.phones.join(',')}</a>` : ''}
+                            ${len(person.urls) ? html`<a href="${person.urls.join(',')}" target="_blank" class="secondary">Link</a>` : ''}
                         </td>
                     </tr>
                 `)}
