@@ -90,9 +90,9 @@ function PeopleList({ local = [] }) {
                         </td>
 
                         <td data-label="Contact">
-                            ${len(person.emails) ? html`<a href="mailto:${person.emails.join(',')}" style="display: block;">${person.emails.join(',')}</a>` : ''}
-                            ${len(person.phones) ? html`<a href="tel:${person.phones.join(',')}" style="display: block;">${person.phones.join(',')}</a>` : ''}
-                            ${len(person.urls) ? html`<a href="${person.urls.join(',')}" target="_blank" class="secondary">Link</a>` : ''}
+                            ${person.emails?.length > 0 ? html`<a href="mailto:${person.emails.join(',')}" style="display: block;">${person.emails.join(',')}</a>` : ''}
+                            ${person.phones?.length > 0 ? html`<a href="tel:${person.phones.join(',')}" style="display: block;">${person.phones.join(',')}</a>` : ''}
+                            ${person.urls?.length > 0 ? html`<a href="${person.urls.join(',')}" target="_blank" class="secondary">Link</a>` : ''}
                         </td>
                     </tr>
                 `)}
