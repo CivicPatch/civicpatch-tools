@@ -59,11 +59,9 @@ people:
   start_date: 2024-05
   end_date: 2026-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2023/05/FullSizeR001-3-1.jpg
-thought: The source is the official Town of Rancho Viejo website's Board of Aldermen
-  page, listing the officials with photos, roles, emails, phones, and term periods.
-  The roster appears current as of 2026 and terms stretch into 2027. I extracted full
-  names, roles, terms, contact info, and images where available. The phone number
-  956-350-4093 is used primarily as the main office contact and also by the Mayor
-  Todd Day individually. The emails follow the standard town email format. No wards,
-  districts or designations were specified for the officials, so designations arrays
-  are left empty.
+thought: The webpage lists the currently serving Board of Aldermen for the Town of
+  Rancho Viejo, with their names, roles, photos where available, official emails,
+  term start and end dates. The main phone contact is the municipal phone number 956-350-4093,
+  which is assigned explicitly to Mayor Todd Day as well. I extracted officials from
+  the structured current board roster and merged all relevant details, confirming
+  terms are current or upcoming as of 2026 February.

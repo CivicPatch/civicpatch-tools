@@ -119,9 +119,10 @@ people:
   start_date: null
   end_date: null
   image: null
-thought: The elected officials (Mayor and City Council Members) are listed in a clear,
-  structured table under the 'Austin City Hall' section. For each official, the name,
-  role, district (if applicable), phone number, and a URL to their respective profile/contact
-  page are explicitly provided. No start or end dates, emails, or images are provided
-  in the content. The City Manager is excluded as they are an appointed, not elected,
-  official.
+thought: The elected officials were extracted from a structured table under 'Austin
+  City Hall'. Each entry provided the name, role (Mayor or Council Member), district
+  (for Council Members), phone number, and a URL to their respective profile or contact
+  page. No start or end dates, emails, or images were explicitly provided in the content
+  for these officials. The City Manager was not included as it is typically an appointed,
+  not elected, position. Related URLs were identified from links within the text that
+  could provide more information about the city's governance or officials.

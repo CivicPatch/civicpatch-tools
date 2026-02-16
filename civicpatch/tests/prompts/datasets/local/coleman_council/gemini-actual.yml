@@ -1,14 +1,4 @@
 people:
-- name: Tommy Sloan
-  roles:
-  - Mayor
-  designations: []
-  phone: (325) 625-5114
-  email: null
-  url: null
-  start_date: null
-  end_date: null
-  image: null
 - name: Beau Brudney
   roles:
   - Council Member
@@ -27,6 +17,16 @@ people:
   designations:
   - Place 4
   - Ward South
+  phone: (325) 625-5114
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
+- name: Tommy Sloan
+  roles:
+  - Mayor
+  designations: []
   phone: (325) 625-5114
   email: null
   url: null
@@ -58,9 +58,6 @@ people:
   start_date: null
   end_date: null
   image: null
-thought: The information about the City Council members is explicitly stated in the
-  image caption under the 'City Council' section. I have extracted the names, roles,
-  and designations for each member. A general contact phone number for council members
-  is also provided. No individual emails, URLs, or specific start/end dates for terms
-  are available in the text. I will use the general phone number provided for all
-  council members.
+thought: The content clearly lists the City Council members, their roles, and ward
+  designations in the image caption. A general phone number for council members is
+  also provided. No individual emails, URLs, or start/end dates are available.

@@ -51,4 +51,4 @@ failed_cases:
   case_number: 4
   case_id: vacant_positions_council
   failures:
-  - 'email: actual=0.400, expected>=0.9'
+  - 'email: actual=0.400, expected>=0.8'
