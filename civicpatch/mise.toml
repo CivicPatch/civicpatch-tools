@@ -44,7 +44,7 @@ docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm
 
 [tasks.evals]
 run = """
-docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm evals tests/prompts
+docker compose -f docker-compose.development.yml run --rm civicpatch_test pytest -vvm evals tests/prompts
 """
 
 [tasks.scratchtest]

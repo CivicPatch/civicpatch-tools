@@ -1,4 +1,14 @@
 people:
+- name: Tommy Sloan
+  roles:
+  - Mayor
+  designations: []
+  phone: (325) 625-5114
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
 - name: Beau Brudney
   roles:
   - Council Member
@@ -7,7 +17,7 @@ people:
   - Ward East
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -19,17 +29,7 @@ people:
   - Ward South
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
-  start_date: null
-  end_date: null
-  image: null
-- name: Tommy Sloan
-  roles:
-  - Mayor
-  designations: []
-  phone: (325) 625-5114
-  email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -42,7 +42,7 @@ people:
   - Ward West
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -54,15 +54,13 @@ people:
   - Ward North
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
   image: null
-thought: The user requested information on current elected officials for Coleman City
-  Council. I identified a structured listing of council members and the Mayor in the
-  'City Council' section, accompanied by a group photo from 'August 2, 2022'. I extracted
-  names, roles (Mayor, Council Member, Mayor Pro-Tem), and designations (Place and
-  Ward). A general phone number for the council was found. No individual email addresses,
-  profile URLs, or specific start/end dates for terms were provided. The group photo
-  URL is not suitable for individual profile images. The main City Council page URL
-  is used for individual urls.
+thought: The information about the City Council members is explicitly stated in the
+  image caption under the 'City Council' section. I have extracted the names, roles,
+  and designations for each member. A general contact phone number for council members
+  is also provided. No individual emails, URLs, or specific start/end dates for terms
+  are available in the text. I will use the general phone number provided for all
+  council members.

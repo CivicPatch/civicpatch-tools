@@ -9,12 +9,22 @@ people:
   start_date: null
   end_date: null
   image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
-- name: Tracy Rankin
+- name: Beau Brudney
   roles:
   - Council Member
   designations:
-  - Ward North
-  - Place 1
+  - place 3 East Ward
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Monte Sides
+  roles:
+  - Council Member
+  designations:
+  - place 4 South Ward
   phone: (325) 625-5114
   email: null
   url: https://www.cityofcolemantx.us/council/index.html
@@ -26,42 +36,28 @@ people:
   - Council Member
   - Mayor Pro-Tem
   designations:
-  - Ward West
-  - Place 2
+  - place 2 West Ward
   phone: (325) 625-5114
   email: null
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
-- name: Beau Brudney
+- name: Tracy Rankin
   roles:
   - Council Member
   designations:
-  - Ward East
-  - Place 3
+  - place 1 North Ward
   phone: (325) 625-5114
   email: null
   url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
-- name: Monte Sides
-  roles:
-  - Council Member
-  designations:
-  - Ward South
-  - Place 4
-  phone: (325) 625-5114
-  email: null
-  url: https://www.cityofcolemantx.us/council/index.html
-  start_date: null
-  end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
-thought: The content includes a structured listing of the Coleman City Council officials
-  in a dedicated section titled 'City Council'. It lists a Mayor and four Council
-  Members with their associated ward places and wards (North, West, East, South),
-  a photo with their names and designations, and contact info. The roles and designations
-  are clearly stated. The phone number, image, and council webpage URL were added.
-  There are no term start or end dates given. No indication that any are former or
-  no longer in office, so all are assumed currently serving as of 2026-02-06.
+thought: 'The information about the currently serving Coleman City Council was found
+  on the city''s official council page, including an image showing the members together
+  and designations by Place and Ward. The council consists of a Mayor and 4 Council
+  Members representing 4 wards: North, West, East, and South. Contact phone number
+  for council members is provided, but no personal emails or individual profile URLs
+  were explicitly given. Roles and designations were derived directly from the text,
+  with the council place names matched to wards as specified.'

@@ -87,6 +87,7 @@ roles:
       - town council
       - town board member
       - representative
+      - council
       - member
   - role: committee member
     is_unique: true

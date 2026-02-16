@@ -117,7 +117,7 @@ def normalize_remaining_text(text: str) -> str:
     return text
 
 
-def normalize_roles(logger, roles: List[str]) -> List[str]:
+def normalize_roles(roles: List[str]) -> List[str]:
     """
     Normalize roles using configured aliases.
     """
@@ -133,10 +133,6 @@ def normalize_roles(logger, roles: List[str]) -> List[str]:
         direct_match = role_aliases.get(role)
         if direct_match:
             seen.add(direct_match)
-        else:
-            logger.warning(
-                f"Role '{role}' not found in aliases. Keeping original."
-            )
 
     sorted_roles = sort_roles(seen)
 

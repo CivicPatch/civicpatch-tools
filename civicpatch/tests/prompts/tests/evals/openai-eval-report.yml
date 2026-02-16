@@ -2,9 +2,9 @@ aggregated_report:
   name: 1.0
   roles: 1.0
   designations: 1.0
-  email: 0.9696969696969697
+  email: 0.8618181818181817
   phone: 1.0
-  url: 0.9696969696969697
+  url: 0.7418181818181818
 per_case_scores:
 - case_id: austin_council
   scores:
@@ -21,7 +21,7 @@ per_case_scores:
     designations: 1.0
     email: 1.0
     phone: 1.0
-    url: 1.0
+    url: 0.0
 - case_id: coleman_council
   scores:
     name: 1.0
@@ -30,4 +30,25 @@ per_case_scores:
     email: 1.0
     phone: 1.0
     url: 1.0
-failed_cases: []
+- case_id: mixed_current_past
+  scores:
+    name: 1.0
+    roles: 1.0
+    designations: 1.0
+    email: 1.0
+    phone: 1.0
+    url: 1.0
+- case_id: vacant_positions_council
+  scores:
+    name: 1.0
+    roles: 1.0
+    designations: 1.0
+    email: 0.4
+    phone: 1.0
+    url: 0.8
+failed_cases:
+- model_client: openai
+  case_number: 4
+  case_id: vacant_positions_council
+  failures:
+  - 'email: actual=0.400, expected>=0.9'

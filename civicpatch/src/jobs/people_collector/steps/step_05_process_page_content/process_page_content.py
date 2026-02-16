@@ -227,7 +227,7 @@ def normalize_record(logger, record: LLMPerson) -> LLMPerson:
     """
     Normalize roles and designations in an LLMPerson record.
     """
-    normalized_roles = people_utils.normalize_roles(logger, record.roles)
+    normalized_roles = people_utils.normalize_roles(record.roles)
     normalized_designations = people_utils.normalize_designations(record.designations)
 
     try:
