@@ -17,6 +17,7 @@
     --catppuccin-text: 76, 79, 105;
     --catppuccin-subtext0: 108, 118, 139;
     --catppuccin-subtext1: 92, 102, 124;
+    --catppuccin-overlay1: 140, 143, 161;
     --catppuccin-surface0: 204, 208, 218; /* Corrected */
     --catppuccin-surface1: 188, 192, 204; /* Corrected */
     --catppuccin-surface2: 204, 208, 218; /* Corrected */
@@ -35,7 +36,7 @@
     --pico-h2-color: rgb(var(--catppuccin-text));
     --pico-h3-color: rgb(var(--catppuccin-text));
     --pico-background-color: rgb(var(--catppuccin-base));
-    --pico-text-selection-color: rgb(var(--catppuccin-surface1));
+    --pico-text-selection-color: rgba(var(--catppuccin-sapphire), 0.3);
     --pico-form-element-focus-color: rgb(var(--catppuccin-mauve));
     --pico-form-element-border-color: rgb(var(--catppuccin-base));
     --pico-primary-focus: rgb(var(--catppuccin-mantle));
@@ -43,7 +44,7 @@
     --pico-primary-background: rgb(var(--catppuccin-text));
     --pico-primary-inverse: rgb(var(--catppuccin-base));
     --pico-primary-hover-background: rgb(var(--catppuccin-surface0));
-    --pico-secondary-background: rgb(var(--catppuccin-surface2));
+    --pico-secondary-background: rgb(var(--catppuccin-overlay1));
     --pico-secondary-inverse: rgb(var(--catppuccin-base));
     --pico-secondary-hover-background: rgb(var(--catppuccin-sapphire));
     --pico-form-element-active-background-color: rgb(var(--catppuccin-surface1));
@@ -92,7 +93,7 @@
     --pico-h2-color: rgb(var(--catppuccin-text));
     --pico-h3-color: rgb(var(--catppuccin-text));
     --pico-background-color: rgb(var(--catppuccin-base));
-    --pico-text-selection-color: rgb(var(--catppuccin-surface1));
+    --pico-text-selection-color: rgba(var(--catppuccin-sapphire), 0.3);
     --pico-form-element-focus-color: rgb(var(--catppuccin-mauve));
     --pico-form-element-border-color: rgb(var(--catppuccin-surface2));
     --pico-primary-focus: rgb(var(--catppuccin-mantle));

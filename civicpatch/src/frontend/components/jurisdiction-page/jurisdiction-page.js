@@ -3,7 +3,9 @@ import { html } from "lit-html";
 import { useSSE } from "../hooks/useSse.js"; // <-- Import the hook
 import "../scrape-history/scrape-history-list.js";
 import "../edit-people/editable-people-list.js";
-const DEFAULT_CENTER = "30.24171,-91.991044";
+import "./jurisdiction-detail.js"
+import "./config-detail.js";  
+// const DEFAULT_CENTER = "30.24171,-91.991044";
 const API_URL = __API_URL__;
 
 function JurisdictionPage({ 
@@ -13,7 +15,7 @@ function JurisdictionPage({
   const [data, setData] = useState(null);
   const [people, setPeople] = useState([]);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false); 
-  const [peopleMode, setPeopleMode] = useState("read"); // Add mode state
+  const [isLoading, setIsLoading] = useState(true);
   const identities = people?.reduce((acc, person) => {
     if (acc[person.name]) {
       acc[person.name] = [...new Set([...acc[person.name], ...(person.other_names || [])])];
@@ -46,6 +48,7 @@ function JurisdictionPage({
   }, []);
 
   const fetchData = async () => {
+    setIsLoading(true)
     const [jurisdictionData, peopleData] =
       await Promise.all([
         fetchJurisdictionData(jurisdiction_ocdid),
@@ -53,6 +56,7 @@ function JurisdictionPage({
       ]);
     setData(jurisdictionData);
     setPeople(peopleData);
+    setIsLoading(false);
   };
 
   const fetchJurisdictionData = async (ocdid) => {
@@ -124,13 +128,14 @@ function JurisdictionPage({
     </style>
     <div style="display: flex; flex-direction: column; gap: 2rem;">
       <div class="grid">
-        <div>
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
           <civ-map
             canmove="false"
             .latlng=${data && data.geo_center
               ? { lat: data.geo_center.lat, lng: data.geo_center.lng }
               : null}
           ></civ-map>
+          <civ-config-detail></civ-config-detail>
         </div>
 
         <div>
@@ -148,13 +153,7 @@ function JurisdictionPage({
                 </header>
                 <hr />
 
-                <p>
-                  <strong><i class="fa-solid fa-landmark" style="margin-right: 6px;"></i>Jurisdiction OCDID:</strong> ${data.data.id} <br />
-                  <strong><i class="fa-solid fa-globe" style="margin-right: 6px;"></i>Website:</strong> 
-                  <a href="${data.data.url}" target="_blank">${data.data.url}</a> <br />
-                  <strong><i class="fa-solid fa-hashtag" style="margin-right: 6px;"></i>Geoid:</strong> ${data.data.geoid} <br />
-                  <strong><i class="fa-solid fa-users" style="margin-right: 6px;"></i>Population:</strong> ${data.data.population.toLocaleString()}
-                </p>
+                <civ-jurisdiction-detail .data=${data?.data}></civ-jurisdiction-detail>
 
                 <h3>Scrape History</h3>
                 <hr />
@@ -189,11 +188,13 @@ function JurisdictionPage({
       </div>
 
       <h2>Elected Representatives</h2>
-      
-      <civ-editable-people-list 
-        jurisdiction_ocdid=${jurisdiction_ocdid}
-        .people=${people}
-      ></civ-editable-people-list>
+     
+      ${!isLoading ? html`
+        <civ-editable-people-list 
+          jurisdiction_ocdid=${jurisdiction_ocdid}
+          .people=${people}
+        ></civ-editable-people-list>
+      ` : null }
     </div>
   `;
 }
