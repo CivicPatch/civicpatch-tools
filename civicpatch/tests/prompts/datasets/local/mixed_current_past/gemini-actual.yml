@@ -2,22 +2,24 @@ people:
 - name: Michael Pye
   roles:
   - Mayor
-  designations: []
+  designations:
+  - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
-  start_date: null
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: 2024-05
   end_date: '2026-05-02'
   image: null
 - name: Al Stephens
   roles:
   - Mayor Pro Tem
+  - Council Member
   designations:
   - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
-  start_date: null
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: 2024-05
   end_date: '2026-05-02'
   image: null
 - name: Bobby Hanson
@@ -27,8 +29,8 @@ people:
   - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
-  start_date: null
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: 2024-05
   end_date: '2026-05-02'
   image: null
 - name: Darrell Grintz
@@ -38,9 +40,9 @@ people:
   - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
-  start_date: null
-  end_date: '2027-05-01'
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: 2025-05
+  end_date: 2027-05
   image: null
 - name: Billy Wayne Martin
   roles:
@@ -49,9 +51,9 @@ people:
   - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
-  start_date: null
-  end_date: '2027-05-01'
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: 2025-05
+  end_date: 2027-05
   image: null
 - name: Charles Wrenn
   roles:
@@ -60,18 +62,21 @@ people:
   - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
-  url: null
-  start_date: null
-  end_date: '2027-05-01'
+  url: https://www.cityofleonard.net/page/city_council
+  start_date: 2025-05
+  end_date: 2027-05
   image: null
-thought: 'The information for the officials is extracted from a structured table under
-  the ''City Council'' section. Each official''s name, position, and the deadline
-  to file for candidacy are provided. The term end dates are inferred based on the
-  next election dates mentioned in the text: ''The next local election for officers
-  will take place on Saturday, May 2, 2026.'' for positions elected in even years
-  (Mayor and two Council Members), and for positions elected in odd years (three Council
-  Members), the election date is assumed to be May 1, 2027 (first Saturday in May
-  2027), corresponding to their candidacy deadline of Feb 16, 2027. All council positions
-  are explicitly stated as ''At Large''. The general city phone number and email for
-  City Administration are used as contact information as no individual contact details
-  are provided. No start dates, images, or individual URLs were explicitly found.'
+thought: The City Council roster provides the names and positions of the officials.
+  The text indicates that council positions are 'At Large', which is used as a designation.
+  Although specific email addresses and phone numbers for each official are not provided,
+  the general city contact information (phone and email) is used as a fallback. Start
+  and end dates are inferred from the election cycle information provided, considering
+  the current date (2026-02-16) and the next election dates and candidacy deadlines.
+  The Mayor and two At Large Council members (Michael Pye, Al Stephens, Bobby Hanson)
+  are elected in even-numbered years, with the next election on May 2, 2026. Therefore,
+  their terms are inferred to end on 2026-05-02 and started in May 2024. The three
+  other At Large Council members (Darrell Grintz, Billy Wayne Martin, Charles Wrenn)
+  are elected in odd-numbered years, with the next candidacy deadline in Feb 2027.
+  Therefore, their terms are inferred to end in May 2027 and started in May 2025.
+  The image provided is a group photo, not an individual profile picture, so it is
+  not used.

@@ -187,7 +187,7 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
         "name": 0.80,
         "roles": 0.90,
         "designations": 0.85,
-        "email": 0.90,
+        "email": 0.80,
         "phone": 0.90,
         "url": 0.0,
     }

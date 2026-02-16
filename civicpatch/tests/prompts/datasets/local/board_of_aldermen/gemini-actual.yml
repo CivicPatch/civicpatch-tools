@@ -29,16 +29,6 @@ people:
   start_date: 2024-05
   end_date: 2026-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/05/C-Burnias3-e1716392656796.jpg
-- name: Vacant Vacant
-  roles:
-  - Alderman
-  designations: []
-  phone: null
-  email: Abelardo.Gonzalez@RanchoViejoTx.gov
-  url: null
-  start_date: 2025-05
-  end_date: 2027-05
-  image: null
 - name: Peter Harris
   roles:
   - Alderman
@@ -59,12 +49,10 @@ people:
   start_date: 2024-05
   end_date: 2026-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2023/05/FullSizeR001-3-1.jpg
-thought: I have extracted the information for each official from the 'Board of Aldermen'
-  section. For each official, I extracted their name, role, image URL, email, phone
-  number (if available and specific to the official), and their term start and end
-  dates. I noticed one 'Alderman' role without a name but with an email; I treated
-  this as 'Vacant Vacant' as per instructions, but kept the email associated with
-  the position as it was explicitly provided. The phone number 956-350-4093 was only
-  explicitly listed for Todd Day, so it was not applied to other officials. No other
-  related URLs were found to be directly associated with individual officials or providing
-  additional details about the board itself beyond the main page.
+thought: The user requested information on elected officials. I iterated through the
+  'Board of Aldermen' section. For each official, I extracted their name, role, image
+  URL, email, phone number (if explicitly present next to their name), and their term
+  start and end dates. I formatted the dates to YYYY-MM. I skipped one entry for an
+  'Alderman' where the name was not explicitly stated, only derivable from the email,
+  to adhere strictly to the 'Do NOT infer or fabricate any details' guideline. I also
+  noted that no specific designation types like ward or district were present.

@@ -2,9 +2,9 @@ aggregated_report:
   name: 1.0
   roles: 1.0
   designations: 1.0
-  email: 1.0
+  email: 0.8800000000000001
   phone: 1.0
-  url: 0.5018181818181817
+  url: 0.7418181818181818
 per_case_scores:
 - case_id: austin_council
   scores:
@@ -37,13 +37,18 @@ per_case_scores:
     designations: 1.0
     email: 1.0
     phone: 1.0
-    url: 0.0
+    url: 1.0
 - case_id: vacant_positions_council
   scores:
     name: 1.0
     roles: 1.0
     designations: 1.0
-    email: 1.0
+    email: 0.4
     phone: 1.0
-    url: 0.6
-failed_cases: []
+    url: 0.8
+failed_cases:
+- model_client: gemini
+  case_number: 4
+  case_id: vacant_positions_council
+  failures:
+  - 'email: actual=0.400, expected>=0.8'

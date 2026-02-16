@@ -8,7 +8,7 @@ people:
   url: https://www.austintexas.gov/email/mayorwatson
   start_date: null
   end_date: null
-  image: null
+  image: https://www.austintexas.gov/themes/custom/coa/images/austin-header-branding-logo.svg
 - name: Natasha Harper-Madison
   roles:
   - Council Member
@@ -119,10 +119,10 @@ people:
   start_date: null
   end_date: null
   image: null
-thought: The source is the official City of Austin government website, listing the
-  current City Council and the Mayor. The names, roles, district designations, phone
-  numbers, and profile URLs for the Mayor Kirk Watson, and the 10 district Council
-  Members are explicitly provided in a clear structured roster. There are no dates
-  provided for start or end of term, and no profile images available from the given
-  text. Email is only provided for the Mayor, using a City of Austin email address.
-  No indication that the roster is historical; thus, these are currently serving officials.
+thought: The page lists a current roster of the City of Austin municipal governing
+  officials including the Mayor and the ten district City Council Members with their
+  official contact phone numbers and URLs. No end dates or start dates are provided,
+  so those fields are left null. Email is only provided for the Mayor. The designations
+  are extracted as district numbers as indicated next to each council member. The
+  evidence strongly indicates these are current office holders as no historical or
+  past indication is present.
