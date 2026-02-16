@@ -77,13 +77,14 @@ def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
         target_text = ""
 
     return f"""
-    Your task is to extract information about the **current** elected officials of the target municipality.
+    Your task is to extract information about the currently serving elected officials 
+    of the target municipality.
 
     {target_text}
 
-    Only extract people who are currently serving aselected officials as of {current_date}. 
-    Do not include anyone who is described as former, past, resigned, deceased, 
-    or otherwise not currently in office.
+    Treat officials as currently serving when they appear in a structured roster 
+    that is presented as the municipality's governing body, unless
+    the content clearly indicates the roster is historical or past.
 
     Roles (examples): Mayor, Council Member, Aldermen, Commissioner
     Target Designations: {designations_str}
@@ -91,7 +92,7 @@ def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
 
     Return a JSON object in the following format, each having:
     - people: (Array of objects) Each object should have:
-      - name: (String) Full name only (no titles)
+      - name: (String) Full name only (no titles). If the role is vacant, use "Vacant Vacant" as the name.
       - image: (String or null) URL to profile image (https://...)
       - roles: (Array of strings) Active municipal roles
       - designations: (Array) 
@@ -102,9 +103,9 @@ def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
             - "Ward 1" -> "Ward 1"
             - "East District" -> "District East"
             - "Alderman 5" -> "5"
-      - phone: (String or null) Formatted phone number
-      - email: (String or null) Email address in the format of email@domain.tld
-      - url: (String or null) In order of importance: the official's profile, biography URL, contact form URL, related position listing, or null if none exist.
+      - phone: (String or null) Formatted phone number (personal phone > office phone > general contact number for municipality)
+      - email: (String or null) Email address in the format of email@domain.tld (personal email > office email > general contact email for municipality)
+      - url: (String or null) Formatted URL (https://...). (official's profile > biography URL > contact form email URL > related position listing > general listing)
       - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
       - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
     - related_urls: (Array of strings) URLs that potentially contain more information about the officials, ward/district profiles, etc.
@@ -112,22 +113,10 @@ def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
 
     Guidelines:
     - **Only extract information that is explicitly present in the provided content. Do NOT infer or fabricate any details, including email addresses, phone numbers, or URLs.**
-    - Designation extraction:
-        - Extract designations if explicitly mentioned in the text and relevant to the person's role.
-        - Examples: ["Ward 1", "District 2"]
-    - Name extraction:
-        - Extract full names ONLY, not titles.
-    - Phone number extraction:
-        - Extract phone numbers even when formatted as Markdown link text.
-    - URL extraction:
-        - Extract URLs starting with "http://" or "https://".
-    - Email extraction:
-        - Extract email addresses found directly in the text
     - Start and End Date Extraction:
         - Extract dates only if explicitly written in the text.
         - **Start Date**:
             - Extract the date associated with the **most recent election or appointment**.
-            - Ignore past terms or historical dates unless explicitly stated as the current term.
             - Example: "Elected in November 2020 and reelected in November 2024" → `start_date`: `2024-11`.
         - **End Date**:
             - Extract the date associated with the **current term expiration**.
@@ -141,13 +130,10 @@ def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
     - Do NOT infer or guess officials' names, roles, or contact details from context, prior knowledge, or recent mentions. Only extract if the information is presented in a structured way or in a dedicated section.
     - If the content contains a mix of structured listings and unstructured mentions, only extract information from the structured listings or dedicated sections.
     - Ensure all extracted details refer to the **current term** of the official.
-    - Use the provided current date ({current_date}) to filter out officials, roles, 
-        or terms that are no longer active.
-    - Exclude individuals who have resigned, vacated their roles, or are deceased.
     - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
 
     Examples of what NOT to extract:
     - If the content only mentions that an official attended an event, was quoted in a news article, 
       or is referenced in a meeting summary, and there is no structured list or 
-      dedicated biography/about/contact section, **return an empty array**.
+      dedicated biography/about/contact section, do not extract any officials. Return an empty array for the "people" field.
     """

@@ -119,8 +119,9 @@ people:
   start_date: null
   end_date: null
   image: null
-thought: The user requested information on current elected officials. I found a structured
-  table listing the Mayor and ten District Council Members with their names, roles,
-  designations, phone numbers, and profile URLs. I have excluded the City Manager
-  as it is typically an appointed position, not an elected one. No start dates, end
-  dates, emails, or images were provided in the text for any of the officials.
+thought: The elected officials (Mayor and City Council Members) are listed in a clear,
+  structured table under the 'Austin City Hall' section. For each official, the name,
+  role, district (if applicable), phone number, and a URL to their respective profile/contact
+  page are explicitly provided. No start or end dates, emails, or images are provided
+  in the content. The City Manager is excluded as they are an appointed, not elected,
+  official.

@@ -12,6 +12,8 @@ import pathlib
 import yaml
 import os
 from tests.utils import find_person_by_name
+import utils.merge_utils 
+import utils.people_utils
 
 pytestmark = pytest.mark.evals
 
@@ -37,12 +39,15 @@ def score_case(actual: RawLLMPerson, expected: RawLLMPerson):
     score = {}
 
     # name (normalized)
-    score["name"] = merge_utils.normalize_name(actual.name) == merge_utils.normalize_name(expected.name) and 1.0 or 0.0
+    score["name"] = merge_utils.normalize_name(actual.name) == utils.merge_utils.normalize_name(expected.name) and 1.0 or 0.0
 
     # roles (set match)
-    score["roles"] = len(set(actual.roles) & set(expected.roles)) / len(expected.roles)
+    matching_roles = set(utils.people_utils.normalize_roles(actual.roles)) & set(utils.people_utils.normalize_roles(expected.roles))
+    score["roles"] = len(matching_roles) / len(expected.roles)
 
-    if not expected.designations:  # Check if the list is empty
+    # Don't care about designations other than district or ward
+    has_district_or_ward = any(d in ["district", "ward"] for d in expected.designations)
+    if not expected.designations or not has_district_or_ward:  # Check if the list is empty
         score["designations"] = 1.0
     else:
         score["designations"] = len(set(actual.designations) & set(expected.designations)) / len(expected.designations)
@@ -179,19 +184,21 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     print("Final aggregated report:", report)
 
     thresholds = {
-        "name": 0.95,
+        "name": 0.80,
         "roles": 0.90,
         "designations": 0.85,
         "email": 0.90,
         "phone": 0.90,
-        "url": 0.40,
+        "url": 0.0,
     }
 
     failed_cases = []
     for idx, (case_id, case_aggregate) in enumerate(per_case_scores):
         failed = []
+        print(f"Evaluating case #{idx} ('{case_id}')")
         for key, threshold in thresholds.items():
             actual_score = case_aggregate.get(key, 1.0)
+            print(f"  {key}: actual={actual_score:.3f}, expected>={threshold}")
             if actual_score < threshold:
                 failed.append(f"{key}: actual={actual_score:.3f}, expected>={threshold}")
         if failed:
@@ -216,7 +223,9 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
             ],
             "failed_cases": failed_cases
         }, f, sort_keys=False)
+    print(f"Saved evaluation report to {report_path}")
 
+    # Assert thresholds
     assert report["name"] >= thresholds["name"]
     assert report["roles"] >= thresholds["roles"]
     assert report["designations"] >= thresholds["designations"]

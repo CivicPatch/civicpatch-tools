@@ -57,15 +57,14 @@ def municipality_officials_prompt(
         target_text = ""
 
     prompt = f"""
-    Your task is to extract information about the **current** elected officials of the target municipality.
+    Your task is to extract information about the currently serving elected officials
+    of the target municipality.
 
     {target_text}
 
-    Only extract people who are currently serving as officials as of {current_date}. 
-    Do not include anyone who is described as former, past, resigned, deceased, 
-    or otherwise not currently in office.
-
-    First, determine if the content contains a **structured listing** (such as a table, list, or directory) of officials, or a **dedicated biography/about/contact section** for an official. If not, return an empty JSON array `[]`.
+    Treat officials as currently serving when they appear in a structured roster 
+    that is presented as the municipality's governing body, unless
+    the content clearly indicates the roster is historical or past.
 
     Roles (examples): Mayor, Council Member, Aldermen, Select Board Member, Commissioner
     Target designations: {designations_str}
@@ -73,48 +72,22 @@ def municipality_officials_prompt(
 
     Return a JSON object in the following format:
     - people: (Array of objects) Each object should have:
-      - name: (String) Full name only (no titles)
+      - name: (String) Full name only (no titles). If the role is vacant, use "Vacant Vacant" as the name.
       - image: (String or null) URL to profile image (https://...)
       - roles: (Array of strings) Active municipal roles
       - designations: (Array) 
             Designation labels should ALWAYS be in the format of <designation_type> <designation value/name>, 
             If no designation type is provided, leave empty.
-            If the text contains a role, drop it (the role should be set under "roles", not "designations").
-            Examples:
-            - "Ward 1" -> "Ward 1"
-            - "East District" -> "District East"
-            - "Alderman 5" -> "5"
-            - "Ward 2 (Place 3)" -> "Ward 2", "Place 3"
-            
-      - phone: (String or null) Formatted phone number
-      - email: (String or null) Email address in the format of email@domain.tld
-      - url: (String or null) In order of importance: the official's profile, biography URL, contact form URL, related position listing, or null if none exist.
+      - phone: (String or null) Formatted phone number (personal phone > office phone > general contact number for municipality)
+      - email: (String or null) Formatted email in form email@domain.tld (personal email > office email > general contact email for municipality)
+      - url: (String or null) Formatted URL (https://...). (official's profile > biography URL > contact form email URL > related position listing > general listing)
       - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
       - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
     - thoughts: (String) Your reasoning process
- 
-    **Instructions:*
-    - Only extract officials if their information appears in a **structured listing** (e.g., table, list, or directory) or in a **dedicated biography/about/contact section**.
-    - A **structured listing** must explicitly include names and roles. Additional details (e.g., contact information, designations, or term dates) are optional but preferred.
-    - **Do NOT extract officials based on mentions in news articles, event summaries, meeting notes, or scattered references throughout the content.**
-    - **Do NOT extract officials if the only evidence is a link, heading, or navigation item (e.g., "Mayor And Council") without an actual structured listing or dedicated section in the provided content.**
-    - **Do NOT extract officials based on contextual clues such as dates, roles, or ongoing activities unless they are explicitly part of a structured listing or dedicated section.**
-    - If the only mentions of officials are within news stories, event recaps, meeting summaries, or scattered throughout the text (not in a structured list or dedicated section), return an empty array.
-    - Do NOT infer or guess officials' names or roles from context, prior knowledge, or recent mentions. Only extract if the information is presented in a structured way or in a dedicated section.
-    - Do NOT infer information for officials. Only extract what is explicitly stated (ex: emails).
-    - Do NOT include people whose terms have ended, resigned, vacated their roles, or are deceased.
+
+    **Instructions:**
+    - Extract phone numbers, email addresses, and URLs even if they are not part of a structured listing or dedicated section, as long as they are explicitly present in the text.
+    - Ensure all extracted details refer to the **current term** of the official.
     - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
-
-    **Examples of what NOT to extract:**
-    - "Mayor John Smith attended the ribbon-cutting ceremony for the new library."
-    - "Councilwoman Jane Doe was quoted in a news article about the town's budget."
-    - "Deputy Mayor Joe Bloggs was present at the community event on March 3, 2024."
-    - "Mayor and Council" is mentioned as a link or heading, but no structured listing or dedicated section is present.
-
-    **Examples of what to extract:**
-    - A table listing officials with their names and roles (e.g., "John Smith - Mayor, Jane Doe - Councilwoman").
-    - A section titled "Mayor and Council" that includes a list of officials with their roles, contact details, and/or biographies.
-
-    **FINAL MANDATORY CHECK:** Review your entire response for accuracy before submitting, paying close attention to the role inference, date extraction, and term identification rules.
     """
     return prompt

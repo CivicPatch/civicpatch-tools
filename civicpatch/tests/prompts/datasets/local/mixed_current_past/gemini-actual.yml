@@ -1,0 +1,77 @@
+people:
+- name: Michael Pye
+  roles:
+  - Mayor
+  designations: []
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: null
+  start_date: null
+  end_date: '2026-05-02'
+  image: null
+- name: Al Stephens
+  roles:
+  - Mayor Pro Tem
+  designations:
+  - At Large
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: null
+  start_date: null
+  end_date: '2026-05-02'
+  image: null
+- name: Bobby Hanson
+  roles:
+  - Council Member
+  designations:
+  - At Large
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: null
+  start_date: null
+  end_date: '2026-05-02'
+  image: null
+- name: Darrell Grintz
+  roles:
+  - Council Member
+  designations:
+  - At Large
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: null
+  start_date: null
+  end_date: '2027-05-01'
+  image: null
+- name: Billy Wayne Martin
+  roles:
+  - Council Member
+  designations:
+  - At Large
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: null
+  start_date: null
+  end_date: '2027-05-01'
+  image: null
+- name: Charles Wrenn
+  roles:
+  - Council Member
+  designations:
+  - At Large
+  phone: 903-587-3334
+  email: cityadmin@cityofleonard.net
+  url: null
+  start_date: null
+  end_date: '2027-05-01'
+  image: null
+thought: 'The information for the officials is extracted from a structured table under
+  the ''City Council'' section. Each official''s name, position, and the deadline
+  to file for candidacy are provided. The term end dates are inferred based on the
+  next election dates mentioned in the text: ''The next local election for officers
+  will take place on Saturday, May 2, 2026.'' for positions elected in even years
+  (Mayor and two Council Members), and for positions elected in odd years (three Council
+  Members), the election date is assumed to be May 1, 2027 (first Saturday in May
+  2027), corresponding to their candidacy deadline of Feb 16, 2027. All council positions
+  are explicitly stated as ''At Large''. The general city phone number and email for
+  City Administration are used as contact information as no individual contact details
+  are provided. No start dates, images, or individual URLs were explicitly found.'
