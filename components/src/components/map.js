@@ -326,7 +326,7 @@ const handleFeatureClick = (e) => {
   return html`
     <style>
       ${leafletStyles} ${locateStyles} ${geocoderStyles} .map-container {
-        height: 30rem;
+        height: 50rem;
       }
 
       .map-container .map {

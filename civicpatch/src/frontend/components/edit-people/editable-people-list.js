@@ -11,7 +11,8 @@ function genKey() {
 }
 
 const TRACKED_FIELDS = [
-  "name", "other_names", "phones", "emails", "urls", "start_date", "end_date", "office", "source_urls"
+  "name", "other_names", "phones", "emails", "urls", "start_date", "end_date", "office", "source_urls",
+  "image", "cdn_image", "updated_at"
 ];
 
 function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
@@ -63,8 +64,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     if (!selectedOpenPullRequest) {
       // Use default people
       assignPeople(people)
-    }
-    else {
+    } else {
       getSelectedOpenPullRequestData(selectedOpenPullRequest);
     }
   }, [selectedOpenPullRequest])
@@ -121,6 +121,8 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   function markAsDeleted(keys) {
     keys.forEach(key => {
       updatePerson(key, { _deleted: true });
+      // Move person to bottom of the list
+      reorderPersonToBottom(key);
     });
   }
 
@@ -137,8 +139,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     }
 
     markAsDeleted([key]);
-    // Move person to bottom of the list
-    reorderPersonToBottom(key);
   }
 
   function handleAdd() {
@@ -152,16 +152,21 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       _deleted: false,
       _isNew: true,
       name: '',
+      other_names: [], 
+      phones: [],
+      emails: [],
+      urls: [],
+      start_date: null,
+      end_date: null,
       office: {
         name: default_office_name,
         division_ocdid: default_office_division_ocdid,
       },
-      phones: [],
-      emails: [],
-      urls: [],
+      image: null,
+      jurisdiction_ocdid: jurisdiction_ocdid,
+      cdn_image: null,
       source_urls: [],
-      start_date: '',
-      end_date: '',
+      updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, '+00:00'), // Correctly formatted updated_at
     };
     setPeople(localPeople => [newPerson, ...localPeople]);
   }
@@ -201,7 +206,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     const selectedPeople = localPeople.filter(p => selected.includes(p._tempKey));
     if (selectedPeople.length < 2) return;
 
-    const singleValueFields = ["name", "image", "start_date", "end_date"];
+    const singleValueFields = ["name", "image", "start_date", "end_date", "image", "cdn_image", "updated_at"];
     const arrayFields = ["other_names", "phones", "emails", "urls", "source_urls"];
 
     // Use the first selected person as the base for merging
@@ -209,10 +214,11 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     if (basePersonIndex === -1) return;
     const basePerson = { ...localPeople[basePersonIndex] };
 
-    // Merge single value fields (pick first non-null)
+    // Merge single value fields (pick first non-null, fallback to null)
     for (const field of singleValueFields) {
-      basePerson[field] = selectedPeople.map(p => p[field]).find(v => v != null && v !== "");
+      basePerson[field] = selectedPeople.map(p => p[field]).find(v => v != null && v !== "") || null;
     }
+
     // Merge array fields (combine, dedupe)
     for (const field of arrayFields) {
       basePerson[field] = Array.from(
@@ -229,9 +235,10 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       .map(p => p.office?.name)
       .filter(Boolean);
     if (officeNames.length > 0) {
+      const uniqueOfficeNames = Array.from(new Set(officeNames));
       basePerson.office = {
         ...(basePerson.office || {}),
-        name: officeNames.join(" - ")
+        name: uniqueOfficeNames.join(" - ")
       };
     }
 
@@ -282,7 +289,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     
     submitChanges(
       selectedOpenPullRequest, // TODO: if not available needs to open a new PR instead
-      localPeople.map(({ _dirty, _changes, _tempKey, _selected, _deleted, ...person }) => person)
+      localPeople.map(({ _dirty, _changes, _tempKey, _selected, _deleted, _isNew, ...person }) => person)
     )
       .then(() => {
         setNotice(
@@ -320,7 +327,9 @@ function updatePerson(key, updates) {
 
   const selected = localPeople.filter(p => p._selected).map(p => p._tempKey);
 
-  const updatedPeople = localPeople.map(({ _dirty, _changes, _tempKey, _selected, _deleted, ...person }) => person);
+  const updatedPeople = localPeople
+    .filter(p => !p._deleted)
+    .map(({ _dirty, _changes, _tempKey, _selected, _deleted, _isNew, ...person }) => person);
 
   if (loading) return html`<p>Loading people...</p>`;
 

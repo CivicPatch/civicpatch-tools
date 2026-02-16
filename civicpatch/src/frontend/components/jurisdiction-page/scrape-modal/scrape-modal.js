@@ -17,7 +17,8 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
     setScrapeScope(event.target.value);
   };
 
-  const resetUrl = () => {
+  const resetUrl = (e) => {
+    e.preventDefault();
     setCurrentUrl(url);
   };
 
@@ -112,22 +113,16 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
 
     ${scrapeScope === "top-level-url"
       ? html`
+        <form @submit=${(e) => e.preventDefault()}>
           <fieldset role="group">
             <input
               type="url"
               .value="${currentUrl}"
               @input=${handleUrlChange}
             />
+            <button type="button" @click=${resetUrl}>Reset</button>
           </fieldset>
-          <div style="display: flex;">
-            <button
-              class="secondary outline"
-              style="margin-left: auto;"
-              @click=${resetUrl}
-            >
-              Reset URL
-            </button>
-          </div>
+        </form>
         `
       : html`
           ${currentSourceUrls.map(
@@ -137,11 +132,7 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
                   type="url"
                   @input=${(e) => handleSourceUrlChange(index, e)}
                 />
-                <button
-                  type="button"
-                  class="secondary outline"
-                  @click=${() => removeSourceUrl(index)}
-                >
+                <button type="button" @click=${() => removeSourceUrl(index)}>
                   Delete
                 </button>
               </fieldset>

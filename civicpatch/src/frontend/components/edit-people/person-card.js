@@ -48,8 +48,10 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
   const isEndDateChanged = person._changes?.includes('end_date');
   const isPhonesChanged = person._changes?.includes('phones');
   const isEmailsChanged = person._changes?.includes('emails');
+  const isOtherNamesChanged = person._changes?.includes('other_names');
   const isUrlsChanged = person._changes?.includes('urls');
   const isSourceUrlsChanged = person._changes?.includes('source_urls');
+  const isImageChanged = person._changes?.includes('image');
 
   const imageUrl = person.image || person.cdn_image || null;
 
@@ -208,20 +210,22 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
         <label>Term</label>
         <div style="display: flex; gap: 0.5rem;">
           <input
-            type="date"
-            class=${(isStartDateChanged ? 'field-added' : '')}
+            type="text"
+            class=${isStartDateChanged ? 'field-added' : ''}
             @keydown=${e => e.stopPropagation()}
             .value=${person.start_date || ''}
             @input=${e => handleFieldChange('start_date', e.target.value)}
-            placeholder="Start"
+            placeholder="YYYY-MM or YYYY-MM-DD"
+            style="flex: 1;"
           />
           <input
-            type="date"
+            type="text"
             class=${isEndDateChanged ? 'field-added' : ''}
             @keydown=${e => e.stopPropagation()}
             .value=${person.end_date || ''}
             @input=${e => handleFieldChange('end_date', e.target.value)}
-            placeholder="End"
+            placeholder="YYYY-MM or YYYY-MM-DD"
+            style="flex: 1;"
           />
         </div>
       </section>
@@ -320,6 +324,54 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
           `)}
           <button type="button" @click=${() => handleArrayAdd('source_urls')}>+ Add Source</button>
         </div>
+      </section>
+
+      <section>
+        <label>Other Names</label>
+        <div>
+          ${(person.other_names || []).map((name, idx) => html`
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <input
+                class=${isOtherNamesChanged ? 'field-added' : ''}
+                type="text"
+                .value=${name}
+                @keydown=${e => e.stopPropagation()}
+                @input=${e => handleArrayChange('other_names', idx, e.target.value)}
+                placeholder="Other Name"
+              />
+              <button
+                @click=${() => handleArrayRemove('other_names', idx)}
+                title="Remove name"
+                type="button"
+              >✕</button>
+            </div>
+          `)}
+          <button type="button" @click=${() => handleArrayAdd('other_names')}>+ Add Name</button>
+        </div>
+      </section>
+
+      <section>
+        <label>Image</label>
+        <input
+          type="url"
+          .value=${person.image || ''}
+          @keydown=${e => e.stopPropagation()}
+          @input=${e => handleFieldChange('image', e.target.value)}
+          placeholder="Image URL"
+          style="width: 100%;"
+          class=${isImageChanged ? 'field-added' : ''}
+        />
+      </section>
+
+      <section>
+        <label>Last Updated</label>
+        <input
+          type="text"
+          .value=${person.updated_at || ''}
+          readonly
+          placeholder="Last Updated"
+          style="width: 100%; background: #f9f9f9; color: #666;"
+        />
       </section>
       ${person._changes && person._changes.length > 0 ? html`
         <footer>
