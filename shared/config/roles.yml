@@ -146,6 +146,9 @@ roles:
     - aldermen
     - alderwoman
     - city alderman
+    - city alderwoman
+    - city council alderman
+    - city council alderwoman
   - role: chair
     aliases:
     - council chair

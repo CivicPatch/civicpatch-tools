@@ -494,7 +494,7 @@ def person_to_official(designation_configs, person: Person) -> Official:
     )
 
     office_names = person.roles + role_designations
-    unique_office_names = list(set(office_names))
+    unique_office_names = list(dict.fromkeys(office_names))
     office_name = " - ".join(unique_office_names) if unique_office_names else "Unknown Office"
     return Official(
         name=person.name,

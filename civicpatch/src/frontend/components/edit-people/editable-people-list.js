@@ -150,7 +150,11 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   function handleAdd() {
     const default_office_name = "Council Member";
+    const first_person = originalPeople.lenggth > 0 ? originalPeople[0] : null;
+    const last_person = originalPeople.length > 0 ? originalPeople[originalPeople.length - 1] : null;
     const default_office_division_ocdid = originalPeople.length > 0 ? originalPeople[0].office?.division_ocdid : null;
+    const default_link = last_person?.urls?.[0] || null;
+    const default_source_url = last_person?.source_urls?.[0] || null;
 
     const newPerson = {
       _tempKey: genKey(),
@@ -162,7 +166,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       other_names: [], 
       phones: [],
       emails: [],
-      urls: [],
+      urls: default_link ? [default_link] : [],
       start_date: null,
       end_date: null,
       office: {
@@ -172,7 +176,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       image: null,
       jurisdiction_ocdid: jurisdiction_ocdid,
       cdn_image: null,
-      source_urls: [],
+      source_urls: [default_source_url],
       updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, '+00:00'), // Correctly formatted updated_at
     };
     setCurrentPeople(currentPeople => [newPerson, ...currentPeople]);
