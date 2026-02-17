@@ -47,7 +47,7 @@ RUN poetry install
 
 FROM image-base AS post-install
 
-RUN poetry run playwright install --with-deps chromium
+RUN poetry run playwright install --with-deps chrome
 
 RUN poetry run post-install
 
