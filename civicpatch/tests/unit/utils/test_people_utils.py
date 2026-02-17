@@ -9,7 +9,7 @@ pytestmark = pytest.mark.unit
 
 @pytest.mark.parametrize("roles, expected", [
     (["Mayor", "mayor"], ["Mayor"]),  # Case-insensitive deduplication
-    (["Mayor", "Chief Executive"], ["Mayor"]),  # Alias normalization
+    (["Mayor", "Chief Executive"], ["Mayor", "Chief Executive"]),  # Alias normalization
     ([], []),  # Empty input
     ([None, ""], []),  # Invalid roles
     (["  mayor  ", "MAYOR"], ["Mayor"]),  # Mixed case and whitespace

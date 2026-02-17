@@ -130,6 +130,9 @@ def normalize_roles(roles: List[str]) -> List[str]:
     for role in roles:
         role = str(role).strip().lower()
 
+        if not role:
+            continue
+
         direct_match = role_aliases.get(role)
         if direct_match:
             seen.add(direct_match)

@@ -182,12 +182,10 @@ def test_direct_name_match():
         url="https://city.gov",
         identities={"michelle drass": ["michelle d rass"]}
     )
-    research = ResearchMunicipalityStep(
-        people=[],
-        elected_officials=[ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[])]
-    )
+
+    officials = [make_official("michelle drass")]
     people = [make_official("michelle drass")]
-    errors = get_identity_mismatches(research, config, people)
+    errors = get_identity_mismatches(officials, config, people)
     assert errors == []
 
 def test_alias_match():
@@ -195,12 +193,9 @@ def test_alias_match():
         url="https://city.gov",
         identities={"michelle drass": ["michelle d rass"]}
     )
-    research = ResearchMunicipalityStep(
-        people=[],
-        elected_officials=[ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[])]
-    )
     people = [make_official("michelle d rass")]
-    errors = get_identity_mismatches(research, config, people)
+    officials = [make_official("michelle drass")]
+    errors = get_identity_mismatches(officials, config, people)
     assert errors == []
 
 def test_missing_official():
@@ -208,12 +203,9 @@ def test_missing_official():
         url="https://city.gov",
         identities={"michelle drass": ["michelle d rass"]}
     )
-    research = ResearchMunicipalityStep(
-        people=[],
-        elected_officials=[ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[])]
-    )
     people = [make_official("john smith")]
-    errors = get_identity_mismatches(research, config, people)
+    officials = [make_official("michelle drass")]
+    errors = get_identity_mismatches(officials, config, people)
     assert errors == [
         "Extra official: john smith",
         "Missing official: michelle drass"
@@ -232,7 +224,8 @@ def test_multiple_officials_some_missing():
         ]
     )
     people = [make_official("michelle d rass"), make_official("john smith")]
-    errors = get_identity_mismatches(research, config, people)
+    officials = [make_official("michelle drass"), make_official("jane smith")]
+    errors = get_identity_mismatches(officials, config, people)
     assert errors == [
         "Extra official: john smith",
         "Missing official: jane smith"
@@ -243,12 +236,10 @@ def test_extra_official_in_people():
         url="https://city.gov",
         identities={"michelle drass": ["michelle d rass"]}
     )
-    research = ResearchMunicipalityStep(
-        people=[],
-        elected_officials=[ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[])]
-    )
     people = [make_official("michelle drass"), make_official("john smith")]
-    errors = get_identity_mismatches(research, config, people)
+
+    officials = [make_official("michelle drass")]
+    errors = get_identity_mismatches(officials, config, people)
     assert errors == ["Extra official: john smith"]
 
 def test_extra_official_in_research():
@@ -256,15 +247,10 @@ def test_extra_official_in_research():
         url="https://city.gov",
         identities={"michelle drass": ["michelle d rass"]}
     )
-    research = ResearchMunicipalityStep(
-        people=[],
-        elected_officials=[
-            ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[]),
-            ResearchedPerson(name="jane smith", roles=["council"], designations=[])
-        ]
-    )
+    
     people = [make_official("michelle d rass")]
-    errors = get_identity_mismatches(research, config, people)
+    officials = [make_official("michelle drass"), make_official("jane smith")]
+    errors = get_identity_mismatches(officials, config, people)
     assert errors == ["Missing official: jane smith"]
 
 def test_both_extra_and_missing_officials():
@@ -272,15 +258,10 @@ def test_both_extra_and_missing_officials():
         url="https://city.gov",
         identities={"michelle drass": ["michelle d rass"]}
     )
-    research = ResearchMunicipalityStep(
-        people=[],
-        elected_officials=[
-            ResearchedPerson(name="michelle drass", roles=["mayor"], designations=[]),
-            ResearchedPerson(name="jane smith", roles=["council"], designations=[])
-        ]
-    )
+    
     people = [make_official("michelle d rass"), make_official("john smith")]
-    errors = get_identity_mismatches(research, config, people)
+    officials = [make_official("michelle drass"), make_official("jane smith")]
+    errors = get_identity_mismatches(officials, config, people)
     assert errors == [
         "Extra official: john smith",
         "Missing official: jane smith"
@@ -291,10 +272,7 @@ def test_no_officials():
         url="https://city.gov",
         identities={}
     )
-    research = ResearchMunicipalityStep(
-        people=[],
-        elected_officials=[]
-    )
+    
     people = []
-    errors = get_identity_mismatches(research, config, people)
+    errors = get_identity_mismatches([], config, people)
     assert errors == []
