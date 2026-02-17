@@ -83,7 +83,9 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
 
     content = read_preprocessed_content(context.data.jurisdiction_ocdid, page_to_process)
 
-    is_relevant_page_prompt = openai_prompt.relevant_page_prompt(setup_data.people_hint)
+    is_relevant_page_prompt = openai_prompt.relevant_page_prompt(
+        page_to_process.url,
+        setup_data.people_hint)
     is_relevant_response = await openai_llm.run_prompt(
         context.request_id, 
         context.data.jurisdiction_ocdid, 
@@ -93,9 +95,9 @@ async def process_page_content(context: PeopleCollectorContext, page_to_process:
     
     response = RelevantPageResponseSchema.model_validate(is_relevant_response)
     updated_links = copy.deepcopy(context.data.links)
-    if response.related_urls:
-        logger.info(f"Page relevance check found related urls: {response.related_urls}")
-        updated_links = move_links_to_top(context.data.config.url, response.related_urls, updated_links)
+    if response.relevant_urls:
+        logger.info(f"Page relevance check found related urls: {response.relevant_urls}")
+        updated_links = move_links_to_top(context.data.config.url, response.relevant_urls, updated_links)
 
      # If page is not relevant, mark as processed_irrelevant and return
     if not response.is_relevant:

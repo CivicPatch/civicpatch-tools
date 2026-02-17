@@ -173,7 +173,9 @@ def get_keywords() -> List[str]:
     extra_keywords = [
         "title", "email", "phone", "contact", "address",
         "start date", "elected at", "end date", "term expires",
-        "current term"
+        "current term", 
+        # Irrelevant keywords, but we want to keep to help filter out irrelevant content
+        "committee", "planning", "board", "zoning"
     ]
 
     # Combine and dedupe all

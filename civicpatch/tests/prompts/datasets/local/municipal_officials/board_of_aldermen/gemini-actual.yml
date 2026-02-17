@@ -5,7 +5,7 @@ people:
   designations: []
   phone: 956-350-4093
   email: Todd.Day@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  url: null
   start_date: 2025-05
   end_date: 2027-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/07/Todd-Day-e1720626761286.jpg
@@ -15,7 +15,7 @@ people:
   designations: []
   phone: null
   email: Javier.Vera@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  url: null
   start_date: 2025-05
   end_date: 2027-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2021/11/Group-1.jpg
@@ -25,27 +25,17 @@ people:
   designations: []
   phone: null
   email: Christi.Burnias@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  url: null
   start_date: 2024-05
   end_date: 2026-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/05/C-Burnias3-e1716392656796.jpg
-- name: Abelardo Gonzalez
-  roles:
-  - Alderman
-  designations: []
-  phone: null
-  email: Abelardo.Gonzalez@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
-  start_date: 2025-05
-  end_date: 2027-05
-  image: null
 - name: Peter Harris
   roles:
   - Alderman
   designations: []
   phone: null
   email: Peter.Harris@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  url: null
   start_date: 2025-05
   end_date: 2026-05
   image: null
@@ -55,13 +45,14 @@ people:
   designations: []
   phone: null
   email: Mark.Johnson@RanchoViejoTx.gov
-  url: https://www.ranchoviejotexas.com/board-of-aldermen/
+  url: null
   start_date: 2024-05
   end_date: 2026-05
   image: https://www.ranchoviejotexas.com/wp-content/uploads/2023/05/FullSizeR001-3-1.jpg
-thought: The webpage lists the currently serving Board of Aldermen for the Town of
-  Rancho Viejo, with their names, roles, photos where available, official emails,
-  term start and end dates. The main phone contact is the municipal phone number 956-350-4093,
-  which is assigned explicitly to Mayor Todd Day as well. I extracted officials from
-  the structured current board roster and merged all relevant details, confirming
-  terms are current or upcoming as of 2026 February.
+thought: I have extracted the information for the Board of Aldermen. For each official,
+  I extracted their name, role, email, image (if available), phone (if available),
+  and term start and end dates. I omitted the entry for "Abelardo Gonzalez" because
+  his name was not explicitly provided in a structured heading, only implicitly in
+  his email address, which violates the "Do NOT infer or fabricate any details" rule
+  for names. Relevant URLs include the main Board of Aldermen page and the meeting
+  agendas page.

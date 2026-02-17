@@ -7,7 +7,7 @@ people:
   - Ward East
   phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null
@@ -19,7 +19,7 @@ people:
   - Ward South
   phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null
@@ -29,7 +29,7 @@ people:
   designations: []
   phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null
@@ -42,7 +42,7 @@ people:
   - Ward West
   phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null
@@ -54,10 +54,14 @@ people:
   - Ward North
   phone: (325) 625-5114
   email: null
-  url: null
+  url: https://www.cityofcolemantx.us/council/index.html
   start_date: null
   end_date: null
   image: null
-thought: The content clearly lists the City Council members, their roles, and ward
-  designations in the image caption. A general phone number for council members is
-  also provided. No individual emails, URLs, or start/end dates are available.
+thought: I have extracted the information about the Coleman City Council members and
+  Mayor from the structured text and image caption. I identified their names, roles,
+  and designations (Place and Ward for council members). No individual images, email
+  addresses, or specific start/end dates were provided, so those fields are null.
+  A general contact phone number for the council was included for all officials. The
+  relevant URLs include the main City Council page, the proclamations page, and the
+  elections information page.

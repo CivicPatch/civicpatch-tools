@@ -54,7 +54,7 @@ class PeopleArrayLLMResponseSchema(BaseModel):
 
 class RelevantPageResponseSchema(BaseModel):
     is_relevant: bool
-    related_urls: List[str] = []
+    relevant_urls: List[str] = []
     thoughts: str
 
 class LLMPerson(RawLLMPerson):

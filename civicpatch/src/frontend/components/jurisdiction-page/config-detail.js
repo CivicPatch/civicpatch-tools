@@ -3,10 +3,6 @@ import { html } from "lit-html";
 
 
 const DummyConfig = {
-  source_urls: [
-    "https://www.austintexas.gov/department/city-council/council-members",
-    "https://www.austintexas.gov/department/mayor-kirk-watson"
-  ],
   identities: [],
   offices: [
     {
@@ -79,31 +75,6 @@ function ConfigDetail({ config = DummyConfig, onSave }) {
       ${isEditMode
         ? html`
             <form @submit=${e => { e.preventDefault(); handleSave(); }}>
-              <h3>Source URLs</h3>
-              ${formData.source_urls.map((url, index) => html`
-                <fieldset role="group">
-                  <input
-                    type="url"
-                    .value=${url}
-                    @input=${e => handleArrayChange('source_urls', index, null, e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    class="secondary outline"
-                    @click=${() => handleArrayRemove('source_urls', index)}
-                  >
-                    Remove
-                  </button>
-                </fieldset>
-              `)}
-              <button
-                type="button"
-                class="secondary"
-                @click=${() => handleArrayAdd('source_urls', '')}
-              >
-                + Add URL
-              </button>
-
               <h3>Identities</h3>
               ${formData.identities.map((identity, index) => html`
                 <fieldset role="group">
@@ -168,11 +139,6 @@ function ConfigDetail({ config = DummyConfig, onSave }) {
             </form>
           `
         : html`
-            <h3>Source URLs</h3>
-            <ul>
-              ${config.source_urls.map(url => html`<li>${url}</li>`)}
-            </ul>
-
             <h3>Identities</h3>
             <ul>
               ${config.identities.map(identity => html`<li>${identity}</li>`)}

@@ -47,6 +47,11 @@ run = """
 docker compose -f docker-compose.development.yml run --rm civicpatch_test pytest -vvm evals tests/prompts
 """
 
+[tasks.evals_relevant]
+run = """
+docker compose -f docker-compose.development.yml run --rm civicpatch_test pytest -vvm evals_relevant tests/prompts
+"""
+
 [tasks.scratchtest]
 run = """
 docker compose -f docker-compose.development.yml run --rm civicpatch pytest -vvm unit tests/unit/jobs/steps/step_04_preprocess_page_content

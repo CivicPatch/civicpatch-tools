@@ -16,7 +16,6 @@ const TRACKED_FIELDS = [
 ];
 
 function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
-  console.log("people are", people)
   // Assign _tempKey to people if not present
   const [currentPeople, setCurrentPeople] = useState(
     people.map(person => ({

@@ -55,8 +55,12 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
 
   const imageUrl = person.image || person.cdn_image || null;
 
-
   const readMode = html`
+      <style>
+        .person-card-content .label {
+          font-weight: bold;
+        }
+      </style>
       <section class="person-card-content">
         <div class="field">
           <span class="label">Name:</span>
@@ -67,37 +71,58 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
           <span class="value">${person.office?.name || 'N/A'}</span>
         </div>
         <div class="field">
-          <span class="label">Start Date:</span>
-          <span class="value">${person.start_date || 'N/A'}</span>
+          <span class="label">Office Division:</span>
+          <span class="value">${person.office?.division_ocdid}</span>
         </div>
-        <div class="field">
-          <span class="label">End Date:</span>
-          <span class="value">${person.end_date || 'N/A'}</span>
-        </div>
-        <div class="field">
-          <span class="label">Phone Numbers:</span>
-          <span class="value">${(person.phones || []).join(', ') || 'N/A'}</span>
-        </div>
-        <div class="field">
-          <span class="label">Email Addresses:</span>
-          <span class="value">${(person.emails || []).join(', ') || 'N/A'}</span>
-        </div>
-        <div class="field">
-          <span class="label">Links:</span>
-          <span class="value">${(person.urls || []).join(', ') || 'N/A'}</span>
-        </div>
+
+        ${person.start_date ? html`
+          <div class="field">
+            <span class="label">Start Date:</span>
+            <span class="value">${person.start_date || 'N/A'}</span>
+          </div>
+        ` : ''}
+        ${person.end_date ? html`
+          <div class="field">
+            <span class="label">End Date:</span>
+            <span class="value">${person.end_date || 'N/A'}</span>
+          </div>
+        ` : ''}
+        ${person.phones && person.phones.length > 0 ? html`
+          <div class="field">
+            <span class="label">Phone Numbers:</span>
+            <span class="value">${(person.phones || []).join(', ') || 'N/A'}</span>
+          </div>
+        ` : ''}
+        ${person.emails && person.emails.length > 0 ? html`
+          <div class="field">
+            <span class="label">Email Addresses:</span>
+            <span class="value">${(person.emails || []).join(', ') || 'N/A'}</span>
+          </div>
+        ` : ''}
+        ${person.urls && person.urls.length > 0 ? html`
+          <div class="field">
+            <span class="label">Links:</span>
+            <span class="value">${(person.urls || []).join(', ') || 'N/A'}</span>
+          </div>
+        ` : ''}
         <div class="field">
           <span class="label">Source URLs:</span>
           <span class="value">${(person.source_urls || []).join(', ') || 'N/A'}</span>
         </div>
-        <div class="field">
-          <span class="label">Other Names:</span>
-          <span class="value">${(person.other_names || []).join(', ') || 'N/A'}</span>
-        </div>
-        <div class="field">
-          <span class="label">Image:</span>
-          <span class="value">${person.image || 'N/A'}</span>
-        </div>
+        ${person.other_names && person.other_names.length > 0 ? html`
+          <div class="field">
+            <span class="label">Other Names:</span>
+            <span class="value">${(person.other_names || []).join(', ') || 'N/A'}</span>
+          </div>
+        ` : ''}
+        ${person.image ? html`
+          <div class="field">
+            <span class="label">Image:</span>
+            <span class="value">
+              <a href=${person.image || '#'} target="_blank" rel="noopener" ?hidden=${!person.image}>View</a>
+            </span>
+          </div>
+        ` : ''}
         <div class="field">
           <span class="label">Last Updated:</span>
           <span class="value">${person.updated_at || 'N/A'}</span>
@@ -399,6 +424,12 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
           ?disabled=${person._deleted}
           />
         <div style="margin-left: auto; display: flex; gap: 0.5rem;">
+          <button
+            @click=${() => setIsEditMode(!isEditMode)}
+            title=${isEditMode ? "Switch to read mode" : "Switch to edit mode"}
+          >
+            ${isEditMode ? "Read Mode" : "Edit Mode"}
+          </button>
           <button 
             class="contrast" 
             title="Delete person" 
@@ -426,7 +457,7 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
         </figure>
       </div>
 
-      ${isEditMode ? readMode : editMode}
+      ${isEditMode ? editMode : readMode}
 
       ${person._changes && person._changes.length > 0 ? html`
         <footer>

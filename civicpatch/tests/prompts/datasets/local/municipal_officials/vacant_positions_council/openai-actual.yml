@@ -1,7 +1,7 @@
 people:
 - name: Vacant Vacant
   roles:
-  - Council
+  - Council Member
   designations: []
   phone: null
   email: null
@@ -11,45 +11,48 @@ people:
   image: null
 - name: Vacant Vacant
   roles:
-  - Council
+  - Council Member
   designations: []
   phone: null
   email: null
-  url: https://www.seadrifftx.org/city-council/directory-listing/vacated-alderman
+  url: https://www.seadrifttx.org/city-council/directory-listing/vacated-alderman
   start_date: null
   end_date: null
   image: null
 - name: Alysa Jarvis
   roles:
-  - Council
+  - Council Member
   designations: []
   phone: 713-703-8662
-  email: null
+  email: 'mailto:'
   url: https://www.seadrifttx.org/city-council/directory-listing/alysa-jarvis
   start_date: null
   end_date: null
   image: null
 - name: Tracey Johnson
   roles:
-  - Council
+  - Council Member
   designations: []
   phone: 361-746-8488
-  email: null
+  email: 'mailto:'
   url: https://www.seadrifttx.org/city-council/directory-listing/tracey-johnson
   start_date: null
   end_date: null
   image: null
 - name: Kenneth Reese
   roles:
-  - Council
+  - Council Member
   designations: []
   phone: null
-  email: null
+  email: 'mailto:'
   url: https://www.seadrifttx.org/city-council/directory-listing/kenneth-reese
   start_date: null
   end_date: null
   image: null
-thought: I have extracted the elected officials from the 'City Council' section, including
-  their names, roles, phone numbers, email availability, and profile URLs. Vacant
-  positions have been noted. I have also identified relevant URLs from the navigation
-  menu.
+thought: 'The City Council roster from the City of Seadrift website lists five council
+  members including two vacancies, and three named individuals (Alysa Jarvis, Tracey
+  Johnson, Kenneth Reese). No mayor was listed. I extracted all council members as
+  current officials with their roles. Phone numbers and emails were gathered as provided,
+  though some emails are shown as mailto: links without a specific address. URLs link
+  to their official city profile pages. No start or end dates were provided in the
+  directory. No images or additional designations were shown.'
