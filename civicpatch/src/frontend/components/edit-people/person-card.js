@@ -1,7 +1,7 @@
-import { html, component } from 'haunted';
+import { html, component, useState} from 'haunted';
 
 function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
-  // Remove useState for isSelected and editPerson
+  const [isEditMode, setIsEditMode] = useState(false);
 
   // Helper for array fields
   const handleArrayChange = (field, idx, value) => {
@@ -55,117 +55,57 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
 
   const imageUrl = person.image || person.cdn_image || null;
 
-  return html`
-    <style>
-    .person-card header [type="checkbox"] {
-      --pico-form-element-border-color: rgb(var(--pico-color));
-    }
-    .person-card section input,
-    .person-card section button,
-    .person-card section select,
-    .person-card section textarea {
-      --pico-form-element-spacing-vertical: 0.25rem;
-      --pico-form-element-spacing-horizontal: 0.5rem;
-      font-size: 0.75rem;
-    }
-    .person-card-avatar-row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-    .person-card-avatar-row figure {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-    }
-    .person-card-avatar-row img,
-    .person-card-avatar-row span {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      object-fit: cover;
-      font-size: 32px;
-      background: var(--muted-bg, #e5e7eb);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .person-card {
-      position: relative;
-    }
-    .person-card.selected::after {
-      content: ''; 
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(var(--pico-primary-hover), 0.5);
-      pointer-events: none; /* Ensure it doesn't block interactions */
-    }
-    .person-card.deleted::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(var(--catppuccin-red), 0.2);
-      pointer-events: none; /* Ensure it doesn't block interactions */
-    }
 
-    .field-added {
-      background: rgba(var(--catppuccin-green), 0.3); /* Green color filter */
-    }
-
-    </style>
-    <article 
-      class="person-card 
-        ${person._selected ? 'selected' : ''}
-        ${person._deleted ? 'deleted' : ''} 
-      "  
-      style="padding:1rem;"
-      .onSelect=${() => toggleSelect(person._tempKey)}
-    >
-      <header style="display: flex; align-items: center; gap: 1rem;">
-        <input
-          type="checkbox"
-          .checked=${person._selected}
-          @change=${handleCheckboxChange}
-          aria-label="Select ${person.name}" 
-          ?disabled=${person._deleted}
-          />
-        <div style="margin-left: auto; display: flex; gap: 0.5rem;">
-          <button 
-            class="contrast" 
-            title="Delete person" 
-            @click=${handleDeleteClick}
-            ?disabled=${person._deleted}
-          >
-            Delete
-          </button>
-          <button 
-            title="Reset changes" 
-            @click=${handleReset}
-            ?disabled=${(!person._changes || person._changes.length === 0) && !person._deleted}
-          >
-            Reset
-          </button>
+  const readMode = html`
+      <section class="person-card-content">
+        <div class="field">
+          <span class="label">Name:</span>
+          <span class="value">${person.name || 'N/A'}</span>
         </div>
-      </header>
+        <div class="field">
+          <span class="label">Office:</span>
+          <span class="value">${person.office?.name || 'N/A'}</span>
+        </div>
+        <div class="field">
+          <span class="label">Start Date:</span>
+          <span class="value">${person.start_date || 'N/A'}</span>
+        </div>
+        <div class="field">
+          <span class="label">End Date:</span>
+          <span class="value">${person.end_date || 'N/A'}</span>
+        </div>
+        <div class="field">
+          <span class="label">Phone Numbers:</span>
+          <span class="value">${(person.phones || []).join(', ') || 'N/A'}</span>
+        </div>
+        <div class="field">
+          <span class="label">Email Addresses:</span>
+          <span class="value">${(person.emails || []).join(', ') || 'N/A'}</span>
+        </div>
+        <div class="field">
+          <span class="label">Links:</span>
+          <span class="value">${(person.urls || []).join(', ') || 'N/A'}</span>
+        </div>
+        <div class="field">
+          <span class="label">Source URLs:</span>
+          <span class="value">${(person.source_urls || []).join(', ') || 'N/A'}</span>
+        </div>
+        <div class="field">
+          <span class="label">Other Names:</span>
+          <span class="value">${(person.other_names || []).join(', ') || 'N/A'}</span>
+        </div>
+        <div class="field">
+          <span class="label">Image:</span>
+          <span class="value">${person.image || 'N/A'}</span>
+        </div>
+        <div class="field">
+          <span class="label">Last Updated:</span>
+          <span class="value">${person.updated_at || 'N/A'}</span>
+        </div>
+      </section>
+  `;
 
-      <div class="person-card-avatar-row">
-        <figure>
-          ${imageUrl
-            ? html`<img src=${imageUrl} alt="Avatar of ${person.name}" />`
-            : html`<span>${person.name ? person.name.charAt(0).toUpperCase() : '?'}</span>`
-          }
-        </figure>
-      </div>
-
+  const editMode = html`
       <section style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
         <input
           type="text"
@@ -373,6 +313,121 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
           style="width: 100%; background: #f9f9f9; color: #666;"
         />
       </section>
+  `
+
+  return html`
+    <style>
+    .person-card header [type="checkbox"] {
+      --pico-form-element-border-color: rgb(var(--pico-color));
+    }
+    .person-card section input,
+    .person-card section button,
+    .person-card section select,
+    .person-card section textarea {
+      --pico-form-element-spacing-vertical: 0.25rem;
+      --pico-form-element-spacing-horizontal: 0.5rem;
+      font-size: 0.75rem;
+    }
+    .person-card-avatar-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .person-card-avatar-row figure {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .person-card-avatar-row img,
+    .person-card-avatar-row span {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      font-size: 32px;
+      background: var(--muted-bg, #e5e7eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .person-card {
+      position: relative;
+    }
+    .person-card.selected::after {
+      content: ''; 
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(var(--pico-primary-hover), 0.5);
+      pointer-events: none; /* Ensure it doesn't block interactions */
+    }
+    .person-card.deleted::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(var(--catppuccin-red), 0.2);
+      pointer-events: none; /* Ensure it doesn't block interactions */
+    }
+
+    .field-added {
+      background: rgba(var(--catppuccin-green), 0.3); /* Green color filter */
+    }
+
+    </style>
+    <article 
+      class="person-card 
+        ${person._selected ? 'selected' : ''}
+        ${person._deleted ? 'deleted' : ''} 
+      "  
+      style="padding:1rem;"
+      .onSelect=${() => toggleSelect(person._tempKey)}
+    >
+      <header style="display: flex; align-items: center; gap: 1rem;">
+        <input
+          type="checkbox"
+          .checked=${person._selected}
+          @change=${handleCheckboxChange}
+          aria-label="Select ${person.name}" 
+          ?disabled=${person._deleted}
+          />
+        <div style="margin-left: auto; display: flex; gap: 0.5rem;">
+          <button 
+            class="contrast" 
+            title="Delete person" 
+            @click=${handleDeleteClick}
+            ?disabled=${person._deleted}
+          >
+            Delete
+          </button>
+          <button 
+            title="Reset changes" 
+            @click=${handleReset}
+            ?disabled=${(!person._changes || person._changes.length === 0) && !person._deleted}
+          >
+            Reset
+          </button>
+        </div>
+      </header>
+
+      <div class="person-card-avatar-row">
+        <figure>
+          ${imageUrl
+            ? html`<img src=${imageUrl} alt="Avatar of ${person.name}" />`
+            : html`<span>${person.name ? person.name.charAt(0).toUpperCase() : '?'}</span>`
+          }
+        </figure>
+      </div>
+
+      ${isEditMode ? readMode : editMode}
+
       ${person._changes && person._changes.length > 0 ? html`
         <footer>
           <strong>Unsaved changes:</strong>

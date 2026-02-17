@@ -24,12 +24,14 @@ def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
 
     people = [people_utils.person_to_official(designation_configs, person) for person in data]
 
+    filtered_people = [person for person in people if not person.name == "Vacant Vacant"]
+
     # TODO: Make this more generic later
-    for person in people:
+    for person in filtered_people:
         person = maybe_add_fallback_url(person)
 
-    identities = generate_identities_config(people)
-    source_urls = find_source_urls(people)
+    identities = generate_identities_config(filtered_people)
+    source_urls = find_source_urls(filtered_people)
 
     config = WorkflowConfig(
         url = context.data.config.url,

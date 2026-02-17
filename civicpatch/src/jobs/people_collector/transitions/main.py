@@ -94,6 +94,14 @@ async def search_links_transition(_: JobConfig, logger: WorkflowLogger, context:
     if search_link_pointer >= len(SearchEngineNames):
         logger.info("All search engines have been processed.")
         next_state = WorkflowStatus.MERGE_RECORDS_WITHIN_LLM
+
+        if len(context.data.links) == 0:
+            logger.info("No links found after processing all search engines, use main web URL.")
+            next_context = context.copy(update={
+                "data": context.data.copy(update={
+                    "links": [Link(url=context.data.config.url, status=LinkStatus.PENDING.value)]
+                })
+            })
     else:
         links, result = await search_links(context)
         progress = calculate_progress_percentage(context.data, 2)
