@@ -13,6 +13,8 @@ roles:
     - mayor pro tem
     - mayor pro temp
     - mayor pro-tempore
+    - mayor-pro tem 
+    - mayor protem
   - role: assistant mayor
     is_unique: true
   - role: deputy mayor
@@ -143,6 +145,7 @@ roles:
     - alderman
     - aldermen
     - alderwoman
+    - city alderman
   - role: chair
     aliases:
     - council chair

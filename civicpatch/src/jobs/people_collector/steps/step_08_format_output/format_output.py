@@ -44,7 +44,7 @@ def format_output(context: PeopleCollectorContext) -> FormatOutputStep:
     )
 
     return FormatOutputStep(
-        officials=people,
+        officials=filtered_people,
         config=config
     )
 

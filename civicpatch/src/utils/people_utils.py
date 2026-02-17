@@ -133,6 +133,8 @@ def normalize_roles(roles: List[str]) -> List[str]:
         direct_match = role_aliases.get(role)
         if direct_match:
             seen.add(direct_match)
+        else: # No direct match found
+            seen.add(role)
 
     sorted_roles = sort_roles(seen)
 
@@ -492,7 +494,8 @@ def person_to_official(designation_configs, person: Person) -> Official:
     )
 
     office_names = person.roles + role_designations
-    office_name = " - ".join(office_names) if office_names else "Unknown Office"
+    unique_office_names = list(set(office_names))
+    office_name = " - ".join(unique_office_names) if unique_office_names else "Unknown Office"
     return Official(
         name=person.name,
         other_names=person.other_names,
