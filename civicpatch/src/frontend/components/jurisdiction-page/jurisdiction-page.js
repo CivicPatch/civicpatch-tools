@@ -103,7 +103,7 @@ function JurisdictionPage({
   };
 
   const canStartScrape = true;
-  const scrapeStatus = data?.data?.updated_at ? `Scraped` : `Unscraped`;
+  const scrapeStatus = people?.length > 0 ? `Scraped` : `Unscraped`;
 
   return html`
     <style>

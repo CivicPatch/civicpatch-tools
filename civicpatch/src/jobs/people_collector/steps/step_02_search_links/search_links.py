@@ -142,11 +142,11 @@ async def municipality_search(
 
     if not results:
         logger.error(f"No results found with {search_engine}")
-        raise Exception(f"No results found with {search_engine}")
+    else:
+        logger.info(
+           f"Search successful with {search_engine}. Found {len(results)} results."
+        )
 
-    logger.info(
-        f"Search successful with {search_engine}. Found {len(results)} results."
-    )
     urls.extend(results)
 
     return urls  # Return results immediately on success

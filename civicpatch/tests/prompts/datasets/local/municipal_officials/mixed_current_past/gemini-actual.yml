@@ -2,22 +2,24 @@ people:
 - name: Michael Pye
   roles:
   - Mayor
-  designations: []
+  designations:
+  - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2026-02-13'
-  image: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+  end_date: null
+  image: null
 - name: Al Stephens
   roles:
   - Mayor Pro Tem
-  designations: []
+  designations:
+  - At Large
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2026-02-13'
+  end_date: null
   image: null
 - name: Bobby Hanson
   roles:
@@ -28,7 +30,7 @@ people:
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2026-02-13'
+  end_date: null
   image: null
 - name: Darrell Grintz
   roles:
@@ -39,7 +41,7 @@ people:
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2027-02-16'
+  end_date: null
   image: null
 - name: Billy Wayne Martin
   roles:
@@ -50,7 +52,7 @@ people:
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2027-02-16'
+  end_date: null
   image: null
 - name: Charles Wrenn
   roles:
@@ -61,12 +63,14 @@ people:
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
   start_date: null
-  end_date: '2027-02-16'
+  end_date: null
   image: null
-thought: The City of Leonard website provides a current roster of the City Council
-  members including the Mayor, Mayor Pro Tem, and Council Members who all serve At
-  Large positions. The phone number 903-587-3334 and the city administrative email
-  cityadmin@cityofleonard.net are listed as primary contact details, as no individual
-  personal contacts are provided. The roster is current and the next election deadlines
-  are noted, indicating the terms end in 2026 or 2027 according to the filing deadlines,
-  confirming these are current serving officials.
+thought: I have extracted the City Council members from the provided table. For each
+  official, I have identified their name, role, and the 'At Large' designation as
+  stated in the text. The general city phone number and the first general email address
+  provided on the page have been used for each official, as no individual contact
+  information was given. The URL to the City Council page has been used as the official's
+  URL. I have not extracted start_date or end_date as there is no explicit 'term begins'
+  or 'term ends' date provided for any official in the text; the 'Deadline to file
+  for candidacy' is not a term expiration date and thus cannot be used as an end_date.
+  No image URLs were associated with individual officials.

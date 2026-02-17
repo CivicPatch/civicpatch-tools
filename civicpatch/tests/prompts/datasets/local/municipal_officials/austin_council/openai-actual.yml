@@ -8,7 +8,7 @@ people:
   url: https://www.austintexas.gov/email/mayorwatson
   start_date: null
   end_date: null
-  image: https://www.austintexas.gov/themes/custom/coa/images/austin-header-branding-logo.svg
+  image: null
 - name: Natasha Harper-Madison
   roles:
   - Council Member
@@ -119,10 +119,11 @@ people:
   start_date: null
   end_date: null
   image: null
-thought: The page lists a current roster of the City of Austin municipal governing
-  officials including the Mayor and the ten district City Council Members with their
-  official contact phone numbers and URLs. No end dates or start dates are provided,
-  so those fields are left null. Email is only provided for the Mayor. The designations
-  are extracted as district numbers as indicated next to each council member. The
-  evidence strongly indicates these are current office holders as no historical or
-  past indication is present.
+thought: The provided text includes a clear current roster of the City of Austin's
+  governing officials, listing the Mayor and City Council Members by district with
+  their official phone numbers and respective official profile URLs from the austintexas.gov
+  website. No emails were provided except for the Mayor's contact email shown on the
+  webpage. There is no explicit indication of start or end dates for the offices,
+  so those fields remain null. I extracted names, roles, districts, phone numbers,
+  emails, and URLs where provided, and left image data as null since no images of
+  officials were included or linked.

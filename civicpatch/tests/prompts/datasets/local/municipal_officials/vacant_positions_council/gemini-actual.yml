@@ -24,7 +24,7 @@ people:
   - Council
   designations: []
   phone: 713-703-8662
-  email: alysa.jarvis@seadrifttx.org
+  email: null
   url: https://www.seadrifttx.org/city-council/directory-listing/alysa-jarvis
   start_date: null
   end_date: null
@@ -34,7 +34,7 @@ people:
   - Council
   designations: []
   phone: 361-746-8488
-  email: tracey.johnson@seadrifttx.org
+  email: null
   url: https://www.seadrifttx.org/city-council/directory-listing/tracey-johnson
   start_date: null
   end_date: null
@@ -44,14 +44,16 @@ people:
   - Council
   designations: []
   phone: null
-  email: kenneth.reese@seadrifttx.org
+  email: null
   url: https://www.seadrifttx.org/city-council/directory-listing/kenneth-reese
   start_date: null
   end_date: null
   image: null
-thought: 'The extracted data comes from the current City Council roster on Seadrift
-  TX official website. The council section lists two vacant alderman seats, and three
-  current council members: Alysa Jarvis, Tracey Johnson, and Kenneth Reese with respective
-  contact details. No start or end dates were provided for terms, and no images were
-  linked. The council roles were confirmed current as no historical indications were
-  present, and linked URLs are official city pages.'
+thought: I have extracted the information for the City Council members from the provided
+  structured table. I identified two vacant positions, Alysa Jarvis, Tracey Johnson,
+  and Kenneth Reese as current council members. I have included their names, roles,
+  phone numbers where available, and their respective profile URLs. Since no explicit
+  email addresses were provided (only contact form links), the email field is null
+  for all. Similarly, no start or end dates were explicitly mentioned, so those fields
+  are null. The relevant URLs include the main City Council page and the general Elected
+  Officials page.

@@ -4,7 +4,7 @@ people:
   - Mayor
   designations: []
   phone: 512-978-2100
-  email: null
+  email: mayorwatson@austintexas.gov
   url: https://www.austintexas.gov/email/mayorwatson
   start_date: null
   end_date: null
@@ -119,10 +119,9 @@ people:
   start_date: null
   end_date: null
   image: null
-thought: The elected officials were extracted from a structured table under 'Austin
-  City Hall'. Each entry provided the name, role (Mayor or Council Member), district
-  (for Council Members), phone number, and a URL to their respective profile or contact
-  page. No start or end dates, emails, or images were explicitly provided in the content
-  for these officials. The City Manager was not included as it is typically an appointed,
-  not elected, position. Related URLs were identified from links within the text that
-  could provide more information about the city's governance or officials.
+thought: I have extracted the elected officials from the structured table under 'Austin
+  City Hall'. For each official, I extracted their name, role, designations (District
+  number), phone number, and a direct URL. For Mayor Kirk Watson, an email address
+  was inferred from the provided email link. No images, start dates, or end dates
+  were explicitly available in the provided text. I excluded the City Manager as the
+  prompt specifically asked for elected officials.

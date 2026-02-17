@@ -22,7 +22,8 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
     designations_str = ', '.join(designations)
 
     return f"""
-    Provide the current elected officials for the specified city, including the Mayor (if applicable) and other elected members of the local government. Format the response as a JSON object.
+    Provide the current elected officials for the specified city, including the Mayor (if applicable) 
+    and other elected members of the local government. Format the response as a JSON object.
 
     Municipality: {municipality_name}, {state}
 
@@ -56,7 +57,7 @@ def research_municipality_prompt(jurisdiction_ocdid: str, municipality_name: str
     """
 
 
-def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
+def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
     """
     Generate a prompt for extracting municipality officials.
     """
@@ -65,22 +66,20 @@ def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
     designations_str = ", ".join(designation_names)
     current_date = datetime.now().strftime("%Y-%m-%d")
 
-    maybe_target_people = [person.name for person in people_hint if person.name]
+    # maybe_target_people = [person.name for person in people_hint if person.name]
 
-    if maybe_target_people:
-        target_text = (
-            "If the content includes information about the following people, "
-            "they are very likely to be on the council: "
-            f"{', '.join(maybe_target_people)}"
-        )
-    else:
-        target_text = ""
+    #if maybe_target_people:
+    #    target_text = (
+    #        "If the content includes information about the following people, "
+    #        "they are very likely to be on the council: "
+    #        f"{', '.join(maybe_target_people)}"
+    #    )
+    #else:
+    #    target_text = ""
 
     return f"""
     Your task is to extract information about the currently serving elected officials 
     of the target municipality.
-
-    {target_text}
 
     Treat officials as currently serving when they appear in a structured roster 
     that is presented as the municipality's governing body, unless
@@ -108,7 +107,7 @@ def municipality_officials_prompt(people_hint: List[ResearchedPerson]):
       - url: (String or null) Formatted URL (https://...). (official's profile > biography URL > contact form email URL > related position listing > general listing)
       - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
       - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
-    - related_urls: (Array of strings) URLs that potentially contain more information about the officials, ward/district profiles, etc.
+    - relevant_urls: (Array of strings) URLs that potentially contain more information about the officials, ward/district profiles, etc.
     - thoughts: (String) Your reasoning process
 
     Guidelines:

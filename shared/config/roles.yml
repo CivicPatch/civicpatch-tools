@@ -12,7 +12,7 @@ roles:
     - mayor pro-temp
     - mayor pro tem
     - mayor pro temp
-    - town mayor
+    - mayor pro-tempore
   - role: assistant mayor
     is_unique: true
   - role: deputy mayor

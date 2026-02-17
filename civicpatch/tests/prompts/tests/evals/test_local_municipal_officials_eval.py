@@ -58,8 +58,6 @@ def score_case(actual: RawLLMPerson, expected: RawLLMPerson):
     # phone
     actual_phone_parsed = phonenumbers.parse(actual.phone, "US") if actual.phone else None
     expected_phone_parsed = phonenumbers.parse(expected.phone, "US") if expected.phone else None
-    print("actual:", actual_phone_parsed)
-    print("expected:", expected_phone_parsed)
     score["phone"] = 1.0 if actual_phone_parsed == expected_phone_parsed else 0.0
 
     score["url"] = 1.0 if actual.url == expected.url else 0.0
@@ -107,7 +105,7 @@ async def run_eval(model_client, cases):
         prompt = make_prompt([])
         response = await run_prompt(
             "run-eval",
-            "ocd-jurisdiction/country:us/state:tx/place:austin/government",
+            "ocd-jurisdiction/country:us/state:tx/place:example/government",
             prompt,
             response_schema=PeopleArrayLLMResponseSchema,
             content=case_input
@@ -131,7 +129,7 @@ async def run_eval(model_client, cases):
     return aggregate(scores), per_case_scores
 
 @pytest_asyncio.fixture
-def load_eval_cases(base_dir="tests/prompts/datasets/local"):
+def load_eval_cases(base_dir="tests/prompts/datasets/local/municipal_officials"):
     base = pathlib.Path(base_dir)
     cases = []
 
@@ -211,7 +209,7 @@ async def test_eval_with_mocked_cases(model_client, load_eval_cases):
             print(f"[{model_client['name']}] Case #{idx} ('{case_id}') failed: {', '.join(failed)}")
 
     # Write full report to file
-    evals_dir = "tests/prompts/tests/evals"
+    evals_dir = "tests/prompts/tests/evals/municipal_officials"
     os.makedirs(evals_dir, exist_ok=True)
     report_path = os.path.join(evals_dir, f"{model_client['name']}-eval-report.yml")
     with open(report_path, "w", encoding="utf-8") as f:
