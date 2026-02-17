@@ -6,9 +6,6 @@ from utils.people_utils import sort_roles, sort_designations, sort_people, extra
 
 pytestmark = pytest.mark.unit
 
-# Create dummy logger for testing
-logger = logging.getLogger(__name__)
-
 
 @pytest.mark.parametrize("roles, expected", [
     (["Mayor", "mayor"], ["Mayor"]),  # Case-insensitive deduplication
@@ -18,7 +15,7 @@ logger = logging.getLogger(__name__)
     (["  mayor  ", "MAYOR"], ["Mayor"]),  # Mixed case and whitespace
 ])
 def test_normalize_roles(roles, expected):
-    assert people_utils.normalize_roles(logger, roles) == expected
+    assert people_utils.normalize_roles(roles) == expected
 
 
 @pytest.mark.parametrize("divisions, expected", [

@@ -24,6 +24,8 @@ designations:
       - position council
       - posn
       - pos.
+      - position no.
+      - position no
   seat:
     is_unique: true
     aliases:

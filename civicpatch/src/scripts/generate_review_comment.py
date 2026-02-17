@@ -29,13 +29,16 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
     issues = generate_validation_errors(pipeline_context, people)
     has_validation_errors = len(validation_errors) > 0 or len(issues) > 0
 
+    researched_people = pipeline_context.data.research_municipality_step.elected_officials
+    filtered_researched_people = [p for p in researched_people if p.name != "Vacant Vacant"]
+
     identity_errors = get_identity_mismatches(
-        pipeline_context.data.research_municipality_step,
+        filtered_researched_people,
         pipeline_context.data.format_output_step.config    ,
         people,
     )
     identity_table = identities_mismatch_table(
-        pipeline_context.data.research_municipality_step,
+        filtered_researched_people,
         pipeline_context.data.format_output_step.config,
         people,
     )
@@ -191,13 +194,13 @@ def canonicalize_names(officials, identities):
     return canonicals
 
 def get_identity_mismatches(
-    research_municipality: ResearchMunicipalityStep,
+    researched_people: List[Official],
     config: WorkflowConfig, 
     people: list, 
 ) -> list:
     """Return a list of errors for canonical name mismatches."""
     identities = config.identities or {}
-    research_canonicals = canonicalize_names(research_municipality.elected_officials, identities)
+    research_canonicals = canonicalize_names(researched_people, identities)
     people_canonicals = canonicalize_names(people, identities)
 
     errors = []
@@ -212,7 +215,7 @@ def get_identity_mismatches(
     return errors
 
 def identities_mismatch_table(
-    research_municipality: ResearchMunicipalityStep,
+    researched_people: List[Official],
     config: WorkflowConfig, 
     people: list, 
 ) -> str:
@@ -221,7 +224,7 @@ def identities_mismatch_table(
     combining aliases under their canonical name using config.identities.
     """
     identities = config.identities or {}
-    research_canonicals = canonicalize_names(research_municipality.elected_officials, identities)
+    research_canonicals = canonicalize_names(researched_people, identities)
     people_canonicals = canonicalize_names(people, identities)
     all_canonicals = sorted(research_canonicals | people_canonicals)
 

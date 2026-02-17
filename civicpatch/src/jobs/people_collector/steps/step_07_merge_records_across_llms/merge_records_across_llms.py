@@ -23,6 +23,8 @@ FIELD_WEIGHTS = {
 }
 FIELDS_TO_CHECK = list(FIELD_WEIGHTS.keys())
 
+# TODO: move disagreements logic to open-data, should not live here
+
 def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAcrossLLMsStep:
     """
     Merge records across all LLMs to produce a unified list of Person objects.

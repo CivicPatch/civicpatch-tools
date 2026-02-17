@@ -49,12 +49,7 @@ async def scrape(logger, website_url, options=None):
         async with async_playwright() as playwright:
             browser = await playwright.chromium.launch(
                 headless=headless,
-                args=[
-                    '--disable-blink-features=AutomationControlled',
-                    '--disable-dev-shm-usage',
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                ]
+                channel="chrome"
             )
             
             context = await browser.new_context(

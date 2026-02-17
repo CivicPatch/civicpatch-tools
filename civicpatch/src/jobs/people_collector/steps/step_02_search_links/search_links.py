@@ -26,7 +26,7 @@ SEARCH_SERVICES = {
     "google": google_search,
     #"serpapi": serp_search,
     #"brave": brave_search,
-    "crawl": crawl
+    #"crawl": crawl
 }
 
 SearchEngineNames = list(SEARCH_SERVICES.keys())
