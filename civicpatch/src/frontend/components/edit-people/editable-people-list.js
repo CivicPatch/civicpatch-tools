@@ -1,6 +1,8 @@
 import { html, component, useEffect, useState, useRef } from 'haunted';
 import { ref } from 'lit-html/directives/ref.js';
+
 import './person-card.js';
+import '../basic/table/table.js';
 import yaml from 'js-yaml';
 import { useRovingFocusList } from '../../hooks/use-roving-focus-list.js';
 import './diff-preview.js';
@@ -34,6 +36,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   const selectedPeople = currentPeople.filter(p => p._selected).map(p => p._tempKey);
   const dirty = currentPeople.some(person => person._dirty);
+  const element = this;
 
   const peopleToSubmit = currentPeople
     .filter(p => !p._deleted)
@@ -308,25 +311,32 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       });
   }
 
-function updatePerson(key, updates) {
-  setCurrentPeople(currentPeople =>
-    currentPeople.map(person => {
-      if (person._tempKey === key) {
-        const originalPerson = originalPeople.find(p => p._tempKey === key);
-        const nextPerson = { ...person, ...updates };
-        const changedFields = TRACKED_FIELDS.filter(
-          field => JSON.stringify(nextPerson[field]) !== JSON.stringify(originalPerson?.[field])
-        );
-        return {
-          ...nextPerson,
-          _dirty: changedFields.length > 0 || updates._deleted === true,
-          _changes: changedFields,
-        };
-      }
-      return person;
-    })
-  );
-}
+  function updatePerson(key, updates) {
+    setCurrentPeople(currentPeople =>
+      currentPeople.map(person => {
+        if (person._tempKey === key) {
+          const originalPerson = originalPeople.find(p => p._tempKey === key);
+          const nextPerson = { ...person, ...updates };
+          const changedFields = TRACKED_FIELDS.filter(
+            field => JSON.stringify(nextPerson[field]) !== JSON.stringify(originalPerson?.[field])
+          );
+          return {
+            ...nextPerson,
+            _dirty: changedFields.length > 0 || updates._deleted === true,
+            _changes: changedFields,
+          };
+        }
+        return person;
+      })
+    );
+  }
+
+  function handleTableDataChange(e) {
+    // Find the person by index or key and update your state
+    console.log("Data change event:", e.detail);
+    const { identifier, key, value } = e.detail;
+    updatePerson(identifier, { [key]: value }); 
+  }
 
   if (loading) return html`<p>Loading people...</p>`;
 
@@ -335,7 +345,7 @@ function updatePerson(key, updates) {
       return branchName.substring(0, maxLength);
     }
     return branchName;
-  }
+  } 
 
   const diffPreview = html`
   <div style="margin-top:2rem;">
@@ -450,6 +460,53 @@ function updatePerson(key, updates) {
         `}
     </section>
   </div>
+
+  <civ-table 
+  .identifier=${"_tempKey"}
+  .columns=${[
+    {
+      field: "name",
+      label: "Name",
+      editable: true,
+    },
+    {
+      field: "phones",
+      label: "Phones",
+      editable: true,
+    },
+    {
+      field: "emails",
+      label: "Emails",
+      editable: true,
+    },
+    {
+      field: "urls",
+      label: "URLs",
+      editable: true,
+    },
+    {
+      field: "start_date",
+      label: "Start Date",
+      editable: true,
+    },
+    {
+      field: "end_date",
+      label: "End Date",
+      editable: true,
+    },
+    {
+      field: "office.name",
+      label: "Office Name",
+      editable: true,
+    },
+    {
+      field: "source_urls",
+      label: "Source URLs",
+      editable: true,
+    }
+  ]} 
+  .data=${currentPeople} 
+  @data-change=${handleTableDataChange}></civ-table>
 
   <div style="margin-bottom: 1rem; min-height: 2.5em; display: flex; align-items: center;">
     <button @click=${handleAdd} style="margin-right: 1rem;">
