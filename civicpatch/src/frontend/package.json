@@ -1,6 +1,7 @@
 {
   "type": "module",
   "dependencies": {
+    "ag-grid-community": "^35.1.0",
     "diff": "^8.0.3",
     "haunted": "^6.1.0",
     "js-yaml": "^4.1.1",

@@ -53,15 +53,15 @@ def preprocess_page_content(
     preprocessed_md = md(preprocessed_html, keep_inline_images_in=['td', 'th', 'tr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
 
     preprocessed_html_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "preprocessed.html")
-    original_output_md_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "original.md")
+    #original_output_md_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "original.md")
     cleaned_html_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "cleaned.html")
     output_md_file_path = os.path.join(cache_path, page_to_preprocess.folder_name, "preprocessed.md")
 
     with open(preprocessed_html_file_path, "w", encoding="utf-8") as f:
         f.write(preprocessed_html)
     
-    with open(original_output_md_file_path, "w", encoding="utf-8") as f:
-        f.write(output_md)
+    #with open(original_output_md_file_path, "w", encoding="utf-8") as f:
+    #    f.write(output_md)
 
     with open(output_md_file_path, "w", encoding="utf-8") as f:
         f.write(preprocessed_md)

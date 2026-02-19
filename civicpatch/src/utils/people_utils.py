@@ -128,9 +128,13 @@ def normalize_roles(roles: List[str]) -> List[str]:
     seen = set()
 
     for role in roles:
+        # skip falsy values early to avoid converting None -> "None"
+        if not role:
+            continue
+
         role = str(role).strip().lower()
 
-        if not role:
+        if not role or role == "":
             continue
 
         direct_match = role_aliases.get(role)
