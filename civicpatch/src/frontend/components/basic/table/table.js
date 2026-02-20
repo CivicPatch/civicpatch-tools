@@ -3,9 +3,9 @@ import { css } from 'lit';
 import "./cell"
 
 const styles = css`
-  :host {
-    color: blue;
-  }
+  table:focus {
+    outline: 2px solid rgb(var(--catppuccin-sapphire));
+  } 
   td {
     padding: 0;
     border: none;
@@ -52,10 +52,15 @@ function BasicTable(props) {
   }
 
   function handleCellBlur(e) {
-    if (e.currentTarget.contains(e.relatedTarget)) {
-      // Focus is still within the same cell, do not blur
-      return;
-    }
+    //if (e.currentTarget.contains(e.relatedTarget)) {
+    //  // Focus is still within the same cell, do not blur
+    //  return;
+    //}
+    // Focus on the table instead
+    console.log("what is", e, this)
+    const table = this.closest('table');
+    console.log('Focusing table', table);
+    table.focus();
     setFocusedCell({ row: null, col: null });
   }
 
@@ -67,6 +72,8 @@ function BasicTable(props) {
     const { row, col, direction } = event.detail;
     let nextRow = row;
     let nextCol = col;
+
+    // Skip over non-editable cells
     if (direction === 'right') {
       nextCol = Math.min(props.columns.length - 1, col + 1);
     } else if (direction === 'left') {
@@ -95,34 +102,75 @@ function BasicTable(props) {
     setEditingCell({ row: rowIndex, col: colIndex });
   }
 
+  function getNestedValue(obj, path) {
+    return path.split('.').reduce((acc, key) => acc?.[key], obj);
+  }
+
+
+  function handleTableKeyDown(e) {
+    // If no cell is focused, go to the first cell/last cell on any arrow key press
+    const tableIsFocused = document.activeElement === e.currentTarget;
+    console.log("Table key pressed", e.key, focusedCell, tableIsFocused);
+
+    if (tableIsFocused) {
+      setFocusedCell({ row: null, col: null });
+
+      if (['ArrowRight', 'ArrowDown'].includes(e.key)) {
+        setFocusedCell({ row: 0, col: 0 });
+        e.preventDefault();
+      } else if (['ArrowLeft', 'ArrowUp'].includes(e.key)) {
+        setFocusedCell({ row: props.data.length - 1, col: props.columns.length - 1 });
+        e.preventDefault();
+      }
+    } else if (e.key === KEYCODES.ESCAPE) {
+      setFocusedCell({ row: null, col: null });
+      setEditingCell({ row: null, col: null });
+    }
+  }
+
+  const isFirstCell = (rowIndex, colIndex) => {
+    return rowIndex === 0 && colIndex === 0;
+  }
+
+  const isLastCell = (rowIndex, colIndex) => {
+    return rowIndex === props.data.length - 1 && colIndex === props.columns.length - 1;
+  }
+
   return html`
     <style>${styles}</style>
-    <table class="striped" role="grid">
+    <table 
+      class="striped" 
+      role="grid" 
+      style="height: 100%" 
+      tabindex="0"
+      @keydown=${handleTableKeyDown}
+    >
       <thead>
         <tr>
           ${props.columns.map((col, colIndex) => html`
-            <th tabindex="-1"
-                @focus=${() => handleCellFocus(-1, colIndex)}
-                @blur=${handleCellBlur}
-            >${col.label}</th>
+            <th>${col.label}</th>
           `)}
         </tr>
       </thead>
-      <tbody>
+      <tbody style="height: 100%">
         ${props.data.map((row, rowIndex) => html`
-          <tr>
+          <tr style="height: 1px;">
             ${props.columns.map((col, colIndex) => {
-            const value = row[col.field];
+            const value = getNestedValue(row, col.field);
             const cellIsFocused = focusedCell.row === rowIndex && focusedCell.col === colIndex;
             return html`
-              <td style="padding: 0">
+              <td style="padding: 0;">
                 <civ-table-cell
+                  .isFirstCell=${isFirstCell(rowIndex, colIndex)}
+                  .isLastCell=${isLastCell(rowIndex, colIndex)}
                   .identifier=${props.identifier}
                   .rowIndex=${rowIndex}
                   .colIndex=${colIndex}
+                  .type=${col.type}
                   .field=${col.field}
                   .value=${value}
                   @data-change=${handleDataChange}
+                  @focus-stop=${handleCellBlur}
                   @edit-start=${handleEditStart}
                   @edit-stop=${handleEditStop}
                   @on-move=${handleOnMove}
