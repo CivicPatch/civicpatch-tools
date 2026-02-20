@@ -1,12 +1,16 @@
 :root,
 :host {
-    --pico-font-family: "Roboto Serif", serif; 
+    --pico-font-family: "Noto Sans", sans-serif; 
     --pico-form-element-spacing-vertical: 0.5rem; /* Smaller vertical padding */
     --pico-form-element-spacing-horizontal: 0.5rem; /* Smaller horizontal padding */
     font-size: 14px;
     --pico-border-radius: 0.4rem;
     --pico-border-width: 0.03rem;
     --pico-outline-width: 0.2rem;
+}
+
+*:focus {
+  outline: 5px solid red !important;
 }
 
 [data-theme="light"],

@@ -461,53 +461,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     </section>
   </div>
 
-  <civ-table 
-  .identifier=${"_tempKey"}
-  .columns=${[
-    {
-      field: "name",
-      label: "Name",
-      editable: true,
-    },
-    {
-      field: "phones",
-      label: "Phones",
-      editable: true,
-    },
-    {
-      field: "emails",
-      label: "Emails",
-      editable: true,
-    },
-    {
-      field: "urls",
-      label: "URLs",
-      editable: true,
-    },
-    {
-      field: "start_date",
-      label: "Start Date",
-      editable: true,
-    },
-    {
-      field: "end_date",
-      label: "End Date",
-      editable: true,
-    },
-    {
-      field: "office.name",
-      label: "Office Name",
-      editable: true,
-    },
-    {
-      field: "source_urls",
-      label: "Source URLs",
-      editable: true,
-    }
-  ]} 
-  .data=${currentPeople} 
-  @data-change=${handleTableDataChange}></civ-table>
-
   <div style="margin-bottom: 1rem; min-height: 2.5em; display: flex; align-items: center;">
     <button @click=${handleAdd} style="margin-right: 1rem;">
       Add
@@ -553,6 +506,67 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       ${error}
     </div>
   ` : ""}
+
+  <civ-table 
+  .identifier=${"_tempKey"}
+  .columns=${[
+    {
+      field: "image",
+      label: "Image",
+      editable: false,
+      type: "image",
+    },
+    {
+      field: "name",
+      label: "Name",
+      editable: true,
+      type: "single",
+    },
+    {
+      field: "phones",
+      label: "Phones",
+      editable: true,
+      type: "multiple",
+    },
+    {
+      field: "emails",
+      label: "Emails",
+      editable: true,
+      type: "multiple",
+    },
+    {
+      field: "urls",
+      label: "URLs",
+      editable: true,
+      type: "multiple",
+    },
+    {
+      field: "start_date",
+      label: "Start Date",
+      editable: true,
+      type: "date",
+    },
+    {
+      field: "end_date",
+      label: "End Date",
+      editable: true,
+      type: "date",
+    },
+    {
+      field: "office.name",
+      label: "Office Name",
+      editable: true,
+      type: "single",
+    },
+    {
+      field: "source_urls",
+      label: "Source URLs",
+      editable: true,
+      type: "multiple",
+    }
+  ]} 
+  .data=${currentPeople} 
+  @data-change=${handleTableDataChange}></civ-table>
 
   <div
     class="grid"
