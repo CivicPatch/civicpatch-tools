@@ -9,10 +9,6 @@
     --pico-outline-width: 0.2rem;
 }
 
-*:focus {
-  outline: 5px solid red !important;
-}
-
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
     --catppuccin-base: 239, 241, 245;
