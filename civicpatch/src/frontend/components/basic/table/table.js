@@ -30,7 +30,6 @@ const styles = css`
   }
   td:focus-within {
     background-color: rgb(var(--catppuccin-base));
-    outline: 2px solid rgb(var(--catppuccin-sapphire));
     border: 2px solid transparent;
     border-radius: 4px;
   }
@@ -63,33 +62,27 @@ function BasicTable(props) {
   const [focusedCell, setFocusedCell] = useState({ row: null, col: null });
   const [editingCell, setEditingCell] = useState({ row: null, col: null });
 
-  function handleCellFocus(rowIndex, colIndex) {
-    setFocusedCell({ row: rowIndex, col: colIndex });
-  }
-
-  function handleCellBlur(e) {
-    //if (e.currentTarget.contains(e.relatedTarget)) {
-    //  // Focus is still within the same cell, do not blur
-    //  return;
-    //}
-    // Focus on the table instead
-    console.log("what is", e, this)
-    const table = this.closest('table');
-    console.log('Focusing table', table);
-    table.focus();
-    setFocusedCell({ row: null, col: null });
-  }
-
   function handleDataChange(event) {
     console.log("Data changed", event.detail);
+    const { identifier, field, value, row, col } = event.detail;
+    const currentlyEditing = editingCell.row === row && editingCell.col === col;
+    if (!currentlyEditing) {
+      console.warn("Received data change from a cell that is not currently being edited", { row, col });
+      return;
+    }
+
+    // Data has been submitted from a cell, we should reset edit mode
+    setEditingCell({ row: null, col: null });
+
+    // Also, should submit the changes
+    // Good time to validate, but tomorrow's me will implement that
   }
 
-  function handleOnMove(event) {
-    const { row, col, direction } = event.detail;
+  function handleOnMove({row, col, direction}) {
+    console.log("move", {row, col, direction})  
     let nextRow = row;
     let nextCol = col;
 
-    // Skip over non-editable cells
     if (direction === 'right') {
       nextCol = Math.min(props.columns.length - 1, col + 1);
     } else if (direction === 'left') {
@@ -102,17 +95,6 @@ function BasicTable(props) {
     setFocusedCell({ row: nextRow, col: nextCol });
   }
 
-  function handleEditStart(event) {
-    console.log("Edit started", event.detail);
-    const { row, col, value } = event.detail;
-    setEditingCell({ row, col });
-  }
-
-  function handleEditStop(event) {
-    setEditingCell({ row: null, col: null });
-    // ** actually change the data here **
-  }
-
   function handleCellClick(rowIndex, colIndex) {
     setFocusedCell({ row: rowIndex, col: colIndex });
     setEditingCell({ row: rowIndex, col: colIndex });
@@ -122,11 +104,9 @@ function BasicTable(props) {
     return path.split('.').reduce((acc, key) => acc?.[key], obj);
   }
 
-
   function handleTableKeyDown(e) {
     // If no cell is focused, go to the first cell/last cell on any arrow key press
     const tableIsFocused = document.activeElement === e.currentTarget;
-    console.log("Table key pressed", e.key, focusedCell, tableIsFocused);
 
     if (tableIsFocused) {
       setFocusedCell({ row: null, col: null });
@@ -152,6 +132,72 @@ function BasicTable(props) {
     return rowIndex === props.data.length - 1 && colIndex === props.columns.length - 1;
   }
 
+  function handleCellKeyDown(e, { row, col, type, editable }) {
+    const editing = editingCell.row === row && editingCell.col === col;
+    const focused = focusedCell.row === row && focusedCell.col === col;
+
+    switch (e.key) {
+       case KEYCODES.TAB:
+           if (isFirstCell(row, col) && e.shiftKey ||
+               isLastCell(row, col) && !e.shiftKey
+           ) {
+             setFocusedCell({ row: null, col: null });
+             setEditingCell({ row: null, col: null });
+             return; // allow default tab behavior to move focus out of table
+           }
+
+           e.preventDefault();
+           if (e.shiftKey) {
+             handleOnMove({ row, col, direction: 'left' });
+           } else {
+             handleOnMove({ row, col, direction: 'right' });
+           }
+           return;
+       case KEYCODES.ESCAPE:
+           if (editing) {
+             setEditingCell({ row: null, col: null });
+             e.stopPropagation();
+           } else if (focused) {
+             setFocusedCell({ row: null, col: null });
+             e.stopPropagation();
+           }
+           return;
+       case KEYCODES.ENTER:
+           if (editing) {
+             setEditingCell({ row: null, col: null });
+           } else {
+             if (!editable) return;
+             setEditingCell({ row, col });
+           }
+           return;
+       case KEYCODES.RIGHT_ARROW:
+           if (editing) return;
+           e.preventDefault(); 
+           handleOnMove({ row, col, direction: 'right' });
+           return;
+       case KEYCODES.LEFT_ARROW:
+           if (editing) return;
+           e.preventDefault();
+           handleOnMove({ row, col, direction: 'left' });
+           return;
+       case KEYCODES.UP_ARROW:
+           if (editing) return;
+           e.preventDefault();
+           handleOnMove({ row, col, direction: 'up' });
+           return;
+       case KEYCODES.DOWN_ARROW:
+           if (editing) return;
+           e.preventDefault();
+           handleOnMove({ row, col, direction: 'down' });
+           return;
+       default:
+           if (editing) {
+               e.stopPropagation();
+           }
+           return;
+      }
+    }
+
   return html`
     <style>${styles}</style>
     <table 
@@ -175,27 +221,23 @@ function BasicTable(props) {
             const mapKey = `${identifierValue}-${col.field}`;
             const value = getNestedValue(row, col.field);
             const cellIsFocused = focusedCell.row === rowIndex && focusedCell.col === colIndex;
+            const cellIsEditing = editingCell.row === rowIndex && editingCell.col === colIndex;
             return keyed(mapKey, html`
-              <td style="padding: 0;">
+              <td style="padding: 0;" 
+                @keydown=${(e) => handleCellKeyDown(e, { row: rowIndex, col: colIndex, editable: col.editable })}
+                @click=${() => handleCellClick(rowIndex, colIndex)}
+              >
                 <civ-table-cell
-                  .isFirstCell=${isFirstCell(rowIndex, colIndex)}
-                  .isLastCell=${isLastCell(rowIndex, colIndex)}
+                  @data-change=${handleDataChange}
                   .identifier=${props.identifier}
                   .rowIndex=${rowIndex}
                   .colIndex=${colIndex}
                   .type=${col.type}
                   .field=${col.field}
                   .format=${col.format}
-                  .canEdit=${col.editable}
                   .value=${value}
-                  @data-change=${handleDataChange}
-                  @focus-stop=${handleCellBlur}
-                  @edit-start=${handleEditStart}
-                  @edit-stop=${handleEditStop}
-                  @on-move=${handleOnMove}
-                  @click=${() => handleCellClick(rowIndex, colIndex)}
                   .focused=${cellIsFocused}
-                  .editing=${editingCell.row === rowIndex && editingCell.col === colIndex}
+                  .editing=${cellIsEditing}
                 ></civ-table-cell>
               </td>
           `)
