@@ -1,37 +1,25 @@
 import { component, useState } from "haunted";
 import { html } from "lit-html";
 
-
 const DummyConfig = {
   identities: [],
-  offices: [
-    {
-      name: "Mayor",
-      division_ocdid: "ocd-division/country:us/state:tx/place:austin"
-    },
-    {
-      name: "Council Member",
-      division_ocdid: "ocd-division/country:us/state:tx/place:austin/council_district:1"
-    },
-    {
-      name: "Council Member",
-      division_ocdid: "ocd-division/country:us/state:tx/place:austin/council_district:2"
-    }
-  ]
 };
+
+const DummyNotes = [
+  { date: "2024-01-01", content: "Information important to reviewer", pull_request_url: "<URL>" },
+  { date: "2024-01-02", content: "Maybe collect comments from previous pull requests" },
+];
 
 /* Should display the config details for a jurisdiction, 
 and allow users to edit and save the config. */
-function ConfigDetail({ config = DummyConfig, onSave }) {
+function ConfigDetail({ config = DummyConfig, onSave, people, notes = DummyNotes }) {
+  console.log("data", people)
   const [isEditMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState(config);
+  const offices = people?.map(p => ({ "name": p.office?.name, "division_ocdid": p.office?.division_ocdid })) || [];
 
   const toggleEditMode = () => {
     setEditMode(!isEditMode);
-  };
-
-  const handleInputChange = (field, value) => {
-    setFormData({ ...formData, [field]: value });
   };
 
   const handleArrayChange = (field, index, key, value) => {
@@ -57,10 +45,17 @@ function ConfigDetail({ config = DummyConfig, onSave }) {
     setEditMode(false);
   };
 
+  const noteItem = (note) => {
+    if (note.pull_request_url) {
+      return html`<li><strong>${note.date}</strong>: <a href="${note.pull_request_url}" target="_blank">[View PR]</a> ${note.content} </li>`;
+    }
+    return html`<li><strong>${note.date}</strong>: ${note.content}</li>`;
+  }
+
   return html`
     <article>
       <header class="d-flex align-items-center justify-content-between">
-        <h2>Config Details</h2>
+        <h2>History<h2>
         <button 
           @click=${toggleEditMode} 
           class="contrast outline"
@@ -71,6 +66,12 @@ function ConfigDetail({ config = DummyConfig, onSave }) {
         </button>
       </header>
 
+      <section>
+        <h3>Notes</h3>
+        <ul>
+          ${notes.map(noteItem)}
+        </ul>
+      </section>
 
       ${isEditMode
         ? html`
@@ -146,7 +147,7 @@ function ConfigDetail({ config = DummyConfig, onSave }) {
 
             <h3>Offices</h3>
             <ul>
-              ${config.offices.map(office => html`
+              ${offices.map(office => html`
                 <li>
                   <strong>${office.name}</strong><br/>
                   Division OCDID: ${office.division_ocdid}

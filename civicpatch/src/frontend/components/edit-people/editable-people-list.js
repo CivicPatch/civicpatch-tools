@@ -1,5 +1,6 @@
 import { html, component, useEffect, useState, useRef } from 'haunted';
 import { ref } from 'lit-html/directives/ref.js';
+import { keyed } from 'lit/directives/keyed.js';
 
 import './person-card.js';
 import '../basic/table/table.js';
@@ -153,7 +154,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   function handleAdd() {
     const default_office_name = "Council Member";
-    const first_person = originalPeople.lenggth > 0 ? originalPeople[0] : null;
+    //const first_person = originalPeople.lenggth > 0 ? originalPeople[0] : null;
     const last_person = originalPeople.length > 0 ? originalPeople[originalPeople.length - 1] : null;
     const default_office_division_ocdid = originalPeople.length > 0 ? originalPeople[0].office?.division_ocdid : null;
     const default_link = last_person?.urls?.[0] || null;
@@ -511,7 +512,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   .identifier=${"_tempKey"}
   .columns=${[
     {
-      field: "image",
+      field: "cdn_image",
       label: "Image",
       editable: false,
       type: "image",
@@ -526,12 +527,14 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       field: "phones",
       label: "Phones",
       editable: true,
+      format: "phone",
       type: "multiple",
     },
     {
       field: "emails",
       label: "Emails",
       editable: true,
+      format: "email",
       type: "multiple",
     },
     {
@@ -559,6 +562,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       type: "single",
     },
     {
+      field: "office.division_ocdid",
+      label: "Division",
+      editable: true,
+      type: "single"
+    },
+    {
       field: "source_urls",
       label: "Source URLs",
       editable: true,
@@ -579,7 +588,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     "
   >
     ${currentPeople.map(
-      (person, idx) => html`
+      (person, idx) => keyed(person._tempKey, html`
         <div role="listitem">
           <person-card
             tabIndex=${focusedIdx === idx ? "0" : "-1"}
@@ -593,7 +602,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
             .onReset=${() => handleReset(person._tempKey)}
           ></person-card>
         </div>
-      `
+      `)
     )}
   </div>
   ${!notice ? diffPreview : ""}

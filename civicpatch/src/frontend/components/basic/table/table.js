@@ -1,5 +1,6 @@
 import { html, component, useState, useLayoutEffect } from 'haunted';
 import { css } from 'lit';
+import { keyed } from 'lit/directives/keyed.js';
 import "./cell"
 
 const styles = css`
@@ -17,6 +18,21 @@ const styles = css`
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+  }
+  tr {
+    border: 1px solid rgb(var(--catppuccin-crust));
+  }
+  tr:hover {
+    background-color: rgba(var(--catppuccin-teal), 0.1);
+  }
+  td {
+    background-color: inherit; 
+  }
+  td:focus-within {
+    background-color: rgb(var(--catppuccin-base));
+    outline: 2px solid rgb(var(--catppuccin-sapphire));
+    border: 2px solid transparent;
+    border-radius: 4px;
   }
 `;
 
@@ -139,7 +155,6 @@ function BasicTable(props) {
   return html`
     <style>${styles}</style>
     <table 
-      class="striped" 
       role="grid" 
       style="height: 100%" 
       tabindex="0"
@@ -154,11 +169,13 @@ function BasicTable(props) {
       </thead>
       <tbody style="height: 100%">
         ${props.data.map((row, rowIndex) => html`
-          <tr style="height: 1px;">
+          <tr>
             ${props.columns.map((col, colIndex) => {
+            const identifierValue = row[props.identifier];
+            const mapKey = `${identifierValue}-${col.field}`;
             const value = getNestedValue(row, col.field);
             const cellIsFocused = focusedCell.row === rowIndex && focusedCell.col === colIndex;
-            return html`
+            return keyed(mapKey, html`
               <td style="padding: 0;">
                 <civ-table-cell
                   .isFirstCell=${isFirstCell(rowIndex, colIndex)}
@@ -168,6 +185,8 @@ function BasicTable(props) {
                   .colIndex=${colIndex}
                   .type=${col.type}
                   .field=${col.field}
+                  .format=${col.format}
+                  .canEdit=${col.editable}
                   .value=${value}
                   @data-change=${handleDataChange}
                   @focus-stop=${handleCellBlur}
@@ -179,7 +198,7 @@ function BasicTable(props) {
                   .editing=${editingCell.row === rowIndex && editingCell.col === colIndex}
                 ></civ-table-cell>
               </td>
-  `;
+          `)
   })}
           </tr>
         `)}

@@ -138,7 +138,7 @@ function JurisdictionPage({
               ? { lat: data.geo_center.lat, lng: data.geo_center.lng }
               : null}
           ></civ-map>
-          <civ-config-detail></civ-config-detail>
+          <civ-config-detail .people=${people}></civ-config-detail>
         </div>
 
         <div>

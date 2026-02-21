@@ -2,7 +2,7 @@ import { useState, useEffect } from 'haunted';
 import { createRef } from 'lit-html/directives/ref.js';
 
 export function useRovingFocusList(length) {
-  const [focusedIdx, setFocusedIdx] = useState(0);
+  const [focusedIdx, setFocusedIdx] = useState(null);
   const refs = Array.from({ length }, () => createRef());
 
   useEffect(() => {
