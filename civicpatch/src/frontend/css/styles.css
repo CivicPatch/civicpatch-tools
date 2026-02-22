@@ -9,6 +9,13 @@
     --pico-outline-width: 0.2rem;
 }
 
+*:focus {
+  outline: 2px solid rgb(var(--catppuccin-sapphire));
+  outline-offset: 2px;
+  border: 2px solid transparent;
+  border-radius: var(--pico-border-radius);
+}
+
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
     --catppuccin-base: 239, 241, 245;

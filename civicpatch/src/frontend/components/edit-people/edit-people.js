@@ -13,6 +13,17 @@ function genKey() {
   return Math.random().toString(36).substr(2, 9) + Date.now();
 }
 
+function setNestedValue(obj, path, value) {
+  const keys = path.split('.');
+  let curr = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (!curr[keys[i]]) curr[keys[i]] = {};
+    curr = curr[keys[i]];
+  }
+  curr[keys[keys.length - 1]] = value;
+  return obj;
+}
+
 const TRACKED_FIELDS = [
   "name", "other_names", "phones", "emails", "urls", "start_date", "end_date", "office", "source_urls",
   "image", "cdn_image", "updated_at"
@@ -37,7 +48,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   const selectedPeople = currentPeople.filter(p => p._selected).map(p => p._tempKey);
   const dirty = currentPeople.some(person => person._dirty);
-  const element = this;
 
   const peopleToSubmit = currentPeople
     .filter(p => !p._deleted)
@@ -86,6 +96,16 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       currentPeople.map(person =>
         person._tempKey === key
           ? { ...person, _selected: !person._selected }
+          : person
+      )
+    );
+  }
+
+  function setSelected(key, selected) {
+    setCurrentPeople(currentPeople =>
+      currentPeople.map(person =>
+        person._tempKey === key
+          ? { ...person, _selected: selected }
           : person
       )
     );
@@ -313,6 +333,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   function updatePerson(key, updates) {
+    console.log("updates: ", updates)
     setCurrentPeople(currentPeople =>
       currentPeople.map(person => {
         if (person._tempKey === key) {
@@ -334,9 +355,16 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   function handleTableDataChange(e) {
     // Find the person by index or key and update your state
-    console.log("Data change event:", e.detail);
-    const { identifier, key, value } = e.detail;
-    updatePerson(identifier, { [key]: value }); 
+    const { identifier, field, value } = e.detail;
+    console.log("Updating person", { identifier, field, value });
+
+    if (field == "_selected") {
+      setSelected(identifier, value);
+    } else {
+      // Handle nested field, ex: office.name
+      updatePerson(identifier, setNestedValue({ [field]: value }, field, value));
+    }
+
   }
 
   if (loading) return html`<p>Loading people...</p>`;
@@ -510,7 +538,25 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   <civ-table 
   .identifier=${"_tempKey"}
+  .selectedIdentifiers=${selectedPeople}
+  .canReorder=${true}
   .columns=${[
+    {
+      editable: true,
+      field: "_selected",
+      type: "checkbox",
+    },
+    {
+      type: "drag-row",
+      editable: false,
+      renderCell: (person) => html`
+          <div style="display:flex;align-items:center;justify-content:center; height:100%;">
+            <span class="drag-handle" style="display: flex; align-items: center; justify-content: center; cursor: grab; font-size: 1.2rem; height: 100%;" title="Drag to reorder">
+              <i class="fas fa-grip-vertical" style="display: flex; align-items: center; justify-content: center; height: 100%;"></i>
+            </span>
+          </div>
+      `
+    },
     {
       field: "cdn_image",
       label: "Image",

@@ -21,39 +21,37 @@ const styles = css`
     height: 100%;
     box-sizing: border-box;
 
-        div {
-            width: 100%;
-            height: 100%;
-            min-height: 1em;
-            display: flex;
-            align-items: stretch;
-        }
+    div {
+        width: 100%;
+        height: 100%;
+        min-height: 1em;
+        display: flex;
+        align-items: stretch;
+    }
 
-        span {
-            flex: 1;
-            width: 100%;
-            height: 100%;
-            display: block;
-            min-height: 1em;
-            box-sizing: border-box;
-            border: 2px solid transparent;
-            padding: 0.4rem;
-            white-space: normal;
-            word-break: break-word;
-            overflow-wrap: break-word;
-        }
+    span {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        display: block;
+        min-height: 1em;
+        box-sizing: border-box;
+        border: 2px solid transparent;
+        padding: 0.4rem;
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
 
-        span.cell-content[contenteditable="true"]:focus {
-            box-sizing: border-box;
-            outline: 2px solid rgb(var(--catppuccin-sapphire));
-        }
-        div.tag-list:focus-within {
-            outline: 2px solid rgb(var(--catppuccin-sapphire));
-        }
-
-        div:focus {
-            outline: 1px solid rgb(var(--catppuccin-sapphire));
-        }
+    span.cell-content[contenteditable="true"]:focus {
+        box-sizing: border-box;
+        outline: 2px solid rgb(var(--catppuccin-mauve));
+        border-radius: var(--pico-border-radius);
+    }
+    div.tag-list:focus-within {
+        outline: 2px solid rgb(var(--catppuccin-mauve));
+        border-radius: var(--pico-border-radius);
+    }
 
     .tag-list {
         display: flex;
@@ -136,28 +134,58 @@ function TableCell({
   format,
   value,
   focused,
-  editing
+  editing,
+  customCell,
+  data
 }) {
-  const contentEditableRef = createRef()
+  const [editList, setEditList] = useState(() => Array.isArray(value) ? value : []);
   const divRef = createRef();
 
+  const contentEditableRef = createRef();
+  const checkboxRef = createRef();
+
+  useEffect(() => {
+    // Sync local state when parent value changes (e.g., after save/cancel)
+    setEditList(Array.isArray(value) ? value : []);
+  }, [value]);
+
   useLayoutEffect(() => {
+    if (type === "checkbox" && (focused || editing)) {
+      checkboxRef.current.focus()
+      return;
+    }
+
+    // Generic editing
     if (editing) {
-      const el = contentEditableRef.current;
-      if (el) {
-        el.focus();
+      if (contentEditableRef.current) {
+        contentEditableRef.current.focus();
         // Move caret to end
         const range = document.createRange();
-        range.selectNodeContents(el);
+        range.selectNodeContents(contentEditableRef.current);
         range.collapse(false);
         const sel = window.getSelection();
         sel.removeAllRanges();
         sel.addRange(range);
       }
     } else if (focused) {
-      divRef.current.focus();
+        divRef.current.focus();
     }
   }, [focused, editing]);
+
+  const handleSingleCellKeyDown = (e) => {
+    if (e.key === KEYCODES.ENTER) {
+      e.preventDefault();
+
+      if (editing) {
+        e.stopPropagation();
+        const newValue = contentEditableRef.current?.innerText ?? '';
+
+        // Reset input
+        contentEditableRef.current.innerText = '';
+        dispatchDataChange(e, newValue);
+      }
+    }
+  }
 
   function renderSingleCell() {
     if (!editing) {
@@ -169,58 +197,78 @@ function TableCell({
             <span
                 class="cell-content"
                 contenteditable="true"
+                @keydown=${handleSingleCellKeyDown}
                 ${ref(el => {
-      contentEditableRef.current = el;
-      if (el && !el.dataset.initialized) {
-        el.innerText = value ?? '';
-        el.dataset.initialized = 'true';
-      }
+                  contentEditableRef.current = el;
+                  if (el && !el.dataset.initialized) {
+                    el.innerText = value ?? '';
+                    el.dataset.initialized = 'true';
+                  }
     })}
             ></span>
         `);
   }
 
   function handleAddItem(e, newItem) {
-    if (newItem) {
-      const newList = [...currentList, newItem];
-      e.currentTarget.dispatchEvent(new CustomEvent('data-change', {
-        detail: { identifier, field, value: newList, row: rowIndex, col: colIndex },
-        bubbles: true,
-        composed: true
-      }));
-      e.target.innerText = '';
+    let newList = [...editList]
+
+    if (newItem && newItem.trim() !== '') {
+      newList = [...newList, newItem.trim()];
     }
+    setEditList(newList);
+
+    dispatchDataChange(e, newList);
+
+    return newList;
   }
 
   function handleRemoveItem(e, index) {
-    const currentList = Array.isArray(value) ? value : [];
-    const newList = currentList.filter((_, i) => i !== index);
-    e.currentTarget.dispatchEvent(new CustomEvent('data-change', {
-      detail: { identifier, field, value: newList, row: rowIndex, col: colIndex },
+    // Only update local state, do not dispatch event
+    const newList = editList.filter((_, i) => i !== index);
+    setEditList(newList);
+
+    return newList;
+  }
+
+  function dispatchDataChange(e, newValue) {
+    divRef.current?.dispatchEvent(new CustomEvent('cell-change', {
+      detail: { identifier, field, value: newValue, row: rowIndex, col: colIndex },
       bubbles: true,
       composed: true
     }));
   }
 
-  function handleListInputKeyDown(e, currentList) {
-    if (!editing) { return; }
-
+  function handleListInputKeyDown(e) {
+    if (!editing) return;
     if (e.key === KEYCODES.ENTER) {
       e.preventDefault();
       const newItem = e.target.innerText.trim();
       handleAddItem(e, newItem)
     } else if (e.key === KEYCODES.BACKSPACE) {
-      if (currentList.length === 0) {
-        return
+      console.log("handling input...", editList)
+      // If there is input, return
+      // Else, remove a button
+      const input = e.target.innerText.trim();
+      console.log('what is', input, !!input, input.length)
+      if (input && input.length > 0) {
+        return;
       }
 
-      handleRemoveItem(e, currentList.length - 1)
+      if (editList.length === 0) {
+        return;
+      }
+      // Visual update only -- commits only when Entered
+      handleRemoveItem(e, editList.length - 1);
+    }
+  }
+
+  function handleCheckboxKeyDown(e) {
+    if (e.key === KEYCODES.SPACE) {
+      e.preventDefault()
     }
   }
 
   function renderListCell() {
-    const editList = value && Array.isArray(value) ? value : [];
-
     const displayWithFormat = item => {
       switch (format) {
         case 'phone':
@@ -230,31 +278,31 @@ function TableCell({
         default: // Regular link
           return html`<a href="${item}" target="_blank" rel="noopener noreferrer" class="tag-link" tabindex="-1">${item}</a>`;
       }
-    }
+    };
 
     return html`
-            <div class="tag-list ${editing ? 'editing' : ''}">
-                ${editList.map((item, i) => editing
-      ? html`
-                        <button type="button" @click=${() => handleRemoveItem(i)}>
-                            <span class="tag-label">${item}</span>
-                            <span class="tag-remove">×</span>
-                        </button>`
-      : displayWithFormat(item)
-    )}
-                ${editing ? html`
-                    <span
-                        class="tag-input"
-                        contenteditable="true"
-                        data-placeholder="Add…"
-                        @keydown=${e => { handleListInputKeyDown(e, editList) }}
-                        ${ref(el => {
-      contentEditableRef.current = el;
-    })}
-                    ></span>
-                ` : ''}
-            </div>
-        `;
+      <div class="tag-list ${editing ? 'editing' : ''}">
+        ${editList.map((item, i) => editing
+          ? html`
+            <button type="button" @click=${e => handleRemoveItem(e, i)}>
+              <span class="tag-label">${item}</span>
+              <span class="tag-remove">×</span>
+            </button>`
+          : displayWithFormat(item)
+        )}
+        ${editing ? html`
+          <span
+            class="tag-input"
+            contenteditable="true"
+            data-placeholder="Add…"
+            @keydown=${handleListInputKeyDown}
+            ${ref(el => {
+              contentEditableRef.current = el;
+            })}
+          ></span>
+        ` : ''}
+      </div>
+    `;
   }
 
   function renderImageCell() {
@@ -286,12 +334,41 @@ function TableCell({
         `;
   }
 
+  function renderCheckboxCell() {
+    return html`
+        <div style="display:flex; 
+          align-items:center; 
+          justify-content:center; 
+          height:100%;
+          margin:0 1rem"
+          >
+            <input type="checkbox" style="margin: 0" tabIndex="-1"
+              ${ref(el => {
+                checkboxRef.current = el;
+                if (el && !el.dataset.initialized) {
+                  el.checked = !!value;
+                  el.dataset.initialized = 'true';
+                }
+              })}
+              @keydown=${handleCheckboxKeyDown}
+              @change=${(e) => dispatchDataChange(e, e.target.checked)}
+            />
+          </div>
+    `;
+  }
+
   function renderCell() {
+    if (customCell) {
+      return customCell(data);
+    }
+
     switch (type) {
       case 'multiple':
         return renderListCell();
       case 'image':
         return renderImageCell();
+      case 'checkbox':
+        return renderCheckboxCell()
       default:
         return renderSingleCell();
     }
@@ -301,12 +378,10 @@ function TableCell({
         <style>${styles}</style>
         <div
             tabIndex="-1"
-            data-col=${colIndex} 
-            data-row=${rowIndex} 
             data-field=${field} 
             ${ref(el => {
-    divRef.current = el;
-  })}
+              divRef.current = el;
+            })}
         >
             ${renderCell()}
         </div>
