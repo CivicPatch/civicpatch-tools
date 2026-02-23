@@ -356,7 +356,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   function handleTableDataChange(e) {
     // Find the person by index or key and update your state
     const { identifier, field, value } = e.detail;
-    console.log("Updating person", { identifier, field, value });
 
     if (field == "_selected") {
       setSelected(identifier, value);
@@ -364,7 +363,19 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       // Handle nested field, ex: office.name
       updatePerson(identifier, setNestedValue({ [field]: value }, field, value));
     }
+  }
 
+  function handleTableDataReorder(e) {
+    const { newOrder } = e.detail;
+    setCurrentPeople(currentPeople => {
+      const peopleById = currentPeople.reduce((acc, person) => {
+        person._dirty = true;
+        acc[person._tempKey] = person;
+
+        return acc;
+      }, {});
+      return newOrder.map(id => peopleById[id] || peopleById[parseInt(id)]);
+    });
   }
 
   if (loading) return html`<p>Loading people...</p>`;
@@ -621,7 +632,9 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     }
   ]} 
   .data=${currentPeople} 
-  @data-change=${handleTableDataChange}></civ-table>
+  @data-change=${handleTableDataChange}
+  @reorder=${handleTableDataReorder}
+  ></civ-table>
 
   <div
     class="grid"

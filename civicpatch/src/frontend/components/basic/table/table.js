@@ -2,6 +2,7 @@ import { html, component, useState, useLayoutEffect } from 'haunted';
 import { css } from 'lit';
 import { keyed } from 'lit/directives/keyed.js';
 import { ref, createRef } from 'lit/directives/ref.js';
+import { useSortableList } from '../../hooks/useSortableList';
 import "./cell"
 
 const styles = css`
@@ -18,12 +19,29 @@ const styles = css`
   }
   tr {
     border: 1px solid rgb(var(--catppuccin-crust));
+    transition: transform 300ms ease, opacity 300ms ease, background-color 150ms ease;
   }
   tr:hover {
     background-color: rgba(var(--catppuccin-teal), 0.1);
   }
+  tr.dragging {
+    opacity: 0.3;
+  }
+  tr.drop-indicator td div {
+    animation: expand 250ms ease-out forwards;
+  }
+  @keyframes expand {
+    from {
+      height: 0;
+      opacity: 0;
+    }
+    to {
+      height: 5rem;
+      opacity: 1;
+    }
+  }
   td {
-    background-color: inherit; 
+    background-color: inherit;
   }
   td:focus-within {
     background-color: rgb(var(--catppuccin-base));
@@ -57,9 +75,23 @@ function BasicTable(props) {
   const [focusedCell, setFocusedCell] = useState({ row: null, col: null });
   const [editingCell, setEditingCell] = useState({ row: null, col: null });
   
-  let draggedRowIndex = null;
-
   const tableRef = createRef();
+
+  const {
+    draggedIndex,
+    dragOverIndex,
+    handleDragStart,
+    handleDragOver,
+    handleDrop,
+    handleDragEnd,
+  } = useSortableList(props.data, props.identifier, (newOrder) => {
+    // Dispatch or handle the new order as needed
+    tableRef.current.dispatchEvent(new CustomEvent('reorder', {
+      detail: { newOrder },
+      bubbles: true,
+      composed: true
+    }));
+  });
 
   function handleDataChange(event) {
     const { identifier, field, value } = event.detail;
@@ -140,7 +172,6 @@ function BasicTable(props) {
   function handleCellKeyDown(e, { row, col, type, editable, isSelectCell }) {
     const editing = editingCell.row === row && editingCell.col === col;
     const focused = focusedCell.row === row && focusedCell.col === col;
-    console.log("Cell keydown", { key: e.key, editing, focused, isSelectCell});
 
     switch (e.code) {
       case KEYCODES.TAB:
@@ -224,34 +255,56 @@ function BasicTable(props) {
     }
   }
 
-  function handleDragStart(row, rowIndex, e) {
-    draggedRowIndex = rowIndex;
-    e.dataTransfer.effectAllowed = "move";
+  function renderDropIndicator(colspan, dragOverIndex) {
+    return html`
+      <tr class="drop-indicator">
+        <td 
+          colspan=${colspan} 
+          style="padding:0;"
+          @dragover=${e => handleDragOver(dragOverIndex, e)}
+          @drop=${e => handleDrop(dragOverIndex, e)}
+          >
+          <div style="height:5rem; background:rgba(var(--catppuccin-mauve),0.18); border-radius:var(--pico-border-radius);"></div>
+        </td>
+      </tr>
+    `;
   }
 
-  function handleDragOver(row, rowIndex, e) {
-    e.preventDefault();
-    // Optionally highlight row
+  function renderDataCell(col, colIndex, rowIndex) {
+    const row = props.data[rowIndex];
+    const identifierValue = row[props.identifier];
+    const mapKey = `${identifierValue}-${col.field}`;
+    const value = getNestedValue(row, col.field);
+    const cellIsFocused = focusedCell.row === rowIndex && focusedCell.col === colIndex;
+    const cellIsEditing = editingCell.row === rowIndex && editingCell.col === colIndex;
+    return keyed(mapKey, html`
+      <td style="padding: 0;" 
+        data-row=${rowIndex}
+        data-col=${colIndex}
+        @keydown=${(e) => handleCellKeyDown(e, { row: rowIndex, col: colIndex, editable: col.editable, isSelectCell: col.type === 'checkbox' })}
+        @click=${() => handleCellClick({ row: rowIndex, col: colIndex, editable: col.editable })}
+        @dragover=${e => handleDragOver(rowIndex, e)}
+        @drop=${e => handleDrop(rowIndex, e)}
+      >
+        <civ-table-cell
+          @cell-change=${handleDataChange}
+          .identifier=${identifierValue}
+          .rowIndex=${rowIndex}
+          .colIndex=${colIndex}
+          .type=${col.type}
+          .field=${col.field}
+          .format=${col.format}
+          .value=${value}
+          .focused=${cellIsFocused}
+          .editing=${cellIsEditing}
+          .customCell=${col.renderCell}
+          .data=${row}}
+        ></civ-table-cell>
+      </td>
+    `)
   }
 
-  function handleDrop(row, rowIndex, e) {
-    e.preventDefault();
-    if (draggedRowIndex === null || draggedRowIndex === rowIndex) return;
-
-    const newOrder = [...props.data];
-    const [moved] = newOrder.splice(draggedRowIndex, 1);
-    newOrder.splice(rowIndex, 0, moved);
-
-    // Send new order of IDs
-    const newOrderIds = newOrder.map(r => r[props.identifier]);
-    tableRef.current.dispatchEvent(new CustomEvent('reorder', {
-      detail: { newOrder: newOrderIds },
-      bubbles: true,
-      composed: true
-    }));
-
-    draggedRowIndex = null;
-  }
+  const isRedundantDrop = dragOverIndex === draggedIndex || dragOverIndex === draggedIndex + 1;
 
   return html`
     <style>${styles}</style>
@@ -270,50 +323,37 @@ function BasicTable(props) {
         </tr>
       </thead>
       <tbody style="height: 100%">
-        ${props.data.map((row, rowIndex) => html`
-          <tr
-            draggable="true"
-            @dragstart=${e => handleDragStart(row, rowIndex, e)}
-            @dragover=${e => handleDragOver(row, rowIndex, e)}
-            @drop=${e => handleDrop(row, rowIndex, e)}
-            @dragend=${e => props.onDragEnd?.(row, rowIndex, e)}
-          >
-            ${props.columns.map((col, colIndex) => {
-                const identifierValue = row[props.identifier];
-                const mapKey = `${identifierValue}-${col.field}`;
-                const value = getNestedValue(row, col.field);
-                const cellIsFocused = focusedCell.row === rowIndex && focusedCell.col === colIndex;
-                const cellIsEditing = editingCell.row === rowIndex && editingCell.col === colIndex;
-                return keyed(mapKey, html`
-                <td style="padding: 0;" 
-                  data-row=${rowIndex}
-                  data-col=${colIndex}
-                  @keydown=${(e) => handleCellKeyDown(e, { row: rowIndex, col: colIndex, editable: col.editable, isSelectCell: col.type === 'checkbox' })}
-                  @click=${() => handleCellClick({ row: rowIndex, col: colIndex, editable: col.editable })}
-                >
-                  <civ-table-cell
-                    @cell-change=${handleDataChange}
-                    .identifier=${identifierValue}
-                    .rowIndex=${rowIndex}
-                    .colIndex=${colIndex}
-                    .type=${col.type}
-                    .field=${col.field}
-                    .format=${col.format}
-                    .value=${value}
-                    .focused=${cellIsFocused}
-                    .editing=${cellIsEditing}
-                    .customCell=${col.renderCell}
-                    .data=${row}}
-                  ></civ-table-cell>
-                </td>
-              `)
-    })}
-          </tr>
+        ${[...Array(props.data.length + 1)].map((_, dropIndex) => html`
+          ${!isRedundantDrop && dropIndex === dragOverIndex ? renderDropIndicator(props.columns.length, dropIndex) : null}
+          ${dropIndex < props.data.length ? html`
+            <tr
+              draggable="true"
+              class=${dropIndex === draggedIndex ? "dragging" : ""}
+              @dragstart=${e => handleDragStart(dropIndex, e)}
+              @dragend=${handleDragEnd}
+            >
+              ${props.columns.map((col, colIndex) => {
+                return renderDataCell(col, colIndex, dropIndex);
+              })}
+            </tr>
+          ` : null}
         `)}
+        <!-- Always-present drop zone for the end of the list -->
+        ${dragOverIndex !== props.data.length ? html`
+          <tr>
+            <td
+              colspan=${props.columns.length}
+              style="height: 1rem; padding: 0;"
+              @dragover=${e => handleDragOver(props.data.length, e)}
+              @drop=${e => handleDrop(props.data.length, e)}
+            ></td>
+          </tr>
+        ` : null}
       </tbody>
     </table>
     <p>Focused: ${focusedCell.row}, ${focusedCell.col}</p>
     <p>Editing: ${editingCell.row}, ${editingCell.col}</p>
+    ${dragOverIndex}
   `;
 }
 
