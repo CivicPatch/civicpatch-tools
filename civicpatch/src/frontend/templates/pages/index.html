@@ -1,8 +1,18 @@
-{% extends "layouts/base.html" %} {% block content %} {% if not missing_env %}
+{% extends "layouts/base.html" %} 
+{% block content %} 
+{% if not missing_env %}
 
 <civ-search-jurisdictions></civ-search-jurisdictions>
 
-{% endif %} {% if missing_env %}
+<auth-status>
+  <div slot="user">
+    <p>Welcome, authenticated user!</p>
+    <!-- You can render user details here using JS -->
+  </div>
+</auth-status>
+
+{% endif %} 
+{% if missing_env %}
 <article class="card">
     <header>
         <h3 style="margin-bottom: 0.5em">
@@ -20,13 +30,5 @@
         {% endfor %}
     </ul>
 </article>
-{% else %}
-<article class="card">
-    <header>
-        <h3 style="margin-bottom: 0.5em">
-            ✅ Environment Ready
-        </h3>
-    </header>
-    <p>Your environment is all set up!</p>
-</article>
-{% endif %} {% endblock %}
+{% endif %} 
+{% endblock %}

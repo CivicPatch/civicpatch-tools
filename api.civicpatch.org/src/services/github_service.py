@@ -3,6 +3,7 @@ from typing import List, Optional, Dict, Any
 import yaml
 import base64
 import httpx
+import json
 
 from schemas.common import PullRequest
 timeout = httpx.Timeout(60.0)  
@@ -171,13 +172,11 @@ async def update_pull_request_file(
         **get_default_headers(),
     }
     contents_url = f"https://api.github.com/repos/CivicPatch/open-data/contents/{file_path}?ref={branch_name}"
-    print("contents_url:", contents_url)
     contents_response = await github_async_client.get(contents_url, headers=headers, timeout=timeout)
     if contents_response.status_code != 200:
         print("Error fetching file contents:", contents_response.status_code, contents_response.text)
         return False
     sha = contents_response.json()["sha"]
-    print("sha:", sha)
     serialized_data = yaml.dump(new_data, sort_keys=False, allow_unicode=True)
     encoded_content = base64.b64encode(serialized_data.encode("utf-8")).decode("utf-8")
 
@@ -202,3 +201,15 @@ async def update_pull_request_file(
     else:
         print("Error updating file:", update_response.status_code, update_response.text)
         return False
+
+async def get_teams(user_oauth_token: str):
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "Authorization": f"Bearer {user_oauth_token}"
+    }
+    teams_url = "https://api.github.com/user/teams"
+    response = await github_async_client.get(teams_url, headers=headers)
+    teams = response.json()
+    our_teams = [team for team in teams if team["organization"]["login"] == "CivicPatch"]
+    team_names = [team["name"] for team in our_teams]
+    return team_names

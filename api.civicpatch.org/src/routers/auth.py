@@ -5,21 +5,25 @@ from typing import cast
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from fastapi_sso import GithubSSO
+from services import github_service
 import database
 import secrets
 
-INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8000")
+INSTANCE_URL = os.getenv("INSTANCE_URL", "https://api.civicpatch.local")
+COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.local")
 GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID")
 GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
-GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/auth/github/callback"
+GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/api/v1/auth/github/callback"
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 from jose import jwt
 
+# https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
 github_sso = GithubSSO(
     client_id=GITHUB_CLIENT_ID,
     client_secret=GITHUB_CLIENT_SECRET,
     redirect_uri=GITHUB_CALLBACK_URL,
+    scope=["read:user", "user:email", "read:org"]  # Requesting access to read user info and org membership
 )
 
 def get_router(is_production: bool) -> APIRouter:
@@ -41,10 +45,25 @@ def get_router(is_production: bool) -> APIRouter:
 
     @router.get("/logout", include_in_schema=False)
     async def logout():
+        # TODO - connect this to redis (once we have it)
+        # This would allow us to dynamically invalidate their sessions
+        # based on team updates on GitHub
         """Forget the user's session."""
         response = RedirectResponse(url="/")
-        response.delete_cookie(key="token")
-        response.delete_cookie(key="csrf_token")
+        response.delete_cookie(
+            key="token",
+            domain=COOKIE_INSTANCE_URL,
+            samesite="none",
+            secure=True,  # required for samesite="none"
+            path="/"
+        )
+        response.delete_cookie(
+            key="csrf_token",
+            domain=COOKIE_INSTANCE_URL,
+            samesite="none",
+            secure=True,
+            path="/"
+        ) 
         return response
 
     @router.get("/{provider}/callback", include_in_schema=False)
@@ -65,14 +84,17 @@ def get_router(is_production: bool) -> APIRouter:
             tz=datetime.timezone.utc
         ) + datetime.timedelta(days=1)
 
-        await database.maybe_insert_user(openid.provider, openid.id, openid.email)
-        user = await database.get_user(openid.provider, openid.id)
+        teams = await github_service.get_teams(sso.access_token)
+
+        await database.create_update_user(openid.provider, openid.id, openid.email, teams)
+        # user = await database.get_user(openid.provider, openid.id)
         token = jwt.encode(
             {
                 "pld": openid.model_dump(), 
                 "exp": expiration,
                 "sub": openid.id,
-                "roles": user.get("roles") if user else None
+                "teams": teams
+                #"roles": user.get("roles") if user else None
             },
             key=cast(str, JWT_SECRET_KEY),
             algorithm="HS256",
@@ -83,8 +105,10 @@ def get_router(is_production: bool) -> APIRouter:
             value=token,
             expires=expiration,
             httponly=True,
-            secure=is_production,
-            samesite="lax",
+            secure=True,
+            samesite="none",
+            domain=COOKIE_INSTANCE_URL,
+            path="/"
         )
         # Create a signed CSRF token (stateless) and set it as a readable cookie
         csrf_payload = {"sub": openid.id, "iat": int(time.time()), "nonce": secrets.token_urlsafe(8)}
@@ -94,10 +118,12 @@ def get_router(is_production: bool) -> APIRouter:
             key="csrf_token",
             value=csrf_signed,
             expires=expiration,
-            httponly=False,
-            samesite="lax",
-            secure=is_production,
+            httponly=True,
+            secure=True,
+            samesite="none",
+            domain=COOKIE_INSTANCE_URL,
+            path="/"
         )
-        return response    
+        return response
 
     return router

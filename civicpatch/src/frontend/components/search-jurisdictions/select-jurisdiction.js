@@ -1,7 +1,9 @@
 import { component, useEffect, useState, useRef}  from "haunted";
 import { html } from "lit-html";
+import { useAuth } from "../hooks/useAuth.js";
 
 function CivSelectJurisdiction() {
+  const { user, loading: authLoading } = useAuth();
   const [states, setStates] = useState([]);
   const [jurisdictions, setJurisdictions] = useState([]);
   const [jurisdictionsMetadata, setJurisdictionsMetadata] = useState({});
@@ -125,6 +127,11 @@ function CivSelectJurisdiction() {
         @click=${handleSubmitClick} 
         ?disabled=${!selectedJurisdiction}>Submit</button>
       -->
+      ${ user ? html`
+        <a href="${jurisdictionLink()}" ?hidden=${!selectedJurisdiction}>
+          Go to jurisdiction page
+        </a>
+      ` : null }
       <a href="${jurisdictionLink()}" ?hidden=${!selectedJurisdiction}>
         Go to jurisdiction page
       </a>

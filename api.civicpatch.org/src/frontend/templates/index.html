@@ -11,7 +11,7 @@
       <div style="display: flex; align-items: center; justify-content: space-between;">
         <h1>civicpatch - api key management</h1>
         {% if user %}
-          <a href="/auth/logout" class="secondary" style="margin-left: auto; font-size: 1rem; padding: 0.4em 1.2em;">Logout</a>
+          <a href="/api/v1/auth/logout" class="secondary" style="margin-left: auto; font-size: 1rem; padding: 0.4em 1.2em;">Logout</a>
         {% endif %}
       </div>
       <p>Manage your API keys for your civicpatch server here.</p>
@@ -32,7 +32,7 @@
 
         <p>If you are setting this up for the first time, contact the <a href="mailto:{{ maintainer_email }}">maintainer</a>
         to approve your account. You will want to provide your <strong>provider_user_id</strong> after logging in.</p>
-        <a href="/auth/github/login" class="contrast" role="button">Login with GitHub</a>
+        <a href="/api/v1/auth/github/login" class="contrast" role="button">Login with GitHub</a>
       {% endif %}
     </main>
   </body>

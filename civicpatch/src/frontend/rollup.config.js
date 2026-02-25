@@ -4,7 +4,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import image from "@rollup/plugin-image";
 import css from "rollup-plugin-import-css";
 import replace from "@rollup/plugin-replace";
-//import alias from "@rollup/plugin-alias";
+import alias from "@rollup/plugin-alias";
 
 const devMode = process.env.BUILD_ENV === "development";
 console.log(`${devMode ? "development" : "production"} mode bundle`);
@@ -24,16 +24,16 @@ const config = {
     sourcemap: devMode ? "inline" : false,
   },
   plugins: [
-    //alias({
-    //  entries: [
-    //    {
-    //      find: '@components',
-    //      replacement: devMode 
-    //        ? './cdn/bundle.js'  // Local in dev
-    //        : 'https://components.civicpatch.org/bundle.js'  // CDN in prod
-    //    }
-    //  ]
-    //}),
+//    alias({
+//      entries: [
+//        {
+//          find: '@components',
+//          replacement: devMode 
+//            ? './cdn/bundle.js'  // Local in dev
+//            : 'https://components.civicpatch.org/bundle.js'  // CDN in prod
+//        }
+//      ]
+//    }),
     nodeResolve(),
     image(),
     commonjs(),

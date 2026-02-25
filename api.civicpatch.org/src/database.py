@@ -27,36 +27,36 @@ def to_iso(dt):
         return dt.isoformat()
     return None
 
-async def maybe_insert_user(provider, provider_user_id, email):
-    async with pool.connection() as conn:
-        # Try to insert the user; check if it was newly created
-        result = await conn.execute(
+async def create_update_user(provider, provider_user_id, email, teams: List[str]):
+    async with pool.connection() as conn, conn.cursor() as cur:
+        # Upsert user
+        await cur.execute(
             """
             INSERT INTO users (provider, provider_user_id, email)
             VALUES (%s, %s, %s)
-            ON CONFLICT (provider, provider_user_id) DO NOTHING
+            ON CONFLICT (provider, provider_user_id)
+            DO UPDATE SET email = EXCLUDED.email
             """,
             (provider, provider_user_id, email),
         )
-        # If result.rowcount > 0, the user was newly inserted
-        if result.rowcount > 0:
-            # Insert 'unverified' role for new user
-            await conn.execute(
-                """
-                INSERT INTO user_roles (provider, provider_user_id, role)
-                VALUES (%s, %s, %s)
-                """,
-                (provider, provider_user_id, "unverified"),
-            )
-        else:
-            # User already exists, just update email if needed
-            await conn.execute(
-                """
-                UPDATE users SET email = %s
-                WHERE provider = %s AND provider_user_id = %s
-                """,
-                (email, provider, provider_user_id),
-            )
+        # Remove existing teams for user
+        await cur.execute(
+            """
+            DELETE FROM user_roles
+            WHERE provider = %s AND provider_user_id = %s
+            """,
+            (provider, provider_user_id),
+        )
+        # Insert new teams for user (always present)
+        await cur.executemany(
+            """
+            INSERT INTO user_roles (provider, provider_user_id, role)
+            VALUES (%s, %s, %s)
+            ON CONFLICT (provider, provider_user_id, role)
+            DO NOTHING
+            """,
+            [(provider, provider_user_id, team) for team in teams],
+        )
 
 
 async def create_api_key(provider, provider_user_id):
@@ -134,7 +134,7 @@ async def get_user(provider, provider_user_id):
             "email": row[0],
             "server_url": row[1],
             "created_at": row[2],
-            "roles": row[3], 
+            "teams": row[3], 
         }
 
 async def get_user_by_api_key(api_key):
@@ -167,7 +167,7 @@ async def get_user_by_api_key(api_key):
             "email": row[2],
             "server_url": row[3],
             "created_at": row[4],
-            "roles": row[5],
+            "teams": row[5],
         }
 
 async def get_user_details(provider, provider_user_id):

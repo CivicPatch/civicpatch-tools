@@ -53,7 +53,7 @@ function PeopleList({ local = [] }) {
         `;
     };
 
-    if (!people || people.length === 0) {
+    if (!people || people.length === 0 ) {
         return html`<p role="alert">No data available for this jurisdiction.</p>`;
     }
 
