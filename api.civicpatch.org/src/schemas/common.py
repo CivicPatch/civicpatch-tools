@@ -21,10 +21,10 @@ class UserRole(str, Enum):
 
 
 class RouteCategory(str, Enum):
-    COMPONENT_API = "component_api"    # Widget/component routes (was public_widget)
-    INTERNAL_API = "internal_api"      # Internal server operations  
-    ADMIN_ONLY = "admin_only"         # Admin-only routes
-    JOBS_API = "jobs_api"        # Routes for /api/v1/jobs/people
+    PUBLIC = "public"
+    AUTHENTICATED = "authenticated"
+    ADMIN = "admin"      
+    JOBS = "jobs"         
 
 
 class Person(BaseModel):
@@ -56,7 +56,7 @@ class Identity(BaseModel):
     provider: str
     provider_user_id: str
     email: str | None
-    roles: list[str] | None
+    teams: list[str] | None
 
 class PeopleJobHistory(BaseModel):
     request_id: str

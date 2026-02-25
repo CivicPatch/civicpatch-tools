@@ -1,14 +1,13 @@
 from typing import Optional, List
 import os
-from fastapi import HTTPException, Security, Header, Request, Depends, Cookie
+from fastapi import HTTPException, Security, Request, Depends
 from fastapi.security import APIKeyCookie, APIKeyHeader
 from fastapi_sso.sso.base import OpenID
 from jose import jwt, JWTError
 import time
-from typing import cast, Annotated
+from typing import cast
 import database
-from http import cookies as _cookies
-from schemas.common import Identity, RouteCategory, UserRole, ApiKeyType
+from schemas.common import Identity, RouteCategory, ApiKeyType
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 API_COOKIE = APIKeyCookie(name="token", auto_error=False)
@@ -19,25 +18,22 @@ JWT_ISSUER = os.getenv("JWT_ISSUER")
 
 UNSAFE_METHODS = {"POST", "PUT", "PATCH", "DELETE"}
 
-# Define ROUTE_PERMISSIONS once at module level
+# TODO: refactor in the future to support fine-grained permissions 
+# Example: in addition to "teams", add "api_keys" that are scoped
 ROUTE_PERMISSIONS = {
-    RouteCategory.COMPONENT_API: {
-        UserRole.ADMIN: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY],
-        UserRole.MEMBER: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY], 
-        UserRole.UNVERIFIED: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY]
+    RouteCategory.PUBLIC: {
+        "public": True
     },
-    RouteCategory.ADMIN_ONLY: {
-        UserRole.ADMIN: [ApiKeyType.SERVER_KEY]
+    RouteCategory.AUTHENTICATED: {
+        "teams": []
     },
-    RouteCategory.INTERNAL_API: {
-        UserRole.ADMIN: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY],
-        UserRole.MEMBER: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY],
-        UserRole.UNVERIFIED: [ApiKeyType.SERVER_KEY, ApiKeyType.INTERNAL_SERVER_KEY]
+    RouteCategory.ADMIN: {
+        "teams": ["admins"]
     },
-    RouteCategory.JOBS_API: {
-        #UserRole.ADMIN: [ApiKeyType.SERVER_KEY],
-        UserRole.JOBS: [ApiKeyType.SERVER_KEY]
-    }
+    RouteCategory.JOBS: {
+        "teams": ["jobs"],
+    },
+
 }
 
 async def get_user(
@@ -73,7 +69,7 @@ async def get_user(
 
     return identity
 
-# Update Identity creation to use roles (list)
+# Update Identity creation to use teams (list)
 async def get_user_by_api_key(api_key: str) -> Identity:
     user = await database.get_user_by_api_key(api_key)
 
@@ -84,10 +80,10 @@ async def get_user_by_api_key(api_key: str) -> Identity:
         provider=user.get("provider"),
         provider_user_id=user.get("provider_user_id"),
         email=user.get("email"),
-        roles=user.get("roles", [])  # <-- pass list of roles
+        teams=user.get("teams", [])  # <-- pass list of teams
     )
 
-# Update Identity creation to use roles (list)
+# Update Identity creation to use teams (list)
 async def get_user_by_cookie(request, token: str) -> Identity:
     try: #TODO
         decode_kwargs = {"key": cast(str, JWT_SECRET_KEY), "algorithms": ["HS256"]}
@@ -133,21 +129,21 @@ async def get_user_by_cookie(request, token: str) -> Identity:
             raise HTTPException(status_code=403, detail="Expired CSRF token")
 
     openid_obj = OpenID(**payload)
-    roles = payload.get("roles")  # <-- expect a list from token payload
+    teams = payload.get("teams")  # <-- expect a list from token payload
 
-    if not roles:
+    if not teams:
         provider = payload.get("provider") or getattr(openid_obj, "provider", None)
         provider_user_id = payload.get("sub") or payload.get("id") or getattr(openid_obj, "id", None)
         if provider and provider_user_id:
             user_row = await database.get_user(provider, provider_user_id)
-            if user_row and user_row.get("roles"):
-                roles = user_row["roles"]
+            if user_row and user_row.get("teams"):
+                teams = user_row["teams"]
 
     return Identity(
         provider=openid_obj.provider,
         provider_user_id=openid_obj.id,
         email=openid_obj.email,
-        roles=roles or []
+        teams=teams or []
     )
 
 async def get_optional_user(
@@ -164,16 +160,16 @@ async def get_optional_user(
         return None
 
 
-def require_any_role(*allowed_roles: str):
+def require_any_team(*allowed_teams: str):
     """
     Factory that returns a dependency callable. Use in routes as:
       current_user = Depends(require_role("admin"))
     or router dependencies: dependencies=[Depends(require_role("member","admin"))]
     """
     async def _dependency(user: Identity = Depends(get_user)):
-        user_roles = getattr(user, "roles", [])
-        if allowed_roles:
-            if not any(role in allowed_roles for role in user_roles):
+        user_teams = getattr(user, "teams", [])
+        if allowed_teams:
+            if not any(team in allowed_teams for team in user_teams):
                 raise HTTPException(status_code=403, detail="Insufficient permissions")
         return user
 
@@ -215,49 +211,15 @@ def get_api_key_type_from_auth(
 
 def require_route_access(category: RouteCategory):
     """Factory that returns a dependency for route category access control"""
-    async def _dependency(user: Identity = Depends(get_user), api_key_type: ApiKeyType = Depends(get_api_key_type)):
-        user_roles = getattr(user, "roles", [])
-        for role in user_roles:
-            allowed_key_types = ROUTE_PERMISSIONS.get(category, {}).get(role, [])
-            if api_key_type in allowed_key_types:
-                return user
-        raise HTTPException(
-            status_code=403,
-            detail="Insufficient permissions for this route."
-        )
-    return _dependency
-
-def require_route_access_optional(category: RouteCategory):
-    """Factory that returns an optional dependency for route category access control"""
-    async def _dependency(
-        request: Request,
-        authorization: Optional[str] = Security(API_HEADER),
-        cookie: Optional[str] = Security(API_COOKIE)
-    ):
-        # If no auth headers provided, allow anonymous access
-        if not authorization and not cookie:
-            return None
-
-        # If auth headers are provided, validate them properly
-        try:
-            user = await get_user(request, authorization, cookie)
-        except HTTPException:
-            raise
-
-        # If auth is valid, enforce permissions
-        api_key_type = get_api_key_type_from_auth(authorization, cookie)
-        if not api_key_type:
-            return user  # Shouldn't happen if user exists, but handle gracefully
-
-        for role in user.roles:
-            allowed_key_types = ROUTE_PERMISSIONS.get(category, {}).get(role, [])
-            if api_key_type in allowed_key_types:
-                return user
-
-        raise HTTPException(
-            status_code=403,
-            detail=f"Insufficient permissions for this route."
-             # Roles {user.roles} cannot use {api_key_type} for {category}"
-        )
-
+    async def _dependency(user: Identity = Depends(get_user)):
+        user_teams = getattr(user, "teams", [])
+        print("category", category)
+        allowed_teams = ROUTE_PERMISSIONS.get(category, {}).get("teams", [])
+        print("user: ", user)
+        print("allowed teams", allowed_teams)
+        if allowed_teams and not any(team in allowed_teams for team in user_teams):
+            raise HTTPException(
+                status_code=403,
+                detail="Insufficient permissions for this route."
+            )
     return _dependency

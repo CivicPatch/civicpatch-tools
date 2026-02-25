@@ -6,6 +6,7 @@ services:
       target: development-fe
     volumes:
       - ./src/frontend:/app
+      - ../components/build:/app/cdn:ro
       - /app/node_modules
     networks:
       - civicpatch_net

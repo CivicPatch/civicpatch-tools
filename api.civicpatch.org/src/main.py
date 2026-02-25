@@ -29,7 +29,7 @@ from database import (
     pool,
     user_is_approved,
 )
-from utils.auth import require_route_access, get_optional_user, require_route_access_optional
+from utils.auth import require_route_access, get_optional_user
 from services.memory_pub_sub_service import memory_pubsub
 from fastapi.responses import StreamingResponse
 
@@ -68,7 +68,7 @@ def url_for(request: FastAPIRequest, name: str) -> URL:
 INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8001")
 GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID")
 GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
-GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/auth/github/callback"
+GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/api/v1/auth/github/callback"
 CRUDDER_DB_URL = os.getenv("CRUDDER_DB_URL")
 
 MAINTAINER_EMAIL = os.getenv("MAINTAINER_EMAIL")
@@ -195,34 +195,34 @@ app.include_router(
     api_admin_router.get_router(api_key_header, pool),
     prefix="/api/admin",
     tags=["admin"],
-    dependencies=[Depends(require_route_access(RouteCategory.ADMIN_ONLY))],
+    dependencies=[Depends(require_route_access(RouteCategory.ADMIN))],
 )
 app.include_router(
     api_jurisdictions_router.get_router(),
     prefix="/api/v1/jurisdictions",
     tags=["jurisdictions"],
-    dependencies=[Depends(require_route_access_optional(RouteCategory.COMPONENT_API))]
+    dependencies=[] # public route for now
 )
 
 app.include_router(
     api_people_router.get_router(),
     prefix="/api/v1/people",
     tags=["people"],
-    dependencies=[Depends(require_route_access_optional(RouteCategory.COMPONENT_API))]
+    dependencies=[] # public route for now
 )
 
 app.include_router(
     api_pipelines_router.get_router(api_key_header),
     prefix="/api/internal/pipelines",
     tags=["pipelines"],
-    dependencies=[Depends(require_route_access(RouteCategory.INTERNAL_API))]
+    dependencies=[Depends(require_route_access(RouteCategory.JOBS))]
 )
 
 app.include_router(
     api_jobs_router.get_router(api_key_header),
     prefix="/api/v1/jobs",
     tags=["jobs"],
-    dependencies=[Depends(require_route_access(RouteCategory.JOBS_API))]
+    dependencies=[Depends(require_route_access(RouteCategory.JOBS))]
 )
 
 # Allow you to create your api keys
@@ -231,21 +231,37 @@ app.include_router(
     api_keys_router.get_router(), 
     prefix="/api/internal/api_keys", 
     tags=["api_keys"],
-    dependencies=[Depends(require_route_access(RouteCategory.INTERNAL_API))]
+    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))]
 )
 
 app.include_router(
     api_user_router.get_router(), 
     prefix="/api/internal/user", 
     tags=["user"],
-    dependencies=[Depends(require_route_access(RouteCategory.INTERNAL_API))]
+    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))]
 )
 
 app.include_router(
     auth_router(is_production),
-    prefix="/auth",
+    prefix="/api/v1/auth",
     tags=["auth"],
 )
+
+@app.get("/api/v1/me", tags=["auth"])
+async def get_me(user: Identity = Depends(get_optional_user)):
+    """
+    Returns the authenticated user's identity info.
+    """
+    if not user:
+        return {"authenticated": False}
+    return {
+        "authenticated": True,
+        "provider": user.provider,
+        "provider_user_id": user.provider_user_id,
+        "email": user.email,
+        "teams": getattr(user, "teams", None),
+    }
+
 
 @app.get("/api/v1/sse/jobs/status", include_in_schema=False)
 async def sse_job_status(job_type: str, jurisdiction_ocdid: str, request: Request):

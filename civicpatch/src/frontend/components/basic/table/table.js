@@ -6,6 +6,11 @@ import { useSortableList } from '../../hooks/useSortableList';
 import "./cell"
 
 const styles = css`
+  civ-table {
+    tr:last-child {
+      border: none;
+    }
+  }
   td {
     padding: 0;
     border: none;
@@ -36,7 +41,7 @@ const styles = css`
       opacity: 0;
     }
     to {
-      height: 5rem;
+      height: 8rem;
       opacity: 1;
     }
   }
@@ -121,8 +126,6 @@ function BasicTable(props) {
     } else if (direction === 'down') {
       nextRow = Math.min(props.data.length - 1, row + 1);
     }
-
-    console.log("Next: ", { row: nextRow, col: nextCol })
 
     setFocusedCell({ row: nextRow, col: nextCol });
     setEditingCell({ row: null, col: null })
@@ -264,11 +267,12 @@ function BasicTable(props) {
           @dragover=${e => handleDragOver(dragOverIndex, e)}
           @drop=${e => handleDrop(dragOverIndex, e)}
           >
-          <div style="height:5rem; background:rgba(var(--catppuccin-mauve),0.18); border-radius:var(--pico-border-radius);"></div>
+          <div style="background:rgba(var(--catppuccin-mauve),0.18); border-radius:var(--pico-border-radius);"></div>
         </td>
       </tr>
     `;
   }
+
 
   function renderDataCell(col, colIndex, rowIndex) {
     const row = props.data[rowIndex];
@@ -343,7 +347,7 @@ function BasicTable(props) {
           <tr>
             <td
               colspan=${props.columns.length}
-              style="height: 1rem; padding: 0;"
+              style="height: 10rem; padding: 0;"
               @dragover=${e => handleDragOver(props.data.length, e)}
               @drop=${e => handleDrop(props.data.length, e)}
             ></td>
@@ -356,5 +360,6 @@ function BasicTable(props) {
     ${dragOverIndex}
   `;
 }
+
 
 customElements.define('civ-table', component(BasicTable, { observedAttributes: ['columns', 'data', 'identifier'], useShadowDOM: false }));

@@ -21,29 +21,30 @@
   </footer>
 </article>
 
-<h2>Your Roles</h2>
+<h2>Your Teams</h2>
 <hr />
-{% if user.roles and user.roles|length > 0 %}
+{% if user.teams and user.teams|length > 0 %}
 <p>Different endpoints require different roles. Refer to the 
     <a href="/docs">API documentation</a> for details.
 </p>
 <p>Contact support if you need additional roles.</p>
+<p>Any API keys you create here will inherit the permissions of your teams.</p>
 <table>
     <thead>
         <tr>
-            <th>Role</th>
+            <th>Team</th>
         </tr>
     </thead>
     <tbody>
-        {% for role in user.roles %}
+        {% for team in user.teams %}
         <tr>
-            <td>{{ role }}</td>
+            <td>{{ team }}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
 {% else %}
-<p>You have no roles assigned.</p>
+<p>You have no teams assigned.</p>
 {% endif %}
 
 
