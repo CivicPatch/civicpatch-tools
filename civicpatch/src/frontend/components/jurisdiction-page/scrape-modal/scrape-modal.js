@@ -7,11 +7,6 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
   const [scrapeScope, setScrapeScope] = useState("top-level-url");
   const [currentUrl, setCurrentUrl] = useState(url);
   const [currentSourceUrls, setCurrentSourceUrls] = useState(sourceUrls);
-  const [nameConfigs, setNameConfigs] = useState({});
-
-  const handleNameConfigsChange = (configs) => {
-    setNameConfigs(configs);
-  };
 
   const handleScopeChange = (event) => {
     setScrapeScope(event.target.value);
@@ -84,7 +79,6 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
         },
       };
     }
-    data.identities = nameConfigs;
     onStartScrape(data);
   };
 
@@ -140,32 +134,6 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
           )}
           <button @click=${addSourceUrl}>Add URL</button>
         `}
-
-    <details name="override-names" style="margin-top: 1.5em;">
-      <summary>
-        <span style="font-weight: 600; font-size: 1.1em;">Name Configs</span>
-      </summary>
-      <div
-        style="
-          background: var(--pico-muted-border-color, #f6f8fa);
-          border: 1px solid var(--pico-muted-border-color, #e0e0e0);
-          border-radius: 0.75em;
-          padding: 1.25em 1em 1em 1em;
-          margin-top: 1em;
-          box-shadow: 0 2px 8px 0 rgba(0,0,0,0.03);
-        "
-      >
-        <p style="color: var(--pico-muted-color, #666); margin-bottom: 1em;">
-          Some people go by multiple names that aren't easily guessable to be
-          the same identity. Specify alternate names for identities to improve
-          matching.
-        </p>
-        <name-config-form
-          .onChange=${handleNameConfigsChange}
-          .identities=${identities}
-        ></name-config-form>
-      </div>
-    </details>
   `;
 
   const footer = html`

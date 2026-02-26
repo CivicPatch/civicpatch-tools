@@ -172,6 +172,7 @@ async def update_pull_request_file(
         **get_default_headers(),
     }
     contents_url = f"https://api.github.com/repos/CivicPatch/open-data/contents/{file_path}?ref={branch_name}"
+    print("contents url", contents_url)
     contents_response = await github_async_client.get(contents_url, headers=headers, timeout=timeout)
     if contents_response.status_code != 200:
         print("Error fetching file contents:", contents_response.status_code, contents_response.text)

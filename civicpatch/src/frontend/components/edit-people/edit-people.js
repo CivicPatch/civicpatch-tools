@@ -32,7 +32,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   const [error, setError] = useState(null);
   const [selectedPullRequest, setSelectedPullRequest] = useState(null);
   const [notice, setNotice] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 700px)').matches);
 
   useEffect(() => {
@@ -256,7 +256,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     setIsLoading(true);
 
     const url = [
-      `${API_URL}/jobs/people/pull_request/`,
+      `${API_URL}/api/v1/jobs/people/pull_request/`,
       encodeURIComponent(branchName),
       `/data`,
     ]
@@ -284,16 +284,15 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   function handleSubmit() {
-    setCurrentPeople([]);
-    
+    console.log("handling submit")
     submitChanges(
-      selectedOpenPullRequest, // TODO: if not available needs to open a new PR instead
+      selectedPullRequest?.branch_name, // TODO: if not available needs to open a new PR instead
       peopleToSubmit
     )
       .then(() => {
         setNotice(
-          selectedOpenPullRequest
-            ? `Changes submitted to ${openPullRequests.find(pr => pr.branch_name === selectedOpenPullRequest)?.url || selectedOpenPullRequest}`
+         selectedPullRequest
+            ? `Changes submitted: ${selectedPullRequest?.url}`
             : "Changes submitted."
         );
       })
@@ -372,7 +371,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           Delete (${selectedPeople.length})
         </button>
         <button
-          @click=${() => handleReset()}
+          @click=${handleReset}
           style="margin-left:auto; margin-right: 1rem;"
           ?disabled=${dirty === false}
         >
@@ -576,6 +575,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     </section>
 
   ${renderActionButtons()}
+
+  ${isLoading ? html`
+    <div style="margin-bottom:1rem; padding:0.75em; background:#e0e0ff; border-radius:6px; color:#0000b3;">
+      Submitting changes...
+    </div>
+  ` : ""}
 
   ${notice ? html`
     <div style="margin-bottom:1rem; padding:0.75em; background:#e0ffe0; border-radius:6px; color:#155724;">

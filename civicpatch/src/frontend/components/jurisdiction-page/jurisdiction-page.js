@@ -110,8 +110,8 @@ function JurisdictionPage({
     });
 
     // Reconnect to the SSE stream to get real-time updates on the new job
-    disconnectStream();
-    connectStream();
+    // disconnectStream();
+    // connectStream();
   };
 
   const canStartScrape = true;
