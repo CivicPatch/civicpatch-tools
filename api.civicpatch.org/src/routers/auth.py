@@ -141,7 +141,7 @@ def get_router(is_production: bool) -> APIRouter:
             key="csrf_token",
             value=csrf_signed,
             expires=expiration,
-            httponly=True,
+            httponly=False, # Allow JS to read the CSRF token
             secure=True,
             samesite="lax",
             domain=COOKIE_INSTANCE_URL,

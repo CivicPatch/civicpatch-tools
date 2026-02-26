@@ -8,6 +8,7 @@ import yaml from 'js-yaml';
 import { useRovingFocusList } from '../../hooks/use-roving-focus-list.js';
 import './diff-preview.js';
 import './pull-request-tabs.js';
+import { useCsrf } from '../../hooks/use-csrf.js';
 const API_URL = __API_URL__;
 
 // Helper to generate a random key
@@ -34,6 +35,8 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   const [notice, setNotice] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 700px)').matches);
+  const csrfToken = useCsrf();
+
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 700px)');
@@ -261,11 +264,14 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       `/data`,
     ]
       .join("");
+
+    console.log("Submitting to URL:", url, csrfToken);
     
     return fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken
       },
       body: JSON.stringify({ jurisdiction_ocdid, data }),
       credentials: "include"
@@ -284,7 +290,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   function handleSubmit() {
-    console.log("handling submit")
     submitChanges(
       selectedPullRequest?.branch_name, // TODO: if not available needs to open a new PR instead
       peopleToSubmit

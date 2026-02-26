@@ -1,6 +1,6 @@
 import { component } from 'haunted';
 import { html } from 'lit';
-import { useAuth } from './hooks/useAuth.js';
+import { useAuth } from '../hooks/useAuth.js';
 const API_URL = __API_URL__;
 
 function Navbar() {
