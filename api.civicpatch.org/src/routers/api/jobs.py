@@ -310,6 +310,7 @@ def get_router(api_key_header):
         request: PostJobPullRequestDataRequest,
         user: Identity = Depends(require_route_access(RouteCategory.JOBS_WRITE))
     ):
+        print("branch_name", branch_name)
         user_name = user.email
         file_path = data_path_utils.get_data_file_path(request.jurisdiction_ocdid)
         # Chop off leading "/app/" from file_path
