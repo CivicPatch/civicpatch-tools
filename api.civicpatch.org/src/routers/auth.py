@@ -129,7 +129,7 @@ def get_router(is_production: bool) -> APIRouter:
             expires=expiration,
             httponly=True,
             secure=True,
-            samesite="none",
+            samesite="lax",
             domain=COOKIE_INSTANCE_URL,
             path="/"
         )
@@ -143,7 +143,7 @@ def get_router(is_production: bool) -> APIRouter:
             expires=expiration,
             httponly=True,
             secure=True,
-            samesite="none",
+            samesite="lax",
             domain=COOKIE_INSTANCE_URL,
             path="/"
         )
