@@ -5,6 +5,7 @@ import "../scrape-history/scrape-history-list.js";
 import "../edit-people/edit-people.js";
 import "./jurisdiction-detail.js"
 import "./config-detail.js";  
+import { useAuth } from "../hooks/useAuth.js";
 // const DEFAULT_CENTER = "30.24171,-91.991044";
 const API_URL = __API_URL__;
 
@@ -12,11 +13,12 @@ function JurisdictionPage({
   jurisdiction_ocdid, 
   history
 }) {
+  const { user, loading: authLoading } = useAuth();
   const [data, setData] = useState(null);
   const [people, setPeople] = useState([]);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false); 
   const [isLoading, setIsLoading] = useState(true);
-  const identities = people?.reduce((acc, person) => {
+  const identities = people && people.reduce((acc, person) => {
     if (acc[person.name]) {
       acc[person.name] = [...new Set([...acc[person.name], ...(person.other_names || [])])];
     } else {
@@ -27,6 +29,13 @@ function JurisdictionPage({
 
   }, {});
 
+  // Guard: show loading or block if not authenticated
+  if (authLoading) {
+    return html`<p>Checking authentication...</p>`;
+  }
+  if (!user) {
+    return html`<p>You must be logged in to view this page.</p>`;
+  }
 
   const sseUrl = jurisdiction_ocdid
     ? [`${API_URL}/api/v1/sse/jobs/status`,
@@ -91,7 +100,7 @@ function JurisdictionPage({
         url: details.data.url || data.data.url,
         name: data.data.name,
         source_urls: details.data.sourceUrls,
-        identities: details.data.identities
+        // identities: details.data.identities
       }
     };
     const _response = await fetch(`/api/pipelines`, {

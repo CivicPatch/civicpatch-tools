@@ -132,8 +132,6 @@ function CivSelectJurisdiction() {
           Go to jurisdiction page
         </a>
       ` : null }
-      <a href="${jurisdictionLink()}" ?hidden=${!selectedJurisdiction}>
-        Go to jurisdiction page
       </a>
     </form>
   `;

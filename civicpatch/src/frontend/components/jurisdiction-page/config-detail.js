@@ -13,7 +13,6 @@ const DummyNotes = [
 /* Should display the config details for a jurisdiction, 
 and allow users to edit and save the config. */
 function ConfigDetail({ config = DummyConfig, onSave, people, notes = DummyNotes }) {
-  console.log("data", people)
   const [isEditMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState(config);
   const offices = people?.map(p => ({ "name": p.office?.name, "division_ocdid": p.office?.division_ocdid })) || [];
@@ -76,31 +75,6 @@ function ConfigDetail({ config = DummyConfig, onSave, people, notes = DummyNotes
       ${isEditMode
         ? html`
             <form @submit=${e => { e.preventDefault(); handleSave(); }}>
-              <h3>Identities</h3>
-              ${formData.identities.map((identity, index) => html`
-                <fieldset role="group">
-                  <input
-                    type="text"
-                    .value=${identity}
-                    @input=${e => handleArrayChange('identities', index, null, e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    class="secondary outline"
-                    @click=${() => handleArrayRemove('identities', index)}
-                  >
-                    Remove
-                  </button>
-                </fieldset>
-              `)}
-              <button
-                type="button"
-                class="secondary"
-                @click=${() => handleArrayAdd('identities', '')}
-              >
-                + Add Identity
-              </button>
-
               <h3>Offices</h3>
               ${formData.offices.map((office, index) => html`
                 <fieldset role="group">
@@ -140,14 +114,9 @@ function ConfigDetail({ config = DummyConfig, onSave, people, notes = DummyNotes
             </form>
           `
         : html`
-            <h3>Identities</h3>
-            <ul>
-              ${config.identities.map(identity => html`<li>${identity}</li>`)}
-            </ul>
-
             <h3>Offices</h3>
             <ul>
-              ${offices.map(office => html`
+              ${(offices || []).map(office => html`
                 <li>
                   <strong>${office.name}</strong><br/>
                   Division OCDID: ${office.division_ocdid}

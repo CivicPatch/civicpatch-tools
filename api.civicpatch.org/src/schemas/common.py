@@ -6,13 +6,6 @@ import shared.utils.id_utils
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
 
-
-class ApiKeyType(str, Enum):
-    WIDGET_KEY = "widget_key"      # TODO: Implement
-    SERVER_KEY = "server_key"      # For internal server operations
-    INTERNAL_SERVER_KEY = "internal_key"
-
-
 class UserRole(str, Enum):
     ADMIN = "admin"
     JOBS = "jobs"
@@ -21,10 +14,11 @@ class UserRole(str, Enum):
 
 
 class RouteCategory(str, Enum):
+    ADMIN = "admin"
     PUBLIC = "public"
     AUTHENTICATED = "authenticated"
-    ADMIN = "admin"      
-    JOBS = "jobs"         
+    TEAM_MEMBER = "team_member"
+    JOBS_WRITE = "jobs_write"
 
 
 class Person(BaseModel):

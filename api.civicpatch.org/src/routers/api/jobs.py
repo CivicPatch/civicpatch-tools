@@ -14,12 +14,13 @@ from database import (
     update_job_pull_request_url
 )
 import database as database
-from utils.auth import get_user
+from utils.auth import get_user, require_route_access
 import shared.utils.data_path_utils as data_path_utils
 import shared.utils.id_utils
 import json
 import yaml
 from services.memory_pub_sub_service import memory_pubsub
+from schemas.common import RouteCategory
 
 import logging
 
@@ -86,7 +87,10 @@ def get_router(api_key_header):
             404: {"model": ErrorResponse, "description": "Job not found"}
         }
     )
-    async def get_job_endpoint(request_id: str):
+    async def get_job_endpoint(
+        request_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
+    ):
         job = await get_job(request_id)
         if job:
             return GetJobResponse(
@@ -114,7 +118,10 @@ def get_router(api_key_header):
             404: {"model": ErrorResponse, "description": "Job not found"}
         }
     )
-    async def get_job_status_endpoint(request_id: str):
+    async def get_job_status_endpoint(
+        request_id: str,
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
+    ):
         response = await get_job_status(request_id)
         if not response:
             return JSONResponse(
@@ -137,7 +144,7 @@ def get_router(api_key_header):
     async def patch_job_status_endpoint(
         request_id: str,
         request: UpdateJobStatusRequest,
-        user: Identity = Depends(get_user)
+        user: Identity = Depends(require_route_access(RouteCategory.JOBS_WRITE))
     ):
         can_call_request_id_response = await can_call_request_id(user, request_id)
         if not can_call_request_id_response:
@@ -178,7 +185,7 @@ def get_router(api_key_header):
     )
     async def create_people_job_endpoint(
         request: CreatePeopleJobRequest,
-        user: Identity = Depends(get_user)
+        user: Identity = Depends(require_route_access(RouteCategory.JOBS_WRITE))
     ):
         api_request_allowed, reason = await can_make_api_request(user.provider, user.provider_user_id)
         if not api_request_allowed:
@@ -215,7 +222,7 @@ def get_router(api_key_header):
     )
     async def register_people_job_endpoint(
         request: CreatePeopleRegisterJobRequest,
-        user: Identity = Depends(get_user)
+        user: Identity = Depends(require_route_access(RouteCategory.JOBS_WRITE))
     ):
         print(f"Registering job: {request.request_id} by user {user.provider_user_id} from provider {user.provider}")
         _response = await register_job(
@@ -235,7 +242,7 @@ def get_router(api_key_header):
     async def post_job_result_endpoint(
         request_id: str,
         request: PostJobResultRequest,
-        user: Identity = Depends(get_user)
+        user: Identity = Depends(require_route_access(RouteCategory.JOBS_WRITE))
     ):
         errors = []
         can_call_request_id_response = await can_call_request_id(user, request_id)
@@ -262,7 +269,8 @@ def get_router(api_key_header):
         include_in_schema=False
     )
     async def get_open_people_pull_requests_endpoint(
-        jurisdiction_ocdid: Optional[str] = None
+        jurisdiction_ocdid: Optional[str] = None,
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ):
         branch_name_suffix = shared.utils.id_utils.jurisdiction_ocdid_to_git_branch_suffix(jurisdiction_ocdid)
         open_pull_requests = await github_service.get_open_pull_request_by_branch_suffix(branch_name_suffix)
@@ -274,7 +282,8 @@ def get_router(api_key_header):
     )
     async def get_job_pull_request_data_endpoint(
         branch_name: str,
-        jurisdiction_ocdid: str
+        jurisdiction_ocdid: str,
+        _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ):
         file_path = data_path_utils.get_data_file_path(jurisdiction_ocdid)
         # Chop off leading "/app/" from file_path
@@ -299,7 +308,7 @@ def get_router(api_key_header):
     async def post_job_pull_request_data_endpoint(
         branch_name: str,
         request: PostJobPullRequestDataRequest,
-        user: Identity = Depends(get_user)
+        user: Identity = Depends(require_route_access(RouteCategory.JOBS_WRITE))
     ):
         user_name = user.email
         file_path = data_path_utils.get_data_file_path(request.jurisdiction_ocdid)
@@ -325,7 +334,9 @@ def get_router(api_key_header):
         description="Stop a specific job by its request ID.",
         response_model=DeleteJobResponse
     )
-    async def stop_job_endpoint(request_id: str):
+    async def stop_job_endpoint(request_id: str,
+        user: Identity = Depends(require_route_access(RouteCategory.JOBS_WRITE))
+    ):
         # Implementation to stop a job
         # TBD
         return {"request_id": request_id, "status": "stopped"}

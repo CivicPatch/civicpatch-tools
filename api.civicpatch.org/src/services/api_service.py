@@ -19,9 +19,6 @@ async def can_call_request_id(user: Identity, request_id: str) -> bool:
     Check if the user is allowed to call the given request_id.
     """
 
-    if user.roles and "admin" in user.roles:
-        return True
-    
     owns_request_id = await database.check_user_owns_request_id(
         user.provider, user.provider_user_id, request_id
     )

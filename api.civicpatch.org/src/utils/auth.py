@@ -7,7 +7,7 @@ from jose import jwt, JWTError
 import time
 from typing import cast
 import database
-from schemas.common import Identity, RouteCategory, ApiKeyType
+from schemas.common import Identity, RouteCategory
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 API_COOKIE = APIKeyCookie(name="token", auto_error=False)
@@ -27,13 +27,15 @@ ROUTE_PERMISSIONS = {
     RouteCategory.AUTHENTICATED: {
         "teams": []
     },
+    RouteCategory.TEAM_MEMBER: {
+        "teams": ["default"]
+    },
     RouteCategory.ADMIN: {
         "teams": ["admins"]
     },
-    RouteCategory.JOBS: {
-        "teams": ["jobs"],
+    RouteCategory.JOBS_WRITE: { # People who can run scrapes
+        "teams": ["maintainers"]
     },
-
 }
 
 async def get_user(
@@ -150,8 +152,6 @@ async def get_optional_user(
     request: Request,
     authorization: Optional[str] = Security(API_HEADER),
     cookie: Optional[str] = Security(API_COOKIE),
-    #csrf_token: Optional[str] = Header(None, alias="x-csrf-token"),
-    #csrf_cookie: Optional[str] = Cookie(None, alias="csrf_token"),
  ) -> Optional[Identity]:
     try:
         identity = await get_user(request, authorization, cookie)
@@ -159,67 +159,15 @@ async def get_optional_user(
     except HTTPException:
         return None
 
-
-def require_any_team(*allowed_teams: str):
-    """
-    Factory that returns a dependency callable. Use in routes as:
-      current_user = Depends(require_role("admin"))
-    or router dependencies: dependencies=[Depends(require_role("member","admin"))]
-    """
-    async def _dependency(user: Identity = Depends(get_user)):
-        user_teams = getattr(user, "teams", [])
-        if allowed_teams:
-            if not any(team in allowed_teams for team in user_teams):
-                raise HTTPException(status_code=403, detail="Insufficient permissions")
-        return user
-
-    return _dependency
-
-def get_api_key_type(
-    authorization: Optional[str] = Security(API_HEADER),
-    cookie: Optional[str] = Security(API_COOKIE),
-):
-    """Determine the API key type used for authentication."""
-    token = None
-    if authorization:
-        token = authorization.strip()
-        if token.startswith("pk_"):
-            return ApiKeyType.WIDGET_KEY  # Widget/component key
-        else:
-            return ApiKeyType.SERVER_KEY  # General server key
-    elif cookie:
-        token = cookie
-        return ApiKeyType.INTERNAL_SERVER_KEY # Server generated key
-
-    if not token:
-        raise HTTPException(status_code=401, detail="Missing authentication token")
-    
-
-def get_api_key_type_from_auth(
-    authorization: Optional[str] = None,
-    cookie: Optional[str] = None
-) -> Optional[ApiKeyType]:
-    """Helper to determine API key type from auth sources"""
-    if authorization:
-        if authorization.strip().startswith("pk_"):
-            return ApiKeyType.WIDGET_KEY
-        else:
-            return ApiKeyType.SERVER_KEY
-    elif cookie:
-        return ApiKeyType.INTERNAL_SERVER_KEY
-    return None
-
-def require_route_access(category: RouteCategory):
+def require_route_access(category: RouteCategory): 
     """Factory that returns a dependency for route category access control"""
     async def _dependency(user: Identity = Depends(get_user)):
         user_teams = getattr(user, "teams", [])
-        print("category", category)
         allowed_teams = ROUTE_PERMISSIONS.get(category, {}).get("teams", [])
-        print("user: ", user)
-        print("allowed teams", allowed_teams)
         if allowed_teams and not any(team in allowed_teams for team in user_teams):
             raise HTTPException(
                 status_code=403,
                 detail="Insufficient permissions for this route."
             )
+        return user
     return _dependency

@@ -8,6 +8,7 @@ from fastapi_sso import GithubSSO
 from services import github_service
 import database
 import secrets
+from urllib.parse import urlparse
 
 INSTANCE_URL = os.getenv("INSTANCE_URL", "https://api.civicpatch.local")
 COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.local")
@@ -15,6 +16,19 @@ GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID")
 GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
 GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/api/v1/auth/github/callback"
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+
+ALLOWED_HOSTS = ["civicpatch.org", "civicpatch.local"]
+
+def is_safe_redirect(url: str) -> bool:
+    """Check if the redirect URL is safe (same origin or allowed host)."""
+    if not url:
+        return False
+    parsed = urlparse(url)
+    # Allow relative URLs
+    if not parsed.netloc:
+        return True
+    # Allow only specific hosts
+    return parsed.netloc in ALLOWED_HOSTS or parsed.netloc.endswith(".civicpatch.org") or parsed.netloc.endswith(".civicpatch.local")
 
 from jose import jwt
 
@@ -30,26 +44,31 @@ def get_router(is_production: bool) -> APIRouter:
     router = APIRouter()
  
     @router.get("/{provider}/login", include_in_schema=False)
-
-    async def login(provider: str):
+    async def login(provider: str, request: Request, redirect: str = "/"):
         match provider:
             case "github":
                 sso = github_sso
             case _:
                 raise HTTPException(
-                    status_code=400, detail="Unsupported provider: {provider}"
+                    status_code=400, detail=f"Unsupported provider: {provider}"
                 )
 
+        # Store redirect in session or pass via state parameter
         async with sso:
-            return await sso.get_login_redirect()
+            # Pass redirect URL via OAuth state parameter
+            return await sso.get_login_redirect(state=redirect)
 
     @router.get("/logout", include_in_schema=False)
-    async def logout():
+    async def logout(redirect: str = "/"):
         # TODO - connect this to redis (once we have it)
         # This would allow us to dynamically invalidate their sessions
         # based on team updates on GitHub
         """Forget the user's session."""
-        response = RedirectResponse(url="/")
+        
+        # Validate the redirect URL
+        redirect_url = redirect if is_safe_redirect(redirect) else "/"
+        
+        response = RedirectResponse(url=redirect_url)
         response.delete_cookie(
             key="token",
             domain=COOKIE_INSTANCE_URL,
@@ -67,7 +86,7 @@ def get_router(is_production: bool) -> APIRouter:
         return response
 
     @router.get("/{provider}/callback", include_in_schema=False)
-    async def login_callback(request: Request, provider: str):
+    async def login_callback(request: Request, provider: str, state: str = "/"):
         match provider:
             case "github":
                 sso = github_sso
@@ -79,6 +98,10 @@ def get_router(is_production: bool) -> APIRouter:
             openid = await sso.verify_and_process(request)
             if not openid:
                 raise HTTPException(status_code=401, detail="Authentication failed")
+        
+        # Validate the redirect URL
+        redirect_url = state if is_safe_redirect(state) else "/"
+        
         # Create a JWT with the user's OpenID
         expiration = datetime.datetime.now(
             tz=datetime.timezone.utc
@@ -99,7 +122,7 @@ def get_router(is_production: bool) -> APIRouter:
             key=cast(str, JWT_SECRET_KEY),
             algorithm="HS256",
         )
-        response = RedirectResponse(url="/", status_code=302)
+        response = RedirectResponse(url=redirect_url, status_code=302)
         response.set_cookie(
             key="token",
             value=token,
