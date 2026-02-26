@@ -7,21 +7,12 @@ import '../basic/table/table.js';
 import yaml from 'js-yaml';
 import { useRovingFocusList } from '../../hooks/use-roving-focus-list.js';
 import './diff-preview.js';
+import './pull-request-tabs.js';
+const API_URL = __API_URL__;
 
 // Helper to generate a random key
 function genKey() {
   return Math.random().toString(36).substr(2, 9) + Date.now();
-}
-
-function setNestedValue(obj, path, value) {
-  const keys = path.split('.');
-  let curr = obj;
-  for (let i = 0; i < keys.length - 1; i++) {
-    if (!curr[keys[i]]) curr[keys[i]] = {};
-    curr = curr[keys[i]];
-  }
-  curr[keys[keys.length - 1]] = value;
-  return obj;
 }
 
 const TRACKED_FIELDS = [
@@ -38,13 +29,18 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     }))
   );
   const [originalPeople, setOriginalPeople] = useState([]);
-
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [openPullRequests, setOpenPullRequests] = useState([]);
-  const [selectedOpenPullRequest, setSelectedOpenPullRequest] = useState(null);
+  const [selectedPullRequest, setSelectedPullRequest] = useState(null);
   const [notice, setNotice] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 700px)').matches);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 700px)');
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
   const selectedPeople = currentPeople.filter(p => p._selected).map(p => p._tempKey);
   const dirty = currentPeople.some(person => person._dirty);
@@ -61,36 +57,14 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   } = useRovingFocusList(currentPeople.length);
 
   useEffect(() => {
-    if (!jurisdiction_ocdid) return;
-    setLoading(true);
-    fetch(`/api/api_proxy/jobs/people/pull_request/open?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`)
-      .then(r => r.json())
-      .then(data => {
-        const pullRequests = data.data || [];
-        setOpenPullRequests(pullRequests);
-
-        // Automatically select the first PR or default to "Existing Data"
-        if (pullRequests.length > 0) {
-          setSelectedOpenPullRequest(pullRequests[0].branch_name);
-        } else {
-          setSelectedOpenPullRequest(null);
-        }
-
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
-  useEffect(() => {
-    if (!selectedOpenPullRequest) {
+    if (!selectedPullRequest) {
       // Use default people
       assignPeople(people)
     } else {
-      getSelectedOpenPullRequestData(selectedOpenPullRequest);
+      getSelectedPullRequestData(selectedPullRequest);
     }
-  }, [selectedOpenPullRequest])
-  
-  
+  }, [selectedPullRequest])
+
   function toggleSelect(key) {
     setCurrentPeople(currentPeople =>
       currentPeople.map(person =>
@@ -131,16 +105,17 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     setOriginalPeople(peopleWithKeys); // Save as baseline for change tracking
   }
 
-  function getSelectedOpenPullRequestData(branchName) {
-    if (!branchName) return;
+  function getSelectedPullRequestData(pullRequest) {
+    if (!pullRequest) return;
+    console.log("pull request is ", pullRequest)
 
     const url = [
-      `/api/api_proxy/jobs/people/pull_request/`,
-      encodeURIComponent(branchName),
+      `${API_URL}/api/v1/jobs/people/pull_request/`,
+      encodeURIComponent(pullRequest.branch_name),
       `/data`,
       `?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`
     ].join("");
-    fetch(url)
+    fetch(url, { credentials: "include" })
       .then(r => r.json())
       .then(data => {
         if (data.data) {
@@ -149,27 +124,22 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       })
   } 
 
-  function markAsDeleted(keys) {
+  function handleDelete(keys) {
     keys.forEach(key => {
+      // If it's a new person that hasn't been submitted yet, just remove it from the list
+      const person = currentPeople.find(p => p._tempKey === key);
+      if (person?._isNew) {
+        setCurrentPeople(currentPeople => currentPeople.filter(p => p._tempKey !== key));
+        return;
+      }
+
       updatePerson(key, { _deleted: true });
-      // Move person to bottom of the list
       reorderPersonToBottom(key);
     });
   }
 
   function handleBulkDelete() {
-    markAsDeleted(selectedPeople);
-  }
-
-  function handleDelete(key) {
-    // If it's a new person that hasn't been submitted yet, just remove it from the list
-    const person = currentPeople.find(p => p._tempKey === key);
-    if (person?._isNew) {
-      setCurrentPeople(currentPeople => currentPeople.filter(p => p._tempKey !== key));
-      return;
-    }
-
-    markAsDeleted([key]);
+    handleDelete(selectedPeople);
   }
 
   function handleAdd() {
@@ -218,8 +188,8 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   function handleReset(tempKey) {
     if (!tempKey) {
-      if (selectedOpenPullRequest) {
-        getSelectedOpenPullRequestData(selectedOpenPullRequest);
+      if (selectedPullRequest) {
+        getSelectedPullRequestData(selectedPullRequest);
       } else {
         assignPeople(people);
       }
@@ -286,7 +256,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     setIsLoading(true);
 
     const url = [
-      `/api/api_proxy/jobs/people/pull_request/`,
+      `${API_URL}/jobs/people/pull_request/`,
       encodeURIComponent(branchName),
       `/data`,
     ]
@@ -298,6 +268,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ jurisdiction_ocdid, data }),
+      credentials: "include"
     })
       .then(r => {
         if (!r.ok) {
@@ -333,7 +304,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   function updatePerson(key, updates) {
-    console.log("updates: ", updates)
     setCurrentPeople(currentPeople =>
       currentPeople.map(person => {
         if (person._tempKey === key) {
@@ -356,12 +326,15 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   function handleTableDataChange(e) {
     // Find the person by index or key and update your state
     const { identifier, field, value } = e.detail;
+    console.log("Data change:", identifier, field, value);
+
+
 
     if (field == "_selected") {
       setSelected(identifier, value);
     } else {
       // Handle nested field, ex: office.name
-      updatePerson(identifier, setNestedValue({ [field]: value }, field, value));
+      updatePerson(identifier, { [field]: value });
     }
   }
 
@@ -378,14 +351,185 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     });
   }
 
-  if (loading) return html`<p>Loading people...</p>`;
-
-  function truncateBranchName(branchName, maxLength = 24) {
-    if (branchName.length > maxLength) {
-      return branchName.substring(0, maxLength);
-    }
-    return branchName;
+  function renderActionButtons() {
+    return html`
+      <div style="margin-bottom: 1rem; min-height: 2.5em; display: flex; align-items: center;">
+        <button @click=${handleAdd} style="margin-right: 1rem;">
+          Add
+        </button>
+        <button 
+          @click=${handleMerge} 
+          style="margin-right: 1rem;" 
+          ?disabled=${selectedPeople.length < 2}
+        >
+          Merge (${selectedPeople.length})
+        </button>
+        <button 
+          @click=${handleBulkDelete} 
+          style="margin-right: 1rem;"
+          ?disabled=${selectedPeople.length === 0}
+        >
+          Delete (${selectedPeople.length})
+        </button>
+        <button
+          @click=${() => handleReset()}
+          style="margin-left:auto; margin-right: 1rem;"
+          ?disabled=${dirty === false}
+        >
+          Reset Form
+        </button>
+        <button
+          @click=${handleSubmit}
+          style="margin-right: 0;"
+          ?disabled=${dirty === false}
+        >
+          Submit
+        </button>
+      </div>
+    `
   } 
+
+  function customCssForPerson(person, field) {
+    if (person._deleted) {
+      return "opacity: 0.5; text-decoration: line-through; background-color: var(--pico-del-color);";
+    } else if (person._changes?.includes(field)) {
+      return "background-color: var(--pico-ins-color);";
+    }
+    return "";
+  }
+
+  function renderTableView() {
+    return html`<civ-table 
+      .identifier=${"_tempKey"}
+      .selectedIdentifiers=${selectedPeople}
+      .canReorder=${true}
+      .columns=${[
+        {
+          field: "_selected",
+          editable: true,
+          type: "checkbox",
+        },
+        {
+          type: "drag-row",
+          editable: false,
+          renderCell: (person) => html`
+              <div style="display:flex;align-items:center;justify-content:center; height:100%;">
+                <span class="drag-handle" style="display: flex; align-items: center; justify-content: center; cursor: grab; font-size: 1.2rem; height: 100%;" title="Drag to reorder">
+                  <i class="fas fa-grip-vertical" style="display: flex; align-items: center; justify-content: center; height: 100%;"></i>
+                </span>
+              </div>
+          `
+        },
+        {
+          field: "cdn_image",
+          label: "Image",
+          editable: false,
+          type: "image",
+        },
+        {
+          field: "name",
+          label: "Name",
+          editable: true,
+          type: "single",
+          customCss: customCssForPerson,
+        },
+        {
+          field: "phones",
+          label: "Phones",
+          editable: true,
+          format: "phone",
+          type: "multiple",
+          customCss: customCssForPerson,
+        },
+        {
+          field: "emails",
+          label: "Emails",
+          editable: true,
+          format: "email",
+          type: "multiple",
+          customCss: customCssForPerson,
+        },
+        {
+          field: "urls",
+          label: "URLs",
+          editable: true,
+          type: "multiple",
+          customCss: customCssForPerson,
+        },
+        {
+          field: "start_date",
+          label: "Start Date",
+          editable: true,
+          type: "date",
+          customCss: customCssForPerson,
+        },
+        {
+          field: "end_date",
+          label: "End Date",
+          editable: true,
+          type: "date",
+          customCss: customCssForPerson,
+        },
+        {
+          field: "office.name",
+          label: "Office Name",
+          editable: true,
+          type: "single",
+          customCss: customCssForPerson,
+        },
+        {
+          field: "office.division_ocdid",
+          label: "Division",
+          editable: true,
+          type: "single",
+          customCss: customCssForPerson,
+        },
+        {
+          field: "source_urls",
+          label: "Source URLs",
+          editable: true,
+          type: "multiple",
+          customCss: customCssForPerson,
+        }
+      ]}
+      .data=${currentPeople}
+      @data-change=${handleTableDataChange}
+      @reorder=${handleTableDataReorder}></civ-table>
+    `;
+  }
+
+  function renderCardView() {
+    return html`<div
+        class="grid"
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 1rem;
+          align-items: stretch;
+          width: 100%;
+        "
+      >
+        ${currentPeople.map(
+          (person, idx) => keyed(person._tempKey, html`
+            <div role="listitem">
+              <person-card
+                tabIndex=${focusedIdx === idx ? "0" : "-1"}
+                ${ref(cardRefs[idx])}
+                @focus=${() => setFocusedIdx(idx)}
+                @keydown=${e => handleCardKeyDown(e, idx, person._tempKey) }
+                .person=${person}
+                .onSelect=${() => toggleSelect(person._tempKey)}
+                .onDelete=${() => handleDelete([person._tempKey])}
+                .onChange=${(field, value) => updatePerson(person._tempKey, { [field]: value })}
+                .onReset=${() => handleReset(person._tempKey)}
+              ></person-card>
+            </div>
+          `)
+        )}
+      </div>`;
+  }
+
+  // if (loading) return html`<p>Loading people...</p>`;
 
   const diffPreview = html`
   <div style="margin-top:2rem;">
@@ -394,8 +538,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       .original=${yaml.dump(originalPeople.map(({ _tempKey, ...person }) => person))}
       .updated=${yaml.dump(
         peopleToSubmit
-      )}
-    ></diff-preview>
+      )}></diff-preview>
     <div style="margin-top:2rem;">
       <label for="final-yml" style="font-weight:600;">Final YAML Output</label>
       <pre id="final-yml" style="
@@ -414,126 +557,25 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 `;
 
   return html`
-  <style>
-    .grid > [role="listitem"] person-card:focus article {
-        outline: none;
-        box-shadow: 0 0 0 2px rgba(0,0,0,0.12);
-        z-index: 1;
-    }
-    .tabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .tabs ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      gap: 0.5rem;
-    }
-    .tabs li {
-      margin: 0;
-    }
-    .tabs a {
-      display: block;
-      padding: 0.5rem 1rem;
-      border: 1px solid #ccc;
-      background: rgb(var(--catppuccin-crust));
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-    }
-    .tabs a.active {
-      background: rgb(var(--catppuccin-sapphire));
-      color: white;
-    }
-    .tab-content {
-      padding: 1rem;
-      border: 1px solid #ccc;
-      background: rgb(var(--catppuccin-crust));
-    }
-  </style>
-  <div style="margin-bottom: 2rem;">
-    <h3>Data Sources</h3>
-    <nav class="tabs">
-      <ul>
-        ${openPullRequests.map(
-          pr => html`
-            <li>
-              <a 
-                href="#" 
-                class=${selectedOpenPullRequest === pr.branch_name ? 'active' : ''} 
-                @click=${(e) => {
-                  e.preventDefault();
-                  setSelectedOpenPullRequest(pr.branch_name);
-                }}
-              >
-                [open] ${truncateBranchName(pr.branch_name)}
-              </a>
-            </li>
-          `
-        )}
-        <li>
-          <a 
-            href="#" 
-            class=${!selectedOpenPullRequest ? 'active' : ''} 
-            @click=${(e) => {
-              e.preventDefault();
-              setSelectedOpenPullRequest(null);
-            }}
-          >
-            Existing Data (TBD)
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <civ-pull-request-tabs
+      .jurisdiction_ocdid=${jurisdiction_ocdid}
+      @selected-pull-request=${e => {
+        setSelectedPullRequest(e.detail.pullRequest)
+      }}
+    ></civ-pull-request-tabs>
     <section class="selected-pr">
-      ${!selectedOpenPullRequest
+      ${!selectedPullRequest
         ? html`
-            <p>Use the existing data for this jurisdiction.</p>
+            <p>Use existing data for this jurisdiction.</p>
         `
         : html`
-          <a href=${openPullRequests.find(pr => pr.branch_name === selectedOpenPullRequest)?.url} target="_blank" class="contrast">
+          <a href=${selectedPullRequest?.url} target="_blank" class="contrast">
             View Pull Request
           </a>
         `}
     </section>
-  </div>
 
-  <div style="margin-bottom: 1rem; min-height: 2.5em; display: flex; align-items: center;">
-    <button @click=${handleAdd} style="margin-right: 1rem;">
-      Add
-    </button>
-    <button 
-      @click=${handleMerge} 
-      style="margin-right: 1rem;" 
-      ?disabled=${selectedPeople.length < 2}
-    >
-      Merge (${selectedPeople.length})
-    </button>
-    <button 
-      @click=${handleBulkDelete} 
-      style="margin-right: 1rem;"
-      ?disabled=${selectedPeople.length === 0}
-    >
-      Delete (${selectedPeople.length})
-    </button>
-    <button
-      @click=${() => handleReset()}
-      style="margin-left:auto; margin-right: 1rem;"
-      ?disabled=${dirty === false}
-    >
-      Reset Form
-    </button>
-    <button
-      @click=${handleSubmit}
-      style="margin-right: 0;"
-      ?disabled=${dirty === false}
-    >
-      Submit
-    </button>
-  </div>
+  ${renderActionButtons()}
 
   ${notice ? html`
     <div style="margin-bottom:1rem; padding:0.75em; background:#e0ffe0; border-radius:6px; color:#155724;">
@@ -547,123 +589,8 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     </div>
   ` : ""}
 
-  <civ-table 
-  .identifier=${"_tempKey"}
-  .selectedIdentifiers=${selectedPeople}
-  .canReorder=${true}
-  .columns=${[
-    {
-      editable: true,
-      field: "_selected",
-      type: "checkbox",
-    },
-    {
-      type: "drag-row",
-      editable: false,
-      renderCell: (person) => html`
-          <div style="display:flex;align-items:center;justify-content:center; height:100%;">
-            <span class="drag-handle" style="display: flex; align-items: center; justify-content: center; cursor: grab; font-size: 1.2rem; height: 100%;" title="Drag to reorder">
-              <i class="fas fa-grip-vertical" style="display: flex; align-items: center; justify-content: center; height: 100%;"></i>
-            </span>
-          </div>
-      `
-    },
-    {
-      field: "cdn_image",
-      label: "Image",
-      editable: false,
-      type: "image",
-    },
-    {
-      field: "name",
-      label: "Name",
-      editable: true,
-      type: "single",
-    },
-    {
-      field: "phones",
-      label: "Phones",
-      editable: true,
-      format: "phone",
-      type: "multiple",
-    },
-    {
-      field: "emails",
-      label: "Emails",
-      editable: true,
-      format: "email",
-      type: "multiple",
-    },
-    {
-      field: "urls",
-      label: "URLs",
-      editable: true,
-      type: "multiple",
-    },
-    {
-      field: "start_date",
-      label: "Start Date",
-      editable: true,
-      type: "date",
-    },
-    {
-      field: "end_date",
-      label: "End Date",
-      editable: true,
-      type: "date",
-    },
-    {
-      field: "office.name",
-      label: "Office Name",
-      editable: true,
-      type: "single",
-    },
-    {
-      field: "office.division_ocdid",
-      label: "Division",
-      editable: true,
-      type: "single"
-    },
-    {
-      field: "source_urls",
-      label: "Source URLs",
-      editable: true,
-      type: "multiple",
-    }
-  ]} 
-  .data=${currentPeople} 
-  @data-change=${handleTableDataChange}
-  @reorder=${handleTableDataReorder}
-  ></civ-table>
+  ${ isMobile ? renderCardView() : renderTableView()}
 
-  <div
-    class="grid"
-    style="
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1rem;
-      align-items: stretch;
-      width: 100%;
-    "
-  >
-    ${currentPeople.map(
-      (person, idx) => keyed(person._tempKey, html`
-        <div role="listitem">
-          <person-card
-            tabIndex=${focusedIdx === idx ? "0" : "-1"}
-            ${ref(cardRefs[idx])}
-            @focus=${() => setFocusedIdx(idx)}
-            @keydown=${e => handleCardKeyDown(e, idx, person._tempKey) }
-            .person=${person}
-            .onSelect=${() => toggleSelect(person._tempKey)}
-            .onDelete=${() => handleDelete(person._tempKey)}
-            .onChange=${(field, value) => updatePerson(person._tempKey, { [field]: value })}
-            .onReset=${() => handleReset(person._tempKey)}
-          ></person-card>
-        </div>
-      `)
-    )}
-  </div>
   ${!notice ? diffPreview : ""}
   `;
 }

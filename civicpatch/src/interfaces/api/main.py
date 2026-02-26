@@ -66,7 +66,9 @@ async def proxy_to_api_civicpatch_org_endpoint(path: str, request: Request):
     headers = dict(request.headers)
     headers.pop("host", None)
     headers.pop("accept-encoding", None)
-    headers["Authorization"] = f"{API_CIVICPATCH_ORG_TOKEN}"  # Inject token
+
+    # Should only rely on cookie auth
+    #headers["Authorization"] = f"{API_CIVICPATCH_ORG_TOKEN}"  # Inject token
 
     data = await request.body()
     async with httpx.AsyncClient() as client:

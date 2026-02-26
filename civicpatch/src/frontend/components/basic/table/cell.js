@@ -1,12 +1,12 @@
 import { useState, component, useEffect, useLayoutEffect, useRef } from 'haunted';
 import { html, css } from 'lit';
 import { ref, createRef } from 'lit/directives/ref.js';
-import { keyed } from 'lit/directives/keyed.js';
 
 const KEYCODES = {
   ENTER: 'Enter',
   TAB: 'Tab',
   BACKSPACE: 'Backspace',
+  ESCAPE: 'Escape'
 }
 
 // TODO: Already this needs some refactoring ewww
@@ -42,7 +42,6 @@ const styles = css`
         word-break: break-word;
         overflow-wrap: break-word;
     }
-
     span.cell-content[contenteditable="true"]:focus {
         box-sizing: border-box;
         outline: 2px solid rgb(var(--catppuccin-mauve));
@@ -132,11 +131,11 @@ function TableCell({
   field,
   type,
   format,
-  value,
   focused,
   editing,
   customCell,
-  data
+  data,
+  value
 }) {
   const [editList, setEditList] = useState(() => Array.isArray(value) ? value : []);
   const divRef = createRef();
@@ -174,39 +173,49 @@ function TableCell({
 
   const handleSingleCellKeyDown = (e) => {
     if (e.key === KEYCODES.ENTER) {
-      e.preventDefault();
-
+      e.preventDefault(); // already here, good
+      e.stopPropagation(); // move this OUTSIDE the if(editing) check
+      
       if (editing) {
-        e.stopPropagation();
-        const newValue = contentEditableRef.current?.innerText ?? '';
-
-        // Reset input
+        let textValue = contentEditableRef.current?.innerText ?? '';
+        textValue = textValue.trim();
         contentEditableRef.current.innerText = '';
-        dispatchDataChange(e, newValue);
+        dispatchDataChange(e, field, textValue);
       }
     }
   }
 
-  function renderSingleCell() {
-    if (!editing) {
-      return keyed('display', html`
-                <span class="cell-content">${value}</span>
-            `);
+  function handleCellBlur(e) {
+    if (type === 'multiple') {
+      e.target.innerText = ''; // Reset input on blur
     }
-    return keyed('edit', html`
+    divRef.current?.dispatchEvent(new CustomEvent('cell-cancel', {
+      detail: { identifier, field, row: rowIndex, col: colIndex },
+      bubbles: true,
+      composed: true
+    }));
+  }
+
+  function renderSingleCell() {
+    return html`
+            <span class="cell-content" style="${!editing ? 'display: block;' : 'display: none;'}">
+            ${value}
+            </span>
             <span
                 class="cell-content"
-                contenteditable="true"
+                style="${editing ? 'display: block;' : 'display: none;'}"
+                contenteditable="${editing ? 'true' : 'false'}"
                 @keydown=${handleSingleCellKeyDown}
+                @blur=${handleCellBlur}
                 ${ref(el => {
                   contentEditableRef.current = el;
                   if (el && !el.dataset.initialized) {
                     el.innerText = value ?? '';
                     el.dataset.initialized = 'true';
                   }
-    })}
+              })}
             ></span>
-        `);
+            `;
   }
 
   function handleAddItem(e, newItem) {
@@ -217,7 +226,7 @@ function TableCell({
     }
     setEditList(newList);
 
-    dispatchDataChange(e, newList);
+    dispatchDataChange(e, field, newList);
 
     return newList;
   }
@@ -230,9 +239,9 @@ function TableCell({
     return newList;
   }
 
-  function dispatchDataChange(e, newValue) {
+  function dispatchDataChange(e, updatedField, newValue) {
     divRef.current?.dispatchEvent(new CustomEvent('cell-change', {
-      detail: { identifier, field, value: newValue, row: rowIndex, col: colIndex },
+      detail: { identifier, field: updatedField, value: newValue, row: rowIndex, col: colIndex },
       bubbles: true,
       composed: true
     }));
@@ -245,11 +254,9 @@ function TableCell({
       const newItem = e.target.innerText.trim();
       handleAddItem(e, newItem)
     } else if (e.key === KEYCODES.BACKSPACE) {
-      console.log("handling input...", editList)
       // If there is input, return
       // Else, remove a button
       const input = e.target.innerText.trim();
-      console.log('what is', input, !!input, input.length)
       if (input && input.length > 0) {
         return;
       }
@@ -259,12 +266,6 @@ function TableCell({
       }
       // Visual update only -- commits only when Entered
       handleRemoveItem(e, editList.length - 1);
-    }
-  }
-
-  function handleCheckboxKeyDown(e) {
-    if (e.key === KEYCODES.SPACE) {
-      e.preventDefault()
     }
   }
 
@@ -290,17 +291,16 @@ function TableCell({
             </button>`
           : displayWithFormat(item)
         )}
-        ${editing ? html`
           <span
             class="tag-input"
-            contenteditable="true"
-            data-placeholder="Add…"
+            contenteditable="${editing ? 'true' : 'false'}"
+            data-placeholder=${editing ? 'Add item...' : ''}
+            @blur=${handleCellBlur}
             @keydown=${handleListInputKeyDown}
             ${ref(el => {
               contentEditableRef.current = el;
             })}
           ></span>
-        ` : ''}
       </div>
     `;
   }
@@ -350,8 +350,7 @@ function TableCell({
                   el.dataset.initialized = 'true';
                 }
               })}
-              @keydown=${handleCheckboxKeyDown}
-              @change=${(e) => dispatchDataChange(e, e.target.checked)}
+              @change=${(e) => dispatchDataChange(e, field, e.target.checked)}
             />
           </div>
     `;

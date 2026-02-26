@@ -1,4 +1,5 @@
 import { useState, useEffect } from "haunted";
+const API_URL = __API_URL__;
 
 /**
  * useAuth - Haunted hook for authentication state.
@@ -13,12 +14,16 @@ export function useAuth() {
     async function checkAuth() {
       setLoading(true);
       try {
-        // Replace with your actual REST API endpoint
-        const res = await fetch("/api/auth/status");
+        const res = await fetch(`${API_URL}/api/v1/me`, {
+          credentials: "include"
+        });
         if (!cancelled) {
           if (res.ok) {
+            // Response: {"authenticated":true,"provider":"github","provider_user_id":"1234","email":"test@example.com","display_name":null,"first_name":null,"teams":null}
             const data = await res.json();
-            setUser(data.user || null);
+            if (data.authenticated) {
+              setUser(data);
+            }
           } else {
             setUser(null);
           }

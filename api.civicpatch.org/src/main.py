@@ -151,13 +151,18 @@ if is_production:
         "https://components.civicpatch.org",
     ]
 else:
-    allowed_origins = ["*"]
+    allowed_origins = [
+        "https://app.civicpatch.local",
+        "https://api.civicpatch.local"
+    ]
 
 app.add_middleware(HTTPSSchemeMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_origins=allowed_origins,
+    allow_credentials=True,
+    allow_headers=["*"]    
 )
 
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
@@ -215,14 +220,14 @@ app.include_router(
     api_pipelines_router.get_router(api_key_header),
     prefix="/api/internal/pipelines",
     tags=["pipelines"],
-    dependencies=[Depends(require_route_access(RouteCategory.JOBS))]
+    dependencies=[Depends(require_route_access(RouteCategory.JOBS_WRITE))]
 )
 
 app.include_router(
     api_jobs_router.get_router(api_key_header),
     prefix="/api/v1/jobs",
-    tags=["jobs"],
-    dependencies=[Depends(require_route_access(RouteCategory.JOBS))]
+    tags=["jobs"], 
+    dependencies=[Depends(require_route_access(RouteCategory.TEAM_MEMBER))]
 )
 
 # Allow you to create your api keys
@@ -231,7 +236,7 @@ app.include_router(
     api_keys_router.get_router(), 
     prefix="/api/internal/api_keys", 
     tags=["api_keys"],
-    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))]
+    dependencies=[Depends(require_route_access(RouteCategory.TEAM_MEMBER))]
 )
 
 app.include_router(

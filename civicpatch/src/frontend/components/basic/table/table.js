@@ -6,15 +6,25 @@ import { useSortableList } from '../../hooks/useSortableList';
 import "./cell"
 
 const styles = css`
-  civ-table {
-    tr:last-child {
-      border: none;
-    }
+  civ-table table {
+    border: 2px solid transparent;
+    border-radius: var(--pico-border-radius);
   }
-  td {
-    padding: 0;
+  civ-table table:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--pico-background-color), 0 0 0 4px rgb(var(--catppuccin-sapphire)) !important;
+  }
+
+  civ-table tr:last-child {
     border: none;
-    height: 100%;
+  }
+  civ-table td {
+      padding: 0;
+      border: none;
+      height: 100%;
+  }
+  civ-table td:focus-within {
+    background-color: rgb(var(--catppuccin-base));
   }
   civ-table-cell {
     display: block;
@@ -22,17 +32,17 @@ const styles = css`
     height: 100%;
     box-sizing: border-box;
   }
-  tr {
+  civ-table tr {
     border: 1px solid rgb(var(--catppuccin-crust));
     transition: transform 300ms ease, opacity 300ms ease, background-color 150ms ease;
   }
-  tr:hover {
+  civ-table tr:focus-within {
     background-color: rgba(var(--catppuccin-teal), 0.1);
   }
-  tr.dragging {
+  civ-table tr.dragging {
     opacity: 0.3;
   }
-  tr.drop-indicator td div {
+  civ-table tr.drop-indicator td div {
     animation: expand 250ms ease-out forwards;
   }
   @keyframes expand {
@@ -44,12 +54,6 @@ const styles = css`
       height: 8rem;
       opacity: 1;
     }
-  }
-  td {
-    background-color: inherit;
-  }
-  td:focus-within {
-    background-color: rgb(var(--catppuccin-base));
   }
 `;
 
@@ -98,16 +102,20 @@ function BasicTable(props) {
     }));
   });
 
-  function handleDataChange(event) {
+  function handleDataChange(event, row) {
     const { identifier, field, value } = event.detail;
+
+    const actualField = getResponseField(field);
+    const newValue = getResponseValue(row[actualField], field, value);
 
     // Data has been submitted from a cell, we should reset edit mode
     setEditingCell({ row: null, col: null });
 
     // Also, should submit the changes
     // Good time to validate, but tomorrow's me will implement that
+    console.log("Data change:", identifier, field, value);
     tableRef.current.dispatchEvent(new CustomEvent('data-change', {
-      detail: { identifier, field, value },
+      detail: { identifier, field: actualField, value: newValue },
       bubbles: true,
       composed: true
     }));
@@ -136,12 +144,6 @@ function BasicTable(props) {
     if (editable) {
       setEditingCell({ row, col });
     }
-  }
-
-  function getNestedValue(obj, path) {
-    if (!path) return null;
-
-    return path.split('.').reduce((acc, key) => acc?.[key], obj);
   }
 
   function handleTableKeyDown(e) {
@@ -199,6 +201,8 @@ function BasicTable(props) {
           e.stopPropagation();
         } else if (focused) {
           setFocusedCell({ row: null, col: null });
+          // Focus on table
+          tableRef.current.focus();
           e.stopPropagation();
         }
         return;
@@ -273,25 +277,27 @@ function BasicTable(props) {
     `;
   }
 
-
   function renderDataCell(col, colIndex, rowIndex) {
     const row = props.data[rowIndex];
     const identifierValue = row[props.identifier];
     const mapKey = `${identifierValue}-${col.field}`;
-    const value = getNestedValue(row, col.field);
+    const actualField = getResponseField(col.field);
+    const value = actualField ? getNestedValue(row[actualField], col.field) : null;
     const cellIsFocused = focusedCell.row === rowIndex && focusedCell.col === colIndex;
     const cellIsEditing = editingCell.row === rowIndex && editingCell.col === colIndex;
     return keyed(mapKey, html`
       <td style="padding: 0;" 
         data-row=${rowIndex}
         data-col=${colIndex}
+        style=${col.customCss ? col.customCss(row, actualField) : ""}
         @keydown=${(e) => handleCellKeyDown(e, { row: rowIndex, col: colIndex, editable: col.editable, isSelectCell: col.type === 'checkbox' })}
         @click=${() => handleCellClick({ row: rowIndex, col: colIndex, editable: col.editable })}
         @dragover=${e => handleDragOver(rowIndex, e)}
         @drop=${e => handleDrop(rowIndex, e)}
       >
         <civ-table-cell
-          @cell-change=${handleDataChange}
+          @cell-change=${(e) => handleDataChange(e, row)}
+          @cell-cancel=${handleCellBlur}
           .identifier=${identifierValue}
           .rowIndex=${rowIndex}
           .colIndex=${colIndex}
@@ -302,13 +308,56 @@ function BasicTable(props) {
           .focused=${cellIsFocused}
           .editing=${cellIsEditing}
           .customCell=${col.renderCell}
-          .data=${row}}
         ></civ-table-cell>
       </td>
     `)
   }
 
+  function handleTableBlur(e) {
+    setFocusedCell({ row: null, col: null });
+    setEditingCell({ row: null, col: null });
+  }
+
+  function handleCellBlur(e) {
+    setEditingCell({ row: null, col: null });
+  }
+
   const isRedundantDrop = dragOverIndex === draggedIndex || dragOverIndex === draggedIndex + 1;
+
+  function getResponseField(nestedField) {
+    if (!nestedField) return null;
+
+    let parts = nestedField.split('.');
+    return parts[0];
+  }
+
+  function getNestedValue(maybeObj, nestedField) {
+    if (!maybeObj) return null;
+    // Nested field is in the format "office.name", we need to drill down into the object to get the value
+    // There will either be only 1 level of nesting, or none
+    let parts = nestedField.split('.')
+    if (parts.length === 1) {
+      return maybeObj; // It is not nested, it's just a direct value
+    } else if (parts.length === 2) {
+      const [_parentKey, childKey] = parts;
+      return maybeObj ? maybeObj[childKey] : null; // Drill down into the object to get the nested value
+    }
+  }
+
+  function getResponseValue(maybeObj, nestedField, newValue) {
+    if (!nestedField) return null;
+
+    let parts = nestedField.split('.');
+    if (parts.length === 1) {
+      return newValue;
+    } else if (parts.length === 2) {
+      const [_parentKey, childKey] = parts;
+      return {
+        ...maybeObj,
+        [childKey]: newValue
+      };
+    }
+  }
 
   return html`
     <style>${styles}</style>
@@ -317,6 +366,7 @@ function BasicTable(props) {
       style="height: 100%" 
       tabindex="0"
       @keydown=${handleTableKeyDown}
+      @blur=${handleTableBlur}
       ${ref(el => tableRef.current = el)}
     >
       <thead>

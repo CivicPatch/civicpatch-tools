@@ -2,14 +2,9 @@
 {% block content %} 
 {% if not missing_env %}
 
-<civ-search-jurisdictions></civ-search-jurisdictions>
+<civ-navbar></civ-navbar>
 
-<auth-status>
-  <div slot="user">
-    <p>Welcome, authenticated user!</p>
-    <!-- You can render user details here using JS -->
-  </div>
-</auth-status>
+<civ-search-jurisdictions></civ-search-jurisdictions>
 
 {% endif %} 
 {% if missing_env %}
