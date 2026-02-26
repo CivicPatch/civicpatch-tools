@@ -1,6 +1,6 @@
 import { component, useEffect, useState, useRef}  from "haunted";
 import { html } from "lit-html";
-import { useAuth } from "../hooks/useAuth.js";
+import { useAuth } from "../../hooks/useAuth.js";
 
 function CivSelectJurisdiction() {
   const { user, loading: authLoading } = useAuth();

@@ -1,11 +1,11 @@
 import { component, useEffect, useState, useCallback } from "haunted";
 import { html } from "lit-html";
-import { useSSE } from "../hooks/useSse.js"; // <-- Import the hook
+import { useSSE } from "../../hooks/useSse.js"; // <-- Import the hook
 import "../scrape-history/scrape-history-list.js";
 import "../edit-people/edit-people.js";
 import "./jurisdiction-detail.js"
 import "./config-detail.js";  
-import { useAuth } from "../hooks/useAuth.js";
+import { useAuth } from "../../hooks/useAuth.js";
 // const DEFAULT_CENTER = "30.24171,-91.991044";
 const API_URL = __API_URL__;
 

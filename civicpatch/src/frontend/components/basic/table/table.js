@@ -2,7 +2,7 @@ import { html, component, useState, useLayoutEffect } from 'haunted';
 import { css } from 'lit';
 import { keyed } from 'lit/directives/keyed.js';
 import { ref, createRef } from 'lit/directives/ref.js';
-import { useSortableList } from '../../hooks/useSortableList';
+import { useSortableList } from '../../../hooks/useSortableList.js';
 import "./cell"
 
 const styles = css`
