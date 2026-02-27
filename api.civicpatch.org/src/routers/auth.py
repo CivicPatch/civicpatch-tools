@@ -20,15 +20,48 @@ JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 ALLOWED_HOSTS = ["civicpatch.org", "civicpatch.local"]
 
 def is_safe_redirect(url: str) -> bool:
-    """Check if the redirect URL is safe (same origin or allowed host)."""
+    """Check if the redirect URL is safe (relative URL or allowed host)."""
     if not url:
         return False
-    parsed = urlparse(url)
-    # Allow relative URLs
-    if not parsed.netloc:
+
+    # Normalize URL to handle browser quirks:
+    # - Replace backslashes, which some browsers treat like slashes.
+    # - Strip surrounding whitespace.
+    normalized_url = url.replace("\\", "/").strip()
+    if not normalized_url:
+        return False
+
+    parsed = urlparse(normalized_url)
+
+    # Allow only *relative* URLs with no scheme and no network location.
+    # This prevents malformed absolute URLs like "https:/example.com"
+    # from being treated as relative.
+    if not parsed.scheme and not parsed.netloc:
+        # Optionally, ensure the path starts with "/" to avoid confusing
+        # relative values like "///example.com".
+        if not parsed.path:
+            return False
+        if parsed.path.startswith("/"):
+            return True
+        # Paths that do not start with "/" can be considered unsafe here.
+        return False
+
+    # For absolute URLs, only allow specific hosts over HTTP(S).
+    if parsed.scheme not in ("http", "https"):
+        return False
+
+    hostname = parsed.hostname or ""
+    if not hostname:
+        return False
+
+    if hostname in ALLOWED_HOSTS:
         return True
-    # Allow only specific hosts
-    return parsed.netloc in ALLOWED_HOSTS or parsed.netloc.endswith(".civicpatch.org") or parsed.netloc.endswith(".civicpatch.local")
+
+    # Allow subdomains of civicpatch.org and civicpatch.local
+    if hostname.endswith(".civicpatch.org") or hostname.endswith(".civicpatch.local"):
+        return True
+
+    return False
 
 from jose import jwt
 
