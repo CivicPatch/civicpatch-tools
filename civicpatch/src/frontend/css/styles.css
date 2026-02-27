@@ -59,7 +59,7 @@
     --pico-form-element-active-border-color: rgb(var(--catppuccin-mantle));
     --pico-form-element-color: var(--catppuccin-base);
     --pico-primary-border: rgb(var(--catppuccin-subtext0));
-    --pico-muted-border-color: rgb(var(--catppuccin-subtext0));
+    --pico-muted-border-color: rgba(var(--catppuccin-subtext0), 0.1);
     --pico-contrast-background: rgb(var(--catppuccin-red));
     --pico-contrast-inverse: rgb(var(--catppuccin-base));
     --pico-contrast-hover-background: rgba(var(--catppuccin-red), 0.3);

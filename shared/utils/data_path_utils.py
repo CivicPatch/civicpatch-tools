@@ -66,6 +66,12 @@ def get_data_file_path(jurisdiction_ocdid):
 
     return data_file_path 
 
+# Let's stop including the data path from now on
+def get_data_source_context_file_path(jurisdiction_ocdid: str):
+    folder_path = id_utils.jurisdiction_ocdid_to_folder(jurisdiction_ocdid)
+    context_file_path = os.path.join("data_source", folder_path, "workflow_context.json")
+
+    return context_file_path
 
 # Serialized
 def get_data(jurisdiction_ocdid: str) -> List[Any]:

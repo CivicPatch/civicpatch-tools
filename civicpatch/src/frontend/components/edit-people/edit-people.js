@@ -9,6 +9,7 @@ import { useRovingFocusList } from '../../hooks/use-roving-focus-list.js';
 import './diff-preview.js';
 import './pull-request-tabs.js';
 import { useCsrf } from '../../hooks/use-csrf.js';
+import './review-table.js';
 const API_URL = __API_URL__;
 
 // Helper to generate a random key
@@ -30,6 +31,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     }))
   );
   const [originalPeople, setOriginalPeople] = useState([]);
+  const [reviewData, setReviewData] = useState(null);
   const [error, setError] = useState(null);
   const [selectedPullRequest, setSelectedPullRequest] = useState(null);
   const [notice, setNotice] = useState(null);
@@ -63,6 +65,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     if (!selectedPullRequest) {
       // Use default people
       assignPeople(people)
+      setReviewData(null);
     } else {
       getSelectedPullRequestData(selectedPullRequest);
     }
@@ -122,6 +125,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       .then(data => {
         if (data.data) {
           assignPeople(data.data);
+          // TODO: handle error
+        }
+        if (data.review) {
+          setReviewData(data.review)
+        } else {
+          setReviewData(null);
         }
       })
   } 
@@ -375,7 +384,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           Delete (${selectedPeople.length})
         </button>
         <button
-          @click=${handleReset}
+          @click=${() => handleReset(null)}
           style="margin-left:auto; margin-right: 1rem;"
           ?disabled=${dirty === false}
         >
@@ -577,6 +586,13 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           </a>
         `}
     </section>
+  
+  <civ-review-table
+    .jurisdiction_ocdid=${jurisdiction_ocdid}
+    .branch_name=${selectedPullRequest?.branch_name}
+    .reviewData=${reviewData}
+    .currentPeople=${currentPeople}
+  ></civ-review-table>
 
   ${renderActionButtons()}
 

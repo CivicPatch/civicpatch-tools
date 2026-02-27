@@ -4,9 +4,8 @@ import logging
 from fastapi import APIRouter, Form, HTTPException, Security, UploadFile, BackgroundTasks
 
 import services.auth_service as AuthService
-import job_service.people_collector
+from job_service.people_collector import people_collector
 from schemas.requests import HandleSubmitJobArtifactsRequest
-from schemas.responses import SubmitJobArtifactsResponse
 
 GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
 
@@ -53,7 +52,7 @@ def get_router(api_key_header):
             server_detail=server_detail
         )
 
-        response = await job_service.people_collector.handle_submit_job_artifacts(
+        response = await people_collector.handle_submit_job_artifacts(
             request=request,
             background_tasks=background_tasks
         )
