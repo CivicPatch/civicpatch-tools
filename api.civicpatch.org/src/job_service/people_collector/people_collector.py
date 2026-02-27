@@ -16,6 +16,9 @@ LLMS_SHEET_NAME = "Cost LLMs"
 SEARCH_ENGINES_SHEET_NAME = "Cost Search Engines"
 STORAGE_SHEET_NAME = "Cost Storage"
 
+STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
+INSTANCE_DOMAIN = "civicpatch.org" # Just hardcode it for now...
+
 logger = logging.getLogger(__name__)
 
 async def handle_submit_job_artifacts(
@@ -112,7 +115,12 @@ async def _process_images(debug_file_dir: str, filenames_to_urls: dict, data: Li
     for person in data:
         if person.get("image"):
             if person["image"] in image_map and image_map[person["image"]] in filenames_to_urls:
-                person["cdn_image"] = filenames_to_urls[image_map[person["image"]]]
+                storage_url = filenames_to_urls[image_map[person["image"]]]
+                # convert storage URL to the civicpatch-artifacts bucket
+                # temp TODO move
+                cdn_image_url = storage_url.replace(f"{STORAGE_ENDPOINT}/civicpatch-artifacts", f"https://civicpatch-artifacts.{INSTANCE_DOMAIN}")
+
+                person["cdn_image"] = cdn_image_url
     return data
 
 async def _upload_debug_files(debug_file_dir: str, file_suffix_without_ext: str) -> dict:

@@ -11,12 +11,18 @@ import yaml
 import glob
 import json
 import utils.file_utils as file_utils
+from datetime import datetime, timedelta
+from urllib.parse import urlparse
 
 EXPIRATION_ONE_DAY_IN_SECONDS = 86400
 
 STORAGE_ENDPOINT = os.getenv("STORAGE_ENDPOINT")
 STORAGE_ACCESS_KEY_ID = os.getenv("STORAGE_ACCESS_KEY_ID")
 STORAGE_SECRET_ACCESS_KEY = os.getenv("STORAGE_SECRET_ACCESS_KEY")
+
+# TODO: Move to redis 
+_url_cache: dict[str, tuple[str, datetime]] = {}
+CACHE_TTL_SECONDS = 3600 * 12  # 12 hours (regenerate before expiry)
 
 def get_client():
     if not all([STORAGE_ENDPOINT, STORAGE_ACCESS_KEY_ID, STORAGE_SECRET_ACCESS_KEY]):
@@ -136,3 +142,71 @@ async def upload_file_to_storage(
     except Exception as e:
         print(f"Error during upload: {str(e)}")
         raise IOError(f"Upload failed: {str(e)}")
+
+def get_presigned_url_cached(
+    bucket_name: str,
+    key: str,
+    expiration: int = EXPIRATION_ONE_DAY_IN_SECONDS
+) -> str:
+    """
+    Get a presigned URL, using cache if available and not expired.
+    
+    Args:
+        bucket_name: The S3 bucket name
+        key: The object key
+        expiration: URL expiration time in seconds
+    
+    Returns:
+        Presigned URL for the object
+    """
+    cache_key = f"{bucket_name}/{key}"
+    
+    # Check cache
+    if cache_key in _url_cache:
+        url, created_at = _url_cache[cache_key]
+        if datetime.now() - created_at < timedelta(seconds=CACHE_TTL_SECONDS):
+            return url
+    
+    # Generate new URL
+    storage_client = get_client()
+    presigned_url = storage_client.generate_presigned_url(
+        ClientMethod='get_object',
+        Params={'Bucket': bucket_name, 'Key': key},
+        ExpiresIn=expiration
+    )
+    
+    # Cache it
+    _url_cache[cache_key] = (presigned_url, datetime.now())
+    
+    return presigned_url
+
+
+def get_presigned_url_from_object_url(
+    object_url: str,
+    expiration: int = EXPIRATION_ONE_DAY_IN_SECONDS
+) -> str:
+    """
+    Generate a presigned URL from a full storage object URL.
+    
+    Args:
+        object_url: Full URL like "https://endpoint.com/bucket/path/to/file.jpg"
+        expiration: URL expiration time in seconds
+    
+    Returns:
+        Presigned URL for the object
+    """
+    
+    if not object_url:
+        return ""
+    
+    parsed = urlparse(object_url)
+    
+    # Path style: https://endpoint.com/bucket-name/key
+    path_parts = parsed.path.lstrip('/').split('/', 1)
+    if len(path_parts) < 2:
+        raise ValueError(f"Invalid object URL format: {object_url}")
+    
+    bucket_name = path_parts[0]
+    key = path_parts[1]
+    
+    return get_presigned_url_cached(bucket_name, key, expiration)

@@ -1,0 +1,104 @@
+from typing import List, Protocol, Dict, Set
+from . import name_utils
+
+
+class PersonLike(Protocol):
+    """Protocol for objects with name and other_names fields."""
+    name: str
+    other_names: List[str] | None
+
+
+def generate_review(
+    research_people: List[dict],
+    people_by_llm: Dict[str, List[dict]],
+    people: List[dict],
+    identities: Dict[str, List[str]] | None = None,
+):
+    identities = identities or {}
+
+    # 1. Gather all people
+    all_people = []
+    all_people.extend(research_people)
+    all_people.extend(people)
+    for llm_people in people_by_llm.values():
+        all_people.extend(llm_people)
+
+    # 2. Build canonical map
+    canonical_map = name_utils.build_canonical_map(all_people, identities)
+
+    # 3. Build canonical sets for each source
+    research_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in research_people}
+    people_canonicals = {canonical_map[name_utils.get_person_name(p)] for p in people}
+    llm_canonicals = {
+        llm: {canonical_map[name_utils.get_person_name(p)] for p in ppl}
+        for llm, ppl in people_by_llm.items()
+    }
+
+    all_canonicals = _collect_all_canonicals(research_canonicals, people_canonicals, llm_canonicals)
+    issues = _generate_issues(research_canonicals, people_canonicals)
+    rows = _generate_rows(all_canonicals, research_canonicals, people_canonicals, llm_canonicals)
+
+    return {
+        "issues": issues,
+        "llm_names": sorted(people_by_llm.keys()),
+        "people_by_source": rows,
+    }
+
+
+def _collect_all_canonicals(
+    research_canonicals: Set[str],
+    people_canonicals: Set[str],
+    llm_canonicals: Dict[str, Set[str]],
+) -> List[str]:
+    """Collect and sort all canonical names from all sources."""
+    all_names = research_canonicals | people_canonicals | set().union(*llm_canonicals.values())
+    return sorted(all_names)
+
+
+def _generate_issues(
+    research_canonicals: Set[str],
+    people_canonicals: Set[str],
+) -> List[str]:
+    """Generate issue strings for mismatches between research and final."""
+    issues = []
+    
+    for name in sorted(people_canonicals - research_canonicals):
+        issues.append(f"Extra official: {name}")
+    
+    for name in sorted(research_canonicals - people_canonicals):
+        issues.append(f"Missing official: {name}")
+    
+    return issues
+
+
+def _generate_rows(
+    all_canonicals: List[str],
+    research_canonicals: Set[str],
+    people_canonicals: Set[str],
+    llm_canonicals: Dict[str, Set[str]],
+) -> List[Dict]:
+    """Generate table rows for each canonical name."""
+    llm_names = sorted(llm_canonicals.keys())
+    
+    return [
+        _build_row(name, research_canonicals, people_canonicals, llm_canonicals, llm_names)
+        for name in all_canonicals
+    ]
+
+
+def _build_row(
+    name: str,
+    research_canonicals: Set[str],
+    people_canonicals: Set[str],
+    llm_canonicals: Dict[str, Set[str]],
+    llm_names: List[str],
+) -> Dict:
+    """Build a single row dict for a canonical name."""
+    row = {
+        "name": name,
+        "in_research": name in research_canonicals,
+    }
+    for llm_name in llm_names:
+        row[llm_name] = name in llm_canonicals.get(llm_name, set())
+    row["in_final"] = name in people_canonicals
+    return row

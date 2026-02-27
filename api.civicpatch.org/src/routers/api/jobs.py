@@ -4,6 +4,7 @@ from typing import Optional, Any, List, Dict
 from pydantic import BaseModel
 from schemas.common import Identity
 import services.github_service as github_service
+import services.storage_service as storage_service
 from services.api_service import can_make_api_request, can_call_request_id
 from database import (
     get_job,
@@ -17,6 +18,7 @@ import database as database
 from utils.auth import get_user, require_route_access
 import shared.utils.data_path_utils as data_path_utils
 import shared.utils.id_utils
+import job_service.people_collector.people_data_utils as people_data_utils
 import json
 import yaml
 from services.memory_pub_sub_service import memory_pubsub
@@ -286,20 +288,40 @@ def get_router(api_key_header):
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ):
         file_path = data_path_utils.get_data_file_path(jurisdiction_ocdid)
+        context_file_path = data_path_utils.get_data_source_context_file_path(jurisdiction_ocdid)
+        print("context file path", context_file_path)
         # Chop off leading "/app/" from file_path
         if file_path.startswith("/app/"):
             file_path = file_path[len("/app/"):]
-        github_response = await github_service.get_github_file_contents(
+
+        data_github_response = await github_service.get_github_file_contents(
             github_file_path=file_path,
             ref=branch_name
         )
+        
+        context_github_response = await github_service.get_github_file_contents(
+            github_file_path=context_file_path,
+            ref=branch_name
+        )
+        if context_github_response:
+            context = json.loads(context_github_response)
+            review = None
+            try:
+                people = data_github_response and yaml.safe_load(data_github_response) or []
+                review = people_data_utils.extract_review_data(context, people)
+            except Exception as e:
+                print("Error extracting review data, skipping:", e)
 
-        if github_response is None:
+        if data_github_response is None:
             return {"branch_name": branch_name, "data": None}
 
-        response = yaml.safe_load(github_response) if github_response else None
+        response = yaml.safe_load(data_github_response) if data_github_response else None
 
-        return {"branch_name": branch_name, "data": response}
+        return {
+            "branch_name": branch_name, 
+            "data": response, 
+            "review": review or None
+        }
 
     @router.post(
         "/people/pull_request/{branch_name}/data",

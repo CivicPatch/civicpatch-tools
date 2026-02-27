@@ -405,9 +405,6 @@ function BasicTable(props) {
         ` : null}
       </tbody>
     </table>
-    <p>Focused: ${focusedCell.row}, ${focusedCell.col}</p>
-    <p>Editing: ${editingCell.row}, ${editingCell.col}</p>
-    ${dragOverIndex}
   `;
 }
 
