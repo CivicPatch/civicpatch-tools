@@ -21,3 +21,6 @@ Core Python package for collecting municipal official data via web scraping and 
 ## Conventions
 - Async/await for I/O operations
 - Use `config_utils` for designation/role configuration
+
+## Tests
+- pytest

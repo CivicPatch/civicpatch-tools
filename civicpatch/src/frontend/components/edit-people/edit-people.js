@@ -110,7 +110,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   function getSelectedPullRequestData(pullRequest) {
     if (!pullRequest) return;
-    console.log("pull request is ", pullRequest)
 
     const url = [
       `${API_URL}/api/v1/jobs/people/pull_request/`,
