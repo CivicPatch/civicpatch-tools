@@ -13,7 +13,7 @@ function JurisdictionPage({
   jurisdiction_ocdid, 
   history
 }) {
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, permissions } = useAuth();
   const [data, setData] = useState(null);
   const [people, setPeople] = useState([]);
   const [scrapeModalOpen, setScrapeModalOpen] = useState(false); 
@@ -33,7 +33,7 @@ function JurisdictionPage({
   if (authLoading) {
     return html`<p>Checking authentication...</p>`;
   }
-  if (!user) {
+  if (!permissions.JURISDICTION_PAGE) {
     return html`<p>You must be logged in to view this page.</p>`;
   }
 

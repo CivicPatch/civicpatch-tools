@@ -9,6 +9,7 @@ from services import github_service
 import database
 import secrets
 from urllib.parse import urlparse
+from jose import jwt
 
 INSTANCE_URL = os.getenv("INSTANCE_URL", "https://api.civicpatch.local")
 COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.local")
@@ -63,8 +64,6 @@ def is_safe_redirect(url: str) -> bool:
 
     return False
 
-from jose import jwt
-
 # https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
 github_sso = GithubSSO(
     client_id=GITHUB_CLIENT_ID,
@@ -86,10 +85,15 @@ def get_router(is_production: bool) -> APIRouter:
                     status_code=400, detail=f"Unsupported provider: {provider}"
                 )
 
+        if is_safe_redirect(redirect):
+            redirect_url = redirect
+        else:
+            redirect_url = "/"
+
         # Store redirect in session or pass via state parameter
         async with sso:
             # Pass redirect URL via OAuth state parameter
-            return await sso.get_login_redirect(state=redirect)
+            return await sso.get_login_redirect(state=redirect_url)
 
     @router.get("/logout", include_in_schema=False)
     async def logout(redirect: str = "/"):
