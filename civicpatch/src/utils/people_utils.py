@@ -120,6 +120,8 @@ def normalize_remaining_text(text: str) -> str:
 def normalize_roles(roles: List[str]) -> List[str]:
     """
     Normalize roles using configured aliases.
+    Tries progressively shorter suffixes to handle location prefixes
+    like "Seattle City Councilmember" -> "city councilmember" -> "council member".
     """
     if not roles:
         return []
@@ -137,10 +139,26 @@ def normalize_roles(roles: List[str]) -> List[str]:
         if not role or role == "":
             continue
 
+        # Try exact match first
         direct_match = role_aliases.get(role)
         if direct_match:
             seen.add(direct_match)
-        else: # No direct match found
+            continue
+
+        # Try progressively shorter suffixes
+        # "Seattle City Councilmember" -> "City Councilmember" -> "Councilmember"
+        words = role.split()
+        matched = False
+        for i in range(1, len(words)):
+            suffix = " ".join(words[i:])
+            suffix_match = role_aliases.get(suffix)
+            if suffix_match:
+                seen.add(suffix_match)
+                matched = True
+                break
+
+        if not matched:
+            # No match found - keep original
             seen.add(role)
 
     sorted_roles = sort_roles(seen)

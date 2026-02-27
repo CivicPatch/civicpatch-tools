@@ -3,10 +3,10 @@ from jobs.people_collector.schemas import (
     LLMPerson, Person, 
     RecordsByLLM, PeopleCollectorContext, MergeRecordsWithinLLMStep,
 )
-from utils import merge_utils
+from utils import merge_utils, role_utils
+from shared.utils import config_utils
 import jobs.people_collector.steps.step_06_merge_records_within_llm.field_mergers as field_mergers
 from collections import Counter
-from datetime import datetime, timezone
 
 def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWithinLLMStep:
     """
@@ -34,6 +34,10 @@ def merge_records_within_llm(context: PeopleCollectorContext) -> MergeRecordsWit
             identity_names = context.data.config.identities or research_identities
             consolidated_people = merge_records(identity_names, llm_records_list, jurisdiction_ocdid)
             merged_people.extend(consolidated_people)
+
+        # Filter out records by the roles we want to keep
+        roles_to_keep = config_utils.get_role_names()
+        merged_people = role_utils.people_with_roles(merged_people, roles_to_keep)
 
         people_by_llm[llm] = merged_people
 

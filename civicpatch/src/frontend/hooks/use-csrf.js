@@ -11,7 +11,6 @@ export function useCsrf() {
     return () => window.removeEventListener("focus", checkCsrf);
   }, []);
 
-  console.log("Current CSRF token:", csrf);
   return csrf;
 }
 
