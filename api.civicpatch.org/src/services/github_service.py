@@ -179,9 +179,9 @@ async def get_open_pull_requests() -> List[PullRequest]:
     params = "state=open&per_page=100&sort=created&direction=desc"
     url = f"https://api.github.com/repos/CivicPatch/open-data/pulls?{params}"
 
-
+    default_headers = await get_default_headers()
     headers = {
-        **get_default_headers(),
+        **default_headers,
         "Accept": "application/vnd.github+json",
     }
 

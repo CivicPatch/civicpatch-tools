@@ -31,7 +31,7 @@ CONFIG = {
     ],
     "JURISDICTION_FILES_PATTERN": "data_source/**/jurisdictions_metadata.yml",
     "MAP_FILES_PATTERN": "data/**/.maps/*.geojson",
-    "CRUDDER_DB_URL": os.getenv("CRUDDER_DB_URL"),
+    "CIVICPATCH_API_DB_URL": os.getenv("CIVICPATCH_API_DB_URL"),
 }
 
 # Use config values throughout the file
@@ -40,11 +40,11 @@ REPO_PATH = CONFIG["REPO_PATH"]
 DATA_FILES_PATTERNS = CONFIG["DATA_FILES_PATTERNS"]
 JURISDICTION_FILES_PATTERN = CONFIG["JURISDICTION_FILES_PATTERN"]
 MAP_FILES_PATTERN = CONFIG["MAP_FILES_PATTERN"]
-CRUDDER_DB_URL = CONFIG["CRUDDER_DB_URL"]
+CIVICPATCH_API_DB_URL = CONFIG["CIVICPATCH_API_DB_URL"]
 
 # Check for required environment variable before attempting to create pool
-if not CRUDDER_DB_URL:
-    raise ValueError("CRUDDER_DB_URL environment variable is not set.")
+if not CIVICPATCH_API_DB_URL:
+    raise ValueError("CIVICPATCH_API_DB_URL environment variable is not set.")
 
 async def get_jurisdiction_metadata(state: str):
     jurisdictions_file_path = os.path.join("data_source", state, "jurisdictions.yml")
