@@ -5,6 +5,8 @@ from services.openai.llm import run_prompt as run_openai_prompt
 from services.openai.prompts import municipality_officials_prompt as make_openai_prompt
 from services.google_gemini.llm import run_prompt as run_gemini_prompt 
 from services.google_gemini.prompts import municipality_officials_prompt as make_gemini_prompt
+from services.together_ai.llm import run_prompt as run_together_prompt
+from services.together_ai.prompts import municipality_officials_prompt as make_together_prompt
 from jobs.people_collector.schemas import PeopleArrayLLMResponseSchema, RawLLMPerson
 import phonenumbers
 from typing import cast, List
@@ -172,10 +174,16 @@ async def model_client(request):
             "run_prompt": run_gemini_prompt,
             "make_prompt": make_gemini_prompt,
         }
+    elif request.param == "together_ai":
+        return {
+            "name": "together_ai",
+            "run_prompt": run_together_prompt,
+            "make_prompt": make_together_prompt,
+        }
     else:
         raise ValueError(f"Unknown model client: {request.param}")
 
-@pytest.mark.parametrize("model_client", ["openai", "gemini"], indirect=True)
+@pytest.mark.parametrize("model_client", ["openai", "gemini", "together_ai"], indirect=True)
 @pytest.mark.asyncio
 async def test_eval_with_mocked_cases(model_client, load_eval_cases):
     report, per_case_scores = await run_eval(model_client, load_eval_cases)

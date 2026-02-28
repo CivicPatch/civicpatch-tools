@@ -46,8 +46,8 @@ services:
       - api_civicpatch_org_test_db
     environment:
       APP_ENVIRONMENT: test
-      GITHUB_CLIENT_ID: test_github_client_id
-      GITHUB_CLIENT_SECRET: test_github_client_secret
+      GITHUB_APP_CLIENT_ID: test_GITHUB_APP_CLIENT_ID
+      GITHUB_APP_CLIENT_SECRET: test_GITHUB_APP_CLIENT_SECRET
       JWT_SECRET_KEY: test_jwt_secret_key
       DATABASE_HASH_KEY: test_database_hash_key
       CRUDDER_DB_PASSWORD: test_password

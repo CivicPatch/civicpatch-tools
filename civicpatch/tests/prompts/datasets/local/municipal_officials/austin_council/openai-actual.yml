@@ -119,11 +119,3 @@ people:
   start_date: null
   end_date: null
   image: null
-thought: The provided text includes a clear current roster of the City of Austin's
-  governing officials, listing the Mayor and City Council Members by district with
-  their official phone numbers and respective official profile URLs from the austintexas.gov
-  website. No emails were provided except for the Mayor's contact email shown on the
-  webpage. There is no explicit indication of start or end dates for the offices,
-  so those fields remain null. I extracted names, roles, districts, phone numbers,
-  emails, and URLs where provided, and left image data as null since no images of
-  officials were included or linked.

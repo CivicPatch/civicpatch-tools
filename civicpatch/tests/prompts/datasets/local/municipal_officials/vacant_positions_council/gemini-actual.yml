@@ -1,7 +1,7 @@
 people:
 - name: Vacant Vacant
   roles:
-  - Council
+  - Alderman
   designations: []
   phone: null
   email: null
@@ -11,7 +11,7 @@ people:
   image: null
 - name: Vacant Vacant
   roles:
-  - Council
+  - Alderman
   designations: []
   phone: null
   email: null
@@ -21,7 +21,7 @@ people:
   image: null
 - name: Alysa Jarvis
   roles:
-  - Council
+  - Alderman
   designations: []
   phone: 713-703-8662
   email: null
@@ -31,7 +31,7 @@ people:
   image: null
 - name: Tracey Johnson
   roles:
-  - Council
+  - Alderman
   designations: []
   phone: 361-746-8488
   email: null
@@ -41,7 +41,7 @@ people:
   image: null
 - name: Kenneth Reese
   roles:
-  - Council
+  - Alderman
   designations: []
   phone: null
   email: null
@@ -49,11 +49,3 @@ people:
   start_date: null
   end_date: null
   image: null
-thought: I have extracted the information for the City Council members from the provided
-  structured table. I identified two vacant positions, Alysa Jarvis, Tracey Johnson,
-  and Kenneth Reese as current council members. I have included their names, roles,
-  phone numbers where available, and their respective profile URLs. Since no explicit
-  email addresses were provided (only contact form links), the email field is null
-  for all. Similarly, no start or end dates were explicitly mentioned, so those fields
-  are null. The relevant URLs include the main City Council page and the general Elected
-  Officials page.

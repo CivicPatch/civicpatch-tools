@@ -2,67 +2,64 @@ people:
 - name: Michael Pye
   roles:
   - Mayor
-  designations:
-  - At-Large
-  phone: 903-587-3334
+  designations: []
+  phone: (903) 587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: null
-  end_date: 2026-05
+  start_date: '2025'
+  end_date: '2026'
   image: null
 - name: Al Stephens
   roles:
   - Mayor Pro Tem
-  - Council Member
-  designations:
-  - At-Large
-  phone: 903-587-3334
+  designations: []
+  phone: (903) 587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: null
-  end_date: 2026-05
+  start_date: '2025'
+  end_date: '2026'
   image: null
 - name: Bobby Hanson
   roles:
   - Council Member
   designations:
-  - At-Large
-  phone: 903-587-3334
+  - At Large
+  phone: (903) 587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: null
-  end_date: 2026-05
+  start_date: '2025'
+  end_date: '2026'
   image: null
 - name: Darrell Grintz
   roles:
   - Council Member
   designations:
-  - At-Large
-  phone: 903-587-3334
+  - At Large
+  phone: (903) 587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: null
-  end_date: 2027-05
+  start_date: '2025'
+  end_date: '2027'
   image: null
 - name: Billy Wayne Martin
   roles:
   - Council Member
   designations:
-  - At-Large
-  phone: 903-587-3334
+  - At Large
+  phone: (903) 587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: null
-  end_date: 2027-05
+  start_date: '2025'
+  end_date: '2027'
   image: null
 - name: Charles Wrenn
   roles:
   - Council Member
   designations:
-  - At-Large
-  phone: 903-587-3334
+  - At Large
+  phone: (903) 587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: null
-  end_date: 2027-05
+  start_date: '2025'
+  end_date: '2027'
   image: null

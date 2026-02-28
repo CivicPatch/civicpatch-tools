@@ -233,8 +233,6 @@ async def merge_records_across_llms_transition(_: JobConfig, logger: WorkflowLog
         })
     })
 
-    
-
     next_state = WorkflowStatus.FORMAT_OUTPUT
     return next_context, next_state
 

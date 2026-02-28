@@ -1,13 +1,23 @@
 people:
+- name: Tommy Sloan
+  roles:
+  - Mayor
+  designations: []
+  phone: (325) 625-5114
+  email: null
+  url: null
+  start_date: null
+  end_date: null
+  image: null
 - name: Beau Brudney
   roles:
   - Council Member
   designations:
   - Place 3
-  - Ward East
+  - East Ward
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -16,20 +26,10 @@ people:
   - Council Member
   designations:
   - Place 4
-  - Ward South
+  - South Ward
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
-  start_date: null
-  end_date: null
-  image: null
-- name: Tommy Sloan
-  roles:
-  - Mayor
-  designations: []
-  phone: (325) 625-5114
-  email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -39,10 +39,10 @@ people:
   - Mayor Pro-Tem
   designations:
   - Place 2
-  - Ward West
+  - West Ward
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
   image: null
@@ -51,17 +51,10 @@ people:
   - Council Member
   designations:
   - Place 1
-  - Ward North
+  - North Ward
   phone: (325) 625-5114
   email: null
-  url: https://www.cityofcolemantx.us/council/index.html
+  url: null
   start_date: null
   end_date: null
   image: null
-thought: I have extracted the information about the Coleman City Council members and
-  Mayor from the structured text and image caption. I identified their names, roles,
-  and designations (Place and Ward for council members). No individual images, email
-  addresses, or specific start/end dates were provided, so those fields are null.
-  A general contact phone number for the council was included for all officials. The
-  relevant URLs include the main City Council page, the proclamations page, and the
-  elections information page.

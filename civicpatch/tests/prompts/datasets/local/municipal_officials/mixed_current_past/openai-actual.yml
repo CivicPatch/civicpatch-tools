@@ -6,9 +6,9 @@ people:
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: '2025'
+  start_date: '2025-01-01'
   end_date: '2026-12-31'
-  image: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+  image: null
 - name: Al Stephens
   roles:
   - Mayor Pro Tem
@@ -16,9 +16,9 @@ people:
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: '2025'
+  start_date: '2025-01-01'
   end_date: '2026-12-31'
-  image: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+  image: null
 - name: Bobby Hanson
   roles:
   - Council Member
@@ -27,7 +27,7 @@ people:
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: '2025'
+  start_date: '2025-01-01'
   end_date: '2026-12-31'
   image: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
 - name: Darrell Grintz
@@ -38,9 +38,9 @@ people:
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: '2025'
-  end_date: '2027-02-16'
-  image: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+  start_date: '2025-01-01'
+  end_date: '2027-12-31'
+  image: null
 - name: Billy Wayne Martin
   roles:
   - Council Member
@@ -49,9 +49,9 @@ people:
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: '2025'
-  end_date: '2027-02-16'
-  image: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
+  start_date: '2025-01-01'
+  end_date: '2027-12-31'
+  image: null
 - name: Charles Wrenn
   roles:
   - Council Member
@@ -60,16 +60,6 @@ people:
   phone: 903-587-3334
   email: cityadmin@cityofleonard.net
   url: https://www.cityofleonard.net/page/city_council
-  start_date: '2025'
-  end_date: '2027-02-16'
-  image: https://www.cityofleonard.net/upload/page/0016/widgets/image/000401/new%20council%20members%2025%20cropped.jpg
-thought: The City of Leonard's current governing body includes a Mayor, a Mayor Pro
-  Tem, and five Council Members. From the content, the council members and mayor serve
-  at-large positions. The terms for positions elected on even years (Mayor, Mayor
-  Pro Tem, and one Council Member) end in 2026, while terms for positions elected
-  on odd years (three Council Members) end in 2027. Phone number 903-587-3334 and
-  cityadmin@cityofleonard.net are the main contact details used for all officials
-  as no individual contact info was provided. The start date for the current term
-  is inferred as 2025 based on election cycles, and end dates correspond to the filing
-  deadline dates provided in the source, interpreted as the term end dates. The profile
-  image used is the group image from the 2025 new council members section.
+  start_date: '2025-01-01'
+  end_date: '2027-12-31'
+  image: null

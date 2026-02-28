@@ -8,9 +8,6 @@ from utils.request_utils import with_retry
 from utils.log_utils import get_workflow_logger
 from utils import cost_utils
 
-PROMPT_TOKENS=600
-OUTPUT_BUFFER=1500
-
 MAX_RETRIES = 5
 BASE_URL = "https://api.together.xyz/v1"
 
@@ -38,7 +35,7 @@ MODELS_BY_TYPE = {
             # token limit exceeded - default test with 3147 input tokens
         #"model": "openai/gpt-oss-20b",
         #"input_cost": 0.05 / 1000000,
-        #"output_cost": 0.10 / 1000000
+        #"output_cost": 0.20 / 1000000 # 0.10 / 1000000 -> (0.20) as of 02/28/2026
         # FAILS
             # Good result, but Zack Zappone is missing??
             # TODO: figure out chunking, maybe it's being cut off
@@ -46,8 +43,7 @@ MODELS_BY_TYPE = {
         #"model": "meta-llama/Llama-3.2-3B-Instruct-Turbo",
         #"input_cost": 0.06 / 1000000,
         #"output_cost": 0.06 / 1000000,
-        #"token_limit": 4096,  # Actual token limit is 4096, leave buffer for output tokens
-        # PASSES with flying colors
+        # eh, does well on some, not so well on others, ex. bad formatting
         #"model": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
         #"input_cost": 0.10 / 1000000,
         #"output_cost": 0.10 / 1000000,
@@ -73,11 +69,6 @@ MODELS_BY_TYPE = {
         # "output_cost": 0.18 / 1000000
         # FAILS
             # OK generation, but took too long because response was bad so needed retriee
-        # "model": "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
-        # "input_cost": 0.18 / 1000000,
-        # "output_cost": 0.18 / 1000000
-        # FAILS
-            # It needed retries 
         # "model": "deepcogito/cogito-v2-preview-llama-109B-MoE",
         # "input_cost": 0.18 / 1000000,
         # "output_cost": 0.59 / 1000000
@@ -98,10 +89,10 @@ MODELS_BY_TYPE = {
         # "input_cost": 0.20 / 1000000,
         # "output_cost": 0.20 / 1000000
         # ???
-        # "model": "google/gemma-3n-E4B-it",
-        # "input_cost": 0.02 / 1000000,
-        # "output_cost": 0.04 / 1000000
-        # FAILS
+        #"model": "google/gemma-3n-E4B-it",
+        #"input_cost": 0.02 / 1000000,
+        #"output_cost": 0.04 / 1000000
+        ## FAILS
             # Takes too long, more for batch jobs
             # Did not stick around to get result
         # "model": "Qwen/Qwen3-235B-A22B-Instruct-2507-tput",
@@ -114,13 +105,31 @@ MODELS_BY_TYPE = {
         # "model": "Qwen/Qwen2.5-7B-Instruct-Turbo",
         # "input_cost": 0.30 / 1000000,
         # "output_cost": 0.30 / 1000000
-        "model": "mistralai/Mixtral-8x7B-Instruct-v0.1",
-        "input_cost": 0.60 / 1000000,
-        "output_cost": 0.60 / 1000000
+        #"model": "mistralai/Mixtral-8x7B-Instruct-v0.1",
+        #"input_cost": 0.60 / 1000000,
+        #"output_cost": 0.60 / 1000000
+        #"model": "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+        #"input_cost": 0.18 / 1000000,
+        #"output_cost": 0.18 / 1000000
+        # FAILS
+            # Hmmm failing tests but pretty good output
+        #"model": "Qwen/Qwen3-VL-8B-Instruct",
+        #"input_cost": 0.18 / 1000000,
+        #"output_cost": 0.68 / 1000000
+        # FAILS
+        #"model": "Qwen/Qwen3-235B-A22B-Instruct-2507-tput",
+        #"input_cost": 0.20 / 1000000,
+        #"output_cost": 0.60 / 1000000
     },
 }
 
-def run_prompt(request_id, jurisdiction_ocdid: str, prompt, content="", response_schema=None, model_type="STANDARD"):
+def run_prompt(
+        request_id, 
+        jurisdiction_ocdid: str,
+        prompt, 
+        response_schema=None,
+        content="",
+        model_type="STANDARD"):
     """
     Run a prompt against Together AI's API using OpenAI-compatible interface
     """

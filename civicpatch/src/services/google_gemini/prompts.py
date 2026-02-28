@@ -108,7 +108,6 @@ def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
       - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
       - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
     - relevant_urls: (Array of strings) URLs that potentially contain more information about the officials, ward/district profiles, etc.
-    - thoughts: (String) Your reasoning process
 
     Guidelines:
     - **Only extract information that is explicitly present in the provided content. Do NOT infer or fabricate any details, including email addresses, phone numbers, or URLs.**

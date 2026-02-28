@@ -4,23 +4,64 @@ import yaml
 import base64
 import httpx
 import json
+import jwt
+import time
 
 from schemas.common import PullRequest
+from services import cache_service
 timeout = httpx.Timeout(60.0)  
 github_async_client = httpx.AsyncClient(timeout=timeout)
 
-GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
-GITHUB_UPDATE_TOKEN = os.getenv("GITHUB_UPDATE_TOKEN")
+#GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
+#GITHUB_UPDATE_TOKEN = os.getenv("GITHUB_UPDATE_TOKEN")
+GITHUB_APP_ID=os.getenv("GITHUB_APP_ID")
+GITHUB_APP_PRIVATE_KEY_BASE64 = os.getenv("GITHUB_APP_PRIVATE_KEY_BASE64")
+GITHUB_APP_PRIVATE_KEY = base64.b64decode(GITHUB_APP_PRIVATE_KEY_BASE64).decode()
+GITHUB_APP_INSTALLATION_ID = os.getenv("GITHUB_APP_INSTALLATION_ID")
+
+CACHE_KEY = f"github:installation:{GITHUB_APP_INSTALLATION_ID}"
+
+def _generate_jwt() -> str:
+    now = int(time.time())
+    return jwt.encode(
+        {"iat": now - 60, "exp": now + 600, "iss": GITHUB_APP_ID},
+        GITHUB_APP_PRIVATE_KEY,
+        algorithm="RS256",
+    )
+
+
+async def _fetch_github_token() -> tuple[str, float]:
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            f"https://api.github.com/app/installations/{GITHUB_APP_INSTALLATION_ID}/access_tokens",
+            headers={
+                "Authorization": f"Bearer {_generate_jwt()}",
+                "Accept": "application/vnd.github+json",
+            },
+        )
+        response.raise_for_status()
+        data = response.json()
+
+    token = data["token"]
+    expires_at = time.mktime(time.strptime(data["expires_at"], "%Y-%m-%dT%H:%M:%SZ"))
+    return token, expires_at
+
+
+async def get_github_token() -> str:
+    return await cache_service.get_cached_token(CACHE_KEY, _fetch_github_token)
+
+
 
 # Shared HTTP client
 github_async_client = httpx.AsyncClient(timeout=timeout)
 
-def get_default_headers() -> Dict[str, str]:
+async def get_default_headers() -> Dict[str, str]:
     """
     Get the default headers for GitHub API requests.
     """
+    github_token = await get_github_token()
     return {
-        "Authorization": f"Bearer {GITHUB_WORKFLOW_TOKEN}",
+        "Authorization": f"Bearer {github_token}",
         "X-GitHub-Api-Version": "2022-11-28",
     }
 
@@ -42,9 +83,10 @@ async def trigger_people_job_workflow(
         data["inputs"]["name"] = name
     if url:
         data["inputs"]["url"] = url
+    default_headers = await get_default_headers()
 
     headers = {
-        **get_default_headers(),
+        **default_headers,
         "Accept": "application/vnd.github+json",
     }
 
@@ -85,9 +127,11 @@ async def trigger_github_data_intake_workflow(
         },
     }
 
+    default_headers = await get_default_headers()
+
     headers = {
-        **get_default_headers(),
-         "Accept": "application/vnd.github+json",
+        **default_headers,
+        "Accept": "application/vnd.github+json",
     }
 
     response = await github_async_client.post(
@@ -110,7 +154,7 @@ async def get_github_file_contents(
         github_file_path: str,
         ref: Optional[str] = None,
     ) -> str | None:
-    print("Fetching GitHub file:", github_file_path, "ref:", ref)
+    default_headers = await get_default_headers()
 
     url = (
         f"https://api.github.com/repos/CivicPatch/open-data/contents/{github_file_path}"
@@ -118,7 +162,7 @@ async def get_github_file_contents(
     if ref:
         url += f"?ref={ref}"    
     headers = {
-        **get_default_headers(),
+        **default_headers,
         "Accept": "application/vnd.github.raw",
     }
     response = await github_async_client.get(url, headers=headers, timeout=timeout)
@@ -168,14 +212,13 @@ async def update_pull_request_file(
     commit_message: str = "Automated update via API"
 ) -> bool:
     # Get file SHA
+    default_headers = await get_default_headers()
     headers = {
-        **get_default_headers(),
+        **default_headers,
     }
     contents_url = f"https://api.github.com/repos/CivicPatch/open-data/contents/{file_path}?ref={branch_name}"
-    print("contents url", contents_url)
     contents_response = await github_async_client.get(contents_url, headers=headers, timeout=timeout)
     if contents_response.status_code != 200:
-        print("Error fetching file contents:", contents_response.status_code, contents_response.text)
         return False
     sha = contents_response.json()["sha"]
     serialized_data = yaml.dump(new_data, sort_keys=False, allow_unicode=True)
@@ -189,8 +232,7 @@ async def update_pull_request_file(
     }
 
     headers = {
-        **get_default_headers(),
-        "Authorization": f"Bearer {GITHUB_UPDATE_TOKEN}",
+        **default_headers,
         "Accept": "application/vnd.github+json",
     }
 
