@@ -11,14 +11,22 @@ import secrets
 from urllib.parse import urlparse
 from jose import jwt
 
-INSTANCE_URL = os.getenv("INSTANCE_URL", "https://api.civicpatch.local")
-COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.local")
-GITHUB_CLIENT_ID = os.getenv("GITHUB_CLIENT_ID")
-GITHUB_CLIENT_SECRET = os.getenv("GITHUB_CLIENT_SECRET")
-GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/api/v1/auth/github/callback"
+INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8000")
+GITHUB_APP_CLIENT_ID = os.getenv("GITHUB_APP_CLIENT_ID")
+GITHUB_APP_CLIENT_SECRET = os.getenv("GITHUB_APP_CLIENT_SECRET")
+GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/auth/github/callback"
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
-ALLOWED_HOSTS = ["civicpatch.org", "civicpatch.local"]
+APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT")
+is_production = APP_ENVIRONMENT.lower() == "production"
+
+if is_production:
+    ALLOWED_HOSTS = ["civicpatch.org"]
+    COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.org")
+else:
+    ALLOWED_HOSTS = ["civicpatch.local"]
+    COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.local")
+
 
 def is_safe_redirect(url: str) -> bool:
     """Check if the redirect URL is safe (relative URL or allowed host)."""
@@ -66,8 +74,8 @@ def is_safe_redirect(url: str) -> bool:
 
 # https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
 github_sso = GithubSSO(
-    client_id=GITHUB_CLIENT_ID,
-    client_secret=GITHUB_CLIENT_SECRET,
+    client_id=GITHUB_APP_CLIENT_ID,
+    client_secret=GITHUB_APP_CLIENT_SECRET,
     redirect_uri=GITHUB_CALLBACK_URL,
     scope=["read:user", "user:email", "read:org"]  # Requesting access to read user info and org membership
 )

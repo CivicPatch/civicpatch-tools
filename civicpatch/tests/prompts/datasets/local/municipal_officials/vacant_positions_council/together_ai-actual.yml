@@ -1,7 +1,7 @@
 people:
 - name: Vacant Vacant
   roles:
-  - Council Member
+  - Council
   designations: []
   phone: null
   email: null
@@ -11,7 +11,7 @@ people:
   image: null
 - name: Vacant Vacant
   roles:
-  - Council Member
+  - Council
   designations: []
   phone: null
   email: null
@@ -21,30 +21,30 @@ people:
   image: null
 - name: Alysa Jarvis
   roles:
-  - Council Member
+  - Council
   designations: []
   phone: 713-703-8662
-  email: no-reply@seadrifttx.org
+  email: alysa.jarvis@seadrifttx.org
   url: https://www.seadrifttx.org/city-council/directory-listing/alysa-jarvis
   start_date: null
   end_date: null
   image: null
 - name: Tracey Johnson
   roles:
-  - Council Member
+  - Council
   designations: []
   phone: 361-746-8488
-  email: no-reply@seadrifttx.org
+  email: tracey.johnson@seadrifttx.org
   url: https://www.seadrifttx.org/city-council/directory-listing/tracey-johnson
   start_date: null
   end_date: null
   image: null
 - name: Kenneth Reese
   roles:
-  - Council Member
+  - Council
   designations: []
   phone: null
-  email: no-reply@seadrifttx.org
+  email: kenneth.reese@seadrifttx.org
   url: https://www.seadrifttx.org/city-council/directory-listing/kenneth-reese
   start_date: null
   end_date: null

@@ -3,7 +3,7 @@ people:
   roles:
   - Mayor
   designations: []
-  phone: 956-350-4093
+  phone: (956) 350-4093
   email: Todd.Day@RanchoViejoTx.gov
   url: null
   start_date: 2025-05
@@ -13,7 +13,7 @@ people:
   roles:
   - Mayor Pro Tem
   designations: []
-  phone: null
+  phone: (956) 350-4093
   email: Javier.Vera@RanchoViejoTx.gov
   url: null
   start_date: 2025-05
@@ -23,7 +23,7 @@ people:
   roles:
   - Alderwoman
   designations: []
-  phone: null
+  phone: (956) 350-4093
   email: Christi.Burnias@RanchoViejoTx.gov
   url: null
   start_date: 2024-05
@@ -33,7 +33,7 @@ people:
   roles:
   - Alderman
   designations: []
-  phone: null
+  phone: (956) 350-4093
   email: Abelardo.Gonzalez@RanchoViejoTx.gov
   url: null
   start_date: 2025-05
@@ -43,17 +43,17 @@ people:
   roles:
   - Alderman
   designations: []
-  phone: null
+  phone: (956) 350-4093
   email: Peter.Harris@RanchoViejoTx.gov
   url: null
   start_date: 2025-05
   end_date: 2026-05
-  image: null
+  image: https://www.ranchoviejotexas.com/wp-content/uploads/2024/05/C-Burnias3-e1716392656796.jpg
 - name: Mark A. Johnson
   roles:
   - Alderman
   designations: []
-  phone: null
+  phone: (956) 350-4093
   email: Mark.Johnson@RanchoViejoTx.gov
   url: null
   start_date: 2024-05

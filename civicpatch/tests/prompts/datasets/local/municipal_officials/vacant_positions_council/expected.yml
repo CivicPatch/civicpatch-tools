@@ -1,7 +1,7 @@
 people:
 - name: Vacant Vacant
   roles:
-  - Council Member
+  - Alderman
   designations: []
   phone: null
   email: null
@@ -11,7 +11,7 @@ people:
   image: null
 - name: Vacant Vacant
   roles:
-  - Council Member
+  - Alderman
   designations: []
   phone: null
   email: null
@@ -21,38 +21,31 @@ people:
   image: null
 - name: Alysa Jarvis
   roles:
-  - Council Member
+  - Alderman
   designations: []
   phone: 713-703-8662
-  email: ajr@seadrifttx.org
+  email: null
   url: https://www.seadrifttx.org/city-council/directory-listing/alysa-jarvis
   start_date: null
   end_date: null
   image: null
 - name: Tracey Johnson
   roles:
-  - Council Member
+  - Alderman
   designations: []
   phone: 361-746-8488
-  email: tjohnson@seadrifttx.org
+  email: null
   url: https://www.seadrifttx.org/city-council/directory-listing/tracey-johnson
   start_date: null
   end_date: null
   image: null
 - name: Kenneth Reese
   roles:
-  - Council Member
+  - Alderman
   designations: []
   phone: null
-  email: kreese@seadrifttx.org
+  email: null
   url: https://www.seadrifttx.org/city-council/directory-listing/kenneth-reese
   start_date: null
   end_date: null
   image: null
-thought: 'The City Council roster lists five members: two seats are vacant, and three
-  current members are Alysa Jarvis, Tracey Johnson, and Kenneth Reese. They all hold
-  the role of Council Member, with no ward, district or similar designations given.
-  Their phone numbers and emails were extracted from the page, using the office contact
-  email format (first initial + last name @ seadrifttx.org) where an email link text
-  was given. No start or end dates were specified for their terms, and no images were
-  present for these officials in the provided content.'

@@ -33,7 +33,6 @@ def relevant_page_prompt(page_url: str, _people_hint: List[ResearchedPerson]):
     {{
         "relevant_urls": ["https://example.com/council", "https://example.com/mayor"],  # ALL links found on this page that may lead to main officials — even if the current page is not relevant
         "is_relevant": true/false,
-        "thoughts": "Your reasoning goes here"
     }}
 
     **Critical rules:**
@@ -50,15 +49,6 @@ def municipality_officials_prompt(
     designation_names = config_utils.get_designation_names()
     designations_str = ", ".join(designation_names)
     current_date = datetime.now().strftime("%Y-%m-%d")
-
-    #maybe_target_people = [p.name for p in (people_hint or []) if p.name]
-
-    #if maybe_target_people:
-    #    target_text = (
-    #        f"Here is a list of known target people (may be missing or include extra): {', '.join(maybe_target_people)}"
-    #    )
-    #else:
-    #    target_text = ""
 
     prompt = f"""
     Your task is to extract information about the currently serving elected officials
@@ -85,7 +75,6 @@ def municipality_officials_prompt(
       - url: (String or null) Formatted URL (https://...). (official's profile > biography URL > contact form email URL > related position listing > general listing)
       - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
       - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
-    - thoughts: (String) Your reasoning process
 
     **Instructions:**
     - Extract phone numbers, email addresses, and URLs even if they are not part of a structured listing or dedicated section, as long as they are explicitly present in the text.

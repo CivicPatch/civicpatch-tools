@@ -1,0 +1,12 @@
+{
+  "frontendFramework": "lit-html",
+  "webComponentStyle": "lit",
+  "defaultLanguage": "javascript",
+  "stateLibrary": "haunted",
+  "codeStyle": "functional",
+  "typescript": false,
+  "cssFramework": "pico",
+  "apiStyle": "rest",
+  "fileStructure": "feature-based",
+  "accessibility": true
+}

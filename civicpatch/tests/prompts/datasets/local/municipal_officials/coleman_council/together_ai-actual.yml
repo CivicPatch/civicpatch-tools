@@ -1,19 +1,9 @@
 people:
-- name: Tommy Sloan
-  roles:
-  - Mayor
-  designations: []
-  phone: (325) 625-5114
-  email: null
-  url: https://www.cityofcolemantx.us/council/index.html
-  start_date: null
-  end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
 - name: Beau Brudney
   roles:
   - Council Member
   designations:
-  - Place 3 East Ward
+  - ward East Ward
   phone: (325) 625-5114
   email: null
   url: https://www.cityofcolemantx.us/council/index.html
@@ -24,7 +14,17 @@ people:
   roles:
   - Council Member
   designations:
-  - Place 4 South Ward
+  - ward South Ward
+  phone: (325) 625-5114
+  email: null
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: null
+  end_date: null
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Tommy Sloan
+  roles:
+  - Mayor
+  designations: []
   phone: (325) 625-5114
   email: null
   url: https://www.cityofcolemantx.us/council/index.html
@@ -36,7 +36,7 @@ people:
   - Council Member
   - Mayor Pro-Tem
   designations:
-  - Place 2 West Ward
+  - ward West Ward
   phone: (325) 625-5114
   email: null
   url: https://www.cityofcolemantx.us/council/index.html
@@ -47,7 +47,7 @@ people:
   roles:
   - Council Member
   designations:
-  - Place 1 North Ward
+  - ward North Ward
   phone: (325) 625-5114
   email: null
   url: https://www.cityofcolemantx.us/council/index.html
