@@ -14,7 +14,7 @@ from jose import jwt
 INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8000")
 GITHUB_APP_CLIENT_ID = os.getenv("GITHUB_APP_CLIENT_ID")
 GITHUB_APP_CLIENT_SECRET = os.getenv("GITHUB_APP_CLIENT_SECRET")
-GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/auth/github/callback"
+GITHUB_CALLBACK_URL = f"{INSTANCE_URL}/api/v1/auth/github/callback"
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 
 APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT")

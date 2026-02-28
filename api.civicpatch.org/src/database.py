@@ -12,10 +12,10 @@ from psycopg_pool import AsyncConnectionPool
 
 from schemas.common import Person, PeopleJobHistory
 
-CRUDDER_DB_URL = os.getenv("CRUDDER_DB_URL")
+CIVICPATCH_API_DB_URL = os.getenv("CIVICPATCH_API_DB_URL")
 DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")
 
-pool = AsyncConnectionPool(CRUDDER_DB_URL, open=False)
+pool = AsyncConnectionPool(CIVICPATCH_API_DB_URL, open=False)
 
 
 def hash_string(string: str, hash_key: str) -> str:

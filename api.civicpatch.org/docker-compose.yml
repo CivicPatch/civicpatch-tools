@@ -51,7 +51,7 @@ services:
       JWT_SECRET_KEY: test_jwt_secret_key
       DATABASE_HASH_KEY: test_database_hash_key
       CRUDDER_DB_PASSWORD: test_password
-      CRUDDER_DB_URL: "postgres://civicpatch_test:test_password@api_civicpatch_org_test_db:5432/test_db?sslmode=disable"
+      CIVICPATCH_API_DB_URL: "postgres://civicpatch_test:test_password@api_civicpatch_org_test_db:5432/test_db?sslmode=disable"
       INSTANCE_URL: "http://localhost:8002"
       MAINTAINER_EMAIL: test_maintainer@email.com
       STORAGE_ENDPOINT: http://localhost:9000

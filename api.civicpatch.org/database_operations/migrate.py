@@ -4,7 +4,7 @@ from psycopg.rows import dict_row
 
 # CONFIG
 DATABASE_URL = os.getenv(
-    "CRUDDER_DB_URL",
+    "CIVICPATCH_API_DB_URL",
     "postgresql://civicpatch:development_password@crudder_db:5432/development_db",
 )
 MIGRATIONS_DIR = "database_operations/migrations"
