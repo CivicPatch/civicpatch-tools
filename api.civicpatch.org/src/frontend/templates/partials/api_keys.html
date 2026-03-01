@@ -82,7 +82,14 @@
     {% endif %}
 </article>
 
-<div style="display: flex; justify-content: flex-start; margin-top: 2em">
+{% set has_active_key = api_keys and api_keys | selectattr('revoked_at', 'none') | list | length > 0 %}
+
+<div style="display: flex; justify-content: flex-start; align-items: center; gap: 1em; margin-top: 2em">
+    {% if has_active_key %}
+    <small style="color: var(--muted-color);">
+        You already have an active API key. Revoke it before creating a new one.
+    </small>
+    {% else %}
     <span
         {%
         if
@@ -118,6 +125,7 @@
             + Create New Key
         </button>
     </span>
+    {% endif %}
 </div>
 
 <dialog id="apiKeyModal">
@@ -179,6 +187,8 @@
             if (response.ok) {
                 const data = await response.json();
                 showApiKeyModal(data.api_key);
+            } else if (response.status === 409) {
+                alert("You already have an active API key. Please revoke it before creating a new one.");
             } else {
                 console.error("Failed to create key:", response.status);
             }
