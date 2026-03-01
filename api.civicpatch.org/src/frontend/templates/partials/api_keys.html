@@ -65,8 +65,9 @@
             </button>
             {% else %}
             <button
+                id="revoke-btn-{{ key.id }}"
                 class="secondary outline"
-                onclick="revokeKey('{{ key.id }}')"
+                onclick="revokeKey('{{ key.id }}', this)"
                 data-tooltip="This action cannot be undone"
             >
                 Revoke
@@ -158,26 +159,56 @@
 </dialog>
 
 <script>
-    async function revokeKey(keyId) {
-        if (!confirm("Are you sure you want to revoke this API key?")) {
+    async function revokeKey(keyId, btn) {
+        if (!confirm("Are you sure you want to revoke this API key? This cannot be undone.")) {
             return;
         }
+
+        // Disable button and show loading state
+        btn.disabled = true;
+        btn.textContent = "Revoking...";
+
         try {
             const csrf = getCsrfCookie();
             const response = await fetch(`/api/internal/api_keys/${keyId}`, {
                 method: "DELETE",
-                credentials: "include", // send cookies
+                credentials: "include",
                 headers: {
                     "x-csrf-token": csrf
                 }
             });
+
             if (response.ok) {
-                window.location.reload();
+                // Update the button in place without a full reload
+                btn.textContent = "Revoked";
+                btn.classList.remove("outline");
+                btn.disabled = true;
+
+                // Also update the "Revoked:" date shown next to the key
+                const small = btn.closest("[role='group']").querySelector("small");
+                if (small) {
+                    const now = new Date().toISOString().slice(0, 19).replace("T", " ");
+                    small.innerHTML = small.innerHTML.replace("—", now);
+                }
+
+                // Reload after a short delay so the user sees the updated state
+                setTimeout(() => window.location.reload(), 800);
+            } else if (response.status === 404) {
+                alert("API key not found. It may have already been revoked.");
+                btn.disabled = false;
+                btn.textContent = "Revoke";
             } else {
-                console.error("Failed to revoke key:", response.status);
+                const text = await response.text();
+                console.error("Failed to revoke key:", response.status, text);
+                alert(`Failed to revoke key (${response.status}). Please try again.`);
+                btn.disabled = false;
+                btn.textContent = "Revoke";
             }
         } catch (error) {
             console.error("Error revoking key:", error);
+            alert("An unexpected error occurred. Please try again.");
+            btn.disabled = false;
+            btn.textContent = "Revoke";
         }
     }
 
@@ -186,7 +217,7 @@
             const csrf = getCsrfCookie();
             const response = await fetch("/api/internal/api_keys", {
                 method: "POST",
-                credentials: "include", // send cookies
+                credentials: "include",
                 headers: {
                     "Accept": "application/json",
                     "x-csrf-token": csrf
@@ -198,10 +229,13 @@
             } else if (response.status === 409) {
                 alert("You already have an active API key. Please revoke it before creating a new one.");
             } else {
-                console.error("Failed to create key:", response.status);
+                const text = await response.text();
+                console.error("Failed to create key:", response.status, text);
+                alert(`Failed to create key (${response.status}). Please try again.`);
             }
         } catch (error) {
             console.error("Error creating key:", error);
+            alert("An unexpected error occurred. Please try again.");
         }
     }
 
