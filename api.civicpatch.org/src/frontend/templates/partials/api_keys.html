@@ -23,7 +23,7 @@
 
 <h2>Your Teams</h2>
 <hr />
-{% if teams is defined and teams and teams|length > 0 %}
+{% if user.teams is defined and user.teams and user.teams|length > 0 %}
 <p>Different endpoints require different roles. Refer to the 
     <a href="/docs">API documentation</a> for details.
 </p>
