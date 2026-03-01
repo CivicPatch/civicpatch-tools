@@ -5,20 +5,12 @@ services:
       service: civicpatch
     networks:
       - civicpatch_net
-    depends_on:
-      - caddy
-    volumes:
-      - ./development/caddy/data:/development/caddy/data:ro      
   api_civicpatch_org:
     extends:
       file: api.civicpatch.org/docker-compose.yml
       service: api_civicpatch_org
     networks:
       - civicpatch_net
-    depends_on:
-      - caddy
-    volumes:
-      - ./development/caddy/data:/development/caddy/data:ro    
   civicpatch-frontend:
     extends:
       file: civicpatch/docker-compose.development.yml
@@ -31,21 +23,6 @@ services:
       service: api_civicpatch_org_db
     networks:
       - civicpatch_net
-  caddy:
-    container_name: caddy
-    build: 
-      context: development/caddy
-      dockerfile: Dockerfile
-    networks:
-      civicpatch_net:
-        aliases:
-          - api.civicpatch.local
-          - app.civicpatch.local
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./development/caddy/data:/data
 
 networks:
   civicpatch_net:

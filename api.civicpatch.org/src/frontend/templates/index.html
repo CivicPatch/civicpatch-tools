@@ -18,6 +18,9 @@
 
       {% if user %}
         <p>Welcome, {{user.first_name or user.display_name or user.email}}</p> 
+        {% include 'partials/teams.html' %}
+
+        {% include 'partials/api_usage.html' %}        
 
         {% include 'partials/api_keys.html' %}
 

@@ -1,5 +1,6 @@
 import os
 
+from contextlib import asynccontextmanager
 import arel
 import httpx
 from fastapi import FastAPI, HTTPException, Request, Response
@@ -11,12 +12,8 @@ from starlette.datastructures import URL
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request as StarletteRequest
 
+FORWARDED_RESPONSE_HEADERS = {"content-type", "cache-control", "etag", "last-modified", "location"}
 
-class HTTPSSchemeMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: StarletteRequest, call_next):
-        if request.headers.get("x-forwarded-proto", "").lower() == "https":
-            request.scope["scheme"] = "https"
-        return await call_next(request)
 
 # Hack to get url_for to generate https URLs when behind a proxy that terminates SSL
 def url_for(request: FastAPIRequest, name: str) -> URL:
@@ -31,9 +28,16 @@ from interfaces.api.routes.frontend import get_router as get_frontend_router
 API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "http://api_civicpatch_org:8001")
 API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app):
+    app.state.client = httpx.AsyncClient()
+    yield
+    await app.state.client.aclose()
+
+app = FastAPI(
+    lifespan=lifespan
+)
 app.mount("/frontend", StaticFiles(directory="src/frontend"), name="frontend")
-app.add_middleware(HTTPSSchemeMiddleware)
 
 civicpatch_env = os.getenv("CIVICPATCH_ENV", "development")
 is_production = civicpatch_env == "production"
@@ -57,9 +61,8 @@ app.include_router(get_frontend_router(templates), tags=["frontend"])
 )
 async def proxy_to_api_civicpatch_org_endpoint(path: str, request: Request):
     # Inject Authorization header from env var
-    if not API_CIVICPATCH_ORG_TOKEN:
-        raise HTTPException(status_code=500, detail="Missing API_CIVICPATCH_ORG_TOKEN")
-    print(f"Proxying request to {API_CIVICPATCH_ORG_URL}: {request.method} /{path}")
+    #if not API_CIVICPATCH_ORG_TOKEN:
+    #    raise HTTPException(status_code=500, detail="Missing API_CIVICPATCH_ORG_TOKEN")
 
     method = request.method
     url = f"{API_CIVICPATCH_ORG_URL}/api/v1/{path}"
@@ -71,17 +74,19 @@ async def proxy_to_api_civicpatch_org_endpoint(path: str, request: Request):
     #headers["Authorization"] = f"{API_CIVICPATCH_ORG_TOKEN}"  # Inject token
 
     data = await request.body()
-    async with httpx.AsyncClient() as client:
-        resp = await client.request(
-            method,
-            url,
-            headers=headers,
-            content=data if method in ["POST", "PUT", "PATCH"] else None,
-            params=dict(request.query_params),
-        )
+    client = request.app.state.client
+    resp = await client.request(
+        method,
+        url,
+        headers=headers,
+        content=data if method in ["POST", "PUT", "PATCH"] else None,
+        params=dict(request.query_params),
+    )
 
-    response_headers = dict(resp.headers)
-
+    response_headers = {
+        k: v for k, v in resp.headers.items()
+        if k.lower() in FORWARDED_RESPONSE_HEADERS
+    }
     # CRITICAL: Remove headers that prevent double-decompression
     # httpx decompressed the content, so we must remove the encoding header
     response_headers.pop("content-encoding", None)

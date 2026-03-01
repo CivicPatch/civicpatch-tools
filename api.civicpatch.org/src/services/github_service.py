@@ -3,21 +3,21 @@ from typing import List, Optional, Dict, Any
 import yaml
 import base64
 import httpx
-import json
 import jwt
 import time
+from datetime import datetime, timezone
 
 from schemas.common import PullRequest
 from services import cache_service
+
 timeout = httpx.Timeout(60.0)  
 github_async_client = httpx.AsyncClient(timeout=timeout)
 
-#GITHUB_WORKFLOW_TOKEN = os.getenv("GITHUB_WORKFLOW_TOKEN")
-#GITHUB_UPDATE_TOKEN = os.getenv("GITHUB_UPDATE_TOKEN")
 GITHUB_APP_ID=os.getenv("GITHUB_APP_ID")
 GITHUB_APP_PRIVATE_KEY_BASE64 = os.getenv("GITHUB_APP_PRIVATE_KEY_BASE64")
 GITHUB_APP_PRIVATE_KEY = base64.b64decode(GITHUB_APP_PRIVATE_KEY_BASE64).decode()
 GITHUB_APP_INSTALLATION_ID = os.getenv("GITHUB_APP_INSTALLATION_ID")
+OPEN_DATA_REPO_URL = os.getenv("OPEN_DATA_REPO_URL", "https://api.github.com/repos/CivicPatch/test-open-data")
 
 CACHE_KEY = f"github:installation:{GITHUB_APP_INSTALLATION_ID}"
 
@@ -32,7 +32,7 @@ def _generate_jwt() -> str:
 
 async def _fetch_github_token() -> tuple[str, float]:
     async with httpx.AsyncClient() as client:
-        response = await client.post(
+        response = await github_async_client.post(
             f"https://api.github.com/app/installations/{GITHUB_APP_INSTALLATION_ID}/access_tokens",
             headers={
                 "Authorization": f"Bearer {_generate_jwt()}",
@@ -43,17 +43,14 @@ async def _fetch_github_token() -> tuple[str, float]:
         data = response.json()
 
     token = data["token"]
-    expires_at = time.mktime(time.strptime(data["expires_at"], "%Y-%m-%dT%H:%M:%SZ"))
+    expires_at = datetime.strptime(data["expires_at"], "%Y-%m-%dT%H:%M:%SZ")
+    expires_at = expires_at.replace(tzinfo=timezone.utc).timestamp()
     return token, expires_at
 
 
 async def get_github_token() -> str:
     return await cache_service.get_cached_token(CACHE_KEY, _fetch_github_token)
 
-
-
-# Shared HTTP client
-github_async_client = httpx.AsyncClient(timeout=timeout)
 
 async def get_default_headers() -> Dict[str, str]:
     """
@@ -97,8 +94,6 @@ async def trigger_people_job_workflow(
         json=data,
     )
 
-    print("Response from GitHub API:", response.status_code, response.text)
-
     if response.status_code != 204:
         raise Exception(
             f"Failed to trigger workflow: {response.status_code} - {response.text}"
@@ -135,12 +130,10 @@ async def trigger_github_data_intake_workflow(
     }
 
     response = await github_async_client.post(
-            "https://api.github.com/repos/CivicPatch/open-data/actions/workflows/data_intake.yml/dispatches",
+            f"{OPEN_DATA_REPO_URL}/actions/workflows/data_intake.yml/dispatches",
             headers=headers,
             json=data,
         )
-
-    print("Response from GitHub API:", response.status_code, response.text)
 
     if response.status_code != 204:
         raise Exception(
@@ -157,7 +150,7 @@ async def get_github_file_contents(
     default_headers = await get_default_headers()
 
     url = (
-        f"https://api.github.com/repos/CivicPatch/open-data/contents/{github_file_path}"
+        f"{OPEN_DATA_REPO_URL}/contents/{github_file_path}"
     )
     if ref:
         url += f"?ref={ref}"    
@@ -177,7 +170,7 @@ async def get_github_file_contents(
 
 async def get_open_pull_requests() -> List[PullRequest]:
     params = "state=open&per_page=100&sort=created&direction=desc"
-    url = f"https://api.github.com/repos/CivicPatch/open-data/pulls?{params}"
+    url = f"{OPEN_DATA_REPO_URL}/pulls?{params}"
 
     default_headers = await get_default_headers()
     headers = {
@@ -216,7 +209,7 @@ async def update_pull_request_file(
     headers = {
         **default_headers,
     }
-    contents_url = f"https://api.github.com/repos/CivicPatch/open-data/contents/{file_path}?ref={branch_name}"
+    contents_url = f"{OPEN_DATA_REPO_URL}/contents/{file_path}?ref={branch_name}"
     contents_response = await github_async_client.get(contents_url, headers=headers, timeout=timeout)
     if contents_response.status_code != 200:
         return False
@@ -239,7 +232,6 @@ async def update_pull_request_file(
     # Update file
     update_response = await github_async_client.put(contents_url, json=data, headers=headers, timeout=timeout)
     if update_response.status_code in [200, 201]:
-        print("File updated successfully.")
         return True
     else:
         print("Error updating file:", update_response.status_code, update_response.text)
@@ -256,3 +248,7 @@ async def get_teams(user_oauth_token: str):
     our_teams = [team for team in teams if team["organization"]["login"] == "CivicPatch"]
     team_names = [team["name"] for team in our_teams]
     return team_names
+
+
+async def close():
+    await github_async_client.aclose()

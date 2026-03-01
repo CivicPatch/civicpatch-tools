@@ -1,9 +1,0 @@
-app.civicpatch.local {
-	reverse_proxy civicpatch:8000
-	tls internal
-}
-
-api.civicpatch.local {
-	reverse_proxy api_civicpatch_org:8001
-	tls internal
-}

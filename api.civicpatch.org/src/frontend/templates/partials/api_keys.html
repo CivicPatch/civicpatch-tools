@@ -1,273 +1,170 @@
-<h2>API Usage</h2>
-<article style="max-width: 400px; margin-bottom: 2em;">
-  <header style="display: flex; align-items: center; gap: 1em;">
-    <span style="font-size: 2em; color: var(--primary); display: flex; align-items: center;">
-      <svg width="32" height="32" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-        <path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-      </svg>
-    </span>
-    <div>
-      <strong>Daily Limit:</strong> {{ api_usage.daily_limit }}<br>
-      <strong>Requests Today:</strong> {{ api_usage.usage_count }}
-    </div>
-  </header>
-  <progress value="{{ api_usage.usage_count }}" max="{{ api_usage.daily_limit }}" style="width: 100%; margin: 1em 0;"></progress>
-  <footer>
-    <small>
-      <span style="color: var(--muted-color);">
-        Currently capped at 100 requests/day for <code>POST /jobs/people</code> endpoints.
-      </span>
-    </small>
-  </footer>
-</article>
-
-<h2>Your Teams</h2>
-<hr />
-{% if teams is defined and teams and teams|length > 0 %}
-<p>Different endpoints require different roles. Refer to the 
-    <a href="/docs">API documentation</a> for details.
-</p>
-<p>Contact support if you need additional roles.</p>
-<p>Any API keys you create here will inherit the permissions of your teams.</p>
-<table>
-    <thead>
-        <tr>
-            <th>Team</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for team in teams %}
-        <tr>
-            <td>{{ team }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<p>You have no teams assigned.</p>
-{% endif %}
-
-
 <h2>Your API Keys</h2>
 <hr />
-<article id="api-keys-list">
-    {% if api_keys %} {% for key in api_keys %}
-    <div class="grid">
-        <div role="group">
-            <strong>***************{{ key.suffix }}</strong>
-            <small>
-                Created: {{ key.created_at }}<br />
-                Revoked: {{ key.revoked_at if key.revoked_at else "—" }}
-            </small>
-            {% if key.revoked_at %}
-            <button class="secondary outline" disabled style="margin-left: 1em">
-                Revoked
-            </button>
-            {% else %}
-            <button
-                id="revoke-btn-{{ key.id }}"
-                class="secondary outline"
-                onclick="revokeKey('{{ key.id }}', this)"
-                data-tooltip="This action cannot be undone"
-            >
-                Revoke
-            </button>
-            {% endif %}
-        </div>
-    </div>
-    <hr />
-    {% endfor %} {% else %}
-    <article>
-        <p>No API keys found. Create one to get started.</p>
-    </article>
-    {% endif %}
-</article>
 
-<div style="display: flex; justify-content: flex-start; align-items: center; gap: 1em; margin-top: 2em">
-    {% if has_active_key %}
-    <small style="color: var(--muted-color);">
-        You already have an active API key. Revoke it before creating a new one.
-    </small>
-    {% else %}
-    <span
-        {%
-        if
-        not
-        user_details
-        or
-        not
-        user_details.server_url
-        %}
-        data-tooltip="Please fill out your server URL before creating an API key."
-        {%
-        endif
-        %}
-    >
-        <button
-            class="secondary"
-            style="font-size: 0.8rem; padding: 0.15em 0.7em"
-            onclick="createApiKey()"
-            {%
-            if
-            not
-            approved_user
-            or
-            not
-            user_details
-            or
-            not
-            user_details.server_url
-            %}disabled{%
-            endif
-            %}
-        >
-            + Create New Key
-        </button>
-    </span>
-    {% endif %}
-</div>
+<!-- Active Keys -->
+<section>
+  {% set active_keys = api_keys | selectattr("revoked_at", "==", None) | list %}
+  {% set revoked_keys = api_keys | selectattr("revoked_at", "!=" , None) | list %}
 
-<dialog id="apiKeyModal">
-    <article>
+  {% if active_keys %}
+    {% for key in active_keys %}
+      <article>
         <header>
-            <h3>New API Key</h3>
+          <strong>***************{{ key.suffix }}</strong>
         </header>
         <p>
-            <strong id="apiKeyValue" style="word-break: break-all"></strong>
-        </p>
-        <p>
-            <small style="color: #af291d"
-                >This key will not be shown again. Copy and store it
-                securely.</small
-            >
+          <small>Created: {{ key.created_at }}</small>
         </p>
         <footer>
-            <button id="copyApiKeyBtn" class="secondary">Copy</button>
-            <button id="closeApiKeyModalBtn" class="contrast">Close</button>
+          <button
+            id="revoke-btn-{{ key.id }}"
+            class="secondary"
+            onclick="revokeKey('{{ key.id }}', this)"
+            data-tooltip="Marks key as revoked but keeps audit record"
+          >
+            Revoke
+          </button>
         </footer>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p>No active API keys found. Create one to get started.</p>
+  {% endif %}
+</section>
+
+<!-- Collapsible Revoked Keys Section -->
+<details style="margin-top: 2em;">
+  <summary>
+    Show revoked keys ({{ revoked_keys | length }})
+  </summary>
+  {% for key in revoked_keys %}
+    <article>
+      <header>
+        <strong>***************{{ key.suffix }}</strong>
+      </header>
+      <p>
+        <small>
+          Created: {{ key.created_at }}<br>
+          Revoked: {{ key.revoked_at }}
+        </small>
+      </p>
     </article>
+  {% endfor %}
+</details>
+
+<!-- Create Key Button -->
+<section style="margin-top: 2em;">
+  {% if has_active_key %}
+    <small class="muted">
+      You already have an active API key. Revoke it before creating a new one.
+    </small>
+  {% else %}
+    <button
+      class="contrast"
+      onclick="createApiKey()"
+      {% if not approved_user or not user_details or not user_details.server_url %}disabled{% endif %}
+      data-tooltip="Please fill out your server URL before creating an API key."
+    >
+      + Create New Key
+    </button>
+  {% endif %}
+</section>
+
+<dialog id="apiKeyModal">
+  <article>
+    <header>
+      <h3>New API Key</h3>
+    </header>
+    <p>
+      <strong id="apiKeyValue" style="word-break: break-all"></strong>
+    </p>
+    <p>
+      <small class="muted">
+        This key will not be shown again. Copy and store it securely.
+      </small>
+    </p>
+    <footer>
+      <button id="copyApiKeyBtn" class="secondary">Copy</button>
+      <button id="closeApiKeyModalBtn" class="contrast">Close</button>
+    </footer>
+  </article>
 </dialog>
 
 <script>
-    async function revokeKey(keyId, btn) {
-        if (!confirm("Are you sure you want to revoke this API key? This cannot be undone.")) {
-            return;
-        }
-
-        // Disable button and show loading state
+  async function revokeKey(keyId, btn) {
+    if (!confirm("Are you sure you want to revoke this API key? This cannot be undone.")) return;
+    btn.disabled = true;
+    btn.textContent = "Revoking...";
+    try {
+      const csrf = getCsrfCookie();
+      const response = await fetch(`/api/internal/api_keys/${keyId}/revoke`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "x-csrf-token": csrf }
+      });
+      if (response.ok) {
+        btn.textContent = "Revoked";
         btn.disabled = true;
-        btn.textContent = "Revoking...";
-
-        try {
-            const csrf = getCsrfCookie();
-            const response = await fetch(`/api/internal/api_keys/${keyId}`, {
-                method: "DELETE",
-                credentials: "include",
-                headers: {
-                    "x-csrf-token": csrf
-                }
-            });
-
-            if (response.ok) {
-                // Update the button in place without a full reload
-                btn.textContent = "Revoked";
-                btn.classList.remove("outline");
-                btn.disabled = true;
-
-                // Also update the "Revoked:" date shown next to the key
-                const small = btn.closest("[role='group']").querySelector("small");
-                if (small) {
-                    const now = new Date().toISOString().slice(0, 19).replace("T", " ");
-                    small.innerHTML = small.innerHTML.replace("—", now);
-                }
-
-                // Reload after a short delay so the user sees the updated state
-                setTimeout(() => window.location.reload(), 800);
-            } else if (response.status === 404) {
-                alert("API key not found. It may have already been revoked.");
-                btn.disabled = false;
-                btn.textContent = "Revoke";
-            } else {
-                const text = await response.text();
-                console.error("Failed to revoke key:", response.status, text);
-                alert(`Failed to revoke key (${response.status}). Please try again.`);
-                btn.disabled = false;
-                btn.textContent = "Revoke";
-            }
-        } catch (error) {
-            console.error("Error revoking key:", error);
-            alert("An unexpected error occurred. Please try again.");
-            btn.disabled = false;
-            btn.textContent = "Revoke";
-        }
+        setTimeout(() => window.location.reload(), 800);
+      } else {
+        alert("Failed to revoke key.");
+        btn.disabled = false;
+        btn.textContent = "Revoke";
+      }
+    } catch (error) {
+      alert("Error revoking key.");
+      btn.disabled = false;
+      btn.textContent = "Revoke";
     }
+  }
 
-    async function createApiKey() {
-        try {
-            const csrf = getCsrfCookie();
-            const response = await fetch("/api/internal/api_keys", {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Accept": "application/json",
-                    "x-csrf-token": csrf
-                }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                showApiKeyModal(data.api_key);
-            } else if (response.status === 409) {
-                alert("You already have an active API key. Please revoke it before creating a new one.");
-            } else {
-                const text = await response.text();
-                console.error("Failed to create key:", response.status, text);
-                alert(`Failed to create key (${response.status}). Please try again.`);
-            }
-        } catch (error) {
-            console.error("Error creating key:", error);
-            alert("An unexpected error occurred. Please try again.");
+  async function createApiKey() {
+    try {
+      const csrf = getCsrfCookie();
+      const response = await fetch("/api/internal/api_keys", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Accept": "application/json",
+          "x-csrf-token": csrf
         }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        showApiKeyModal(data.api_key);
+      } else if (response.status === 409) {
+        alert("You already have an active API key. Please revoke it before creating a new one.");
+      } else {
+        alert("Failed to create key.");
+      }
+    } catch (error) {
+      alert("Error creating key.");
     }
+  }
 
-    // Read CSRF token cookie (csrf_token)
-    function getCsrfCookie() {
-        const name = 'csrf_token=';
-        const parts = document.cookie.split(';');
-        for (let i = 0; i < parts.length; i++) {
-            let c = parts[i].trim();
-            if (c.indexOf(name) === 0) return decodeURIComponent(c.substring(name.length));
-        }
-        return '';
+  function getCsrfCookie() {
+    const name = 'csrf_token=';
+    const parts = document.cookie.split(';');
+    for (let i = 0; i < parts.length; i++) {
+      let c = parts[i].trim();
+      if (c.indexOf(name) === 0) return decodeURIComponent(c.substring(name.length));
     }
+    return '';
+  }
 
-    // Inject a hidden CSRF input into any plain HTML forms on the page so server-side form handlers receive it
-    document.addEventListener('DOMContentLoaded', function () {
-        const csrf = getCsrfCookie();
-        if (!csrf) return;
-        for (const form of document.forms) {
-            if (!form.querySelector('input[name="csrf_token"]')) {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = 'csrf_token';
-                input.value = csrf;
-                form.appendChild(input);
-            }
-        }
-    });
+  function showApiKeyModal(apiKey) {
+    const modal = document.getElementById("apiKeyModal");
+    const apiKeyValue = document.getElementById("apiKeyValue");
+    apiKeyValue.textContent = apiKey;
+    modal.showModal();
 
-    function showApiKeyModal(apiKey) {
-        const modal = document.getElementById("apiKeyModal");
-        const apiKeyValue = document.getElementById("apiKeyValue");
-        apiKeyValue.textContent = apiKey;
-        modal.showModal();
+    document.getElementById("copyApiKeyBtn").onclick = function () {
+      navigator.clipboard.writeText(apiKey);
+    };
 
-        document.getElementById("copyApiKeyBtn").onclick = function () {
-            navigator.clipboard.writeText(apiKey);
-        };
-
-        document.getElementById("closeApiKeyModalBtn").onclick = function () {
-            modal.close();
-            window.location.reload();
-        };
-    }
+    document.getElementById("closeApiKeyModalBtn").onclick = function () {
+      modal.close();
+      window.location.reload();
+    };
+  }
 </script>

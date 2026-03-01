@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request, Depends, HTTPException
 
 import database
 from utils.auth import get_user 
@@ -20,14 +20,31 @@ def get_router():
             "message": "API key created successfully.",
             "api_key": api_key,
         }
+    
+    @router.post("/{api_key_id}/revoke", include_in_schema=False)
+    async def revoke_api_Key(
+        request: Request,
+        api_key_id: str,
+        user: Identity = Depends(get_user)
+    ):
+        api_key_owner = await database.get_user_by_api_key_id(api_key_id)
+
+        if api_key_owner["provider"] != user.provider and api_key_owner["provider_user_id"] != user.provider_user_id:
+            raise HTTPException(status_code=401, detail="User does not own this resource")
+
+        await database.revoke_api_key(api_key_id)
 
     @router.delete("/{api_key_id}", include_in_schema=False)
     async def delete_api_key(
         request: Request,
         api_key_id: str,
-        _user: Identity = Depends(get_user)
+        user: Identity = Depends(get_user)
     ):
-        # TODO: double check auth
-        await database.revoke_api_key(api_key_id)
+        api_key_owner = await database.get_user_by_api_key_id(api_key_id)
+
+        if api_key_owner["provider"] != user.provider and api_key_owner["provider_user_id"] != user.provider_user_id:
+            raise HTTPException(status_code=401, detail="User does not own this resource")
+
+        await database.delete_api_key(api_key_id)
 
     return router

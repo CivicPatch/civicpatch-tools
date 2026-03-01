@@ -18,14 +18,13 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
     router = APIRouter()
 
     REQUIRED_ENV_VARS = [
-        #"BRAVE_SEARCH_TOKEN",
-        "GOOGLE_SEARCH_TOKEN",
-        "GOOGLE_SEARCH_ENGINE_ID",
-        #"SERP_API_SEARCH_TOKEN",
-        "GOOGLE_GEMINI_TOKEN",
-        "OPENAI_TOKEN",
-        #"TOGETHER_AI_TOKEN",
-        "API_CIVICPATCH_ORG_TOKEN",
+        # For local scrapes only
+        #"GOOGLE_SEARCH_TOKEN",
+        #"GOOGLE_SEARCH_ENGINE_ID",
+        #"GOOGLE_GEMINI_TOKEN",
+        #"OPENAI_TOKEN",
+
+        #"API_CIVICPATCH_ORG_TOKEN",
         "API_CIVICPATCH_ORG_URL",
     ]
 

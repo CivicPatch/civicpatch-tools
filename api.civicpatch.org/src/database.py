@@ -86,6 +86,12 @@ async def revoke_api_key(api_key_id):
             (api_key_id,),
         )
 
+async def delete_api_key(api_key_id):
+    async with pool.connection() as conn:
+        await conn.execute(
+            "DELETE FROM api_keys WHERE id = %s",
+            (api_key_id,),
+        )
 
 async def get_api_keys_for_user(provider, provider_user_id):
     data = []
@@ -136,7 +142,30 @@ async def get_user(provider, provider_user_id):
             "created_at": row[2],
             "teams": row[3], 
         }
-
+async def get_user_by_api_key_id(api_key_id):
+    async with pool.connection() as conn:
+        result = await conn.execute(
+            """
+            SELECT u.provider,
+                   u.provider_user_id
+            FROM users u
+            JOIN api_keys k ON u.provider = k.provider AND u.provider_user_id = k.provider_user_id
+            LEFT JOIN user_roles r ON u.provider = r.provider AND u.provider_user_id = r.provider_user_id
+            WHERE k.id = %s AND k.revoked_at IS NULL
+            GROUP BY u.provider, u.provider_user_id, u.email, u.server_url, u.created_at
+            """,
+            (api_key_id,),
+        )
+        row = await result.fetchone()
+        if not row:
+            return None
+        
+        return {
+            "provider": row[0],
+            "provider_user_id": row[1]
+        }
+    
+    
 async def get_user_by_api_key(api_key):
     candidate_api_key_hash = hash_string(api_key, DATABASE_HASH_KEY)
     async with pool.connection() as conn, conn.cursor() as cur:
@@ -247,12 +276,8 @@ async def get_jurisdiction_people(jurisdiction_ocdid: str) -> List[Person]:
             """,
             (jurisdiction_ocdid,),
         )
-        row = await cur.fetchone()
-    if row:
-        people_data = row[0]
-    else:
-        people_data = []
-    people = [Person(**d_item) for d_item in people_data]
+        rows = await cur.fetchall()
+        people = [Person(**row[0]) for row in rows]
     return people
 
 
@@ -354,22 +379,18 @@ async def get_people_by_geo(lat: float, long: float):
             # Use ST_Intersects as the single spatial predicate
             await cur.execute(
                 """
-                SELECT j.jurisdiction_ocdid, j.data, per.person
+                SELECT j.jurisdiction_ocdid, j.data, p.data
                 FROM geo g
                 JOIN jurisdictions j ON j.data->>'geoid' = g.geoid
                 JOIN people p ON p.jurisdiction_ocdid = j.jurisdiction_ocdid
-                CROSS JOIN LATERAL jsonb_array_elements(p.data) AS per(person)
                 WHERE ST_Intersects(g.geom, ST_SetSRID(ST_Point(%s, %s), 4326))
                 """,
                 (long, lat),
             )
             rows = await cur.fetchall()
-
             if not rows:
-                print(f"get_people_by_geo: no matching geo rows for point ({lat},{long})")
                 return {"jurisdiction_ocdid": "", "people": []}
 
-            # Since only one jurisdiction is expected, pick the first matched jurisdiction
             first_jurisdiction = rows[0][0]
             people_list = []
             for (jurisdiction_ocdid, _jurisdiction_data, person_json) in rows:
@@ -378,12 +399,6 @@ async def get_people_by_geo(lat: float, long: float):
                 except Exception:
                     person_obj = person_json
                 people_list.append(person_obj)
-
-            if any(r[0] != first_jurisdiction for r in rows):
-                print(
-                    f"Warning: multiple jurisdictions matched point; using first {first_jurisdiction}"
-                )
-            # primary predicate is ST_Intersects
 
             return {"jurisdiction_ocdid": first_jurisdiction, "people": people_list}
     except Exception as e:

@@ -28,11 +28,17 @@ def get_router(templates: Jinja2Templates):
 
             api_keys = await database.get_api_keys_for_user("github", provider_user_id)
             api_usage = await database.get_api_usage_for_user("github", provider_user_id)
+            has_active_key = await database.get_api_keys_for_user(user.provider, user.provider_user_id)
 
             return templates.TemplateResponse(
                 request=request,
                 name="api_keys.html",
-                context={"user": user, "api_keys": api_keys, "api_usage": api_usage},
+                context={
+                        "user": user, 
+                        "api_keys": api_keys,
+                        "has_active_key": has_active_key.count,
+                        "api_usage": api_usage
+                        }
             )
         except HTTPException:
             return RedirectResponse(url="/", status_code=302)
