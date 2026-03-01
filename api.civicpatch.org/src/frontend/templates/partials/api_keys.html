@@ -23,7 +23,7 @@
 
 <h2>Your Teams</h2>
 <hr />
-{% if user.teams is defined and user.teams and user.teams|length > 0 %}
+{% if teams is defined and teams and teams|length > 0 %}
 <p>Different endpoints require different roles. Refer to the 
     <a href="/docs">API documentation</a> for details.
 </p>
@@ -82,8 +82,6 @@
     </article>
     {% endif %}
 </article>
-
-{% set has_active_key = api_keys and (api_keys | selectattr('revoked_at', 'none') | list | length > 0) %}
 
 <div style="display: flex; justify-content: flex-start; align-items: center; gap: 1em; margin-top: 2em">
     {% if has_active_key %}
