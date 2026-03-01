@@ -54,7 +54,7 @@ const config = {
       preventAssignment: true,
       values: {
         __API_URL__: devMode
-          ? `"https://api.civicpatch.local"`
+          ? `"http://localhost:8001"`
           : `"https://api.civicpatch.org"`,
         __DEV_MODE__: JSON.stringify(devMode),
       },

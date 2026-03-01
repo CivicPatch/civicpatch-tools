@@ -30,7 +30,6 @@ tmp/
 .venv
 
 todo.md
-development/caddy/data
 
 .scratch/*
 .aider*

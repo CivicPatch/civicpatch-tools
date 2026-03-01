@@ -1,5 +1,6 @@
 services:
   api_civicpatch_org:
+    container_name: api_civicpatch_org
     env_file: .env
     build:
       context: ..
@@ -27,6 +28,15 @@ services:
       - crudder_pgdata:/var/lib/postgresql/data
     ports:
       - "127.0.0.1:6000:5432"
+    networks:
+      - civicpatch_net
+
+  api_civicpatch_org_redis:
+    image: redis:alpine
+    expose:
+      - '6379'
+    #ports:
+    #  - '6379:6379'
     networks:
       - civicpatch_net
 
@@ -72,20 +82,6 @@ services:
     networks:
       - civicpatch_test_net
 
-  prod_api:
-    env_file: .env
-    build:
-      context: ..
-      dockerfile: api.civicpatch.org/Dockerfile
-      target: production
-    # restart: unless-stopped
-    ports:
-      - "8001:8001"
-    networks:
-      - civicpatch_net
-    depends_on:
-      - api_civicpatch_org_db
-  
 volumes:
   crudder_pgdata:
   test_pgdata:

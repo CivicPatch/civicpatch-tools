@@ -32,6 +32,7 @@ from database import (
 from utils.auth import require_route_access, get_optional_user
 from services.memory_pub_sub_service import memory_pubsub
 from fastapi.responses import StreamingResponse
+from services import github_service
 
 import logging
 
@@ -44,12 +45,6 @@ from starlette.datastructures import URL
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request as StarletteRequest
 
-
-class HTTPSSchemeMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: StarletteRequest, call_next):
-        if request.headers.get("x-forwarded-proto", "").lower() == "https":
-            request.scope["scheme"] = "https"
-        return await call_next(request)
 
 # Hack to get url_for to generate https URLs when behind a proxy that terminates SSL
 def url_for(request: FastAPIRequest, name: str) -> URL:
@@ -65,7 +60,7 @@ def url_for(request: FastAPIRequest, name: str) -> URL:
 # to and from the open-data repo
 # Ref: https://github.com/tomasvotava/fastapi-sso/blob/master/docs/how-to-guides/use-with-fastapi-security.md
 
-INSTANCE_URL = os.getenv("INSTANCE_URL", "http://127.0.0.1:8001")
+INSTANCE_URL = os.getenv("INSTANCE_URL", "http://localhost:8001")
 
 GITHUB_APP_ID = os.getenv("GITHUB_APP_ID")
 GITHUB_APP_CLIENT_ID = os.getenv("GITHUB_APP_CLIENT_ID")
@@ -142,6 +137,7 @@ async def lifespan(instance: FastAPI):
     await pool.open()
     yield
     await pool.close()
+    await github_service.close()
 
 
 app = FastAPI(
@@ -164,11 +160,10 @@ if is_production:
     ]
 else:
     allowed_origins = [
-        "https://app.civicpatch.local",
-        "https://api.civicpatch.local"
+        "http://localhost:8000",
+        "http://localhost:8001",
     ]
 
-app.add_middleware(HTTPSSchemeMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],

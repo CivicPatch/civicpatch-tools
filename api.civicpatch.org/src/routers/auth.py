@@ -24,8 +24,7 @@ if is_production:
     ALLOWED_HOSTS = ["civicpatch.org"]
     COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.org")
 else:
-    ALLOWED_HOSTS = ["civicpatch.local"]
-    COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.local")
+    ALLOWED_HOSTS = ["localhost"]
 
 
 def is_safe_redirect(url: str) -> bool:
@@ -64,10 +63,6 @@ def is_safe_redirect(url: str) -> bool:
         return False
 
     if hostname in ALLOWED_HOSTS:
-        return True
-
-    # Allow subdomains of civicpatch.org and civicpatch.local
-    if hostname.endswith(".civicpatch.org") or hostname.endswith(".civicpatch.local"):
         return True
 
     return False
@@ -114,19 +109,26 @@ def get_router(is_production: bool) -> APIRouter:
         redirect_url = redirect if is_safe_redirect(redirect) else "/"
         
         response = RedirectResponse(url=redirect_url)
+        if is_production:
+            cookie_params = {
+                "domain": COOKIE_INSTANCE_URL,
+                "secure": True,
+            }
+        else: # likely localhost
+            cookie_params = {
+                "secure": False,
+            }
         response.delete_cookie(
             key="token",
-            domain=COOKIE_INSTANCE_URL,
-            samesite="none",
-            secure=True,  # required for samesite="none"
-            path="/"
+            samesite="lax",
+            path="/",
+            **cookie_params
         )
         response.delete_cookie(
             key="csrf_token",
-            domain=COOKIE_INSTANCE_URL,
-            samesite="none",
-            secure=True,
-            path="/"
+            samesite="lax",
+            path="/",
+            **cookie_params
         ) 
         return response
 
@@ -168,15 +170,24 @@ def get_router(is_production: bool) -> APIRouter:
             algorithm="HS256",
         )
         response = RedirectResponse(url=redirect_url, status_code=302)
+
+        if is_production:
+            cookie_params = {
+                "domain": COOKIE_INSTANCE_URL,
+                "secure": True,
+            }
+        else: # likely localhost
+            cookie_params = {
+                "secure": False,
+            }
         response.set_cookie(
             key="token",
             value=token,
             expires=expiration,
             httponly=True,
-            secure=True,
             samesite="lax",
-            domain=COOKIE_INSTANCE_URL,
-            path="/"
+            path="/",
+            **cookie_params
         )
         # Create a signed CSRF token (stateless) and set it as a readable cookie
         csrf_payload = {"sub": openid.id, "iat": int(time.time()), "nonce": secrets.token_urlsafe(8)}
@@ -187,10 +198,10 @@ def get_router(is_production: bool) -> APIRouter:
             value=csrf_signed,
             expires=expiration,
             httponly=False, # Allow JS to read the CSRF token
-            secure=True,
             samesite="lax",
-            domain=COOKIE_INSTANCE_URL,
-            path="/"
+            path="/",
+            **cookie_params
+
         )
         return response
 
