@@ -23,7 +23,7 @@
 
 <h2>Your Teams</h2>
 <hr />
-{% if user.teams and user.teams|length > 0 %}
+{% if teams and teams|length > 0 %}
 <p>Different endpoints require different roles. Refer to the 
     <a href="/docs">API documentation</a> for details.
 </p>
@@ -36,7 +36,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for team in user.teams %}
+        {% for team in teams %}
         <tr>
             <td>{{ team }}</td>
         </tr>
@@ -82,7 +82,7 @@
     {% endif %}
 </article>
 
-{% set has_active_key = api_keys and api_keys | selectattr('revoked_at', 'none') | list | length > 0 %}
+{% set has_active_key = api_keys and api_keys | selectattr('revoked_at', 'equalto', none) | list | length > 0 %}
 
 <div style="display: flex; justify-content: flex-start; align-items: center; gap: 1em; margin-top: 2em">
     {% if has_active_key %}
