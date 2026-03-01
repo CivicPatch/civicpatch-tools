@@ -1,0 +1,1 @@
+{% set has_active_key = api_keys and (api_keys | selectattr('revoked_at', 'none') | list | length > 0) %}
