@@ -35,14 +35,14 @@ jobs:
           ref: ${{ github.ref_name }}
 
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
 #      - name: Login to wizards.cafe Hub
-#        uses: docker/login-action@v3
+#        uses: docker/login-action@v4
 #        with:
 #          registry: code.wizards.cafe
 #          username: ${{ secrets.WIZARDS_CAFE_DOCKER_USERNAME }}
