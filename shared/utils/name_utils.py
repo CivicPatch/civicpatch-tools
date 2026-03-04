@@ -1,5 +1,6 @@
 from typing import Dict, Set, List, Protocol
 from nameparser import HumanName
+import unicodedata
 
 def get_person_name(p):
     return p.get("name") if isinstance(p, dict) else p.name
@@ -35,11 +36,16 @@ def fuzzy_match(name1: str, name2: str) -> bool:
 
 
 def normalize_name(name: str) -> str:
-    """Normalize name by removing suffixes and extra whitespace."""
-    parsed = parse_name(name)
-    # Reconstruct without suffix
-    parts = [parsed.first, parsed.middle, parsed.last]
-    return " ".join(p for p in parts if p).lower()
+    """Normalize name by removing accents, titles, suffixes, and extra whitespace, but preserving nickname."""
+    hn = HumanName(name)
+    # Build name from first, middle, last, and nickname (if present)
+    parts = [hn.first, hn.middle, hn.last]
+    if hn.nickname:
+        parts.append(f'"{hn.nickname}"')
+    base = " ".join(p for p in parts if p)
+    # Remove accents/diacritics
+    base = unicodedata.normalize("NFKD", base).encode("ascii", "ignore").decode("ascii")
+    return base.lower().strip()
 
 def build_canonical_map(
     all_people: List[dict],

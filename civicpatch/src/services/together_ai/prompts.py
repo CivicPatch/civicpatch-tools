@@ -3,7 +3,8 @@ from typing import List
 from jobs.people_collector.schemas import ResearchedPerson
 import shared.utils.config_utils as config_utils
 
-def relevant_page_prompt(page_url: str, _people_hint: List[ResearchedPerson]):
+# Note: Claude Sonnet 4.6 Generated prompt
+def relevant_page_prompt(page_url: str):
     prompt = f"""
     Your task is to determine if the provided content contains information about the **currently serving main officials** 
     of the target municipality. Main officials include roles such as Mayor, City Council Members, Aldermen, Select Board Members, 
@@ -33,7 +34,6 @@ def relevant_page_prompt(page_url: str, _people_hint: List[ResearchedPerson]):
     {{
         "relevant_urls": ["https://example.com/council", "https://example.com/mayor"],  # ALL links found on this page that may lead to main officials — even if the current page is not relevant
         "is_relevant": true/false,
-        "thoughts": "Your reasoning goes here"
     }}
 
     **Critical rules:**
@@ -44,44 +44,92 @@ def relevant_page_prompt(page_url: str, _people_hint: List[ResearchedPerson]):
     """
     return prompt
 
+# Note: Claude Sonnet 4.6 Generated prompt
 def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
     """
-    Generate a prompt to identify municipality officials from the given content.
+    Generate a prompt for extracting municipality officials (Llama-optimized).
     """
     designation_names = config_utils.get_designation_names()
     designations_str = ", ".join(designation_names)
     current_date = datetime.now().strftime("%Y-%m-%d")
 
-    prompt = f"""
-    Your task is to extract information about the currently serving elected officials
-    of the target municipality.
+    return f"""
+    You are a data extraction assistant. Extract information about the currently 
+    serving elected officials of the target municipality from the provided content.
 
-    Treat officials as currently serving when they appear in a structured roster 
-    that is presented as the municipality's governing body, unless
-    the content clearly indicates the roster is historical or past.
-
-    Roles (examples): Mayor, Council Member, Aldermen, Select Board Member, Commissioner
-    Target designations: {designations_str}
     Current Date: {current_date}
 
-    Return a JSON object in the following format:
-    - people: (Array of objects) Each object should have:
-      - name: (String) Full name only (no titles). If the role is vacant, use "Vacant Vacant" as the name.
-      - image: (String or null) URL to profile image (https://...)
-      - roles: (Array of strings) Active municipal roles
-      - designations: (Array) 
-            Designation labels should ALWAYS be in the format of <designation_type> <designation value/name>, 
-            If no designation type is provided, leave empty.
-      - phone: (String or null) Formatted phone number (personal phone > office phone > general contact number for municipality)
-      - email: (String or null) Formatted email in form email@domain.tld (personal email > office email > general contact email for municipality)
-      - url: (String or null) Formatted URL (https://...). (official's profile > biography URL > contact form email URL > related position listing > general listing)
-      - start_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
-      - end_date: (String or null) "YYYY" or "YYYY-MM" or "YYYY-MM-DD"
-    - thoughts: (String) Your reasoning process
+    STEP 1 - FIND OFFICIALS
+    Only extract officials from:
+    - A structured table, list, or directory of officials
+    - A dedicated biography, about, or contact section for an official
+    Do NOT extract officials mentioned only in news articles, event summaries,
+    meeting notes, or scattered references. If no structured listing exists,
+    return an empty array for "people".
+    Treat officials as currently serving unless the content explicitly states
+    the roster is historical or past.
 
-    **Instructions:**
-    - Extract phone numbers, email addresses, and URLs even if they are not part of a structured listing or dedicated section, as long as they are explicitly present in the text.
-    - Ensure all extracted details refer to the **current term** of the official.
-    - Ensure only ONE entry exists per unique person's name. Merge all extracted details for the same person into a single record.
+    STEP 2 - FOR EACH OFFICIAL, EXTRACT THE FOLLOWING
+
+    name:
+    - Full name only. No titles or honorifics.
+    - If the position is vacant, use "Vacant Vacant".
+
+    image:
+    - URL to a profile photo. Must start with https://.
+    - If none found, use null.
+
+    roles:
+    - The official's role exactly as written in the source. Do not rename or normalize.
+    - Common roles you may encounter: Mayor, Council Member, Alderman, Commissioner,
+      Select Board Member. Always use the source's exact wording.
+
+    designations:
+      Known types: {designations_str}
+      Normalize common variations to the canonical type (e.g. "Council Ward 3" → "Ward 3", 
+      "Posn. 2" → "Position 2", "City-Wide" → "At Large").
+      Format as "<canonical type> <value>". If no designation found, use an empty array.
+      Do not include role titles as designations.      
+
+    phone:
+    - A phone number explicitly present in the content.
+    - Use in this order: personal number first, then office number, then any
+      general municipal contact number found anywhere in the content.
+    - If none found, use null.
+
+    email:
+    - A valid email address in the format email@domain.tld.
+    - Use in this order: personal email first, then office email, then any
+      general municipal contact email found anywhere in the content.
+    - Contact form URLs (e.g. /email-contact/node/...) are NOT email addresses.
+      Treat them as a URL candidate instead.
+    - If none found, use null.
+
+    url:
+    - Use in this order: official profile page, biography page, contact form URL,
+      position listing page, general listing page.
+    - If none found, use null.
+
+    start_date:
+    - Date of the most recent election or appointment, if explicitly stated.
+    - Format: "YYYY", "YYYY-MM", or "YYYY-MM-DD".
+    - If not explicitly stated, use null.
+
+    end_date:
+    - Date the current term expires, if explicitly stated.
+    - Format: "YYYY", "YYYY-MM", or "YYYY-MM-DD".
+    - If not explicitly stated, use null.
+
+    STEP 3 - ADDITIONAL RULES
+    - Only extract information explicitly present in the content. Do not guess or fabricate.
+    - One entry per unique person. If the same person appears multiple times, merge into one record.
+    - All details must refer to the official's current term.
+
+    STEP 4 - RETURN JSON
+
+    Return a JSON object with exactly these two fields:
+    - people: array of official objects as described above
+    - relevant_urls: array of URLs found in the content that may lead to more
+      information about officials (biography pages, ward profiles, council subpages, etc.)
+
     """
-    return prompt

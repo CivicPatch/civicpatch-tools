@@ -90,6 +90,7 @@ class WorkflowStatus(Enum):
     MAYBE_SEND_TO_GITHUB = "MAYBE_SEND_TO_GITHUB"
     RETRY = "RETRY"
     FINALIZE = "FINALIZE"
+    ERROR = "ERROR"
     DONE = "DONE"
 
 class FieldComparison(BaseModel):
@@ -145,6 +146,8 @@ class ProcessPageContentStep(BaseModel):
     progress: ProgressState = ProgressState(
         required_data=0, current_data=0, has_target_role=False, has_target_designations=False
     )
+    current_llm_index: int = 0
+    current_llm_retry_count: int = 0
 
 class MergeRecordsWithinLLMStep(BaseModel):
     people_by_llm: Dict[str, List[Person]]  # LLM Names to list of Person records
@@ -183,6 +186,7 @@ class PeopleCollectorData(BaseModel):
     merge_records_across_llms_step: Optional[MergeRecordsAcrossLLMsStep] = None
     format_output_step: Optional[FormatOutputStep] = None
     maybe_send_to_github_step: Optional[MaybeSendToGitHubStep] = None
+    error_step: Optional[str] = None
 
 class PeopleCollectorContext(WorkflowContext[PeopleCollectorData, WorkflowStatus]):
     pass

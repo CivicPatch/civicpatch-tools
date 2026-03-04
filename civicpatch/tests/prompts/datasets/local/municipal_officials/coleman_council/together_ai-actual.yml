@@ -1,56 +1,60 @@
 people:
-- name: Beau Brudney
-  roles:
-  - Council Member
-  designations:
-  - ward East Ward
-  phone: (325) 625-5114
-  email: null
-  url: https://www.cityofcolemantx.us/council/index.html
-  start_date: null
-  end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
-- name: Monte Sides
-  roles:
-  - Council Member
-  designations:
-  - ward South Ward
-  phone: (325) 625-5114
-  email: null
-  url: https://www.cityofcolemantx.us/council/index.html
-  start_date: null
-  end_date: null
-  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
 - name: Tommy Sloan
   roles:
   - Mayor
   designations: []
   phone: (325) 625-5114
-  email: null
+  email: ''
   url: https://www.cityofcolemantx.us/council/index.html
-  start_date: null
-  end_date: null
+  start_date: ''
+  end_date: ''
   image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
 - name: Sharlene T. Hetzel
   roles:
   - Council Member
   - Mayor Pro-Tem
   designations:
-  - ward West Ward
+  - Place 2
+  - West Ward
   phone: (325) 625-5114
-  email: null
+  email: ''
   url: https://www.cityofcolemantx.us/council/index.html
-  start_date: null
-  end_date: null
+  start_date: ''
+  end_date: ''
   image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
 - name: Tracy Rankin
   roles:
   - Council Member
   designations:
-  - ward North Ward
+  - Place 1
+  - North Ward
   phone: (325) 625-5114
-  email: null
+  email: ''
   url: https://www.cityofcolemantx.us/council/index.html
-  start_date: null
-  end_date: null
+  start_date: ''
+  end_date: ''
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Beau Brudney
+  roles:
+  - Council Member
+  designations:
+  - Place 3
+  - East Ward
+  phone: (325) 625-5114
+  email: ''
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: ''
+  end_date: ''
+  image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
+- name: Monte Sides
+  roles:
+  - Council Member
+  designations:
+  - Place 4
+  - South Ward
+  phone: (325) 625-5114
+  email: ''
+  url: https://www.cityofcolemantx.us/council/index.html
+  start_date: ''
+  end_date: ''
   image: https://www.cityofcolemantx.us/council/images/2022%20Council.JPG
