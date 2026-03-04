@@ -45,7 +45,6 @@ def test_format_output():
         people=people,
         agreement_score=85.0,  # Add the required field
         disagreements={},
-        missing_people=[],
         validation_errors=[]
     )
     research_municipality_step_data = ResearchMunicipalityStep(

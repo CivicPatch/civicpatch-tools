@@ -5,7 +5,6 @@ def merge_field(field: str, values: List[str]) -> Any:
     """
     Merge a list of fields with the following criteria:
     - If all values are empty, return empty string
-    - If no value has at least 2 occurrences, return empty string
     - Otherwise, return the most common non-empty value
     """
     non_empty_values = [v for v in values if v]
@@ -13,28 +12,22 @@ def merge_field(field: str, values: List[str]) -> Any:
         return ""
 
     value_counter = Counter(non_empty_values)
-    most_common_value, count = value_counter.most_common(1)[0]
-    if count < 2:
-        if field in ["website"]:
-            # For website, allow a single occurrence if it's a valid URL
-            if most_common_value.startswith("http://") or most_common_value.startswith("https://"):
-                return most_common_value
-        return ""
+    most_common_value, _count = value_counter.most_common(1)[0]
 
     return most_common_value
 
 def merge_field_to_list(records: List[List[str]]) -> List[str]:
     """
     Merge a multi-value field (e.g., emails, phones, urls) from a list of lists of strings.
-    Collect unique values and include only those that appear in at least two records.
+    Collect unique values and, if there are values that appear in multiple records, include only those.
+    If there are no duplicate records, include all of the unique values.
+    De-duplicate the values.
     Case-insensitive: "A@B.com" and "a@b.com" are treated as the same.
     """
-    # Flatten the list of lists and count occurrences of each value (case-insensitive)
-    all_values = [value for sublist in records for value in sublist]
-    lower_map = {v.lower(): v for v in all_values}  # preserve original casing of first occurrence
-    value_counter = Counter(v.lower() for v in all_values)
+    value_counter = Counter(value.lower() for record in records for value in record if value)
+    merged_values = [value for value, count in value_counter.items() if count > 1]  # Include values that appear in multiple records
+    if not merged_values:  # If no values appear in multiple records, include all unique values
+        merged_values = list(set(value.lower() for record in records for value in record if value))
 
-    # Keep only values that appear in at least two records (case-insensitive)
-    merged_values = [lower_map[value] for value, count in value_counter.items() if count >= 2]
-
+    merged_values = list(dict.fromkeys(merged_values))  # De-duplicate while preserving order
     return merged_values

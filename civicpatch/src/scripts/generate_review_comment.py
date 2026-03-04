@@ -22,7 +22,6 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
     agreement_score = merge_step.agreement_score
     disagreements_by_person = merge_step.disagreements
     validation_errors = merge_step.validation_errors
-    missing_people = merge_step.missing_people
 
     all_sources = {source for person in people for source in person.source_urls}
 
@@ -51,11 +50,6 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
         markdown.append("# Rejected ❌")
         markdown.append("Rejected by Bot - please manually review.")
         markdown.append("### Issues\n")
-        if missing_people:
-            markdown.append("- Found missing people:")
-            for person in missing_people:
-                markdown.append(f"  - {person}")
-            markdown.append("")
         for issue in issues:
             markdown.append(f"- {issue}")
         for err in identity_errors:
@@ -73,16 +67,6 @@ def generate_review_comment(pipeline_context: PeopleCollectorContext, people: Li
     for source in sorted(all_sources):
         markdown.append(f"- {source}")
     markdown.append("\n---\n")
-
-    # Missing People section
-    if missing_people:
-        markdown.append("### Missing People\n")
-        for person in missing_people:
-            markdown.append(f"#### {person.name}")
-            markdown.append(f"- Missing from: {', '.join(person.missing_from_llms)}")
-            markdown.append(f"- Found in: {', '.join(person.found_in_llms)}")
-            markdown.append("")
-        markdown.append("---\n")
 
     markdown.append("### Identity Comparison\n")
     markdown.append(identity_table)

@@ -167,7 +167,6 @@ function JurisdictionPage({
 
                 <civ-jurisdiction-detail .data=${data?.data}></civ-jurisdiction-detail>
 
-                <h3>Scrape History</h3>
                 <hr />
                 <civ-scrape-history-list
                   .history=${history}
@@ -198,9 +197,7 @@ function JurisdictionPage({
             : html` <p>Loading jurisdiction data...</p> `}
         </div>
       </div>
-
-      <h2>Elected Representatives</h2>
-     
+  
       ${!isLoading ? html`
         <civ-editable-people-list 
           jurisdiction_ocdid=${jurisdiction_ocdid}

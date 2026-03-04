@@ -541,33 +541,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       </div>`;
   }
 
-  // if (loading) return html`<p>Loading people...</p>`;
-
-  const diffPreview = html`
-  <div style="margin-top:2rem;">
-    <label for="diff-table" style="font-weight:600;">YAML Diff</label>
-    <diff-preview
-      .original=${yaml.dump(originalPeople.map(({ _tempKey, ...person }) => person))}
-      .updated=${yaml.dump(
-        peopleToSubmit
-      )}></diff-preview>
-    <div style="margin-top:2rem;">
-      <label for="final-yml" style="font-weight:600;">Final YAML Output</label>
-      <pre id="final-yml" style="
-        background: var(--pico-code-background, #f6f8fa);
-        border-radius: 6px;
-        padding: 1em;
-        font-family: var(--pico-font-monospace, monospace);
-        white-space: pre-wrap;
-        max-height: 300px;
-        overflow: auto;
-      ">${yaml.dump(
-        peopleToSubmit
-      )}</pre>
-    </div>
-  </div>
-`;
-
   return html`
     <civ-pull-request-tabs
       .jurisdiction_ocdid=${jurisdiction_ocdid}
@@ -615,8 +588,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   ` : ""}
 
   ${ isMobile ? renderCardView() : renderTableView()}
-
-  ${!notice ? diffPreview : ""}
   `;
 }
 

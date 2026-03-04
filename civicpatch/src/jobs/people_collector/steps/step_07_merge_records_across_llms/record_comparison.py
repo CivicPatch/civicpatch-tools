@@ -1,7 +1,7 @@
 from typing import Dict, List
 
 from domain.models import Person
-from jobs.people_collector.schemas import FieldComparison, MissingPerson 
+from jobs.people_collector.schemas import FieldComparison
 from difflib import SequenceMatcher
 
 def values_match(value1, value2):
@@ -64,9 +64,7 @@ def calculate_overall_agreement_score(
     field_weights: Dict[str, float],
     fields_to_check: List[str],
     all_disagreements: Dict[str, List[FieldComparison]],
-    missing_people: List[MissingPerson],
     total_llms: int,
-    total_people: int
 ) -> float:
     # Calculate total disagreement score
     total_disagreement = 0.0
@@ -80,17 +78,7 @@ def calculate_overall_agreement_score(
     total_weight = sum(field_weights.get(field, 1.0) for field in fields_to_check)
     disagreement = (total_disagreement / (total_weight * total_llms)) * disagreement_weight if total_weight > 0 else 0.0
 
-    # Calculate missing people penalty
-    missing_penalty = 0.0
-    if missing_people:
-        for missing_person in missing_people:
-            missing_ratio = len(missing_person.missing_from_llms) / total_llms
-            missing_penalty += missing_ratio
-        missing_penalty = missing_penalty / total_people  # Normalize by total people
-    missing_penalty = missing_penalty * (1 - disagreement_weight)  # Weight the missing penalty
-
-    # Final score: 1 - (normalized_disagreement + missing_penalty)
-    agreement_score = 1.0 - (disagreement + missing_penalty)
+    agreement_score = 1.0 - disagreement
 
     # Convert to percentage and clamp between 0 and 100
     return max(0.0, min(100.0, round(agreement_score * 100, 2)))

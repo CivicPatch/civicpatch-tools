@@ -89,9 +89,9 @@ def test_has_role_and_contact_info_with_three_contact_info_types():
 def test_move_existing_link_to_top():
     domain = "https://foo.com"
     links = [
-        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name="", is_profile_page=False),
-        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name="", is_profile_page=False),
-        Link(url="https://foo.com/c", status=LinkStatus.PENDING.value, folder_name="", is_profile_page=False),
+        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name=""),
+        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name=""),
+        Link(url="https://foo.com/c", status=LinkStatus.PENDING.value, folder_name=""),
     ]
     result = move_links_to_top(domain, ["https://foo.com/b"], links)
     urls = [l.url for l in result]
@@ -100,8 +100,8 @@ def test_move_existing_link_to_top():
 def test_add_new_link():
     domain = "https://foo.com"
     links = [
-        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name="", is_profile_page=False),
-        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name="", is_profile_page=False),
+        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name=""),
+        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name=""),
     ]
     # Add new link 'c'
     result = move_links_to_top(domain, ["https://foo.com/c"], links)
@@ -113,7 +113,7 @@ def test_add_new_link():
 def test_ignore_out_of_domain():
     domain = "https://foo.com"
     links = [
-        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name="", is_profile_page=False),
+        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name=""),
     ]
     # Try to add out-of-domain link
     result = move_links_to_top(domain, ["https://bar.com/x"], links)
@@ -123,8 +123,8 @@ def test_ignore_out_of_domain():
 def test_multiple_links():
     domain = "https://foo.com"
     links = [
-        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name="", is_profile_page=False),
-        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name="", is_profile_page=False),
+        Link(url="https://foo.com/a", status=LinkStatus.PENDING.value, folder_name=""),
+        Link(url="https://foo.com/b", status=LinkStatus.DONE.value, folder_name=""),
     ]
     # Add new and move existing
     result = move_links_to_top(domain, ["https://foo.com/b", "https://foo.com/c"], links)
