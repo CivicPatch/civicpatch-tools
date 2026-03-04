@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html, css } from 'lit-html';
 import { component, useState } from 'haunted';
 
 function JurisdictionDetail({ data, onSave }) {
@@ -39,7 +39,7 @@ function JurisdictionDetail({ data, onSave }) {
   return html`
     <div class="container">
       <header class="d-flex align-items-center justify-content-between">
-        <h2>Jurisdiction Details</h2>
+        <h3>Jurisdiction Details</h3>
         <button 
           @click=${toggleEditMode} 
           class="contrast outline"
@@ -154,65 +154,82 @@ function JurisdictionDetail({ data, onSave }) {
             </form>
           `
         : html`
-            <div class="responsive-grid">
-              <p>
-                <strong>Jurisdiction OCDID:</strong> ${data.id} <br />
-                <strong>Website:</strong> 
-                <a href="${data.url}" target="_blank">${data.url}</a> <br />
-                <strong>Geoid:</strong> ${data.geoid || 'N/A'} <br />
-                <strong>Population:</strong> ${data.population ? data.population.toLocaleString() : 'N/A'} <br />
-                <strong>Classification:</strong> ${data.classification || 'N/A'} <br />
-                <strong>Accurate As Of:</strong> ${data.accurate_asof ? new Date(data.accurate_asof).toLocaleDateString() : "N/A"} <br />
-                <strong>Last Updated:</strong> ${data.last_updated ? new Date(data.last_updated).toLocaleDateString() : "N/A"} <br />
-              </p>
+              <dl class="details-dl">
+                <dt>Jurisdiction OCDID:</dt>
+                <dd>${data.id}</dd>
+                <dt>Website:</dt>
+                <dd>
+                  <a href="${data.url}" target="_blank">${data.url}</a>
+                </dd>
+                <dt>Geoid:</dt>
+                <dd>${data.geoid || 'N/A'}</dd>
+                <dt>Population:</dt>
+                <dd>${data.population ? data.population.toLocaleString() : 'N/A'}</dd>
+                <dt>Classification:</dt>
+                <dd>${data.classification || 'N/A'}</dd>
+                <dt>Accurate As Of:</dt>
+                <dd>${data.accurate_asof ? new Date(data.accurate_asof).toLocaleDateString() : "N/A"}</dd>
+                <dt>Last Updated:</dt>
+                <dd>${data.last_updated ? new Date(data.last_updated).toLocaleDateString() : "N/A"}</dd>
+              </dl>
+
               <h4>Term Information</h4>
               ${data.term && data.term.length > 0
                 ? html`
-                    <ul>
+                    <dl class="details-dl">
                       ${data.term.map(
                         term => html`
-                          <li>
-                            <strong>Duration:</strong> ${term.duration} years <br />
-                            <strong>Description:</strong> ${term.term_description} <br />
-                            <strong>Number of Positions:</strong> ${term.number_of_positions} <br />
-                            <strong>Term Limits:</strong> ${term.term_limits} <br />
-                            <strong>Last Known Term End Date:</strong> ${term.last_known_term_end_date || 'N/A'}
-                          </li>
+                          <dt>Duration:</dt>
+                          <dd>${term.duration} years</dd>
+                          <dt>Description:</dt>
+                          <dd>${term.term_description}</dd>
+                          <dt>Number of Positions:</dt>
+                          <dd>${term.number_of_positions}</dd>
+                          <dt>Term Limits:</dt>
+                          <dd>${term.term_limits}</dd>
+                          <dt>Last Known Term End Date:</dt>
+                          <dd>${term.last_known_term_end_date || 'N/A'}</dd>
                         `
                       )}
-                    </ul>
+                    </dl>
                   `
                 : html`<p>No term information available.</p>`}
+
               <h4>Sourcing</h4>
               ${data.sourcing && data.sourcing.length > 0
                 ? html`
-                    <ul>
+                    <dl class="details-dl">
                       ${data.sourcing.map(
                         source => html`
-                          <li>
-                            <strong>Field:</strong> ${source.field} <br />
-                            <strong>Source Name:</strong> ${source.source_name || 'N/A'} <br />
-                            <strong>Source URL:</strong> 
-                            <a href="${source.source_url}" target="_blank">${source.source_url}</a> <br />
-                            <strong>Source Type:</strong> ${source.source_type || 'N/A'}
-                          </li>
+                          <dt>Field:</dt>
+                          <dd>${source.field}</dd>
+                          <dt>Source Name:</dt>
+                          <dd>${source.source_name || 'N/A'}</dd>
+                          <dt>Source URL:</dt>
+                          <dd>
+                            <a href="${source.source_url}" target="_blank">${source.source_url}</a>
+                          </dd>
+                          <dt>Source Type:</dt>
+                          <dd>${source.source_type || 'N/A'}</dd>
                         `
                       )}
-                    </ul>
+                    </dl>
                   `
                 : html`<p>No sourcing information available.</p>`}
+
               <h4>Metadata</h4>
               ${data.metadata && data.metadata.urls && data.metadata.urls.length > 0
                 ? html`
-                    <ul>
+                    <dl class="details-dl">
                       ${data.metadata.urls.map(
                         url => html`
-                          <li>
+                          <dt>URL:</dt>
+                          <dd>
                             <a href="${url}" target="_blank">${url}</a>
-                          </li>
+                          </dd>
                         `
                       )}
-                    </ul>
+                    </dl>
                   `
                 : html`<p>No metadata URLs available.</p>`}
             </div>

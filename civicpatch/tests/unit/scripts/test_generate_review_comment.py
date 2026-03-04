@@ -70,7 +70,6 @@ def test_generate_review_comment_with_missing_llm_values():
             people=[john],
             agreement_score=85.0,
             disagreements=disagreements,
-            missing_people=[],
             validation_errors=[]
         ),
         WorkflowStatus.FORMAT_OUTPUT: FormatOutputStep(
@@ -134,7 +133,6 @@ def test_generate_review_comment_with_all_llms_present():
             people=[jane],
             agreement_score=90.0,
             disagreements=disagreements,
-            missing_people=[],
             validation_errors=[]
         ),
         WorkflowStatus.FORMAT_OUTPUT: FormatOutputStep(

@@ -3,7 +3,6 @@ from utils import people_utils, merge_utils
 from domain.models import Person
 from jobs.people_collector.schemas import (
     PeopleCollectorContext, 
-    MissingPerson,
     MergeRecordsAcrossLLMsStep, 
 )
 from collections import Counter
@@ -45,7 +44,6 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
     # Merge each group and collect disagreements
     merged_people = []
     all_disagreements = {}  # Dict[person_name, List[FieldComparison]]
-    missing_people = []
 
     for grouped_identities_by_llm in groups_by_llm:
         # Merge the group
@@ -75,22 +73,12 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
         if field_comparisons:
             all_disagreements[merged_person.name] = field_comparisons
         
-        missing_person = check_for_missing_person(
-            merged_person.name,
-            grouped_identities_by_llm,  # Pass the grouped data
-            list(people_by_llm.keys())  # Pass all LLM names
-        )
-        if missing_person:
-            missing_people.append(missing_person)
-
     # Calculate overall agreement score (include missing people in the calculation)
     overall_agreement_score = record_comparison.calculate_overall_agreement_score(
         FIELD_WEIGHTS,
         FIELDS_TO_CHECK,
         all_disagreements, 
-        missing_people, 
         len(people_by_llm), 
-        len(merged_people)
     )
 
     # Sort people by role priority, designations, and name
@@ -106,26 +94,8 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
         people=sorted_people,
         agreement_score=overall_agreement_score,
         disagreements=all_disagreements,
-        missing_people=missing_people,
         validation_errors=validation_errors,
     )
-
-def check_for_missing_person(person_name: str, grouped_people_by_llm: Dict[str, List[Person]], all_llm_names: List[str]) -> MissingPerson | None:
-    """
-    Check if this person is missing from some LLMs and create MissingPerson if so.
-    """
-    # Remove debug print
-    found_in_llms = list(grouped_people_by_llm.keys())
-    missing_from_llms = [llm for llm in all_llm_names if llm not in found_in_llms]
-    
-    if missing_from_llms:
-        return MissingPerson(
-            name=person_name,
-            missing_from_llms=missing_from_llms,
-            found_in_llms=found_in_llms
-        )
-    
-    return None
 
 def group_records_across_llms(identity_names: Dict[str, List[str]], people_by_llm: Dict[str, List[Person]]) -> List[Dict[str, List[Person]]]:
     """
@@ -212,12 +182,6 @@ def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Per
     """
     Merge a group of weakly tied Person objects into a single Person object.
     """
-    # Collect roles and designations that appear in more than one source
-    role_counter = Counter(role for person in group for role in person.roles)
-    designation_counter = Counter(div for person in group for div in person.designations)
-
-    roles = [role for role, count in role_counter.items()] 
-    designations = [div for div, count in designation_counter.items() if count > 1]  # Include designations present in more than one source
 
     # For single-value fields, take the most common non-empty value across all sources
     image_counter = Counter(person.image for person in group if person.image)
@@ -244,8 +208,8 @@ def merge_group_across_llms(group: List[Person], jurisdiction_ocdid: str) -> Per
         name=canonical_name,
         other_names=other_names,
 
-        roles=roles,
-        designations=designations,
+        roles=person.roles,
+        designations=person.designations,
 
         emails=field_mergers.merge_field_to_list([person.emails for person in group if person.emails]),
         phones=field_mergers.merge_field_to_list([person.phones for person in group if person.phones]),

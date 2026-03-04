@@ -33,7 +33,6 @@ class Link(BaseModel):
     url: str
     status: str  # LinkStatus value
     folder_name: str = ""
-    is_profile_page: bool = False
 
 class RawLLMPerson(BaseModel):
     name: str
@@ -105,11 +104,6 @@ class PersonDisagreements(BaseModel):
     disagreements: List[FieldComparison]
 
 
-class MissingPerson(BaseModel):
-    name: str
-    missing_from_llms: List[str]  # List of source names where this person was not found
-    found_in_llms: List[str]  # List of source names where this person was found
-
 class ResearchedPerson(BaseModel):
     name: str
     roles: List[str]
@@ -146,8 +140,6 @@ class ProcessPageContentStep(BaseModel):
     progress: ProgressState = ProgressState(
         required_data=0, current_data=0, has_target_role=False, has_target_designations=False
     )
-    current_llm_index: int = 0
-    current_llm_retry_count: int = 0
 
 class MergeRecordsWithinLLMStep(BaseModel):
     people_by_llm: Dict[str, List[Person]]  # LLM Names to list of Person records
@@ -156,9 +148,6 @@ class MergeRecordsAcrossLLMsStep(BaseModel):
     people: List[Person]
     agreement_score: float
     disagreements: Dict[str, List[FieldComparison]] = {}
-    missing_people: List[
-        MissingPerson
-    ] = []  # Now properly typed with MissingPerson class
     validation_errors: List[str] = []
 
 class FormatOutputStep(BaseModel):

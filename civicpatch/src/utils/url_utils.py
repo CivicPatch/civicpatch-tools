@@ -46,3 +46,5 @@ def same_domain(domain: str, url: str) -> bool:
     return core_base_host == core_link_host
 
 
+def get_path(url: str) -> str:
+    return urlparse(url).path

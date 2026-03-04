@@ -71,6 +71,7 @@
 
     --pico-ins-color: rgba(var(--catppuccin-green), 0.5);
     --pico-del-color: rgba(var(--catppuccin-red), 0.5);
+    --pico-warn-color: rgba(var(--catppuccin-yellow), 0.5);
 }
 
 @media only screen and (prefers-color-scheme: dark) {
@@ -204,4 +205,21 @@ main.container-fluid {
   overflow: hidden;
   clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap;
+}
+
+/* in your global CSS */
+.details-dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+  margin: 0;
+}
+.details-dl dt {
+  font-weight: 600;
+  color: var(--pico-muted-color);
+  white-space: nowrap;
+}
+.details-dl dd {
+  margin: 0;
+  word-break: break-word;
 }
