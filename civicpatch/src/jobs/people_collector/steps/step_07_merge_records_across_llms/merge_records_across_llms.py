@@ -39,8 +39,8 @@ def merge_records_across_llms(context: PeopleCollectorContext) -> MergeRecordsAc
     identity_names = context.data.config.identities or research_identities
     groups_by_llm = group_records_across_llms(identity_names, people_by_llm)
 
-    # Filter out groups that only have one LLM source
-    groups_by_llm = [group for group in groups_by_llm if len(group) > 1]
+    ## Filter out groups that only have one LLM source
+    #groups_by_llm = [group for group in groups_by_llm if len(group) > 1]
     
     # Merge each group and collect disagreements
     merged_people = []

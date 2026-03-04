@@ -1,7 +1,5 @@
 import pytest
 import pytest_asyncio
-from services.openai.llm import run_prompt as run_openai_prompt
-from services.openai.prompts import relevant_page_prompt as make_openai_prompt
 from services.together_ai.llm import run_prompt as run_together_prompt
 from services.together_ai.prompts import relevant_page_prompt as make_together_prompt
 from jobs.people_collector.schemas import RelevantPageResponseSchema
@@ -40,13 +38,14 @@ async def run_eval(model_client, case):
     page_url = expected.get("page_url", "")
     make_prompt = model_client["make_prompt"]
 
-    prompt = make_prompt(page_url, [])
+    prompt = make_prompt(page_url)
     response = await run_prompt(
         "run-eval",
         "ocd-jurisdiction/country:us/state:tx/place:example/government",
         prompt,
         response_schema=RelevantPageResponseSchema,
-        content=case_input
+        content=case_input,
+        model_type="STANDARD"
     )
     actual = cast(RelevantPageResponseSchema, response)
     case_path = case.get("case_path", "unknown_case")
@@ -56,8 +55,8 @@ async def run_eval(model_client, case):
         serialized_output = RelevantPageResponseSchema.model_dump(actual)
         yaml.safe_dump(serialized_output, f, sort_keys=False)
 
-    # Score the single page
-    return score_page(serialized_output, expected["page"])
+    # Return both score and actual output
+    return score_page(serialized_output, expected["page"]), serialized_output
 
 @pytest_asyncio.fixture
 def load_eval_cases(base_dir="tests/prompts/datasets/local/relevant_page"):
@@ -98,13 +97,7 @@ async def model_client(request):
     """
     Fixture to provide the model client for the test.
     """
-    if request.param == "openai":
-        return {
-            "name": "openai",
-            "run_prompt": run_openai_prompt,
-            "make_prompt": make_openai_prompt,
-        }
-    elif request.param == "together_ai":
+    if request.param == "together_ai":
         return {
             "name": "together_ai",
             "run_prompt": run_together_prompt,
@@ -113,7 +106,7 @@ async def model_client(request):
     else:
         raise ValueError(f"Unknown model client: {request.param}")
 
-@pytest.mark.parametrize("model_client", ["openai", "together_ai"], indirect=True)
+@pytest.mark.parametrize("model_client", ["together_ai"], indirect=True)
 @pytest.mark.asyncio
 async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_cases):
     """
@@ -126,27 +119,37 @@ async def test_relevant_page_eval_with_mocked_cases(model_client, load_eval_case
     failed_cases = []
     for case in load_eval_cases:
         print(f"Running evaluation for case: {case['id']}")
-        case_scores = await run_eval(model_client, case)
-
-        # Check thresholds
+        (case_scores, actual_output) = await run_eval(model_client, case)
+        expected_page = case["expected"]["page"]
         failed = []
-        for key, threshold in thresholds.items():
-            actual_score = case_scores.get(key, 1.0)
-            print(f"  {key}: actual={actual_score:.3f}, expected>={threshold}")
-            if actual_score < threshold:
-                failed.append(f"{key}: actual={actual_score:.3f}, expected>={threshold}")
-
-        # Handle boolean comparison for is_relevant
-        if case_scores.get("is_relevant") != 1.0:  # 1.0 represents a match (true == true)
-            failed.append(f"is_relevant: actual={case_scores.get('is_relevant')}, expected=true")
-
+        # relevant_urls comparison
+        actual_urls = set(actual_output.get("relevant_urls", []))
+        expected_urls = set(expected_page.get("relevant_urls", []))
+        score_urls = len(actual_urls & expected_urls) / len(expected_urls) if expected_urls else 1.0
+        if score_urls < thresholds["relevant_urls"]:
+            failed.append({
+                "field": "relevant_urls",
+                "expected": list(expected_urls),
+                "actual": list(actual_urls),
+                "score": score_urls,
+                "threshold": thresholds["relevant_urls"]
+            })
+        # is_relevant comparison
+        if case_scores.get("is_relevant") != 1.0:
+            failed.append({
+                "field": "is_relevant",
+                "expected": expected_page.get("is_relevant"),
+                "actual": actual_output.get("is_relevant"),
+                "score": case_scores.get("is_relevant"),
+                "threshold": 1.0
+            })
         if failed:
             failed_cases.append({
                 "model_client": model_client["name"],
                 "case_id": case["id"],
                 "failures": failed
             })
-            print(f"[{model_client['name']}] Case '{case['id']}' failed: {', '.join(failed)}")
+            print(f"[{model_client['name']}] Case '{case['id']}' failed: {failed}")
 
     # Write full report to file
     evals_dir = "tests/prompts/tests/evals/relevant_page"

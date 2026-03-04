@@ -29,6 +29,7 @@ from jobs.people_collector.steps.step_10_save_output.save_output import save_out
 from jobs.people_collector.steps.step_11_maybe_send_to_github.maybe_send_to_github import maybe_send_to_github
 
 from jobs.people_collector.transitions.process_page_content_transition import next_state_for_process_content_state
+from jobs.people_collector.transitions.merge_records_within_llm_transition import check_pipeline_heuristics
 from jobs.people_collector.utils.links import (
     get_next_link_with_status,
     get_link_status_by_url,
@@ -218,9 +219,21 @@ async def merge_records_within_llm_transition(_: JobConfig, logger: WorkflowLogg
         })
     })
 
+    heuristics_pass, reasons = check_pipeline_heuristics(
+        result.people_by_llm
+    )
 
-    next_state = WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS
-    return next_context, next_state
+    if not heuristics_pass:
+        logger.info("Pipeline heuristics failed. Failing pipeline.")
+        reasons_str = "; ".join(reasons)
+        next_context = next_context.copy(update={
+            "data": next_context.data.copy(update={
+                "error_step": f"merge_records_within_llm: heuristics failed: {reasons_str}"
+            })
+        })
+        return next_context, WorkflowStatus.ERROR
+
+    return next_context, WorkflowStatus.MERGE_RECORDS_ACROSS_LLMS
 
 async def merge_records_across_llms_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
     result = merge_records_across_llms(context)
@@ -292,6 +305,10 @@ async def finalize_transition(_: JobConfig, logger: WorkflowLogger, context: Peo
     })
     return next_context, WorkflowStatus.DONE
 
+async def error_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]: 
+    logger.error("An error occurred during processing.")
+    return context, WorkflowStatus.ERROR
+
 # TODO: issue with this is that steps can go backwards, so progress
 # might decrease at certain points. Should fix.
 def calculate_progress_percentage(context_data: PeopleCollectorData, current_step: int):
@@ -321,4 +338,5 @@ TRANSITION_MAP = {
   WorkflowStatus.SAVE_OUTPUT: save_output_transition,
   WorkflowStatus.MAYBE_SEND_TO_GITHUB: maybe_send_to_github_transition,
   WorkflowStatus.FINALIZE: finalize_transition, 
+  WorkflowStatus.ERROR: error_transition
 }

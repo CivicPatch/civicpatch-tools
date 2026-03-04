@@ -43,9 +43,10 @@ def relevant_page_prompt(page_url: str, _people_hint: List[ResearchedPerson]):
     """
     return prompt
 
-def municipality_officials_prompt(
-        _people_hint: List[ResearchedPerson]
-    ):
+def municipality_officials_prompt(_people_hint: List[ResearchedPerson]):
+    """
+    Generate a prompt to identify municipality officials from the given content.
+    """
     designation_names = config_utils.get_designation_names()
     designations_str = ", ".join(designation_names)
     current_date = datetime.now().strftime("%Y-%m-%d")

@@ -1,51 +1,51 @@
 people:
-- name: Vacant Vacant
-  roles:
-  - Council
-  designations: []
-  phone: null
-  email: null
-  url: https://www.seadrifttx.org/city-council/directory-listing/vacated-alderman-0
-  start_date: null
-  end_date: null
-  image: null
-- name: Vacant Vacant
-  roles:
-  - Council
-  designations: []
-  phone: null
-  email: null
-  url: https://www.seadrifttx.org/city-council/directory-listing/vacated-alderman
-  start_date: null
-  end_date: null
-  image: null
 - name: Alysa Jarvis
   roles:
   - Council
   designations: []
   phone: 713-703-8662
-  email: alysa.jarvis@seadrifttx.org
+  email: ''
   url: https://www.seadrifttx.org/city-council/directory-listing/alysa-jarvis
-  start_date: null
-  end_date: null
-  image: null
+  start_date: ''
+  end_date: ''
+  image: ''
 - name: Tracey Johnson
   roles:
   - Council
   designations: []
   phone: 361-746-8488
-  email: tracey.johnson@seadrifttx.org
+  email: ''
   url: https://www.seadrifttx.org/city-council/directory-listing/tracey-johnson
-  start_date: null
-  end_date: null
-  image: null
+  start_date: ''
+  end_date: ''
+  image: ''
 - name: Kenneth Reese
   roles:
   - Council
   designations: []
-  phone: null
-  email: kenneth.reese@seadrifttx.org
+  phone: ''
+  email: ''
   url: https://www.seadrifttx.org/city-council/directory-listing/kenneth-reese
-  start_date: null
-  end_date: null
-  image: null
+  start_date: ''
+  end_date: ''
+  image: ''
+- name: Vacant Vacant
+  roles:
+  - Council
+  designations: []
+  phone: ''
+  email: ''
+  url: https://www.seadrifttx.org/city-council/directory-listing/vacated-alderman-0
+  start_date: ''
+  end_date: ''
+  image: ''
+- name: Vacant Vacant
+  roles:
+  - Council
+  designations: []
+  phone: ''
+  email: ''
+  url: https://www.seadrifttx.org/city-council/directory-listing/vacated-alderman
+  start_date: ''
+  end_date: ''
+  image: ''

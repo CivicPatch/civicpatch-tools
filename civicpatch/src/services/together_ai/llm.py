@@ -13,10 +13,15 @@ BASE_URL = "https://api.together.xyz/v1"
 
 MODELS_BY_TYPE = {
     "CHEAP": {
-        "model": "meta-llama/Meta-Llama-3-8B-Instruct-Lite",
-        "input_cost": 0.10 / 1000000,
-        "output_cost": 0.10 / 1000000,
-        "token_limit": 8192,
+        #"model": "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+        #"input_cost": 0.10 / 1000000,
+        #"output_cost": 0.10 / 1000000,
+        #"token_limit": 8192,
+        #FAILS
+        #"model": "zai-org/GLM-4.5-Air-FP8",
+        "input_cost": 0.20 / 1000000,
+        "output_cost": 1.10 / 1000000,
+
     },
     "STANDARD": { # Used for municipality official extraction
         # MUNICIPALITY_PROMPT TESTS
@@ -120,6 +125,13 @@ MODELS_BY_TYPE = {
         #"model": "Qwen/Qwen3-235B-A22B-Instruct-2507-tput",
         #"input_cost": 0.20 / 1000000,
         #"output_cost": 0.60 / 1000000
+        # "model": "zai-org/GLM-4.5-Air-FP8",
+        # "input_cost": 0.20 / 1000000,
+        # "output_cost": 1.10 / 1000000,
+        # ^^ Mostly good results but fails at vacant_positions_council for roles
+        "model": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+        "input_cost": 0.27 / 1000000,
+        "output_cost": 0.85 / 1000000,
     },
 }
 
@@ -155,7 +167,7 @@ def run_prompt(
     # Execute request with retries
     def execute():
         together_client = openai.OpenAI(api_key=api_key, base_url=BASE_URL)
-        client = instructor.from_openai(together_client)
+        client = instructor.from_openai(together_client, mode=instructor.Mode.MD_JSON)
 
         response, completion = client.chat.completions.create_with_completion(
             model=model,
