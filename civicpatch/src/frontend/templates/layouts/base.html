@@ -39,8 +39,6 @@
             src="{{ url_for('frontend', path='/dist/bundle.js') }}"
         ></script>
 
-        {{ url_for('frontend', path='/dist/bundle.js') }}
-
         {% else %}
         <!-- Hot reload script -->
         {{ hot_reload.script(url_for('hot-reload')) | safe }}
@@ -48,7 +46,7 @@
         <script type="importmap">
             {
                 "imports": {
-                    "@components": "{{ url_for('frontend', path='/cdn/bundle.js') }}"
+                    "@components": "../cdn/bundle.js"
                 }
             }
         </script>
@@ -56,7 +54,6 @@
             type="module"
             src="{{ url_for('frontend', path='/build/bundle.js') }}"
         ></script>
-
 
         <!--<script type="module" src="/dev-modules/build/bundle.js"></script>-->
         {% endif %}

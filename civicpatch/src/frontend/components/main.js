@@ -5,5 +5,7 @@ import "./search-jurisdictions/index.js";
 import "./jurisdiction-page/index.js";
 import "./navbar.js";
 
-import { registerCivMap } from "../cdn/bundle.js";
+import { registerCivMap } from "@components";
 registerCivMap();
+
+
