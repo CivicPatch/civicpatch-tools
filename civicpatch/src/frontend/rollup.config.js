@@ -28,16 +28,14 @@ const config = {
     sourcemap: devMode ? "inline" : false,
   },
   plugins: [
-    alias({
+    ...(devMode ? [alias({
       entries: [
         {
           find: '@components',
-          replacement: devMode
-            ? '../cdn/bundle.js' // Absolute path for dev
-            : 'https://components.civicpatch.org/bundle.js'  // CDN in prod
+          replacement: '../cdn/bundle.js'
         }
       ]
-    }),
+    })] : []),
     nodeResolve(),
     image(),
     commonjs(),
