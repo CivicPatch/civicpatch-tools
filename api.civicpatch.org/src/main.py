@@ -18,8 +18,10 @@ import routers.api.admin as api_admin_router
 import routers.api.api_keys as api_keys_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.people as api_people_router
+import routers.api.service.people as api_service_people_router
 import routers.api.pipelines as api_pipelines_router
 import routers.api.jobs as api_jobs_router
+import routers.api.service.jobs as api_service_jobs_router
 import routers.api.user as api_user_router
 from routers.auth import get_router as auth_router
 from database import (
@@ -29,7 +31,7 @@ from database import (
     pool,
     user_is_approved,
 )
-from utils.auth import require_route_access, get_optional_user
+from utils.auth_utils import require_route_access, get_optional_user
 from services.memory_pub_sub_service import memory_pubsub
 from fastapi.responses import StreamingResponse
 from services import github_service
@@ -220,14 +222,14 @@ app.include_router(
     api_people_router.get_router(),
     prefix="/api/v1/people",
     tags=["people"],
-    dependencies=[] # public route for now
+    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))]
 )
 
 app.include_router(
-    api_pipelines_router.get_router(api_key_header),
-    prefix="/api/internal/pipelines",
-    tags=["pipelines"],
-    dependencies=[Depends(require_route_access(RouteCategory.JOBS_WRITE))]
+    api_service_people_router.get_router(),
+    prefix="/api/v1/people",
+    tags=["people"],
+    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))]
 )
 
 app.include_router(
@@ -235,6 +237,20 @@ app.include_router(
     prefix="/api/v1/jobs",
     tags=["jobs"], 
     dependencies=[Depends(require_route_access(RouteCategory.TEAM_MEMBER))]
+)
+
+app.include_router(
+    api_service_jobs_router.get_router(api_key_header),
+    prefix="/api/v1/jobs",
+    tags=["jobs"], 
+    dependencies=[Depends(require_route_access(RouteCategory.SERVICE))]
+)
+
+app.include_router(
+    api_pipelines_router.get_router(api_key_header),
+    prefix="/api/internal/pipelines",
+    tags=["pipelines"],
+    dependencies=[Depends(require_route_access(RouteCategory.SERVICE))]
 )
 
 # Allow you to create your api keys
@@ -250,7 +266,7 @@ app.include_router(
     api_user_router.get_router(), 
     prefix="/api/internal/user", 
     tags=["user"],
-    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED_USER))]
+    dependencies=[Depends(require_route_access(RouteCategory.USER))]
 )
 
 app.include_router(

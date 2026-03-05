@@ -11,9 +11,8 @@ from schemas.common import PullRequest
 from services import cache_service
 
 timeout = httpx.Timeout(60.0)  
-github_async_client = httpx.AsyncClient(timeout=timeout)
 
-GITHUB_APP_ID=os.getenv("GITHUB_APP_ID")
+GITHUB_APP_ID = os.getenv("GITHUB_APP_ID")
 GITHUB_APP_PRIVATE_KEY_BASE64 = os.getenv("GITHUB_APP_PRIVATE_KEY_BASE64")
 GITHUB_APP_PRIVATE_KEY = base64.b64decode(GITHUB_APP_PRIVATE_KEY_BASE64).decode()
 GITHUB_APP_INSTALLATION_ID = os.getenv("GITHUB_APP_INSTALLATION_ID")
@@ -29,10 +28,9 @@ def _generate_jwt() -> str:
         algorithm="RS256",
     )
 
-
 async def _fetch_github_token() -> tuple[str, float]:
     async with httpx.AsyncClient() as client:
-        response = await github_async_client.post(
+        response = await client.post(
             f"https://api.github.com/app/installations/{GITHUB_APP_INSTALLATION_ID}/access_tokens",
             headers={
                 "Authorization": f"Bearer {_generate_jwt()}",
@@ -47,15 +45,10 @@ async def _fetch_github_token() -> tuple[str, float]:
     expires_at = expires_at.replace(tzinfo=timezone.utc).timestamp()
     return token, expires_at
 
-
 async def get_github_token() -> str:
     return await cache_service.get_cached_token(CACHE_KEY, _fetch_github_token)
 
-
 async def get_default_headers() -> Dict[str, str]:
-    """
-    Get the default headers for GitHub API requests.
-    """
     github_token = await get_github_token()
     return {
         "Authorization": f"Bearer {github_token}",
@@ -87,12 +80,12 @@ async def trigger_people_job_workflow(
         "Accept": "application/vnd.github+json",
     }
 
-
-    response = await github_async_client.post(
-        "https://api.github.com/repos/CivicPatch/server/actions/workflows/data_scrape.yml/dispatches",
-        headers=headers,
-        json=data,
-    )
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.post(
+            "https://api.github.com/repos/CivicPatch/server/actions/workflows/data_scrape.yml/dispatches",
+            headers=headers,
+            json=data,
+        )
 
     if response.status_code != 204:
         raise Exception(
@@ -101,7 +94,6 @@ async def trigger_people_job_workflow(
 
     return True
 
-
 async def trigger_github_data_intake_workflow(
     user_email: str,
     server_url: str,
@@ -109,8 +101,6 @@ async def trigger_github_data_intake_workflow(
     jurisdiction_ocdid: str,
     zip_file_url: str
 ):
-    # Trigger GitHub Actions workflow to pull data from the given URL
-    # For example, you might use the GitHub API to dispatch a workflow event
     data = {
         "ref": "main",
         "inputs": {
@@ -129,7 +119,8 @@ async def trigger_github_data_intake_workflow(
         "Accept": "application/vnd.github+json",
     }
 
-    response = await github_async_client.post(
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.post(
             f"{OPEN_DATA_REPO_URL}/actions/workflows/data_intake.yml/dispatches",
             headers=headers,
             json=data,
@@ -141,7 +132,6 @@ async def trigger_github_data_intake_workflow(
         )
 
     return True
-
 
 async def get_github_file_contents(
         github_file_path: str,
@@ -158,7 +148,8 @@ async def get_github_file_contents(
         **default_headers,
         "Accept": "application/vnd.github.raw",
     }
-    response = await github_async_client.get(url, headers=headers, timeout=timeout)
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.get(url, headers=headers)
 
     if response.status_code == 200:
         file_content = response.text
@@ -166,7 +157,6 @@ async def get_github_file_contents(
     else:
         print(f"Error fetching file contents: {github_file_path}", response.status_code, response.text)
         return None
-
 
 async def get_open_pull_requests() -> List[PullRequest]:
     params = "state=open&per_page=100&sort=created&direction=desc"
@@ -178,7 +168,8 @@ async def get_open_pull_requests() -> List[PullRequest]:
         "Accept": "application/vnd.github+json",
     }
 
-    response = await github_async_client.get(url, headers=headers, timeout=timeout)
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        response = await client.get(url, headers=headers)
 
     if response.status_code == 200:
         pull_requests = response.json()
@@ -204,38 +195,37 @@ async def update_pull_request_file(
     new_data: List[Dict[str, Any]],
     commit_message: str = "Automated update via API"
 ) -> bool:
-    # Get file SHA
     default_headers = await get_default_headers()
     headers = {
         **default_headers,
     }
     contents_url = f"{OPEN_DATA_REPO_URL}/contents/{file_path}?ref={branch_name}"
-    contents_response = await github_async_client.get(contents_url, headers=headers, timeout=timeout)
-    if contents_response.status_code != 200:
-        return False
-    sha = contents_response.json()["sha"]
-    serialized_data = yaml.dump(new_data, sort_keys=False, allow_unicode=True)
-    encoded_content = base64.b64encode(serialized_data.encode("utf-8")).decode("utf-8")
+    async with httpx.AsyncClient(timeout=timeout) as client:
+        contents_response = await client.get(contents_url, headers=headers)
+        if contents_response.status_code != 200:
+            return False
+        sha = contents_response.json()["sha"]
+        serialized_data = yaml.dump(new_data, sort_keys=False, allow_unicode=True)
+        encoded_content = base64.b64encode(serialized_data.encode("utf-8")).decode("utf-8")
 
-    data = {
-        "message": commit_message,
-        "content": encoded_content,
-        "sha": sha,
-        "branch": branch_name
-    }
+        data = {
+            "message": commit_message,
+            "content": encoded_content,
+            "sha": sha,
+            "branch": branch_name
+        }
 
-    headers = {
-        **default_headers,
-        "Accept": "application/vnd.github+json",
-    }
+        headers = {
+            **default_headers,
+            "Accept": "application/vnd.github+json",
+        }
 
-    # Update file
-    update_response = await github_async_client.put(contents_url, json=data, headers=headers, timeout=timeout)
-    if update_response.status_code in [200, 201]:
-        return True
-    else:
-        print("Error updating file:", update_response.status_code, update_response.text)
-        return False
+        update_response = await client.put(contents_url, json=data, headers=headers)
+        if update_response.status_code in [200, 201]:
+            return True
+        else:
+            print("Error updating file:", update_response.status_code, update_response.text)
+            return False
 
 async def get_teams(user_oauth_token: str):
     headers = {
@@ -243,12 +233,9 @@ async def get_teams(user_oauth_token: str):
         "Authorization": f"Bearer {user_oauth_token}"
     }
     teams_url = "https://api.github.com/user/teams"
-    response = await github_async_client.get(teams_url, headers=headers)
+    async with httpx.AsyncClient() as client:
+        response = await client.get(teams_url, headers=headers)
     teams = response.json()
     our_teams = [team for team in teams if team["organization"]["login"] == "CivicPatch"]
     team_names = [team["name"] for team in our_teams]
     return team_names
-
-
-async def close():
-    await github_async_client.aclose()

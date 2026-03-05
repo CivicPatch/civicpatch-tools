@@ -26,7 +26,6 @@ from interfaces.api.routes.backend import get_router as get_backend_router
 from interfaces.api.routes.frontend import get_router as get_frontend_router
 
 API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "http://api_civicpatch_org:8001")
-SERVICE_API_KEY = os.getenv("SERVICE_API_KEY")
 
 @asynccontextmanager
 async def lifespan(app):
@@ -60,18 +59,11 @@ app.include_router(get_frontend_router(templates), tags=["frontend"])
     methods=["GET", "POST", "PUT", "DELETE", "PATCH"],
 )
 async def proxy_to_api_civicpatch_org_endpoint(path: str, request: Request):
-    # Inject Authorization header from env var
-    #if not SERVICE_API_KEY:
-    #    raise HTTPException(status_code=500, detail="Missing SERVICE_API_KEY")
-
     method = request.method
     url = f"{API_CIVICPATCH_ORG_URL}/api/v1/{path}"
     headers = dict(request.headers)
     headers.pop("host", None)
     headers.pop("accept-encoding", None)
-
-    # Should only rely on cookie auth
-    #headers["Authorization"] = f"{SERVICE_API_KEY}"  # Inject token
 
     data = await request.body()
     client = request.app.state.client

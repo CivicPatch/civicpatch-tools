@@ -7,6 +7,7 @@ function ScrapeModal({ onStartScrape, url = "", sourceUrls = [], modalProps = {}
   const [scrapeScope, setScrapeScope] = useState("top-level-url");
   const [currentUrl, setCurrentUrl] = useState(url);
   const [currentSourceUrls, setCurrentSourceUrls] = useState(sourceUrls);
+  console.log("what is", url)
 
   const handleScopeChange = (event) => {
     setScrapeScope(event.target.value);

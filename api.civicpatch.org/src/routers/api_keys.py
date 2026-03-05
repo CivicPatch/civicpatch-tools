@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 import database
-from utils.auth import get_user
+from utils.auth_utils import get_user
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 

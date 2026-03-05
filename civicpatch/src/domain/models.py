@@ -8,6 +8,7 @@ class Office(BaseModel):
     division_ocdid: Optional[str] = None
  
 class Official(BaseModel):
+    id: str
     name: str
     other_names: List[str] = []
     phones: List[str] = []

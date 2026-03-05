@@ -250,7 +250,7 @@ async def merge_records_across_llms_transition(_: JobConfig, logger: WorkflowLog
     return next_context, next_state
 
 async def format_output_transition(_: JobConfig, logger: WorkflowLogger, context: PeopleCollectorContext) -> tuple[PeopleCollectorContext, WorkflowStatus]:
-    result = format_output(context)
+    result = await format_output(context)
     progress = calculate_progress_percentage(context.data, 8)
     next_context = context.copy(update={
         "progress": progress,

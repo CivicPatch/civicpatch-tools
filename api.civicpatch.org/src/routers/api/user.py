@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse
 from fastapi_sso.sso.base import OpenID
 
 import database
-from utils.auth import get_user
+from utils.auth_utils import get_user
 
 
 # TODO: rbac perms needed

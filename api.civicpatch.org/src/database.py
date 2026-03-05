@@ -10,7 +10,8 @@ from schemas.requests import ServerDetail
 
 from psycopg_pool import AsyncConnectionPool
 
-from schemas.common import Person, PeopleJobHistory
+from schemas.common import PeopleJobHistory
+from shared.schemas import Person
 
 CIVICPATCH_API_DB_URL = os.getenv("CIVICPATCH_API_DB_URL")
 DATABASE_HASH_KEY = os.getenv("DATABASE_HASH_KEY")

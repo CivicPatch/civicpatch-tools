@@ -1,13 +1,14 @@
 from typing import Dict, Set, List, Protocol
 from nameparser import HumanName
 import unicodedata
+from shared.schemas import Person
 
-def person_list_to_identities(people: List[dict]) -> Dict[str, List[str]]:
+def person_list_to_identities(people: List[Person]) -> Dict[str, List[str]]:
     """Convert a list of people dicts to an identities mapping."""
     identities = {}
     for person in people:
-        name = person.get("name")
-        other_names = person.get("other_names", [])
+        name = person.name
+        other_names = person.other_names
         if name:
             identities[name] = other_names
     return identities

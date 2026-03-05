@@ -89,16 +89,19 @@ function JurisdictionPage({ jurisdiction_ocdid, history }) {
             .canStartScrape=${canStartScrape}
           ></civ-jurisdiction-sidebar>
 
-          <civ-scrape-modal
-            .onStartScrape=${handleScrapeStartClick}
-            .url=${jurisdictionData?.data?.url}
-            .modalProps=${{
-              open: scrapeModalOpen,
-              onClose: () => setScrapeModalOpen(false),
-              closeOnBackdropClick: false
-            }}
-            .identities=${identities}
-          ></civ-scrape-modal>
+          ${jurisdictionData ? html`
+            <civ-scrape-modal
+              .onStartScrape=${handleScrapeStartClick}
+              .url=${jurisdictionData?.data?.url}
+              .modalProps=${{
+                open: scrapeModalOpen,
+                onClose: () => setScrapeModalOpen(false),
+                closeOnBackdropClick: false
+              }}
+              .identities=${identities}
+            ></civ-scrape-modal>
+          ` : null}
+
         </div>
       </div>
 

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Depends, HTTPException
 
 import database
-from utils.auth import get_user 
+from utils.auth_utils import get_user 
 from schemas.common import Identity
 
 
