@@ -308,6 +308,7 @@ function BasicTable(props) {
           .focused=${cellIsFocused}
           .editing=${cellIsEditing}
           .customCell=${col.renderCell}
+          .data=${row}
         ></civ-table-cell>
       </td>
     `)

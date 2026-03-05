@@ -25,16 +25,20 @@ ROUTE_PERMISSIONS = {
         "public": True
     },
     RouteCategory.AUTHENTICATED: {
+        "teams": [],
+        "allow_service_api_key": True
+    },
+    RouteCategory.AUTHENTICATED_USER: {
         "teams": []
     },
     RouteCategory.TEAM_MEMBER: {
         "teams": ["default"]
     },
     RouteCategory.ADMIN: {
-        "teams": ["admins"]
+        "teams": ["admins"],
     },
     RouteCategory.JOBS_WRITE: { # People who can run scrapes
-        "teams": ["maintainers"]
+        "teams": ["maintainers"],
     },
 }
 
@@ -43,20 +47,35 @@ async def get_user(
     authorization: Optional[str] = Security(API_HEADER),
     cookie: Optional[str] = Security(API_COOKIE),
 ) -> Identity:
-    """Authenticate from Authorization: Bearer <token> or from cookie 'token'.
-    Enforce simple CSRF check for unsafe cookie-authenticated requests.
-    """
+    service_api_key = os.getenv("SERVICE_API_KEY")
+    auth_header = request.headers.get("authorization")
+
     token = None
     token_source = None
-    if authorization:
-        token = authorization.strip()
-        token_source = "header"
-    elif cookie:
+
+    # 1. Prioritize cookie if present
+    if cookie:
         token = cookie
         token_source = "cookie"
-
-    if not token:
+    # 2. Then check Authorization header
+    elif authorization:
+        token = authorization.strip()
+        # Check if it's the service API key
+        if service_api_key and token == service_api_key:
+            token_source = "service_api_key"
+        else:
+            token_source = "header"
+    else:
         raise HTTPException(status_code=401, detail="Missing authentication token")
+
+    # 3. Handle service API key
+    if token_source == "service_api_key":
+        return Identity(
+            provider="system",
+            provider_user_id="service_api_key",
+            email=None,
+            teams=[]
+        )
 
     if not JWT_SECRET_KEY:
         raise HTTPException(status_code=500, detail="Server not configured to verify tokens")
@@ -160,11 +179,11 @@ async def get_optional_user(
         return None
 
 def require_route_access(category: RouteCategory): 
-    """Factory that returns a dependency for route category access control"""
-    async def _dependency(user: Identity = Depends(get_user)):
-        user_teams = getattr(user, "teams", [])
+    async def _dependency(
+        user: Identity = Depends(get_user),
+    ):
         allowed_teams = ROUTE_PERMISSIONS.get(category, {}).get("teams", [])
-        if allowed_teams and not any(team in allowed_teams for team in user_teams):
+        if allowed_teams and not any(team in allowed_teams for team in user.teams):
             raise HTTPException(
                 status_code=403,
                 detail="Insufficient permissions for this route."

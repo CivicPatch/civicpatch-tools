@@ -1,3 +1,4 @@
+import path from "path";
 import terser from "@rollup/plugin-terser";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
@@ -14,7 +15,10 @@ console.log(`${devMode ? "development" : "production"} mode bundle`);
 const config = {
   input: "./components/main.js",
   watch: {
-    include: "./components/**",
+    include: [
+      "./components/**",
+      "./hooks/**",
+    ],
     exclude: ["./build/**", "./dist/**", "node_modules/**"],
     clearScreen: false
   },
@@ -24,16 +28,16 @@ const config = {
     sourcemap: devMode ? "inline" : false,
   },
   plugins: [
-//    alias({
-//      entries: [
-//        {
-//          find: '@components',
-//          replacement: devMode 
-//            ? './cdn/bundle.js'  // Local in dev
-//            : 'https://components.civicpatch.org/bundle.js'  // CDN in prod
-//        }
-//      ]
-//    }),
+    //alias({
+    //  entries: [
+    //    {
+    //      find: '@components',
+    //      replacement: devMode 
+    //        ? path.resolve(__dirname, './cdn/bundle.js') // Absolute path for dev
+    //        : 'https://components.civicpatch.org/bundle.js'  // CDN in prod
+    //    }
+    //  ]
+    //}),
     nodeResolve(),
     image(),
     commonjs(),

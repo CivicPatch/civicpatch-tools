@@ -6,7 +6,7 @@ import './person-card.js';
 import '../basic/table/table.js';
 import yaml from 'js-yaml';
 import { useRovingFocusList } from '../../hooks/use-roving-focus-list.js';
-import './diff-preview.js';
+import './action-buttons.js';
 import './pull-request-tabs.js';
 import { useCsrf } from '../../hooks/use-csrf.js';
 import './review-table.js';
@@ -103,10 +103,17 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   }
 
   function assignPeople(peopleToAssign) {
-    const peopleWithKeys = peopleToAssign.map(person => ({
-      ...person,
-      _tempKey: person._tempKey || genKey(),
-    }));
+    // Build a Set of canonical ids for fast lookup
+    const canonicalIds = new Set((people || []).map(p => p.id).filter(Boolean));
+
+    const peopleWithKeys = peopleToAssign.map(person => {
+      const isNew = !person.id || !canonicalIds.has(person.id);
+      return {
+        ...person,
+        _tempKey: person._tempKey || genKey(),
+        _isNew: isNew,
+      };
+    });
     setCurrentPeople(peopleWithKeys);
     setOriginalPeople(peopleWithKeys); // Save as baseline for change tracking
   }
@@ -153,13 +160,48 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     handleDelete(selectedPeople);
   }
 
-  function handleAdd() {
+  async function resolvePerson({ name, email, jurisdiction_ocdid }) {
+    const res = await fetch(`${API_URL}/api/v1/people/resolve`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ name, email, jurisdiction_ocdid }),
+    });
+    if (!res.ok) throw new Error("Failed to resolve person");
+    const data = await res.json();
+    return data.data; // { person_id, person, ambiguous }
+  }
+
+  async function generatePersonId() {
+    const res = await fetch(`${API_URL}/api/v1/people/generate-id`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    if (!res.ok) throw new Error("Failed to generate person id");
+    const data = await res.json();
+    return data.data.person_id;
+  }
+
+  async function handleAdd() {
     const default_office_name = "Council Member";
-    //const first_person = originalPeople.lenggth > 0 ? originalPeople[0] : null;
     const last_person = originalPeople.length > 0 ? originalPeople[originalPeople.length - 1] : null;
     const default_office_division_ocdid = originalPeople.length > 0 ? originalPeople[0].office?.division_ocdid : null;
     const default_link = last_person?.urls?.[0] || null;
     const default_source_url = last_person?.source_urls?.[0] || null;
+
+    // You can prompt for name/email here, or leave blank for now
+    const name = "";
+    const email = "";
+
+    // Call generatePersonId to get a new id
+    let person_id;
+    try {
+      person_id = await generatePersonId();
+    } catch (e) {
+      // fallback: generate a new id if API fails
+      person_id = genKey();
+    }
 
     const newPerson = {
       _tempKey: genKey(),
@@ -167,8 +209,9 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       _selected: false,
       _deleted: false,
       _isNew: true,
-      name: '',
-      other_names: [], 
+      id: person_id,
+      name,
+      other_names: [],
       phones: [],
       emails: [],
       urls: default_link ? [default_link] : [],
@@ -182,7 +225,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       jurisdiction_ocdid: jurisdiction_ocdid,
       cdn_image: null,
       source_urls: [default_source_url],
-      updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, '+00:00'), // Correctly formatted updated_at
+      updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, '+00:00'),
     };
     setCurrentPeople(currentPeople => [newPerson, ...currentPeople]);
   }
@@ -363,44 +406,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     });
   }
 
-  function renderActionButtons() {
-    return html`
-      <div style="margin-bottom: 1rem; min-height: 2.5em; display: flex; align-items: center;">
-        <button @click=${handleAdd} style="margin-right: 1rem;">
-          Add
-        </button>
-        <button 
-          @click=${handleMerge} 
-          style="margin-right: 1rem;" 
-          ?disabled=${selectedPeople.length < 2}
-        >
-          Merge (${selectedPeople.length})
-        </button>
-        <button 
-          @click=${handleBulkDelete} 
-          style="margin-right: 1rem;"
-          ?disabled=${selectedPeople.length === 0}
-        >
-          Delete (${selectedPeople.length})
-        </button>
-        <button
-          @click=${() => handleReset(null)}
-          style="margin-left:auto; margin-right: 1rem;"
-          ?disabled=${dirty === false}
-        >
-          Reset Form
-        </button>
-        <button
-          @click=${handleSubmit}
-          style="margin-right: 0;"
-          ?disabled=${dirty === false}
-        >
-          Submit
-        </button>
-      </div>
-    `
-  } 
-
   function customCssForPerson(person, field) {
     if (person._deleted) {
       return "opacity: 0.5; text-decoration: line-through; background-color: var(--pico-del-color);";
@@ -408,6 +413,44 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       return "background-color: var(--pico-ins-color);";
     }
     return "";
+  }
+
+  function renderImageCell(person) {
+    const value = person?.cdn_image || person?.image;
+    // Get initials (first letter of each part of the name, up to 2)
+    let initials = "?";
+    if (person?.name) {
+      const parts = person.name.trim().split(/\s+/);
+      initials = parts.slice(0, 2).map(p => p[0].toUpperCase()).join("");
+    }
+    return html`
+      <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0.25rem; box-sizing: border-box;">
+        ${value
+          ? html`<img src="${value}" alt="Profile image" style="
+              width: min(100%, 100cqh, 4rem);
+              height: min(100%, 100cqh, 4rem);
+              border-radius: 50%;
+              object-fit: cover;
+              object-position: center;
+              display: block;
+              flex-shrink: 0;
+            " />`
+          : html`<div style="
+              width: min(100%, 100cqh, 4rem);
+              height: min(100%, 100cqh, 4rem);
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-shrink: 0;
+              font-size: 1.1rem;
+              font-weight: bold;
+              background: #f0f0f0;
+              color: #888;
+            ">${initials}</div>`
+        }
+      </div>
+    `;
   }
 
   function renderTableView() {
@@ -436,7 +479,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
           field: "cdn_image",
           label: "Image",
           editable: false,
-          type: "image",
+          renderCell: (person) => renderImageCell(person),
         },
         {
           field: "name",
@@ -548,26 +591,31 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         setSelectedPullRequest(e.detail.pullRequest)
       }}
     ></civ-pull-request-tabs>
-    <section class="selected-pr">
-      ${!selectedPullRequest
-        ? html`
-            <p>Use existing data for this jurisdiction.</p>
-        `
-        : html`
-          <a href=${selectedPullRequest?.url} target="_blank" class="contrast">
-            View Pull Request
-          </a>
-        `}
-    </section>
-  
-  <civ-review-table
-    .jurisdiction_ocdid=${jurisdiction_ocdid}
-    .branch_name=${selectedPullRequest?.branch_name}
-    .reviewData=${reviewData}
-    .currentPeople=${currentPeople}
-  ></civ-review-table>
 
-  ${renderActionButtons()}
+  ${!!selectedPullRequest ? html`
+    <a href=${selectedPullRequest?.url} target="_blank" class="contrast">
+      View Pull Request
+    </a>
+    <civ-review-table
+      .jurisdiction_ocdid=${jurisdiction_ocdid}
+      .branch_name=${selectedPullRequest?.branch_name}
+      .reviewData=${reviewData}
+      .currentPeople=${currentPeople}
+    ></civ-review-table>
+  ` : ""}
+  
+  <civ-people-action-buttons
+    .onAdd=${handleAdd}
+    .onMerge=${handleMerge}
+    .onBulkDelete=${handleBulkDelete}
+    .onReset=${() => handleReset(null)}
+    .onSubmit=${handleSubmit}
+    .selectedPeople=${selectedPeople}
+    .dirty=${dirty}
+    .isLoading=${isLoading}
+    .notice=${notice}
+    .error=${error}
+  ></civ-people-action-buttons>
 
   ${isLoading ? html`
     <div style="margin-bottom:1rem; padding:0.75em; background:#e0e0ff; border-radius:6px; color:#0000b3;">

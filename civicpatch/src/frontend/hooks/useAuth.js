@@ -3,7 +3,8 @@ const API_URL = __API_URL__;
 
 const DEFAULT_PERMISSIONS = {
   JURISDICTION_PAGE: false,
-  JURISDICTION_PAGE_SCRAPE: false
+  JURISDICTION_PAGE_SCRAPE_REMOTE: false,
+  JURISDICTION_PAGE_SCRAPE_LOCAL: false
 }
 
 /**
@@ -15,10 +16,11 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
   const [permissions, setPermissions] = useState(DEFAULT_PERMISSIONS)
 
-  function teamsToPermissions(teams) {
+  function toPermissions(permissions) {
     return {
-      JURISDICTION_PAGE: teams.length > 0, // Any team under our org
-      JURISDICTION_PAGE_SCRAPE: teams.includes("maintainers")
+      JURISDICTION_PAGE: permissions["can_view_jurisdiction_page"],
+      JURISDICTION_PAGE_SCRAPE_REMOTE: permissions["can_scrape_remote"],
+      JURISDICTION_PAGE_SCRAPE_LOCAL: permissions["can_scrape_local"]
     }
   }
 
@@ -27,16 +29,20 @@ export function useAuth() {
     async function checkAuth() {
       setLoading(true);
       try {
-        const res = await fetch(`${API_URL}/api/v1/me`, {
+        const res = await fetch(`/api/permissions`, {
           credentials: "include"
         });
+
         if (!cancelled) {
           if (res.ok) {
             // Response: {"authenticated":true,"provider":"github","provider_user_id":"1234","email":"test@example.com","display_name":null,"first_name":null,"teams":null}
             const data = await res.json();
             if (data.authenticated) {
-              setUser(data);
-              setPermissions(teamsToPermissions(data.teams || []));
+              setUser(data.data);
+              setPermissions({
+                ...DEFAULT_PERMISSIONS,
+                ...toPermissions(data.permissions)
+              });
             }
           } else {
             setUser(null);

@@ -878,44 +878,45 @@ async def update_jurisdiction(jurisdiction_ocdid, state, file_path, data: dict):
             (jurisdiction_ocdid, state, file_path, data_json, updated_at, dummy_git_commit)
         )
 
-async def update_people(jurisdiction_ocdid, file_path, data: dict):
-    """
-    Update people record(s) in the database for a single jurisdiction_ocdid.
-    """
-    async with pool.connection() as conn:
-        dummy_git_commit = "dummy_git_commit_hash"
-        # Handle empty data
-        if not data or (isinstance(data, list) and len(data) == 0):
-            updated_at = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds')
-            data_json = json.dumps([])
-        else:
-            updated_at = data[0]["updated_at"]
-            data_json = json.dumps(data)
-        await conn.execute(
-            """
-            INSERT INTO people (jurisdiction_ocdid, file_path, data, updated_at, git_commit)
-            VALUES (%s, %s, %s, %s, %s)
-            ON CONFLICT (jurisdiction_ocdid)
+# Probably could be optimized more, but maybe not worth it
+# for the scale of our data...
+async def bulk_update_people(people_records: list):
+    if not people_records:
+        return
+
+    # Group incoming records by jurisdiction_ocdid
+    jurisdictions: dict = {}
+    for record in people_records:
+        person_id, jurisdiction_ocdid = record[0], record[1]
+        if jurisdiction_ocdid not in jurisdictions:
+            jurisdictions[jurisdiction_ocdid] = []
+        jurisdictions[jurisdiction_ocdid].append(person_id)
+
+    async with pool.connection() as conn, conn.cursor() as cur:
+        # Upsert all incoming people with status "current"
+        insert_query = """
+            INSERT INTO people (id, jurisdiction_ocdid, file_path, data, updated_at, git_commit, status)
+            VALUES (%s, %s, %s, %s, %s, %s, 'current')
+            ON CONFLICT (id)
             DO UPDATE SET
                 data = EXCLUDED.data,
                 updated_at = EXCLUDED.updated_at,
-                git_commit = EXCLUDED.git_commit
-            """,
-            (jurisdiction_ocdid, file_path, data_json, updated_at, dummy_git_commit)
-        )
+                git_commit = EXCLUDED.git_commit,
+                status = 'current'
+        """
+        await cur.executemany(insert_query, people_records)
 
-async def bulk_update_people(people_records: list):
-    query = """
-        INSERT INTO people (jurisdiction_ocdid, file_path, data, updated_at, git_commit)
-        VALUES (%s, %s, %s, %s, %s)
-        ON CONFLICT (jurisdiction_ocdid)
-        DO UPDATE SET
-            data = EXCLUDED.data,
-            updated_at = EXCLUDED.updated_at,
-            git_commit = EXCLUDED.git_commit
-    """
-    async with pool.connection() as conn, conn.cursor() as cur:
-        await cur.executemany(query, people_records)
+        # For each jurisdiction, mark people not in the incoming set as "past"
+        for jurisdiction_ocdid, incoming_ids in jurisdictions.items():
+            await cur.execute(
+                """
+                UPDATE people
+                SET status = 'past'
+                WHERE jurisdiction_ocdid = %s
+                  AND id != ALL(%s)
+                """,
+                (jurisdiction_ocdid, incoming_ids)
+            )
 
 async def bulk_update_jurisdictions(jurisdiction_records: list):
     query = """
@@ -947,11 +948,12 @@ async def get_jurisdiction_updates() -> List[dict]:
             }
     return jurisdictions
 
-async def get_people_updates() -> List[dict]:
+async def get_people_updates() -> dict:
     async with pool.connection() as conn, conn.cursor() as cur:
         await cur.execute(
             """
-            SELECT jurisdiction_ocdid, updated_at FROM people
+            SELECT jurisdiction_ocdid, MAX(updated_at) as updated_at FROM people
+            GROUP BY jurisdiction_ocdid
             ORDER BY jurisdiction_ocdid;
             """
         )
@@ -962,6 +964,19 @@ async def get_people_updates() -> List[dict]:
                 "jurisdiction_ocdids": row[0],
                 "updated_at": to_iso(row[1]),
             }
+    return people
+
+async def get_people_for_jurisdiction(jurisdiction_ocdid: str) -> List[Person]:
+    async with pool.connection() as conn, conn.cursor() as cur:
+        await cur.execute(
+            """
+            SELECT data FROM people
+            WHERE jurisdiction_ocdid = %s
+            """,
+            (jurisdiction_ocdid,),
+        )
+        rows = await cur.fetchall()
+        people = [Person(**row[0]) for row in rows]
     return people
 
 async def delete_jurisdictions_by_ocdids(ocdids: List[str]):

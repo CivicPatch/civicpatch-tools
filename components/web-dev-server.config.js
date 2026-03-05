@@ -7,9 +7,9 @@ export default {
       changeOrigin: true,
       rewrite: (path) => path.replace(/^\/api\/api_proxy/, '/'),
       logs: true,
-      headers: {
-        Authorization: process.env.API_CIVICPATCH_ORG_TOKEN,
-      }
+      //headers: {
+      //  Authorization: process.env.SERVICE_API_KEY,
+      //}
     }),
   ], 
 };

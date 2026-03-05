@@ -23,7 +23,7 @@ async def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGi
 
     # https://docs.github.com/en/rest/actions/workflows?apiVersion=2022-11-28#create-a-workflow-dispatch-event
     # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
-    API_CIVICPATCH_ORG_TOKEN = os.getenv("API_CIVICPATCH_ORG_TOKEN")
+    SERVICE_API_KEY = os.getenv("SERVICE_API_KEY")
     API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "https://api.civicpatch.org")
     CRUDDER_UPLOAD_URL = f"{API_CIVICPATCH_ORG_URL}/api/internal/pipelines/submit_job_artifacts"
     request_id = context.request_id
@@ -31,9 +31,9 @@ async def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGi
     logger.info(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
 
     try:
-        if not API_CIVICPATCH_ORG_TOKEN:
+        if not SERVICE_API_KEY:
             logger.error(
-                "API_CIVICPATCH_ORG_TOKEN is not set, skipping github workflow dispatch."
+                "SERVICE_API_KEY is not set, skipping github workflow dispatch."
             )
             logger.error(f"Generate api key from CRUDDER at {API_CIVICPATCH_ORG_URL}")
 
@@ -47,7 +47,7 @@ async def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGi
         cost_utils.add_storage_cost(request_id, jurisdiction_ocdid, file_size_bytes)
 
         headers = {
-            "Authorization": API_CIVICPATCH_ORG_TOKEN,
+            "Authorization": SERVICE_API_KEY,
         }
 
         files = {
