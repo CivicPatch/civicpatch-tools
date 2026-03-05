@@ -250,7 +250,7 @@ app.include_router(
     api_user_router.get_router(), 
     prefix="/api/internal/user", 
     tags=["user"],
-    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))]
+    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED_USER))]
 )
 
 app.include_router(

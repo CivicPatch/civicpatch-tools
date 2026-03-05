@@ -1,4 +1,4 @@
-import { html, css } from 'lit-html';
+import { html } from 'lit-html';
 import { component, useState } from 'haunted';
 
 function JurisdictionDetail({ data, onSave }) {

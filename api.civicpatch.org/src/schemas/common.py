@@ -17,6 +17,7 @@ class RouteCategory(str, Enum):
     ADMIN = "admin"
     PUBLIC = "public"
     AUTHENTICATED = "authenticated"
+    AUTHENTICATED_USER = "authenticated_user"
     TEAM_MEMBER = "team_member"
     JOBS_WRITE = "jobs_write"
 

@@ -1,6 +1,6 @@
 import { html, component, useState} from 'haunted';
 
-function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
+function PersonCard({ person, onSelect, onChange, onDelete, onReset, renderImageCell }) {
   const [isEditMode, setIsEditMode] = useState(false);
 
   // Helper for array fields
@@ -450,9 +450,12 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset }) {
 
       <div class="person-card-avatar-row">
         <figure>
-          ${imageUrl
-            ? html`<img src=${imageUrl} alt="Avatar of ${person.name}" />`
-            : html`<span>${person.name ? person.name.charAt(0).toUpperCase() : '?'}</span>`
+          ${renderImageCell
+            ? renderImageCell(person)
+            : (imageUrl
+                ? html`<img src=${imageUrl} alt="Avatar of ${person.name}" />`
+                : html`<span>${person.name ? person.name.charAt(0).toUpperCase() : '?'}</span>`
+              )
           }
         </figure>
       </div>

@@ -24,7 +24,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         #"GOOGLE_GEMINI_TOKEN",
         #"OPENAI_TOKEN",
 
-        #"API_CIVICPATCH_ORG_TOKEN",
+        "SERVICE_API_KEY",
         "API_CIVICPATCH_ORG_URL",
     ]
 
@@ -41,7 +41,7 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         jurisdiction_ocdid: str
     ):
 
-        history = await civicpatch_api.get_people_job_history(jurisdiction_ocdid)
+        history = await civicpatch_api.get_people_job_history(jurisdiction_ocdid, request)
 
         return templates.TemplateResponse(
             "pages/jurisdiction.html",

@@ -305,35 +305,6 @@ function TableCell({
     `;
   }
 
-  function renderImageCell() {
-    return html`
-            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0.25rem; box-sizing: border-box;">
-                ${value
-        ? html`<img src="${value}" alt="Profile image" style="
-                        width: min(100%, 100cqh, 4rem);
-                        height: min(100%, 100cqh, 4rem);
-                        border-radius: 50%;
-                        object-fit: cover;
-                        object-position: center;
-                        display: block;
-                        flex-shrink: 0;
-                      " />`
-        : html`<div style="
-                        width: min(100%, 100cqh, 4rem);
-                        height: min(100%, 100cqh, 4rem);
-                        border-radius: 50%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        flex-shrink: 0;
-                        font-size: 0.7rem;
-                        color: #aaa;
-                      ">?</div>`
-      }
-            </div>
-        `;
-  }
-
   function renderCheckboxCell() {
     return html`
         <div style="display:flex; 
@@ -364,8 +335,6 @@ function TableCell({
     switch (type) {
       case 'multiple':
         return renderListCell();
-      case 'image':
-        return renderImageCell();
       case 'checkbox':
         return renderCheckboxCell()
       default:
@@ -387,4 +356,4 @@ function TableCell({
     `;
 }
 
-customElements.define('civ-table-cell', component(TableCell, { observedAttributes: ['identifier', 'rowIndex', 'colIndex', 'field', 'value'], useShadowDOM: false }));
+customElements.define('civ-table-cell', component(TableCell, { observedAttributes: ['identifier', 'rowIndex', 'colIndex', 'field', 'data', 'value'], useShadowDOM: false }));

@@ -3,7 +3,7 @@ import json
 import traceback
 from typing import List, Optional
 
-from fastapi import APIRouter, BackgroundTasks, Body, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Body, Depends, HTTPException, Request
 from fastapi.responses import StreamingResponse
 
 from interfaces.schemas import (
@@ -12,20 +12,40 @@ from interfaces.schemas import (
 )
 from jobs.people_collector.main import start_threaded as start_people_collector
 from jobs.people_collector.main import stop as stop_people_collector
-from jobs.people_collector.schemas import PeopleCollectorContext, WorkflowStatus
+from jobs.people_collector.schemas import WorkflowStatus
 from shared.utils import id_utils
 from jobs.registry import get_workflow
+import services.civicpatch_api
 
 
 def get_router() -> APIRouter:
     router = APIRouter()
 
+    @router.get("/permissions")
+    async def get_permissions(request: Request):
+        data = await services.civicpatch_api.get_me(request)
+        authenticated = data.get("authenticated", False)
+
+        PERMISSIONS = {
+            "can_scrape_local": services.civicpatch_api.can_scrape_locally,
+            "can_scrape_remote": "maintainers" in data.get("teams", []),
+            "can_view_jurisdiction_page": len(data.get("teams", [])) > 0
+        }
+
+        return {
+            "permissions": PERMISSIONS, 
+            "authenticated": authenticated, 
+            "data": data
+        }
+
     @router.post("/pipelines")
-    #@router.post("/jobs/people")
     async def post_pipelines(
         request: PeopleCollectorJobRequest,
         background_tasks: BackgroundTasks,
     ):
+        if not services.civicpatch_api.can_scrape_locally:
+            raise HTTPException(status_code=403, detail="Local scraping is not allowed for this user")
+
         request_id = id_utils.make_request_id()
         warnings, errors = validate_people_request(request)
 
@@ -47,94 +67,13 @@ def get_router() -> APIRouter:
             }
         }
 
-    def generate_status_response(current_state: WorkflowStatus):
-        statuses = list(WorkflowStatus)  # Use the enum directly
-        previous_statuses = [
-            status.value
-            for status in statuses
-            if statuses.index(status) < statuses.index(current_state)
-        ]
-        future_statuses = [
-            status.value
-            for status in statuses
-            if statuses.index(status) > statuses.index(current_state)
-        ]
-        return {
-            "data": {
-                "status": current_state.value,
-                "previous_statuses": previous_statuses,
-                "future_statuses": future_statuses,
-            }
-        }
-
-    @router.get("/pipelines/status")
-    async def pipeline_status(
-        jurisdiction_ocdid: str,
-    ):
-        workflow = get_workflow(jurisdiction_ocdid)
-        if workflow is None:
-            raise HTTPException(status_code=404, detail="Workflow not found")
-
-        current_state = (
-            workflow.current_state
-        )  # This should already be a PipelineStatus instance
-
-        status_response = generate_status_response(current_state)
-
-        return status_response
-
-    @router.get("/sse/pipelines/status")
-    async def sse_pipeline_status(
-        jurisdiction_ocdid: str,
-    ):
-        workflow = get_workflow(jurisdiction_ocdid)
-
-        if workflow is None:
-            raise HTTPException(status_code=404, detail="Workflow not found")
-
-        # Initialize the last state tracker
-        last_state: Optional[str] = None
-
-        async def sse_generator():
-            nonlocal last_state
-
-            while True:
-                # 1. Access the current state from the pipeline object
-                # Assuming pipeline.context.state is a dictionary or a Pydantic model
-                try:
-                    # Use .dict() or .model_dump() if it's a Pydantic model
-                    # Use getattr() in case the attribute might not exist yet
-                    current_response = generate_status_response(workflow.current_state)
-                except Exception as e:
-                    # Handle cases where context or state might be null/uninitialized
-                    print(f"Error accessing workflow state: {e}")
-                    current_response = {
-                        "data": {"status": "ERROR", "detail": "State access error"}
-                    }
-
-                # 2. Check if the state has changed
-                # Comparing the Python dictionary objects directly works here.
-                if current_response["data"]["status"] != last_state:
-                    # 3. A change was detected, format and yield the update
-                    # Note: We must encode the message to bytes for the StreamingResponse
-                    sse_message = f"data: {json.dumps(current_response)}\n\n"
-
-                    # 4. Update the tracker
-                    last_state = current_response["data"]["status"]
-
-                    yield sse_message.encode("utf-8")
-
-                # 5. Pause non-blockingly before checking again
-                # Adjust the sleep interval (e.g., 0.5 seconds) based on required responsiveness
-                await asyncio.sleep(1)
-
-        # 6. Return the StreamingResponse
-        return StreamingResponse(sse_generator(), media_type="text/event-stream")
-
     @router.post("/pipelines/stop")
     async def stop_pipeline_endpoint(
         jurisdiction_ocdid: str,
     ):
+        if not services.civicpatch_api.can_scrape_locally:
+            raise HTTPException(status_code=403, detail="Local scraping is not allowed for this user")
+
         workflow = get_workflow(jurisdiction_ocdid)
         if workflow is None:
             raise HTTPException(status_code=404, detail="Workflow not found")

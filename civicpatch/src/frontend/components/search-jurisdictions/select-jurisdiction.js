@@ -3,7 +3,7 @@ import { html } from "lit-html";
 import { useAuth } from "../../hooks/useAuth.js";
 
 function CivSelectJurisdiction() {
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, permissions } = useAuth();
   const [states, setStates] = useState([]);
   const [jurisdictions, setJurisdictions] = useState([]);
   const [jurisdictionsMetadata, setJurisdictionsMetadata] = useState({});
@@ -127,7 +127,7 @@ function CivSelectJurisdiction() {
         @click=${handleSubmitClick} 
         ?disabled=${!selectedJurisdiction}>Submit</button>
       -->
-      ${ user ? html`
+      ${ permissions.JURISDICTION_PAGE ? html`
         <a href="${jurisdictionLink()}" ?hidden=${!selectedJurisdiction}>
           Go to jurisdiction page
         </a>

@@ -113,9 +113,12 @@ async def sync_people_by_ocdids(jurisdiction_ocdids):
         remote_data = await github_service.get_github_file_contents(people_file_path)
         remote_data_list = yaml.safe_load(remote_data) if remote_data else None
 
-        first_updated_at = remote_data_list[0].get("updated_at") if remote_data_list and len(remote_data_list) > 0 else None
-        serialized_data = json.dumps(remote_data_list) if remote_data_list else None
-        people_list.append((jurisdiction_ocdid, "can-delete", serialized_data, first_updated_at, "can-delete"))
+        if remote_data_list:
+            for person in remote_data_list:
+                person_id = person.get("id")
+                updated_at = person.get("updated_at")
+                serialized_data = json.dumps(person)
+                people_list.append((person_id, jurisdiction_ocdid, people_file_path, serialized_data, updated_at, "dummy_git_commit_hash"))
 
     await database.bulk_update_people(people_list)
 
