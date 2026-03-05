@@ -2,6 +2,12 @@ from pydantic import BaseModel
 from typing import Optional
 from decimal import Decimal
 
+class Person(BaseModel):
+    name: str
+    jurisdiction_ocdid: str
+
+    class Config:
+        extra = "allow"
 
 class JobConfig(BaseModel):
     max_pages: int

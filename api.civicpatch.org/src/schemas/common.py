@@ -1,33 +1,37 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List, Dict
+from dataclasses import dataclass, field
 from enum import Enum
 
 import shared.utils.id_utils
 
 KNOWN_PLACE_KEYS = ["place", "special_district"]
 
-class UserRole(str, Enum):
-    ADMIN = "admin"
-    JOBS = "jobs"
-    MEMBER = "member"
-    UNVERIFIED = "unverified"
-
-
 class RouteCategory(str, Enum):
-    ADMIN = "admin"
     PUBLIC = "public"
-    AUTHENTICATED = "authenticated"
-    AUTHENTICATED_USER = "authenticated_user"
-    TEAM_MEMBER = "team_member"
-    JOBS_WRITE = "jobs_write"
+    AUTHENTICATED = "authenticated"   # Any valid credential (user API key or session)
+    USER = "user"                     # Session only (GUI-specific routes)
+    TEAM_MEMBER = "team_member"       # Must belong to "default" team
+    SERVICE = "service"               # Service API key only (pipeline/scrape)
+    ADMIN = "admin"                   # Admins team only
 
 
-class Person(BaseModel):
-    name: str
-    jurisdiction_ocdid: str
+@dataclass
+class RoutePermission:
+    public: bool = False
+    required_teams: List[str] = field(default_factory=list)
+    allow_service_api_key: bool = False
+    require_session: bool = False     # GUI-only routes
 
-    class Config:
-        extra = "allow"
+
+ROUTE_PERMISSIONS: Dict[RouteCategory, RoutePermission] = {
+    RouteCategory.PUBLIC:        RoutePermission(public=True),
+    RouteCategory.AUTHENTICATED: RoutePermission(allow_service_api_key=True),
+    RouteCategory.USER:          RoutePermission(require_session=True),
+    RouteCategory.TEAM_MEMBER:   RoutePermission(required_teams=["default"], require_session=True),
+    RouteCategory.SERVICE:       RoutePermission(allow_service_api_key=True),
+    RouteCategory.ADMIN:         RoutePermission(required_teams=["admins"], require_session=True),
+}
 
 class PullRequest(BaseModel):
     branch_name: str
@@ -48,6 +52,7 @@ class Jurisdiction(BaseModel):
     url: str | None
 
 class Identity(BaseModel):
+    is_service_api_key: bool = False
     provider: str
     provider_user_id: str
     email: str | None

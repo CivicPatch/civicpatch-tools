@@ -1,8 +1,6 @@
 import os
 import zipfile
 
-import requests
-
 from jobs.people_collector.schemas import (
     MaybeSendToGitHubStep, PeopleCollectorContext, WorkflowStatus
 )
@@ -13,6 +11,7 @@ from shared.utils.data_path_utils import (
     get_data_file_path,
 )
 from utils.request_utils import with_retry
+import services.civicpatch_api
 
 GITHUB_WORKFLOW_DISPATCH_URL = "https://api.github.com/repos/your-username/your-repo/actions/workflows/your-workflow.yml/dispatches"
 
@@ -25,10 +24,8 @@ async def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGi
     # https://github.com/android-sms-gateway/example-webhooks-fastapi/blob/master/main.py
     SERVICE_API_KEY = os.getenv("SERVICE_API_KEY")
     API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "https://api.civicpatch.org")
-    CRUDDER_UPLOAD_URL = f"{API_CIVICPATCH_ORG_URL}/api/internal/pipelines/submit_job_artifacts"
     request_id = context.request_id
     jurisdiction_ocdid = context.data.jurisdiction_ocdid
-    logger.info(f"CRUDDER_UPLOAD_URL: {CRUDDER_UPLOAD_URL}")
 
     try:
         if not SERVICE_API_KEY:
@@ -46,32 +43,9 @@ async def maybe_send_to_github(context: PeopleCollectorContext) -> MaybeSendToGi
         )
         cost_utils.add_storage_cost(request_id, jurisdiction_ocdid, file_size_bytes)
 
-        headers = {
-            "Authorization": SERVICE_API_KEY,
-        }
-
-        files = {
-            "file": (
-                os.path.basename(zip_file_path),
-                open(zip_file_path, "rb"),
-                "application/zip",
-            )
-        }
-
-        # Add metadata in the request body
-        data = {
-            "request_id": context.request_id,
-            "jurisdiction_ocdid": context.data.jurisdiction_ocdid,
-        }
-
-        response = await with_retry(
-            logger,
-            max_retries=5,
-            func=lambda: requests.post(
-                CRUDDER_UPLOAD_URL, headers=headers, files=files, data=data
-            ),
+        response = await services.civicpatch_api.submit_job_artifacts(
+            request_id, jurisdiction_ocdid, zip_file_path
         )
-
         if not response:
             logger.error("Failed to get a response from Crudder after retries.")
             return MaybeSendToGitHubStep(status="failed_no_response")

@@ -7,7 +7,7 @@ from jose import jwt, JWTError
 import time
 from typing import cast
 import database
-from schemas.common import Identity, RouteCategory
+from schemas.common import Identity, RouteCategory, ROUTE_PERMISSIONS
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 API_COOKIE = APIKeyCookie(name="token", auto_error=False)
@@ -17,30 +17,6 @@ JWT_AUDIENCE = os.getenv("JWT_AUDIENCE")
 JWT_ISSUER = os.getenv("JWT_ISSUER")
 
 UNSAFE_METHODS = {"POST", "PUT", "PATCH", "DELETE"}
-
-# TODO: refactor in the future to support fine-grained permissions 
-# Example: in addition to "teams", add "api_keys" that are scoped
-ROUTE_PERMISSIONS = {
-    RouteCategory.PUBLIC: {
-        "public": True
-    },
-    RouteCategory.AUTHENTICATED: {
-        "teams": [],
-        "allow_service_api_key": True
-    },
-    RouteCategory.AUTHENTICATED_USER: {
-        "teams": []
-    },
-    RouteCategory.TEAM_MEMBER: {
-        "teams": ["default"]
-    },
-    RouteCategory.ADMIN: {
-        "teams": ["admins"],
-    },
-    RouteCategory.JOBS_WRITE: { # People who can run scrapes
-        "teams": ["maintainers"],
-    },
-}
 
 async def get_user(
     request: Request,
@@ -73,6 +49,7 @@ async def get_user(
         return Identity(
             provider="system",
             provider_user_id="service_api_key",
+            is_service_api_key=True,
             email=None,
             teams=[]
         )
@@ -178,15 +155,30 @@ async def get_optional_user(
     except HTTPException:
         return None
 
-def require_route_access(category: RouteCategory): 
+def require_route_access(category: RouteCategory):
     async def _dependency(
         user: Identity = Depends(get_user),
     ):
-        allowed_teams = ROUTE_PERMISSIONS.get(category, {}).get("teams", [])
-        if allowed_teams and not any(team in allowed_teams for team in user.teams):
-            raise HTTPException(
-                status_code=403,
-                detail="Insufficient permissions for this route."
-            )
+        permission = ROUTE_PERMISSIONS.get(category)
+        if not permission:
+            raise HTTPException(status_code=403, detail="Unknown route category.")
+
+        # Public routes need no further checks
+        if permission.public:
+            return user
+
+        # Service API key access
+        if permission.allow_service_api_key and user.is_service_api_key:
+            return user
+
+        # Session-only routes — reject service API keys
+        if permission.require_session and user.is_service_api_key:
+            raise HTTPException(status_code=403, detail="This route requires a user session.")
+
+        # Team requirement
+        if permission.required_teams and not any(t in permission.required_teams for t in user.teams):
+            raise HTTPException(status_code=403, detail="Insufficient permissions for this route.")
+
         return user
+
     return _dependency

@@ -522,6 +522,7 @@ def person_to_official(designation_configs, person: Person) -> Official:
     unique_office_names = list(dict.fromkeys(office_names))
     office_name = " - ".join(unique_office_names) if unique_office_names else "Unknown Office"
     return Official(
+        id="", # to be filled in later after resolving with API
         name=person.name,
         other_names=person.other_names,
 
