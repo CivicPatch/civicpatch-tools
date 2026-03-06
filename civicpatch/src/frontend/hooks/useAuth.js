@@ -5,55 +5,74 @@ const DEFAULT_PERMISSIONS = {
   JURISDICTION_PAGE: false,
   JURISDICTION_PAGE_SCRAPE_REMOTE: false,
   JURISDICTION_PAGE_SCRAPE_LOCAL: false
+};
+
+// Module-level cache
+let cachedAuth = null;
+let cachedPromise = null;
+
+function toPermissions(permissions) {
+  return {
+    JURISDICTION_PAGE: permissions["can_view_jurisdiction_page"],
+    JURISDICTION_PAGE_SCRAPE_REMOTE: permissions["can_scrape_remote"],
+    JURISDICTION_PAGE_SCRAPE_LOCAL: permissions["can_scrape_local"]
+  }
+}
+
+async function fetchAuth() {
+  if (cachedAuth) return cachedAuth;
+  if (cachedPromise) return cachedPromise;
+
+  cachedPromise = fetch(`/api/permissions`, { credentials: "include" })
+    .then(async res => {
+      if (res.ok) {
+        const data = await res.json();
+        if (data.authenticated) {
+          cachedAuth = {
+            user: data.data,
+            permissions: {
+              ...DEFAULT_PERMISSIONS,
+              ...toPermissions(data.permissions)
+            }
+          };
+        } else {
+          cachedAuth = { user: null, permissions: DEFAULT_PERMISSIONS };
+        }
+      } else {
+        cachedAuth = { user: null, permissions: DEFAULT_PERMISSIONS };
+      }
+      return cachedAuth;
+    })
+    .catch(() => {
+      cachedAuth = { user: null, permissions: DEFAULT_PERMISSIONS };
+      return cachedAuth;
+    })
+    .finally(() => {
+      cachedPromise = null;
+    });
+
+  return cachedPromise;
 }
 
 /**
  * useAuth - Haunted hook for authentication state.
- * Returns: { user, loading }
+ * Returns: { user, loading, permissions }
  */
 export function useAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [permissions, setPermissions] = useState(DEFAULT_PERMISSIONS)
-
-  function toPermissions(permissions) {
-    return {
-      JURISDICTION_PAGE: permissions["can_view_jurisdiction_page"],
-      JURISDICTION_PAGE_SCRAPE_REMOTE: permissions["can_scrape_remote"],
-      JURISDICTION_PAGE_SCRAPE_LOCAL: permissions["can_scrape_local"]
-    }
-  }
+  const [permissions, setPermissions] = useState(DEFAULT_PERMISSIONS);
 
   useEffect(() => {
     let cancelled = false;
-    async function checkAuth() {
-      setLoading(true);
-      try {
-        const res = await fetch(`/api/permissions`, {
-          credentials: "include"
-        });
-
-        if (!cancelled) {
-          if (res.ok) {
-            // Response: {"authenticated":true,"provider":"github","provider_user_id":"1234","email":"test@example.com","display_name":null,"first_name":null,"teams":null}
-            const data = await res.json();
-            if (data.authenticated) {
-              setUser(data.data);
-              setPermissions({
-                ...DEFAULT_PERMISSIONS,
-                ...toPermissions(data.permissions)
-              });
-            }
-          } else {
-            setUser(null);
-          }
-        }
-      } catch (e) {
-        if (!cancelled) setUser(null);
+    setLoading(true);
+    fetchAuth().then(auth => {
+      if (!cancelled) {
+        setUser(auth.user);
+        setPermissions(auth.permissions);
+        setLoading(false);
       }
-      if (!cancelled) setLoading(false);
-    }
-    checkAuth();
+    });
     return () => { cancelled = true; };
   }, []);
 
