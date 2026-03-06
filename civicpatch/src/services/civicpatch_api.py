@@ -40,7 +40,7 @@ async def get_people_job_history(jurisdiction_ocdid: str, request: Request) -> d
         return response.json()
 
 # System calls
-async def register_people_job(logger, request_id: str, arguments: dict, request: Optional[Request] = None):
+async def register_people_job(logger, request_id: str, arguments: dict):
     data = {
         "request_id": request_id,
         "arguments": arguments,
@@ -50,13 +50,12 @@ async def register_people_job(logger, request_id: str, arguments: dict, request:
         response = await client.post(
             f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/people/register",
             json=data,
-            cookies=_get_cookies(request)
         )
         if response.status_code != 200:
             logger.error(f"Failed to register job with api.civicpatch.org: {response.status_code} {response.text}")
         return response
 
-async def update_job_status(request_id: str, jurisdiction_ocdid: str, status: str, progress: int, request: Optional[Request] = None):
+async def update_job_status(request_id: str, jurisdiction_ocdid: str, status: str, progress: int):
     data = {
         "status": status,
         "progress": progress,
@@ -66,11 +65,10 @@ async def update_job_status(request_id: str, jurisdiction_ocdid: str, status: st
         response = await client.patch(
             f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/people/{request_id}/status",
             json=data,
-            cookies=_get_cookies(request)
         )
         return response
 
-async def update_people_job_result(logger, request_id: str, people: List[Official], request: Optional[Request] = None):
+async def update_people_job_result(logger, request_id: str, people: List[Official]):
     people_dicts = [official.model_dump() for official in people]
     data = {
         "data": people_dicts
@@ -79,7 +77,6 @@ async def update_people_job_result(logger, request_id: str, people: List[Officia
         response = await client.post(
             f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/people/{request_id}/result",
             json=data,
-            cookies=_get_cookies(request)
         )
         if response.status_code != 200:
             logger.error(f"Failed to update job result with api.civicpatch.org: {response.status_code} {response.text}")
@@ -88,8 +85,11 @@ async def update_people_job_result(logger, request_id: str, people: List[Officia
 async def batch_resolve_people(jurisdiction_ocdid: str, people: List[Official]):
     people_dicts = [official.model_dump() for official in people]
     formatted_people_dicts = [
-        {"name": person.get("name"), 
-         "email": person.get("email")} 
+        {
+         "id": person.get("id"),
+         "name": person.get("name"), 
+         "email": person.get("email")
+         } 
          for person in people_dicts]
 
     data = {
@@ -118,7 +118,7 @@ async def submit_job_artifacts(request_id: str, jurisdiction_ocdid: str, zip_fil
     }
     async with httpx.AsyncClient(headers=SYSTEM_AUTH_HEADER) as client:
         response = await client.post(
-            f"{API_CIVICPATCH_ORG_URL}/api/internal/pipelines/submit_job_artifacts",
+            f"{API_CIVICPATCH_ORG_URL}/api/v1/jobs/people/{request_id}/submit",
             data=data,
             files=files
         )

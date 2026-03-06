@@ -7,15 +7,18 @@
     --pico-border-radius: 0.4rem;
     --pico-border-width: 0.03rem;
     --pico-outline-width: 0.2rem;
+    --pico-info-background: rgba(var(--catppuccin-blue), 0.10);   /* For "Current" highlight */
+    --pico-del-background: rgba(var(--catppuccin-red), 0.10);     /* For "Proposed" highlight */
+    --pico-ins-background: rgba(var(--catppuccin-green), 0.10);   /* For insertions, if needed */
 }
-
+/**
 *:focus {
   outline: 2px solid rgb(var(--catppuccin-sapphire));
   outline-offset: 2px;
   border: 2px solid transparent;
   border-radius: var(--pico-border-radius);
 }
-
+*/
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
     --catppuccin-base: 239, 241, 245;
@@ -69,9 +72,9 @@
     --pico-card-sectioning-background-color: rgb(var(--catppuccin-crust)); 
     --pico-card-background-color: rgb(var(--catppuccin-mantle)); 
 
-    --pico-ins-color: rgba(var(--catppuccin-green), 0.5);
-    --pico-del-color: rgba(var(--catppuccin-red), 0.5);
-    --pico-warn-color: rgba(var(--catppuccin-yellow), 0.5);
+    --pico-ins-color: rgb(var(--catppuccin-green));
+    --pico-del-color: rgb(var(--catppuccin-red));
+    --pico-warn-color: rgb(var(--catppuccin-yellow));
 }
 
 @media only screen and (prefers-color-scheme: dark) {
@@ -129,6 +132,9 @@
 
     --pico-ins-color: rgba(var(--catppuccin-green), 0.5);
     --pico-del-color: rgba(var(--catppuccin-red), 0.5);
+    --pico-info-background: rgb(var(--catppuccin-blue));
+    --pico-del-background: rgb(var(--catppuccin-red));
+    --pico-ins-background: rgb(var(--catppuccin-green));
   }
 }
 

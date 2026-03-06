@@ -10,12 +10,8 @@ import './action-buttons.js';
 import './pull-request-tabs.js';
 import { useCsrf } from '../../hooks/use-csrf.js';
 import './review-table.js';
+import './profile-modal.js';
 const API_URL = __API_URL__;
-
-// Helper to generate a random key
-function genKey() {
-  return Math.random().toString(36).substr(2, 9) + Date.now();
-}
 
 const TRACKED_FIELDS = [
   "name", "other_names", "phones", "emails", "urls", "start_date", "end_date", "office", "source_urls",
@@ -23,11 +19,10 @@ const TRACKED_FIELDS = [
 ];
 
 function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
-  // Assign _tempKey to people if not present
+  // Assign id to people if not present
   const [currentPeople, setCurrentPeople] = useState(
     people.map(person => ({
       ...person,
-      _tempKey: person._tempKey || genKey(),
     }))
   );
   const [originalPeople, setOriginalPeople] = useState([]);
@@ -37,6 +32,14 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   const [notice, setNotice] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isMobile, setIsMobile] = useState(window.matchMedia('(max-width: 700px)').matches);
+  const [profileModal, setProfileModal] = useState({ open: false, person: null });
+  const [resolvedPeople, setResolvedPeople] = useState({}); // [{ id, name, email }]
+  const selectedPeople = currentPeople.filter(p => p._selected).map(p => p.id);
+  const dirty = currentPeople.some(person => person._dirty);
+
+  const peopleToSubmit = currentPeople
+    .filter(p => !p._deleted)
+    .map(({ _dirty, _changes, _selected, _deleted, _isNew, ...person }) => person);
   const csrfToken = useCsrf();
 
 
@@ -46,13 +49,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     mq.addEventListener('change', handler);
     return () => mq.removeEventListener('change', handler);
   }, []);
-
-  const selectedPeople = currentPeople.filter(p => p._selected).map(p => p._tempKey);
-  const dirty = currentPeople.some(person => person._dirty);
-
-  const peopleToSubmit = currentPeople
-    .filter(p => !p._deleted)
-    .map(({ _dirty, _changes, _tempKey, _selected, _deleted, _isNew, ...person }) => person);
 
   const {
     refs: cardRefs,
@@ -67,14 +63,69 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       assignPeople(people)
       setReviewData(null);
     } else {
-      getSelectedPullRequestData(selectedPullRequest);
+      handleSelectedPullRequestData(selectedPullRequest)
     }
   }, [selectedPullRequest])
+
+  async function fetchPullRequestData(pullRequest, jurisdiction_ocdid) {
+    if (!pullRequest) return null;
+    const url = [
+      `${API_URL}/api/v1/jobs/people/pull_request/`,
+      encodeURIComponent(pullRequest.branch_name),
+      `/data`,
+      `?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`
+    ].join("");
+    const response = await fetch(url, { credentials: "include" });
+    if (!response.ok) throw new Error("Failed to fetch pull request data");
+    return response.json();
+  }
+
+  async function batchResolvePeople(people, jurisdiction_ocdid) {
+    if (!people?.length) return null;
+    const formattedPeople = people.map(person => ({
+      id: person.id,
+      name: person.name,
+      email: person.emails?.[0] || null,
+    }));
+
+    const res = await fetch(`${API_URL}/api/v1/people/batch-resolve`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
+      credentials: "include",
+      body: JSON.stringify({ people: formattedPeople, jurisdiction_ocdid })
+    });
+    if (!res.ok) throw new Error("Batch resolve failed");
+    return res.json();
+  }
+
+  async function handleSelectedPullRequestData(pullRequest) {
+    if (!pullRequest) return;
+    try {
+      const data = await fetchPullRequestData(pullRequest, jurisdiction_ocdid);
+      if (data?.data) {
+        assignPeople(data.data);
+        try {
+          const response = await batchResolvePeople(data.data, jurisdiction_ocdid);
+          const formatted_people = response?.data?.map(d => d.person) || [];
+          setResolvedPeople(formatted_people.reduce((acc, person) => {
+            acc[person.id] = person;
+            return acc;
+          }, {}));
+        } catch (err) {
+          console.error("Batch resolve failed", err);
+        }
+      }
+      setReviewData(data?.review || null);
+    } catch (err) {
+      setError("Failed to load pull request data.");
+      console.error(err);
+    }
+  }
 
   function toggleSelect(key) {
     setCurrentPeople(currentPeople =>
       currentPeople.map(person =>
-        person._tempKey === key
+        person.id === key
           ? { ...person, _selected: !person._selected }
           : person
       )
@@ -84,7 +135,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   function setSelected(key, selected) {
     setCurrentPeople(currentPeople =>
       currentPeople.map(person =>
-        person._tempKey === key
+        person.id === key
           ? { ...person, _selected: selected }
           : person
       )
@@ -110,7 +161,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
       const isNew = !person.id || !canonicalIds.has(person.id);
       return {
         ...person,
-        _tempKey: person._tempKey || genKey(),
+        id: person.id || genKey(),
         _isNew: isNew,
       };
     });
@@ -118,36 +169,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     setOriginalPeople(peopleWithKeys); // Save as baseline for change tracking
   }
 
-  function getSelectedPullRequestData(pullRequest) {
-    if (!pullRequest) return;
-
-    const url = [
-      `${API_URL}/api/v1/jobs/people/pull_request/`,
-      encodeURIComponent(pullRequest.branch_name),
-      `/data`,
-      `?jurisdiction_ocdid=${encodeURIComponent(jurisdiction_ocdid)}`
-    ].join("");
-    fetch(url, { credentials: "include" })
-      .then(r => r.json())
-      .then(data => {
-        if (data.data) {
-          assignPeople(data.data);
-          // TODO: handle error
-        }
-        if (data.review) {
-          setReviewData(data.review)
-        } else {
-          setReviewData(null);
-        }
-      })
-  } 
-
   function handleDelete(keys) {
     keys.forEach(key => {
       // If it's a new person that hasn't been submitted yet, just remove it from the list
-      const person = currentPeople.find(p => p._tempKey === key);
+      const person = currentPeople.find(p => p.id === key);
       if (person?._isNew) {
-        setCurrentPeople(currentPeople => currentPeople.filter(p => p._tempKey !== key));
+        setCurrentPeople(currentPeople => currentPeople.filter(p => p.id !== key));
         return;
       }
 
@@ -175,7 +202,10 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   async function generatePersonId() {
     const res = await fetch(`${API_URL}/api/v1/people/generate-id`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "X-CSRF-Token": csrfToken
+       },
       credentials: "include",
     });
     if (!res.ok) throw new Error("Failed to generate person id");
@@ -196,20 +226,14 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
     // Call generatePersonId to get a new id
     let person_id;
-    try {
-      person_id = await generatePersonId();
-    } catch (e) {
-      // fallback: generate a new id if API fails
-      person_id = genKey();
-    }
+    person_id = await generatePersonId();
 
     const newPerson = {
-      _tempKey: genKey(),
+      id: person_id,
       _changes: [],
       _selected: false,
       _deleted: false,
       _isNew: true,
-      id: person_id,
       name,
       other_names: [],
       phones: [],
@@ -232,10 +256,10 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
   function reorderPersonToBottom(key) {
     setCurrentPeople(currentPeople => {
-      const index = currentPeople.findIndex(p => p._tempKey === key);
+      const index = currentPeople.findIndex(p => p.id === key);
       if (index === -1) return currentPeople;
       const person = currentPeople[index];
-      const without = currentPeople.filter(p => p._tempKey !== key);
+      const without = currentPeople.filter(p => p.id !== key);
       return [...without, person];
     });
   }
@@ -248,11 +272,11 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         assignPeople(people);
       }
     } else {
-      const originalPerson = originalPeople.find(p => p._tempKey === tempKey);
+      const originalPerson = originalPeople.find(p => p.id === tempKey);
       if (originalPerson) {
         setCurrentPeople(currentPeople =>
           currentPeople.map(person =>
-            person._tempKey === tempKey ? { ...originalPerson } : person
+            person.id === tempKey ? { ...originalPerson } : person
           )
         );
       }
@@ -262,10 +286,10 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   function handleMerge() {
     const singleValueFields = ["name", "image", "start_date", "end_date", "image", "cdn_image", "updated_at"];
     const arrayFields = ["other_names", "phones", "emails", "urls", "source_urls"];
-    const peopleToMerge = currentPeople.filter(p => selectedPeople.includes(p._tempKey));
+    const peopleToMerge = currentPeople.filter(p => selectedPeople.includes(p.id));
 
     // Use the first selected person as the base for merging
-    const basePersonIndex = currentPeople.findIndex(p => p._tempKey === selectedPeople[0]);
+    const basePersonIndex = currentPeople.findIndex(p => p.id === selectedPeople[0]);
     if (basePersonIndex === -1) return;
     const basePerson = { ...currentPeople[basePersonIndex] };
 
@@ -299,8 +323,8 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
 
     // Remove all selected except the base (keep merged in same position), and replace base with merged
     setCurrentPeople(p => {
-      const withoutMerged = p.filter(person => !selectedPeople.includes(person._tempKey) || person._tempKey === basePerson._tempKey);
-      const withChanges = withoutMerged.map(person => person._tempKey === basePerson._tempKey ? { ...basePerson, _dirty: true, _changes: TRACKED_FIELDS } : person);
+      const withoutMerged = p.filter(person => !selectedPeople.includes(person.id) || person.id === basePerson.id);
+      const withChanges = withoutMerged.map(person => person.id === basePerson.id ? { ...basePerson, _dirty: true, _changes: TRACKED_FIELDS } : person);
       const resetSelected = withChanges.map(person => ({ ...person, _selected: false }));
       return resetSelected;
     });
@@ -316,8 +340,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     ]
       .join("");
 
-    console.log("Submitting to URL:", url, csrfToken);
-    
     return fetch(url, {
       method: "POST",
       headers: {
@@ -334,7 +356,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         return r.json();
       })
       .catch(e => {
-        console.error("Error submitting changes:", e);
         throw e;
       })
       .finally(() => setIsLoading(false));
@@ -361,8 +382,8 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   function updatePerson(key, updates) {
     setCurrentPeople(currentPeople =>
       currentPeople.map(person => {
-        if (person._tempKey === key) {
-          const originalPerson = originalPeople.find(p => p._tempKey === key);
+        if (person.id === key) {
+          const originalPerson = originalPeople.find(p => p.id === key);
           const nextPerson = { ...person, ...updates };
           const changedFields = TRACKED_FIELDS.filter(
             field => JSON.stringify(nextPerson[field]) !== JSON.stringify(originalPerson?.[field])
@@ -381,9 +402,6 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   function handleTableDataChange(e) {
     // Find the person by index or key and update your state
     const { identifier, field, value } = e.detail;
-    console.log("Data change:", identifier, field, value);
-
-
 
     if (field == "_selected") {
       setSelected(identifier, value);
@@ -398,7 +416,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     setCurrentPeople(currentPeople => {
       const peopleById = currentPeople.reduce((acc, person) => {
         person._dirty = true;
-        acc[person._tempKey] = person;
+        acc[person.id] = person;
 
         return acc;
       }, {});
@@ -415,16 +433,35 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     return "";
   }
 
+  function openProfileModal(person) {
+    const existingPerson = resolvedPeople[person.id];
+    setProfileModal({ open: true, person, existingPerson });
+  }
+
   function renderImageCell(person) {
     const value = person?.cdn_image || person?.image;
-    // Get initials (first letter of each part of the name, up to 2)
     let initials = "?";
     if (person?.name) {
       const parts = person.name.trim().split(/\s+/);
       initials = parts.slice(0, 2).map(p => p[0].toUpperCase()).join("");
     }
     return html`
-      <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 0.25rem; box-sizing: border-box;">
+      <button
+        type="button"
+        style="
+          all: unset;
+          cursor: pointer;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0.25rem;
+          box-sizing: border-box;
+        "
+        @click=${() => openProfileModal(person)}
+        title="Edit profile"
+      >
         ${value
           ? html`<img src="${value}" alt="Profile image" style="
               width: min(100%, 100cqh, 4rem);
@@ -449,13 +486,13 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
               color: #888;
             ">${initials}</div>`
         }
-      </div>
+      </button>
     `;
   }
 
   function renderTableView() {
     return html`<civ-table 
-      .identifier=${"_tempKey"}
+      .identifier=${"id"}
       .selectedIdentifiers=${selectedPeople}
       .canReorder=${true}
       .columns=${[
@@ -565,18 +602,18 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
         "
       >
         ${currentPeople.map(
-          (person, idx) => keyed(person._tempKey, html`
+          (person, idx) => keyed(person.id, html`
             <div role="listitem">
               <person-card
                 tabIndex=${focusedIdx === idx ? "0" : "-1"}
                 ${ref(cardRefs[idx])}
                 @focus=${() => setFocusedIdx(idx)}
-                @keydown=${e => handleCardKeyDown(e, idx, person._tempKey) }
+                @keydown=${e => handleCardKeyDown(e, idx, person.id) }
                 .person=${person}
-                .onSelect=${() => toggleSelect(person._tempKey)}
-                .onDelete=${() => handleDelete([person._tempKey])}
-                .onChange=${(field, value) => updatePerson(person._tempKey, { [field]: value })}
-                .onReset=${() => handleReset(person._tempKey)}
+                .onSelect=${() => toggleSelect(person.id)}
+                .onDelete=${() => handleDelete([person.id])}
+                .onChange=${(field, value) => updatePerson(person.id, { [field]: value })}
+                .onReset=${() => handleReset(person.id)}
               ></person-card>
             </div>
           `)
@@ -596,6 +633,7 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
     <a href=${selectedPullRequest?.url} target="_blank" class="contrast">
       View Pull Request
     </a>
+    <hr />
     <civ-review-table
       .jurisdiction_ocdid=${jurisdiction_ocdid}
       .branch_name=${selectedPullRequest?.branch_name}
@@ -636,6 +674,12 @@ function EditablePeopleList({ jurisdiction_ocdid, people = [] }) {
   ` : ""}
 
   ${ isMobile ? renderCardView() : renderTableView()}
+  <profile-modal
+    .open=${profileModal.open}
+    .person=${profileModal.person}
+    .existingPerson=${profileModal.existingPerson}
+    @close=${() => setProfileModal({ open: false, person: null, existingPerson: null })}
+  ></profile-modal>
   `;
 }
 

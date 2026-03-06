@@ -107,7 +107,7 @@ def get_router(api_key_header):
         jurisdiction_ocdid: Optional[str] = None,
         _: Identity = Depends(require_route_access(RouteCategory.AUTHENTICATED))
     ):
-        branch_name_suffix = shared.utils.id_utils.jurisdiction_ocdid_to_git_branch_suffix(jurisdiction_ocdid)
+        branch_name_suffix = shared.utils.id_utils.jurisdiction_ocdid_to_slug(jurisdiction_ocdid)
         open_pull_requests = await github_service.get_open_pull_request_by_branch_suffix(branch_name_suffix)
         return {"data": open_pull_requests}
 

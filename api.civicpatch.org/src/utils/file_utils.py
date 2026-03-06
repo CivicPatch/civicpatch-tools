@@ -7,6 +7,7 @@ from typing import Tuple, List
 from fastapi import UploadFile
 import shutil
 import fnmatch
+import tempfile
 
 async def validate_file_patterns(directory: str, patterns: list) -> bool:
     """
@@ -19,18 +20,16 @@ async def validate_file_patterns(directory: str, patterns: list) -> bool:
             return False
     return True
 
-async def save_upload_to_temp(upload_file: UploadFile) -> Tuple[str, str]:
-    """
-    Save an uploaded file to a temporary directory asynchronously and return the file path and temp directory.
-    """
+async def save_upload_to_temp(upload_file):
     temp_dir = tempfile.mkdtemp()
     file_path = os.path.join(temp_dir, upload_file.filename)
-
-    # Write the file asynchronously
-    async with aiofiles.open(file_path, "wb") as f:
-        while chunk := await upload_file.read(1024 * 1024):  # Read in chunks
-            await f.write(chunk)
-
+    with open(file_path, "wb") as buffer:
+        while True:
+            chunk = await upload_file.read(1024 * 1024)
+            if not chunk:
+                break
+            buffer.write(chunk)
+    await upload_file.close()  # Explicitly close after reading
     return file_path, temp_dir
 
 

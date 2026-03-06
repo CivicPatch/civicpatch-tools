@@ -6,6 +6,7 @@ from services import google_sheets_service
 from schemas.requests import HandleSubmitJobArtifactsRequest
 from schemas.responses import SubmitJobArtifactsResponse
 import utils.file_utils as file_utils
+import shared.utils.id_utils
 import services.storage_service as storage_service
 import services.github_service as github_service
 import logging
@@ -23,9 +24,8 @@ logger = logging.getLogger(__name__)
 
 async def handle_submit_job_artifacts(
         request: HandleSubmitJobArtifactsRequest, 
-        background_tasks=None
 ) -> SubmitJobArtifactsResponse:
-    file_suffix = request.file.filename
+    file_suffix = shared.utils.id_utils.make_git_branch(request.jurisdiction_ocdid, request.request_id)
 
     artifact_file_patterns = [
         "data/*/local/*.yml",
@@ -38,7 +38,8 @@ async def handle_submit_job_artifacts(
         "data_source/*/local/*/workflow.log",
     ]
 
-    zip_path, temp_dir = await file_utils.save_upload_to_temp(request.file)
+    zip_path = request.zip_path
+    temp_dir = request.temp_dir
     extracted_dir = os.path.join(temp_dir, "extracted")
     os.makedirs(extracted_dir, exist_ok=True)
     await file_utils.extract_zip(zip_path, extracted_dir)
@@ -66,7 +67,7 @@ async def handle_submit_job_artifacts(
     with open(data_file_path, "w") as f:
         yaml.safe_dump(updated_data, f, sort_keys=False, allow_unicode=True)
 
-    artifact_zip_path = await file_utils.zip_directory(artifact_file_dir, f"artifact_{file_suffix}")
+    artifact_zip_path = await file_utils.zip_directory(artifact_file_dir, f"artifact_{file_suffix}.zip")
     zip_file_key = f"{request.request_id}/{os.path.basename(artifact_zip_path)}"
     zip_file_url = await storage_service.upload_file_to_storage(
         "civicpatch-artifacts", 
@@ -76,8 +77,7 @@ async def handle_submit_job_artifacts(
     )
 
 
-    # Send costs to Google Sheets
-    background_tasks.add_task(_send_costs, debug_file_dir)
+    await _send_costs(debug_file_dir)
 
     await github_service.trigger_github_data_intake_workflow(
             request.server_detail.user_email,
@@ -88,7 +88,7 @@ async def handle_submit_job_artifacts(
         )
 
     return SubmitJobArtifactsResponse(
-        filename=request.file.filename,
+        filename=file_suffix,
         status="uploaded",
         zip_file_url=zip_file_url,
         request_id=request.request_id,

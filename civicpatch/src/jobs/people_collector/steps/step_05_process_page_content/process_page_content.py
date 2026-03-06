@@ -19,7 +19,7 @@ from shared.utils import (
     config_utils, 
     data_path_utils, 
     phone_utils,
-    name_utils
+    email_utils
 )
 from utils import (
     merge_utils, 
@@ -321,6 +321,12 @@ def normalize_record(logger, record: LLMPerson) -> LLMPerson:
         logger.warning(f"Failed to parse phone number: {record.phone}")
         normalized_phone = None
 
+    if record.email and not email_utils.is_valid_email(record.email):
+        logger.warning(f"Invalid email address found: {record.email}")
+        if not record.url and url_utils.is_valid_url(record.email):
+            record.url = url_utils.format_url(record.email)
+        record.email = None
+
     return LLMPerson(
         name=record.name,
         roles=people_utils.normalize_roles(record.roles),
@@ -375,7 +381,7 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
         # or if they have at least one contact method plus a profile signal (url or image).
         if person.phone and person.email:
             return True
-        if (person.url or person.image) and (person.phone or person.email):
+        if (person.image) and (person.url or person.phone or person.email):
             return True
         return False
 

@@ -413,7 +413,7 @@ function PersonCard({ person, onSelect, onChange, onDelete, onReset, renderImage
         ${person._deleted ? 'deleted' : ''} 
       "  
       style="padding:1rem;"
-      .onSelect=${() => toggleSelect(person._tempKey)}
+      .onSelect=${() => toggleSelect(person.id)}
     >
       <header style="display: flex; align-items: center; gap: 1rem;">
         <input

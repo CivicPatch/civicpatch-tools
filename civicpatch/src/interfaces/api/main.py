@@ -11,7 +11,6 @@ from fastapi import Request as FastAPIRequest
 from starlette.datastructures import URL
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request as StarletteRequest
-
 FORWARDED_RESPONSE_HEADERS = {"content-type", "cache-control", "etag", "last-modified", "location"}
 
 
