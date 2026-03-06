@@ -40,7 +40,6 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
         request: Request, 
         jurisdiction_ocdid: str
     ):
-
         history = await civicpatch_api.get_people_job_history(jurisdiction_ocdid, request)
 
         return templates.TemplateResponse(
@@ -52,4 +51,25 @@ def get_router(templates: Jinja2Templates) -> APIRouter:
             }
         )
 
+    @router.get("/progress", include_in_schema=False)
+    async def progress_page(
+        request: Request, 
+    ):
+        return templates.TemplateResponse(
+            "pages/progress.html",
+            {
+                "request": request,
+            }
+        )
+
+    #@router.get("/jobs", include_in_schema=False)
+    #async def jobs_page(
+    #    request: Request, 
+    #):
+    #    return templates.TemplateResponse(
+    #        "pages/jobs.html",
+    #        {
+    #            "request": request,
+    #        }
+    #    )
     return router
