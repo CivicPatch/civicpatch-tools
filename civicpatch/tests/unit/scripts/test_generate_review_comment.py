@@ -173,6 +173,7 @@ def make_official(name):
         source_urls=[],
         jurisdiction_ocdid="",
         updated_at="",
+        id=""
     )
 
 def test_direct_name_match():

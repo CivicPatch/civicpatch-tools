@@ -2,11 +2,11 @@ import pytest
 import os
 from unittest.mock import patch
 from jobs.people_collector.schemas import (
-    LLMPerson, LinkStatus, WorkflowStatus, ProcessPageContentStep, Link
+    LLMPerson, LinkStatus, Link
 )
-from jobs.people_collector.steps.step_05_process_page_content.process_page_content import has_role_and_contact_info, move_links_to_top
-from utils.url_utils import format_url_to_folder
-from jobs.people_collector.steps.step_05_process_page_content.process_page_content import check_page_heuristics
+from jobs.people_collector.steps.step_05_process_page_content.process_page_content import (
+    has_role_and_contact_info, move_links_to_top, check_page_heuristics
+)
 from jobs.people_collector.schemas import LLMPerson
 
 pytestmark = pytest.mark.unit

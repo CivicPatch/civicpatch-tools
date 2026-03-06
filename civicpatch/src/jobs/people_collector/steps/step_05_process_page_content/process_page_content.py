@@ -377,11 +377,11 @@ def has_role_and_contact_info(roles: List[str], records: List[LLMPerson]) -> boo
     people = [LLMPerson.model_validate(r) if not isinstance(r, LLMPerson) else r for r in records]
 
     def has_sufficient_contact(person):
-        # A person is considered reachable if they have both phone and email,
-        # or if they have at least one contact method plus a profile signal (url or image).
         if person.phone and person.email:
             return True
-        if (person.image) and (person.url or person.phone or person.email):
+        if person.url and (person.phone or person.email):
+            return True
+        if person.image and (person.url or person.phone or person.email):
             return True
         return False
 

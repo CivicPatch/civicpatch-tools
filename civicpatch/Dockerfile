@@ -50,7 +50,7 @@ RUN chown -R civicpatch_user:civicpatch_user /app/tmp/.cache /app/tmp/.config
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 
 # Copy the shared folder from parent directory
-COPY --chown=civicpatch_user:civicpatch_user shared /app/src/shared
+COPY --chown=civicpatch_user:civicpatch_user shared/src /app/src/shared
 
 # Copy the rest of the application
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME} /app

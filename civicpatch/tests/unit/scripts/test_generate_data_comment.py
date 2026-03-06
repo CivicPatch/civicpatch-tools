@@ -17,7 +17,8 @@ def test_generate_table_with_full_data():
         cdn_image="https://cdn.example.com/jane.jpg",
         jurisdiction_ocdid="ocd-division/country:us",
         source_urls=["https://source.com"],
-        updated_at="2024-01-01"
+        updated_at="2024-01-01",
+        id=""
     )
     table = generate_data_comment([official])
     assert "Jane Doe" in table
@@ -36,7 +37,8 @@ def test_generate_table_with_missing_data():
         cdn_image=None,
         jurisdiction_ocdid="ocd-division/country:us",
         source_urls=[],
-        updated_at="2024-01-01"
+        updated_at="2024-01-01",
+        id=""
     )
     table = generate_data_comment([official])
     assert "John Smith" in table

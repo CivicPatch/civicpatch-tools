@@ -33,7 +33,14 @@ def test_generate_identities_config():
         "Jane Smith": []
     }
 
-def test_format_output():
+@pytest.mark.asyncio
+async def test_format_output(httpx_mock):
+    # Provide a dummy JSON response for the batch_resolve_people endpoint
+    httpx_mock.add_response(
+        status_code=200,
+        json={"resolved_people": []}  # or whatever structure your code expects
+    )
+
     # Create mock people data
     people = [
         person_factory(name="John Doe", urls=[], source_urls=["https://example.com/john_doe"]),
@@ -60,7 +67,7 @@ def test_format_output():
     })
 
     # Call the function
-    output = format_output(context)
+    output = await format_output(context)
 
     # Assertions
     assert isinstance(output, FormatOutputStep)
