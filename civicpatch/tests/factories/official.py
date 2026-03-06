@@ -28,5 +28,6 @@ def official_factory(
         jurisdiction_ocdid=jurisdiction_ocdid,
         cdn_image=None,
         source_urls=source_urls,
-        updated_at=""
+        updated_at="",
+        id=""
     )

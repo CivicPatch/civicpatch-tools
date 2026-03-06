@@ -11,7 +11,7 @@ services:
       - "8001:8001"
     volumes:
       - ./:/app
-      - ../shared:/app/src/shared:ro
+      - ../shared/src:/app/src/shared:ro
     networks:
       - civicpatch_net
     depends_on:
@@ -49,7 +49,7 @@ services:
       - "8002:8001"  # Use a different port for the test service
     volumes:
       - ./:/app
-      - ../shared:/app/src/shared:ro
+      - ../shared/src:/app/src/shared:ro
     networks:
       - civicpatch_test_net
     depends_on:

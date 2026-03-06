@@ -4,7 +4,7 @@ from typing import List, Optional
 from domain.models import Official
 from fastapi import Request
 
-SERVICE_API_KEY = os.getenv("SERVICE_API_KEY")
+SERVICE_API_KEY = os.getenv("SERVICE_API_KEY", "")
 API_CIVICPATCH_ORG_URL = os.getenv("API_CIVICPATCH_ORG_URL", "https://api.civicpatch.org")
 SERVER_SOURCE = os.getenv("CIVICPATCH_SERVER_SOURCE")
 SYSTEM_AUTH_HEADER = {
