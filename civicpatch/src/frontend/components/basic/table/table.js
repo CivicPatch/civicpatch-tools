@@ -113,7 +113,6 @@ function BasicTable(props) {
 
     // Also, should submit the changes
     // Good time to validate, but tomorrow's me will implement that
-    console.log("Data change:", identifier, field, value);
     tableRef.current.dispatchEvent(new CustomEvent('data-change', {
       detail: { identifier, field: actualField, value: newValue },
       bubbles: true,

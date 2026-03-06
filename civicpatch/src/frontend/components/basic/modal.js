@@ -4,9 +4,9 @@ import { ref } from "lit-html/directives/ref.js";
 
 function Modal({
   title = "",
-  content = null, // a lit-html TemplateResult or null
-  footer = null, // a lit-html TemplateResult or null
-  modalProps = {}, // { open, onClose, modalRef, closeOnBackdropClick = true, ariaLabel }
+  content = null,
+  footer = null,
+  modalProps = {},
 }) {
   const [open, setOpen] = useState(Boolean(modalProps.open));
   useEffect(() => {
@@ -16,31 +16,36 @@ function Modal({
   let dialogEl = null;
   const setDialogRef = (el) => {
     dialogEl = el;
-    // propagate to any ref passed in modalProps (supports callback or object ref)
     if (!modalProps.modalRef) return;
     if (typeof modalProps.modalRef === "function") modalProps.modalRef(el);
     else if (typeof modalProps.modalRef === "object") modalProps.modalRef.value = el;
   };
 
+  // Helper to close and emit event
+  function handleClose(e) {
+    modalProps.onClose && modalProps.onClose(e);
+    // Emit a DOM event for parent listeners
+    if (dialogEl) {
+      dialogEl.dispatchEvent(new CustomEvent("close", { bubbles: true, composed: true }));
+    }
+  }
+
   const onKey = (e) => {
     if (e.key === "Escape") {
-      modalProps.onClose && modalProps.onClose();
+      handleClose(e);
     }
   };
-  
+
   useEffect(() => {
-    // focus the dialog so it receives key events when opened
     if (open && dialogEl && typeof dialogEl.focus === "function") {
       dialogEl.focus();
     }
   }, [open]);
 
-
   const backdropClick = (e) => {
     if (!modalProps.closeOnBackdropClick && modalProps.closeOnBackdropClick !== undefined) return;
-    // click on dialog (child) shouldn't close; click on backdrop (dialog element) should
     if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === "dialog") {
-      modalProps.onClose && modalProps.onClose();
+      handleClose(e);
     }
   };
 
@@ -51,7 +56,6 @@ function Modal({
       position: fixed !important;
       left: 0; top: 0; right: 0; bottom: 0;
       margin: auto;
-      /* Optional: add a semi-transparent background */
       background: var(--pico-background-color, rgba(0, 0, 0, 0.5));
     }
     </style>
@@ -80,7 +84,7 @@ function Modal({
           ? html` <footer>${footer}</footer> `
           : html`
               <footer>
-                <button @click=${modalProps.onClose} class="secondary">Close</button>
+                <button @click=${handleClose} class="secondary">Close</button>
               </footer>
             `}
       </article>

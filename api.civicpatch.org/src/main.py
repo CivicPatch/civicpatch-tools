@@ -18,8 +18,6 @@ import routers.api.admin as api_admin_router
 import routers.api.api_keys as api_keys_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.people as api_people_router
-import routers.api.service.people as api_service_people_router
-import routers.api.pipelines as api_pipelines_router
 import routers.api.jobs as api_jobs_router
 import routers.api.service.jobs as api_service_jobs_router
 import routers.api.user as api_user_router
@@ -47,7 +45,6 @@ from starlette.datastructures import URL
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request as StarletteRequest
 
-
 # Hack to get url_for to generate https URLs when behind a proxy that terminates SSL
 def url_for(request: FastAPIRequest, name: str) -> URL:
     url = request.url_for(name)
@@ -55,11 +52,6 @@ def url_for(request: FastAPIRequest, name: str) -> URL:
         url = url.replace(scheme="https")
     return url
 
-# Only purpose is to manage users, their API keys, and move data from 3rd party servers
-# to GitHub Actions.
-# Update 2025/10/24
-# Goal has expanded to -- whatever the civicpatch servers need to sync data
-# to and from the open-data repo
 # Ref: https://github.com/tomasvotava/fastapi-sso/blob/master/docs/how-to-guides/use-with-fastapi-security.md
 
 INSTANCE_URL = os.getenv("INSTANCE_URL", "http://localhost:8001")
@@ -139,7 +131,6 @@ async def lifespan(instance: FastAPI):
     await pool.open()
     yield
     await pool.close()
-    await github_service.close()
 
 
 app = FastAPI(
@@ -226,13 +217,6 @@ app.include_router(
 )
 
 app.include_router(
-    api_service_people_router.get_router(),
-    prefix="/api/v1/people",
-    tags=["people"],
-    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))]
-)
-
-app.include_router(
     api_jobs_router.get_router(api_key_header),
     prefix="/api/v1/jobs",
     tags=["jobs"], 
@@ -243,13 +227,6 @@ app.include_router(
     api_service_jobs_router.get_router(api_key_header),
     prefix="/api/v1/jobs",
     tags=["jobs"], 
-    dependencies=[Depends(require_route_access(RouteCategory.SERVICE))]
-)
-
-app.include_router(
-    api_pipelines_router.get_router(api_key_header),
-    prefix="/api/internal/pipelines",
-    tags=["pipelines"],
     dependencies=[Depends(require_route_access(RouteCategory.SERVICE))]
 )
 

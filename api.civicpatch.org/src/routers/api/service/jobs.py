@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends 
+from fastapi import APIRouter, Depends, Form, HTTPException, Security, UploadFile, BackgroundTasks
 from fastapi.responses import JSONResponse
 import services.storage_service as storage_service
 from services.api_service import can_make_api_request, can_call_request_id
@@ -18,6 +18,11 @@ import shared.utils.id_utils
 import shared.utils.data_path_utils as data_path_utils
 import services.github_service as github_service
 import json
+from job_service.people_collector import people_collector
+from schemas.requests import HandleSubmitJobArtifactsRequest, ServerDetail
+import utils.file_utils
+import tempfile
+import os
 
 import logging
 logger = logging.getLogger(__name__)
@@ -68,6 +73,7 @@ def get_router(api_key_header):
     async def patch_job_status_endpoint(
         request_id: str,
         request: UpdateJobStatusRequest,
+        background_tasks: BackgroundTasks,
         user: Identity = Depends(require_route_access(RouteCategory.SERVICE))
     ):
         can_call_request_id_response = await can_call_request_id(user, request_id)
@@ -77,7 +83,12 @@ def get_router(api_key_header):
                 status_code=403
             )
 
-        await update_job_status(request_id, status=request.status, progress=request.progress)
+        background_tasks.add_task(
+            update_job_status, 
+            request_id=request_id, 
+            status=request.status, 
+            progress=request.progress
+        )
 
         # Publish to SSE subscribers
         key = f"people:{request.jurisdiction_ocdid}"
@@ -161,6 +172,56 @@ def get_router(api_key_header):
         )
         return {"request_id": request.request_id, "status": "pending"}
 
+    # TODO: maybe want to get rid of result
+    @router.post(
+        "/people/{request_id}/submit",
+        summary="Upload zip file containing municipal data",
+        description="Accepts a zip file containing municipal data and processes it",
+        include_in_schema=False,
+    )
+    async def submit_people_endpoint(
+        request_id: str,
+        file: UploadFile,
+        background_tasks: BackgroundTasks,
+        authorization: str = Security(api_key_header),
+        jurisdiction_ocdid: str = Form(...),
+        user: Identity = Depends(require_route_access(RouteCategory.SERVICE))
+    ):
+        if not authorization:
+            raise HTTPException(status_code=401, detail="Missing Authorization header")
+
+        # Check file type
+        if not file.filename.lower().endswith(".zip"):
+            raise HTTPException(status_code=400, detail="Only .zip files are accepted")
+        if file.content_type not in ["application/zip", "application/x-zip-compressed"]:
+            raise HTTPException(
+                status_code=400, detail="Invalid content type for zip file"
+            )
+
+        logger.info(f"Processing intake for {request_id} - {jurisdiction_ocdid}")
+
+        # Save the file to disk immediately
+        file_path, temp_dir = await utils.file_utils.save_upload_to_temp(file)
+
+        request_obj = HandleSubmitJobArtifactsRequest(
+            file_path=file_path,  # Pass the path, not the UploadFile
+            request_id=request_id,
+            jurisdiction_ocdid=jurisdiction_ocdid,
+            server_detail=ServerDetail(
+                user_email="jobs-people@civicpatch.org",
+                server_url="civicpatch.org"
+            ),
+            zip_path=file_path,
+            temp_dir=temp_dir
+        )
+
+        background_tasks.add_task(
+            people_collector.handle_submit_job_artifacts,
+            request=request_obj,
+        )
+
+        return {"request_id": request_id, "status": "processing"}
+
     @router.post(
         "/people/{request_id}/result",
         include_in_schema=False, # Internally called by every civicpatch server
@@ -230,5 +291,5 @@ def get_router(api_key_header):
         # Implementation to stop a job
         # TBD
         return {"request_id": request_id, "status": "stopped"}
-
+    
     return router

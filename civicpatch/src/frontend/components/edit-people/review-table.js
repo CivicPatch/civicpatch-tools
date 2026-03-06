@@ -4,7 +4,9 @@ const API_URL = __API_URL__;
 
 function ReviewTable({ jurisdiction_ocdid, branch_name, reviewData, currentPeople }) {
   function renderCheckmark(value) {
-    return value ? '✅' : '❌';
+    return value
+      ? html`<i class="fa-solid fa-check" style="color: var(--pico-ins-color, #4caf50);"></i>`
+      : html`<i class="fa-solid fa-xmark" style="color: var(--pico-del-color, #e53935);"></i>`;
   }
 
   function renderIssues() {

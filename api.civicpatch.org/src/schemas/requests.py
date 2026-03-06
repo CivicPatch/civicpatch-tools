@@ -10,7 +10,8 @@ class ServerDetail(BaseModel):
     server_url: str
 
 class HandleSubmitJobArtifactsRequest(BaseModel):
-    file: UploadFile
+    zip_path: str
+    temp_dir: str
     request_id: str
     jurisdiction_ocdid: str
     server_detail: ServerDetail

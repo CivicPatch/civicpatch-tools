@@ -47,9 +47,9 @@ async def get_user(
     # 3. Handle service API key
     if token_source == "service_api_key":
         return Identity(
+            type="service_key",
             provider="system",
             provider_user_id="service_api_key",
-            is_service_api_key=True,
             email=None,
             teams=[]
         )
@@ -75,6 +75,7 @@ async def get_user_by_api_key(api_key: str) -> Identity:
         raise HTTPException(status_code=401, detail="No identity found using api key")
 
     return Identity(
+        type="user_key",
         provider=user.get("provider"),
         provider_user_id=user.get("provider_user_id"),
         email=user.get("email"),
@@ -138,6 +139,7 @@ async def get_user_by_cookie(request, token: str) -> Identity:
                 teams = user_row["teams"]
 
     return Identity(
+        type="cookie",
         provider=openid_obj.provider,
         provider_user_id=openid_obj.id,
         email=openid_obj.email,
@@ -148,7 +150,7 @@ async def get_optional_user(
     request: Request,
     authorization: Optional[str] = Security(API_HEADER),
     cookie: Optional[str] = Security(API_COOKIE),
- ) -> Optional[Identity]:
+) -> Optional[Identity]:
     try:
         identity = await get_user(request, authorization, cookie)
         return identity
@@ -157,28 +159,33 @@ async def get_optional_user(
 
 def require_route_access(category: RouteCategory):
     async def _dependency(
-        user: Identity = Depends(get_user),
+        identity: Identity = Depends(get_user),
     ):
         permission = ROUTE_PERMISSIONS.get(category)
         if not permission:
             raise HTTPException(status_code=403, detail="Unknown route category.")
 
-        # Public routes need no further checks
+        # Public
         if permission.public:
-            return user
+            return identity
 
-        # Service API key access
-        if permission.allow_service_api_key and user.is_service_api_key:
-            return user
+        # Service key — not tied to a person, skip all team checks
+        if permission.allow_service_key and identity.type == "service_key":
+            return identity
 
-        # Session-only routes — reject service API keys
-        if permission.require_session and user.is_service_api_key:
-            raise HTTPException(status_code=403, detail="This route requires a user session.")
+        # Session-only routes — reject non-session auth
+        if permission.allow_session and identity.type != "service_key":
+            if identity.type != "session" and not permission.allow_user_key:
+                raise HTTPException(status_code=403, detail="This route requires a user session.")
 
-        # Team requirement
-        if permission.required_teams and not any(t in permission.required_teams for t in user.teams):
-            raise HTTPException(status_code=403, detail="Insufficient permissions for this route.")
+            # User API key or session — resolve teams from DB if needed
+            user_teams = identity.teams
 
-        return user
+            if permission.required_teams and not any(t in permission.required_teams for t in user_teams):
+                raise HTTPException(status_code=403, detail="Insufficient team permissions.")
+
+            return identity
+
+        raise HTTPException(status_code=403, detail="Access denied.")
 
     return _dependency
