@@ -6,6 +6,7 @@ import httpx
 import jwt
 import time
 from datetime import datetime, timezone
+import logging
 
 from schemas.common import PullRequest
 from services import cache_service
@@ -19,6 +20,8 @@ GITHUB_APP_INSTALLATION_ID = os.getenv("GITHUB_APP_INSTALLATION_ID")
 OPEN_DATA_REPO_URL = os.getenv("OPEN_DATA_REPO_URL", "https://api.github.com/repos/CivicPatch/test-open-data")
 
 CACHE_KEY = f"github:installation:{GITHUB_APP_INSTALLATION_ID}"
+
+logger = logging.getLogger(__name__)
 
 def _generate_jwt() -> str:
     now = int(time.time())
@@ -142,25 +145,38 @@ async def get_github_file_contents(
         github_file_path: str,
         ref: Optional[str] = None,
     ) -> str | None:
-    default_headers = await get_default_headers()
+    cache_key = f"github:file:{github_file_path}:{ref or 'main'}"
+    cached = cache_service.get_cached(cache_key)
+    cached_etag = cached.get("etag") if cached else None
+    cached_content = cached.get("content") if cached else None
 
-    url = (
-        f"{OPEN_DATA_REPO_URL}/contents/{github_file_path}"
-    )
+    default_headers = await get_default_headers()
+    url = f"{OPEN_DATA_REPO_URL}/contents/{github_file_path}"
     if ref:
-        url += f"?ref={ref}"    
+        url += f"?ref={ref}"
     headers = {
         **default_headers,
         "Accept": "application/vnd.github.raw",
     }
+    if cached_etag:
+        headers["If-None-Match"] = cached_etag
+
     async with httpx.AsyncClient(timeout=timeout) as client:
         response = await client.get(url, headers=headers)
 
-    if response.status_code == 200:
+    if response.status_code == 304 and cached_content is not None:
+        logger.debug(f"File {github_file_path} not modified since last fetch, using cached content.")
+        # Not modified, return cached content
+        return cached_content
+    elif response.status_code == 200:
         file_content = response.text
+        etag = response.headers.get("etag")
+        logger.info(f"Fetched new version of {github_file_path} (etag: {etag}) from GitHub.")
+        # Store both content and etag in cache
+        cache_service.set_cached(cache_key, {"content": file_content, "etag": etag})
         return file_content
     else:
-        print(f"Error fetching file contents: {github_file_path}", response.status_code, response.text)
+        logger.error(f"Error fetching file contents: {github_file_path} {response.status_code} {response.text}")
         return None
 
 async def get_open_pull_requests() -> List[PullRequest]:
