@@ -3,8 +3,6 @@ from typing import Optional, List, Dict
 from dataclasses import dataclass, field
 from enum import Enum
 
-import shared.utils.id_utils
-
 KNOWN_PLACE_KEYS = ["place", "special_district"]
 
 class RouteCategory(str, Enum):

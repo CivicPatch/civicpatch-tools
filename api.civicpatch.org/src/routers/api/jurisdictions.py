@@ -107,39 +107,53 @@ def get_router() -> APIRouter:
             raise HTTPException(
                 status_code=404, detail="Could not find jurisdictions file"
             )
-        # Combine metadata with jurisdiction entries from jurisdiction.yml, 
-        # filtering out jurisdictions with open pull requests or recently updated metadata
         jurisdictions_metadata = yaml.safe_load(jurisdictions_metadata_file_content)
         jurisdictions_data = yaml.safe_load(jurisdictions_file_content)
-        jurisdictions = []
         open_pull_requests = await github_service.get_open_pull_requests()
         jurisdictions_entries = jurisdictions_data.get("jurisdictions", [])
-        for jurisdiction_ocdid, jurisdiction_metadata in jurisdictions_metadata.get("jurisdictions_by_id", {}).items():
-            # Skip over if updated_at is populated (TODO: new condition needed)
-            if jurisdiction_metadata.get("updated_at"):
-                continue
-            # Skip over if there's an open pull request for this jurisdiction
+        jurisdictions = []
+
+        # Helper to check if a jurisdiction is eligible (no open PR, has URL)
+        def is_eligible(jurisdiction_ocdid):
             if any(pr.jurisdiction_ocdid == jurisdiction_ocdid for pr in open_pull_requests):
-                continue
-            # Need to find matching jurisdiction_entry under "jurisdictions" array field
-            jurisdiction_entry = next((entry for entry in jurisdictions_entries if entry.get("id") == jurisdiction_ocdid), None)
+                return False
+            entry = next((e for e in jurisdictions_entries if e.get("id") == jurisdiction_ocdid), None)
+            return entry and entry.get("url")
 
-            # Skip over if no url 
-            if not jurisdiction_entry.get("url"):
-                continue
-
-            if jurisdiction_entry:
-                jurisdiction_metadata["jurisdiction"] = jurisdiction_entry
-                jurisdictions.append(
+        # First, try to get jurisdictions with empty updated_at
+        empty_updated = []
+        for jurisdiction_ocdid, jurisdiction_metadata in jurisdictions_metadata.get("jurisdictions_by_id", {}).items():
+            if not jurisdiction_metadata.get("updated_at") and is_eligible(jurisdiction_ocdid):
+                entry = next(e for e in jurisdictions_entries if e.get("id") == jurisdiction_ocdid)
+                jurisdiction_metadata["jurisdiction"] = entry
+                empty_updated.append(
                     Jurisdiction(
-                        id=jurisdiction_metadata["jurisdiction"]["id"],
-                        name=jurisdiction_metadata["jurisdiction"]["name"],
-                        url=jurisdiction_metadata["jurisdiction"]["url"],
+                        id=entry["id"],
+                        name=entry["name"],
+                        url=entry["url"],
                     )
                 )
 
-        filtered_jurisdictions = jurisdictions[:num_jurisdictions]
-        return {"jurisdictions": filtered_jurisdictions}
+        if empty_updated:
+            jurisdictions = empty_updated[:num_jurisdictions]
+        else:
+            # Otherwise, pick the oldest eligible jurisdictions by updated_at
+            eligible = []
+            for jurisdiction_ocdid, jurisdiction_metadata in jurisdictions_metadata.get("jurisdictions_by_id", {}).items():
+                if is_eligible(jurisdiction_ocdid):
+                    entry = next(e for e in jurisdictions_entries if e.get("id") == jurisdiction_ocdid)
+                    eligible.append((jurisdiction_metadata.get("updated_at") or "", entry))
+            eligible.sort(key=lambda tup: tup[0])  # Oldest first
+            jurisdictions = [
+                Jurisdiction(
+                    id=entry["id"],
+                    name=entry["name"],
+                    url=entry["url"],
+                )
+                for _, entry in eligible[:num_jurisdictions]
+            ]
+
+        return {"jurisdictions": jurisdictions}
 
     @router.get("/states")
     async def get_jurisdiction_states_endpoint(

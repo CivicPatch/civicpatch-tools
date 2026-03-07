@@ -13,11 +13,12 @@ console.log(`${devMode ? "development" : "production"} mode bundle`);
 // The main JavaScript bundle for modern browsers that support
 // JavaScript modules and other ES2015+ features.
 const config = {
-  input: "./components/main.js",
+  input: "./assets/main.js",
   watch: {
     include: [
       "./components/**",
       "./hooks/**",
+      "./pages/**"
     ],
     exclude: ["./build/**", "./dist/**", "node_modules/**"],
     clearScreen: false

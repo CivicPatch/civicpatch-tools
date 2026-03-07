@@ -16,6 +16,7 @@ import asyncio
 
 import routers.api.admin as api_admin_router
 import routers.api.api_keys as api_keys_router
+import routers.api.data as api_data_router
 import routers.api.jurisdictions as api_jurisdictions_router
 import routers.api.people as api_people_router
 import routers.api.jobs as api_jobs_router
@@ -213,7 +214,7 @@ app.include_router(
     api_people_router.get_router(),
     prefix="/api/v1/people",
     tags=["people"],
-    dependencies=[Depends(require_route_access(RouteCategory.AUTHENTICATED))]
+    dependencies=[] # Most routes are public
 )
 
 app.include_router(
@@ -237,6 +238,13 @@ app.include_router(
     prefix="/api/internal/api_keys", 
     tags=["api_keys"],
     dependencies=[Depends(require_route_access(RouteCategory.TEAM_MEMBER))]
+)
+
+app.include_router(
+    api_data_router.get_router(), 
+    prefix="/api/v1/data", 
+    tags=["data"],
+    dependencies=[]
 )
 
 app.include_router(

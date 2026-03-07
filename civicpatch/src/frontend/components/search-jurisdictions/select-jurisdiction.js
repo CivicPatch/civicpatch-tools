@@ -1,4 +1,4 @@
-import { component, useEffect, useState, useRef}  from "haunted";
+import { component, useEffect, useState, useRef } from "haunted";
 import { html } from "lit-html";
 import { useAuth } from "../../hooks/useAuth.js";
 
@@ -20,7 +20,7 @@ function CivSelectJurisdiction() {
     }
     // Call the handler with the current selections
     handleInputChange(selectedState, selectedJurisdiction);
-  }, [selectedState, selectedJurisdiction])
+  }, [selectedState, selectedJurisdiction]);
 
   useEffect(() => {
     // Fetch states from backend proxy (no auth header needed)
@@ -49,7 +49,7 @@ function CivSelectJurisdiction() {
         composed: true,
       })
     );
-  }
+  };
 
   const handleJurisdictionSuggestions = (detail) => {
     const query = detail.query || "";
@@ -65,9 +65,9 @@ function CivSelectJurisdiction() {
           page: data.page,
           limit: data.limit,
           links: data.links
-        })
+        });
       }); 
-  }
+  };
 
   const handleSubmitClick = (e) => {
     e.preventDefault();
@@ -75,15 +75,15 @@ function CivSelectJurisdiction() {
     const jurisdiction_data = jurisdictions.find(jur => jur.id === selectedJurisdiction);
     const jurisdiction_ocdid_slug = jurisdiction_data["jurisdiction_ocdid_slug"];
     window.location.href = `/jurisdictions/${jurisdiction_ocdid_slug}`;
-  }
+  };
 
   const jurisdictionLink = () => {
     if (!selectedJurisdiction) return "";
     if (!jurisdictions) return "";
 
-    const jurisdictionOcdidFormatted = encodeURIComponent(selectedJurisdiction)
+    const jurisdictionOcdidFormatted = encodeURIComponent(selectedJurisdiction);
     return jurisdictionOcdidFormatted ? `/jurisdictions?jurisdiction_ocdid=${jurisdictionOcdidFormatted}` : "";
-  }
+  };
 
   return html`
     <form 
@@ -116,7 +116,7 @@ function CivSelectJurisdiction() {
         }}
         @input-change=${(e) => {
           const {value, item} = e.detail;
-          setJurisdictionInputValue(value)
+          setJurisdictionInputValue(value);
           setSelectedJurisdiction(item ? item.value : "");
         }}
         @item-selected=${(e) => setSelectedJurisdiction(e.detail.value)}
@@ -132,7 +132,6 @@ function CivSelectJurisdiction() {
           Go to jurisdiction page
         </a>
       ` : null }
-      </a>
     </form>
   `;
 }

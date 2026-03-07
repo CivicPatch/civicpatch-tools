@@ -45,8 +45,13 @@ async def _fetch_github_token() -> tuple[str, float]:
     expires_at = expires_at.replace(tzinfo=timezone.utc).timestamp()
     return token, expires_at
 
-async def get_github_token() -> str:
-    return await cache_service.get_cached_token(CACHE_KEY, _fetch_github_token)
+async def get_github_token():
+    token = cache_service.get_cached(CACHE_KEY)
+    if token:
+        return token
+    token, expires_at = await _fetch_github_token()
+    cache_service.set_cached(CACHE_KEY, token, expires_at)
+    return token
 
 async def get_default_headers() -> Dict[str, str]:
     github_token = await get_github_token()
