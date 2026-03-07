@@ -21,6 +21,7 @@ from datetime import timezone
 from schemas.requests import OdSyncRequestSchema
 import logging
 logger = logging.getLogger(__name__)
+import shared.utils.config_utils as config_utils
 
 # Configuration
 CONFIG = {
@@ -133,8 +134,8 @@ async def sync_people_by_ocdids(jurisdiction_ocdids):
 
 async def bulk_sync():
     logger.info("Starting bulk sync")
-    states = await database.get_states()
-    logger.debug(f"States from DB: {states}")
+    states_config = config_utils.get_states()
+    states = [state["code"] for state in states_config]
     all_jurisdiction_metadata = {}
 
     for state in states:
