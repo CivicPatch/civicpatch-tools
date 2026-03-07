@@ -10,7 +10,8 @@ import "./config-detail.js";
 import "./jurisdiction-header.js";
 import "./jurisdiction-sidebar.js";
 
-const API_URL = __API_URL__;
+import { config } from '../../assets/config.js';
+const API_URL = config.apiUrl;
 
 function JurisdictionPage({ jurisdiction_ocdid, history }) {
   const { loading: authLoading, permissions } = useAuth();

@@ -1,6 +1,7 @@
 import { html, component, useEffect, useState } from 'haunted';
 import { css } from 'lit';
-const API_URL = __API_URL__;
+import { config } from '../../assets/config.js';
+const API_URL = config.apiUrl;
 
 const styles = css`
   civ-pull-request-tabs .tabs {

@@ -16,15 +16,16 @@ const config = {
   input: "./assets/main.js",
   watch: {
     include: [
+      "./css/**",
       "./components/**",
       "./hooks/**",
       "./pages/**"
     ],
-    exclude: ["./build/**", "./dist/**", "node_modules/**"],
+    exclude: ["./build/**", "node_modules/**"],
     clearScreen: false
   },
   output: {
-    file: devMode ? "./build/bundle.js" : "./dist/bundle.js",
+    file: "./build/bundle.js",
     format: "es",
     sourcemap: devMode ? "inline" : false,
   },
@@ -56,9 +57,6 @@ const config = {
     replace({
       preventAssignment: true,
       values: {
-        __API_URL__: devMode
-          ? `"http://localhost:8001"`
-          : `"https://api.civicpatch.org"`,
         __DEV_MODE__: JSON.stringify(devMode),
       },
     }),

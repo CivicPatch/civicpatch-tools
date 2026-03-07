@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y \
     xvfb \
     x11-utils \
     dbus-x11 \
+    # env substitution
+    gettext-base \ 
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -42,11 +44,8 @@ RUN useradd -m -s /bin/bash civicpatch_user
 
 # For xvfb
 RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && \
-    mkdir -p /app/tmp/.cache && \
-    mkdir -p /app/tmp/.config && \
     chown -R root:root /tmp/.X11-unix
 
-RUN chown -R civicpatch_user:civicpatch_user /app/tmp/.cache /app/tmp/.config
 COPY --chown=civicpatch_user:civicpatch_user ${PROJECT_NAME}/pyproject.toml ${PROJECT_NAME}/poetry.lock ./
 
 # Copy the shared folder from parent directory
@@ -143,7 +142,11 @@ ENV CIVICPATCH_ENV="production"
 
 WORKDIR /app
 
-COPY --from=production-build /app/dist/. /app/src/frontend/dist
+COPY --from=production-build /app/build/. /app/src/frontend/build
+
+RUN chown -R root:root /app && \
+    chmod -R 755 /app && \
+    chown -R civicpatch_user:civicpatch_user /app/src/frontend/assets
 
 USER civicpatch_user
 

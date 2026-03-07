@@ -1,7 +1,8 @@
 import { component } from 'haunted';
 import { html } from 'lit';
 import { useAuth } from '../hooks/useAuth.js';
-const API_URL = __API_URL__;
+import { config } from '../assets/config.js';
+const API_URL = config.apiUrl;
 
 // Only keep layout and spacing styles, remove sticky positioning from civ-navbar
 const NAVBAR_CSS = html`

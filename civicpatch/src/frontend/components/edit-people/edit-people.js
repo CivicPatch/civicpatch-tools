@@ -11,7 +11,8 @@ import './pull-request-tabs.js';
 import { useCsrf } from '../../hooks/use-csrf.js';
 import './review-table.js';
 import './profile-modal.js';
-const API_URL = __API_URL__;
+import { config } from '../../assets/config.js';
+const API_URL = config.apiUrl;
 
 const TRACKED_FIELDS = [
   "name", "other_names", "phones", "emails", "urls", "start_date", "end_date", "office", "source_urls",
