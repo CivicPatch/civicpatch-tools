@@ -41,11 +41,6 @@ dependencies = [
     "pytest-httpx (>=0.36.0,<0.37.0)",
 ]
 
-[tool.poetry]
-packages = [
-    { include = "src" }
-]
-
 [tool.pyright]
 include = ["src"]
 pythonVersion = "3.11"
@@ -54,8 +49,6 @@ executionEnvironments = [
   { root = "src" }
 ]
 
-[tool.poetry.scripts]
-post-install = "setup:post_install"
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"

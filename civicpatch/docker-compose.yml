@@ -17,11 +17,11 @@ services:
 
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
     init: true # https://stackoverflow.com/questions/50634819/xvfb-run-hangs-in-container
-    #build:
-    #  context: ..
-    #  dockerfile: civicpatch/Dockerfile
-    #  target: production
-    image: ghcr.io/civicpatch/civicpatch:latest
+    build:
+      context: ..
+      dockerfile: civicpatch/Dockerfile
+      target: production
+    # image: ghcr.io/civicpatch/civicpatch:latest
     user: "${UID:-1000}:${GID:-1000}"
     ports:
       - "8000:8000"

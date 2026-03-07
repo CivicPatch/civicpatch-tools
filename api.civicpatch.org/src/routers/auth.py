@@ -21,7 +21,11 @@ APP_ENVIRONMENT = os.getenv("APP_ENVIRONMENT")
 is_production = APP_ENVIRONMENT.lower() == "production"
 
 if is_production:
-    ALLOWED_HOSTS = ["civicpatch.org"]
+    ALLOWED_HOSTS = [
+        "civicpatch.org",
+        "test.civicpatch.org",
+        "test-api.civicpatch.org"
+    ]
     COOKIE_INSTANCE_URL = os.getenv("COOKIE_INSTANCE_URL", ".civicpatch.org")
 else:
     ALLOWED_HOSTS = ["localhost"]

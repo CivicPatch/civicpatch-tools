@@ -32,6 +32,7 @@ from database import (
 )
 from utils.auth_utils import require_route_access, get_optional_user
 from services.memory_pub_sub_service import memory_pubsub
+import services.github_sync_service
 from fastapi.responses import StreamingResponse
 from services import github_service
 
@@ -130,7 +131,10 @@ is_production = APP_ENVIRONMENT.lower() == "production"
 @asynccontextmanager
 async def lifespan(instance: FastAPI):
     await pool.open()
+    await startup_tasks()
+
     yield
+
     await pool.close()
 
 
@@ -309,3 +313,7 @@ async def sse_job_status(job_type: str, jurisdiction_ocdid: str, request: Reques
             "X-Accel-Buffering": "no",
         },
     )
+
+async def startup_tasks():
+    print("Running startup tasks...")
+    asyncio.create_task(services.github_sync_service.bulk_sync())
