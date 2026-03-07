@@ -94,7 +94,6 @@ async def sync_jurisdictions_by_ocdids_with_metadata(jurisdiction_metadata, juri
     jurisdictions: List[tuple] = []
     for jurisdiction_ocdid in jurisdiction_ocdids:
         jurisdiction_data = jurisdiction_metadata.get(jurisdiction_ocdid)
-        logging.info(f"Jurisdiction data for {jurisdiction_ocdid}: {jurisdiction_data}")
 
         parsed_ocdid = shared.utils.id_utils.parse_jurisdiction_ocdid(jurisdiction_ocdid)
         state = parsed_ocdid.state
@@ -133,7 +132,6 @@ async def bulk_sync():
         all_jurisdiction_metadata = {**all_jurisdiction_metadata, **remote_metadata_file}
 
     local_jurisdictions = await database.get_jurisdiction_updates()
-    local_people = await database.get_people_updates()
 
     jurisdictions_to_update_metadata = []
     jurisdictions_to_update_data = []
@@ -141,23 +139,23 @@ async def bulk_sync():
     for jurisdiction_ocdid in all_jurisdiction_metadata:
         remote_updated_at = all_jurisdiction_metadata[jurisdiction_ocdid].get("updated_at")
 
-        local_people_data = local_people.get(jurisdiction_ocdid)
-
         jurisdictions_to_update_metadata.append(jurisdiction_ocdid)
 
-        if is_newer(remote_updated_at, local_people_data.get("updated_at") if local_people_data else None):
+        local_jurisdiction_data = local_jurisdictions.get(jurisdiction_ocdid)
+        if is_newer(remote_updated_at, local_jurisdiction_data.get("updated_at") if local_jurisdiction_data else None):
             jurisdictions_to_update_data.append(jurisdiction_ocdid)
 
     remote_ocdids = set(all_jurisdiction_metadata.keys())
     local_ocdids = set(local_jurisdictions.keys())
 
     # Jurisdictions to delete
+    # TODO: this should be a soft delete
     ocdids_to_delete = local_ocdids - remote_ocdids
     if ocdids_to_delete:
         logger.info(f"Deleting jurisdictions with OCDIDs: {ocdids_to_delete}")
         await database.delete_jurisdictions_by_ocdids(list(ocdids_to_delete))
 
-    logger.info(f"Updating metadata for jurisdictions with OCDIDs: {jurisdictions_to_update_metadata}")
+    logger.info(f"Updating metadata for jurisdictions with OCDIDs: {len(jurisdictions_to_update_metadata)}")
     await sync_jurisdictions_by_ocdids_with_metadata(all_jurisdiction_metadata, jurisdictions_to_update_metadata)
 
     logger.info(f"Updating people data for jurisdictions with OCDIDs: {jurisdictions_to_update_data}")
